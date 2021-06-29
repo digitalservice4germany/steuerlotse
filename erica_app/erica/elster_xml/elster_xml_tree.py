@@ -5,6 +5,7 @@ class ElsterXmlTreeNode(object):
         A Node can have a name and subelements.
         Additionally, some nodes can be repeated and can be specific for one person.
     """
+
     def __init__(self, name, sub_elements, is_person_specific=False, repetitions=1, is_repeatable=False):
         self.name = name
         self.sub_elements = sub_elements
@@ -14,9 +15,9 @@ class ElsterXmlTreeNode(object):
 
 
 _PERSON_A_FIELDS = ['E0100401', 'E0100201', 'E0100301', 'E0100402', 'E0101104', 'E0101206', 'E0101207', 'E0101301',
-                   'E0100601', 'E0100602', 'E0100701', 'E0100702', 'E0100703', 'E0100704']
+                    'E0100601', 'E0100602', 'E0100701', 'E0100702', 'E0100703', 'E0100704']
 _PERSON_B_FIELDS = ['E0101001', 'E0100901', 'E0100801', 'E0101002', 'E0102105', 'E0102202', 'E0102203', 'E0102301',
-                   'E0101701', 'E0101702']
+                    'E0101701', 'E0101702']
 
 # Persönliche Daten
 _ALLG_A = ElsterXmlTreeNode(name='A', sub_elements=_PERSON_A_FIELDS)
@@ -30,7 +31,8 @@ _EST1A_ART_ERKL = ElsterXmlTreeNode(name='Art_Erkl', sub_elements=['E0100001'])
 # Behinderung
 _BEH_GEH_STEH_BLIND_HILFL = ElsterXmlTreeNode(name='Geh_Steh_Blind_Hilfl', sub_elements=['E0109707', 'E0109706'])
 _BEH_AUSW_RENTB_BESCH = ElsterXmlTreeNode(name='Ausw_Rentb_Besch', sub_elements=['E0109708'])
-_AGB_BEH = ElsterXmlTreeNode(name="Beh", sub_elements=[_BEH_AUSW_RENTB_BESCH, _BEH_GEH_STEH_BLIND_HILFL], is_person_specific=True, repetitions=2)
+_AGB_BEH = ElsterXmlTreeNode(name="Beh", sub_elements=[_BEH_AUSW_RENTB_BESCH, _BEH_GEH_STEH_BLIND_HILFL],
+                             is_person_specific=True, repetitions=2)
 
 # Besondere Belastungen
 _KRANKH_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161304', 'E0161305'])
@@ -73,7 +75,6 @@ _GEZAHLT_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0107601'])
 _KIST_GEZAHLT = ElsterXmlTreeNode(name='Gezahlt', sub_elements=[_GEZAHLT_SUM])
 _KIST_ERSTATTET = ElsterXmlTreeNode(name='Erstattet', sub_elements=['E0107602'])
 _VOR_KIST = ElsterXmlTreeNode(name='KiSt', sub_elements=[_KIST_GEZAHLT, _KIST_ERSTATTET])
-
 
 TOP_ELEMENT_ESTA1A = ElsterXmlTreeNode(name='ESt1A', sub_elements=[_EST1A_ART_ERKL, _EST1A_BELEGE, _EST1A_ALLG])
 TOP_ELEMENT_SA = ElsterXmlTreeNode(name='SA', sub_elements=[_VOR_KIST, _SA_ZUW])

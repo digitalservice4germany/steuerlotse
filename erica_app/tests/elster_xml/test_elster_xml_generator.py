@@ -1,6 +1,5 @@
 import copy
 import unittest
-import datetime as dt
 from unittest.mock import patch, MagicMock, call
 from xml.etree.ElementTree import XML, ParseError, Element, SubElement, tostring
 
@@ -222,7 +221,7 @@ class TestGenerateTransferHeader(unittest.TestCase):
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_returns_xml_with_transfer_header(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
-                   MagicMock(return_value=self.xml_with_th_binary)) as fun_create_th:
+                   MagicMock(return_value=self.xml_with_th_binary)):
             res = _generate_transfer_header(self.xml, self.th_fields)
 
             self.assertEqual(self.xml_with_th_binary.decode(), res)
@@ -875,7 +874,7 @@ class TestVastRequest(unittest.TestCase):
         self.assertEqual('2020-12-31', returned_date)
 
     @freeze_time("2020-08-23")  # last day we need the end of the year
-    def test_compute_valid_until_date_returns_correct_date_if_end_of_a_year(self):
+    def test_compute_valid_until_date_returns_correct_date_if_not_yet_end_of_a_year(self):
         returned_date = _compute_valid_until_date()
         self.assertEqual('2020-12-31', returned_date)
 

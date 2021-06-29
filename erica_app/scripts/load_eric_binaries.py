@@ -12,6 +12,7 @@ ERICA_CERT_NAME = "cert.pfx"
 ERICA_CERT_TARGET_DEST = "erica/instances/blueprint"
 ENDPOINT_URL = environ.get("ENDPOINT_URL")
 
+
 @click.group()
 def cli():
     pass
@@ -22,7 +23,7 @@ def get_connected_session():
     session = boto3.session.Session()
     s3 = session.resource(
         service_name='s3',
-        endpoint_url= ENDPOINT_URL
+        endpoint_url=ENDPOINT_URL
     )
     return s3
 

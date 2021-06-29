@@ -341,9 +341,11 @@ class EricTransferError(EricProcessNotSuccessful):
 
     def __str__(self):
         if self.work_dir:
-            return f"{self.res_code}: {self.get_eric_error_code_message(self.res_code)} in: {self.work_dir}; server_err_msg: {self.server_err_msg}"
+            return f"{self.res_code}: {self.get_eric_error_code_message(self.res_code)} in: {self.work_dir}; " \
+                   f"server_err_msg: {self.server_err_msg} "
         else:
-            return f"{self.res_code}: {self.get_eric_error_code_message(self.res_code)}; server_err_msg: {self.server_err_msg}"
+            return f"{self.res_code}: {self.get_eric_error_code_message(self.res_code)}; " \
+                   f"server_err_msg: {self.server_err_msg} "
 
     def generate_error_response(self, include_responses=False):
         """
@@ -441,7 +443,6 @@ class EricUnknownError(EricProcessNotSuccessful):
     ERROR_CODE = 100
 
 
-
 def check_result(rescode, eric_response=None, server_response=None, server_err_msg=None):
     """Checks if a result code indicates an error and raises the corresponding exception.
     If result code is ERIC_OK, no error is raised."""
@@ -476,8 +477,9 @@ def _create_transfer_error(rescode, eric_response, server_response, server_err_m
              "Es besteht bereits eine Berechtigung mit der gleichen Gültigkeitsdauer"
              in server_response.decode()):
         raise EricAlreadyRequestedError(eric_response, server_response, server_err_msg)
-    elif server_response and rescode in _NO_ANTRAG_FOUND_ERRORS and "Es ist kein Antrag auf Erteilung einer Berechtigung " \
-                                                                    "zum Datenabruf bzw. keine Berechtigung zum Widerruf vorhanden." in server_response.decode():
+    elif server_response and rescode in _NO_ANTRAG_FOUND_ERRORS and \
+            "Es ist kein Antrag auf Erteilung einer Berechtigung zum Datenabruf bzw. keine Berechtigung zum Widerruf " \
+            "vorhanden." in server_response.decode():
         raise EricAntragNotFoundError(eric_response, server_response, server_err_msg)
     elif rescode in _ERIC_TRANSFER_ERRORS:
         raise EricTransferError(rescode, eric_response, server_response, server_err_msg)

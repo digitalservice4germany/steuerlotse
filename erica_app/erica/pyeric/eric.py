@@ -2,7 +2,7 @@ import logging
 import os
 import tempfile
 from contextlib import contextmanager
-from ctypes import *
+from ctypes import Structure, c_int, c_uint32, c_char_p, c_void_p, pointer, CDLL, RTLD_GLOBAL
 from dataclasses import dataclass
 from typing import ByteString
 
@@ -233,10 +233,11 @@ class EricWrapper(object):
 
             if server_response and res in [610101210, 610101292]:
                 # only for ERIC_TRANSFER_ERR_XML_NHEADER and ERIC_TRANSFE R_ERR_XML_THEADER is error in server response
-                _, th_res_code, th_error_message, ndh_err_xml = self.get_error_message_from_xml_response(server_response)
+                _, th_res_code, th_error_message, ndh_err_xml = self.get_error_message_from_xml_response(
+                    server_response)
                 server_err_msg = {'TH_RES_CODE': th_res_code,
-                                 'TH_ERR_MSG': th_error_message,
-                                 'NDH_ERR_XML': ndh_err_xml}
+                                  'TH_ERR_MSG': th_error_message,
+                                  'NDH_ERR_XML': ndh_err_xml}
             else:
                 server_err_msg = None
 
@@ -276,7 +277,8 @@ class EricWrapper(object):
 
     def create_th(self,
                   xml, datenart='ESt', verfahren='ElsterErklaerung', vorgang='send-Auth',
-                  testmerker='700000004', herstellerId=get_settings().hersteller_id, datenLieferant='Softwaretester ERiC',
+                  testmerker='700000004', herstellerId=get_settings().hersteller_id,
+                  datenLieferant='Softwaretester ERiC',
                   versionClient='1'):
         fun_create_th = self.eric.EricMtCreateTH
         fun_create_th.argtypes = [c_void_p, c_char_p, c_char_p, c_char_p, c_char_p,
@@ -341,11 +343,11 @@ class EricWrapper(object):
         ndh_err_xml_buffer = self.create_buffer()
         try:
             res_code = fun_get_error_message(self.eric_instance,
-                                         xml_response,
-                                         transferticket_buffer,
-                                         th_res_code_buffer,
-                                         th_error_message_buffer,
-                                         ndh_err_xml_buffer)
+                                             xml_response,
+                                             transferticket_buffer,
+                                             th_res_code_buffer,
+                                             th_error_message_buffer,
+                                             ndh_err_xml_buffer)
             check_result(res_code)
 
             transferticket = self.read_buffer(transferticket_buffer).decode()

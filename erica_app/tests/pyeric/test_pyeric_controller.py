@@ -1,10 +1,13 @@
-import os
 import unittest
-from pathlib import Path
 from unittest.mock import MagicMock, patch, call
 
+from erica.config import get_settings
+from erica.pyeric.eric import EricResponse
 from erica.pyeric.eric_errors import EricGlobalValidationError, EricIOError
-from erica.pyeric.pyeric_controller import *
+from erica.pyeric.pyeric_controller import PyericController, EstPyericController, EstValidationPyericController, \
+    UnlockCodeRequestPyericController, UnlockCodeActivationPyericController, AbrufcodeRequestPyericController, \
+    UnlockCodeRevocationPyericController, BelegIdRequestPyericController, DecryptBelegePyericController, \
+    BelegRequestPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 

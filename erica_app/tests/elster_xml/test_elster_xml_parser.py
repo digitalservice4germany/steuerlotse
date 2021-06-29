@@ -1,6 +1,4 @@
-import os
 import unittest
-from pathlib import Path
 from xml.etree.ElementTree import tostring, Element, ParseError, SubElement
 
 from erica.elster_xml.elster_xml_parser import get_antrag_id_from_xml, get_idnr_from_xml, \
@@ -40,7 +38,8 @@ class TestAddressFromXml(unittest.TestCase):
         import html
         expected_address = html.unescape('<AdrKette>'
                                          '<StrAdr>'
-                                         '<Str>&#220;xh&#228;&#252;&#228;&#246;-&#225;&#238;-&#255;&#241;-&#197;-Stra&#223;e</Str>'
+                                         '<Str>&#220;xh&#228;&#252;&#228;&#246;-&#225;&#238;-&#255;&#241;-&#197;-Stra'
+                                         '&#223;e</Str> '
                                          '<HausNr>1101</HausNr><Plz>34125</Plz><Ort>Kassel</Ort>'
                                          '</StrAdr>'
                                          '</AdrKette>').encode()

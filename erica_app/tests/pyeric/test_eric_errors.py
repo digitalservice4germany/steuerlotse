@@ -1,6 +1,9 @@
 import unittest
 
-from erica.pyeric.eric_errors import *
+from erica.pyeric.eric_errors import EricGlobalError, EricProcessNotSuccessful, EricGlobalValidationError, \
+    EricGlobalInitialisationError, EricTransferError, EricCryptError, EricIOError, EricPrintError, \
+    EricNullReturnedError, EricAlreadyRequestedError, EricAntragNotFoundError, check_result, EricUnknownError, \
+    check_xml, EricInvalidXmlReturnedError, EricAlreadyRevokedError, check_handle
 
 _VALIDATION_ERROR_CODE = 610001002
 _INITIALISATION_ERROR_CODES = [610001081, 610001082, 610001083]
@@ -123,7 +126,6 @@ class TestGenerateErrorResponse(unittest.TestCase):
                                 b"bzw. keine Berechtigung zum Widerruf vorhanden."
         error.server_err_msg = server_err_msg
 
-
         actual_response = error.generate_error_response()
 
         self.assertEqual(expected_response, actual_response)
@@ -202,8 +204,8 @@ class TestCheckResCode(unittest.TestCase):
         eric_response = b""
         server_response = b""
         server_err_msg = {'TH_RES_CODE': None,
-                            'TH_ERR_MSG': None,
-                            'NDH_ERR_XML': '<?xml version="1.0" encoding="UTF-8"?><EricGetErrormessagesFromXMLAnswer xmlns="http://www.elster.de/EricXML/1.0/EricGetErrormessagesFromXMLAnswer">\t<Fehler>\t\t<Code>371015213</Code>\t\t<Meldung>Der Antrag auf Erteilung einer Berechtigung zum Datenabruf für diesen Dateninhaber bzw. der genehmigte Antrag auf Datenabruf (Berechtigung) ist bereits zurückgezogen worden.</Meldung>\t</Fehler>   <Fehler>\t\t<Code>371015212</Code>\t\t<Meldung>Der Antrag auf Erteilung einer Berechtigung zum Datenabruf für diesen Dateninhaber bzw. der genehmigte Antrag auf Datenabruf (Berechtigung) ist bereits zurückgezogen worden.</Meldung>\t</Fehler></EricGetErrormessagesFromXMLAnswer>'}
+                          'TH_ERR_MSG': None,
+                          'NDH_ERR_XML': '<?xml version="1.0" encoding="UTF-8"?><EricGetErrormessagesFromXMLAnswer xmlns="http://www.elster.de/EricXML/1.0/EricGetErrormessagesFromXMLAnswer">\t<Fehler>\t\t<Code>371015213</Code>\t\t<Meldung>Der Antrag auf Erteilung einer Berechtigung zum Datenabruf für diesen Dateninhaber bzw. der genehmigte Antrag auf Datenabruf (Berechtigung) ist bereits zurückgezogen worden.</Meldung>\t</Fehler>   <Fehler>\t\t<Code>371015212</Code>\t\t<Meldung>Der Antrag auf Erteilung einer Berechtigung zum Datenabruf für diesen Dateninhaber bzw. der genehmigte Antrag auf Datenabruf (Berechtigung) ist bereits zurückgezogen worden.</Meldung>\t</Fehler></EricGetErrormessagesFromXMLAnswer>'}
         self.assertRaises(EricAlreadyRevokedError, check_result, 610101292, eric_response, server_response, server_err_msg)
 
 

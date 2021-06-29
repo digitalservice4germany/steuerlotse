@@ -432,4 +432,3 @@ class TestGenerateElectronicSteuernummer(unittest.TestCase):
             generate_electronic_steuernummer(steuernummer, bundesland)
         except InvalidBufaNumberError:
             self.fail("generate_electronic_steuernummer raised unexpected InvalidBufaNumberError")
-

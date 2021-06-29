@@ -1,6 +1,4 @@
-import os
 import unittest
-from pathlib import Path
 from unittest.mock import patch, MagicMock
 
 from fastapi.exceptions import HTTPException
@@ -9,6 +7,7 @@ from erica.pyeric.eric import EricResponse
 from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code
 from tests.utils import create_unlock_request, create_unlock_activation, create_est, create_unlock_revocation, \
     missing_cert, missing_pyeric_lib
+
 
 @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
 @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")

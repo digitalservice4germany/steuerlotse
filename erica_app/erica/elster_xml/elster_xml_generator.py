@@ -395,8 +395,8 @@ def _add_sterkl_fields(xml_parent, fields, sterkl):
                 for sub_element in sterkl.sub_elements:
                     _add_person_specific_sterkl_fields(sterkl_xml, fields, sub_element, person)
             elif sterkl.is_repeatable and \
-                    any([isinstance(fields[sub_element], list) and len(fields[sub_element]) > 1 if sub_element in fields.keys() else False for sub_element in
-                         sterkl.sub_elements]):
+                    any([isinstance(fields[sub_element], list) and len(fields[sub_element]) > 1
+                         if sub_element in fields.keys() else False for sub_element in sterkl.sub_elements]):
                 for sub_element in sterkl.sub_elements:
                     _add_sterkl_fields(sterkl_xml, fields, sub_element)
                 _add_sterkl_fields(xml_parent, fields, sterkl)

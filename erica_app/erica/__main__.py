@@ -1,6 +1,5 @@
 import logging
 from logging.config import dictConfig
-import os
 
 import uvicorn
 

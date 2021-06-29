@@ -5,8 +5,7 @@ from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
 from erica.elster_xml.elster_xml_parser import get_antrag_id_from_xml, get_transfer_ticket_from_xml, \
-    get_address_from_xml, remove_declaration_and_namespace, get_elements_text_from_xml, get_relevant_beleg_ids
-from erica.pyeric import utils
+    get_address_from_xml, get_elements_text_from_xml, get_relevant_beleg_ids
 
 from erica.pyeric.pyeric_controller import EstPyericController, EstValidationPyericController, \
     UnlockCodeActivationPyericController, UnlockCodeRequestPyericController, UnlockCodeRevocationPyericController, \
@@ -44,7 +43,7 @@ class EricaRequestController(object):
         return self.generate_json(pyeric_response)
 
     def generate_full_xml(self, use_testmerker):
-        raise NotImplemented
+        raise NotImplementedError
 
     def _reformat_date(self, date_attribute):
         if date_attribute:

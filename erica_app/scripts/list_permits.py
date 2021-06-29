@@ -14,5 +14,6 @@ def get_idnr_status_list():
     datenteil_xml = xml.find('.//DatenTeil')
     print(elster_xml_generator._pretty(datenteil_xml))
 
+
 os.chdir('../../')  # Change the working directory to be able to find the eric binaries
 get_idnr_status_list()

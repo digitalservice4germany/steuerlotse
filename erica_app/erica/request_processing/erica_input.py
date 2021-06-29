@@ -83,7 +83,7 @@ class FormDataEst(BaseModel):
         if not 10 <= len(v) <= 11:
             raise ValueError('must be 10 or 11 numbers long')
         return v
-    
+
     @validator('familienstand_married_lived_separated_since', always=True)
     def must_be_set_if_familienstand_married_lived_separated_set(cls, v, values, **kwargs):
         if values.get('familienstand_married_lived_separated') and not v:

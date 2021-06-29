@@ -223,9 +223,9 @@ def check_and_generate_entries(est_data, year=2019):
     enriched_est_data = est_data
     enriched_est_data['is_einkommensteuererklaerung'] = 'X'
     enriched_est_data['is_digitally_signed'] = 'X'
-    if est_data.get('is_person_a_account_holder') == True:
+    if est_data.get('is_person_a_account_holder') is True:
         enriched_est_data['is_person_a_account_holder'] = 'X'
-    elif est_data.get('is_person_a_account_holder') == False:
+    elif est_data.get('is_person_a_account_holder') is False:
         enriched_est_data['is_person_b_account_holder'] = 'X'
 
     # Lebenssituation
@@ -283,4 +283,3 @@ def generate_electronic_steuernummer(steuernummer, bundesland, use_testmerker=Fa
         raise InvalidBufaNumberError
     electronic_steuernummer = bufa_nr + '0' + bundesschema_steuernummer[4:]
     return electronic_steuernummer
-

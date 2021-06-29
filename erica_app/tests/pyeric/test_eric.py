@@ -1,13 +1,12 @@
-import logging
 import unittest
-from ctypes import c_int, create_string_buffer
+from ctypes import c_int
 from unittest.mock import patch, MagicMock, mock_open
 
 from erica.config import get_settings
 from tests.utils import gen_random_key, missing_cert, missing_pyeric_lib
 from erica.pyeric.eric import EricWrapper, EricDruckParameterT, EricVerschluesselungsParameterT, EricResponse, \
     get_eric_wrapper
-from erica.pyeric.eric_errors import EricProcessNotSuccessful, EricGlobalInitialisationError, EricNullReturnedError
+from erica.pyeric.eric_errors import EricProcessNotSuccessful, EricNullReturnedError
 
 TEST_CERTIFICATE_PATH = 'erica/instances/blueprint/cert.pfx'
 
@@ -1013,8 +1012,7 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
 
         with get_eric_wrapper() as eric_wrapper:
             xml = b'<?xml version="1.0" encoding="UTF-8"?><Elster xmlns="http://www.elster.de/elsterxml/schema/v11"><TransferHeader version="11"><Verfahren>ElsterBRM</Verfahren><DatenArt>SpezRechtAntrag</DatenArt><Vorgang>send-Auth</Vorgang><TransferTicket>et1342xkwgbad241mt1vzk05y9r8ysbh</TransferTicket><Testmerker>370000001</Testmerker><Empfaenger id="L"><Ziel>CS</Ziel></Empfaenger><HerstellerID>74931</HerstellerID><DatenLieferant>MIAGCSqGSIb3DQEHBqCAMIACAQAwgAYJKoZIhvcNAQcBMBQGCCqGSIb3DQMHBAhLyJ45SHSVhaCA\r\nBIGQmgarDFUhwpn5SmzDyqAq+Lf32ScDOgQYqi3k17CsnatLZBPY4zdnSAzt/Ruw/AJuuhfNQVPK\r\nNtlvXqZnruxvWgQccRQU5cmsmsrFUMBe26Ai+awkAg2+KdjUW3IzXzePKG0B2Z5TVa1ipBh6tcbE\r\newH6FIO+Q0dHy3UsEOnRUWTsQYPPFzAmcDJ1CLXzFLbkAAAAAAAAAAAAAA==\r\n</DatenLieferant><EingangsDatum>20210514174325</EingangsDatum><Datei><Verschluesselung>CMSEncryptedData</Verschluesselung><Kompression>GZIP</Kompression><TransportSchluessel>MIAGCSqGSIb3DQEHBqCAMIACAQAwgAYJKoZIhvcNAQcBMBQGCCqGSIb3DQMHBAh7cVTB5g6eO6CA\r\nBBitUxKf3+PYnzNyTEkgylr0hUwyeHF+XcgAAAAAAAAAAAAA\r\n</TransportSchluessel></Datei><RC><Rueckgabe><Code>42</Code><Text>This is the world we live in</Text></Rueckgabe><Stack><Code>0</Code><Text></Text></Stack></RC><VersionClient>1</VersionClient><Zusatz><Info>CorrelationID:91ac751d-2288-4318-93cf-d00a9b8d1a57</Info></Zusatz></TransferHeader><DatenTeil><Nutzdatenblock><NutzdatenHeader version="11"><NutzdatenTicket>1</NutzdatenTicket><Empfaenger id="L">CS</Empfaenger><RC><Rueckgabe><Code>371015223</Code><Text>Die Antragspr\xc3\xbcfung ist fehlgeschlagen. Es besteht bereits ein offener Antrag auf Erteilung einer Berechtigung zum Datenabruf f\xc3\xbcr diesen Dateninhaber.</Text></Rueckgabe><Stack><Code>371015223</Code><Text></Text></Stack></RC></NutzdatenHeader><Nutzdaten>\n                <SpezRechtAntrag version="3">\n                    <DateninhaberIdNr>04452317681</DateninhaberIdNr>\n                    <DateninhaberGeburtstag>1985-01-01</DateninhaberGeburtstag>\n                    <Recht>AbrufEBelege</Recht>\n                    <GueltigBis>2224-12-31</GueltigBis>\n                    <DatenabruferMail>steuerlotse_testing@4germany.org</DatenabruferMail>\n                    <Veranlagungszeitraum>\n                        <Unbeschraenkt>true</Unbeschraenkt>\n                    </Veranlagungszeitraum>\n                </SpezRechtAntrag>\n            </Nutzdaten></Nutzdatenblock></DatenTeil></Elster>'
-            transferticket_buffer, th_returncode, th_error_msg, nd_returncode_error_msg = eric_wrapper.get_error_message_from_xml_response(
-                xml)
+            transferticket_buffer, th_returncode, th_error_msg, nd_returncode_error_msg = eric_wrapper.get_error_message_from_xml_response(xml)
 
             self.assertEqual('et1342xkwgbad241mt1vzk05y9r8ysbh', transferticket_buffer)
             self.assertEqual(expected_th_returncode, th_returncode)

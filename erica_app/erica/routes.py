@@ -8,7 +8,7 @@ from erica.request_processing.erica_input import EstData, UnlockCodeRequestData,
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.request_processing.requests_controller import UnlockCodeRequestController, \
     UnlockCodeActivationRequestController, EstValidationRequestController, EstRequestController, \
-    UnlockCodeRevocationRequestController, GetAddressRequestController
+    UnlockCodeRevocationRequestController
 
 PYERIC_VERSION_URL = '/01'
 
