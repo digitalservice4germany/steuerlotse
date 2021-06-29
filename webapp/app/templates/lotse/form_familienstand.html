@@ -72,6 +72,15 @@
             }
         }
 
+        function show_hide_checkbox_field(show_condition, input_name) {
+            if (show_condition) {
+                $('#' + input_name + '_field').show();
+            } else {
+                $('#' + input_name + '_field').hide();
+                $('#' + input_name).prop('checked', false);
+            }
+        }
+
         function show_hide_familienstand_date_field() {
             show_hide_date_field($('input[value="married"]').is(':checked') ||
                 $('input[value="widowed"]').is(':checked') ||
@@ -103,7 +112,7 @@
         }
 
         function show_hide_familienstand_confirm_zusammenveranlagung_field() {
-            show_hide_yes_no_field(
+            show_hide_checkbox_field(
                 ($('input[value="married"]').is(':checked')
                     && $('#familienstand_married_lived_separated-no').is(':checked')) ||
                 ($('input[value="widowed"]').is(':checked')

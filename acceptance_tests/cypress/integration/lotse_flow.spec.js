@@ -121,7 +121,7 @@ context('Acceptance tests', () => {
             cy.get('#familienstand-1').check()
             cy.get('#familienstand_date').clear().type(older_date)
             cy.get('label[for=familienstand_married_lived_separated-no]').click()
-            cy.get('label[for=familienstand_confirm_zusammenveranlagung]').first().click()
+            cy.get('label[for=familienstand_confirm_zusammenveranlagung]').should('be.visible')
 
             cy.get('label[for=familienstand_married_lived_separated-yes]').click()
             cy.get('#familienstand_married_lived_separated_since').clear().type(older_date)
@@ -136,9 +136,14 @@ context('Acceptance tests', () => {
             cy.get('#familienstand_date').clear().type(older_date)
             cy.get('label[for=familienstand_married_lived_separated-no]').click()
             cy.get('div[id=familienstand_confirm_zusammenveranlagung_field]').should('be.visible')
+            cy.get('label[for=familienstand_confirm_zusammenveranlagung]').first().click()
+            cy.get('#familienstand_confirm_zusammenveranlagung').should('be.checked')
             cy.get('#familienstand-0').check()
             cy.get('#familienstand-1').check()
             cy.get('div[id=familienstand_confirm_zusammenveranlagung_field]').should('not.be.visible')
+            cy.get('label[for=familienstand_married_lived_separated-no]').click()
+            cy.get('div[id=familienstand_confirm_zusammenveranlagung_field]').should('be.visible')
+            cy.get('#familienstand_confirm_zusammenveranlagung').should('not.be.checked')
 
             // Widowed
             cy.get('#familienstand-2').check()
