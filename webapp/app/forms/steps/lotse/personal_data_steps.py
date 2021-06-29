@@ -78,7 +78,7 @@ class StepFamilienstand(FormStep):
                 validators.InputRequired(_l('form.lotse.validation-familienstand-married-lived-separated-since'))(self, field)
             else:
                 validators.Optional()(self, field)
-            if field.data < self.familienstand_date.data:
+            if field.data and field.data < self.familienstand_date.data:
                 from wtforms.validators import ValidationError
                 raise ValidationError(_('form.lotse.validation.married-after-separated'))
         
@@ -95,7 +95,7 @@ class StepFamilienstand(FormStep):
                 validators.InputRequired(_l('form.lotse.validation-familienstand-widowed-lived-separated-since'))(self, field)
             else:
                 validators.Optional()(self, field)
-            if field.data >= self.familienstand_date.data:
+            if field.data and field.data >= self.familienstand_date.data:
                 from wtforms.validators import ValidationError
                 raise ValidationError(_('form.lotse.validation.widowed-before-separated'))
 

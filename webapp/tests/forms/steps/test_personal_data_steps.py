@@ -192,6 +192,16 @@ class TestFamilienstand(unittest.TestCase):
         self.assertFalse(form.validate())
         self.assertIn('familienstand_married_lived_separated_since', form.errors)
 
+    def test_if_married_and_lived_separated_and_separated_since_is_invalid_date_then_fail_validation(self):
+        data = MultiDict({'familienstand': 'married',
+                          'familienstand_date': '03.04.2008',
+                          'familienstand_married_lived_separated': 'yes',
+                          'familienstand_married_lived_separated_since': '99.99.9999',
+                          'familienstand_confirm_zusammenveranlagung': 'y'})
+        form = self.step.Form(formdata=data)
+        self.assertFalse(form.validate())
+        self.assertIn('familienstand_married_lived_separated_since', form.errors)
+
     def test_if_married_and_lived_separated_and_separated_since_before_married_date_then_fail_validation(self):
         data = MultiDict({'familienstand': 'married',
                           'familienstand_date': '03.04.2008',
@@ -292,6 +302,16 @@ class TestFamilienstand(unittest.TestCase):
                           'familienstand_date': '03.04.2008',
                           'familienstand_widowed_lived_separated': 'yes',
                           'familienstand_widowed_lived_separated_since': '01.01.2010',
+                          'familienstand_confirm_zusammenveranlagung': 'y'})
+        form = self.step.Form(formdata=data)
+        self.assertFalse(form.validate())
+        self.assertIn('familienstand_widowed_lived_separated_since', form.errors)
+    
+    def test_if_widowed_and_lived_separated_and_separated_since_is_invalid_date_then_fail_validation(self):
+        data = MultiDict({'familienstand': 'widowed',
+                          'familienstand_date': '03.04.2008',
+                          'familienstand_widowed_lived_separated': 'yes',
+                          'familienstand_widowed_lived_separated_since': '99.99.9999',
                           'familienstand_confirm_zusammenveranlagung': 'y'})
         form = self.step.Form(formdata=data)
         self.assertFalse(form.validate())
