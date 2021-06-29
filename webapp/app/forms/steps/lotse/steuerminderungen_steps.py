@@ -43,9 +43,13 @@ class StepSteuerminderungYesNo(FormStep):
 class StepVorsorge(FormStep):
     name = 'vorsorge'
     label = _l('form.lotse.step_vorsorge.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-                 ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))]
+    section_link = SectionLink('section_steuerminderung',
+                               StepSteuerminderungYesNo.name,
+                               _l('form.lotse.section_steuerminderung.label'))
+    SKIP_COND = [
+        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
+        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))
+    ]
 
     class Form(SteuerlotseBaseForm):
         stmind_vorsorge_summe = EuroField(
@@ -77,9 +81,12 @@ class StepVorsorge(FormStep):
 class StepAussergBela(FormStep):
     name = 'ausserg_bela'
     label = _l('form.lotse.step_ausserg_bela.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-                 ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))]
+    section_link = SectionLink('section_steuerminderung',
+                               StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
+    SKIP_COND = [
+        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
+        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))
+    ]
 
     class Form(SteuerlotseBaseForm):
         stmind_krankheitskosten_summe = EuroField(
@@ -151,9 +158,12 @@ class StepAussergBela(FormStep):
 class StepHaushaltsnahe(FormStep):
     name = 'haushaltsnahe'
     label = _l('form.lotse.step_haushaltsnahe.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-                 ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))]
+    section_link = SectionLink('section_steuerminderung',
+                               StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
+    SKIP_COND = [
+        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
+        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))
+    ]
 
     class Form(SteuerlotseBaseForm):
         stmind_haushaltsnahe_entries = EntriesField(
@@ -195,7 +205,7 @@ class StepHaushaltsnahe(FormStep):
             _('form.lotse.haushaltsnahe-list-item-3'),
             _('form.lotse.haushaltsnahe-list-item-4'),
             _('form.lotse.haushaltsnahe-list-item-5'),
-        ],header_title=_('form.lotse.steuerminderungen.header-title'))
+        ], header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
 class StepHandwerker(FormStep):

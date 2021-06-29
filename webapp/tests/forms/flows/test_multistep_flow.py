@@ -2,11 +2,10 @@ import datetime
 import time
 import unittest
 from decimal import Decimal
-from http.client import HTTPException
 from unittest.mock import patch, MagicMock
 
-from cryptography.fernet import InvalidToken, Fernet
-from flask import json, session
+from cryptography.fernet import InvalidToken
+from flask import json
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
@@ -122,7 +121,8 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         session = self.run_handle(flow, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(flow, MockRenderStep.name, method='GET', session=session)
         session = self.run_handle(flow, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
+        self.assertTrue(set(original_data).issubset(
+            set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
 
     def test_update_session_data_is_called(self):
         expected_data = {'brother: Luigi'}

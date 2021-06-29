@@ -71,5 +71,3 @@ class StepSessionNote(DisplayStep):
             _l('form.lotse.session-note.list-item-3'),
             _l('form.lotse.session-note.list-item-4'),
         ], header_title=_('form.lotse.header-title'))
-
-

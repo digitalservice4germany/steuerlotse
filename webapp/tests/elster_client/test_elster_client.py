@@ -523,7 +523,7 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
 class TestGenerateEStRequestData(unittest.TestCase):
 
     def test_set_form_data_dict_results_in_dict_with_est_data_field_and_meta_data_field(self):
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context():
             form_data = LotseMultiStepFlow(None).default_data()[1]
 
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
@@ -533,7 +533,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertIn('meta_data', result)
 
     def test_set_form_data_dict_results_in_est_data_dict_with_same_keys(self):
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context():
             form_data = LotseMultiStepFlow(None).default_data()[1]
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
             result = _generate_est_request_data(form_data)

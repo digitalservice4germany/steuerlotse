@@ -1,5 +1,3 @@
-import datetime
-
 from pydantic import ValidationError
 
 from app.forms import SteuerlotseBaseForm
@@ -75,13 +73,14 @@ class StepFamilienstand(FormStep):
 
         def validate_familienstand_married_lived_separated_since(self, field):
             if self.familienstand.data == 'married' and self.familienstand_married_lived_separated.data == 'yes':
-                validators.InputRequired(_l('form.lotse.validation-familienstand-married-lived-separated-since'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-familienstand-married-lived-separated-since'))(self,
+                                                                                                                  field)
             else:
                 validators.Optional()(self, field)
             if field.data < self.familienstand_date.data:
                 from wtforms.validators import ValidationError
                 raise ValidationError(_('form.lotse.validation.married-after-separated'))
-        
+
         def validate_familienstand_widowed_lived_separated(self, field):
             if self.familienstand.data == 'widowed' and \
                     self.familienstand_date.data and \
@@ -92,7 +91,8 @@ class StepFamilienstand(FormStep):
 
         def validate_familienstand_widowed_lived_separated_since(self, field):
             if self.familienstand.data == 'widowed' and self.familienstand_widowed_lived_separated.data == 'yes':
-                validators.InputRequired(_l('form.lotse.validation-familienstand-widowed-lived-separated-since'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-familienstand-widowed-lived-separated-since'))(self,
+                                                                                                                  field)
             else:
                 validators.Optional()(self, field)
             if field.data >= self.familienstand_date.data:
@@ -123,7 +123,8 @@ class StepFamilienstand(FormStep):
                                              self.familienstand_widowed_lived_separated.data == 'no'
 
             if married_not_separated or widowed_recently_not_separated:
-                validators.InputRequired(_l('form.lotse.validation-familienstand-confirm-zusammenveranlagung'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-familienstand-confirm-zusammenveranlagung'))(self,
+                                                                                                                field)
             else:
                 validators.Optional()(self, field)
 
@@ -170,9 +171,10 @@ class StepSteuernummer(FormStep):
                        'input_req_err_msg': _l('form.lotse.field_bundesland_required')}
         )
         steuernummer = SteuerlotseStringField(label=_l('form.lotse.steuernummer'),
-                                   validators=[InputRequired(), DecimalOnly(), IntegerLength(min=10, max=11)],
-                                   render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
-                                              'example_input': _l('form.lotse.steuernummer.example_input')})
+                                              validators=[InputRequired(), DecimalOnly(),
+                                                          IntegerLength(min=10, max=11)],
+                                              render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
+                                                         'example_input': _l('form.lotse.steuernummer.example_input')})
 
     def __init__(self, **kwargs):
         super(StepSteuernummer, self).__init__(
@@ -454,4 +456,3 @@ class StepIban(FormStep):
             self.form = self.FormSingle
 
         return super().create_form(request, prefilled_data)
-

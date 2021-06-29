@@ -156,13 +156,13 @@ class TestValidCharacterSet(unittest.TestCase):
         self.field = StringField()
         self.form = SteuerlotseBaseForm()
         self.validator = ValidElsterCharacterSet()
-        
+
     def test_invalid_character_raises_error(self):
         invalid_chars = ['ć', '\\', '❤️']
         for invalid_char in invalid_chars:
             self.field.data = invalid_char
             self.assertRaises(ValidationError, self.validator.__call__, self.form, self.field)
-    
+
     def test_valid_character_does_not_raise_error(self):
         valid_string = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz' \
                        '{|}~¡¢£¥§ª«¬®¯°±²³µ¶¹º»¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿŒœŠ' \

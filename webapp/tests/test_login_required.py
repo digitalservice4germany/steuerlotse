@@ -136,7 +136,7 @@ class TestUnlockCodeActivationStepLogin(IntegrationTest):
             self.assertIn("unlock_code_failure", res.headers[2][1])
 
     def test_if_inactive_user_then_returns_unlock_code_failure(self):
-        user = create_user('04452397687', '1985-01-01', '0000')
+        create_user('04452397687', '1985-01-01', '0000')
         with app.test_client() as client:
             res = client.post('/unlock_code_activation/step/data_input', data=dict(
                 idnr='04452397687',

@@ -1,13 +1,10 @@
-import os
 import unittest
-from pathlib import Path
 from unittest.mock import patch
 
 from flask import json
 from flask.sessions import SecureCookieSession
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
-from wtforms import Form
 
 from app import app, db
 from app.data_access.user_controller import create_user, find_user

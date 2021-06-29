@@ -7,7 +7,9 @@ class TestGetRedirectionInfoIfSkipped(unittest.TestCase):
 
     def test_if_single_criterion_is_correct_then_return_correct_step_and_message(self):
         input_data = {'criterion': 'met'}
-        expected_message = 'This is a message for youhuhu: if you are reading this we are looking for new team members (https://4germany.jobs.personio.de) :)'
+        expected_message = 'This is a message for youhuhu: ' \
+                           'if you are reading this we are looking for new team members ' \
+                           '(https://4germany.jobs.personio.de) :)'
         expected_step = 'step_name'
         step = MockStartStep
         step.SKIP_COND = [([('criterion', 'met')], expected_step, expected_message)]

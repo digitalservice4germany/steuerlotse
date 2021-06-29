@@ -26,7 +26,7 @@ class EuroFieldWidget(TextInput):
         kwargs['class'] = 'euro_field form-control'
         kwargs['onwheel'] = 'this.blur()'
         markup_input = super(EuroFieldWidget, self).__call__(field, **kwargs)
-        
+
         markup = Markup(
             Markup('<div class="input-group euro-field">') +
             markup_input +

@@ -34,7 +34,8 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
 
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
-        render_info, stored_data = super(UnlockCodeActivationMultiStepFlow, self)._handle_specifics_for_step(step, render_info, stored_data)
+        render_info, stored_data = super(UnlockCodeActivationMultiStepFlow,
+                                         self)._handle_specifics_for_step(step, render_info, stored_data)
 
         if isinstance(step, UnlockCodeActivationInputStep):
             if request.method == 'POST' and render_info.form.validate():

@@ -1,25 +1,38 @@
+import datetime
 import copy
 import unittest
+from decimal import Decimal
 from unittest.mock import patch, MagicMock, call
 
 from flask import json
 from flask.sessions import SecureCookieSession
 from flask_babel import _, lazy_gettext as _l
 from flask_login import login_user
-from pydantic.error_wrappers import ErrorWrapper
+from pydantic.error_wrappers import ErrorWrapper, ValidationError
+from pydantic.errors import MissingError
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 from wtforms import Field
+from wtforms.fields.core import UnboundField, IntegerField, SelectField, RadioField
 
-from app import db
+from app import db, app
 from app.crypto.pw_hashing import global_salt_hash
 from app.data_access.user_controller import find_user
-from app.forms.flows.lotse_flow import *
+from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalValidationError, EricaIsMissingFieldError, \
+    ElsterInvalidBufaNumberError
+from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
+from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS, show_person_b
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.steps.step import Step
+from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
+from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse.personal_data_steps import StepFamilienstand, StepSteuernummer, StepPersonA, StepPersonB, \
+    StepIban
+from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
+    StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
+from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
-    InputDataInvalidError, IdNrMismatchInputValidationError
+    InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockHandwerkerStep, MockIbanStep, \
     MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStep, \
@@ -864,8 +877,8 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
     def test_if_step_is_filing_step_and_user_has_completed_tax_return_before_then_do_not_send_to_elster_again(self):
         with app.app_context() and app.test_request_context():
             with patch("app.elster_client.elster_client.send_est_with_elster") as send_est_with_elster, \
-                 patch('app.forms.flows.lotse_flow.current_user',
-                       MagicMock(has_completed_tax_return=MagicMock(return_value=True))):
+                    patch('app.forms.flows.lotse_flow.current_user',
+                          MagicMock(has_completed_tax_return=MagicMock(return_value=True))):
                 _, _ = self.flow._handle_specifics_for_step(
                     self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
@@ -883,16 +896,19 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
                 self.assertEqual(True, returned_render_info.additional_info['elster_data']['was_successful'])
                 self.assertEqual(mock_pdf, returned_render_info.additional_info['elster_data']['pdf'])
-                self.assertEqual(mock_transfer_ticket, returned_render_info.additional_info['elster_data']['transfer_ticket'])
+                self.assertEqual(mock_transfer_ticket,
+                                 returned_render_info.additional_info['elster_data']['transfer_ticket'])
 
-    def test_if_step_is_filing_step_and_user_has_completed_tax_return_before_and_user_idnr_is_test_idnr_then_send_to_elster_again(self):
+    def test_if_step_is_filing_step_and_user_has_completed_tax_return_before_and_user_idnr_is_test_idnr_then_send_to_elster_again(
+            self):
         for test_idr in SPECIAL_RESEND_TEST_IDNRS:
             hashed_test_idnr = global_salt_hash().hash(test_idr)
             with app.app_context() and app.test_request_context():
                 with patch("app.elster_client.elster_client.send_est_with_elster",
                            MagicMock(return_value=copy.deepcopy(self.ack_elster_data))) as send_est_with_elster, \
                         patch('app.forms.flows.lotse_flow.current_user',
-                              MagicMock(has_completed_tax_return=MagicMock(return_value=True), idnr_hashed=hashed_test_idnr)), \
+                              MagicMock(has_completed_tax_return=MagicMock(return_value=True),
+                                        idnr_hashed=hashed_test_idnr)), \
                         patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"), \
                         patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
                     _, _ = self.flow._handle_specifics_for_step(self.filing_step,
@@ -911,8 +927,8 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             with patch("app.elster_client.elster_client.send_est_with_elster",
                        MagicMock(return_value=copy.deepcopy(self.ack_elster_data))) as send_est_with_elster, \
-                 patch('app.forms.flows.lotse_flow.current_user',
-                       MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
+                    patch('app.forms.flows.lotse_flow.current_user',
+                          MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
                     patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"), \
                     patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
                 returned_data, _ = self.flow._handle_specifics_for_step(
@@ -928,9 +944,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             raised_exception.validation_problems = 'Well, that\'s just wrong'
             with patch("app.elster_client.elster_client.send_est_with_elster",
                        MagicMock(side_effect=raised_exception)), \
-                 patch('app.forms.flows.lotse_flow.current_user',
-                       MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
-                 patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
+                    patch('app.forms.flows.lotse_flow.current_user',
+                          MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
+                    patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
                 returned_data, _ = self.flow._handle_specifics_for_step(
                     self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
@@ -948,9 +964,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             raised_exception.server_response = 'Servcer says'
             with patch("app.elster_client.elster_client.send_est_with_elster",
                        MagicMock(side_effect=raised_exception)), \
-                 patch('app.forms.flows.lotse_flow.current_user',
-                       MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
-                 patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
+                    patch('app.forms.flows.lotse_flow.current_user',
+                          MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
+                    patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
                 returned_data, _ = self.flow._handle_specifics_for_step(
                     self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
@@ -965,9 +981,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             with patch("app.elster_client.elster_client.send_est_with_elster",
                        MagicMock(return_value=copy.deepcopy(self.ack_elster_data))), \
-                 patch('app.forms.flows.lotse_flow.current_user',
-                       MagicMock(has_completed_tax_return=MagicMock(return_value=False))) as current_user_mock, \
-                 patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket") as store_pdf_and_transfer_ticket, \
+                    patch('app.forms.flows.lotse_flow.current_user',
+                          MagicMock(has_completed_tax_return=MagicMock(return_value=False))) as current_user_mock, \
+                    patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket") as store_pdf_and_transfer_ticket, \
                     patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"):
                 returned_render_info, _ = self.flow._handle_specifics_for_step(
                     self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
@@ -979,10 +995,10 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             with patch("app.elster_client.elster_client.send_est_with_elster",
                        MagicMock(return_value=copy.deepcopy(self.ack_elster_data))), \
-                 patch('app.forms.flows.lotse_flow.current_user',
-                       MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
-                 patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"), \
-                 patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"):
+                    patch('app.forms.flows.lotse_flow.current_user',
+                          MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
+                    patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"), \
+                    patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"):
                 returned_render_info, _ = self.flow._handle_specifics_for_step(
                     self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
@@ -1396,7 +1412,8 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
     def test_if_filing_step_and_send_est_with_elster_raises_invalid_bufa_error_then_flash_err_and_redirect_to_summary(
             self):
         with app.app_context() and app.test_request_context(), \
-                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))), \
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(
+                    has_completed_tax_return=MagicMock(return_value=False))), \
                 patch('app.forms.flows.lotse_flow.flash') as mock_flash, \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input'), \
                 patch('app.elster_client.elster_client.send_est_with_elster',
@@ -1651,8 +1668,8 @@ class TestLotseValidateInput(unittest.TestCase):
             self._create_logged_in_user(existing_idnr)
             form_data = {**self.valid_data_single,
                          **{'confirm_complete_correct': True,
-                         'confirm_data_privacy': True,
-                         'confirm_terms_of_service': True}}
+                            'confirm_data_privacy': True,
+                            'confirm_terms_of_service': True}}
 
             self.assertRaises(IdNrMismatchInputValidationError, LotseMultiStepFlow._validate_input, form_data)
 
@@ -1662,8 +1679,8 @@ class TestLotseValidateInput(unittest.TestCase):
             self._create_logged_in_user(existing_idnr)
             form_data = {**self.valid_data_single,
                          **{'person_a_idnr': 'NotTheCorrectOne',
-                         'confirm_complete_correct': True,
-                         'confirm_data_privacy': True}}
+                            'confirm_complete_correct': True,
+                            'confirm_data_privacy': True}}
 
             self.assertRaises(IdNrMismatchInputValidationError, LotseMultiStepFlow._validate_input, form_data)
 

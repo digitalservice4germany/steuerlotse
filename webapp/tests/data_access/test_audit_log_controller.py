@@ -114,7 +114,7 @@ class TestCreateAuditLogConfirmationEntry(unittest.TestCase):
 
     def tearDown(self):
         db.drop_all()
-        
+
 
 class TestCreateAuditLogAddressEntry(unittest.TestCase):
     def setUp(self):
@@ -156,4 +156,3 @@ class TestCreateAuditLogAddressEntry(unittest.TestCase):
 
     def tearDown(self):
         db.drop_all()
-

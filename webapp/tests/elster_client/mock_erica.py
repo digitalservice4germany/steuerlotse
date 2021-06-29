@@ -227,9 +227,11 @@ class MockErica:
         if idnr_exists:
             elster_request_id_for_revocation = gen_random_key()
             if show_response:
-                return get_json_response('unlock_code_revocation_with_resp', elster_request_id=elster_request_id_for_revocation)
+                return get_json_response('unlock_code_revocation_with_resp',
+                                         elster_request_id=elster_request_id_for_revocation)
             else:
-                return get_json_response('unlock_code_revocation_no_resp', elster_request_id=elster_request_id_for_revocation)
+                return get_json_response('unlock_code_revocation_no_resp',
+                                         elster_request_id=elster_request_id_for_revocation)
 
     @staticmethod
     def get_address_data(input_body, show_response: bool):
@@ -283,7 +285,6 @@ class MockErica:
         # EricaTransferError because of already revoked request
         if MockErica.request_code_already_revoked_error_occurred:
             return get_json_response('request_code_already_revoked')
-
 
         # InvalidBufaNumberError
         if MockErica.invalid_bufa_number_error_occurred:

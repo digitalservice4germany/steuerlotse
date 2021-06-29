@@ -1,7 +1,7 @@
 import secrets
 
 from app.data_access.user_controller import create_user, find_user
-from app.forms.flows.multistep_flow import serialize_session_data, deserialize_session_data
+from app.forms.flows.multistep_flow import serialize_session_data
 
 
 def gen_random_key(length=32):

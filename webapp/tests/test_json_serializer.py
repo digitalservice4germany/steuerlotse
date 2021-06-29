@@ -143,5 +143,3 @@ class TestJsonEncodeDecode(unittest.TestCase):
             json.loads(json_data, object_hook=mock_object_hook)
 
             mock_object_hook.assert_any_call({"is_it_special": 'yes'})
-
-

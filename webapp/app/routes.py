@@ -21,6 +21,7 @@ from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMult
 
 def add_caching_headers(route_handler, minutes=5):
     """Set Expire and Cache-Control headers. """
+
     @wraps(route_handler)
     def add_headers(*args, **kwargs):
         delta = dt.timedelta(minutes=minutes)
@@ -28,6 +29,7 @@ def add_caching_headers(route_handler, minutes=5):
         response.expires = dt.datetime.utcnow() + delta
         response.cache_control.max_age = int(delta.total_seconds())
         return response
+
     return add_headers
 
 
@@ -72,7 +74,7 @@ def load_user(user_id):
     if user:
         app.logger.info(f'Loaded user with id {user.id}')
     else:
-        app.logger.info(f'No user loaded')
+        app.logger.info('No user loaded')
 
     return user
 
@@ -86,9 +88,9 @@ def make_session_permanent():
 def add_http_header(response):
     response.headers['X-Content-Type-Options'] = 'no-sniff'
     response.headers['Content-Security-Policy'] = (
-        "default-src 'self'; " \
-        "script-src 'self' 'unsafe-inline' plausible.io; " \
-        "connect-src plausible.io; " \
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' plausible.io; "
+        "connect-src plausible.io; "
         "object-src 'none'; "
     )
     return response

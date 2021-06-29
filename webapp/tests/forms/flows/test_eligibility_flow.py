@@ -7,12 +7,13 @@ from flask.sessions import SecureCookieSession
 from flask_babel import lazy_gettext as _l
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
-from werkzeug.exceptions import UnprocessableEntity, NotFound
+from werkzeug.exceptions import NotFound
 
 from app import app
-from app.forms.flows.eligibility_flow import *
+from app.forms.flows.eligibility_flow import EligibilityMultiStepFlow, IncorrectEligibilityData
 from app.forms.flows.eligibility_flow import _validate_eligibility
 from app.forms.flows.multistep_flow import RenderInfo
+from app.forms.steps.eligibility_steps import EligibilityStepIncomes, EligibilityStepStart, EligibilityStepResult
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockEligibilityIncomeStep, MockEligibilityResultStep
 from tests.utils import create_session_form_data
@@ -192,7 +193,7 @@ class TestGetEligibilityResult(unittest.TestCase):
     def test_if_all_keys_in_data_but_invalid_then_return_error_reasons(self):
         for invalid_reasons in self.data_invalid_single_reasons:
             result = _validate_eligibility(invalid_reasons)
-            self.assertTrue(len(result)>0)
+            self.assertTrue(len(result) > 0)
 
     def test_if_keys_in_data_missing_and_some_given_values_invalid_then_error_reasons(self):
         for missing_key_data in self.invalid_data_without_all_keys:

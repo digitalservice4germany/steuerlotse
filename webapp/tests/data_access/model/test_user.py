@@ -1,6 +1,8 @@
 import unittest
 
-from app.data_access.db_model.user import *
+from app import db
+from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
+from app.data_access.db_model.user import User
 
 
 class TestUserInit(unittest.TestCase):
@@ -13,7 +15,7 @@ class TestUserInit(unittest.TestCase):
     def test_if_dob_given_then_set_dob_hashed(self):
         dob = '1985-01-01'
         user = User('123', dob, '123')
-        self.assertTrue(indiv_salt_hash().verify(dob,user.dob_hashed))
+        self.assertTrue(indiv_salt_hash().verify(dob, user.dob_hashed))
 
     def test_if_req_id_given_then_set_req_id(self):
         req_id = '42123'
@@ -32,17 +34,17 @@ class TestUserInit(unittest.TestCase):
 class TestUserLastModified(unittest.TestCase):
     def setUp(self):
         db.create_all()
-        
+
     def test_if_user_created_then_last_modified_is_set_to_current_time(self):
         import datetime
-        
+
         user = User('1337', '123', '123')
         db.session.add(user)
         db.session.commit()
-        
+
         self.assertGreater(user.last_modified, datetime.datetime.utcnow() - datetime.timedelta(seconds=1))
         self.assertLess(user.last_modified, datetime.datetime.utcnow())
-    
+
     def test_activate_user_updates_last_modified(self):
         user = User('1337', '123', '123')
         db.session.add(user)

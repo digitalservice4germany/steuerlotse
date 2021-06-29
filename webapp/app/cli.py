@@ -4,7 +4,7 @@ import os
 from flask.cli import AppGroup
 from sqlalchemy.exc import IntegrityError
 
-from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, \
+from app.elster_client.elster_errors import ElsterProcessNotSuccessful, \
     ElsterRequestAlreadyRevoked
 
 

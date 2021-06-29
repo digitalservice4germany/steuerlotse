@@ -1,11 +1,12 @@
-from flask import request, flash
+from flask import request, flash, url_for
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
-from wtforms.fields.core import UnboundField, SelectField, BooleanField
+from wtforms.fields.core import UnboundField, SelectField, BooleanField, RadioField, IntegerField
 
 from app import app
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
-from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField
+from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
+    ConfirmationField, EntriesField, EuroField
 from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
     IdNrMismatchInputValidationError
@@ -13,10 +14,12 @@ from app.data_access.user_controller import store_pdf_and_transfer_ticket, check
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
 from app.forms.flows.multistep_flow import MultiStepFlow, FlowNavItem
-from app.forms.steps.lotse.declaration_steps import *
-from app.forms.steps.lotse.personal_data_steps import StepSteuernummer, StepPersonA, StepPersonB, StepIban
-from app.forms.steps.lotse.steuerminderungen_steps import *
-from app.forms.steps.lotse.confirmation_steps import *
+from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse.personal_data_steps import StepSteuernummer, StepPersonA, StepPersonB, StepIban, \
+    StepFamilienstand
+from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
+    StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
+from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepAck, StepFiling
 
 from decimal import Decimal
 from flask_babel import _, lazy_gettext as _l
@@ -25,7 +28,6 @@ import datetime
 
 from app.forms.steps.lotse.confirmation_steps import StepSummary
 from app.forms.steps.step import Section
-
 
 SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
@@ -339,13 +341,13 @@ class LotseMultiStepFlow(MultiStepFlow):
             if step_data:
                 if curr_step.section_link.name not in sections:
                     # Append new section
-                    sections[curr_step.section_link.name] = self._create_section_from_section_link(curr_step.section_link,
-                                                                                                   {})
+                    sections[curr_step.section_link.name] = self._create_section_from_section_link(
+                        curr_step.section_link, {})
                 curr_section = sections[curr_step.section_link.name]
 
                 curr_section.data[curr_step.name] = Section(curr_step.label,
-                                                    self.url_for_step(curr_step.name, _has_link_overview=True),
-                                                    step_data)
+                                                            self.url_for_step(curr_step.name, _has_link_overview=True),
+                                                            step_data)
 
         return sections
 

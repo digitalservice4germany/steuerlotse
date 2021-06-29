@@ -20,10 +20,10 @@ _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_li
               'is_person_a_account_holder', 'person_a_blind', 'person_a_gehbeh',
               'person_b_same_address', 'person_b_blind', 'person_b_gehbeh', 'steuerminderung',
               'is_digitally_signed']
-_DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe', 'stmind_vorsorge_summe',
-                 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe', 'stmind_krankheitskosten_summe',
-                 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch',
-                 'stmind_beh_aufw_summe',
+_DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
+                 'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
+                 'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
+                 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
                  'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
                  'stmind_bestattung_summe', 'stmind_bestattung_anspruch',
                  'stmind_aussergbela_sonst_summe', 'stmind_aussergbela_sonst_anspruch']
@@ -79,7 +79,11 @@ def send_unlock_code_request_with_elster(form_data, ip_address, include_elster_r
     check_pyeric_response_for_errors(pyeric_response)
 
     response_data = pyeric_response.json()
-    create_audit_log_entry('unlock_code_request_sent', ip_address, form_data['idnr'], response_data['transfer_ticket'], response_data['elster_request_id'])
+    create_audit_log_entry('unlock_code_request_sent',
+                           ip_address,
+                           form_data['idnr'],
+                           response_data['transfer_ticket'],
+                           response_data['elster_request_id'])
     return pyeric_response.json()
 
 
@@ -93,7 +97,11 @@ def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_add
     check_pyeric_response_for_errors(pyeric_response)
 
     response_data = pyeric_response.json()
-    create_audit_log_entry('unlock_code_activation_sent', ip_address, form_data['idnr'], response_data['transfer_ticket'], response_data['elster_request_id'])
+    create_audit_log_entry('unlock_code_activation_sent',
+                           ip_address,
+                           form_data['idnr'],
+                           response_data['transfer_ticket'],
+                           response_data['elster_request_id'])
     return pyeric_response.json()
 
 
@@ -105,7 +113,10 @@ def send_unlock_code_revocation_with_elster(form_data, ip_address, include_elste
     check_pyeric_response_for_errors(pyeric_response)
 
     response_data = pyeric_response.json()
-    create_audit_log_entry('unlock_code_revocation_sent', ip_address, form_data['idnr'], response_data['transfer_ticket'], response_data['elster_request_id'])
+    create_audit_log_entry('unlock_code_revocation_sent',
+                           ip_address, form_data['idnr'],
+                           response_data['transfer_ticket'],
+                           response_data['elster_request_id'])
 
     return pyeric_response.json()
 
@@ -215,12 +226,13 @@ def check_pyeric_response_for_errors(pyeric_response):
                                              server_response=server_response)
         elif error_code == 11:
             raise ElsterRequestAlreadyRevoked(message=error_message, eric_response=eric_response,
-                                             server_response=server_response)
+                                              server_response=server_response)
         elif error_code == 12:
             raise ElsterInvalidBufaNumberError()
         else:
             raise ElsterUnknownError(message=error_message)
-    elif pyeric_response.status_code == 422 and any([error.get('type') == "value_error.missing" for error in pyeric_response.json()['detail']]):
+    elif pyeric_response.status_code == 422 and \
+            any([error.get('type') == "value_error.missing" for error in pyeric_response.json()['detail']]):
         raise EricaIsMissingFieldError()
     else:
         raise GeneralEricaError(message=pyeric_response.content)

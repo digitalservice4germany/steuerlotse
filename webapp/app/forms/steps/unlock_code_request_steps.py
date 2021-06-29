@@ -28,12 +28,15 @@ class UnlockCodeRequestInputStep(FormStep):
 
         def __init__(self, *args, **kwargs):
             super(UnlockCodeRequestInputStep.Form, self).__init__(*args, **kwargs)
-            self.registration_confirm_data_privacy.label.text = _l('form.unlock-code-request.field_registration_confirm_data_privacy',
-                                                                   link=url_for('data_privacy'))
-            self.registration_confirm_terms_of_service.label.text = _l('form.unlock-code-request.field_registration_confirm_terms_of_service',
-                                                                       link=url_for('agb'))
-            self.registration_confirm_incomes.label.text = _l('form.unlock-code-request.field_registration_confirm_incomes',
-                                                              link=url_for('eligibility', step='start'))
+            self.registration_confirm_data_privacy.label.text = _l(
+                'form.unlock-code-request.field_registration_confirm_data_privacy',
+                link=url_for('data_privacy'))
+            self.registration_confirm_terms_of_service.label.text = _l(
+                'form.unlock-code-request.field_registration_confirm_terms_of_service',
+                link=url_for('agb'))
+            self.registration_confirm_incomes.label.text = _l(
+                'form.unlock-code-request.field_registration_confirm_incomes',
+                link=url_for('eligibility', step='start'))
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestInputStep, self).__init__(

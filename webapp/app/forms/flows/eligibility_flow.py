@@ -11,6 +11,7 @@ class IncorrectEligibilityData(Exception):
     """Raised in case of incorrect data from the eligible form. This might happen because of an empty session cookie"""
     pass
 
+
 EligibilityResult = namedtuple(
     typename='EligibilityResult',
     field_names=['eligible', 'errors']

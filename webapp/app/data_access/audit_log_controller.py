@@ -26,6 +26,7 @@ class LoggedConfirmationData:
     confirmation_label: str
     confirmation_value: bool
 
+
 @dataclass
 class LoggedAddressData:
     event_name: str

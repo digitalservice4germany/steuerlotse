@@ -1,6 +1,4 @@
-import datetime as dt
 import unittest
-from unittest.mock import patch
 
 from flask import request
 from werkzeug.datastructures import MultiDict
@@ -286,7 +284,7 @@ class TestFamilienstand(unittest.TestCase):
         form = self.step.Form(formdata=data)
         self.assertFalse(form.validate())
         self.assertIn('familienstand_widowed_lived_separated_since', form.errors)
-    
+
     def test_if_widowed_and_lived_separated_and_separated_since_after_widowed_date_then_fail_validation(self):
         data = MultiDict({'familienstand': 'widowed',
                           'familienstand_date': '03.04.2008',

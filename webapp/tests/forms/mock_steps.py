@@ -266,6 +266,7 @@ class MockUnlockCodeActivationInputStep(UnlockCodeActivationInputStep):
     def __init__(self, **kwargs):
         super(MockUnlockCodeActivationInputStep, self).__init__(**kwargs)
 
+
 class MockUnlockCodeActivationFailureStep(UnlockCodeActivationFailureStep):
 
     def __init__(self, **kwargs):
@@ -298,5 +299,3 @@ class MockLogoutInputStep(LogoutInputStep):
 
 class MockForm(Form):
     name = 'mock_form'
-
-

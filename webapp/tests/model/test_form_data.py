@@ -154,7 +154,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_no_familienstand_then_raise_missing_error(self):
         with self.assertRaises(ValidationError) as validation_error:
-            mandatory_data = MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b} )
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b} )
         self.assertIsInstance(validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual('familienstand', validation_error.exception.raw_errors[0]._loc)
 
@@ -164,15 +164,14 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_show_person_b_false_then_raise_no_error_if_person_b_fields_missing(self):
         with patch('app.model.form_data.FamilienstandModel.show_person_b', MagicMock(return_value=False)):
-            mandatory_data = MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.married_familienstand})
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.married_familienstand})
 
     def test_if_show_person_b_true_then_raise_error_if_person_b_fields_missing(self):
         expected_missing_fields = ['person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
                                    'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh']
         with patch('app.model.form_data.FamilienstandModel.show_person_b', MagicMock(return_value=True)):
             with self.assertRaises(ValidationError) as validation_error:
-                mandatory_data = MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.married_familienstand})
+                MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.married_familienstand})
 
-            self.assertTrue(all([isinstance(raw_e.exc, MissingError) for raw_e in validation_error.exception.raw_errors ]))
+            self.assertTrue(all([isinstance(raw_e.exc, MissingError) for raw_e in validation_error.exception.raw_errors]))
             self.assertEqual(expected_missing_fields, [raw_e._loc for raw_e in validation_error.exception.raw_errors])
-

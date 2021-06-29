@@ -4,7 +4,7 @@ from typing import Optional, Any
 
 from flask_babel import lazy_gettext as _l
 from flask_login import current_user
-from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator
+from pydantic import BaseModel, validator, MissingError, ValidationError
 from pydantic.error_wrappers import ErrorWrapper
 
 from app.data_access.user_controller import check_idnr
@@ -91,7 +91,11 @@ class MandatoryFormData(BaseModel):
 
     def __init__(self, **data: Any) -> None:
         enriched_data = copy.deepcopy(data)
-        enriched_data['familienstandStruct'] = {familienstand_value: enriched_data.get(familienstand_value) for familienstand_value in FamilienstandModel.schema().get("properties").keys() if familienstand_value in enriched_data}
+        enriched_data['familienstandStruct'] = {
+            familienstand_value: enriched_data.get(familienstand_value)
+            for familienstand_value in FamilienstandModel.schema().get("properties").keys()
+            if familienstand_value in enriched_data
+        }
 
         try:
             super(MandatoryFormData, self).__init__(**enriched_data)

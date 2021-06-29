@@ -1,6 +1,11 @@
 import unittest
 
-from app.data_access.user_controller import *
+from app import db
+from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
+from app.data_access.db_model.user import User
+from app.data_access.user_controller import create_user, user_exists, delete_user, activate_user, \
+    store_pdf_and_transfer_ticket, find_user, check_idnr, check_dob
+from app.data_access.user_controller_errors import UserAlreadyExistsError
 
 
 class TestUserExists(unittest.TestCase):

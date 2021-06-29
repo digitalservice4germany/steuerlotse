@@ -1,7 +1,7 @@
 import unittest
 
 from app import app
-from app.config import StagingConfig, ProductionConfig
+from app.config import ProductionConfig
 from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
 
 

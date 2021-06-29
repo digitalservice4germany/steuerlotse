@@ -5,7 +5,7 @@ from unittest.mock import patch
 from app import db
 from app.cli import _delete_outdated_not_activated_users, _delete_outdated_users_with_completed_process, \
     _delete_inactive_users, _delete_outdated_users
-from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket, delete_user
+from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket
 
 
 class TestDeleteOutdatedNotActivatedUsers(unittest.TestCase):
