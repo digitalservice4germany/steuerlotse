@@ -26,9 +26,13 @@
 
 {% macro nav_item_list(nav, current_user) %}
     <ul class="nav navbar-nav ml-auto">
-        {% for item in nav.top if not item.ident.endpoint == 'logout' or current_user.is_active -%}
-            <li class="nav-item {{ 'active' if item.is_active else '' }} pt-2 pb-2">
-                <a class="nav-link pt-0 pb-0" href="{{ item.url }}">{{ item.label }}</a>
+        {% for item in nav.top if not item.ident.endpoint == 'logout' or current_user.is_active %}
+            <li class="nav-item {{ 'active' if item.is_current else '' }} pt-2 pb-2">
+                {% if item.is_active %}
+                    <a class="nav-link pt-0 pb-0" href="{{ item.url }}">{{ item.label }}</a>
+                {% else %}
+                    <span class="nav-link inactive pt-0 pb-0">{{ item.label }}</span>
+                {% endif %}
             </li>
         {% endfor -%}
     </ul>

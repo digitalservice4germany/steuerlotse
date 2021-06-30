@@ -534,6 +534,11 @@ ol li::before {
     border-left: 4px solid var(--text-color);
 }
 
+span.nav-link.inactive {
+    color: var(--secondary-text-color);
+    cursor: default;
+}
+
 .bmf-info {
     position: fixed;
     bottom: 0;

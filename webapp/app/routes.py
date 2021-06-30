@@ -34,27 +34,31 @@ def add_caching_headers(route_handler, minutes=5):
 # Navigation
 
 
-class MultiEndpointItem(nav.Item):
+class SteuerlotseNavItem(nav.Item):
 
-    def __init__(self, label, endpoint, params, matching_endpoint_prefixes):
-        super(MultiEndpointItem, self).__init__(label, endpoint, params)
-        self.matching_endpoint_prefixes = matching_endpoint_prefixes
+    def __init__(self, label, endpoint, params, matching_endpoint_prefixes=None, deactivate_when_logged_in=False):
+        super(SteuerlotseNavItem, self).__init__(label, endpoint, params)
+        self.matching_endpoint_prefixes = matching_endpoint_prefixes if matching_endpoint_prefixes else [endpoint]
+        self.deactivate_when_logged_in = deactivate_when_logged_in
 
     @property
     def is_current(self):
         return any([request.endpoint.startswith(pfx) for pfx in self.matching_endpoint_prefixes])
 
+    @property
+    def is_active(self):
+        return not self.deactivate_when_logged_in or current_user and not current_user.is_authenticated
+
 
 nav.Bar('top', [
-    nav.Item(_l('nav.home'), 'index'),
-    nav.Item(_l('nav.how-it-works'), 'howitworks'),
-    MultiEndpointItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'},
-                      matching_endpoint_prefixes=['eligibility']),
-    MultiEndpointItem(_l('nav.register'), 'unlock_code_request', {},
-                      matching_endpoint_prefixes=['unlock_code_request']),
-    MultiEndpointItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
-                      matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
-    nav.Item(_l('nav.logout'), 'logout'),
+    SteuerlotseNavItem(_l('nav.home'), 'index', {}),
+    SteuerlotseNavItem(_l('nav.how-it-works'), 'howitworks', {}),
+    SteuerlotseNavItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'}),
+    SteuerlotseNavItem(_l('nav.register'), 'unlock_code_request', {},
+                       deactivate_when_logged_in=True),
+    SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
+                       matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
+    SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
 ])
 
 login_manager.login_view = 'unlock_code_activation'

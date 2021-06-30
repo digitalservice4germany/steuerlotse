@@ -110,6 +110,14 @@ context('Acceptance tests', () => {
             login()
         })
 
+        it('Check that register and revocation are disabled', () => {
+            cy.visit('/')
+            cy.get('.nav-link').contains('Registrieren')
+                .should('have.class', 'inactive')
+                .click()
+            cy.location('pathname').should('eq', '/')
+        })
+
         it('Enter different familienstands', () => {
             cy.visit('/lotse/step/familienstand?link_overview=True')
 
