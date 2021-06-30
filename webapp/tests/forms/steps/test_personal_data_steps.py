@@ -151,6 +151,15 @@ class TestFamilienstand(unittest.TestCase):
         form = self.step.Form(formdata=data)
         self.assertTrue(form.validate())
 
+    def test_if_invalid_familienstand_date_given_then_fail_validation(self):
+        data = MultiDict({'familienstand': 'married',
+                          'familienstand_date': '99.99.9999',
+                          'familienstand_married_lived_separated': 'no',
+                          'familienstand_confirm_zusammenveranlagung': 'y'})
+        form = self.step.Form(formdata=data)
+        self.assertFalse(form.validate())
+        self.assertIn('familienstand_date', form.errors)
+
     def test_if_married_and_no_familienstand_date_given_then_fail_validation(self):
         data = MultiDict({'familienstand': 'married',
                           'familienstand_married_lived_separated': 'no',
