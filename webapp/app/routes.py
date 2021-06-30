@@ -47,7 +47,7 @@ class SteuerlotseNavItem(nav.Item):
 
     @property
     def is_active(self):
-        return not self.deactivate_when_logged_in or current_user and not current_user.is_authenticated
+        return not self.deactivate_when_logged_in or (current_user and not current_user.is_authenticated)
 
 
 nav.Bar('top', [
