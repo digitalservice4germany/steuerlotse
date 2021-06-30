@@ -534,7 +534,7 @@ ol li::before {
     border-left: 4px solid var(--text-color);
 }
 
-span.nav-link.inactive {
+span.nav-link.inactive, span.inactive {
     color: var(--secondary-text-color);
     cursor: default;
 }

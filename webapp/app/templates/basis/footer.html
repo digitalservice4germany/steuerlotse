@@ -12,7 +12,11 @@
                             <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
                         </li>
                         <li class="text-nowrap mt-2">
-                            <a href="{{ url_for('unlock_code_revocation', step='start') }}">{{ _('footer.revocation') }}</a>
+                            {% if current_user.is_authenticated %}
+                                <span class="inactive">{{ _('footer.revocation') }}</span>
+                            {% else %}
+                                <a href="{{ url_for('unlock_code_revocation', step='start') }}">{{ _('footer.revocation') }}</a>
+                            {% endif %}
                         </li>
                     </ul>
                 </div>
