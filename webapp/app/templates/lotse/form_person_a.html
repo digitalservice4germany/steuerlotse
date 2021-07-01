@@ -25,10 +25,10 @@
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_street) }}
         {{ macros.render_field(form.person_a_street_number, 2, field_div_classes="px-2") }}
-        {{ macros.render_field(form.person_a_street_number_ext, 4) }}
     </div>
     <div class="form-row-center">
-        {{ macros.render_field(form.person_a_address_ext) }}
+        {{ macros.render_field(form.person_a_street_number_ext) }}
+        {{ macros.render_field(form.person_a_address_ext, field_div_classes="px-2") }}
     </div>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_plz) }}

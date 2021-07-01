@@ -24,15 +24,15 @@
   <div id="form_address_fields">
     <div class="form-row-center">
       {{ macros.render_field(form.person_b_street) }}
-      {{ macros.render_field(form.person_b_street_number, 2) }}
-      {{ macros.render_field(form.person_b_street_number_ext, 4) }}
+      {{ macros.render_field(form.person_b_street_number, 2, field_div_classes="px-2") }}
     </div>
     <div class="form-row-center">
-      {{ macros.render_field(form.person_b_address_ext) }}
+      {{ macros.render_field(form.person_b_street_number_ext) }}
+      {{ macros.render_field(form.person_b_address_ext, field_div_classes="px-2") }}
     </div>
     <div class="form-row-center">
       {{ macros.render_field(form.person_b_plz) }}
-      {{ macros.render_field(form.person_b_town) }}
+      {{ macros.render_field(form.person_b_town, field_div_classes="px-2") }}
     </div>
   </div>
 
