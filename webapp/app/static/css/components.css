@@ -208,6 +208,8 @@
     color: var(--text-color);
     background: inherit;
     border: 0;
+    outline: none;
+    box-shadow: none;
 }
 
 .details-card .card-header .collapsed span {
@@ -219,10 +221,6 @@
 .details-card .card-header .collapsed span:hover {
     color: var(--link-hover-color);
     text-decoration-color: var(--link-hover-color);
-}
-
-.details-card .card-header button:focus {
-    outline:none;
 }
 
 .details-card .card-header button:focus span {
