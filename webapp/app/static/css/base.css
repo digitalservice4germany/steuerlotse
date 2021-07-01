@@ -139,6 +139,7 @@ img.invalid-feedback{
 }
 
 .error-found-line{
+    margin-left: var(--spacing-02);
     padding-left: var(--spacing-04) !important;
     border-left: 2px solid var(--error-colour);
 }
@@ -689,7 +690,7 @@ footer a{
 
 .form-row-center {
     display: flex;
-    align-items: center
+    align-items: baseline;
 }
 
 .section-intro p {
