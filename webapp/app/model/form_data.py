@@ -160,11 +160,12 @@ class InputDataInvalidError(ValueError):
 
 class MandatoryFieldMissingValidationError(InputDataInvalidError):
     """Raised in case of a mandatory field missing"""
-    message = _l('form.lotse.input_invalid.mandatory_field_missing')
-
     def __init__(self, missing_fields=None):
         super().__init__()
         self.missing_fields = missing_fields
+
+    def get_message(self):
+        return _l('form.lotse.input_invalid.mandatory_field_missing', num_errors=len(self.missing_fields))
 
 
 class ConfirmationMissingInputValidationError(MandatoryFieldMissingValidationError):

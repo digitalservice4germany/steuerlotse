@@ -249,7 +249,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 app.logger.info(f"Mandatory est fields missing: {e.missing_fields}", exc_info=True)
                 # prevent flashing the same message two times
                 if request.method == 'GET':
-                    flash(e.message, 'warn')
+                    flash(e.get_message(), 'warn')
                 missing_fields = e.missing_fields
                 render_info.next_url = self.url_for_step(StepSummary.name)
             if not stored_data.get('steuerminderung') or stored_data['steuerminderung'] == 'no':
