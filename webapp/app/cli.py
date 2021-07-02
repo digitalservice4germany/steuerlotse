@@ -5,7 +5,7 @@ from flask.cli import AppGroup
 from sqlalchemy.exc import IntegrityError
 
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful, \
-    ElsterRequestAlreadyRevoked
+    ElsterRequestAlreadyRevoked, ElsterRequestIdUnkownError
 
 
 def register_commands(app):
@@ -123,7 +123,7 @@ def _revoke_permission_and_delete_users(users_to_delete, success_message):
             elster_client.send_unlock_code_revocation_with_elster(form_data, 'CRONJOB-IP')
             db.session.delete(user_to_delete)
             app.logger.info(success_message)
-        except ElsterRequestAlreadyRevoked as e:
+        except (ElsterRequestAlreadyRevoked, ElsterRequestIdUnkownError) as e:
             app.logger.warn(str(e))
             db.session.delete(user_to_delete)
             app.logger.info(success_message)
