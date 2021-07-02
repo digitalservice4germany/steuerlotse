@@ -691,6 +691,11 @@ footer a{
 .form-row-center {
     display: flex;
     align-items: baseline;
+    margin: 0 calc(-1 * var(--spacing-02));
+}
+
+.form-row-center > * {
+    margin: 0 var(--spacing-02);
 }
 
 .section-intro p {
