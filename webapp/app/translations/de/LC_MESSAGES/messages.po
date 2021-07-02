@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-01 14:35+0200\n"
+"POT-Creation-Date: 2021-07-02 15:16+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -742,7 +742,7 @@ msgstr " "
 
 #: app/forms/steps/lotse/confirmation_steps.py:21
 msgid "form.lotse.summary.header-title"
-msgstr "Steuerlormular - Prüfung - Der Steuerlotse für Rente und Pension"
+msgstr "Steuerformular - Prüfung - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/confirmation_steps.py:31
 #: app/forms/steps/lotse/confirmation_steps.py:37
@@ -779,7 +779,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/confirmation_steps.py:46
 msgid "form.lotse.confirmation.header-title"
-msgstr "Steuerlormular - Versand - Der Steuerlotse für Rente und Pension"
+msgstr "Steuerformular - Versand - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/confirmation_steps.py:56
 msgid "form.lotse.filing.title"
@@ -796,11 +796,11 @@ msgstr ""
 #: app/forms/steps/lotse/confirmation_steps.py:64
 #: app/forms/steps/lotse/confirmation_steps.py:80
 msgid "form.lotse.filing.header-title"
-msgstr "Steuerlormular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
+msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/confirmation_steps.py:69
 msgid "form.lotse.filing.failure.header-title"
-msgstr "Steuerlormular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
+msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/confirmation_steps.py:76
 msgid "form.lotse.ack.alert.title"
@@ -866,7 +866,7 @@ msgstr ""
 #: app/forms/steps/lotse/declaration_steps.py:54
 #: app/forms/steps/lotse/declaration_steps.py:73
 msgid "form.lotse.header-title"
-msgstr "Steuerlormular - Der Steuerlotse für Rente und Pension"
+msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/declaration_steps.py:41
 msgid "form.lotse.field_declaration_edaten.label"
@@ -1069,7 +1069,7 @@ msgstr "Familienstand"
 #: app/forms/steps/lotse/personal_data_steps.py:397
 #: app/forms/steps/lotse/personal_data_steps.py:449
 msgid "form.lotse.mandatory_data.header-title"
-msgstr "Steuerlormular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
+msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/personal_data_steps.py:144
 msgid "form.lotse.step_steuernummer.label"
@@ -1613,7 +1613,7 @@ msgstr ""
 #: app/forms/steps/lotse/steuerminderungen_steps.py:382
 msgid "form.lotse.steuerminderungen.header-title"
 msgstr ""
-"Steuerlormular - Steuermindernde Aufwendungen - Der Steuerlotse für Rente"
+"Steuerformular - Steuermindernde Aufwendungen - Der Steuerlotse für Rente"
 " und Pension"
 
 #: app/forms/steps/lotse/steuerminderungen_steps.py:45
@@ -3697,7 +3697,7 @@ msgid "info-stl.card-submission.p2-content"
 msgstr ""
 "Personen, die verpflichtet sind, eine Einkommensteuererklärung "
 "einzureichen, müssen ihre Steuererklärung <strong>bis zum "
-"31.Juli</strong> an das Finanzamt übermitteln."
+"31.Oktober</strong> an das Finanzamt übermitteln."
 
 #: app/templates/content/howitworks.html:36
 #: app/templates/content/landing_page.html:34
