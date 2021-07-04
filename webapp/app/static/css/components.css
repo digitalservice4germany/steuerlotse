@@ -136,52 +136,55 @@
     padding-bottom: .75rem;
 }
 
-.accordion .card-header{
+.accordion button.card-header{
     border: 0;
     background: inherit;
     padding: .75rem 0;
 }
 
-.accordion .card-header h5{
-    font-size: var(--text-medium);
-    font-weight: var( --font-bold);
-}
-
-.accordion .card-header button:focus{
-    color: var(--text-colour);
-
-    background: var(--focus-colour);
-
+.accordion button.card-header:focus, .accordion button.card-header:active{
     outline:none;
     box-shadow: none;
     border: 0;
+}
+
+.accordion button.card-header h5{
+    font-size: var(--text-medium);
+    font-weight: var( --font-bold);
+
+    display: inline;
+}
+
+.accordion button.card-header:focus h5 {
+    color: var(--text-colour);
+    background: var(--focus-colour);
     border-bottom: 4px solid var(--focus-border-colour);
 }
 
-.accordion .card-header button{
+.accordion button.card-header {
     text-align: left;
     color: var(--text-colour);
     background: inherit;
     border: 0;
 }
 
-.accordion .card-header button:hover, .accordion .card-header button:active{
+.accordion button.card-header:hover, .accordion button.card-header:active{
     color: var(--link-hover-color);
 }
 
-.accordion .card-header .control-show-more{
+.accordion button.card-header .control-show-more{
     display: none;
 }
 
-.accordion .card-header .control-show-less{
+.accordion button.card-header .control-show-less{
     display: block;
 }
 
-.accordion .card-header .collapsed .control-show-more{
+.accordion button.card-header.collapsed .control-show-more{
     display: block;
 }
 
-.accordion .card-header .collapsed .control-show-less{
+.accordion button.card-header.collapsed .control-show-less{
     display: none;
 }
 
