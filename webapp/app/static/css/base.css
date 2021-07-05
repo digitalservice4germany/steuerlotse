@@ -691,6 +691,8 @@ footer a{
 .form-row-center {
     display: flex;
     align-items: baseline;
+    /* This moved the border further outside to allow for the children to fill that space with margin,
+    allowing the children to have space between them. See the bootstrap row/column technique. */
     margin: 0 calc(-1 * var(--spacing-02));
 }
 
