@@ -53,13 +53,14 @@
 
 {% macro radio_field(field) -%}
     <fieldset>
-    {{ field_label(field) }}
-    {% for subfield in field %}
-        <div>
-            {{ subfield(class="") }}
-            {{ field_label(subfield, class="col-sm-10 col-form-label") }}
-        </div>
-    {% endfor %}
+        {{ field_label(field) }}
+        {% for subfield in field %}
+            <div>
+                {{ subfield(class="") }}
+                {{ field_label(subfield, class="col-sm-10 col-form-label") }}
+            </div>
+        {% endfor %}
+        {{ field_errors(field) }}
     </fieldset>
 {%- endmacro %}
 
