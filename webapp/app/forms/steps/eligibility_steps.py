@@ -21,7 +21,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
             intro=_('form.eligibility.start-intro'), **kwargs)
 
     def _main_handle(self, stored_data):
-        super()._main_handle()
+        super()._main_handle(stored_data)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
         return stored_data
 
