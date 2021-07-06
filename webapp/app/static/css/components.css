@@ -473,7 +473,7 @@ input[type="radio"] {
     opacity: 0;
 }
 
-input[type="radio"] + *::before {
+input[type="radio"] + label::before {
     content: "";
     display: inline-block;
     vertical-align: bottom;
@@ -485,20 +485,25 @@ input[type="radio"] + *::before {
     background: white;
 }
 
-input[type="radio"]:checked + *::before {
+input[type="radio"]:checked + label::before {
     background: radial-gradient(var(--link-active-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
     border-color: var(--link-active-color);
 }
 
-input[type="radio"]:checked + *:hover::before{
+input[type="radio"]:checked + label:hover::before{
     background: radial-gradient(var(--hover-border-colour) 40%, var(--bg-white) 40%, transparent 0%, transparent);
     border-color: var(--hover-border-colour);
 }
 
-input[type="radio"]:checked + *:focus::before{
-    background: var(--focus-color);
+input[type="radio"]:not(:checked):focus + label::before{
+    background: var(--focus-colour);
     border-color: black;
-    box-shadow: 0 0 0 2px var(--focus-color);
+    box-shadow: 0 0 0 2px var(--focus-colour);
+}
+
+input[type="radio"]:checked:focus + label::before{
+    border-color: black;
+    box-shadow: 0 0 0 2px var(--focus-colour);
 }
 
 .field-label{
