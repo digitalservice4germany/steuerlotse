@@ -52,7 +52,7 @@
 {% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False) %}
     {% if field.type == 'ConfirmationField' %}
         {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True) }}
-    {% elif field.type == 'BooleanField' %}
+    {% elif field.type in ('BooleanField', 'RadioField') %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True) }}
     {% else %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label) }}
