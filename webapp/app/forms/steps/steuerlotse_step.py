@@ -31,11 +31,11 @@ class SteuerlotseStep(object):
         return self._post_handle(stored_data)
 
     def _pre_handle(self, stored_data):
-        self.render_info = RenderInfo(flow_title=self.title, step_title=self.title, step_intro=self.intro, form=None,
-                                 prev_url=self.url_for_step(self._prev_step.name) if self._prev_step else None,
-                                 next_url=self.url_for_step(self._next_step.name) if self._next_step else None,
-                                 submit_url=self.url_for_step(self.name),
-                                 overview_url=self.url_for_step(self.overview_step.name) if self.has_link_overview and self.overview_step else None)
+        self.render_info = RenderInfo(step_title=self.title, step_intro=self.intro, form=None,
+                                      prev_url=self.url_for_step(self._prev_step.name) if self._prev_step else None,
+                                      next_url=self.url_for_step(self._next_step.name) if self._next_step else None,
+                                      submit_url=self.url_for_step(self.name), overview_url=self.url_for_step(
+                self.overview_step.name) if self.has_link_overview and self.overview_step else None)
         return stored_data
 
     def _handle_redirects(self):

@@ -152,9 +152,8 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
             self.success_url = '/lotse/step/start'
 
             prev_step, self.input_step, next_step = self.flow._generate_steps(MockUnlockCodeActivationInputStep.name)
-            self.render_info_input_step = RenderInfo(flow_title=self.flow.title, step_title=self.input_step.title,
-                                                     step_intro=self.input_step.intro, form=None,
-                                                     prev_url=self.flow.url_for_step(prev_step.name),
+            self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
+                                                     form=None, prev_url=self.flow.url_for_step(prev_step.name),
                                                      next_url=self.flow.url_for_step(next_step.name),
                                                      submit_url=self.flow.url_for_step(self.input_step.name),
                                                      overview_url="Overview URL",

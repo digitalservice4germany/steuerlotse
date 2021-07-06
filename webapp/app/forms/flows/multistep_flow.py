@@ -13,9 +13,7 @@ from app.forms.steps.step import FormStep
 
 
 class RenderInfo(object):
-    def __init__(self, flow_title, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url,
-                 flow_nav):
-        self.flow_title = flow_title
+    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, flow_nav=None):
         self.step_title = step_title
         self.step_intro = step_intro
         self.form = form
@@ -26,6 +24,20 @@ class RenderInfo(object):
         self.flow_nav = flow_nav
         self.additional_info = {}
         self.redirect_url = None
+
+    def __eq__(self, other):
+        if isinstance(other, RenderInfo):
+            return self.step_title == other.step_title and \
+                   self.step_intro == other.step_intro and \
+                   self.form == other.form and \
+                   self.prev_url == other.prev_url and \
+                   self.next_url == other.next_url and \
+                   self.submit_url == other.submit_url and \
+                   self.overview_url == other.overview_url and \
+                   self.flow_nav == other.flow_nav and \
+                   self.additional_info == other.additional_info and \
+                   self.redirect_url == other.redirect_url
+        return False
 
 
 # Used for the header step overview of the main form
@@ -95,11 +107,11 @@ class MultiStepFlow:
 
         prev_step, step, next_step = self._generate_steps(step_name)
 
-        render_info = RenderInfo(flow_title=self.title, step_title=step.title, step_intro=step.intro, form=None,
+        render_info = RenderInfo(step_title=step.title, step_intro=step.intro, form=None,
                                  prev_url=self.url_for_step(prev_step.name) if prev_step else None,
                                  next_url=self.url_for_step(next_step.name) if next_step else None,
-                                 submit_url=self.url_for_step(step.name),
-                                 overview_url=self.url_for_step(self.overview_step.name) if self.has_link_overview and self.overview_step else None,
+                                 submit_url=self.url_for_step(step.name), overview_url=self.url_for_step(
+                self.overview_step.name) if self.has_link_overview and self.overview_step else None,
                                  flow_nav=self._get_flow_nav(step))
 
         render_info, stored_data = self._handle_specifics_for_step(step, render_info, stored_data)
@@ -185,3 +197,5 @@ class MultiStepFlow:
             if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
                 stored_data.pop(field)
         return stored_data
+
+

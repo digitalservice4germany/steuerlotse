@@ -30,10 +30,8 @@ class TestLogoutHandleSpecificsForStep(unittest.TestCase):
             self.success_url = url_for('unlock_code_activation')
 
             _, self.input_step, _ = self.flow._generate_steps(MockLogoutInputStep.name)
-            self.render_info_input_step = RenderInfo(flow_title=self.flow.title, step_title=self.input_step.title,
-                                                     step_intro=self.input_step.intro, form=None,
-                                                     prev_url=None,
-                                                     next_url=None,
+            self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
+                                                     form=None, prev_url=None, next_url=None,
                                                      submit_url=self.flow.url_for_step(self.input_step.name),
                                                      overview_url="Overview URL",
                                                      flow_nav=self.flow._get_flow_nav(self.input_step))

@@ -260,13 +260,10 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
             steuerlotse_step.name = "This is the one"
             steuerlotse_step._pre_handle(None)
 
-            expected_render_info = RenderInfo(flow_title=title, step_title=title, step_intro=intro,
-                                              form=None,
-                                              prev_url=None,
-                                              next_url=None,
-                                              submit_url=url_for(endpoint=correct_endpoint,
-                                                                 step=steuerlotse_step.name,
-                                                                 link_overview=steuerlotse_step.has_link_overview),
+            expected_render_info = RenderInfo(step_title=title, step_intro=intro, form=None, prev_url=None,
+                                              next_url=None, submit_url=url_for(endpoint=correct_endpoint,
+                                                                                step=steuerlotse_step.name,
+                                                                                link_overview=steuerlotse_step.has_link_overview),
                                               overview_url=None)
 
             self.assertEqual(expected_render_info, steuerlotse_step.render_info)
@@ -285,8 +282,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
             steuerlotse_step.name = "This is the one"
             steuerlotse_step._pre_handle(None)
 
-            expected_render_info = RenderInfo(flow_title=title, step_title=title, step_intro=intro,
-                                              form=None,
+            expected_render_info = RenderInfo(step_title=title, step_intro=intro, form=None,
                                               prev_url=url_for(endpoint=correct_endpoint,
                                                                step=prev_step.name,
                                                                link_overview=steuerlotse_step.has_link_overview),
@@ -313,13 +309,10 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
 
             steuerlotse_step.render_info.overview_url = overview_url
 
-            expected_render_info = RenderInfo(flow_title=title, step_title=title, step_intro=intro,
-                                              form=None,
-                                              prev_url=None,
-                                              next_url=None,
-                                              submit_url=url_for(endpoint=correct_endpoint,
-                                                                 step=steuerlotse_step.name,
-                                                                 link_overview=steuerlotse_step.has_link_overview),
+            expected_render_info = RenderInfo(step_title=title, step_intro=intro, form=None, prev_url=None,
+                                              next_url=None, submit_url=url_for(endpoint=correct_endpoint,
+                                                                                step=steuerlotse_step.name,
+                                                                                link_overview=steuerlotse_step.has_link_overview),
                                               overview_url=overview_url)
 
             self.assertEqual(expected_render_info, steuerlotse_step.render_info)

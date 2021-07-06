@@ -129,11 +129,9 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             with patch('app.forms.flows.multistep_flow.override_session_data') as update_fun, \
                  patch('app.forms.flows.multistep_flow.MultiStepFlow._handle_specifics_for_step',
-                       MagicMock(return_value=(RenderInfo(flow_title="Title", step_title="Any",
-                                                          step_intro="Introduction",
-                                                          form=MockForm, prev_url="Prev", next_url="Next",
-                                                          submit_url="Submit", overview_url="Overview",
-                                                          flow_nav="Navigation"), expected_data))):
+                       MagicMock(return_value=(
+                       RenderInfo(step_title="Any", step_intro="Introduction", form=MockForm, prev_url="Prev",
+                                  next_url="Next", submit_url="Submit", overview_url="Overview", flow_nav="Navigation"), expected_data))):
                 self.flow.handle(MockRenderStep.name)
 
                 update_fun.assert_called_once_with(expected_data)
@@ -374,7 +372,7 @@ class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):
             self.session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
 
             prev_step, self.middle_step, next_step = self.flow._generate_steps(MockMiddleStep.name)
-            self.render_info_middle_step = RenderInfo(flow_title=self.flow.title, step_title=self.middle_step.title,
+            self.render_info_middle_step = RenderInfo(step_title=self.middle_step.title,
                                                       step_intro=self.middle_step.intro, form=None,
                                                       prev_url=self.flow.url_for_step(prev_step.name),
                                                       next_url=self.flow.url_for_step(next_step.name),
@@ -383,9 +381,8 @@ class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):
                                                       flow_nav=self.flow._get_flow_nav(self.middle_step))
 
             prev_step, self.form_step, next_step = self.flow._generate_steps(MockFormStep.name)
-            self.render_info_form_step = RenderInfo(flow_title=self.flow.title, step_title=self.form_step.title,
-                                                    step_intro=self.form_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
+            self.render_info_form_step = RenderInfo(step_title=self.form_step.title, step_intro=self.form_step.intro,
+                                                    form=None, prev_url=self.flow.url_for_step(prev_step.name),
                                                     next_url=self.flow.url_for_step(next_step.name),
                                                     submit_url=self.flow.url_for_step(self.form_step.name),
                                                     overview_url="Overview URL",
@@ -393,13 +390,15 @@ class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):
 
             prev_step, self.form_step_input, next_step = self.flow_with_input._generate_steps(
                 MockFormWithInputStep.name)
-            self.render_info_form_step_with_input = RenderInfo(flow_title=self.flow_with_input.title,
-                                                               step_title=self.form_step_input.title,
+            self.render_info_form_step_with_input = RenderInfo(step_title=self.form_step_input.title,
                                                                step_intro=self.form_step_input.intro, form=None,
-                                                               prev_url=self.flow_with_input.url_for_step(prev_step.name),
-                                                               next_url=self.flow_with_input.url_for_step(next_step.name),
+                                                               prev_url=self.flow_with_input.url_for_step(
+                                                                   prev_step.name),
+                                                               next_url=self.flow_with_input.url_for_step(
+                                                                   next_step.name),
                                                                submit_url=self.flow_with_input.url_for_step(
-                                                                   self.form_step_input.name), overview_url="Overview URL",
+                                                                   self.form_step_input.name),
+                                                               overview_url="Overview URL",
                                                                flow_nav=self.flow_with_input._get_flow_nav(
                                                                    self.form_step_input))
 
