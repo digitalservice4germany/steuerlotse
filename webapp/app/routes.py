@@ -7,7 +7,6 @@ from flask import render_template, request, send_file, session, make_response
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.exceptions import InternalServerError
-from werkzeug.utils import redirect
 
 from app import app, nav, login_manager, limiter
 from app.data_access.db_model.user import User
@@ -100,7 +99,7 @@ def add_http_header(response):
 
 @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
 def eligibility(step):
-    return EligibilityStepChooser(endpoint='eligibility2').get_correct_step(step_name=step).handle()
+    return EligibilityStepChooser(endpoint='eligibility').get_correct_step(step_name=step).handle()
 
 
 @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
