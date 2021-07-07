@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-02 12:11+0200\n"
+"POT-Creation-Date: 2021-07-06 15:07+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -303,11 +303,11 @@ msgstr "Steuererklärung abgeben"
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:365
+#: app/forms/flows/lotse_flow.py:367
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:417
+#: app/forms/flows/lotse_flow.py:419
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -2262,15 +2262,21 @@ msgstr ""
 "Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke sind nur auf "
 "Anforderung des Finanzamts durch eine Bestätigung nachzuweisen. "
 
-#: app/model/form_data.py:163
+#: app/model/form_data.py:168
 msgid "form.lotse.input_invalid.mandatory_field_missing"
-msgstr "Bitte füllen Sie alle notwendigen Felder aus."
+msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
+msgstr[0] ""
+"Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
+" zu können. Es ist noch %(num)s notwendiges Feld nicht ausgefüllt."
+msgstr[1] ""
+"Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
+" zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:172
+#: app/model/form_data.py:173
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:178
+#: app/model/form_data.py:179
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
@@ -3282,7 +3288,9 @@ msgstr ""
 msgid "contact.service-legal"
 msgstr ""
 "Bitte beachten Sie, dass wir Sie aus rechtlichen Gründen nicht zu "
-"individuellen Steuerfragen  beraten dürfen."
+"individuellen Steuerfragen beraten dürfen. Bitte schicken Sie uns "
+"außerdem keine spezifischen personenbezogenen Daten wie zum Beispiel Ihre"
+" Adresse, Steuer-Identifikationsnummer oder Ihren Freischaltcode."
 
 #: app/templates/content/contact.html:16
 msgid "contact.feedback-headline"

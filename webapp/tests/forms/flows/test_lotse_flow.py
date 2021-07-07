@@ -1051,6 +1051,25 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
             get_overview.assert_called_once_with(data_with_missing_fields, missing_fields)
 
+    def test_if_summary_step_and_data_missing_then_flash_message_with_missing_fields_once(self):
+        data_with_missing_fields = {'steuernummer': 'C3P0'}
+        missing_fields = ['spacecraft', 'droids']
+        missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
+
+        with patch('app.forms.flows.lotse_flow.flash') as mock_flash, \
+            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
+            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
+                  MagicMock(side_effect=missing_fields_error)):
+            with app.app_context() and app.test_request_context(method='POST'):
+                render_info, _ = self.flow._handle_specifics_for_step(
+                    self.summary_step, self.render_info_summary_step, data_with_missing_fields)
+
+            with app.app_context() and app.test_request_context(method='GET'):
+                render_info, _ = self.flow._handle_specifics_for_step(
+                    self.summary_step, self.render_info_summary_step, data_with_missing_fields)
+
+            mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
+
     def test_if_summary_step_and_data_not_missing_then_set_next_url_correct(self):
         data_without_missing_fields = self.flow.default_data()[1]
 

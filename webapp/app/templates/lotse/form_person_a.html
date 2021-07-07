@@ -24,15 +24,15 @@
     <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h3>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_street) }}
-        {{ macros.render_field(form.person_a_street_number, 2, field_div_classes="px-2") }}
-        {{ macros.render_field(form.person_a_street_number_ext, 4) }}
+        {{ macros.render_field(form.person_a_street_number, 2) }}
     </div>
     <div class="form-row-center">
+        {{ macros.render_field(form.person_a_street_number_ext) }}
         {{ macros.render_field(form.person_a_address_ext) }}
     </div>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_plz) }}
-        {{ macros.render_field(form.person_a_town, 6, field_div_classes="pl-2") }}
+        {{ macros.render_field(form.person_a_town, 6) }}
     </div>
 
     <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-religion') }}</h3>

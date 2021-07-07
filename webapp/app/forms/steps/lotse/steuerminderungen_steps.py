@@ -19,7 +19,8 @@ class StepSteuerminderungYesNo(FormStep):
 
     class Form(SteuerlotseBaseForm):
         steuerminderung = RadioField(
-            label=_l('form.lotse.field_steuerminderung'),
+            # Field overrides the label with a default value if we don't explicitly set it to an empty string
+            label='',
             render_kw={'data_label': _l('form.lotse.field_steuerminderung.data_label'),
                        'hide_label': True},
             choices=[

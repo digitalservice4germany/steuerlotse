@@ -2,7 +2,7 @@ import copy
 from datetime import date
 from typing import Optional, Any
 
-from flask_babel import lazy_gettext as _l
+from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
 from pydantic import BaseModel, validator, MissingError, ValidationError
 from pydantic.error_wrappers import ErrorWrapper
@@ -160,11 +160,12 @@ class InputDataInvalidError(ValueError):
 
 class MandatoryFieldMissingValidationError(InputDataInvalidError):
     """Raised in case of a mandatory field missing"""
-    message = _l('form.lotse.input_invalid.mandatory_field_missing')
-
     def __init__(self, missing_fields=None):
         super().__init__()
         self.missing_fields = missing_fields
+
+    def get_message(self):
+        return ngettext('form.lotse.input_invalid.mandatory_field_missing', 'form.lotse.input_invalid.mandatory_field_missing', num=len(self.missing_fields))
 
 
 class ConfirmationMissingInputValidationError(MandatoryFieldMissingValidationError):

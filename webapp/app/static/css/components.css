@@ -35,14 +35,14 @@
 
 
 .btn-primary:focus, a.btn-primary:focus{
-    color: var(--focus-text-colour);
+    color: var(--focus-text-color);
 
-    background: var(--focus-colour);
+    background: var(--focus-color);
 
     outline: none;
     box-shadow: none;
     border: 0;
-    border-bottom: 4px solid var(--focus-border-colour);
+    border-bottom: 4px solid var(--focus-border-color);
 }
 
 .btn-outline-primary, a.btn-outline-primary{
@@ -59,7 +59,7 @@
 
     border: 0;
     border-radius: 0;
-    border: 1px solid var(--border-colour);
+    border: 1px solid var(--border-color);
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active, a.btn-outline-primary:not(:disabled):not(.disabled):active{
@@ -75,11 +75,11 @@
 }
 
 .btn-outline-primary:focus, a.btn-outline-primary:focus{
-    color: var(--focus-colour);
+    color: var(--focus-color);
 
     outline:none;
     box-shadow: none;
-    border: 1px solid var(--focus-border-colour);
+    border: 1px solid var(--focus-border-color);
 }
 
 
@@ -96,7 +96,7 @@
 }
 
 .btn-help:focus  {
-    background: var(--focus-colour);
+    background: var(--focus-color);
     color: var(--text-color) !important;
     text-decoration: none;
 }
@@ -121,7 +121,7 @@
 .remove-button:focus{
     text-decoration: none;
     color: var(--text-color) !important;
-    background: var(--focus-colour);
+    background: var(--focus-color);
     box-shadow: none;
     outline: 0;
 }
@@ -155,15 +155,15 @@
     display: inline;
 }
 
-.accordion .card-header:focus h5 {
-    color: var(--text-colour);
-    background: var(--focus-colour);
-    border-bottom: 4px solid var(--focus-border-colour);
+.accordion .card-header:focus h5{
+    color: var(--text-color);
+    background: var(--focus-color);
+    border-bottom: 4px solid var(--focus-border-color);
 }
 
-.accordion .card-header {
+.accordion .card-header{
     text-align: left;
-    color: var(--text-colour);
+    color: var(--text-color);
     background: inherit;
     border: 0;
 }
@@ -218,7 +218,7 @@
 .details-card .card-header .collapsed span {
     color: var(--link-color);
     text-decoration: underline;
-    text-decoration-color: var(--icon-default-colour);
+    text-decoration-color: var(--icon-default-color);
 }
 
 .details-card .card-header .collapsed span:hover {
@@ -227,11 +227,11 @@
 }
 
 .details-card .card-header button:focus span {
-    color: var(--focus-text-colour);
+    color: var(--focus-text-color);
     text-decoration: underline;
-    text-decoration-color: var(--focus-text-colour);
+    text-decoration-color: var(--focus-text-color);
 
-    background: var(--focus-colour);
+    background: var(--focus-color);
 
     outline:none;
     box-shadow: none;
@@ -272,7 +272,7 @@
     width: 2px;
     height: 100%;
     margin: 0 auto;
-    background-color: var(--border-colour);
+    background-color: var(--border-color);
 }
 
 .details-card .card-header button:hover, .accordion .card-header button:active {
@@ -325,7 +325,7 @@
     text-align: center;
     color: var(--text-color);
 
-    background: var(--icon-default-colour) url("/static/icons/arrow_back.svg") no-repeat center/var(--size);
+    background: var(--icon-default-color) url("/static/icons/arrow_back.svg") no-repeat center/var(--size);
 
     border-radius: 50%;
 }
@@ -379,7 +379,7 @@ a.back-link:focus a.back-link:active{
     font-weight: var(--font-bold);
     color: var(--text-color);
 
-    background: var(--icon-default-colour) url("/static/icons/download_icon.svg") no-repeat center/var(--size);
+    background: var(--icon-default-color) url("/static/icons/download_icon.svg") no-repeat center/var(--size);
 
     border-radius: 50%;
 
@@ -401,7 +401,7 @@ a.back-link:focus a.back-link:active{
 }
 
 .consent-box {
-    background-color: var(--bg-highlight-colour);
+    background-color: var(--bg-highlight-color);
     padding: var(--spacing-04);
 }
 
@@ -412,8 +412,8 @@ a.back-link:focus a.back-link:active{
 }
 
 .checkbox input:focus + label {
-    box-shadow: 0 0 0 3px var(--focus-colour);
-    background-color: var(--focus-colour);
+    box-shadow: 0 0 0 3px var(--focus-color);
+    background-color: var(--focus-color);
 }
 
 .checkbox input:checked + label {
@@ -442,12 +442,12 @@ a.back-link:focus a.back-link:active{
     font-size: var(--text-s);
     box-shadow: none;
     border-radius: 0;
-    border: 1px solid var(--border-colour) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
 .switch-yes.focus, .switch-no.focus {
-    color: var(--focus-text-colour) !important;
-    background: var(--focus-colour) !important;
+    color: var(--focus-text-color) !important;
+    background: var(--focus-color) !important;
 
     box-shadow: none;
     border: 1px solid var(--text-color) !important;
@@ -462,7 +462,7 @@ a.back-link:focus a.back-link:active{
 }
 
 .switch-yes.active.focus, .switch-no.active.focus {
-    box-shadow: 0 0 0 3px var(--focus-colour) !important;
+    box-shadow: 0 0 0 3px var(--focus-color) !important;
 }
 
 .switch-yes.active:hover, .switch-no.active:hover {
@@ -476,7 +476,7 @@ input[type="radio"] {
     opacity: 0;
 }
 
-input[type="radio"] + *::before {
+input[type="radio"] + label::before {
     content: "";
     display: inline-block;
     vertical-align: bottom;
@@ -488,18 +488,23 @@ input[type="radio"] + *::before {
     background: white;
 }
 
-input[type="radio"]:checked + *::before {
+input[type="radio"]:checked + label::before {
     background: radial-gradient(var(--link-active-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
     border-color: var(--link-active-color);
 }
 
-input[type="radio"]:checked + *:hover::before{
-    background: radial-gradient(var(--hover-border-colour) 40%, var(--bg-white) 40%, transparent 0%, transparent);
-    border-color: var(--hover-border-colour);
+input[type="radio"]:checked + label:hover::before{
+    background: radial-gradient(var(--hover-border-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
+    border-color: var(--hover-border-color);
 }
 
-input[type="radio"]:checked + *:focus::before{
+input[type="radio"]:not(:checked):focus + label::before{
     background: var(--focus-color);
+    border-color: black;
+    box-shadow: 0 0 0 2px var(--focus-color);
+}
+
+input[type="radio"]:checked:focus + label::before{
     border-color: black;
     box-shadow: 0 0 0 2px var(--focus-color);
 }
@@ -512,14 +517,14 @@ input[type="radio"]:checked + *:focus::before{
 /* ALERTS */
 .alert-success{
     color: var(--inverse-text-color);
-    background-color: var(--success-colour);
+    background-color: var(--success-color);
     border: 0;
     border-radius: 0;
 }
 
 .alert-danger{
     color: var(--inverse-text-color);
-        background-color: var(--error-colour);
+        background-color: var(--error-color);
         border: 0;
     border-radius: 0;
 }

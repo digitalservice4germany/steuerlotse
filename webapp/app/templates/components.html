@@ -52,12 +52,16 @@
 {% endmacro %}
 
 {% macro radio_field(field) -%}
-    {% for subfield in field %}
-        <div class="form-row-center">
-            {{ subfield(class="") }}
-            {{ field_label(subfield, class="col-sm-10 col-form-label") }}
-        </div>
-    {% endfor %}
+    <fieldset>
+        {{ field_label(field) }}
+        {% for subfield in field %}
+            <div>
+                {{ subfield(class="") }}
+                {{ field_label(subfield, class="col-sm-10 col-form-label") }}
+            </div>
+        {% endfor %}
+        {{ field_errors(field) }}
+    </fieldset>
 {%- endmacro %}
 
 {% macro field_label(field, class="") %}
@@ -65,10 +69,18 @@
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
 
-    <label for="{{ label.field_id }}"
-           class="field-label  {{ class }}">{{ label.text }}
-        {% if help %}{{ help_button(label.field_id) }}{% endif %}
-    </label>
+    {% if field.type == 'RadioField' %}
+        {% if label.text %} {# Only show legend if there is a legend text to show #}
+            <legend class="field-label {{ class }}">{{ label.text }}
+                {% if help %}{{ help_button(label.field_id) }}{% endif %}
+            </legend>
+        {% endif %}
+    {% else %}
+        <label for="{{ label.field_id }}"
+               class="field-label {{ class }}">{{ label.text }}
+            {% if help %}{{ help_button(label.field_id) }}{% endif %}
+        </label>
+    {% endif %}
     {%- if help %}{{ help_dialog(label.field_id, label.text, help) }}{% endif %}
     {% if field.render_kw and "example_input" in field.render_kw %}
         <div class="example-input">

@@ -49,17 +49,19 @@
     {{ components.field_errors(field) }}
 {%- endmacro %}
 
-{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False) %}
+{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False, hide_errors=False) %}
     {% if field.type == 'ConfirmationField' %}
-        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True) }}
+        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors) }}
     {% elif field.type == 'BooleanField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors) }}
+    {% elif field.type == 'RadioField' %}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=True) }}
     {% else %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label, hide_errors=hide_errors) }}
     {% endif %}
 {% endmacro %}
 
-{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False) %}
+{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False, hide_errors=False) %}
     {% if field.errors %}
         {% set field_div_classes = field_div_classes + " error-found-line" %}
     {% endif %}
@@ -90,7 +92,7 @@
                 {% endif %}
             {% endif %}
         {% if d_block %}</div>{% endif %}
-        {{ field_errors(field) }}
+        {% if not hide_errors %}{{ field_errors(field) }}{% endif %}
     </div>
 {% endmacro %}
 
