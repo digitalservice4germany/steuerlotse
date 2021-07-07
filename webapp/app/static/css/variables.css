@@ -4,9 +4,9 @@
   --secondary-text-color: #5e5e5e;
   --inverse-text-color: #FFFFFF;
 
-  --border-colour: #bababa;
-  --hover-border-colour: #003b52;
-  --active-outline-colour: #CDC0B1;
+  --border-color: #bababa;
+  --hover-border-color: #003b52;
+  --active-outline-color: #CDC0B1;
 
   --link-color: #005576;
   --link-hover-color: #003b52;
@@ -14,19 +14,19 @@
   --link-active-color: #0b0c0c;
   --link-underline-color: rgba(10, 10, 25, 0.2); /* original #0A0A19, 20%; */
 
-  --icon-default-colour: #E3D9CE;
-  --icon-hover-colour: #CDC0B1;
+  --icon-default-color: #E3D9CE;
+  --icon-hover-color: #CDC0B1;
 
-  --focus-colour: #FFC979;
-  --focus-text-colour: #0B0C0C;
-  --focus-border-colour: #0B0C0C;
+  --focus-color: #FFC979;
+  --focus-text-color: #0B0C0C;
+  --focus-border-color: #0B0C0C;
 
-  --body-colour: #FDF8F4;
-  --bg-highlight-colour: #EEE8E1;
+  --body-color: #FDF8F4;
+  --bg-highlight-color: #EEE8E1;
   --bg-white: #FFFFFF;
 
-  --success-colour: #005C45;
-  --error-colour: #C0003C;
+  --success-color: #005C45;
+  --error-color: #C0003C;
   --error-bg-color: #F9E5EB;
 
   /* Font Size */
