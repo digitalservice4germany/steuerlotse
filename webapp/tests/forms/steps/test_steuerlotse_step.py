@@ -14,7 +14,7 @@ from app.forms.steps.steuerlotse_step import SteuerlotseStep, serialize_session_
     RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
     MockFormWithInputStep, MockRenderStep, MockYesNoStep
-from tests.utils import create_session_form_data
+from tests.utils import create_session_form_data, run_handle
 
 
 class TestSteuerlotseStepInit(unittest.TestCase):
@@ -27,7 +27,6 @@ class TestSteuerlotseStepInit(unittest.TestCase):
             step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....", endpoint="WhereItAllStarts")
 
             self.assertTrue(step.has_link_overview)
-            self.assertIsNone(step.render_info)
 
         with app.app_context() and app.test_request_context() as req:
             req.request.args = {'link_overview': "False"}
@@ -35,7 +34,6 @@ class TestSteuerlotseStepInit(unittest.TestCase):
             step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....", endpoint="WhereItAllStarts")
 
             self.assertFalse(step.has_link_overview)
-            self.assertIsNone(step.render_info)
 
     def test_if_request_has_no_params_then_set_correct_defaults(self):
         # Only link_overview and session are set from request
@@ -43,7 +41,6 @@ class TestSteuerlotseStepInit(unittest.TestCase):
             step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....", endpoint="WhereItAllStarts")
 
             self.assertFalse(step.has_link_overview)
-            self.assertIsNone(step.render_info)
 
 
 class TestSteuerlotseStepUrlForStep(unittest.TestCase):
@@ -292,24 +289,24 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
 
             self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
-    def test_if_overview_url_set_then_render_info_is_set_correctly(self):
+    def test_render_info_is_set_correctly(self):
         title = "The Steuerlotse I"
         intro = "Not so long ago...."
         correct_endpoint = "lotse"
-        overview_url = "Everything the light touches..."
+        overview_step = MockFinalStep
 
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(title=title, intro=intro, endpoint=correct_endpoint)
+        with app.app_context() and app.test_request_context() as req:
+            req.request.args = {'link_overview': "True"}
+            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
+            steuerlotse_step = SteuerlotseStep(title=title, intro=intro, endpoint=correct_endpoint, overview_step=overview_step)
             steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle()
-
-            steuerlotse_step.render_info.overview_url = overview_url
-
             expected_render_info = RenderInfo(step_title=title, step_intro=intro, form=None, prev_url=None,
                                               next_url=None, submit_url=url_for(endpoint=correct_endpoint,
                                                                                 step=steuerlotse_step.name,
                                                                                 link_overview=steuerlotse_step.has_link_overview),
                                               overview_url=overview_url)
+
+            steuerlotse_step._pre_handle()
 
             self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
@@ -353,7 +350,9 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
                                    link_overview=steuerlotse_step.has_link_overview)
             steuerlotse_step.render_info.redirect_url = redirect_url
 
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()) as step_render:
+            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()):
+                # We need to patch this because the render function in the SteuerlotseStep is not implemented but
+                # called by _post_handle
                 post_result = steuerlotse_step._post_handle(stored_data)
 
             self.assertEqual(302, post_result.status_code)
@@ -427,7 +426,6 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
                 update_fun.assert_called_once_with(expected_data)
 
     def test_yes_no_field_content_overriden_if_empty(self):
-        steps = [MockYesNoStep, MockFinalStep]
         with app.test_request_context():
             mock_yesno_step = MockYesNoStep(endpoint="lotse", next_step=MockRenderStep)
         resulting_session = run_handle(mock_yesno_step, 'POST', {'yes_no_field': 'yes'})
@@ -436,32 +434,23 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
                                                                           app.config['PERMANENT_SESSION_LIFETIME']))
 
 
-class TestSteuerlotseStep(unittest.TestCase):
+class TestSteuerlotseFormStepOverrideSessionData(unittest.TestCase):
 
-    def test_if_form_step_after_render_step_then_keep_data_from_older_form_step(self):
-        endpoint_correct = "lotse"
-        original_data = {'pet': 'Yoshi', 'date': '09.07.1981', 'decimal': '60.000'}
+    def test_data_is_saved_to_empty_session(self):
+        new_data = {'brother': 'Luigi'}
+        with app.app_context() and app.test_request_context() as req:
+            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
+                self.assertNotIn('form_data', req.session)
+                MockFormStep(endpoint="lotse")._override_session_data(new_data)
+                self.assertIn('form_data', req.session)
+                self.assertEqual(new_data, req.session['form_data'])
 
-        with app.app_context() and app.test_request_context():
-            first_step = MockFormWithInputStep(endpoint=endpoint_correct, next_step=MockRenderStep)
-            second_step = MockRenderStep(endpoint=endpoint_correct, next_step=MockFormStep)
-            third_step = MockFormStep(endpoint=endpoint_correct, next_step=MockFinalStep)
-
-        session = run_handle(first_step, method='POST', form_data=original_data)
-        session = run_handle(second_step, method='GET', session=session)
-        session = run_handle(third_step, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(
-            set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
-
-
-def run_handle(step, method='GET', form_data=None, session=None):
-    with app.app_context() and app.test_request_context(method=method) as req:
-        if not form_data:
-            form_data = {}
-        req.request.form = ImmutableMultiDict(form_data)
-        if session is not None:
-            req.session = session
-
-        step.handle()
-
-        return req.session
+    def test_data_is_saved_to_prefilled_session(self):
+        new_data = {'brother': 'Luigi'}
+        with app.app_context() and app.test_request_context() as req:
+            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
+                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'}}
+                self.assertIn('form_data', req.session)
+                MockFormStep(endpoint="lotse")._override_session_data(new_data)
+                self.assertIn('form_data', req.session)
+                self.assertEqual(new_data, req.session['form_data'])

@@ -94,7 +94,7 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
 
             self.assertEqual(not_eligible_errors, eligibility_step.render_info.additional_info['eligibility_errors'])
 
-    def test_if_keys_not_in_data_and_income_step_then_raise_incorrect_eligibility_error(self):
+    def test_if_keys_not_in_data_then_raise_incorrect_eligibility_error(self):
         with app.app_context() and app.test_request_context(method='GET'), \
                 patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
                       MagicMock(return_value=self.data_without_all_keys)):
@@ -137,24 +137,6 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
 
                 self.assertEqual(self.result_url + str(eligibility_step.has_link_overview),
                                  eligibility_step.render_info.next_url)
-
-    def test_if_income_step_then_set_no_additional_info(self):
-        with app.app_context() and app.test_request_context():
-            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
-                                                                     next_step=EligibilityResultDisplaySteuerlotseStep)
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
-                       MagicMock(return_value=self.data_not_eligible)):
-                eligibility_step.handle()
-
-            self.assertRaises(KeyError, lambda: eligibility_step.render_info.additional_info['eligibility_result'])
-
-            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
-                                                                     next_step=EligibilityResultDisplaySteuerlotseStep)
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
-                       MagicMock(return_value=self.data_eligible)):
-                eligibility_step.handle()
-
-            self.assertRaises(KeyError, lambda: eligibility_step.render_info.additional_info['eligibility_result'])
 
 
 class TestEligibilityResultSteuerlotseStepValidateEligibility(unittest.TestCase):
