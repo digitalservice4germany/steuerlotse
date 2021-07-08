@@ -3,7 +3,7 @@ from typing import Optional
 from flask import request, session, url_for, render_template
 from werkzeug.utils import redirect
 
-from app.forms.flows.multistep_flow import RenderInfo, deserialize_session_data, override_session_data, serialize_session_data
+from app.forms.flows.multistep_flow import RenderInfo, deserialize_session_data, serialize_session_data
 
 
 class SteuerlotseStep(object):
@@ -94,7 +94,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         return stored_data
 
     def _post_handle(self, stored_data):
-        override_session_data(stored_data)
+        self._override_session_data(stored_data)
 
         redirection = self._handle_redirects()
         if redirection:
@@ -131,6 +131,10 @@ class FormSteuerlotseStep(SteuerlotseStep):
             if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
                 stored_data.pop(field)
         return stored_data
+
+    @staticmethod
+    def _override_session_data(stored_data):
+        session['form_data'] = serialize_session_data(stored_data)
 
 
 class DisplaySteuerlotseStep(SteuerlotseStep):
