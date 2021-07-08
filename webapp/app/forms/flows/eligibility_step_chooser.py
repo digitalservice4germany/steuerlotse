@@ -6,11 +6,6 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     EligibilityResultDisplaySteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
 
-EligibilityResult = namedtuple(
-    typename='EligibilityResult',
-    field_names=['eligible', 'errors']
-)
-
 
 class NotAllEligibilityCheckParametersProvided(Exception):
     """Exception raised when the input to the eligibility step is faulty.
