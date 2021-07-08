@@ -18,8 +18,7 @@ class TestStepChooserInit(unittest.TestCase):
         self.endpoint_correct = "lotse"
 
     def test_set_attributes_correctly(self):
-        # Only current session and link_overview are set from request
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context():
 
             step_chooser = StepChooser(title="Testing StepChooser", steps=self.testing_steps,
                                        endpoint=self.endpoint_correct)

@@ -181,7 +181,7 @@ class TestLotseInit(unittest.TestCase):
         ]
 
     def test_if_request_has_params_then_set_attributes_correctly(self):
-        # Only current session and link_overview are set from request
+        # Only link_overview is set from request
         with app.app_context() and app.test_request_context() as req:
             req.request.args = {'link_overview': self.set_link_overview}
 
@@ -193,7 +193,6 @@ class TestLotseInit(unittest.TestCase):
             self.assertEqual(StepSummary, flow.overview_step)
 
     def test_if_request_has_no_params_then_set_correct_defaults(self):
-        # Only current session and link_overview are set from request
         with app.app_context() and app.test_request_context():
             flow = LotseMultiStepFlow(endpoint=self.endpoint_correct)
 

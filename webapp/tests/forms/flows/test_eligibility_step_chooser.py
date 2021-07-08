@@ -17,8 +17,7 @@ class TestTestEligibilityChooserInit(unittest.TestCase):
         self.endpoint_correct = "eligibility"
 
     def test_set_attributes_correctly(self):
-        # Only current session and link_overview are set from request
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context():
 
             step_chooser = EligibilityStepChooser(endpoint=self.endpoint_correct)
             self.assertEqual(self.testing_steps[0], step_chooser.first_step)

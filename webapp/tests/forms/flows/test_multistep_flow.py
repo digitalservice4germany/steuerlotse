@@ -29,7 +29,7 @@ class TestMultiStepFlowInit(unittest.TestCase):
         self.set_link_overview = "True"
 
     def test_if_request_has_params_then_set_attributes_correctly(self):
-        # Only current session and link_overview are set from request
+        # Only current link_overview is set from request
         with app.app_context() and app.test_request_context() as req:
             req.request.args = {'link_overview': self.set_link_overview}
 

@@ -20,7 +20,7 @@ from tests.utils import create_session_form_data
 class TestSteuerlotseStepInit(unittest.TestCase):
 
     def test_if_request_has_params_then_set_attributes_correctly(self):
-        # Only current session and link_overview are set from request
+        # Only current link_overview is set from request
         with app.app_context() and app.test_request_context() as req:
             req.request.args = {'link_overview': "True"}
 

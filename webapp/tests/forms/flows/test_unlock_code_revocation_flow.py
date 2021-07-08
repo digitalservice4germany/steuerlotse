@@ -32,10 +32,9 @@ class UnlockCodeRevocationInit(unittest.TestCase):
         ]
 
     def test_if_request_has_params_then_set_attributes_correctly(self):
-        # Only current session and link_overview are set from request
+        # Only current link_overview is set from request
         correct_session = "C3PO"
         with app.app_context() and app.test_request_context() as req:
-            req.session = SecureCookieSession({'session_id': correct_session})
             req.request.args = {'link_overview': self.set_link_overview}
 
             flow = UnlockCodeRevocationMultiStepFlow(endpoint=self.endpoint_correct)
@@ -46,7 +45,6 @@ class UnlockCodeRevocationInit(unittest.TestCase):
             self.assertIsNone(flow.overview_step)
 
     def test_if_request_has_no_params_then_set_correct_defaults(self):
-        # Only current session and link_overview are set from request
         with app.app_context() and app.test_request_context():
             flow = UnlockCodeRevocationMultiStepFlow(endpoint=self.endpoint_correct)
 

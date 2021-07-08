@@ -65,8 +65,6 @@ class SteuerlotseStep(object):
     def render(self):
         raise NotImplementedError
 
-
-
     def url_for_step(self, step_name, _has_link_overview=None, **values):
         """Generate URL for given step and current session."""
         if not _has_link_overview:
@@ -143,18 +141,24 @@ class DisplaySteuerlotseStep(SteuerlotseStep):
 
     def render(self):
         """
-        Renders a display step. Use the render_info to provide all the needed data for rendering.
+        Override this method to render a display step. Use the render_info to provide all the needed data for rendering.
         """
         raise NotImplementedError()
 
 
 class RedirectSteuerlotseStep(SteuerlotseStep):
+    """
+    This step is used only to perform a redirection. It acts a a placeholder step that can be used by the step chooser
+    to return a SteuerlotseStep that should only redirect to another step.
+    """
 
     def __init__(self, redirection_step_name, endpoint, title=None, intro=None, overview_step=None, default_data=None, prev_step=None, next_step=None):
         super(RedirectSteuerlotseStep, self).__init__(title, intro, endpoint, overview_step, default_data, prev_step, next_step)
         self.redirection_step_name = redirection_step_name
 
     def handle(self):
+        # Override handle because this step should do nothing but redirect.
+        # Therefore no _pre_handle or _post_handle are needed.
         return redirect(self.url_for_step(self.redirection_step_name))
 
     def render(self):
