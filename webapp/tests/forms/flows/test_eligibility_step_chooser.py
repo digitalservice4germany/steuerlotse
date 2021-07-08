@@ -2,7 +2,7 @@ import unittest
 
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
-from app.forms.steps.eligibility_steps import EligibilityIncomesFormSteuerlotseStep, EligibilityResultFormSteuerlotseStep, \
+from app.forms.steps.eligibility_steps import EligibilityIncomesFormSteuerlotseStep, EligibilityResultDisplaySteuerlotseStep, \
     EligibilityStartDisplaySteuerlotseStep
 
 
@@ -12,7 +12,7 @@ class TestTestEligibilityChooserInit(unittest.TestCase):
         self.testing_steps = [
             EligibilityStartDisplaySteuerlotseStep,
             EligibilityIncomesFormSteuerlotseStep,
-            EligibilityResultFormSteuerlotseStep
+            EligibilityResultDisplaySteuerlotseStep
         ]
         self.endpoint_correct = "lotse"
 

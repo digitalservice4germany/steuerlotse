@@ -76,12 +76,12 @@ class EligibilityIncomesFormSteuerlotseStep(FormSteuerlotseStep):
         return stored_data
 
 
-class EligibilityResultFormSteuerlotseStep(DisplaySteuerlotseStep):
+class EligibilityResultDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     name = 'result'
 
     def __init__(self, **kwargs):
         kwargs['prev_step'] = EligibilityIncomesFormSteuerlotseStep
-        super(EligibilityResultFormSteuerlotseStep, self).__init__(title=_('form.eligibility.result-title'), **kwargs)
+        super(EligibilityResultDisplaySteuerlotseStep, self).__init__(title=_('form.eligibility.result-title'), **kwargs)
 
     def _main_handle(self, stored_data):
         super()._main_handle(stored_data)

@@ -3,7 +3,7 @@ from collections import namedtuple
 from flask_babel import _
 
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, EligibilityIncomesFormSteuerlotseStep, IncorrectEligibilityData, \
-    EligibilityResultFormSteuerlotseStep
+    EligibilityResultDisplaySteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
 
 EligibilityResult = namedtuple(
@@ -25,7 +25,7 @@ class EligibilityStepChooser(StepChooser):
             steps=[
                 EligibilityStartDisplaySteuerlotseStep,
                 EligibilityIncomesFormSteuerlotseStep,
-                EligibilityResultFormSteuerlotseStep
+                EligibilityResultDisplaySteuerlotseStep
             ],
             endpoint=endpoint,
         )

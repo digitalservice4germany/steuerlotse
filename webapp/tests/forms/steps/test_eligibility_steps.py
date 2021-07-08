@@ -8,10 +8,10 @@ from flask_babel import _, lazy_gettext as _l
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
-from app.forms.steps.eligibility_steps import EligibilityResultFormSteuerlotseStep, IncorrectEligibilityData, \
+from app.forms.steps.eligibility_steps import EligibilityResultDisplaySteuerlotseStep, IncorrectEligibilityData, \
     EligibilityIncomesFormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockRenderStep, MockFormStep, MockFinalStep, \
-    MockEligibilityResultFormStep
+    MockEligibilityResultDisplayStep
 
 
 class TestEligibilityStepChooser(unittest.TestCase):
@@ -78,7 +78,7 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
             babel.side_effect = lambda arg: arg
 
             with app.app_context() and app.test_request_context():
-                eligibility_step = EligibilityResultFormSteuerlotseStep(endpoint=self.endpoint_correct)
+                eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
                 eligibility_step._pre_handle(self.data_eligible)
                 eligibility_step._main_handle(self.data_eligible)
 
@@ -92,7 +92,7 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
             babel.side_effect = lambda arg: arg
 
             with app.app_context() and app.test_request_context():
-                eligibility_step = EligibilityResultFormSteuerlotseStep(endpoint=self.endpoint_correct)
+                eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
                 eligibility_step._pre_handle(self.data_not_eligible)
                 eligibility_step._main_handle(self.data_not_eligible)
 
@@ -100,7 +100,7 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
 
     def test_if_keys_not_in_data_and_income_step_then_return_422(self):
         with app.app_context() and app.test_request_context(method='GET'):
-            eligibility_step = EligibilityResultFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultFormSteuerlotseStep)
+            eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
             eligibility_step._pre_handle(self.data_without_all_keys)
 
             self.assertRaises(IncorrectEligibilityData,
@@ -123,7 +123,7 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
                               'unterhalt': 'no', 'ausland': 'no', 'other': 'no',
                               'verheiratet_zusammenveranlagung': 'yes', 'verheiratet_einzelveranlagung': 'no',
                               'geschieden_zusammenveranlagung': 'no', 'elster_account': 'no'}
-        self.result_url = '/' + self.endpoint_correct + '/step/' + MockEligibilityResultFormStep.name + \
+        self.result_url = '/' + self.endpoint_correct + '/step/' + MockEligibilityResultDisplayStep.name + \
                               '?link_overview='
 
     def test_if_income_step_then_set_next_url_correct(self):
@@ -131,7 +131,7 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
             babel.side_effect = lambda arg: arg
 
             with app.app_context() and app.test_request_context():
-                eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultFormSteuerlotseStep)
+                eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
                 eligibility_step._pre_handle(self.data_not_eligible)
                 eligibility_step._main_handle(self.data_not_eligible)
 
@@ -139,13 +139,13 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
 
     def test_if_income_step_then_set_no_additional_info(self):
         with app.app_context() and app.test_request_context():
-            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultFormSteuerlotseStep)
+            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
             eligibility_step._pre_handle(self.data_not_eligible)
             eligibility_step._main_handle(self.data_not_eligible)
 
             self.assertRaises(KeyError, lambda: eligibility_step.render_info.additional_info['eligibility_result'])
 
-            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultFormSteuerlotseStep)
+            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
             eligibility_step._pre_handle(self.data_eligible)
             eligibility_step._main_handle(self.data_eligible)
 
@@ -277,7 +277,7 @@ class TestEligibilityResultSteuerlotseStepValidateEligibility(unittest.TestCase)
 
         self.endpoint_correct = "eligibility"
         with app.app_context() and app.test_request_context():
-            self.eligiblity_step = EligibilityResultFormSteuerlotseStep(endpoint=self.endpoint_correct)
+            self.eligiblity_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
 
     def test_if_all_keys_in_data_and_all_valid_then_return_empty_list(self):
         for valid_reasons in self.data_valid_all_reasons:
