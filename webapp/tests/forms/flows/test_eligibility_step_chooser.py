@@ -14,7 +14,7 @@ class TestTestEligibilityChooserInit(unittest.TestCase):
             EligibilityIncomesFormSteuerlotseStep,
             EligibilityResultDisplaySteuerlotseStep
         ]
-        self.endpoint_correct = "lotse"
+        self.endpoint_correct = "eligibility"
 
     def test_set_attributes_correctly(self):
         # Only current session and link_overview are set from request

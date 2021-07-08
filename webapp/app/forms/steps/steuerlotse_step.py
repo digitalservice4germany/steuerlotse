@@ -25,12 +25,12 @@ class SteuerlotseStep(object):
         self.has_link_overview = request.args.get('link_overview', False) == 'True'
 
     def handle(self):
-        stored_data = self._get_session_data()
-        stored_data = self._pre_handle(stored_data)
+        stored_data = self._pre_handle()
         stored_data = self._main_handle(stored_data)
         return self._post_handle(stored_data)
 
-    def _pre_handle(self, stored_data):
+    def _pre_handle(self):
+        stored_data = self._get_session_data()
         self.render_info = RenderInfo(step_title=self.title, step_intro=self.intro, form=None,
                                       prev_url=self.url_for_step(self._prev_step.name) if self._prev_step else None,
                                       next_url=self.url_for_step(self._next_step.name) if self._next_step else None,
@@ -84,8 +84,8 @@ class FormSteuerlotseStep(SteuerlotseStep):
         self.form = form
         self.template = template
 
-    def _pre_handle(self, stored_data):
-        stored_data = super()._pre_handle(stored_data)
+    def _pre_handle(self):
+        stored_data = super()._pre_handle()
         form = self.create_form(request, prefilled_data=stored_data)
         if request.method == 'POST' and form.validate():
             stored_data.update(form.data)

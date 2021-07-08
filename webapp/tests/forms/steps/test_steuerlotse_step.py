@@ -211,28 +211,24 @@ class TestSteuerlotseStepHandle(unittest.TestCase):
 
     def test_handle_calls_methods_in_correct_order_and_with_returned_stored_data_from_call_before(self):
         get_session_stored_data = {'location': 'Fowl Manor'}
-        pre_handle_stored_data = {'location': 'Fowl Manor', 'attacker': 'Mulch Diggums'}
         main_handle_stored_data = {'location': 'Fowl Manor', 'attacker': 'Mulch Diggums', 'organisation': 'ZUP'}
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....",
                                                endpoint="WhereItAllStarts")
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
-                       MagicMock(return_value=get_session_stored_data)) as mock_get_session_data, \
-                    patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle",
-                          MagicMock(return_value=pre_handle_stored_data)) as mock_pre_handle, \
+            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle",
+                       MagicMock(return_value=get_session_stored_data)) as mock_pre_handle, \
                     patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle",
                           MagicMock(return_value=main_handle_stored_data)) as mock_main_handle, \
                     patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._post_handle") as mock_post_handle:
                 call_order = MagicMock()
-                call_order.attach_mock(mock_get_session_data, "mock_get_session_data")
                 call_order.attach_mock(mock_pre_handle, "mock_pre_handle")
                 call_order.attach_mock(mock_main_handle, "mock_main_handle")
                 call_order.attach_mock(mock_post_handle, "mock_post_handle")
 
                 steuerlotse_step.handle()
                 call_order.assert_has_calls(
-                    [call.mock_get_session_data(), call.mock_pre_handle(get_session_stored_data),
-                     call.mock_main_handle(pre_handle_stored_data), call.mock_post_handle(main_handle_stored_data)])
+                    [call.mock_pre_handle(),
+                     call.mock_main_handle(get_session_stored_data), call.mock_post_handle(main_handle_stored_data)])
 
     def test_handle_returns_result_from_post_handle(self):
         post_handle_stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
@@ -258,7 +254,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(title=title, intro=intro, endpoint=correct_endpoint)
             steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle(None)
+            steuerlotse_step._pre_handle()
 
             expected_render_info = RenderInfo(step_title=title, step_intro=intro, form=None, prev_url=None,
                                               next_url=None, submit_url=url_for(endpoint=correct_endpoint,
@@ -280,7 +276,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
                                                prev_step=prev_step,
                                                next_step=next_step)
             steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle(None)
+            steuerlotse_step._pre_handle()
 
             expected_render_info = RenderInfo(step_title=title, step_intro=intro, form=None,
                                               prev_url=url_for(endpoint=correct_endpoint,
@@ -305,7 +301,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(title=title, intro=intro, endpoint=correct_endpoint)
             steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle(None)
+            steuerlotse_step._pre_handle()
 
             steuerlotse_step.render_info.overview_url = overview_url
 
@@ -320,11 +316,13 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
     def test_pre_handle_returns_stored_data_untouched(self):
         data = {'father': 'Mufasa'}
 
-        with app.app_context() and app.test_request_context():
+        with app.app_context() and app.test_request_context(), \
+                patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                      MagicMock(return_value=data)):
             steuerlotse_step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....", endpoint="lotse")
             steuerlotse_step.name = "This is the one"
 
-            return_stored_data = steuerlotse_step._pre_handle(data)
+            return_stored_data = steuerlotse_step._pre_handle()
 
             self.assertEqual(data, return_stored_data)
 
@@ -336,7 +334,7 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....", endpoint="lotse")
             steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle(stored_data)
+            steuerlotse_step._pre_handle()
 
             with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()) as step_render:
                 post_result = steuerlotse_step._post_handle(stored_data)
@@ -349,7 +347,7 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(title="The Steuerlotse I", intro="Not so long ago....", endpoint="lotse")
             steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle(stored_data)
+            steuerlotse_step._pre_handle()
 
             redirect_url = url_for(endpoint="lotse", step="RedirectToThis",
                                    link_overview=steuerlotse_step.has_link_overview)
@@ -435,7 +433,7 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
         resulting_session = run_handle(mock_yesno_step, 'POST', {'yes_no_field': 'yes'})
         resulting_session = run_handle(mock_yesno_step, 'POST', {}, resulting_session)
         self.assertEqual({'yes_no_field': None}, deserialize_session_data(resulting_session['form_data'],
-                                                                        app.config['PERMANENT_SESSION_LIFETIME']))
+                                                                          app.config['PERMANENT_SESSION_LIFETIME']))
 
 
 class TestSteuerlotseStep(unittest.TestCase):

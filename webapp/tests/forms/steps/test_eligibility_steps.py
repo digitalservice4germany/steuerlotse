@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from werkzeug.exceptions import NotFound
 
@@ -74,10 +74,11 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
                                     _l('form.eligibility.error-incorrect-unterhalt')]
 
     def test_if_eligible_then_add_no_errors(self):
-        with app.app_context() and app.test_request_context():
+        with app.app_context() and app.test_request_context(), \
+                patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                      MagicMock(return_value=self.data_eligible)):
             eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
-            eligibility_step._pre_handle(self.data_eligible)
-            eligibility_step._main_handle(self.data_eligible)
+            eligibility_step.handle()
 
             self.assertEqual([], eligibility_step.render_info.additional_info['eligibility_errors'])
 
@@ -85,21 +86,23 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
         not_eligible_errors = [_l('form.eligibility.error-incorrect-renten'),
                                _l('form.eligibility.error-incorrect-erwerbstaetigkeit'),
                                _l('form.eligibility.error-incorrect-unterhalt')]
-        with app.app_context() and app.test_request_context():
+        with app.app_context() and app.test_request_context(), \
+                patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                      MagicMock(return_value=self.data_not_eligible)):
             eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
-            eligibility_step._pre_handle(self.data_not_eligible)
-            eligibility_step._main_handle(self.data_not_eligible)
+            eligibility_step.handle()
 
             self.assertEqual(not_eligible_errors, eligibility_step.render_info.additional_info['eligibility_errors'])
 
-    def test_if_keys_not_in_data_and_income_step_then_return_422(self):
-        with app.app_context() and app.test_request_context(method='GET'):
+    def test_if_keys_not_in_data_and_income_step_then_raise_incorrect_eligibility_error(self):
+        with app.app_context() and app.test_request_context(method='GET'), \
+                patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                      MagicMock(return_value=self.data_without_all_keys)):
             eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct,
                                                                        next_step=EligibilityResultDisplaySteuerlotseStep)
-            eligibility_step._pre_handle(self.data_without_all_keys)
 
             self.assertRaises(IncorrectEligibilityData,
-                              eligibility_step._main_handle, self.data_without_all_keys)
+                              eligibility_step.handle)
 
 
 class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
@@ -125,11 +128,12 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
         with patch("app.forms.steps.eligibility_steps._") as babel:
             babel.side_effect = lambda arg: arg
 
-            with app.app_context() and app.test_request_context():
+            with app.app_context() and app.test_request_context(), \
+                    patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                          MagicMock(return_value=self.data_not_eligible)):
                 eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
                                                                          next_step=EligibilityResultDisplaySteuerlotseStep)
-                eligibility_step._pre_handle(self.data_not_eligible)
-                eligibility_step._main_handle(self.data_not_eligible)
+                eligibility_step.handle()
 
                 self.assertEqual(self.result_url + str(eligibility_step.has_link_overview),
                                  eligibility_step.render_info.next_url)
@@ -138,15 +142,17 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
                                                                      next_step=EligibilityResultDisplaySteuerlotseStep)
-            eligibility_step._pre_handle(self.data_not_eligible)
-            eligibility_step._main_handle(self.data_not_eligible)
+            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                       MagicMock(return_value=self.data_not_eligible)):
+                eligibility_step.handle()
 
             self.assertRaises(KeyError, lambda: eligibility_step.render_info.additional_info['eligibility_result'])
 
             eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
                                                                      next_step=EligibilityResultDisplaySteuerlotseStep)
-            eligibility_step._pre_handle(self.data_eligible)
-            eligibility_step._main_handle(self.data_eligible)
+            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
+                       MagicMock(return_value=self.data_eligible)):
+                eligibility_step.handle()
 
             self.assertRaises(KeyError, lambda: eligibility_step.render_info.additional_info['eligibility_result'])
 
