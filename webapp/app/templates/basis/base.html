@@ -24,7 +24,7 @@
         <script async defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>
     {% endif %}
     <title>{{ _('page.title.error-prefix') if form and form.errors else '' }}
-        {{ header_title if header_title else _('page.title') }}</title>
+        {{ header_title if header_title else render_info.header_title if render_info and render_info.header_title else _('page.title') }}</title>
 </head>
 
 <body>

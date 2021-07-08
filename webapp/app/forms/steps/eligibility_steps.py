@@ -14,24 +14,26 @@ from app.model.eligibility_data import ExpectedEligibility, InvalidEligiblityErr
 
 class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     name = 'welcome'
+    title = _l('form.eligibility.start-title')
+    intro = _l('form.eligibility.start-intro')
+    template = 'basis/display_standard.html'
 
     def __init__(self, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(
-            title=_('form.eligibility.start-title'),
-            intro=_('form.eligibility.start-intro'), **kwargs)
+            header_title=_('form.eligibility.header-title'),
+            **kwargs)
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
         return stored_data
 
-    def render(self):
-        return render_template('basis/display_standard.html', render_info=self.render_info,
-                               header_title=_('form.eligibility.header-title'))
-
 
 class EligibilityIncomesFormSteuerlotseStep(FormSteuerlotseStep):
     name = 'incomes'
+    title = _l('form.eligibility.income-title')
+    intro = _l('form.eligibility.income-intro')
+    template = 'eligibility/form_incomes.html'
 
     class IncomesForm(SteuerlotseBaseForm):
         renten = YesNoField(_l('form.eligibility.income-renten'))
@@ -61,14 +63,13 @@ class EligibilityIncomesFormSteuerlotseStep(FormSteuerlotseStep):
             render_kw={'detail': {'title': _l('form.eligibility.elster-account.detail.title'),
                                   'text': _l('form.eligibility.elster-account-help')}})
 
-    def __init__(self, **kwargs):
+    def __init__(self, endpoint, **kwargs):
         super(EligibilityIncomesFormSteuerlotseStep, self).__init__(
-            title=_('form.eligibility.income-title'),
-            intro=_('form.eligibility.income-intro'),
             form=self.IncomesForm,
-            **kwargs,
+            endpoint=endpoint,
             header_title=_('form.eligibility.header-title'),
-            template='eligibility/form_incomes.html')
+            **kwargs,
+            )
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
@@ -78,10 +79,11 @@ class EligibilityIncomesFormSteuerlotseStep(FormSteuerlotseStep):
 
 class EligibilityResultDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     name = 'result'
+    title = _l('form.eligibility.result-title')
 
-    def __init__(self, **kwargs):
+    def __init__(self, endpoint, **kwargs):
         kwargs['prev_step'] = EligibilityIncomesFormSteuerlotseStep
-        super(EligibilityResultDisplaySteuerlotseStep, self).__init__(title=_('form.eligibility.result-title'), **kwargs)
+        super(EligibilityResultDisplaySteuerlotseStep, self).__init__(endpoint=endpoint, header_title=None, **kwargs)
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)

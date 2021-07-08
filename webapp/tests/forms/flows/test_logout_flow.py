@@ -33,8 +33,7 @@ class TestLogoutHandleSpecificsForStep(unittest.TestCase):
             self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
                                                      form=None, prev_url=None, next_url=None,
                                                      submit_url=self.flow.url_for_step(self.input_step.name),
-                                                     overview_url="Overview URL",
-                                                     flow_nav=self.flow._get_flow_nav(self.input_step))
+                                                     overview_url="Overview URL")
 
     def test_removes_all_stored_data(self):
         with app.test_request_context(method='POST', data={'confirm_logout': True}):

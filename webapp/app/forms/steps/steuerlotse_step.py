@@ -9,15 +9,16 @@ from app.forms.flows.multistep_flow import RenderInfo, deserialize_session_data,
 class SteuerlotseStep(object):
     """An abstract step that provides default implementations of the handle functions"""
     name = None
+    title = None
+    intro = None
+    template = None
 
-    def __init__(self, title, intro, endpoint, overview_step=None, default_data=None, prev_step=None, next_step=None, header_title=None):
-        self.title = title
-        self.intro = intro
+    def __init__(self, endpoint, header_title, overview_step, default_data, prev_step, next_step):
         self.endpoint = endpoint
+        self.header_title = header_title
         self.overview_step = overview_step
         self._prev_step = prev_step
         self._next_step = next_step
-        self.header_title = header_title
         self.render_info = None
 
         self.default_data = default_data
@@ -35,7 +36,8 @@ class SteuerlotseStep(object):
                                       prev_url=self.url_for_step(self._prev_step.name) if self._prev_step else None,
                                       next_url=self.url_for_step(self._next_step.name) if self._next_step else None,
                                       submit_url=self.url_for_step(self.name), overview_url=self.url_for_step(
-                self.overview_step.name) if self.has_link_overview and self.overview_step else None)
+                self.overview_step.name) if self.has_link_overview and self.overview_step else None,
+                                      header_title=self.header_title)
         return stored_data
 
     def _main_handle(self, stored_data):
@@ -78,12 +80,12 @@ class SteuerlotseStep(object):
 
 
 class FormSteuerlotseStep(SteuerlotseStep):
+    template = 'basis/form_full_width.html'
 
-    def __init__(self, title, form, intro=None, endpoint=None, overview_step=None, default_data=None, prev_step=None, next_step=None, header_title=None,
-                 template='basis/form_full_width.html'):
-        super(FormSteuerlotseStep, self).__init__(title, intro, endpoint, overview_step, default_data, prev_step, next_step, header_title)
+    def __init__(self, form, endpoint, header_title, overview_step=None, default_data=None, prev_step=None,
+                 next_step=None,):
+        super(FormSteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
         self.form = form
-        self.template = template
 
     def _pre_handle(self):
         stored_data = super()._pre_handle()
@@ -121,8 +123,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         return render_template(
             template_name_or_list=self.template,
             form=self.render_info.form,
-            render_info=self.render_info,
-            header_title=self.header_title
+            render_info=self.render_info
         )
 
     @staticmethod
@@ -139,14 +140,14 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
-    def __init__(self, title, intro=None, endpoint=None, overview_step=None, default_data=None, prev_step=None, next_step=None):
-        super(DisplaySteuerlotseStep, self).__init__(title, intro, endpoint, overview_step, default_data, prev_step, next_step)
+    def __init__(self, endpoint, header_title, overview_step, default_data=None, prev_step=None, next_step=None):
+        super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
 
     def render(self):
         """
-        Override this method to render a display step. Use the render_info to provide all the needed data for rendering.
+        Render a display step. Use the render_info to provide all the needed data for rendering.
         """
-        raise NotImplementedError()
+        return render_template(template_name_or_list=self.template, render_info=self.render_info)
 
 
 class RedirectSteuerlotseStep(SteuerlotseStep):
@@ -155,8 +156,8 @@ class RedirectSteuerlotseStep(SteuerlotseStep):
     to return a SteuerlotseStep that should only redirect to another step.
     """
 
-    def __init__(self, redirection_step_name, endpoint, title=None, intro=None, overview_step=None, default_data=None, prev_step=None, next_step=None):
-        super(RedirectSteuerlotseStep, self).__init__(title, intro, endpoint, overview_step, default_data, prev_step, next_step)
+    def __init__(self, redirection_step_name, endpoint, header_title=None, overview_step=None, default_data=None, prev_step=None, next_step=None):
+        super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
         self.redirection_step_name = redirection_step_name
 
     def handle(self):

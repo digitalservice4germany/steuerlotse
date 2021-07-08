@@ -619,16 +619,14 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                       prev_url=self.flow.url_for_step(prev_step.name),
                                                       next_url=self.flow.url_for_step(next_step.name),
                                                       submit_url=self.flow.url_for_step(self.middle_step.name),
-                                                      overview_url="Overview URL",
-                                                      flow_nav=self.flow._get_flow_nav(self.middle_step))
+                                                      overview_url="Overview URL")
 
             prev_step, self.form_step, next_step = self.flow._generate_steps(MockFormStep.name)
             self.render_info_form_step = RenderInfo(step_title=self.form_step.title, step_intro=self.form_step.intro,
                                                     form=None, prev_url=self.flow.url_for_step(prev_step.name),
                                                     next_url=self.flow.url_for_step(next_step.name),
                                                     submit_url=self.flow.url_for_step(self.form_step.name),
-                                                    overview_url="Overview URL",
-                                                    flow_nav=self.flow._get_flow_nav(self.form_step))
+                                                    overview_url="Overview URL")
 
             prev_step, self.confirmation_step, next_step = self.flow._generate_steps(MockConfirmationStep.name)
             self.render_info_confirmation_step = RenderInfo(step_title=self.confirmation_step.title,
@@ -637,16 +635,14 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                             next_url=self.flow.url_for_step(next_step.name),
                                                             submit_url=self.flow.url_for_step(
                                                                 self.confirmation_step.name),
-                                                            overview_url="Overview URL",
-                                                            flow_nav=self.flow._get_flow_nav(self.confirmation_step))
+                                                            overview_url="Overview URL")
 
             prev_step, self.filing_step, next_step = self.flow._generate_steps(MockFilingStep.name)
             self.render_info_filing_step = RenderInfo(step_title=self.filing_step.title,
                                                       step_intro=self.filing_step.intro, form=None, prev_url=None,
                                                       next_url=self.flow.url_for_step(next_step.name),
                                                       submit_url=self.flow.url_for_step(self.filing_step.name),
-                                                      overview_url=None,
-                                                      flow_nav=self.flow._get_flow_nav(self.filing_step))
+                                                      overview_url=None)
             self.ack_elster_data = {'was_successful': True,
                                     'pdf': 'PDF CONTENT',
                                     'eric_response': 'Could we get the bill, please?',
@@ -659,8 +655,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                        prev_url=self.flow.url_for_step(prev_step.name),
                                                        next_url=self.flow.url_for_step(self.filing_step.name),
                                                        submit_url=self.flow.url_for_step(self.filing_step.name),
-                                                       overview_url=None,
-                                                       flow_nav=self.flow._get_flow_nav(self.filing_step))
+                                                       overview_url=None)
 
             prev_step, self.declaration_incomes_step, next_step = self.flow._generate_steps(
                 MockDeclarationIncomesStep.name)
@@ -671,9 +666,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                                    next_url=self.flow.url_for_step(next_step.name),
                                                                    submit_url=self.flow.url_for_step(
                                                                        self.declaration_incomes_step.name),
-                                                                   overview_url="Overview URL",
-                                                                   flow_nav=self.flow._get_flow_nav(
-                                                                       self.declaration_incomes_step))
+                                                                   overview_url="Overview URL")
 
             prev_step, self.declaration_edaten_step, next_step = self.flow._generate_steps(
                 MockDeclarationEdatenStep.name)
@@ -684,9 +677,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                                   next_url=self.flow.url_for_step(next_step.name),
                                                                   submit_url=self.flow.url_for_step(
                                                                       self.declaration_edaten_step.name),
-                                                                  overview_url="Overview URL",
-                                                                  flow_nav=self.flow._get_flow_nav(
-                                                                      self.declaration_edaten_step))
+                                                                  overview_url="Overview URL")
 
             prev_step, self.familienstand_step, next_step = self.flow._generate_steps(MockFamilienstandStep.name)
             self.render_info_familienstand_step = RenderInfo(step_title=self.familienstand_step.title,
@@ -695,8 +686,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                              next_url=self.flow.url_for_step(next_step.name),
                                                              submit_url=self.flow.url_for_step(
                                                                  self.familienstand_step.name),
-                                                             overview_url="Overview URL",
-                                                             flow_nav=self.flow._get_flow_nav(self.familienstand_step))
+                                                             overview_url="Overview URL")
 
             prev_step, self.personA_step, next_step = self.flow._generate_steps(MockPersonAStep.name)
             self.render_info_personA_step = RenderInfo(step_title=self.personA_step.title,
@@ -704,8 +694,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                        prev_url=self.flow.url_for_step(prev_step.name),
                                                        next_url=self.flow.url_for_step(next_step.name),
                                                        submit_url=self.flow.url_for_step(self.personA_step.name),
-                                                       overview_url="Overview URL",
-                                                       flow_nav=self.flow._get_flow_nav(self.personA_step))
+                                                       overview_url="Overview URL")
 
             prev_step, self.personB_step, next_step = self.flow._generate_steps(MockPersonBStep.name)
             self.render_info_personB_step = RenderInfo(step_title=self.personB_step.title,
@@ -713,16 +702,14 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                        prev_url=self.flow.url_for_step(prev_step.name),
                                                        next_url=self.flow.url_for_step(next_step.name),
                                                        submit_url=self.flow.url_for_step(self.personB_step.name),
-                                                       overview_url="Overview URL",
-                                                       flow_nav=self.flow._get_flow_nav(self.personB_step))
+                                                       overview_url="Overview URL")
 
             prev_step, self.iban_step, next_step = self.flow._generate_steps(MockIbanStep.name)
             self.render_info_iban_step = RenderInfo(step_title=self.iban_step.title, step_intro=self.iban_step.intro,
                                                     form=None, prev_url=self.flow.url_for_step(prev_step.name),
                                                     next_url=self.flow.url_for_step(next_step.name),
                                                     submit_url=self.flow.url_for_step(self.iban_step.name),
-                                                    overview_url="Overview URL",
-                                                    flow_nav=self.flow._get_flow_nav(self.iban_step))
+                                                    overview_url="Overview URL")
 
             self.data_married = {'familienstand': 'married',
                                  'familienstand_married_lived_separated': 'no',
@@ -744,8 +731,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                              step_intro=self.st_mind_yesno_step.intro, form=None,
                                                              prev_url=self.flow.url_for_step(prev_step.name),
                                                              next_url=None, submit_url=self.flow.url_for_step(
-                    self.st_mind_yesno_step.name), overview_url="Overview URL",
-                                                             flow_nav=self.flow._get_flow_nav(self.st_mind_yesno_step))
+                    self.st_mind_yesno_step.name), overview_url="Overview URL")
             self.st_mind_yesno_url = '/' + self.endpoint_correct + '/step/' + StepSteuerminderungYesNo.name + \
                                      '?link_overview=' + str(self.flow.has_link_overview)
             self.st_mind_yes_url = self.render_info_st_mind_yesno_step.next_url
@@ -762,8 +748,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                              next_url=self.flow.url_for_step(next_step.name),
                                                              submit_url=self.flow.url_for_step(
                                                                  self.haushaltsnahe_step.name),
-                                                             overview_url="Overview URL",
-                                                             flow_nav=self.flow._get_flow_nav(self.haushaltsnahe_step))
+                                                             overview_url="Overview URL")
 
             self.data_handwerker_yes = {'stmind_handwerker_summe': Decimal(1.0),
                                         'stmind_handwerker_entries': 'Badezimmer',
@@ -775,8 +760,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                           prev_url=self.flow.url_for_step(prev_step.name),
                                                           next_url=self.flow.url_for_step(next_step.name),
                                                           submit_url=self.flow.url_for_step(self.handwerker_step.name),
-                                                          overview_url="Overview URL",
-                                                          flow_nav=self.flow._get_flow_nav(self.handwerker_step))
+                                                          overview_url="Overview URL")
             self.handwerker_url = '/' + self.endpoint_correct + '/step/' + StepHandwerker.name + \
                                   '?link_overview=' + str(self.flow.has_link_overview)
             self.handwerker_yes_url = self.render_info_handwerker_step.next_url
@@ -792,9 +776,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                         prev_url=self.flow.url_for_step(prev_step.name),
                                                         next_url=self.flow.url_for_step(next_step.name),
                                                         submit_url=self.flow.url_for_step(
-                                                            self.religion_step.name), overview_url="Overview URL",
-                                                        flow_nav=self.flow._get_flow_nav(
-                                                            self.religion_step))
+                                                            self.religion_step.name), overview_url="Overview URL")
             self.religion_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
 

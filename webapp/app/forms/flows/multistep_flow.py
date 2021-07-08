@@ -13,17 +13,18 @@ from app.forms.steps.step import FormStep
 
 
 class RenderInfo(object):
-    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, flow_nav=None):
+    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None):
         self.step_title = step_title
         self.step_intro = step_intro
+        self.header_title = None
         self.form = form
         self.prev_url = prev_url
         self.next_url = next_url
         self.submit_url = submit_url
         self.overview_url = overview_url
-        self.flow_nav = flow_nav
-        self.additional_info = {}
+        self.header_title = header_title
         self.redirect_url = None
+        self.additional_info = {}
 
     def __eq__(self, other):
         if isinstance(other, RenderInfo):
@@ -34,7 +35,6 @@ class RenderInfo(object):
                    self.next_url == other.next_url and \
                    self.submit_url == other.submit_url and \
                    self.overview_url == other.overview_url and \
-                   self.flow_nav == other.flow_nav and \
                    self.additional_info == other.additional_info and \
                    self.redirect_url == other.redirect_url
         return False
@@ -111,8 +111,7 @@ class MultiStepFlow:
                                  prev_url=self.url_for_step(prev_step.name) if prev_step else None,
                                  next_url=self.url_for_step(next_step.name) if next_step else None,
                                  submit_url=self.url_for_step(step.name), overview_url=self.url_for_step(
-                self.overview_step.name) if self.has_link_overview and self.overview_step else None,
-                                 flow_nav=self._get_flow_nav(step))
+                self.overview_step.name) if self.has_link_overview and self.overview_step else None)
 
         render_info, stored_data = self._handle_specifics_for_step(step, render_info, stored_data)
         override_session_data(stored_data)

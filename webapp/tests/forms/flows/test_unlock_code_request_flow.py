@@ -162,8 +162,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
                                                        next_url=self.flow.url_for_step(
                                                            next_step.name) if next_step else None,
                                                        submit_url=self.flow.url_for_step(self.success_step),
-                                                       overview_url="Overview URL",
-                                                       flow_nav=self.flow._get_flow_nav(self.success_step))
+                                                       overview_url="Overview URL")
 
             prev_step, self.input_step, next_step = self.flow._generate_steps(MockUnlockCodeRequestInputStep.name)
             self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
@@ -171,8 +170,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
                                                      next_url=self.flow.url_for_step(
                                                          next_step.name) if next_step else None,
                                                      submit_url=self.flow.url_for_step(self.input_step),
-                                                     overview_url="Overview URL",
-                                                     flow_nav=self.flow._get_flow_nav(self.input_step))
+                                                     overview_url="Overview URL")
 
     def test_if_success_step_then_remove_next_url(self):
         with app.app_context() and app.test_request_context():

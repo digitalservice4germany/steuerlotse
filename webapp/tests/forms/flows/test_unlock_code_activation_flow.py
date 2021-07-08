@@ -155,8 +155,7 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
                                                      form=None, prev_url=self.flow.url_for_step(prev_step.name),
                                                      next_url=self.flow.url_for_step(next_step.name),
                                                      submit_url=self.flow.url_for_step(self.input_step.name),
-                                                     overview_url="Overview URL",
-                                                     flow_nav=self.flow._get_flow_nav(self.input_step))
+                                                     overview_url="Overview URL")
 
     def test_if_user_inactive_and_unlock_code_request_got_through_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'

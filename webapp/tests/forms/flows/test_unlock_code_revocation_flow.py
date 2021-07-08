@@ -152,16 +152,14 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                                                        prev_url=self.flow.url_for_step(prev_step.name),
                                                        next_url=self.flow.url_for_step(next_step.name),
                                                        submit_url=self.flow.url_for_step(self.success_step.name),
-                                                       overview_url="Overview URL",
-                                                       flow_nav=self.flow._get_flow_nav(self.success_step))
+                                                       overview_url="Overview URL")
 
             prev_step, self.input_step, next_step = self.flow._generate_steps(MockUnlockCodeRevocationInputStep.name)
             self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
                                                      form=None, prev_url=self.flow.url_for_step(prev_step.name),
                                                      next_url=self.flow.url_for_step(next_step.name),
                                                      submit_url=self.flow.url_for_step(self.input_step.name),
-                                                     overview_url="Overview URL",
-                                                     flow_nav=self.flow._get_flow_nav(self.input_step))
+                                                     overview_url="Overview URL")
 
     def test_if_user_exists_and_dob_correct_and_unlock_code_revocation_got_through_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
