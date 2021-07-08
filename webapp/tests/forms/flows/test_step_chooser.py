@@ -1,5 +1,6 @@
 import unittest
 
+from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app import app
@@ -8,7 +9,6 @@ from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
     MockRenderStep, MockFormStep
-from tests.utils import run_handle
 
 
 class TestStepChooserInit(unittest.TestCase):
@@ -100,9 +100,9 @@ class TestInteractionBetweenSteps(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
 
-        session = run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
-        session = run_handle(step_chooser, MockRenderStep.name, method='GET', session=session)
-        session = run_handle(step_chooser, MockFormStep.name, method='GET', session=session)
+        session = self.run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
+        session = self.run_handle(step_chooser, MockRenderStep.name, method='GET', session=session)
+        session = self.run_handle(step_chooser, MockFormStep.name, method='GET', session=session)
         self.assertTrue(set(original_data).issubset(
             set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
 
@@ -115,9 +115,22 @@ class TestInteractionBetweenSteps(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
 
-        session = run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
-        session = run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=adapted_data, session=session)
-        session = run_handle(step_chooser, MockRenderStep.name, method='GET', session=session)
-        session = run_handle(step_chooser, MockFormStep.name, method='GET', session=session)
+        session = self.run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
+        session = self.run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=adapted_data, session=session)
+        session = self.run_handle(step_chooser, MockRenderStep.name, method='GET', session=session)
+        session = self.run_handle(step_chooser, MockFormStep.name, method='GET', session=session)
         self.assertTrue(set(adapted_data).issubset(
             set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
+
+    @staticmethod
+    def run_handle(step_chooser: StepChooser, step_name, method='GET', form_data=None, session=None):
+        with app.app_context() and app.test_request_context(method=method) as req:
+            if not form_data:
+                form_data = {}
+            req.request.form = ImmutableMultiDict(form_data)
+            if session is not None:
+                req.session = session
+
+            step_chooser.get_correct_step(step_name).handle()
+
+            return req.session

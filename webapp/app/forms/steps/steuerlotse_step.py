@@ -140,7 +140,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
-    def __init__(self, endpoint, header_title, overview_step, default_data=None, prev_step=None, next_step=None):
+    def __init__(self, endpoint, header_title, overview_step=None, default_data=None, prev_step=None, next_step=None):
         super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
 
     def render(self):

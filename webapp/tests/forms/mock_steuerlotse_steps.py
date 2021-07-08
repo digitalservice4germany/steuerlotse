@@ -25,40 +25,46 @@ from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationInp
 class MockStartStep(SteuerlotseStep):
     name = 'mock_start_step'
 
-    def __init__(self, **kwargs):
+    def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockStartStep, self).__init__(
-            title='The First Step',
-            intro='In a galaxy far far away',
+            header_title=header_title,
+            default_data=default_data,
             **kwargs)
 
 
 class MockMiddleStep(SteuerlotseStep):
     name = 'mock_middle_step'
+    title = 'The Middle',
+    intro = 'The one where the empire strikes back'
 
-    def __init__(self, **kwargs):
+    def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockMiddleStep, self).__init__(
-            title='The Middle',
-            intro='The one where the empire strikes back',
+            header_title=header_title,
+            default_data=default_data,
             **kwargs)
 
 
 class MockFinalStep(SteuerlotseStep):
     name = 'mock_final_step'
+    title = 'The Finale'
+    intro = 'The one with the ewoks'
 
-    def __init__(self, **kwargs):
+    def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockFinalStep, self).__init__(
-            title='The Finale',
-            intro='The one with the ewoks',
+            header_title=header_title,
+            default_data=default_data,
             **kwargs)
 
 
 class MockRenderStep(SteuerlotseStep):
     name = 'mock_render_step'
+    title = 'The Rendering'
+    intro = 'Nice, this one can also render'
 
-    def __init__(self, **kwargs):
+    def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockRenderStep, self).__init__(
-            title='The Rendering',
-            intro='Nice, this one can also render',
+            header_title=header_title,
+            default_data=default_data,
             **kwargs)
 
     def render(self):
@@ -78,12 +84,13 @@ class MockFormWithInput(MockForm):
 
 class MockFormStep(FormSteuerlotseStep):
     name = 'mock_form_step'
+    title = 'The Form'
+    intro = 'The form is strong with you'
 
-    def __init__(self, **kwargs):
+    def __init__(self, header_title=None, **kwargs):
         super(MockFormStep, self).__init__(
-            title='The Form',
             form=None,
-            intro='The form is strong with you',
+            header_title=header_title,
             **kwargs)
 
     def create_form(self, request, prefilled_data):
@@ -111,11 +118,12 @@ class MockYesNoForm(SteuerlotseBaseForm):
 
 class MockYesNoStep(FormSteuerlotseStep):
     name = 'yes_no_step'
+    title = 'yes_no_title'
 
     def __init__(self, **kwargs):
         super(MockYesNoStep, self).__init__(
-            title='yes_no_title',
             form=MockYesNoForm,
+            header_title="Yes or No",
             **kwargs
         )
 
