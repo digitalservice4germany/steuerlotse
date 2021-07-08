@@ -92,10 +92,9 @@ class EligibilityResultDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     @staticmethod
     def _validate_eligibility(stored_data):
         """
-        Method to find find out whether a user is eligible to use the Steuerlotse and give errors for this result.
+        Method to find out whether a user is eligible to use the Steuerlotse and give errors for this result.
 
-        :return: eligibility_result
-        :rtype: EligibilityResult
+        :return: list of validity errors
         """
         errors = []
         missing_inputs = []

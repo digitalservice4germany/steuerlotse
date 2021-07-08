@@ -6,9 +6,10 @@ from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlots
 
 
 class StepChooser:
-    """A StepChooser represents an arrangement of steps and allows to find the correct step to handle
-     an incoming request. The current step can be chosen through the URL while the data for the context
-     is stored in the session.
+    """A StepChooser represents an arrangement of steps and allows to find the correct step to handle an incoming
+    request. The current step is determined by the URL (e.g. 'specific_flow / step / second_step' determines the
+    second_step of the specific_flow). Relevant data for the current session (e.g. data from form input) is stored in
+    the session cookie.
     """
     _DEBUG_DATA = None
 
