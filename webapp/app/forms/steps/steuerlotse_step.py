@@ -39,6 +39,7 @@ class SteuerlotseStep(object):
         return stored_data
 
     def _main_handle(self, stored_data):
+        """ Main method to handle specific behavior of a step. Override this method for specific behavior."""
         return stored_data
 
     def _post_handle(self, stored_data):
