@@ -97,13 +97,13 @@ class EligibilityResultDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         :return: list of validity errors
         """
         errors = []
-        missing_inputs = []
+        has_missing_inputs = False
         try:
             ExpectedEligibility.parse_obj(stored_data)
         except ValidationError as e:
             errors = [raw_e.exc.message for raw_e in e.raw_errors if isinstance(raw_e.exc, InvalidEligiblityError)]
-            missing_inputs = [raw_e.exc for raw_e in e.raw_errors if isinstance(raw_e.exc, MissingError)]
-        if not errors and missing_inputs:
+            has_missing_inputs = any([raw_e for raw_e in e.raw_errors if isinstance(raw_e.exc, MissingError)])
+        if not errors and has_missing_inputs:
             raise IncorrectEligibilityData
         return errors
 

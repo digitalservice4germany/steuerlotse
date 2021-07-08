@@ -74,33 +74,28 @@ class TestEligibilityResultSteuerlotseStepHandle(unittest.TestCase):
                                     _l('form.eligibility.error-incorrect-unterhalt')]
 
     def test_if_eligible_then_add_no_errors(self):
-        with patch("app.forms.steps.eligibility_steps._") as babel:
-            babel.side_effect = lambda arg: arg
+        with app.app_context() and app.test_request_context():
+            eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
+            eligibility_step._pre_handle(self.data_eligible)
+            eligibility_step._main_handle(self.data_eligible)
 
-            with app.app_context() and app.test_request_context():
-                eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
-                eligibility_step._pre_handle(self.data_eligible)
-                eligibility_step._main_handle(self.data_eligible)
-
-                self.assertEqual([], eligibility_step.render_info.additional_info['eligibility_errors'])
+            self.assertEqual([], eligibility_step.render_info.additional_info['eligibility_errors'])
 
     def test_if_not_eligible_then_add_correct_errors(self):
         not_eligible_errors = [_l('form.eligibility.error-incorrect-renten'),
-                                        _l('form.eligibility.error-incorrect-erwerbstaetigkeit'),
-                                        _l('form.eligibility.error-incorrect-unterhalt')]
-        with patch("app.forms.steps.eligibility_steps._") as babel:
-            babel.side_effect = lambda arg: arg
+                               _l('form.eligibility.error-incorrect-erwerbstaetigkeit'),
+                               _l('form.eligibility.error-incorrect-unterhalt')]
+        with app.app_context() and app.test_request_context():
+            eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
+            eligibility_step._pre_handle(self.data_not_eligible)
+            eligibility_step._main_handle(self.data_not_eligible)
 
-            with app.app_context() and app.test_request_context():
-                eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct)
-                eligibility_step._pre_handle(self.data_not_eligible)
-                eligibility_step._main_handle(self.data_not_eligible)
-
-                self.assertEqual(not_eligible_errors, eligibility_step.render_info.additional_info['eligibility_errors'])
+            self.assertEqual(not_eligible_errors, eligibility_step.render_info.additional_info['eligibility_errors'])
 
     def test_if_keys_not_in_data_and_income_step_then_return_422(self):
         with app.app_context() and app.test_request_context(method='GET'):
-            eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
+            eligibility_step = EligibilityResultDisplaySteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                       next_step=EligibilityResultDisplaySteuerlotseStep)
             eligibility_step._pre_handle(self.data_without_all_keys)
 
             self.assertRaises(IncorrectEligibilityData,
@@ -124,28 +119,32 @@ class TestEligibilityIncomesSteuerlotseStepHandle(unittest.TestCase):
                               'verheiratet_zusammenveranlagung': 'yes', 'verheiratet_einzelveranlagung': 'no',
                               'geschieden_zusammenveranlagung': 'no', 'elster_account': 'no'}
         self.result_url = '/' + self.endpoint_correct + '/step/' + MockEligibilityResultDisplayStep.name + \
-                              '?link_overview='
+                          '?link_overview='
 
     def test_if_income_step_then_set_next_url_correct(self):
         with patch("app.forms.steps.eligibility_steps._") as babel:
             babel.side_effect = lambda arg: arg
 
             with app.app_context() and app.test_request_context():
-                eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
+                eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                         next_step=EligibilityResultDisplaySteuerlotseStep)
                 eligibility_step._pre_handle(self.data_not_eligible)
                 eligibility_step._main_handle(self.data_not_eligible)
 
-                self.assertEqual(self.result_url + str(eligibility_step.has_link_overview), eligibility_step.render_info.next_url)
+                self.assertEqual(self.result_url + str(eligibility_step.has_link_overview),
+                                 eligibility_step.render_info.next_url)
 
     def test_if_income_step_then_set_no_additional_info(self):
         with app.app_context() and app.test_request_context():
-            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
+            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                     next_step=EligibilityResultDisplaySteuerlotseStep)
             eligibility_step._pre_handle(self.data_not_eligible)
             eligibility_step._main_handle(self.data_not_eligible)
 
             self.assertRaises(KeyError, lambda: eligibility_step.render_info.additional_info['eligibility_result'])
 
-            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct, next_step=EligibilityResultDisplaySteuerlotseStep)
+            eligibility_step = EligibilityIncomesFormSteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                     next_step=EligibilityResultDisplaySteuerlotseStep)
             eligibility_step._pre_handle(self.data_eligible)
             eligibility_step._main_handle(self.data_eligible)
 
