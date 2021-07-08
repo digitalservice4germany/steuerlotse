@@ -85,7 +85,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         self.template = template
 
     def _pre_handle(self, stored_data):
-        super()._pre_handle(stored_data)
+        stored_data = super()._pre_handle(stored_data)
         form = self.create_form(request, prefilled_data=stored_data)
         if request.method == 'POST' and form.validate():
             stored_data.update(form.data)

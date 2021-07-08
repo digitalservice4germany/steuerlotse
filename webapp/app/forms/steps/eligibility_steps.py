@@ -21,7 +21,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
             intro=_('form.eligibility.start-intro'), **kwargs)
 
     def _main_handle(self, stored_data):
-        super()._main_handle(stored_data)
+        stored_data = super()._main_handle(stored_data)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
         return stored_data
 
@@ -71,7 +71,7 @@ class EligibilityIncomesFormSteuerlotseStep(FormSteuerlotseStep):
             template='eligibility/form_incomes.html')
 
     def _main_handle(self, stored_data):
-        super()._main_handle(stored_data)
+        stored_data = super()._main_handle(stored_data)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.send-button')
         return stored_data
 
@@ -84,7 +84,7 @@ class EligibilityResultDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         super(EligibilityResultDisplaySteuerlotseStep, self).__init__(title=_('form.eligibility.result-title'), **kwargs)
 
     def _main_handle(self, stored_data):
-        super()._main_handle(stored_data)
+        stored_data = super()._main_handle(stored_data)
         eligibility_result = self._validate_eligibility(stored_data)
         self.render_info.additional_info['eligibility_errors'] = eligibility_result
         return stored_data
