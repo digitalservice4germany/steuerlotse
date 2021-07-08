@@ -86,8 +86,8 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         with app.app_context() and app.test_request_context():
             chosen_step_at_begin = self.step_chooser.get_correct_step(MockStartStep.name)
             chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name)
-            self.assertEqual('', chosen_step_at_begin._prev_step)
-            self.assertEqual('', chosen_step_at_end._next_step)
+            self.assertIsNone(chosen_step_at_begin._prev_step)
+            self.assertIsNone(chosen_step_at_end._next_step)
 
 
 class TestInteractionBetweenSteps(unittest.TestCase):

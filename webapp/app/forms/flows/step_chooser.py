@@ -49,8 +49,8 @@ class StepChooser:
         return self.steps[step_name](
             endpoint=self.endpoint,
             overview_step=self.overview_step,
-            prev_step=step_types[idx - 1] if idx > 0 else '',
-            next_step=step_types[idx + 1] if idx < len(step_types) - 1 else ''
+            prev_step=step_types[idx - 1] if idx > 0 else None,
+            next_step=step_types[idx + 1] if idx < len(step_types) - 1 else None
         )
 
     def default_data(self):
