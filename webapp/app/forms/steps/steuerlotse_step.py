@@ -38,21 +38,14 @@ class SteuerlotseStep(object):
                 self.overview_step.name) if self.has_link_overview and self.overview_step else None)
         return stored_data
 
-    def _handle_redirects(self):
-        if self.render_info.redirect_url:
-            return redirect(self.render_info.redirect_url)
+    def _main_handle(self, stored_data):
+        return stored_data
 
     def _post_handle(self, stored_data):
         redirection = self._handle_redirects()
         if redirection:
             return redirection
         return self.render()
-
-    def _main_handle(self, stored_data):
-        return stored_data
-
-    def render(self):
-        raise NotImplementedError
 
     def _get_session_data(self, ttl: Optional[int] = None):
         serialized_session = session.get('form_data', b"")
@@ -63,6 +56,15 @@ class SteuerlotseStep(object):
             stored_data = deserialize_session_data(serialized_session, ttl)
 
         return stored_data
+
+    def _handle_redirects(self):
+        if self.render_info.redirect_url:
+            return redirect(self.render_info.redirect_url)
+
+    def render(self):
+        raise NotImplementedError
+
+
 
     def url_for_step(self, step_name, _has_link_overview=None, **values):
         """Generate URL for given step and current session."""
@@ -111,8 +113,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         if len(form_data) == 0:
             form_data = None
 
-        form = self.form(form_data, **prefilled_data)
-        return form
+        return self.form(form_data, **prefilled_data)
 
     def render(self):
         """
