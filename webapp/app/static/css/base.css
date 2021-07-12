@@ -820,6 +820,21 @@ img.icon {
     font-weight: var(--font-bold);
 }
 
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
+}
+
+#skip-to-content-link {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+#skip-to-content-link:focus {
+    position: static;
+    width: auto;
+    height: auto;
 }
