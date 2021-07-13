@@ -116,20 +116,20 @@
             {% for id, card in accordion.entries.items() -%}
                 {% set card_id = 'card-' + id -%}
                 <div class="card mt-2">
-                    <button class="card-header d-sm-flex justify-content-between align-items-center btn-accordion row collapsed w-100"
+                    <div class="card-header d-sm-flex justify-content-between align-items-center row collapsed w-100"
                          id="heading-{{ card_id }}" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
                          aria-controls="collapseOne">
-                         <div class="col">
-                            <h5 class="mb-0">{{ card['heading'] }}</h5>
-                         </div>
-                         <div class="col-1 control-show-more">
+                         <button class="col text-left">
+                            <span class="mb-0">{{ card['heading'] }}</span>
+                         </button>
+                         <button class="col-1 control-show-more" tabindex="-1" aria-hidden="true">
                              <img src="{{ url_for('static', filename='icons/plus.svg') }}"/>
-                         </div>
-                         <div class="col-1 control-show-less">
+                         </button>
+                         <button class="col-1 control-show-less" tabindex="-1" aria-hidden="true">
                             <img src="{{ url_for('static', filename='icons/minus.svg') }}"/>
-                         </div>
-                    </button>
+                         </button>
+                    </div>
                     <div id="{{ card_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
                         data-parent="#{{accordion.id}}">
                         <div class="card-body-less-padding">
