@@ -1,11 +1,9 @@
-from typing import Optional
-
-from pydantic import BaseModel, validator, root_validator
+import copy
+from typing import Any
 
 from flask_babel import lazy_gettext as _l
+from pydantic import BaseModel, validator, MissingError, ValidationError
 from pydantic.fields import ModelField
-
-from app.model.form_data import InputDataInvalidError
 
 
 class InvalidEligiblityError(ValueError):
@@ -59,4 +57,52 @@ class ExpectedEligibility(BaseModel):
     def declarations_must_be_set_no(cls, v, field):
         if not  v == 'no':
             raise InvalidEligiblityError(field.name)
+        return v
+
+
+def declarations_must_be_set_yes(v, field: ModelField):
+    if not v == 'yes':
+        raise InvalidEligiblityError(field.name)
+    return v
+
+
+def declarations_must_be_set_no(v, field):
+    if not v == 'no':
+        raise InvalidEligiblityError(field.name)
+    return v
+
+
+class RecursiveDataModel(BaseModel):
+    _previous_fields = []
+
+    def __init__(self, **data: Any) -> None:
+        enriched_data = self._update_input(data)
+        super(RecursiveDataModel, self).__init__(**enriched_data)
+
+    def _update_input(self, data: Any) -> Any:
+        enriched_data = copy.deepcopy(data)
+
+        fields = list(self.__class__.__fields__.values())
+        self.__class__._previous_fields = []
+
+        for field in fields:
+            if issubclass(field.type_, BaseModel):
+                self.__class__._previous_fields.append(field.name)
+                self._set_data_for_previous_field(enriched_data, field.name, field.type_)
+
+        return enriched_data
+
+    @staticmethod
+    def _set_data_for_previous_field(enriched_data, field_name, field_type):
+        try:
+            possible_data = field_type.parse_obj(enriched_data).dict()
+            enriched_data[field_name] = possible_data
+        except ValidationError:
+            return
+
+    def one_previous_field_has_to_be_set(cls, v, values):
+        """Validator used to ensure that at least one of the needed previous fields has been set. Make sure to use
+        this validator in the subclass @validator(<LAST_PREV_FIELD_NAME>, always=True, check_fields=False) """
+        if not v and all([values.get(previous_field) is None for previous_field in cls._previous_fields]):
+            raise MissingError
         return v

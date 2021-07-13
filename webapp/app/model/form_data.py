@@ -94,7 +94,6 @@ class MandatoryFormData(BaseModel):
         enriched_data['familienstandStruct'] = {
             familienstand_value: enriched_data.get(familienstand_value)
             for familienstand_value in FamilienstandModel.schema().get("properties").keys()
-            if familienstand_value in enriched_data
         }
 
         try:
