@@ -280,20 +280,22 @@
     outline: none;
 }
 
-.details-card .card-header .control-show-more{
-    display: none;
+.details-card .card-header:not(.collapsed) .control-show-more {
+    /* We need to still show it to keep focus on the element */
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
 }
 
-.details-card .card-header .control-show-less{
-    display: block;
-}
-
-.details-card .card-header .collapsed .control-show-more{
-    display: block;
-}
-
-.details-card .card-header .collapsed .control-show-less{
-    display: none;
+.details-card .card-header.collapsed .control-show-less {
+    /* We need to still show it to keep focus on the element */
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
 }
 
 

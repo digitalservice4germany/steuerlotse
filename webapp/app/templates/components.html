@@ -120,13 +120,13 @@
                          id="heading-{{ card_id }}" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
                          aria-controls="collapseOne">
-                         <button class="col text-left">
+                         <button class="col text-left" type="button">
                             <span class="mb-0">{{ card['heading'] }}</span>
                          </button>
-                         <button class="col-1 control-show-more" tabindex="-1" aria-hidden="true">
+                         <button class="col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true">
                              <img src="{{ url_for('static', filename='icons/plus.svg') }}"/>
                          </button>
-                         <button class="col-1 control-show-less" tabindex="-1" aria-hidden="true">
+                         <button class="col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true">
                             <img src="{{ url_for('static', filename='icons/minus.svg') }}"/>
                          </button>
                     </div>
@@ -159,18 +159,16 @@
                 <div class="collapsed" data-toggle="collapse"
                             data-target="#details-body-{{ details_id }}"
                             aria-expanded="false" aria-controls="collapseOne">
-                    <button class="btn container" type="button">
+                    <div class="container">
                         <div class="row">
-                            <div class="details-icon col-1 control-show-more"></div>
-                            <div class="details-icon col-1 control-show-less"></div>
-                            <div class="col">
+                            <button class="btn details-icon col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn details-icon col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn col" type="button">
                                 <span class="mb-0">{{title}}</span>
-                            </div>
+                            </button>
                         </div>
-                    </button>
-
+                    </div>
                 </div>
-
             </div>
             <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
                 data-parent="#details-{{ details_id }}">
