@@ -108,9 +108,9 @@
 {% endmacro %}
 
 
-{% macro accordion(accordion) %}
+{% macro accordion(accordion, heading_level=3) %}
     <div id="{{ accordion.id }}" class="accordion mt-5 pb-5">
-        <h3 class="mt-5">{{ accordion.heading }}</h3>
+        <h{{ heading_level }} class="mt-5">{{ accordion.heading }}</h{{ heading_level }}>
         <p class="mt-3 pb-2">{{ accordion.intro }}</p>
         <div class="mt-4 pl-0">
             {% for id, card in accordion.entries.items() -%}
@@ -225,11 +225,11 @@
 </div>
 {%- endmacro %}
 
-{% macro teaserCard(url, title, description, img_url, direction) %}
+{% macro teaserCard(url, title, description, img_url, direction, heading_level=3) %}
     <div class="teaser-card teaser-card--{{direction}}">
         <a href="{{ url }}">
             <div class="teaser-card-body">
-                <h3 class="pb-3">{{ title }}</h3>
+                <h{{ heading_level }} class="pb-3 h3">{{ title }}</h{{ heading_level }}>
                 <p>{{ description }}</p>
                 <img src="{{ img_url }}" width="50px" alt="icon info" />
             </div>
