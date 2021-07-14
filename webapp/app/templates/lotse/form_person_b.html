@@ -4,7 +4,7 @@
 
 {% block form_content %}
 
-  <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-allgemein') }}</h3>
+  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-allgemein') }}</h2>
    <div class="form-row-center">
     {{ macros.render_field(form.person_b_first_name) }}
   </div>
@@ -18,7 +18,7 @@
     {{ macros.render_field(form.person_b_idnr) }}
   </div>
 
-  <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h3>
+  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h2>
   {{ macros.render_field(form.person_b_same_address, 10) }}
 
   <div id="form_address_fields" class="hidden">
@@ -36,12 +36,12 @@
     </div>
   </div>
 
-  <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-religion') }}</h3>
+  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-religion') }}</h2>
   <div class="form-row-center">
     {{ macros.render_field(form.person_b_religion, 6, class=" custom-select") }}
   </div>
 
-  <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-beh') }}</h3>
+  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-beh') }}</h2>
   <p class="mb-4">{{ _('form.lotse.person-header-beh-intro') }}</p>
   <div class="form-row-center">
     {{ macros.render_field(form.person_b_beh_grad, 4) }}
