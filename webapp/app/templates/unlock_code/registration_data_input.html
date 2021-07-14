@@ -9,12 +9,12 @@
         {{ macros.render_field(form.idnr) }}
     </div>
 
-    <h5 class="mt-5 mb-4 bold">{{ _('unlock-code-request.data-privacy-and-agb.title') }}</h5>
+    <h2 class="mt-5 mb-4 h5 bold">{{ _('unlock-code-request.data-privacy-and-agb.title') }}</h2>
     {{ macros.render_field(form.registration_confirm_data_privacy) }}
     {{ macros.render_field(form.registration_confirm_terms_of_service) }}
     {{ macros.render_field(form.registration_confirm_incomes) }}
 
-    <h5 class="mt-5 bold">{{ _('unlock-code-request.edata.title') }}</h5>
+    <h2 class="mt-5 h5 bold">{{ _('unlock-code-request.edata.title') }}</h2>
     {{ components.details(_('unlock-code-request.e-data.help-title'), [_('unlock-code-request.e-data.help-text')], details_id=form.registration_confirm_e_data.id) }}
     {{ macros.render_field(form.registration_confirm_e_data) }}
 
