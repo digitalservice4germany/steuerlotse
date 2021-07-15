@@ -23,7 +23,7 @@ class UnlockCodeActivationInputStep(FormStep):
             form=self.Form,
             **kwargs,
             header_title=_('form.unlock-code-activation.header-title'),
-            template='unlock_code/unlock_code_input.html')
+            template='basis/form_standard.html')
 
 
 class UnlockCodeActivationFailureStep(DisplayStep):
