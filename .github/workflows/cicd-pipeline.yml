@@ -29,7 +29,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-deps-webapp-${{ hashFiles('webapp/Pipfile.lock') }}
+        key: ${{ runner.os }}-deps-webapp-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('webapp/Pipfile.lock') }}
 
     - name: Install dependencies
       if: steps.cache-deps-webapp.outputs.cache-hit != 'true'
