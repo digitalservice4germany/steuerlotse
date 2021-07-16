@@ -3,16 +3,16 @@ from unittest.mock import patch, MagicMock
 
 from pydantic import ValidationError
 
-from app.model.eligibility_data import LongSeparateLivingEligibilityData, \
-    ShortSeparateLivingEligibilityData, AlimonySeparatedEligibilityData, UserAElsterAccountEligibilityData, \
+from app.model.eligibility_data import SeparatedEligibilityData, \
+    NotSeparatedEligibilityData, AlimonyMarriedEligibilityData, UserANoElsterAccountEligibilityData, \
     UserBElsterAccountEligibilityData, DivorcedJointTaxesEligibilityData, AlimonyEligibilityData, \
     SingleUserElsterAccountEligibilityData, PensionEligibilityData, InvestmentIncomeEligibilityData, \
     CheaperCheckEligibilityData, \
     NoTaxedInvestmentIncome, NoInvestmentIncomeEligibilityData, \
     NoEmploymentIncomeEligibilityData, EmploymentIncomeEligibilityData, MarginalEmploymentEligibilityData, \
-    OtherIncomeEligibilityData, ForeignCountryEligibility, SeparatedJointTaxesEligibilityData, MarriedEligibilityData, \
+    OtherIncomeEligibilityData, ForeignCountryEligibility, MarriedJointTaxesEligibilityData, MarriedEligibilityData, \
     SingleEligibilityData, WidowedEligibilityData, DivorcedEligibilityData, MoreThanMinimalInvestmentIncome, \
-    MinimalInvestmentIncome
+    MinimalInvestmentIncome, UserAElsterAccountEligibilityData
 
 
 class TestMarriedEligibilityData(unittest.TestCase):
@@ -20,11 +20,11 @@ class TestMarriedEligibilityData(unittest.TestCase):
     def test_if_marital_status_not_married_raise_validation_error(self):
         invalid_marital_statuses = ['widowed', 'single', 'divorced', 'INVALID']
         for invalid_marital_status in invalid_marital_statuses:
-            non_valid_data = {'marital_status': invalid_marital_status}
+            non_valid_data = {'marital_status_eligibility': invalid_marital_status}
             self.assertRaises(ValidationError, MarriedEligibilityData.parse_obj, non_valid_data)
 
     def test_if_marital_status_married_then_raise_no_validation_error(self):
-        valid_data = {'marital_status': 'married'}
+        valid_data = {'marital_status_eligibility': 'married'}
         try:
             MarriedEligibilityData.parse_obj(valid_data)
         except ValidationError:
@@ -36,11 +36,11 @@ class TestWidowedEligibilityData(unittest.TestCase):
     def test_if_marital_status_not_widowed_raise_validation_error(self):
         invalid_marital_statuses = ['single', 'married', 'divorced', 'INVALID']
         for invalid_marital_status in invalid_marital_statuses:
-            non_valid_data = {'marital_status': invalid_marital_status}
+            non_valid_data = {'marital_status_eligibility': invalid_marital_status}
             self.assertRaises(ValidationError, WidowedEligibilityData.parse_obj, non_valid_data)
 
     def test_if_marital_status_widowed_then_raise_no_validation_error(self):
-        valid_data = {'marital_status': 'widowed'}
+        valid_data = {'marital_status_eligibility': 'widowed'}
         try:
             WidowedEligibilityData.parse_obj(valid_data)
         except ValidationError:
@@ -52,11 +52,11 @@ class TestSingleEligibilityData(unittest.TestCase):
     def test_if_marital_status_not_married_raise_validation_error(self):
         invalid_marital_statuses = ['married', 'widowed', 'divorced', 'INVALID']
         for invalid_marital_status in invalid_marital_statuses:
-            non_valid_data = {'marital_status': invalid_marital_status}
+            non_valid_data = {'marital_status_eligibility': invalid_marital_status}
             self.assertRaises(ValidationError, SingleEligibilityData.parse_obj, non_valid_data)
 
     def test_if_marital_status_single_then_raise_no_validation_error(self):
-        valid_data = {'marital_status': 'single'}
+        valid_data = {'marital_status_eligibility': 'single'}
         try:
             SingleEligibilityData.parse_obj(valid_data)
         except ValidationError:
@@ -68,178 +68,196 @@ class TestDivorcedEligibilityData(unittest.TestCase):
     def test_if_marital_status_not_married_raise_validation_error(self):
         invalid_marital_statuses = ['married', 'widowed', 'single', 'INVALID']
         for invalid_marital_status in invalid_marital_statuses:
-            non_valid_data = {'marital_status': invalid_marital_status}
+            non_valid_data = {'marital_status_eligibility': invalid_marital_status}
             self.assertRaises(ValidationError, DivorcedEligibilityData.parse_obj, non_valid_data)
 
     def test_if_marital_status_divorced_then_raise_no_validation_error(self):
-        valid_data = {'marital_status': 'divorced'}
+        valid_data = {'marital_status_eligibility': 'divorced'}
         try:
             DivorcedEligibilityData.parse_obj(valid_data)
         except ValidationError:
             self.fail("FamilienStandEligibilityData.parse_obj should not raise validation error")
 
 
-class TestLongSeparateLivingEligibilityData(unittest.TestCase):
+class TestSeparatedEligibilityDataEligibilityData(unittest.TestCase):
 
-    def test_if_marital_status_valid_and_separated_since_last_year_no_then_raise_validation_error(self):
-        non_valid_data = {'separated_since_last_year': 'no'}
+    def test_if_married_data_valid_and_separated_since_last_year_no_then_raise_validation_error(self):
+        non_valid_data = {'separated_since_last_year_eligibility': 'no'}
         with patch('app.model.eligibility_data.MarriedEligibilityData.parse_obj'):
-            self.assertRaises(ValidationError, LongSeparateLivingEligibilityData.parse_obj, non_valid_data)
+            self.assertRaises(ValidationError, SeparatedEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_marital_status_invalid_and_separated_since_last_year_yes_then_raise_validation_error(self):
-        valid_data = {'separated_since_last_year': 'yes'}
+    def test_if_married_data_invalid_and_separated_since_last_year_yes_then_raise_validation_error(self):
+        valid_data = {'separated_since_last_year_eligibility': 'yes'}
         with patch('app.model.eligibility_data.MarriedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], MarriedEligibilityData))):
-            self.assertRaises(ValidationError, LongSeparateLivingEligibilityData.parse_obj, valid_data)
+            self.assertRaises(ValidationError, SeparatedEligibilityData.parse_obj, valid_data)
 
-    def test_if_marital_status_valid_and_separated_since_last_year_yes_then_raise_no_validation_error(self):
-        valid_data = {'separated_since_last_year': 'yes'}
+    def test_if_married_data_valid_and_separated_since_last_year_yes_then_raise_no_validation_error(self):
+        valid_data = {'separated_since_last_year_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.MarriedEligibilityData.__init__',
                        MagicMock(return_value=None)):
-                LongSeparateLivingEligibilityData.parse_obj(valid_data)
+                SeparatedEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("LongSeparateLivingEligibilityData.parse_obj should not raise validation error")
+            self.fail("SeparatedEligibilityData.parse_obj should not raise validation error")
 
 
-class TestShortSeparateLivingEligibilityData(unittest.TestCase):
+class TestNotSeparatedEligibilityDataEligibilityData(unittest.TestCase):
 
-    def test_if_marital_status_valid_and_separated_since_last_year_yes_then_raise_validation_error(self):
-        non_valid_data = {'separated_since_last_year': 'yes'}
+    def test_if_married_data_valid_and_separated_since_last_year_yes_then_raise_validation_error(self):
+        non_valid_data = {'separated_since_last_year_eligibility': 'yes'}
         with patch('app.model.eligibility_data.MarriedEligibilityData.parse_obj'):
-            self.assertRaises(ValidationError, ShortSeparateLivingEligibilityData.parse_obj, non_valid_data)
+            self.assertRaises(ValidationError, NotSeparatedEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_marital_status_invalid_and_separated_since_last_year_no_then_raise_validation_error(self):
-        valid_data = {'separated_since_last_year': 'no'}
+    def test_if_married_data_invalid_and_separated_since_last_year_no_then_raise_validation_error(self):
+        valid_data = {'separated_since_last_year_eligibility': 'no'}
         with patch('app.model.eligibility_data.MarriedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], MarriedEligibilityData))):
-            self.assertRaises(ValidationError, ShortSeparateLivingEligibilityData.parse_obj, valid_data)
+            self.assertRaises(ValidationError, NotSeparatedEligibilityData.parse_obj, valid_data)
 
-    def test_if_marital_status_valid_and_separated_since_last_year_no_then_raise_no_validation_error(self):
-        valid_data = {'separated_since_last_year': 'no'}
+    def test_if_married_data_valid_and_separated_since_last_year_no_then_raise_no_validation_error(self):
+        valid_data = {'separated_since_last_year_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.MarriedEligibilityData.__init__',
                        MagicMock(return_value=None)):
-                ShortSeparateLivingEligibilityData.parse_obj(valid_data)
+                NotSeparatedEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("SeparatedJointTaxesEligibilityData.parse_obj should not raise validation error")
+            self.fail("MarriedJointTaxesEligibilityData.parse_obj should not raise validation error")
 
 
 class TestSeparatedJointTaxesEligibilityData(unittest.TestCase):
 
-    def test_if_marital_status_valid_and_joint_taxes_no_then_raise_validation_error(self):
-        non_valid_data = {'joint_taxes': 'no'}
-        with patch('app.model.eligibility_data.ShortSeparateLivingEligibilityData.parse_obj'):
-            self.assertRaises(ValidationError, SeparatedJointTaxesEligibilityData.parse_obj, non_valid_data)
+    def test_if_not_separated_valid_and_joint_taxes_no_then_raise_validation_error(self):
+        non_valid_data = {'joint_taxes_eligibility': 'no'}
+        with patch('app.model.eligibility_data.NotSeparatedEligibilityData.parse_obj'):
+            self.assertRaises(ValidationError, MarriedJointTaxesEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_marital_status_invalid_and_joint_taxes_yes_then_raise_validation_error(self):
-        valid_data = {'joint_taxes': 'yes'}
-        with patch('app.model.eligibility_data.ShortSeparateLivingEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], ShortSeparateLivingEligibilityData))):
-            self.assertRaises(ValidationError, SeparatedJointTaxesEligibilityData.parse_obj, valid_data)
+    def test_if_not_separated_invalid_and_joint_taxes_yes_then_raise_validation_error(self):
+        valid_data = {'joint_taxes_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.NotSeparatedEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], NotSeparatedEligibilityData))):
+            self.assertRaises(ValidationError, MarriedJointTaxesEligibilityData.parse_obj, valid_data)
 
-    def test_if_marital_status_valid_and_joint_taxes_yes_then_raise_no_validation_error(self):
-        valid_data = {'joint_taxes': 'yes'}
+    def test_if_not_separated_valid_and_joint_taxes_yes_then_raise_no_validation_error(self):
+        valid_data = {'joint_taxes_eligibility': 'yes'}
         try:
-            with patch('app.model.eligibility_data.ShortSeparateLivingEligibilityData.__init__',
+            with patch('app.model.eligibility_data.NotSeparatedEligibilityData.__init__',
                        MagicMock(return_value=None)):
-                SeparatedJointTaxesEligibilityData.parse_obj(valid_data)
+                MarriedJointTaxesEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("SeparatedJointTaxesEligibilityData.parse_obj should not raise validation error")
+            self.fail("MarriedJointTaxesEligibilityData.parse_obj should not raise validation error")
 
 
-class TestAlimonySeparatedEligibilityData(unittest.TestCase):
+class TestAlimonyMarriedEligibilityData(unittest.TestCase):
 
-    def test_if_short_separate_valid_and_alimony_yes_then_raise_validation_error(self):
-        non_valid_data = {'alimony': 'yes'}
-        with patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.parse_obj'), \
-                patch('app.model.eligibility_data.LongSeparateLivingEligibilityData.parse_obj',
-                      MagicMock(side_effect=ValidationError([], LongSeparateLivingEligibilityData))):
-            self.assertRaises(ValidationError, AlimonySeparatedEligibilityData.parse_obj, non_valid_data)
+    def test_if_not_separated_data_valid_and_alimony_yes_then_raise_validation_error(self):
+        non_valid_data = {'alimony_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.parse_obj'), \
+                patch('app.model.eligibility_data.SeparatedEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedEligibilityData))):
+            self.assertRaises(ValidationError, AlimonyMarriedEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_long_separate_valid_and_alimony_yes_then_raise_validation_error(self):
-        non_valid_data = {'alimony': 'yes'}
-        with patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], SeparatedJointTaxesEligibilityData))), \
-                patch('app.model.eligibility_data.LongSeparateLivingEligibilityData.parse_obj'):
-            self.assertRaises(ValidationError, AlimonySeparatedEligibilityData.parse_obj, non_valid_data)
+    def test_if_separated_data_valid_and_alimony_yes_then_raise_validation_error(self):
+        non_valid_data = {'alimony_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], MarriedJointTaxesEligibilityData))), \
+                patch('app.model.eligibility_data.SeparatedEligibilityData.parse_obj'):
+            self.assertRaises(ValidationError, AlimonyMarriedEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_short_and_long_separate_invalid_and_alimony_no_then_raise_validation_error(self):
-        valid_data = {'alimony': 'no'}
-        with patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], SeparatedJointTaxesEligibilityData))), \
-                patch('app.model.eligibility_data.LongSeparateLivingEligibilityData.parse_obj',
-                      MagicMock(side_effect=ValidationError([], LongSeparateLivingEligibilityData))):
-            self.assertRaises(ValidationError, AlimonySeparatedEligibilityData.parse_obj, valid_data)
+    def test_if_not_and_separated_data_invalid_and_alimony_no_then_raise_validation_error(self):
+        valid_data = {'alimony_eligibility': 'no'}
+        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], MarriedJointTaxesEligibilityData))), \
+                patch('app.model.eligibility_data.SeparatedEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedEligibilityData))):
+            self.assertRaises(ValidationError, AlimonyMarriedEligibilityData.parse_obj, valid_data)
 
-    def test_if_short_separate_valid_and_alimony_no_then_raise_no_validation_error(self):
-        valid_data = {'alimony': 'no'}
+    def test_if_not_separated_data_valid_and_alimony_no_then_raise_no_validation_error(self):
+        valid_data = {'alimony_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__',
+            with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.LongSeparateLivingEligibilityData.parse_obj',
-                          MagicMock(side_effect=ValidationError([], LongSeparateLivingEligibilityData))):
-                AlimonySeparatedEligibilityData.parse_obj(valid_data)
+                    patch('app.model.eligibility_data.SeparatedEligibilityData.parse_obj',
+                          MagicMock(side_effect=ValidationError([], SeparatedEligibilityData))):
+                AlimonyMarriedEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("AlimonySeparatedEligibilityData.parse_obj should not raise validation error")
+            self.fail("AlimonyMarriedEligibilityData.parse_obj should not raise validation error")
 
-    def test_if_long_separate_valid_and_alimony_no_then_raise_no_validation_error(self):
-        valid_data = {'alimony': 'no'}
+    def test_if_separated_data_valid_and_alimony_no_then_raise_no_validation_error(self):
+        valid_data = {'alimony_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.parse_obj',
-                       MagicMock(side_effect=ValidationError([], SeparatedJointTaxesEligibilityData))), \
-                    patch('app.model.eligibility_data.LongSeparateLivingEligibilityData.__init__',
+            with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.parse_obj',
+                       MagicMock(side_effect=ValidationError([], MarriedJointTaxesEligibilityData))), \
+                    patch('app.model.eligibility_data.SeparatedEligibilityData.__init__',
                           MagicMock(return_value=None)):
-                AlimonySeparatedEligibilityData.parse_obj(valid_data)
+                AlimonyMarriedEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("AlimonySeparatedEligibilityData.parse_obj should not raise validation error")
+            self.fail("AlimonyMarriedEligibilityData.parse_obj should not raise validation error")
+
+
+class TestUserANoElsterAccountEligibilityData(unittest.TestCase):
+
+    def test_if_alimony_married_valid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
+        non_valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.parse_obj'):
+            self.assertRaises(ValidationError, UserANoElsterAccountEligibilityData.parse_obj, non_valid_data)
+
+    def test_if_alimony_married_invalid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
+        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
+        with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], AlimonyMarriedEligibilityData))):
+            self.assertRaises(ValidationError, UserANoElsterAccountEligibilityData.parse_obj, valid_data)
+
+    def test_if_alimony_married_valid_and_user_a_has_elster_account_no_then_raise_no_validation_error(self):
+        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
+        try:
+            with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.__init__',
+                       MagicMock(return_value=None)):
+                UserANoElsterAccountEligibilityData.parse_obj(valid_data)
+        except ValidationError as e:
+            self.fail("UserANoElsterAccountEligibilityData.parse_obj should not raise validation error")
 
 
 class TestUserAElsterAccountEligibilityData(unittest.TestCase):
 
-    def test_if_alimony_separated_valid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
-        non_valid_data = {'user_a_has_elster_account': 'yes'}
-        with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.parse_obj'):
+    def test_if_alimony_married_valid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
+        non_valid_data = {'user_a_has_elster_account_eligibility': 'no'}
+        with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, UserAElsterAccountEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_alimony_separated_invalid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
-        valid_data = {'user_a_has_elster_account': 'no'}
-        with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], AlimonySeparatedEligibilityData))):
+    def test_if_alimony_married_invalid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
+        valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], AlimonyMarriedEligibilityData))):
             self.assertRaises(ValidationError, UserAElsterAccountEligibilityData.parse_obj, valid_data)
 
-    def test_if_alimony_separated_valid_and_user_a_has_elster_account_no_then_raise_no_validation_error(self):
-        valid_data = {'user_a_has_elster_account': 'no'}
+    def test_if_alimony_married_valid_and_user_a_has_elster_account_no_then_raise_no_validation_error(self):
+        valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
         try:
-            with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.__init__',
+            with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.__init__',
                        MagicMock(return_value=None)):
                 UserAElsterAccountEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("UserAElsterAccountEligibilityData.parse_obj should not raise validation error")
+            self.fail("UserANoElsterAccountEligibilityData.parse_obj should not raise validation error")
 
 
 class TestUserBElsterAccountEligibilityData(unittest.TestCase):
 
-    def test_if_alimony_separated_valid_and_user_b_has_elster_account_yes_then_raise_validation_error(self):
-        non_valid_data = {'user_a_has_elster_account': 'yes', 'user_b_has_elster_account': 'yes'}
-        with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.parse_obj'):
+    def test_if_user_a_elster_account_valid_and_user_b_has_elster_account_yes_then_raise_validation_error(self):
+        non_valid_data = {'user_b_has_elster_account_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, UserBElsterAccountEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_alimony_separated_valid_and_user_a_and_user_b_have_elster_account_yes_then_raise_validation_error(self):
-        non_valid_data = {'user_a_has_elster_account': 'no', 'user_b_has_elster_account': 'no'}
-        with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.parse_obj'):
-            self.assertRaises(ValidationError, UserBElsterAccountEligibilityData.parse_obj, non_valid_data)
-
-    def test_if_user_a_elster_invalid_and_user_b_has_elster_account_no_then_raise_validation_error(self):
-        valid_data = {'user_a_has_elster_account': 'yes', 'user_b_has_elster_account': 'no'}
-        with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], AlimonySeparatedEligibilityData))):
+    def test_if_user_a_elster_account_invalid_and_user_b_has_elster_account_no_then_raise_validation_error(self):
+        valid_data = {'user_b_has_elster_account_eligibility': 'no'}
+        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))):
             self.assertRaises(ValidationError, UserBElsterAccountEligibilityData.parse_obj, valid_data)
 
-    def test_if_alimony_separated_valid_and_user_b_has_elster_account_no_then_raise_no_validation_error(self):
-        valid_data = {'user_a_has_elster_account': 'yes', 'user_b_has_elster_account': 'no'}
+    def test_if_user_a_elster_account_valid_and_user_b_has_elster_account_no_then_raise_no_validation_error(self):
+        valid_data = {'user_b_has_elster_account_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.AlimonySeparatedEligibilityData.__init__',
+            with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__',
                        MagicMock(return_value=None)):
                 UserBElsterAccountEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -248,19 +266,19 @@ class TestUserBElsterAccountEligibilityData(unittest.TestCase):
 
 class TestDivorcedJointTaxesEligibilityData(unittest.TestCase):
 
-    def test_if_alimony_separated_valid_and_joint_taxes_yes_then_raise_validation_error(self):
-        non_valid_data = {'joint_taxes': 'yes'}
+    def test_if_divorced_data_valid_and_joint_taxes_yes_then_raise_validation_error(self):
+        non_valid_data = {'joint_taxes_eligibility': 'yes'}
         with patch('app.model.eligibility_data.DivorcedEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, DivorcedJointTaxesEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_alimony_separated_invalid_and_joint_taxes_no_then_raise_validation_error(self):
-        valid_data = {'joint_taxes': 'no'}
+    def test_if_divorced_data_invalid_and_joint_taxes_no_then_raise_validation_error(self):
+        valid_data = {'joint_taxes_eligibility': 'no'}
         with patch('app.model.eligibility_data.DivorcedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], DivorcedEligibilityData))):
             self.assertRaises(ValidationError, DivorcedJointTaxesEligibilityData.parse_obj, valid_data)
 
-    def test_if_alimony_separated_valid_and_joint_taxes_no_then_raise_no_validation_error(self):
-        valid_data = {'joint_taxes': 'no'}
+    def test_if_divorced_data_valid_and_joint_taxes_no_then_raise_no_validation_error(self):
+        valid_data = {'joint_taxes_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.DivorcedEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -272,7 +290,7 @@ class TestDivorcedJointTaxesEligibilityData(unittest.TestCase):
 class TestAlimonyEligibilityData(unittest.TestCase):
 
     def test_if_widowed_valid_and_alimony_yes_then_raise_validation_error(self):
-        non_valid_data = {'alimony': 'yes'}
+        non_valid_data = {'alimony_eligibility': 'yes'}
         with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
@@ -281,7 +299,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_single_status_valid_and_alimony_yes_then_raise_validation_error(self):
-        non_valid_data = {'alimony': 'yes'}
+        non_valid_data = {'alimony_eligibility': 'yes'}
         with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
                 patch('app.model.eligibility_data.SingleEligibilityData.parse_obj'), \
@@ -290,7 +308,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_divorced_joint_taxes_valid_and_alimony_yes_then_raise_validation_error(self):
-        non_valid_data = {'alimony': 'yes'}
+        non_valid_data = {'alimony_eligibility': 'yes'}
         with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
                 patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
@@ -299,7 +317,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_widowed_and_single_status_and_divorced_joint_taxes_invalid_and_alimony_no_then_raise_validation_error(self):
-        valid_data = {'alimony': 'no'}
+        valid_data = {'alimony_eligibility': 'no'}
         with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
                 patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
@@ -309,7 +327,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, valid_data)
 
     def test_if_widowed_valid_and_alimony_no_then_raise_no_validation_error(self):
-        valid_data = {'alimony': 'no'}
+        valid_data = {'alimony_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                        MagicMock(return_value=None)), \
@@ -322,7 +340,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
             self.fail("AlimonyEligibilityData.parse_obj should not raise validation error")
 
     def test_if_single_status_valid_and_alimony_no_then_raise_no_validation_error(self):
-        valid_data = {'alimony': 'no'}
+        valid_data = {'alimony_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
@@ -335,7 +353,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
             self.fail("AlimonyEligibilityData.parse_obj should not raise validation error")
 
     def test_if_divorced_joint_taxes_valid_and_alimony_no_then_raise_no_validation_error(self):
-        valid_data = {'alimony': 'no'}
+        valid_data = {'alimony_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
                        MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
@@ -351,18 +369,18 @@ class TestAlimonyEligibilityData(unittest.TestCase):
 class TestSingleUserElsterAccountEligibilityData(unittest.TestCase):
 
     def test_if_alimony_valid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
-        non_valid_data = {'user_a_has_elster_account': 'yes'}
+        non_valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
         with patch('app.model.eligibility_data.AlimonyEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, SingleUserElsterAccountEligibilityData.parse_obj, non_valid_data)
 
     def test_if_alimony_invalid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
-        valid_data = {'user_a_has_elster_account': 'no'}
+        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
         with patch('app.model.eligibility_data.AlimonyEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], AlimonyEligibilityData))):
             self.assertRaises(ValidationError, SingleUserElsterAccountEligibilityData.parse_obj, valid_data)
 
     def test_if_alimony_valid_and_user_a_has_elster_account_account_no_then_raise_no_validation_error(self):
-        valid_data = {'user_a_has_elster_account': 'no'}
+        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -374,49 +392,49 @@ class TestSingleUserElsterAccountEligibilityData(unittest.TestCase):
 class TestPensionEligibilityData(unittest.TestCase):
 
     def test_if_single_elster_valid_and_pension_no_then_raise_validation_error(self):
-        non_valid_data = {'pension': 'no'}
+        non_valid_data = {'pension_eligibility': 'no'}
         with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj'), \
-                patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj',
-                      MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))), \
+                patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))):
             self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, non_valid_data)
 
     def test_if_user_a_elster_valid_and_pension_no_then_raise_validation_error(self):
-        non_valid_data = {'pension': 'no'}
+        non_valid_data = {'pension_eligibility': 'no'}
         with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj'), \
+                patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))):
             self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, non_valid_data)
 
     def test_if_user_b_elster_valid_and_pension_no_then_raise_validation_error(self):
-        non_valid_data = {'pension': 'no'}
+        non_valid_data = {'pension_eligibility': 'no'}
         with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj',
-                      MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))), \
+                patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, non_valid_data)
 
     def test_if_single_elster_and_user_a_elster_and_user_b_elster_invalid_and_pension_yes_then_raise_validation_error(self):
-        valid_data = {'pension': 'yes'}
+        valid_data = {'pension_eligibility': 'yes'}
         with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj',
-                      MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))), \
+                patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))):
             self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, valid_data)
 
     def test_if_single_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension': 'yes'}
+        valid_data = {'pension_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj',
-                          MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))), \
+                    patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
+                          MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))):
                 PensionEligibilityData.parse_obj(valid_data)
@@ -424,11 +442,11 @@ class TestPensionEligibilityData(unittest.TestCase):
             self.fail("PensionEligibilityData.parse_obj should not raise validation error")
 
     def test_if_user_a_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension': 'yes'}
+        valid_data = {'pension_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                    patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__',
+                    patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.__init__',
                        MagicMock(return_value=None)), \
                 patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))):
@@ -437,12 +455,12 @@ class TestPensionEligibilityData(unittest.TestCase):
             self.fail("PensionEligibilityData.parse_obj should not raise validation error")
 
     def test_if_user_b_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension': 'yes'}
+        valid_data = {'pension_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
                        MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                    patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.parse_obj',
-                          MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))), \
+                    patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
+                          MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                     patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__',
                           MagicMock(return_value=None)):
                 PensionEligibilityData.parse_obj(valid_data)
@@ -453,18 +471,18 @@ class TestPensionEligibilityData(unittest.TestCase):
 class TestInvestmentIncome(unittest.TestCase):
 
     def test_if_pension_valid_and_investment_income_no_then_raise_validation_error(self):
-        non_valid_data = {'investment_income': 'no'}
+        non_valid_data = {'investment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.PensionEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, InvestmentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_pension_invalid_and_investment_income_yes_then_raise_validation_error(self):
-        valid_data = {'investment_income': 'yes'}
+        valid_data = {'investment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.PensionEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], PensionEligibilityData))):
             self.assertRaises(ValidationError, InvestmentIncomeEligibilityData.parse_obj, valid_data)
 
     def test_if_pension_valid_and_investment_income_yes_then_raise_no_validation_error(self):
-        valid_data = {'investment_income': 'yes'}
+        valid_data = {'investment_income_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.PensionEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -476,18 +494,18 @@ class TestInvestmentIncome(unittest.TestCase):
 class TestMinimalInvestmentIncome(unittest.TestCase):
 
     def test_if_inv_income_valid_and_taxed_investment_income_no_then_raise_validation_error(self):
-        non_valid_data = {'minimal_investment_income': 'no'}
+        non_valid_data = {'minimal_investment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, MinimalInvestmentIncome.parse_obj, non_valid_data)
 
     def test_if_inv_income_invalid_and_minimal_investment_income_yes_then_raise_validation_error(self):
-        valid_data = {'minimal_investment_income': 'yes'}
+        valid_data = {'minimal_investment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], InvestmentIncomeEligibilityData))):
             self.assertRaises(ValidationError, MinimalInvestmentIncome.parse_obj, valid_data)
 
     def test_if_inv_income_valid_and_minimal_investment_income_yes_then_raise_no_validation_error(self):
-        valid_data = {'minimal_investment_income': 'yes'}
+        valid_data = {'minimal_investment_income_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -499,18 +517,18 @@ class TestMinimalInvestmentIncome(unittest.TestCase):
 class TestMoreThanMinimalInvestmentIncome(unittest.TestCase):
 
     def test_if_inv_income_valid_and_minimal_investment_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'minimal_investment_income': 'yes'}
+        non_valid_data = {'minimal_investment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, MoreThanMinimalInvestmentIncome.parse_obj, non_valid_data)
 
     def test_if_inv_income_invalid_and_minimal_investment_income_no_then_raise_validation_error(self):
-        valid_data = {'minimal_investment_income': 'no'}
+        valid_data = {'minimal_investment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], InvestmentIncomeEligibilityData))):
             self.assertRaises(ValidationError, MoreThanMinimalInvestmentIncome.parse_obj, valid_data)
 
     def test_if_inv_income_valid_and_minimal_investment_income_no_then_raise_no_validation_error(self):
-        valid_data = {'minimal_investment_income': 'no'}
+        valid_data = {'minimal_investment_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -522,18 +540,18 @@ class TestMoreThanMinimalInvestmentIncome(unittest.TestCase):
 class TestNoTaxedInvestmentIncome(unittest.TestCase):
 
     def test_if_above_minimal_inv_income_valid_and_taxed_investment_income_no_then_raise_validation_error(self):
-        non_valid_data = {'taxed_investment_income': 'no'}
+        non_valid_data = {'taxed_investment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.MoreThanMinimalInvestmentIncome.parse_obj'):
             self.assertRaises(ValidationError, NoTaxedInvestmentIncome.parse_obj, non_valid_data)
 
     def test_if_above_minimal_inv_income_invalid_and_taxed_investment_income_yes_then_raise_validation_error(self):
-        valid_data = {'taxed_investment_income': 'yes'}
+        valid_data = {'taxed_investment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.MoreThanMinimalInvestmentIncome.parse_obj',
                    MagicMock(side_effect=ValidationError([], MoreThanMinimalInvestmentIncome))):
             self.assertRaises(ValidationError, NoTaxedInvestmentIncome.parse_obj, valid_data)
 
     def test_if_above_minimal_inv_income_valid_and_taxed_investment_income_yes_then_raise_no_validation_error(self):
-        valid_data = {'taxed_investment_income': 'yes'}
+        valid_data = {'taxed_investment_income_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.MoreThanMinimalInvestmentIncome.__init__',
                        MagicMock(return_value=None)):
@@ -545,18 +563,18 @@ class TestNoTaxedInvestmentIncome(unittest.TestCase):
 class TestCheaperCheckEligibilityData(unittest.TestCase):
 
     def test_if_taxed_inv_valid_and_cheaper_check_yes_then_raise_validation_error(self):
-        non_valid_data = {'cheaper_check': 'yes'}
+        non_valid_data = {'cheaper_check_eligibility': 'yes'}
         with patch('app.model.eligibility_data.NoTaxedInvestmentIncome.parse_obj'):
             self.assertRaises(ValidationError, CheaperCheckEligibilityData.parse_obj, non_valid_data)
 
     def test_if_taxed_inv_invalid_and_cheaper_check_no_then_raise_validation_error(self):
-        valid_data = {'cheaper_check': 'no'}
+        valid_data = {'cheaper_check_eligibility': 'no'}
         with patch('app.model.eligibility_data.NoTaxedInvestmentIncome.parse_obj',
                    MagicMock(side_effect=ValidationError([], NoTaxedInvestmentIncome))):
             self.assertRaises(ValidationError, CheaperCheckEligibilityData.parse_obj, valid_data)
 
     def test_if_taxed_inv_valid_and_cheaper_check_no_then_raise_no_validation_error(self):
-        valid_data = {'cheaper_check': 'no'}
+        valid_data = {'cheaper_check_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.NoTaxedInvestmentIncome.__init__',
                        MagicMock(return_value=None)):
@@ -568,18 +586,18 @@ class TestCheaperCheckEligibilityData(unittest.TestCase):
 class TestNoInvestmentIncomeEligibilityData(unittest.TestCase):
 
     def test_if_taxed_inv_valid_and_investment_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'investment_income': 'yes'}
+        non_valid_data = {'investment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.PensionEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, NoInvestmentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_taxed_inv_invalid_and_investment_income_no_then_raise_validation_error(self):
-        valid_data = {'investment_income': 'no'}
+        valid_data = {'investment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.PensionEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], PensionEligibilityData))):
             self.assertRaises(ValidationError, NoInvestmentIncomeEligibilityData.parse_obj, valid_data)
 
     def test_if_taxed_inv_valid_and_investment_income_no_then_raise_no_validation_error(self):
-        valid_data = {'investment_income': 'no'}
+        valid_data = {'investment_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.PensionEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -591,7 +609,7 @@ class TestNoInvestmentIncomeEligibilityData(unittest.TestCase):
 class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
 
     def test_if_cheaper_check_valid_and_employment_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'employment_income': 'yes'}
+        non_valid_data = {'employment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
@@ -600,7 +618,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_no_inv_income_valid_and_employment_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'employment_income': 'yes'}
+        non_valid_data = {'employment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj'), \
@@ -609,7 +627,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_taxed_inv_income_valid_and_employment_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'employment_income': 'yes'}
+        non_valid_data = {'employment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj',
@@ -618,7 +636,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_cheaper_check_and_no_inv_income_and_taxed_inv_income_invalid_and_employment_income_no_then_raise_validation_error(self):
-        valid_data = {'employment_income': 'no'}
+        valid_data = {'employment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj',
@@ -628,7 +646,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, valid_data)
 
     def test_if_cheaper_check_valid_and_employment_income_no_then_raise_no_validation_error(self):
-        valid_data = {'employment_income': 'no'}
+        valid_data = {'employment_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(return_value=None)), \
@@ -641,7 +659,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
             self.fail("NoEmploymentIncomeEligibilityData.parse_obj should not raise validation error")
 
     def test_if_no_inv_income_valid_and_employment_income_no_then_raise_no_validation_error(self):
-        valid_data = {'employment_income': 'no'}
+        valid_data = {'employment_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
@@ -654,7 +672,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
             self.fail("NoEmploymentIncomeEligibilityData.parse_obj should not raise validation error")
 
     def test_if_taxed_inv_income_valid_and_employment_income_no_then_raise_no_validation_error(self):
-        valid_data = {'employment_income': 'no'}
+        valid_data = {'employment_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
@@ -670,7 +688,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
 class TestEmploymentIncomeEligibilityData(unittest.TestCase):
 
     def test_if_cheaper_check_valid_and_employment_income_no_then_raise_validation_error(self):
-        non_valid_data = {'employment_income': 'no'}
+        non_valid_data = {'employment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
@@ -679,7 +697,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_no_inv_income_valid_and_employment_income_no_then_raise_validation_error(self):
-        non_valid_data = {'employment_income': 'no'}
+        non_valid_data = {'employment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj'), \
@@ -688,7 +706,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_taxed_inv_income_valid_and_employment_income_no_then_raise_validation_error(self):
-        non_valid_data = {'employment_income': 'no'}
+        non_valid_data = {'employment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj',
@@ -697,7 +715,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_cheaper_check_and_no_inv_income_and_taxed_inv_income_invalid_and_employment_income_yes_then_raise_validation_error(self):
-        valid_data = {'employment_income': 'yes'}
+        valid_data = {'employment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.parse_obj',
@@ -707,7 +725,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, valid_data)
 
     def test_if_cheaper_check_valid_and_employment_income_yes_then_raise_no_validation_error(self):
-        valid_data = {'employment_income': 'yes'}
+        valid_data = {'employment_income_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(return_value=None)), \
@@ -720,7 +738,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
             self.fail("EmploymentIncomeEligibilityData.parse_obj should not raise validation error")
 
     def test_if_no_inv_income_valid_and_employment_income_yes_then_raise_no_validation_error(self):
-        valid_data = {'employment_income': 'yes'}
+        valid_data = {'employment_income_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
@@ -733,7 +751,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
             self.fail("EmploymentIncomeEligibilityData.parse_obj should not raise validation error")
 
     def test_if_taxed_inv_income_valid_and_employment_income_yes_then_raise_no_validation_error(self):
-        valid_data = {'employment_income': 'yes'}
+        valid_data = {'employment_income_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.parse_obj',
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
@@ -749,18 +767,18 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
 class TestMarginalEmploymentEligibilityData(unittest.TestCase):
 
     def test_if_employment_income_valid_and_marginal_employment_no_then_raise_validation_error(self):
-        non_valid_data = {'marginal_employment': 'no'}
+        non_valid_data = {'marginal_employment_eligibility': 'no'}
         with patch('app.model.eligibility_data.EmploymentIncomeEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, MarginalEmploymentEligibilityData.parse_obj, non_valid_data)
 
     def test_if_employment_income_invalid_and_marginal_employment_yes_then_raise_validation_error(self):
-        valid_data = {'marginal_employment': 'yes'}
+        valid_data = {'marginal_employment_eligibility': 'yes'}
         with patch('app.model.eligibility_data.EmploymentIncomeEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], EmploymentIncomeEligibilityData))):
             self.assertRaises(ValidationError, MarginalEmploymentEligibilityData.parse_obj, valid_data)
 
     def test_if_employment_income_valid_and_marginal_employment_yes_then_raise_no_validation_error(self):
-        valid_data = {'marginal_employment': 'yes'}
+        valid_data = {'marginal_employment_eligibility': 'yes'}
         try:
             with patch('app.model.eligibility_data.EmploymentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -772,21 +790,21 @@ class TestMarginalEmploymentEligibilityData(unittest.TestCase):
 class TestOtherIncomeEligibilityData(unittest.TestCase):
 
     def test_if_no_employment_valid_and_other_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'other_income': 'yes'}
+        non_valid_data = {'other_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], MarginalEmploymentEligibilityData))):
             self.assertRaises(ValidationError, OtherIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_marginal_employ_valid_and_other_income_yes_then_raise_validation_error(self):
-        non_valid_data = {'other_income': 'yes'}
+        non_valid_data = {'other_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], NoEmploymentIncomeEligibilityData))), \
                 patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, OtherIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_no_and_marginal_employ_invalid_and_other_income_no_then_raise_validation_error(self):
-        valid_data = {'other_income': 'no'}
+        valid_data = {'other_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], NoEmploymentIncomeEligibilityData))), \
                 patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.parse_obj',
@@ -794,7 +812,7 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, OtherIncomeEligibilityData.parse_obj, valid_data)
 
     def test_if_no_employment_valid_and_other_income_no_then_raise_no_validation_error(self):
-        valid_data = {'other_income': 'no'}
+        valid_data = {'other_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)), \
@@ -805,7 +823,7 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
             self.fail("OtherIncomeEligibilityData.parse_obj should not raise validation error")
 
     def test_if_marginal_employ_valid_and_other_income_no_then_raise_no_validation_error(self):
-        valid_data = {'other_income': 'no'}
+        valid_data = {'other_income_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.parse_obj',
                        MagicMock(side_effect=ValidationError([], NoEmploymentIncomeEligibilityData))), \
@@ -819,18 +837,18 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
 class TestForeignCountryEligibility(unittest.TestCase):
 
     def test_if_other_income_valid_and_foreign_country_yes_then_raise_validation_error(self):
-        non_valid_data = {'foreign_country': 'yes'}
+        non_valid_data = {'foreign_country_eligibility': 'yes'}
         with patch('app.model.eligibility_data.OtherIncomeEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, ForeignCountryEligibility.parse_obj, non_valid_data)
 
     def test_if_other_income_invalid_and_foreign_country_no_then_raise_validation_error(self):
-        valid_data = {'foreign_country': 'no'}
+        valid_data = {'foreign_country_eligibility': 'no'}
         with patch('app.model.eligibility_data.OtherIncomeEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], OtherIncomeEligibilityData))):
             self.assertRaises(ValidationError, ForeignCountryEligibility.parse_obj, valid_data)
 
     def test_if_other_income_valid_and_foreign_country_no_then_raise_no_validation_error(self):
-        valid_data = {'foreign_country': 'no'}
+        valid_data = {'foreign_country_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -844,41 +862,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_married_and_no_joint_taxes_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_married_and_joint_taxes_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -887,41 +905,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_married_and_separated_and_alimony_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'yes',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'yes',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'yes',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'yes',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_married_and_separated_and_no_alimony_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'yes',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'yes',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -930,41 +948,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_married_and_joint_taxes_and_alimony_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'yes',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'yes',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_married_and_joint_taxes_and_no_alimony_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -973,41 +991,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_married_and_both_have_elster_account_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'yes',
-            'user_b_has_elster_account': 'yes',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes',
+            'user_b_has_elster_account_eligibility': 'yes',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_married_and_only_a_has_elster_account_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'yes',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1016,21 +1034,21 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_widowed_and_everything_is_set_to_no_and_pension_then_parse_valid_foreign_country_data(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1039,21 +1057,21 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_single_and_everything_is_set_to_no_and_pension_then_parse_valid_foreign_country_data(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1062,41 +1080,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_divorced_and_joint_taxes_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'divorced',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'divorced',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_divorced_and_no_joint_taxes_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'divorced',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'divorced',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1105,41 +1123,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_widowed_and_alimony_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'widowed',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'yes',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'widowed',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'yes',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_widowed_and_no_alimony_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'widowed',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'widowed',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1148,41 +1166,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_single_and_alimony_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'yes',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'yes',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_single_and_no_alimony_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1191,41 +1209,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_divorced_and_no_joint_taxes_and_alimony_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'divorced',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'yes',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'divorced',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'yes',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_divorced_and_no_joint_taxes_and_no_alimony_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'divorced',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'divorced',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1234,61 +1252,61 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_single_and_has_elster_account_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'yes',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'no',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'no',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_single_and_has_no_pension_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'no',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'no',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_single_and_has_pension_then_raise_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1297,41 +1315,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_married_and_joint_taxes_and_has_no_pension_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'no',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'no',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_married_and_joint_taxes_and_has_pension_then_raise_validation_error(self):
         valid_data = {
-            'marital_status': 'married',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'yes',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1340,21 +1358,21 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_has_pension_has_only_minimal_investment_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1363,61 +1381,61 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_has_pension_has_investment_not_taxed_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_has_pension_has_taxed_investment_and_wants_cheaper_check_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'yes',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'yes',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_has_pension_has_taxed_investment_and_wants_no_cheaper_check_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'yes',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1426,41 +1444,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_has_no_investment_income_and_has_employment_income_and_has_more_than_marginal_income_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'no',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'no',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_has_no_investment_income_and_has_employment_income_and_has_only_marginal_income_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1469,41 +1487,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_has_minimal_investment_income_and_has_employment_income_and_has_more_than_marginal_income_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'no',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'no',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_has_minimal_investment_income_and_has_employment_income_and_has_only_marginal_income_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1512,41 +1530,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_wants_no_cheaper_check_income_and_has_employment_income_and_has_more_than_marginal_income_then_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'yes',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'no',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'no',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_wants_no_cheaper_check_income_and_has_employment_income_and_has_only_marginal_income_then_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'yes',
-            'minimal_investment_income': 'no',
-            'taxed_investment_income': 'yes',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1555,41 +1573,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_only_marginal_income_and_other_income_than_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'yes',
-            'other_income': 'yes',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'yes',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_only_marginal_income_and_no_other_income_than_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'yes',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1598,41 +1616,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_no_employment_income_and_other_income_than_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'no',
-            'other_income': 'yes',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'no',
+            'other_income_eligibility': 'yes',
+            'foreign_country_eligibility': 'no'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_no_employment_income_and_no_other_income_than_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
@@ -1641,41 +1659,41 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
     def test_if_other_income_and_foreign_country_than_raise_validation_error(self):
         invalid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'no',
-            'other_income': 'no',
-            'foreign_country': 'yes'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'no',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'yes'}
 
         self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_other_income_and_no_foreign_country_than_raise_no_validation_error(self):
         valid_data = {
-            'marital_status': 'single',
-            'separated_since_last_year': 'no',
-            'user_a_has_elster_account': 'no',
-            'user_b_has_elster_account': 'no',
-            'joint_taxes': 'no',
-            'alimony': 'no',
-            'pension': 'yes',
-            'investment_income': 'no',
-            'minimal_investment_income': 'yes',
-            'taxed_investment_income': 'no',
-            'cheaper_check': 'no',
-            'employment_income': 'no',
-            'marginal_employment': 'yes',
-            'other_income': 'no',
-            'foreign_country': 'no'}
+            'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
