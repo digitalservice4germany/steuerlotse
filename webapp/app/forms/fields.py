@@ -26,11 +26,10 @@ class UnlockCodeWidget(TextInput):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
 
-        html = ""
-        html += f'<fieldset class="btn-group btn-group-toggle form-row-center" id="{field.id}"  data-toggle="buttons">\n'
-        html += f'<legend class="field-label">{field.label.text}</legend>'
-
         kwargs['maxlength'] = 4
+        kwargs['class'] = 'form-control'
+
+        html = ""
         kwargs['value'] = field._value()[0]
         html += '<input %s>' % self.html_params(name=field.name, **kwargs)
         html += '-'
@@ -39,7 +38,6 @@ class UnlockCodeWidget(TextInput):
         html += '-'
         kwargs['value'] = field._value()[2]
         html += '<input %s>' % self.html_params(name=field.name, **kwargs)
-        html += '</fieldset>\n'
 
         return Markup(html)
 

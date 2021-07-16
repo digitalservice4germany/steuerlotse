@@ -64,12 +64,22 @@
     </fieldset>
 {%- endmacro %}
 
+{% macro separated_field(field) -%}
+    <fieldset id="{{ field.id }}">
+        {{ field_label(field) }}
+        <div class="form-row-center">
+            {{ _field(field) }}
+        </div>
+        {{ field_errors(field) }}
+    </fieldset>
+{%- endmacro %}
+
 {% macro field_label(field, class="") %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
 
-    {% if field.type == 'RadioField' %}
+    {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
             <legend class="field-label {{ class }}">{{ label.text }}
                 {% if help %}{{ help_button(label.field_id) }}{% endif %}
