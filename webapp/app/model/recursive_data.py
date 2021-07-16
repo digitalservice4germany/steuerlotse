@@ -11,7 +11,25 @@ class RecursiveDataModel(BaseModel):
     check of at least one of these previous fields being successful. This can be used to have kind of a recursive
     check of deeply nested models where you could have one model per step and still ensure that all previous steps
     are valid without having knowledge about their inner workings. The input data is assumed to be flat and will be
-    adapted in the constructor. """
+    adapted in the constructor.
+
+
+    NOTE: If you want to use this model to create a fork (where other RecursiveDataModels will depend on either
+    answer as in the diagram below) you will need more than one model. One for each answer that you are depending on.
+
+    Let's say you have the following decision tree:
+                    Question A
+                YES /       \ NO
+                /               \
+            Question B      Question C
+
+
+    You would then have the following Models: QuestionAYesModel, QuestionANoModel, QuestionBModel and QuestionCModel.
+
+    These models would have the following dependencies:
+    1) QuestionAYesModel -> QuestionBModel
+    2) QuestionANoModel -> QuestionCModel
+    """
     _previous_fields = []
 
     def __init__(self, **data: Any) -> None:
@@ -24,20 +42,26 @@ class RecursiveDataModel(BaseModel):
         fields = list(self.__class__.__fields__.values())
         self.__class__._previous_fields = []
 
+        non_found = False
         for field in fields:
             if issubclass(field.type_, BaseModel):
                 self.__class__._previous_fields.append(field.name)
-                self._set_data_for_previous_field(enriched_data, field.name, field.type_)
+                if self._set_data_for_previous_field(enriched_data, field.name, field.type_):
+                   non_found = True
 
+        if non_found:
+            print(self.__class__.__name__)
         return enriched_data
 
-    @staticmethod
-    def _set_data_for_previous_field(enriched_data, field_name, field_type):
+
+    def _set_data_for_previous_field(self, enriched_data, field_name, field_type):
         try:
             possible_data = field_type.parse_obj(enriched_data).dict()
             enriched_data[field_name] = possible_data
-        except ValidationError:
-            return
+            return True
+
+        except ValidationError as e:
+            return False
 
     def one_previous_field_has_to_be_set(cls, v, values):
         """Validator used to ensure that at least one of the needed previous fields has been set. Make sure to use
