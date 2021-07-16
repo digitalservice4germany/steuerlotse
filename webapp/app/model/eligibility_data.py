@@ -30,21 +30,7 @@ class InvalidEligiblityError(ValueError):
         'employment_income_eligibility': _l('form.eligibility.incorrect-employment_income'),
         'marginal_employment_eligibility': _l('form.eligibility.incorrect-marginal_employment'),
         'other_income_eligibility': _l('form.eligibility.incorrect-other_income'),
-        'foreign_country_eligibility': _l('form.eligibility.incorrect-foreign_country'), #TODO Delete everything from here when old steps are gone
-        'renten': _l('form.eligibility.error-incorrect-renten'),
-        'kapitaleink_mit_steuerabzug': None,
-        'kapitaleink_ohne_steuerabzug':  _l('form.eligibility.error-incorrect-kapitaleink_ohne_steuerabzug'),
-        'kapitaleink_mit_pauschalbetrag': None,
-        'kapitaleink_guenstiger':  _l('form.eligibility.error-incorrect-gunstiger'),
-        'geringf': None,
-        'erwerbstaetigkeit':  _l('form.eligibility.error-incorrect-erwerbstaetigkeit'),
-        'unterhalt':  _l('form.eligibility.error-incorrect-unterhalt'),
-        'ausland':  _l('form.eligibility.error-incorrect-ausland'),
-        'other':  _l('form.eligibility.error-incorrect-other'),
-        'verheiratet_zusammenveranlagung': None,
-        'verheiratet_einzelveranlagung':  _l('form.eligibility.error-incorrect-verheiratet_einzelveranlagung'),
-        'geschieden_zusammenveranlagung':  _l('form.eligibility.error-incorrect-geschieden_zusammenveranlagung'),
-        'elster_account':  _l('form.eligibility.error-incorrect-elster-account')
+        'foreign_country_eligibility': _l('form.eligibility.incorrect-foreign_country')
     }
 
     def __init__(self, field):

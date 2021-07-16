@@ -2,17 +2,65 @@ import unittest
 
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
-from app.forms.steps.eligibility_steps import EligibilityIncomesFormSteuerlotseStep, EligibilityResultDisplaySteuerlotseStep, \
-    EligibilityStartDisplaySteuerlotseStep
+from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
+    MaritalStatusInputFormSteuerlotseStep, SeparatedEligibilityInputFormSteuerlotseStep, \
+    MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
+    MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, UserAElsterAccountEligibilityInputFormSteuerlotseStep, \
+    UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep, \
+    DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
+    SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep, \
+    SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep, PensionDecisionEligibilityInputFormSteuerlotseStep, \
+    InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
+    MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
+    TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
+    CheaperCheckDecisionEligibilityInputFormSteuerlotseStep, EmploymentDecisionEligibilityInputFormSteuerlotseStep, \
+    MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
+    IncomeOtherDecisionEligibilityInputFormSteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
+    EligibilitySuccessDisplaySteuerlotseStep, MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
+    MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep, UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep, \
+    DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep, SingleAlimonyEligibilityFailureDisplaySteuerlotseStep, \
+    SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep, PensionEligibilityFailureDisplaySteuerlotseStep, \
+    TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
+    MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep, \
+    IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep
 
 
-class TestTestEligibilityChooserInit(unittest.TestCase):
+class TestEligibilityChooserInit(unittest.TestCase):
 
     def setUp(self):
         self.testing_steps = [
             EligibilityStartDisplaySteuerlotseStep,
-            EligibilityIncomesFormSteuerlotseStep,
-            EligibilityResultDisplaySteuerlotseStep
+                MaritalStatusInputFormSteuerlotseStep,
+                SeparatedEligibilityInputFormSteuerlotseStep,
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep,
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep,
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+                PensionDecisionEligibilityInputFormSteuerlotseStep,
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep,
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep,
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
+                EligibilitySuccessDisplaySteuerlotseStep,
+                MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
+                MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
+                UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep,
+                DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
+                SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
+                SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep,
+                PensionEligibilityFailureDisplaySteuerlotseStep,
+                TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
+                CheaperCheckEligibilityFailureDisplaySteuerlotseStep,
+                MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep,
+                IncomeOtherEligibilityFailureDisplaySteuerlotseStep,
+                ForeignCountriesEligibilityFailureDisplaySteuerlotseStep,
         ]
         self.endpoint_correct = "eligibility"
 

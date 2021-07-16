@@ -19,7 +19,7 @@ class SteuerlotseStep(object):
         self.overview_step = overview_step
         self._prev_step = prev_step
         self._next_step = next_step
-        self.render_info = None
+        self.render_info: Optional[RenderInfo] = None
 
         self.default_data = default_data
 
@@ -64,7 +64,7 @@ class SteuerlotseStep(object):
         if self.render_info.redirect_url:
             return redirect(self.render_info.redirect_url)
 
-    def render(self):
+    def render(self, **kwargs):
         raise NotImplementedError
 
     def url_for_step(self, step_name, _has_link_overview=None, **values):
@@ -83,8 +83,9 @@ class FormSteuerlotseStep(SteuerlotseStep):
     template = 'basis/form_full_width.html'
 
     def __init__(self, form, endpoint, header_title, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None,):
-        super(FormSteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
+                 next_step=None, ):
+        super(FormSteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step,
+                                                  next_step)
         self.form = form
 
     def _pre_handle(self):
@@ -116,14 +117,15 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
         return self.form(form_data, **prefilled_data)
 
-    def render(self):
+    def render(self, **kwargs):
         """
         Renders a Form step. Use the render_info to provide all the needed data for rendering.
         """
         return render_template(
             template_name_or_list=self.template,
             form=self.render_info.form,
-            render_info=self.render_info
+            render_info=self.render_info,
+            **kwargs
         )
 
     @staticmethod
@@ -141,13 +143,14 @@ class FormSteuerlotseStep(SteuerlotseStep):
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
     def __init__(self, endpoint, header_title, overview_step=None, default_data=None, prev_step=None, next_step=None):
-        super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
+        super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step,
+                                                     next_step)
 
-    def render(self):
+    def render(self, **kwargs):
         """
         Render a display step. Use the render_info to provide all the needed data for rendering.
         """
-        return render_template(template_name_or_list=self.template, render_info=self.render_info)
+        return render_template(template_name_or_list=self.template, render_info=self.render_info, **kwargs)
 
 
 class RedirectSteuerlotseStep(SteuerlotseStep):
@@ -156,8 +159,10 @@ class RedirectSteuerlotseStep(SteuerlotseStep):
     to return a SteuerlotseStep that should only redirect to another step.
     """
 
-    def __init__(self, redirection_step_name, endpoint, header_title=None, overview_step=None, default_data=None, prev_step=None, next_step=None):
-        super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step, next_step)
+    def __init__(self, redirection_step_name, endpoint, header_title=None, overview_step=None, default_data=None,
+                 prev_step=None, next_step=None):
+        super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, overview_step, default_data, prev_step,
+                                                      next_step)
         self.redirection_step_name = redirection_step_name
 
     def handle(self):

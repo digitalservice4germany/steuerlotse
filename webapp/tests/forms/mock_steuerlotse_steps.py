@@ -6,7 +6,6 @@ from wtforms import Form, validators
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, FormSteuerlotseStep
-from app.forms.steps.eligibility_steps import EligibilityIncomesFormSteuerlotseStep, EligibilityResultDisplaySteuerlotseStep
 from app.forms.steps.logout_steps import LogoutInputStep
 from app.forms.steps.lotse.confirmation_steps import StepFiling, StepSummary, StepConfirmation
 from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
@@ -240,16 +239,7 @@ class MockReligionStep(StepReligion):
         return make_response(json.dumps([data], default=str), 200)
 
 
-class MockEligibilityIncomeStepForm(EligibilityIncomesFormSteuerlotseStep):
 
-    def __init__(self, **kwargs):
-        super(MockEligibilityIncomeStepForm, self).__init__(**kwargs)
-
-
-class MockEligibilityResultDisplayStep(EligibilityResultDisplaySteuerlotseStep):
-
-    def __init__(self, **kwargs):
-        super(MockEligibilityResultDisplayStep, self).__init__(**kwargs)
 
 
 class MockUnlockCodeRequestInputStep(UnlockCodeRequestInputStep):
