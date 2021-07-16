@@ -1,0 +1,12 @@
+{% extends 'basis/base_step_form.html' %}
+{% import 'components.html' as components %}
+
+{% block form_content %}
+    <div class="form-row-center mt-3">
+        {{ macros.render_field(form.idnr) }}
+    </div>
+
+    <div class="form-row-center mt-3">
+        {{ macros.render_field(form.unlock_code, hide_label=True) }}
+    </div>
+{% endblock %}

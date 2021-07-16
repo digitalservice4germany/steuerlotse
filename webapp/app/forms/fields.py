@@ -19,6 +19,46 @@ class SteuerlotseStringField(StringField):
         ValidElsterCharacterSet().__call__(form, self)
 
 
+class UnlockCodeWidget(TextInput):
+    """A divided input field with three text input fields, limited to four chars."""
+
+    def __call__(self, field, **kwargs):
+        if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
+            kwargs['required'] = True
+
+        html = ""
+        html += f'<fieldset class="btn-group btn-group-toggle form-row-center" id="{field.id}"  data-toggle="buttons">\n'
+        html += f'<legend class="field-label">{field.label.text}</legend>'
+
+        kwargs['maxlength'] = 4
+        kwargs['value'] = field._value()[0]
+        html += '<input %s>' % self.html_params(name=field.name, **kwargs)
+        html += '-'
+        kwargs['value'] = field._value()[1]
+        html += '<input %s>' % self.html_params(name=field.name, **kwargs)
+        html += '-'
+        kwargs['value'] = field._value()[2]
+        html += '<input %s>' % self.html_params(name=field.name, **kwargs)
+        html += '</fieldset>\n'
+
+        return Markup(html)
+
+
+class UnlockCodeField(SteuerlotseStringField):
+    def __init__(self, label='', validators=None, **kwargs):
+        super(UnlockCodeField, self).__init__(label, validators, **kwargs)
+        self.widget = UnlockCodeWidget()
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = '-'.join(valuelist)
+        elif self.data is None:
+            self.data = ''
+
+    def _value(self):
+        return self.data.split('-')
+
+
 class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
