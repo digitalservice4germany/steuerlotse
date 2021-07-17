@@ -14,6 +14,8 @@ from app.model.eligibility_data import InvalidEligiblityError, OtherIncomeEligib
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
     UserANoElsterAccountEligibilityData
 
+_ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
+
 
 class IncorrectEligibilityData(Exception):
     """Raised in case of incorrect data from the eligible form. This might happen because of an empty session cookie"""
@@ -25,6 +27,7 @@ class EligibilityFailureDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     template = 'eligibility/display_failure.html'
     eligibility_errors = None
     input_step_name = ''
+    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     def __init__(self, endpoint, **kwargs):
         super(EligibilityFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), **kwargs)
@@ -39,6 +42,7 @@ class EligibilityFailureDisplaySteuerlotseStep(DisplaySteuerlotseStep):
 class EligibilityInputFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'eligibility/form_incomes.html'
     data_model: BaseModel = None
+    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     class InputForm(SteuerlotseBaseForm):
         pass
@@ -92,6 +96,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     title = _l('form.eligibility.start-title')
     intro = _l('form.eligibility.start-intro')
     template = 'basis/display_standard.html'
+    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     def __init__(self, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(

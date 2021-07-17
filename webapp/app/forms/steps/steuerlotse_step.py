@@ -12,6 +12,7 @@ class SteuerlotseStep(object):
     title = None
     intro = None
     template = None
+    session_data_identifier = 'form_data'
 
     def __init__(self, endpoint, header_title, overview_step, default_data, prev_step, next_step):
         self.endpoint = endpoint
@@ -50,11 +51,14 @@ class SteuerlotseStep(object):
             return redirection
         return self.render()
 
-    def _get_session_data(self, ttl: Optional[int] = None):
-        serialized_session = session.get('form_data', b"")
+    def _get_session_data(self, session_data_identifier=None, ttl: Optional[int] = None):
+        if session_data_identifier is None:
+            session_data_identifier = self.session_data_identifier
+        serialized_session = session.get(session_data_identifier, b"")
 
         if self.default_data:
-            stored_data = self.default_data | deserialize_session_data(serialized_session, ttl)  # updates session_data only with non_existent values
+            stored_data = self.default_data | deserialize_session_data(serialized_session,
+                                                                       ttl)  # updates session_data only with non_existent values
         else:
             stored_data = deserialize_session_data(serialized_session, ttl)
 
@@ -129,15 +133,18 @@ class FormSteuerlotseStep(SteuerlotseStep):
         )
 
     @staticmethod
-    def _delete_dependent_data(data_field_prefixes: list, stored_data: dict):
-        for field in list(stored_data.keys()):
-            if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
-                stored_data.pop(field)
-        return stored_data
+    def _delete_dependent_data(data_field_identifier: list, stored_data: dict):
+        """This method filters the stored data. It deletes all the elements where the key includes the
+        data_field_identifier. """
+        return dict(filter(
+            lambda elem: not any([elem[0].startswith(data_field_prefix) for data_field_prefix in data_field_identifier])
+                     and not any([elem[0].endswith(data_field_prefix) for data_field_prefix in data_field_identifier]),
+            stored_data.items()))
 
-    @staticmethod
-    def _override_session_data(stored_data):
-        session['form_data'] = serialize_session_data(stored_data)
+    def _override_session_data(self, stored_data, session_data_identifier=None):
+        if session_data_identifier is None:
+            session_data_identifier = self.session_data_identifier
+        session[session_data_identifier] = serialize_session_data(stored_data)
 
 
 class DisplaySteuerlotseStep(SteuerlotseStep):

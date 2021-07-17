@@ -154,7 +154,7 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
 
     def test_if_session_data_then_return_session_data(self):
         with app.app_context() and app.test_request_context() as req:
-            req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
+            req.session = SecureCookieSession({SteuerlotseStep.session_data_identifier: create_session_form_data(self.session_data)})
             session_data = self.steuerlotse_step._get_session_data()
 
             self.assertEqual(self.session_data, session_data)
@@ -164,7 +164,7 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
         expected_data = {**self.session_data, **default_data}
 
         with app.app_context() and app.test_request_context() as req:
-            req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
+            req.session = SecureCookieSession({SteuerlotseStep.session_data_identifier: create_session_form_data(self.session_data)})
             steuerlotse_step_with_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
                                                                  default_data=default_data, header_title=None,
                                                                  overview_step=None,
@@ -173,6 +173,37 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
             session_data = steuerlotse_step_with_default_data._get_session_data()
 
             self.assertEqual(expected_data, session_data)
+
+    def test_if_session_data_in_incorrect_identifier_then_return_only_data_from_correct_identifier(self):
+        form_data = {"brother": "Luigi"}
+        incorrect_identifier = {"enemy": "Bowser"}
+        expected_data = {**form_data}
+
+        with app.app_context() and app.test_request_context() as req:
+            req.session = SecureCookieSession({SteuerlotseStep.session_data_identifier: create_session_form_data(form_data),
+                                               "INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier)})
+            steuerlotse_step_with_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                 default_data={}, header_title=None,
+                                                                 overview_step=None,
+                                                                 prev_step=None, next_step=None)
+
+            session_data = steuerlotse_step_with_default_data._get_session_data()
+
+            self.assertEqual(expected_data, session_data)
+
+    def test_if_only_data_in_incorrect_identifier_then_return_empty_data(self):
+        incorrect_identifier = {"enemy": "Bowser"}
+
+        with app.app_context() and app.test_request_context() as req:
+            req.session = SecureCookieSession({"INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier)})
+            steuerlotse_step_with_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                 default_data={}, header_title=None,
+                                                                 overview_step=None,
+                                                                 prev_step=None, next_step=None)
+
+            session_data = steuerlotse_step_with_default_data._get_session_data()
+
+            self.assertEqual({}, session_data)
 
     def test_if_no_form_data_in_session_then_return_default_data(self):
         with app.app_context() and app.test_request_context() as req:
@@ -471,3 +502,26 @@ class TestSteuerlotseFormStepOverrideSessionData(unittest.TestCase):
                 MockFormStep(endpoint="lotse")._override_session_data(new_data)
                 self.assertIn('form_data', req.session)
                 self.assertEqual(new_data, req.session['form_data'])
+
+    def test_if_data_stored_with_other_identifiert_then_it_is_not_changed(self):
+        new_data = {'brother': 'Luigi'}
+        other_data = {'enemy': 'Bowser'}
+        with app.app_context() and app.test_request_context() as req:
+            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
+                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'},
+                               'OTHER_IDENTIFIER': other_data}
+                MockFormStep(endpoint="lotse")._override_session_data(new_data)
+                self.assertEqual(other_data, req.session['OTHER_IDENTIFIER'])
+
+    def test_if_stored_data_identifier_is_set_then_override_session_data_with_that_new_identifier(self):
+        new_data = {'brother': 'Luigi'}
+        other_data = {'enemy': 'Bowser'}
+        new_identifier = "NEW_IDENTIFIER"
+        with app.app_context() and app.test_request_context() as req:
+            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
+                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'},
+                               'OTHER_IDENTIFIER': other_data}
+                step = MockFormStep(endpoint="lotse")
+                step.session_data_identifier = new_identifier
+                step._override_session_data(new_data)
+                self.assertEqual(new_data, req.session[new_identifier])
