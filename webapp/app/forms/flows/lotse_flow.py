@@ -347,7 +347,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                         curr_step.section_link, {})
                 curr_section = sections[curr_step.section_link.name]
 
-                curr_section.data[curr_step.name] = Section(curr_step.label,
+                curr_section.data[curr_step.name] = Section(curr_step.get_label(form_data),
                                                             self.url_for_step(curr_step.name, _has_link_overview=True),
                                                             step_data)
 
