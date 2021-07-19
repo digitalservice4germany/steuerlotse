@@ -34,7 +34,7 @@ class MultipleInputFieldWidget(TextInput):
             kwargs['maxlength'] = input_field_length
 
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
-            kwargs['id'] = f'{field.id}_{idx}'
+            kwargs['id'] = f'{field.id}_{idx + 1}'
             joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
             if self.separator and idx < len(self.input_field_lengths) - 1:
                 joined_input_fields += Markup(self.separator)
