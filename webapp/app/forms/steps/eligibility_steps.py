@@ -3,6 +3,7 @@ from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from pydantic import ValidationError, BaseModel
 from wtforms import RadioField
+from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
@@ -133,7 +134,8 @@ class MaritalStatusInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep)
                      ('single', _l('form.eligibility.marital_status.single')),
                      ('divorced', _l('form.eligibility.marital_status.divorced')),
                      ('widowed', _l('form.eligibility.marital_status.widowed')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
@@ -164,7 +166,8 @@ class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormS
                                   'text': _l('form.eligibility.separated_since_last_year.detail.text')}},
             choices=[('yes', _l('form.eligibility.separated_since_last_year.yes')),
                      ('no', _l('form.eligibility.separated_since_last_year.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -188,7 +191,8 @@ class MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligi
                                   'text': _l('form.eligibility.joint_taxes.detail.text')}},
             choices=[('yes', _l('form.eligibility.joint_taxes.yes')),
                      ('no', _l('form.eligibility.joint_taxes.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -212,7 +216,8 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
                                   'text': _l('form.eligibility.alimony.detail.text')}},
             choices=[('yes', _l('form.eligibility.alimony.yes')),
                      ('no', _l('form.eligibility.alimony.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -231,7 +236,8 @@ class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
                                   'text': _l('form.eligibility.user_a_has_elster_account.detail.text')}},
             choices=[('yes', _l('form.eligibility.user_a_has_elster_account.yes')),
                      ('no', _l('form.eligibility.user_a_has_elster_account.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -254,7 +260,8 @@ class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
             render_kw={'hide_label': True},
             choices=[('yes', _l('form.eligibility.user_b_has_elster_account.yes')),
                      ('no', _l('form.eligibility.user_b_has_elster_account.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -278,7 +285,8 @@ class DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
                                   'text': _l('form.eligibility.joint_taxes.detail.text')}},
             choices=[('yes', _l('form.eligibility.joint_taxes.yes')),
                      ('no', _l('form.eligibility.joint_taxes.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -302,7 +310,8 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
                                   'text': _l('form.eligibility.alimony.detail.text')}},
             choices=[('yes', _l('form.eligibility.alimony.yes')),
                      ('no', _l('form.eligibility.alimony.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -326,7 +335,8 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
                                   'text': _l('form.eligibility.user_a_has_elster_account.detail.text')}},
             choices=[('yes', _l('form.eligibility.user_a_has_elster_account.yes')),
                      ('no', _l('form.eligibility.user_a_has_elster_account.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class PensionEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -348,7 +358,8 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
             render_kw={'hide_label': True},
             choices=[('yes', _l('form.eligibility.pension.yes')),
                      ('no', _l('form.eligibility.pension.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -367,7 +378,8 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
                                   'text': _l('form.eligibility.investment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.investment_income.yes')),
                      ('no', _l('form.eligibility.investment_income.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -386,7 +398,8 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
                                   'text': _l('form.eligibility.minimal_investment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.minimal_investment_income.yes')),
                      ('no', _l('form.eligibility.minimal_investment_income.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -410,7 +423,8 @@ class TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionE
                                   'text': _l('form.eligibility.taxed_investment.detail.text')}},
             choices=[('yes', _l('form.eligibility.taxed_investment.yes')),
                      ('no', _l('form.eligibility.taxed_investment.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class CheaperCheckEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -434,7 +448,8 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
                                   'text': _l('form.eligibility.cheaper_check.detail.text')}},
             choices=[('yes', _l('form.eligibility.cheaper_check_eligibility.yes')),
                      ('no', _l('form.eligibility.cheaper_check_eligibility.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -453,7 +468,8 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
                                   'text': _l('form.eligibility.employment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.employment_income.yes')),
                      ('no', _l('form.eligibility.employment_income.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -477,7 +493,8 @@ class MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisi
                                   'text': _l('form.eligibility.marginal_employment.detail.text')}},
             choices=[('yes', _l('form.eligibility.marginal_employment.yes')),
                      ('no', _l('form.eligibility.marginal_employment.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class IncomeOtherEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -501,7 +518,8 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
                                   'text': _l('form.eligibility.income-other.detail.text')}},
             choices=[('yes', _l('form.eligibility.income-other.yes')),
                      ('no', _l('form.eligibility.income-other.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -525,7 +543,8 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
                                   'text': _l('form.eligibility.foreign-country.detail.text')}},
             choices=[('yes', _l('form.eligibility.foreign-country.yes')),
                      ('no', _l('form.eligibility.foreign-country.no')),
-                     ])
+                     ],
+            validators=[InputRequired()])
 
 
 class EligibilitySuccessDisplaySteuerlotseStep(DisplaySteuerlotseStep):
