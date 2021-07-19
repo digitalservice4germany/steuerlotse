@@ -689,7 +689,7 @@ footer a{
 }
 
 .form-container > * {
-    margin-top: var(--spacing-09);
+    margin-top: var(--spacing-07);
 }
 
 @media (max-width: 1024px) {
