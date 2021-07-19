@@ -9,7 +9,9 @@ const unlockCodeData = {
 }
 
 const taxReturnData = {
-    unlockCode: 'DBNH-B8JS-9JE7',
+    unlockCode1: 'DBNH',
+    unlockCode2: 'B8JS',
+    unlockCode3: '9JE7',
     taxNr: '19811310010',
     marriedDate: '01.01.1990',
     iban: 'DE02500105170137075030',
@@ -95,7 +97,9 @@ const login = function () {
     // Log in
     cy.get('.nav-link').contains('Ihre Steuererklärung').click()
     cy.get('#idnr').type(taxReturnData.personA.idnr)
-    cy.get('#unlock_code').type(taxReturnData.unlockCode)
+    cy.get('#unlock_code_1').type(taxReturnData.unlockCode1)
+    cy.get('#unlock_code_2').type(taxReturnData.unlockCode2)
+    cy.get('#unlock_code_3').type(taxReturnData.unlockCode3)
     cy.get(submitBtnSelector).click()  // Submit form
     cy.get(submitBtnSelector).click()  // Skip confirmation
 }
