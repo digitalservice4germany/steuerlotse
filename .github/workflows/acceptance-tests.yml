@@ -16,7 +16,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-acceptance-test-node-modules-${{ hashFiles('acceptance_tests/package-lock.json') }}
+        key: ${{ runner.os }}-acceptance-test-node-modules-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('acceptance_tests/package-lock.json') }}
 
     - name: Install dependencies
       run: cd acceptance_tests && npm install

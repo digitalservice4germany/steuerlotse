@@ -116,20 +116,20 @@
             {% for id, card in accordion.entries.items() -%}
                 {% set card_id = 'card-' + id -%}
                 <div class="card mt-2">
-                    <button class="card-header d-sm-flex justify-content-between align-items-center btn-accordion row collapsed w-100"
+                    <div class="card-header d-sm-flex justify-content-between align-items-center row collapsed w-100"
                          id="heading-{{ card_id }}" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
                          aria-controls="collapseOne">
-                         <div class="col">
-                            <h5 class="mb-0">{{ card['heading'] }}</h5>
-                         </div>
-                         <div class="col-1 control-show-more">
+                         <button class="col text-left" type="button">
+                            <span class="mb-0">{{ card['heading'] }}</span>
+                         </button>
+                         <button class="col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true">
                              <img src="{{ url_for('static', filename='icons/plus.svg') }}"/>
-                         </div>
-                         <div class="col-1 control-show-less">
+                         </button>
+                         <button class="col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true">
                             <img src="{{ url_for('static', filename='icons/minus.svg') }}"/>
-                         </div>
-                    </button>
+                         </button>
+                    </div>
                     <div id="{{ card_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
                         data-parent="#{{accordion.id}}">
                         <div class="card-body-less-padding">
@@ -156,25 +156,23 @@
         <div class="card">
             <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0"
                  id="heading-card_id">
-                <div class="row collapsed" data-toggle="collapse"
+                <div class="collapsed" data-toggle="collapse"
                             data-target="#details-body-{{ details_id }}"
                             aria-expanded="false" aria-controls="collapseOne">
-                    <button class="btn container" type="button">
+                    <div class="container">
                         <div class="row">
-                            <div class="details-icon col-1 control-show-more"></div>
-                            <div class="details-icon col-1 control-show-less"></div>
-                            <div class="col">
+                            <button class="btn details-icon col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn details-icon col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn col" type="button">
                                 <span class="mb-0">{{title}}</span>
-                            </div>
+                            </button>
                         </div>
-                    </button>
-
+                    </div>
                 </div>
-
             </div>
             <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
                 data-parent="#details-{{ details_id }}">
-                <div class="card-body pt-0 pl-0">
+                <div class="card-body container pt-0">
                     <div class="row">
                         <div class="col-1 px-0">
                             <div class="block-quote-line"></div>

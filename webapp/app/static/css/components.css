@@ -128,7 +128,7 @@
 
 
 /* ACCORDION */
-.accordion .card{
+.accordion .card {
     border: 0;
     border-bottom: 1px solid var(--link-underline-color);
     border-radius: 0;
@@ -136,56 +136,60 @@
     padding-bottom: .75rem;
 }
 
-.accordion .card-header{
-    border: 0;
-    background: inherit;
+.accordion .card-header {
     padding: .75rem 0;
-}
-
-.accordion .card-header:focus, .accordion .card-header:active{
-    outline:none;
-    box-shadow: none;
-    border: 0;
-}
-
-.accordion .card-header h5{
-    font-size: var(--text-medium);
-    font-weight: var( --font-bold);
-
-    display: inline;
-}
-
-.accordion .card-header:focus h5{
-    color: var(--text-color);
-    background: var(--focus-color);
-    border-bottom: 4px solid var(--focus-border-color);
-}
-
-.accordion .card-header{
     text-align: left;
     color: var(--text-color);
     background: inherit;
     border: 0;
 }
 
-.accordion .card-header:hover, .accordion .card-header:active{
+.accordion .card-header button {
+    border: 0;
+    background: inherit;
+}
+
+.accordion .card-header button:focus,
+.accordion .card-header button:active {
+    outline:none;
+    box-shadow: none;
+    border: 0;
+}
+
+.accordion .card-header button span {
+    font-size: var(--text-medium);
+    font-weight: var(--font-bold);
+
+    display: inline;
+}
+
+.accordion .card-header:focus-within button span {
+    color: var(--text-color);
+    background: var(--focus-color);
+    border-bottom: 4px solid var(--focus-border-color);
+}
+
+.accordion .card-header button:hover,
+.accordion .card-header button:active{
     color: var(--link-hover-color);
 }
 
-.accordion .card-header .control-show-more{
-    display: none;
+.accordion .card-header:not(.collapsed) .control-show-more {
+    /* We need to still show it to keep focus on the element */
+    height: 1px;
+    width: 1px;
+    background-color: inherit;
+    overflow: hidden;
+    position: absolute;
 }
 
-.accordion .card-header .control-show-less{
-    display: block;
-}
-
-.accordion .card-header.collapsed .control-show-more{
-    display: block;
-}
-
-.accordion .card-header.collapsed .control-show-less{
-    display: none;
+.accordion .card-header.collapsed .control-show-less {
+    /* We need to still show it to keep focus on the element */
+    height: 1px;
+    width: 1px;
+    background-color: inherit;
+    overflow: hidden;
+    position: absolute;
 }
 
 /* DETAILS */
@@ -280,20 +284,24 @@
     outline: none;
 }
 
-.details-card .card-header .control-show-more{
-    display: none;
+.details-card .card-header:not(.collapsed) .control-show-more {
+    /* We need to still show it to keep focus on the element */
+    height: 1px;
+    width: 1px;
+    background-color: inherit;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
 }
 
-.details-card .card-header .control-show-less{
-    display: block;
-}
-
-.details-card .card-header .collapsed .control-show-more{
-    display: block;
-}
-
-.details-card .card-header .collapsed .control-show-less{
-    display: none;
+.details-card .card-header.collapsed .control-show-less {
+    /* We need to still show it to keep focus on the element */
+    height: 1px;
+    width: 1px;
+    background-color: inherit;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
 }
 
 
