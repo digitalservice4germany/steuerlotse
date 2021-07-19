@@ -1883,7 +1883,7 @@ msgstr ""
 "Sie: Die Gesamtausgaben sind nicht in voller Höhe absetzbar. Nur der "
 "Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich "
 "steuermindernd aus. Die zumutbare Belastung hängt von der Höhe Ihres "
-"Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.</p>"
+"Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet."
 
 #: app/forms/steps/lotse/steuerminderungen_steps.py:160
 msgid "form.lotse.step_haushaltsnahe.label"

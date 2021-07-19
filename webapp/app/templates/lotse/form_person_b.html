@@ -21,7 +21,7 @@
   <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h3>
   {{ macros.render_field(form.person_b_same_address, 10) }}
 
-  <div id="form_address_fields">
+  <div id="form_address_fields" class="hidden">
     <div class="form-row-center">
       {{ macros.render_field(form.person_b_street) }}
       {{ macros.render_field(form.person_b_street_number, 2) }}
