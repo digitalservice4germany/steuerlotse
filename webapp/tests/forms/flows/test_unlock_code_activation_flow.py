@@ -162,7 +162,7 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
         create_user(existing_idnr, '1985-01-01', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
-                                                                  'unlock_code': '123456789012'}):
+                                                                  'unlock_code': '0000-0000-0000'}):
             with patch(
                     "app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") \
                     as fun_unlock_code_activation:
@@ -176,7 +176,7 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
         create_user(existing_idnr, '1985-01-01', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
-                                                                  'unlock_code': '123456789012'}):
+                                                                  'unlock_code': '0000-0000-0000'}):
             with patch(
                     "app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster"):
                 self.flow._handle_specifics_for_step(
@@ -188,7 +188,7 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
         create_user(existing_idnr, '1985-01-01', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
-                                                                  'unlock_code': '123456789012'}):
+                                                                  'unlock_code': '0000-0000-0000'}):
             with patch(
                     "app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") \
                     as fun_unlock_code_activation:
@@ -201,12 +201,12 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_is_active_then_send_no_request_to_elster(self):
         existing_idnr = '04452397687'
-        unlock_code = '123456'
+        unlock_code = '0000-0000-0000'
         create_and_activate_user(existing_idnr, '0000', '1985-01-01', unlock_code)
 
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
-                                                                  'unlock_code': '123456789012'}):
+                                                                  'unlock_code': '0000-0000-9999'}):
             with patch(
                     "app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") \
                     as fun_unlock_code_activation:
@@ -218,7 +218,7 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_is_active_and_unlock_code_correct_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
-        unlock_code = '123456'
+        unlock_code = '0000-0000-0000'
         create_and_activate_user(existing_idnr, '0000', '1985-01-01', unlock_code)
 
         with app.app_context() and app.test_request_context(method='POST',
@@ -231,12 +231,12 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_is_active_and_unlock_code_incorrect_then_next_url_is_failure_step(self):
         existing_idnr = '04452397687'
-        unlock_code = '123456'
+        unlock_code = '0000-0000-0000'
         create_and_activate_user(existing_idnr, '0000', '1985-01-01', unlock_code)
 
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
-                                                                  'unlock_code': 'INCORRECt'}):
+                                                                  'unlock_code': '0000-0000-9999'}):
             render_info, _ = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
 
@@ -247,7 +247,7 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
 
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': not_existing_idnr,
-                                                                  'unlock_code': 'INCORRECT'}):
+                                                                  'unlock_code': '0000-0000-0000'}):
             render_info, _ = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
 
