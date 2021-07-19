@@ -70,6 +70,9 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlots
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
+
+        self.render_info.back_link_text = _('form.eligibility.back_link_text')
+
         if request.method == "GET":
             stored_data = self.delete_not_dependent_data(stored_data)
         if request.method == "POST":
@@ -139,6 +142,9 @@ class MaritalStatusInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep)
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
+
+        self.render_info.back_link_text = _('form.eligibility.marital_status.back_link_text')
+
         stored_data = dict(filter(lambda elem: elem[0] == 'marital_status_eligibility', stored_data.items()))
 
         marital_status = stored_data.get('marital_status_eligibility')
