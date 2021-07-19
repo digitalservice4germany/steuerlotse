@@ -206,6 +206,12 @@
     font-weight: var( --font-bold);
 }
 
+@media (max-width: 1024px) {
+    .details-card .card-header span {
+        font-size: var(--text-sm);
+    }
+}
+
 .details-card .card-header button {
     text-align: left;
     color: var(--text-color);

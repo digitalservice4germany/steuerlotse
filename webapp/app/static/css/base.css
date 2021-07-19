@@ -688,12 +688,23 @@ footer a{
     justify-content: center;
 }
 
+.form-container > * {
+    margin-top: var(--spacing-09);
+}
+
+@media (max-width: 1024px) {
+    .form-container > * {
+        margin-top: var(--spacing-06);
+    }
+}
+
 .form-row-center {
     display: flex;
     align-items: baseline;
     /* This moved the border further outside to allow for the children to fill that space with margin,
     allowing the children to have space between them. See the bootstrap row/column technique. */
-    margin: 0 calc(-1 * var(--spacing-02));
+    margin-left: calc(-1 * var(--spacing-02));
+    margin-right: calc(-1 * var(--spacing-02));
 }
 
 .form-row-center > * {
@@ -749,8 +760,7 @@ ul.reasons-success li.and {
 .unstyled-card-header {
     background-color: var(--body-color);
     border: none;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0 0 var(--spacing-02);
 }
 
 .simple-card {
