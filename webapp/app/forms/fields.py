@@ -30,14 +30,14 @@ class UnlockCodeWidget(TextInput):
         kwargs['class'] = 'form-control'
 
         html = ""
-        kwargs['value'] = field._value()[0]
-        html += '<input %s>' % self.html_params(name=field.name, **kwargs)
+        kwargs['value'] = field._value()[0] if len(field._value()) >= 1 else ''
+        html += '<input %s>' % self.html_params(name=field.name, id=f'{field.id}_1', **kwargs)
         html += '-'
-        kwargs['value'] = field._value()[1]
-        html += '<input %s>' % self.html_params(name=field.name, **kwargs)
+        kwargs['value'] = field._value()[1] if len(field._value()) >= 2 else ''
+        html += '<input %s>' % self.html_params(name=field.name, id=f'{field.id}_2', **kwargs)
         html += '-'
-        kwargs['value'] = field._value()[2]
-        html += '<input %s>' % self.html_params(name=field.name, **kwargs)
+        kwargs['value'] = field._value()[2] if len(field._value()) >= 3 else ''
+        html += '<input %s>' % self.html_params(name=field.name, id=f'{field.id}_3', **kwargs)
 
         return Markup(html)
 
@@ -54,7 +54,7 @@ class UnlockCodeField(SteuerlotseStringField):
             self.data = ''
 
     def _value(self):
-        return self.data.split('-')
+        return self.data.split('-') if self.data else ''
 
 
 class EuroFieldWidget(TextInput):
