@@ -177,6 +177,8 @@
 .accordion .card-header:not(.collapsed) .control-show-more {
     /* We need to still show it to keep focus on the element */
     height: 1px;
+    width: 1px;
+    background-color: inherit;
     overflow: hidden;
     position: absolute;
 }
@@ -184,6 +186,8 @@
 .accordion .card-header.collapsed .control-show-less {
     /* We need to still show it to keep focus on the element */
     height: 1px;
+    width: 1px;
+    background-color: inherit;
     overflow: hidden;
     position: absolute;
 }
@@ -284,6 +288,7 @@
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
+    background-color: inherit;
     padding: 0;
     overflow: hidden;
     position: absolute;
@@ -293,6 +298,7 @@
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
+    background-color: inherit;
     padding: 0;
     overflow: hidden;
     position: absolute;
