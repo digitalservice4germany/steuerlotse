@@ -19,27 +19,31 @@ class SteuerlotseStringField(StringField):
         ValidElsterCharacterSet().__call__(form, self)
 
 
-class UnlockCodeWidget(TextInput):
-    """A divided input field with three text input fields, limited to four chars."""
+class MultipleInputFieldWidget(TextInput):
+    """A divided input field."""
+    separator = ''
+    input_field_lengths = []
 
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
-
-        kwargs['maxlength'] = 4
         kwargs['class'] = 'form-control'
 
-        html = ""
-        kwargs['value'] = field._value()[0] if len(field._value()) >= 1 else ''
-        html += '<input %s>' % self.html_params(name=field.name, id=f'{field.id}_1', **kwargs)
-        html += '-'
-        kwargs['value'] = field._value()[1] if len(field._value()) >= 2 else ''
-        html += '<input %s>' % self.html_params(name=field.name, id=f'{field.id}_2', **kwargs)
-        html += '-'
-        kwargs['value'] = field._value()[2] if len(field._value()) >= 3 else ''
-        html += '<input %s>' % self.html_params(name=field.name, id=f'{field.id}_3', **kwargs)
+        joined_input_fields = Markup()
+        for idx, input_field_length in enumerate(self.input_field_lengths):
+            kwargs['maxlength'] = input_field_length
 
-        return Markup(html)
+            kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
+            kwargs['id'] = f'{field.id}_{idx}'
+            joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
+
+        return Markup(joined_input_fields)
+
+
+class UnlockCodeWidget(MultipleInputFieldWidget):
+    """A divided input field with three text input fields, limited to four chars."""
+    separator = '-'
+    input_field_lengths = [4, 4, 4]
 
 
 class UnlockCodeField(SteuerlotseStringField):
