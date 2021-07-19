@@ -28,7 +28,7 @@ class TestMarriedEligibilityData(unittest.TestCase):
         try:
             MarriedEligibilityData.parse_obj(valid_data)
         except ValidationError:
-            self.fail("FamilienStandEligibilityData.parse_obj should not raise validation error")
+            self.fail("MarriedEligibilityData.parse_obj should not raise validation error")
 
 
 class TestWidowedEligibilityData(unittest.TestCase):
@@ -44,7 +44,7 @@ class TestWidowedEligibilityData(unittest.TestCase):
         try:
             WidowedEligibilityData.parse_obj(valid_data)
         except ValidationError:
-            self.fail("FamilienStandEligibilityData.parse_obj should not raise validation error")
+            self.fail("WidowedEligibilityData.parse_obj should not raise validation error")
 
 
 class TestSingleEligibilityData(unittest.TestCase):
@@ -60,7 +60,7 @@ class TestSingleEligibilityData(unittest.TestCase):
         try:
             SingleEligibilityData.parse_obj(valid_data)
         except ValidationError:
-            self.fail("FamilienStandEligibilityData.parse_obj should not raise validation error")
+            self.fail("SingleEligibilityData.parse_obj should not raise validation error")
 
 
 class TestDivorcedEligibilityData(unittest.TestCase):
@@ -76,7 +76,7 @@ class TestDivorcedEligibilityData(unittest.TestCase):
         try:
             DivorcedEligibilityData.parse_obj(valid_data)
         except ValidationError:
-            self.fail("FamilienStandEligibilityData.parse_obj should not raise validation error")
+            self.fail("DivorcedEligibilityData.parse_obj should not raise validation error")
 
 
 class TestSeparatedEligibilityDataEligibilityData(unittest.TestCase):
