@@ -223,8 +223,7 @@ def get_religion_field():
 class StepPersonA(FormStep):
     name = 'person_a'
 
-    label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label',
-                     num=1)
+    label = None
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
@@ -291,9 +290,11 @@ class StepPersonA(FormStep):
                 validators.Optional()(self, field)
 
     def __init__(self, **kwargs):
+        # Title and intro are set to None because they will be set later
+        # in the render function when we have access to the stored data
         super(StepPersonA, self).__init__(
-            title=_('form.lotse.person-a-title'),
-            intro=_l('form.lotse.person-a-intro'),
+            title=None,
+            intro=None,
             form=self.Form,
             **kwargs,
             header_title=_('form.lotse.mandatory_data.header-title'),
@@ -309,8 +310,7 @@ class StepPersonA(FormStep):
         number_of_users = get_number_of_users(data)
         render_info.step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
                                           num=number_of_users)
-        render_info.step_intro = ngettext('form.lotse.person-a-intro', 'form.lotse.person-a-intro',
-                                          num=number_of_users)
+        render_info.step_intro = _('form.lotse.person-a-intro') if number_of_users > 1 else None
 
         return super().render(data, render_info)
 
