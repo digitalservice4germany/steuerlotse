@@ -7,6 +7,7 @@ from werkzeug.exceptions import NotFound
 
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
+from app.forms.flows.multistep_flow import deserialize_session_data
 from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
     MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
     MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, IncorrectEligibilityData, \
@@ -28,12 +29,10 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
     ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, EligibilitySuccessDisplaySteuerlotseStep, \
-    SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep
+    SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, _ELIGIBILITY_DATA_KEY
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep
 from tests.utils import create_session_form_data
-
-_ELIGIBILITY_DATA_KEY = 'form_data'
 
 
 class TestEligibilityStepChooser(unittest.TestCase):
@@ -111,6 +110,56 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MaritalStatusInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MaritalStatusInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MaritalStatusInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
 
 class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
@@ -144,6 +193,60 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
                 SeparatedEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
 
 class TestMarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
 
@@ -188,6 +291,62 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
                 MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestMarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -238,6 +397,65 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
 
 class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
@@ -277,6 +495,68 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
                 UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestUserBElsterAccountEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -331,6 +611,71 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
 
 class TestDivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
 
@@ -375,6 +720,59 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'joint_taxes_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'joint_taxes_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'joint_taxes_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSingleAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -422,6 +820,62 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSingleElsterAccountEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -471,6 +925,65 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
                 SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'user_a_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'user_a_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'user_a_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestPensionEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -523,6 +1036,74 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
 
 class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
@@ -564,6 +1145,77 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -608,6 +1260,80 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes'}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestTaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -665,6 +1391,83 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
                 TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no'}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestCheaperCheckEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -725,6 +1528,86 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
 
 class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
@@ -774,6 +1657,89 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
                 EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestMarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -837,6 +1803,92 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
                 MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestIncomeOtherEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -902,6 +1954,95 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no'}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestForeignCountriesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -969,6 +2110,98 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(unittest.T
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+        session_data_with_incorrect_key = {**session_data, ** {'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'single',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'no',
+            'minimal_investment_income_eligibility': 'yes',
+            'taxed_investment_income_eligibility': 'no',
+            'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'no',
+            'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no',
+            'foreign_country_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):

@@ -53,8 +53,8 @@ class RecursiveDataModel(BaseModel):
             print(self.__class__.__name__)
         return enriched_data
 
-
-    def _set_data_for_previous_field(self, enriched_data, field_name, field_type):
+    @staticmethod
+    def _set_data_for_previous_field(enriched_data, field_name, field_type):
         try:
             possible_data = field_type.parse_obj(enriched_data).dict()
             enriched_data[field_name] = possible_data
@@ -69,3 +69,14 @@ class RecursiveDataModel(BaseModel):
         if not v and all([values.get(previous_field) is None for previous_field in cls._previous_fields]):
             raise MissingError
         return v
+
+    @classmethod
+    def get_all_potential_keys(cls):
+        potential_keys = []
+        potential_keys += cls.schema().get('properties').keys()
+        definitions = cls.schema().get('definitions')
+
+        for definition in definitions.values():
+            potential_keys += definition.get('properties').keys()
+
+        return potential_keys

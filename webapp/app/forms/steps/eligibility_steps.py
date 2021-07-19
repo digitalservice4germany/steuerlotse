@@ -55,20 +55,6 @@ class EligibilityInputFormSteuerlotseStep(FormSteuerlotseStep):
             **kwargs,
             )
 
-    def _validate(self, stored_data):
-        """
-        Method to find out whether the data entered by the user is eligible for this step or not. If the data is not
-        correct because of data input from another step, raise an IncorrectEligibilityData.
-        """
-        try:
-            self.data_model.parse_obj(stored_data)
-        except ValidationError as e:
-            if any([isinstance(raw_e.exc, InvalidEligiblityError) for raw_e in e.raw_errors]):
-                return False
-            else:
-                raise IncorrectEligibilityData
-        return True
-
 
 class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep):
     main_next_step_name = None
@@ -83,12 +69,31 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlots
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
+        if request.method == "GET":
+            stored_data = self.delete_not_dependent_data(stored_data)
         if request.method == "POST":
             if not self._validate(stored_data):
                 self.render_info.next_url = self.url_for_step(self.alternative_next_step_name)
             else:
                 self.render_info.next_url = self.url_for_step(self.main_next_step_name)
         return stored_data
+
+    def delete_not_dependent_data(self, stored_data):
+        return dict(filter(lambda elem: elem[0] in self.data_model.get_all_potential_keys(), stored_data.items()))
+
+    def _validate(self, stored_data):
+        """
+        Method to find out whether the data entered by the user is eligible for this step or not. If the data is not
+        correct because of data input from another step, raise an IncorrectEligibilityData.
+        """
+        try:
+            self.data_model.parse_obj(stored_data)
+        except ValidationError as e:
+            if any([isinstance(raw_e.exc, InvalidEligiblityError) for raw_e in e.raw_errors]):
+                return False
+            else:
+                raise IncorrectEligibilityData
+        return True
 
 
 class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
@@ -132,13 +137,12 @@ class MaritalStatusInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep)
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
-        marital_status = stored_data.get('marital_status_eligibility')
-        stored_data = self._delete_dependent_data(['eligibility'], stored_data)
+        stored_data = dict(filter(lambda elem: elem[0] == 'marital_status_eligibility', stored_data.items()))
 
+        marital_status = stored_data.get('marital_status_eligibility')
         if request.method == "POST":
             if marital_status not in self.next_steps:
                 raise IncorrectEligibilityData
-            stored_data['marital_status_eligibility'] = marital_status
             self.render_info.next_url = self.url_for_step(self.next_steps[stored_data.get('marital_status_eligibility')])
 
         return stored_data
