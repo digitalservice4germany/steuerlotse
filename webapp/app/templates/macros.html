@@ -78,11 +78,11 @@
         {% endif %}
         {% if d_block %}<div class="d-block">{% endif %}
             {% if field.type == 'ConfirmationField' %}
-                {{ components.consent_box(field, classes=classes) }}
+                {{ components.consent_box(field, classes=classes, first_field=first_field) }}
             {% elif field.type == 'BooleanField' %}
-                {{ components.checkbox(field, classes=classes) }}
+                {{ components.checkbox(field, classes=classes, first_field=first_field) }}
             {% elif field.type == 'RadioField' %}
-                {{ components.radio_field(field) }}
+                {{ components.radio_field(field, first_field=first_field) }}
             {% else %}
                 {% if first_field or field.errors %}
                     {{ field(class=classes, autofocus=True) }}
