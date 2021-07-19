@@ -70,7 +70,7 @@
     {%- set detail = field.render_kw['detail'] -%}
 
     {% if field.type == 'RadioField' %}
-        {% if label.text %} {# Only show legend if there is a legend text to show #}
+        {% if label.text and not hide_label and not (field.render_kw and 'hide_label' in field.render_kw and field.render_kw["hide_label"]) %} {# Only show legend if there is a legend text to show #}
             <legend class="field-label {{ class }}">{{ label.text }}
                 {% if help %}{{ help_button(label.field_id) }}{% endif %}
             </legend>
