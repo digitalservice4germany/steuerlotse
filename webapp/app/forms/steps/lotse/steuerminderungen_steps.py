@@ -352,6 +352,7 @@ class StepReligion(FormStep):
         )
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[],
                                header_title=_('form.lotse.steuerminderungen.header-title'))
 
