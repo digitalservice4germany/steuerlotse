@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-16 10:07+0200\n"
+"POT-Creation-Date: 2021-07-19 09:04+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -134,27 +134,27 @@ msgstr ""
 "Bitte prüfen Sie Ihre Angaben. Es sind nicht alle notwendigen "
 "Formularfelder ausgefüllt."
 
-#: app/forms/fields.py:92
+#: app/forms/fields.py:90
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:132 app/forms/fields.py:135
+#: app/forms/fields.py:130 app/forms/fields.py:133
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 31.06.1951"
 
-#: app/forms/fields.py:143
+#: app/forms/fields.py:141
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:162
+#: app/forms/fields.py:160
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:225
+#: app/forms/fields.py:223
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:225
+#: app/forms/fields.py:223
 msgid "switch.no"
 msgstr "Nein"
 
@@ -518,22 +518,34 @@ msgstr "Steuer-Identifikationsnummer"
 msgid "unlock-code-activation.unlock-code"
 msgstr "Freischaltcode"
 
-#: app/forms/steps/unlock_code_activation_steps.py:21
+#: app/forms/steps/unlock_code_activation_steps.py:18
+msgid "unlock-code-request.unlock-code.help-title"
+msgstr "Wo finde ich diese Nummer?"
+
+#: app/forms/steps/unlock_code_activation_steps.py:19
+msgid "unlock-code-request.unlock-code.help-text"
+msgstr ""
+"Wenn Sie sich beim Steuerlotsen erfolgreich registriert haben, bekommen "
+"Sie von Ihrer Finanzverwaltung einen Brief mit Ihrem persönlichen "
+"Freischaltcode zugeschickt. Den Freischaltcode finden Sie auf der letzten"
+" Seite des Briefes."
+
+#: app/forms/steps/unlock_code_activation_steps.py:24
 msgid "form.unlock-code-activation.input-title"
 msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 
-#: app/forms/steps/unlock_code_activation_steps.py:22
+#: app/forms/steps/unlock_code_activation_steps.py:25
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann"
 " können Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/forms/steps/unlock_code_activation_steps.py:25
-#: app/forms/steps/unlock_code_activation_steps.py:38
+#: app/forms/steps/unlock_code_activation_steps.py:28
+#: app/forms/steps/unlock_code_activation_steps.py:41
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:34
+#: app/forms/steps/unlock_code_activation_steps.py:37
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben"
 
@@ -2290,15 +2302,15 @@ msgstr ""
 msgid "form.lotse.summary-button-edit"
 msgstr "Ändern"
 
-#: app/templates/components.html:97
+#: app/templates/components.html:107
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:208
+#: app/templates/components.html:218
 msgid "button.help"
 msgstr "Weitere Informationen"
 
-#: app/templates/components.html:217
+#: app/templates/components.html:227
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
@@ -2306,11 +2318,11 @@ msgstr "Schließen"
 msgid "form.back"
 msgstr "Zurück"
 
-#: app/templates/macros.html:106 app/templates/macros.html:124
+#: app/templates/macros.html:108 app/templates/macros.html:126
 msgid "form.back_to_overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/templates/macros.html:112 app/templates/macros.html:131
+#: app/templates/macros.html:114 app/templates/macros.html:133
 msgid "form.next"
 msgstr "Weiter"
 

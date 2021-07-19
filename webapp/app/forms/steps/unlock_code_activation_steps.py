@@ -14,7 +14,10 @@ class UnlockCodeActivationInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = SteuerlotseStringField(_l('unlock-code-activation.idnr'), [InputRequired(), ValidIdNr()])
-        unlock_code = UnlockCodeField(_l('unlock-code-activation.unlock-code'), [InputRequired(), ValidUnlockCode()])
+        unlock_code = UnlockCodeField(_l('unlock-code-activation.unlock-code'), [InputRequired(), ValidUnlockCode()],
+                                      render_kw={'detail': {'title': _l('unlock-code-request.unlock-code.help-title'),
+                                                            'text': _l('unlock-code-request.unlock-code.help-text')}}
+                                      )
 
     def __init__(self, **kwargs):
         super(UnlockCodeActivationInputStep, self).__init__(
