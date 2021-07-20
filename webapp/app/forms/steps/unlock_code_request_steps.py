@@ -4,7 +4,7 @@ from flask_babel import lazy_gettext as _l
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import ConfirmationField, SteuerlotseDateField, SteuerlotseStringField
+from app.forms.fields import ConfirmationField, SteuerlotseDateField, SteuerlotseStringField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr
 
@@ -13,9 +13,9 @@ class UnlockCodeRequestInputStep(FormStep):
     name = 'data_input'
 
     class Form(SteuerlotseBaseForm):
-        idnr = SteuerlotseStringField(label=_l('unlock-code-request.idnr'), validators=[InputRequired(), ValidIdNr()],
-                                      render_kw={'detail': {'title': _l('unlock-code-request.idnr.help-title'),
-                                                            'text': _l('unlock-code-request.idnr.help-text')}})
+        idnr = IdNrField(label=_l('unlock-code-request.idnr'), validators=[InputRequired(), ValidIdNr()],
+                         render_kw={'detail': {'title': _l('unlock-code-request.idnr.help-title'),
+                                               'text': _l('unlock-code-request.idnr.help-text')}})
         dob = SteuerlotseDateField(label=_l('unlock-code-request.dob'), validators=[InputRequired()])
         registration_confirm_data_privacy = ConfirmationField(
             label=_l('form.unlock-code-request.field_registration_confirm_data_privacy'))
