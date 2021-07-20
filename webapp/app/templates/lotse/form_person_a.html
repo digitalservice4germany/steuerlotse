@@ -4,7 +4,7 @@
 
 {% block form_content %}
 
-    <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-allgemein') }}</h3>
+    <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-allgemein') }}</h2>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_first_name) }}
     </div>
@@ -21,7 +21,7 @@
         {{ macros.render_field(form.person_a_idnr) }}
     </div>
 
-    <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h3>
+    <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h2>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_street) }}
         {{ macros.render_field(form.person_a_street_number, 2) }}
@@ -35,12 +35,12 @@
         {{ macros.render_field(form.person_a_town, 6) }}
     </div>
 
-    <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-religion') }}</h3>
+    <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-religion') }}</h2>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_religion) }}
     </div>
 
-    <h3 class="mt-5 my-3">{{ _('form.lotse.person-header-beh') }}</h3>
+    <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-beh') }}</h2>
     <p class="mb-4">{{ _('form.lotse.person-header-beh-intro') }}</p>
     <div class="form-row-center">
         {{ macros.render_field(form.person_a_beh_grad, 4) }}

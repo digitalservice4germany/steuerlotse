@@ -88,6 +88,17 @@ class ValidIdNr:
             raise ValidationError(_('validate.invalid-idnr'))
 
 
+class ValidUnlockCode:
+    def __call__(self, form, field):
+        input_str = str(field.data)
+        # must contain 14 digits
+        if len(input_str) != 14:
+            raise ValidationError(_('validate.unlock-code-length'))
+        # three block separated by '-'
+        if input_str[4] != '-' or input_str[9] != '-':
+            raise ValidationError(_('validate.invalid-unlock-code'))
+
+
 class ValidElsterCharacterSet:
     def __call__(self, form, field):
         input_str = str(field.data)

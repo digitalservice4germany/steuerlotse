@@ -3,7 +3,6 @@
 {% import "components.html" as components %}
 
 {% block errors %}
-
     <div class="row m-0 pt-4 mt-4 simple-card">
         <p class="font-weight-bolder">{{ _('form.eligibility.intro-errors') }}</p>
         {% if errors is defined %}
@@ -20,22 +19,18 @@
                 {% endfor -%}
             </ul>
         {% endif %}
-
     </div>
 {% endblock %}
 
 {% block display_failure_content %}
-
-
     <div class="row m-0 pt-4">
-        <h4>{{ _('form.eligibility.use-elster') }}</h4>
+        <h2 class="h4">{{ _('form.eligibility.use-elster') }}</h2>
         <p>{{ _('form.eligibility.use-elster-text') }}</p>
         <ol>
             <li>{{ _('form.eligibility.use-elster.list-item-1') }}</li>
             <li>{{ _('form.eligibility.use-elster.list-item-2') }}</li>
         </ol>
     </div>
-
 
     <div class="row m-0 pt-4">
         {{ components.primaryButtonWithIcon(
@@ -47,8 +42,7 @@
     </div>
 
     <div class="row m-0 pt-4">
-        <h4>{{ _('form.eligibility.impact-development') }}</h4>
+        <h2 class="h4">{{ _('form.eligibility.impact-development') }}</h2>
         <p>{{ _('form.eligibility.impact-development-text') }}</p>
-
     </div>
 {% endblock %}

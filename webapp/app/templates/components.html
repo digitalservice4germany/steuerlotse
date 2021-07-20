@@ -64,12 +64,22 @@
     </fieldset>
 {%- endmacro %}
 
+{% macro separated_field(field) -%}
+    <fieldset id="{{ field.id }}">
+        {{ field_label(field) }}
+        <div class="form-row-center">
+            {{ _field(field) }}
+        </div>
+        {{ field_errors(field) }}
+    </fieldset>
+{%- endmacro %}
+
 {% macro field_label(field, class="") %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
 
-    {% if field.type == 'RadioField' %}
+    {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
             <legend class="field-label {{ class }}">{{ label.text }}
                 {% if help %}{{ help_button(label.field_id) }}{% endif %}
@@ -108,28 +118,28 @@
 {% endmacro %}
 
 
-{% macro accordion(accordion) %}
+{% macro accordion(accordion, heading_level=3) %}
     <div id="{{ accordion.id }}" class="accordion mt-5 pb-5">
-        <h3 class="mt-5">{{ accordion.heading }}</h3>
+        <h{{ heading_level }} class="mt-5">{{ accordion.heading }}</h{{ heading_level }}>
         <p class="mt-3 pb-2">{{ accordion.intro }}</p>
         <div class="mt-4 pl-0">
             {% for id, card in accordion.entries.items() -%}
                 {% set card_id = 'card-' + id -%}
                 <div class="card mt-2">
-                    <button class="card-header d-sm-flex justify-content-between align-items-center btn-accordion row collapsed w-100"
+                    <div class="card-header d-sm-flex justify-content-between align-items-center row collapsed w-100"
                          id="heading-{{ card_id }}" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
                          aria-controls="collapseOne">
-                         <div class="col">
-                            <h5 class="mb-0">{{ card['heading'] }}</h5>
-                         </div>
-                         <div class="col-1 control-show-more">
+                         <button class="col text-left" type="button">
+                            <span class="mb-0">{{ card['heading'] }}</span>
+                         </button>
+                         <button class="col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true">
                              <img src="{{ url_for('static', filename='icons/plus.svg') }}"/>
-                         </div>
-                         <div class="col-1 control-show-less">
+                         </button>
+                         <button class="col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true">
                             <img src="{{ url_for('static', filename='icons/minus.svg') }}"/>
-                         </div>
-                    </button>
+                         </button>
+                    </div>
                     <div id="{{ card_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
                         data-parent="#{{accordion.id}}">
                         <div class="card-body-less-padding">
@@ -154,26 +164,25 @@
 {% macro details(title, paragraphs, list_items=None, details_id='') %}
     <div id="details-{{ details_id }}" class="details-card ml-0 pl-0">
         <div class="card">
-            <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0">
-                <div class="row collapsed" data-toggle="collapse"
+            <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0"
+                 id="heading-card_id">
+                <div class="collapsed" data-toggle="collapse"
                             data-target="#details-body-{{ details_id }}"
                             aria-expanded="false" aria-controls="collapseOne">
-                    <button class="btn container" type="button">
+                    <div class="container">
                         <div class="row">
-                            <div class="details-icon col-1 control-show-more"></div>
-                            <div class="details-icon col-1 control-show-less"></div>
-                            <div class="col">
+                            <button class="btn details-icon col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn details-icon col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn col" type="button">
                                 <span class="mb-0">{{title}}</span>
-                            </div>
+                            </button>
                         </div>
-                    </button>
-
+                    </div>
                 </div>
-
             </div>
             <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
                 data-parent="#details-{{ details_id }}">
-                <div class="card-body pt-0 pl-0">
+                <div class="card-body container pt-0">
                     <div class="row">
                         <div class="col-1 px-0">
                             <div class="block-quote-line"></div>
@@ -224,11 +233,11 @@
 </div>
 {%- endmacro %}
 
-{% macro teaserCard(url, title, description, img_url, direction) %}
+{% macro teaserCard(url, title, description, img_url, direction, heading_level=3) %}
     <div class="teaser-card teaser-card--{{direction}}">
         <a href="{{ url }}">
             <div class="teaser-card-body">
-                <h3 class="pb-3">{{ title }}</h3>
+                <h{{ heading_level }} class="pb-3 h3">{{ title }}</h{{ heading_level }}>
                 <p>{{ description }}</p>
                 <img src="{{ img_url }}" width="50px" alt="icon info" />
             </div>
