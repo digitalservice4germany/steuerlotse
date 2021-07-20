@@ -2,6 +2,8 @@ import unittest
 from unittest.mock import patch, MagicMock
 
 from flask.sessions import SecureCookieSession
+from flask_babel import _
+
 from pydantic import MissingError
 from werkzeug.exceptions import NotFound
 
@@ -2213,3 +2215,67 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.prev_url)
+
+    def test_if_user_b_has_no_elster_account_then_set_correct_info(self):
+        expected_information = [_('form.eligibility.result-note.user_b_elster_account'),
+                                _('form.eligibility.result-note.user_b_elster_account-registration')]
+        session_data = {'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',}
+        with app.app_context() and app.test_request_context() as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+
+    def test_if_user_wants_no_cheaper_check_then_set_correct_info(self):
+        expected_information = [_('form.eligibility.result-note.cheaper_check')]
+        session_data = {'marital_status_eligibility': 'single',
+            'user_a_has_elster_account_eligibility': 'no',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes',
+            'cheaper_check_eligibility': 'no',}
+        with app.app_context() and app.test_request_context() as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+
+    def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
+        expected_information = [_('form.eligibility.result-note.user_b_elster_account'),
+                                _('form.eligibility.result-note.user_b_elster_account-registration'),
+                                _('form.eligibility.result-note.cheaper_check')]
+        session_data = {'marital_status_eligibility': 'married',
+            'separated_since_last_year_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes',
+            'user_b_has_elster_account_eligibility': 'no',
+            'joint_taxes_eligibility': 'yes',
+            'alimony_eligibility': 'no',
+            'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes',
+            'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes',
+            'cheaper_check_eligibility': 'no',}
+        with app.app_context() and app.test_request_context() as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+
+    def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
+        expected_information = []
+        with app.app_context() and app.test_request_context():
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+

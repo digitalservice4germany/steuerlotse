@@ -13,7 +13,7 @@ from app.model.eligibility_data import InvalidEligiblityError, OtherIncomeEligib
     PensionEligibilityData, SingleUserElsterAccountEligibilityData, AlimonyEligibilityData, \
     DivorcedJointTaxesEligibilityData, UserBElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
-    UserANoElsterAccountEligibilityData
+    UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData
 
 _ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
 
@@ -561,3 +561,30 @@ class EligibilitySuccessDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     def __init__(self, endpoint, **kwargs):
         kwargs['prev_step'] = ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep
         super(EligibilitySuccessDisplaySteuerlotseStep, self).__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), **kwargs)
+
+    @staticmethod
+    def _validate(data_model, stored_data):
+        """
+        Method to find out whether the data entered by the user is eligible for this step or not. If the data is not
+        correct because of data input from another step, raise an IncorrectEligibilityData.
+        """
+        try:
+            data_model.parse_obj(stored_data)
+        except ValidationError as e:
+            return False
+        return True
+
+    def _main_handle(self, stored_data):
+        stored_data = super()._main_handle(stored_data)
+
+        dependent_notes = []
+        if self._validate(UserBElsterAccountEligibilityData, stored_data):
+            dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
+            dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
+        if self._validate(CheaperCheckEligibilityData, stored_data):
+            dependent_notes.append(_('form.eligibility.result-note.cheaper_check'))
+
+        self.render_info.additional_info['dependent_notes'] = dependent_notes
+        self.render_info.next_url = None
+
+        return stored_data
