@@ -21,7 +21,7 @@ class SteuerlotseStringField(StringField):
 
 class MultipleInputFieldWidget(TextInput):
     """A divided input field."""
-    separator = ''
+    sub_field_separator = ''
     input_field_lengths = []
 
     def __call__(self, field, **kwargs):
@@ -44,7 +44,7 @@ class MultipleInputFieldWidget(TextInput):
 
 class UnlockCodeWidget(MultipleInputFieldWidget):
     """A divided input field with three text input fields, limited to four chars."""
-    separator = '-'
+    sub_field_separator = '-'
     input_field_lengths = [4, 4, 4]
 
 
@@ -61,6 +61,33 @@ class UnlockCodeField(SteuerlotseStringField):
 
     def _value(self):
         return self.data.split('-') if self.data else ''
+
+
+class IdNrWidget(MultipleInputFieldWidget):
+    """A divided input field with four text input fields, limited to two to three chars."""
+    sub_field_separator = ''
+    input_field_lengths = [2, 3, 3, 3]
+
+class IdNrField(SteuerlotseStringField):
+    def __init__(self, label='', validators=None, **kwargs):
+        super(IdNrField, self).__init__(label, validators, **kwargs)
+        self.widget = IdNrWidget()
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = ''.join(valuelist)
+        elif self.data is None:
+            self.data = ''
+
+    def _value(self):
+        split_data = []
+        chunk_sizes = self.widget.input_field_lengths
+        current_idx = 0
+        for chunk_size in chunk_sizes:
+            if self.data:
+                split_data.append(self.data[current_idx: current_idx + chunk_size])
+            current_idx += chunk_size
+        return split_data
 
 
 class EuroFieldWidget(TextInput):
