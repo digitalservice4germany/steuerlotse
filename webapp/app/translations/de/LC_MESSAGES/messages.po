@@ -650,7 +650,7 @@ msgstr ""
 
 #: app/forms/steps/unlock_code_revocation_steps.py:16
 msgid "unlock-code-revocation.idnr"
-msgstr "Steueridentifikationnummer"
+msgstr "Steueridentifikationsnummer"
 
 #: app/forms/steps/unlock_code_revocation_steps.py:17
 msgid "unlock-code-revocation.dob"
