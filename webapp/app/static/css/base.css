@@ -688,12 +688,12 @@ footer a{
     justify-content: center;
 }
 
-.form-container > * {
+.form-container > .form-row-center, .form-container > .form-row {
     margin-top: var(--spacing-07);
 }
 
 @media (max-width: 1024px) {
-    .form-container > * {
+    .form-container > .form-row-center, .form-container > .form-row {
         margin-top: var(--spacing-06);
     }
 }
