@@ -4,7 +4,10 @@ const authPassword = Cypress.env('STAGING_AUTH_PASSWORD')
 Cypress.config('baseUrl', `https://lotse:${authPassword}@www-staging.stl.ds4g.dev`)
 
 const unlockCodeData = {
-    idnr: '09531672807',
+    idnr1: '09',
+    idnr2: '531',
+    idnr3: '672',
+    idnr4: '807',
     dob: '22.12.1972',
 }
 
@@ -16,7 +19,10 @@ const taxReturnData = {
     marriedDate: '01.01.1990',
     iban: 'DE02500105170137075030',
     personA: {
-        idnr: '04452397687',
+        idnr1: '04',
+        idnr2: '452',
+        idnr3: '397',
+        idnr4: '687',
         dob: '01.01.1990',
         firstName: 'Erika',
         lastName: 'Musterfrau',
@@ -29,7 +35,10 @@ const taxReturnData = {
         behGrad: '25',
     },
     personB: {
-        idnr: '02293417683',
+        idnr1: '02',
+        idnr2: '293',
+        idnr3: '417',
+        idnr4: '683',
         dob: '25.02.1951',
         firstName: 'Gerta',
         lastName: 'Mustername',
@@ -96,7 +105,10 @@ const overviewBtnSelector = '[name="overview_button"]'
 const login = function () {
     // Log in
     cy.get('.nav-link').contains('Ihre Steuererklärung').click()
-    cy.get('#idnr').type(taxReturnData.personA.idnr)
+    cy.get('#idnr_1').type(taxReturnData.personA.idnr1)
+    cy.get('#idnr_2').type(taxReturnData.personA.idnr2)
+    cy.get('#idnr_3').type(taxReturnData.personA.idnr3)
+    cy.get('#idnr_4').type(taxReturnData.personA.idnr4)
     cy.get('#unlock_code_1').type(taxReturnData.unlockCode1)
     cy.get('#unlock_code_2').type(taxReturnData.unlockCode2)
     cy.get('#unlock_code_3').type(taxReturnData.unlockCode3)
@@ -205,7 +217,10 @@ context('Acceptance tests', () => {
                 cy.get('select[id=bundesland]').select('BY')
                 cy.get('#steuernummer').type(taxReturnData.taxNr)
                 cy.get(submitBtnSelector).click()
-                cy.get('#person_a_idnr').type(taxReturnData.personA.idnr)
+                cy.get('#person_a_idnr_1').type(taxReturnData.personA.idnr1)
+                cy.get('#person_a_idnr_2').type(taxReturnData.personA.idnr2)
+                cy.get('#person_a_idnr_3').type(taxReturnData.personA.idnr3)
+                cy.get('#person_a_idnr_4').type(taxReturnData.personA.idnr4)
                 cy.get('#person_a_dob').type(taxReturnData.personA.dob)
                 cy.get('#person_a_first_name').type(taxReturnData.personA.firstName)
                 cy.get('#person_a_last_name').type(taxReturnData.personA.lastName)
@@ -248,7 +263,10 @@ context('Acceptance tests', () => {
                 cy.get('select[id=bundesland]').select('BY')
                 cy.get('#steuernummer').type(taxReturnData.taxNr)
                 cy.get(submitBtnSelector).click()
-                cy.get('#person_a_idnr').type(taxReturnData.personA.idnr)
+                cy.get('#person_a_idnr_1').type(taxReturnData.personA.idnr1)
+                cy.get('#person_a_idnr_2').type(taxReturnData.personA.idnr2)
+                cy.get('#person_a_idnr_3').type(taxReturnData.personA.idnr3)
+                cy.get('#person_a_idnr_4').type(taxReturnData.personA.idnr4)
                 cy.get('#person_a_dob').type(taxReturnData.personA.dob)
                 cy.get('#person_a_first_name').type(taxReturnData.personA.firstName)
                 cy.get('#person_a_last_name').type(taxReturnData.personA.lastName)
@@ -262,7 +280,10 @@ context('Acceptance tests', () => {
                 cy.get('label[for=person_a_blind]').first().click()
                 cy.get('label[for=person_a_gehbeh]').first().click()
                 cy.get(submitBtnSelector).click()
-                cy.get('#person_b_idnr').type(taxReturnData.personB.idnr)
+                cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)
+                cy.get('#person_b_idnr_2').type(taxReturnData.personB.idnr2)
+                cy.get('#person_b_idnr_3').type(taxReturnData.personB.idnr3)
+                cy.get('#person_b_idnr_4').type(taxReturnData.personB.idnr4)
                 cy.get('#person_b_dob').type(taxReturnData.personB.dob)
                 cy.get('#person_b_first_name').type(taxReturnData.personB.firstName)
                 cy.get('#person_b_last_name').type(taxReturnData.personB.lastName)
@@ -347,8 +368,8 @@ context('Acceptance tests', () => {
                 cy.visit('/lotse/step/summary')
                 cy.contains('Sie müssen eingeloggt sein')
                 cy.visit('/unlock_code_activation/step/data_input')
-                cy.get('#idnr').should('have.value', '')
-                cy.get('#unlock_code').should('have.value', '')
+                cy.get('#idnr_1').should('have.value', '')
+                cy.get('#unlock_code_1').should('have.value', '')
             });
         });
         // These tests could be split. However, to avoid hitting rate limits, keep it simple, and reduce the run time it is one test.
