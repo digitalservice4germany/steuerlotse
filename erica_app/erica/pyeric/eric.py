@@ -51,7 +51,7 @@ def get_eric_wrapper():
             yield eric
         finally:
             eric.shutdown()
-            with open(os.path.join(tmp_dir, 'eric.log')) as eric_log:
+            with open(os.path.join(tmp_dir, 'eric.log'), encoding='latin-1') as eric_log:
                 logger.debug(eric_log.read())
 
 
