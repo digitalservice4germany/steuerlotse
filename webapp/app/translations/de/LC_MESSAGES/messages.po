@@ -4718,17 +4718,3 @@ msgstr ""
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
 
-#~ msgid "form.lotse.field_steuerminderung"
-#~ msgstr ""
-
-#~ msgid "form.lotse.person-a-intro"
-#~ msgid_plural "form.lotse.person-a-intro"
-#~ msgstr[0] " "
-#~ msgstr[1] ""
-#~ "Geben Sie bitte zunächst die "
-#~ "Informationen des Ehemannes an. Wenn Sie"
-#~ " in einer gleichgeschlechtlichen Partnerschaft"
-#~ " leben, geben Sie bitte zunächst die"
-#~ " Person an, deren Name im Alphabet"
-#~ " zuerst kommt."
-
