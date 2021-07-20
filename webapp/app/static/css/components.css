@@ -522,8 +522,7 @@ input[type="radio"]:checked:focus + label::before{
 }
 
 .field-label{
-    margin-bottom: 0 !important;
-    font-size: var(--text-l);
+    margin-bottom: var(--spacing-01);
 }
 
 /* ALERTS */

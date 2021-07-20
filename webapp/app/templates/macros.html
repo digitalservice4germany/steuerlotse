@@ -67,7 +67,11 @@
     {% endif %}
     <div class="col-md-{{ cols }} {% if as_card %} simple-card {% else %} px-0 {% endif %} {{ field_div_classes }}">
         {% if not hide_label and not (field.render_kw and 'hide_label' in field.render_kw and field.render_kw["hide_label"]) %}
-            {{ field_label(field) }}
+            {% if as_card %}
+                {{ field_label(field) }}
+            {% else %}
+                {{ field_label(field, class="text-input-field-label") }}
+            {% endif %}
         {% endif %}
 
         {% set classes = "form-control " + class %}
@@ -101,7 +105,7 @@
 {# ------------------------ #}
 
 {% macro form_nav_buttons(render_info, explanatory_button_text=None) -%}
-    <div class="form-row">
+    <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
             <button type="submit"
                     class="btn btn-outline-primary mr-2"
