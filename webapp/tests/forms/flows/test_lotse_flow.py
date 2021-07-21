@@ -1127,7 +1127,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
     def test_if_familienstand_step_then_delete_familienstand_date_correctly(self):
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'familienstand': 'married',
-                                                                  'familienstand_date': '01.01.1985',
+                                                                  'familienstand_date': ['1', '1', '1985'],
                                                                   'familienstand_married_lived_separated': 'no',
                                                                   'familienstand_confirm_zusammenveranlagung': True}):
             _, returned_data = self.flow._handle_specifics_for_step(
@@ -1136,7 +1136,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'familienstand': 'single',
-                                                                  'familienstand_date': '01.01.1985'}):
+                                                                  'familienstand_date': ['1', '1', '1985']}):
             _, returned_data = self.flow._handle_specifics_for_step(
                 self.familienstand_step, self.render_info_familienstand_step, {})
             self.assertNotIn('familienstand_date', returned_data)
@@ -1144,7 +1144,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
     def test_if_familienstand_step_then_delete_gem_haushalt_correctly(self):
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'familienstand': 'married',
-                                                                  'familienstand_date': '01.01.1985',
+                                                                  'familienstand_date': ['1', '1', '1985'],
                                                                   'familienstand_married_lived_separated': 'no',
                                                                   'familienstand_confirm_zusammenveranlagung': True}):
             _, returned_data = self.flow._handle_specifics_for_step(
@@ -1172,7 +1172,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             self.assertEqual(self.IBAN_url, render_info.next_url)
 
     def test_if_person_b_step_then_delete_person_b_address_correctly(self):
-        correct_person_b_data = {'person_b_idnr': '02293417683', 'person_b_dob': '25.02.1951',
+        correct_person_b_data = {'person_b_idnr': '02293417683', 'person_b_dob': ['25', '2', '1951'],
                                  'person_b_first_name': 'Gerta', 'person_b_last_name': 'Mustername',
                                  'person_b_religion': 'rk',
                                  'person_b_street': 'Steuerweg', 'person_b_street_number': 42, 'person_b_plz': '20354',

@@ -149,7 +149,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
             # Set sessions up
             self.valid_idnr = '04452397687'
             self.session_data = {'idnr': self.valid_idnr, 'dob': dt.date(1985, 1, 1)}
-            self.valid_input_data = {'idnr': self.valid_idnr, 'dob': '01.01.1980',
+            self.valid_input_data = {'idnr': self.valid_idnr, 'dob': ['1', '1', '1980'],
                                      'registration_confirm_data_privacy': True,
                                      'registration_confirm_terms_of_service': True,
                                      'registration_confirm_incomes': True,

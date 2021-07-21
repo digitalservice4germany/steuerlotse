@@ -113,7 +113,7 @@ class TestMultiStepFlowHandle(unittest.TestCase):
     def test_if_form_step_after_render_step_then_keep_data_from_older_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
         endpoint_correct = "lotse"
-        original_data = {'pet': 'Yoshi', 'date': '09.07.1981', 'decimal': '60.000'}
+        original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
         with app.app_context() and app.test_request_context():
             flow = MultiStepFlow(title="Testing MultiStepFlow", steps=testing_steps, endpoint=endpoint_correct)
@@ -416,7 +416,7 @@ class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):
     def test_if_step_is_form_step_and_form_data_then_return_updated_stored_data(self):
         original_data = {"name": "Peach"}
         with app.app_context() and app.test_request_context(method='POST') as req:
-            req.request.form = ImmutableMultiDict({'pet': 'Yoshi', 'date': '09.07.1981', 'decimal': '60.000'})
+            req.request.form = ImmutableMultiDict({'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'})
             returned_data, updated_data = self.flow._handle_specifics_for_step(
                 self.form_step_input, self.render_info_form_step_with_input, original_data)
 
