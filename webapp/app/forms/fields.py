@@ -68,6 +68,7 @@ class IdNrWidget(MultipleInputFieldWidget):
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]
 
+
 class IdNrField(SteuerlotseStringField):
     def __init__(self, label='', validators=None, **kwargs):
         super(IdNrField, self).__init__(label, validators, **kwargs)
@@ -75,11 +76,17 @@ class IdNrField(SteuerlotseStringField):
 
     def process_formdata(self, valuelist):
         if valuelist:
-            self.data = ''.join(valuelist)
+            self.data = valuelist
         elif self.data is None:
-            self.data = ''
+            self.data = []
 
     def _value(self):
+        # In case the validation was not successful, we already have the data as a list of values.
+        if isinstance(self.data, list):
+            return self.data
+
+        # Once the validation has gone through, post_validate() stores the data as string.
+        # As we know that it is correct, we can just separate it in chunks here.
         split_data = []
         chunk_sizes = self.widget.input_field_lengths
         current_idx = 0
@@ -88,6 +95,12 @@ class IdNrField(SteuerlotseStringField):
                 split_data.append(self.data[current_idx: current_idx + chunk_size])
             current_idx += chunk_size
         return split_data
+
+    def post_validate(self, form, validation_stopped):
+        # Once the validation has gone through, we know that the idnr is correct.
+        # We can therefore store it as a string and just separate it in chunks in self._value().
+        if not validation_stopped and len(self.errors) == 0:
+            self.data = ''.join(self.data)
 
 
 class EuroFieldWidget(TextInput):

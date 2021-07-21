@@ -63,9 +63,9 @@ class ValidIdNr:
         # if not is_valid(idnr_formatted):
         #     raise ValidationError(_('validate.invalid-idnr'))
 
-        input_str = str(field.data)
+        input_str = ''.join(field.data)
         # must contain only digits
-        if not field.data.isdigit():
+        if not input_str.isdigit():
             raise ValidationError(_('validate.invalid-idnr'))
         # must contain 11 digits
         if len(input_str) != 11:
@@ -84,7 +84,7 @@ class ValidIdNr:
         if not found_repeated_digit:
             raise ValidationError(_('validate.invalid-idnr'))
         # checksum has to be correct
-        if not is_valid(field.data):
+        if not is_valid(input_str):
             raise ValidationError(_('validate.invalid-idnr'))
 
 
