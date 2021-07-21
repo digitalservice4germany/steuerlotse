@@ -100,7 +100,7 @@ class SteuerlotseDateField(DateField):
         if self.data:
             return [self.data.day, self.data.month, self.data.year]
         else:
-            return self.raw_data if self.raw_data else ''
+            return self.raw_data if self.raw_data else []
 
 
 class EuroFieldWidget(TextInput):
