@@ -5,7 +5,7 @@ from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
     SteuerlotseStringField
 
-from flask_babel import _
+from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
 from wtforms import IntegerField, RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
@@ -223,7 +223,7 @@ def get_religion_field():
 class StepPersonA(FormStep):
     name = 'person_a'
 
-    label = _l('form.lotse.step_person_a.label')
+    label = None
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
@@ -290,14 +290,40 @@ class StepPersonA(FormStep):
                 validators.Optional()(self, field)
 
     def __init__(self, **kwargs):
+        # Title and intro are set to None because they will be set later
+        # in the render function when we have access to the stored data
         super(StepPersonA, self).__init__(
-            title=_('form.lotse.person-a-title'),
-            intro=_l('form.lotse.person-a-intro'),
+            title=None,
+            intro=None,
             form=self.Form,
             **kwargs,
             header_title=_('form.lotse.mandatory_data.header-title'),
             template='lotse/form_person_a.html'
         )
+
+    @classmethod
+    def get_label(cls, data=None):
+        return ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label',
+                        num=get_number_of_users(data))
+
+    def render(self, data, render_info):
+        number_of_users = get_number_of_users(data)
+        render_info.step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
+                                          num=number_of_users)
+        render_info.step_intro = _('form.lotse.person-a-intro') if number_of_users > 1 else None
+
+        return super().render(data, render_info)
+
+
+def get_number_of_users(input_data):
+    try:
+        familienstand_model = FamilienstandModel.parse_obj(input_data)
+    except ValidationError:
+        return 1
+    if familienstand_model.show_person_b():
+        return 2
+    else:
+        return 1
 
 
 class StepPersonB(FormStep):

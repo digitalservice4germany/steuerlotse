@@ -54,7 +54,7 @@
         {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors) }}
     {% elif field.type == 'BooleanField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors) }}
-    {% elif field.type == 'RadioField' %}
+    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=True) }}
     {% else %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label, hide_errors=hide_errors) }}
@@ -65,7 +65,7 @@
     {% if field.errors %}
         {% set field_div_classes = field_div_classes + " error-found-line" %}
     {% endif %}
-    <div class="col-md-{{ cols }} mb-4 {% if as_card %} simple-card {% else %} px-0 {% endif %} {{ field_div_classes }}">
+    <div class="col-md-{{ cols }} {% if as_card %} simple-card {% else %} px-0 {% endif %} {{ field_div_classes }}">
         {% if not hide_label and not (field.render_kw and 'hide_label' in field.render_kw and field.render_kw["hide_label"]) %}
             {{ field_label(field) }}
         {% endif %}
@@ -84,6 +84,8 @@
                 {{ components.checkbox(field, classes=classes) }}
             {% elif field.type == 'RadioField' %}
                 {{ components.radio_field(field) }}
+            {% elif field.type == 'UnlockCodeField' %}
+                {{ components.separated_field(field) }}
             {% else %}
                 {% if field.errors %}
                     {{ field(class=classes, autofocus=True) }}

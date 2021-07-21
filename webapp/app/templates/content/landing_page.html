@@ -85,7 +85,7 @@
                     title= _('landing.card1.title'),
                     description=_('landing.card1.desc'),
                     img_url=url_for('static', filename='icons/arrow_left.svg'),
-                    direction="left")
+                    direction="left", heading_level=2)
                 }}
 
                 {{ components.teaserCard(
@@ -93,7 +93,7 @@
                     title= _('landing.card2.title'),
                     description=_('landing.card2.desc'),
                     img_url=url_for('static', filename='icons/arrow_left.svg'),
-                    direction="middle")
+                    direction="middle", heading_level=2)
                 }}
 
                 {{ components.teaserCard(
@@ -101,13 +101,13 @@
                     title= _('landing.card3.title'),
                     description=_('landing.card3.desc'),
                     img_url=url_for('static', filename='icons/arrow_left.svg'),
-                    direction="right")
+                    direction="right", heading_level=2)
                 }}
             </div>
         </div>
         <div class="accordion__home col-lg-8 col-md-8 pb-0 g-0">
             {% for accordeon in accordeons %}
-                {{ components.accordion(accordeon) }}
+                {{ components.accordion(accordeon, heading_level=2) }}
             {% endfor %}
             {{ components.primaryButton(text="Zur Informationsseite", url=url_for('howitworks')) }}
         </div>
@@ -115,7 +115,7 @@
             <div class="interview__home__img col-lg-6">
             </div>
             <div class="interview__home__text col-lg-6">
-                <h3 class="mb-4">{{ _('landing.interviews-headline') }}</h3>
+                <h2 class="mb-4">{{ _('landing.interviews-headline') }}</h2>
                 <p class="mb-4">{{ _('landing.interviews-text') }}</p>
                 <a href="{{ url_for('interviews') }}">{{ _('landing.interviews-link') }}</a>
             </div>

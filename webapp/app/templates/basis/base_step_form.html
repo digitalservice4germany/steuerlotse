@@ -6,7 +6,7 @@
     {% block step_intro %}
         {{ macros.form_header(render_info) }}
     {% endblock %}
-    <form class="container px-0" method="POST" action="{{ render_info.submit_url }}">
+    <form class="container px-0 form-container" method="POST" action="{{ render_info.submit_url }}">
         {% block form_content %}
         {% endblock %}
 

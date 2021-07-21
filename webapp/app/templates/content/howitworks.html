@@ -215,7 +215,7 @@
 
 
     {% for accordeon in accordeons %}
-        {{ components.accordion(accordeon) }}
+        {{ components.accordion(accordeon, heading_level=2) }}
     {% endfor %}
 {% endblock %}
 {% block full_width_final_area %}
@@ -225,12 +225,12 @@
                                 _('info.teaser.eligibility.title'),
                                 _('info.teaser.eligibility.description'),
                                 img_url=url_for('static', filename='icons/arrow_left.svg'),
-                                direction='left') }}
+                                direction='left', heading_level=2) }}
             {{ components.teaserCard(url_for('unlock_code_request', step='start'),
                                 _('info.teaser.register.title'),
                                 _('info.teaser.register.description'),
                                 img_url=url_for('static', filename='icons/arrow_left.svg'),
-                                direction='middle') }}
+                                direction='middle', heading_level=2) }}
         </div>
     </div>
 {% endblock %}

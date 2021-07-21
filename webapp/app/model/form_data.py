@@ -165,7 +165,9 @@ class MandatoryFieldMissingValidationError(InputDataInvalidError):
         self.missing_fields = missing_fields
 
     def get_message(self):
-        return ngettext('form.lotse.input_invalid.mandatory_field_missing', 'form.lotse.input_invalid.mandatory_field_missing', num=len(self.missing_fields))
+        return ngettext('form.lotse.input_invalid.mandatory_field_missing',
+                        'form.lotse.input_invalid.mandatory_field_missing',
+                        num=len(self.missing_fields))
 
 
 class ConfirmationMissingInputValidationError(MandatoryFieldMissingValidationError):
