@@ -23,6 +23,7 @@ class MultipleInputFieldWidget(TextInput):
     """A divided input field."""
     separator = ''
     input_field_lengths = []
+    input_field_labels = []
 
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
@@ -33,9 +34,17 @@ class MultipleInputFieldWidget(TextInput):
         for idx, input_field_length in enumerate(self.input_field_lengths):
             kwargs['maxlength'] = input_field_length
 
+            sub_field_id = f'{field.id}_{idx + 1}'
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
-            kwargs['id'] = f'{field.id}_{idx + 1}'
-            joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
+            kwargs['id'] = sub_field_id
+            if len(self.input_field_labels) > idx:
+                joined_input_fields += Markup(
+                    f'<div>'
+                    f'<label for="{sub_field_id}" class="sub-field-label">{self.input_field_labels[idx]}</label>')
+                joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
+                joined_input_fields += Markup('</div>')
+            else:
+                joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
             if self.separator and idx < len(self.input_field_lengths) - 1:
                 joined_input_fields += Markup(self.separator)
 
@@ -66,6 +75,7 @@ class UnlockCodeField(SteuerlotseStringField):
 class SteuerlotseDateWidget(MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
+    input_field_labels = [_('date-field.day'), _('date-field-month'), _('date-field-year')]
 
 
 class SteuerlotseDateField(DateField):

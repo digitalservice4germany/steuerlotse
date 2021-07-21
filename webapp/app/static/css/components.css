@@ -526,6 +526,12 @@ input[type="radio"]:checked:focus + label::before{
     font-size: var(--text-l);
 }
 
+.sub-field-label {
+    margin-bottom: 0 !important;
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+}
+
 /* ALERTS */
 .alert-success{
     color: var(--inverse-text-color);
