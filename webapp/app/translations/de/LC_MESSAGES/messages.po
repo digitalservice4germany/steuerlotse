@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-19 18:16+0200\n"
+"POT-Creation-Date: 2021-07-21 10:19+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -134,27 +134,27 @@ msgstr ""
 "Bitte prüfen Sie Ihre Angaben. Es sind nicht alle notwendigen "
 "Formularfelder ausgefüllt."
 
-#: app/forms/fields.py:90
+#: app/forms/fields.py:96
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:130 app/forms/fields.py:133
+#: app/forms/fields.py:136 app/forms/fields.py:139
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 31.06.1951"
 
-#: app/forms/fields.py:141
+#: app/forms/fields.py:147
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:160
+#: app/forms/fields.py:166
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:223
+#: app/forms/fields.py:229
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:223
+#: app/forms/fields.py:229
 msgid "switch.no"
 msgstr "Nein"
 
@@ -2306,15 +2306,15 @@ msgstr ""
 msgid "form.lotse.summary-button-edit"
 msgstr "Ändern"
 
-#: app/templates/components.html:97
+#: app/templates/components.html:107
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:208
+#: app/templates/components.html:216
 msgid "button.help"
 msgstr "Weitere Informationen"
 
-#: app/templates/components.html:217
+#: app/templates/components.html:225
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
@@ -2322,11 +2322,11 @@ msgstr "Schließen"
 msgid "form.back"
 msgstr "Zurück"
 
-#: app/templates/macros.html:106 app/templates/macros.html:124
+#: app/templates/macros.html:108 app/templates/macros.html:126
 msgid "form.back_to_overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/templates/macros.html:112 app/templates/macros.html:131
+#: app/templates/macros.html:114 app/templates/macros.html:133
 msgid "form.next"
 msgstr "Weiter"
 
@@ -2345,9 +2345,9 @@ msgstr ""
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:31
+#: app/templates/basis/base.html:32
 msgid "skip-to-content-link"
-msgstr "Zum Inhalt springen"
+msgstr "Direkt zum Seiteninhalt"
 
 #: app/templates/basis/footer.html:6
 msgid "footer.help-contact"
@@ -4368,42 +4368,42 @@ msgstr ""
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
-#: app/templates/eligibility/display_failure.html:8
+#: app/templates/eligibility/display_failure.html:7
 msgid "form.eligibility.intro-errors"
 msgstr "Folgende Ihrer Lebensumstände deckt der Steuerlotse nicht ab:"
 
-#: app/templates/eligibility/display_failure.html:31
+#: app/templates/eligibility/display_failure.html:27
 msgid "form.eligibility.use-elster"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_failure.html:32
+#: app/templates/eligibility/display_failure.html:28
 msgid "form.eligibility.use-elster-text"
 msgstr ""
 "Es gibt zwei Möglichkeiten, Ihre Steuererklärung ohne den Steuerlotsen zu"
 " machen:"
 
-#: app/templates/eligibility/display_failure.html:34
+#: app/templates/eligibility/display_failure.html:30
 msgid "form.eligibility.use-elster.list-item-1"
 msgstr ""
 "Sie können für Ihre Steuererklärung die vollumfänglichen "
 "Steuererklärungsvordrucke nutzen. Die notwendigen Formulare dazu erhalten"
 " Sie zum Beispiel in Ihrem Finanzamt."
 
-#: app/templates/eligibility/display_failure.html:35
+#: app/templates/eligibility/display_failure.html:31
 msgid "form.eligibility.use-elster.list-item-2"
 msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "erledigen."
 
-#: app/templates/eligibility/display_failure.html:42
+#: app/templates/eligibility/display_failure.html:37
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
-#: app/templates/eligibility/display_failure.html:50
+#: app/templates/eligibility/display_failure.html:45
 msgid "form.eligibility.impact-development"
 msgstr "Nehmen Sie Einfluss auf die Weiterentwicklung des Steuerlotsen"
 
-#: app/templates/eligibility/display_failure.html:51
+#: app/templates/eligibility/display_failure.html:46
 msgid "form.eligibility.impact-development-text"
 msgstr ""
 "Sie hätten den Steuerlotsen gern genutzt, aber befinden sich "
