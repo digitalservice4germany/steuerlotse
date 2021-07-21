@@ -63,6 +63,36 @@ class UnlockCodeField(SteuerlotseStringField):
         return self.data.split('-') if self.data else ''
 
 
+class SteuerlotseDateWidget(MultipleInputFieldWidget):
+    separator = ''
+    input_field_lengths = [2, 2, 4]
+
+
+class SteuerlotseDateField(DateField):
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault('format', "%d %m %Y")
+
+        if kwargs.get('render_kw'):
+            if kwargs['render_kw'].get('class'):
+                kwargs['render_kw']['class'] = kwargs['render_kw']['class'] + " date_input form-control"
+            else:
+                kwargs['render_kw']['class'] = "date_input form-control"
+            if 'example_input' not in kwargs['render_kw']:
+                kwargs['render_kw']['example_input'] = _('fields.date_field.example_input.text')
+        else:
+            kwargs['render_kw'] = {'class': "date_input form-control",
+                                   'example_input': _('fields.date_field.example_input.text')}
+        super(SteuerlotseDateField, self).__init__(**kwargs)
+        self.widget = SteuerlotseDateWidget()
+
+    def _value(self):
+        if self.data:
+            return [self.data.day, self.data.month, self.data.year]
+        else:
+            return self.raw_data if self.raw_data else ''
+
+
 class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
@@ -119,26 +149,6 @@ class SteuerlotseSelectField(SelectField):
         else:
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
         super(SteuerlotseSelectField, self).__init__(**kwargs)
-
-
-class SteuerlotseDateField(DateField):
-
-    def __init__(self, **kwargs):
-        if not kwargs.get('format'):
-            kwargs['format'] = "%d.%m.%Y"
-
-        if kwargs.get('render_kw'):
-            if kwargs['render_kw'].get('class'):
-                kwargs['render_kw']['class'] = kwargs['render_kw']['class'] + " date_input form-control"
-            else:
-                kwargs['render_kw']['class'] = "date_input form-control"
-            if 'example_input' not in kwargs['render_kw']:
-                kwargs['render_kw']['example_input'] = _('fields.date_field.example_input.text')
-        else:
-            kwargs['render_kw'] = {'class': "date_input form-control",
-                                   'example_input': _('fields.date_field.example_input.text')}
-        super(SteuerlotseDateField, self).__init__(**kwargs)
-
 
 class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""
