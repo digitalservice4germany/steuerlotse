@@ -152,7 +152,8 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlots
                 raise IncorrectEligibilityData
             else:
                 return False
-        return True
+        else:
+            return True
 
 
 class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):

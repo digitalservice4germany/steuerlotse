@@ -57,9 +57,10 @@ class RecursiveDataModel(BaseModel):
     def _set_data_for_previous_field(enriched_data, field_name, field_type):
         try:
             possible_data = field_type.parse_obj(enriched_data).dict()
-            enriched_data[field_name] = possible_data
         except ValidationError:
             return
+        else:
+            enriched_data[field_name] = possible_data
 
     def one_previous_field_has_to_be_set(cls, v, values):
         """Validator used to ensure that at least one of the needed previous fields has been set. Make sure to use
