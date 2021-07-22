@@ -109,14 +109,14 @@ class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.Tes
         valid_data_model.parse_obj = MagicMock(return_value=None)
         data_model = valid_data_model
 
+    class SecondValidPreviousStep(ValidPreviousStep):
+        name = "SECOND_VALID_STEP"
+
     class InValidPreviousStep(DecisionEligibilityInputFormSteuerlotseStep):
         name = "INVALID_STEP"
         invalid_data_model = MagicMock()
         invalid_data_model.parse_obj = MagicMock(side_effect=ValidationError([], None))
         data_model = invalid_data_model
-
-    class NormalStep:
-        name = "NORMAL_STEP"
 
     def test_if_no_previous_step_then_do_not_change_prev_url(self):
         stored_data = {}
@@ -160,21 +160,7 @@ class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.Tes
 
             self.assertEqual(previous_url, step.render_info.prev_url)
 
-    def test_if_invalid_and_normal_are_in_prev_step_then_set_prev_url_to_normal_step(self):
-        stored_data = {}
-        with app.app_context() and app.test_request_context():
-            step = EligibilityInputFormSteuerlotseStep(endpoint="lotse")
-            previous_url = step.url_for_step(self.NormalStep.name)
-            step.name = "CURRENT"
-            step._pre_handle()
-            step.render_info.prev_url = previous_url
-            step.previous_steps = [self.InValidPreviousStep, self.NormalStep]
-
-            step.set_correct_previous_link(stored_data)
-
-            self.assertEqual(previous_url, step.render_info.prev_url)
-
-    def test_if_invalid_and_normal_and_valid_are_in_prev_step_and_valid_last_then_set_prev_url_to_valid_step(self):
+    def test_if_invalid_and_valid_and_second_valid_are_in_prev_step_then_set_prev_url_to_valid_step(self):
         stored_data = {}
         with app.app_context() and app.test_request_context():
             step = EligibilityInputFormSteuerlotseStep(endpoint="lotse")
@@ -182,21 +168,7 @@ class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.Tes
             step.name = "CURRENT"
             step._pre_handle()
             step.render_info.prev_url = previous_url
-            step.previous_steps = [self.InValidPreviousStep, self.NormalStep, self.ValidPreviousStep]
-
-            step.set_correct_previous_link(stored_data)
-
-            self.assertEqual(previous_url, step.render_info.prev_url)
-
-    def test_if_invalid_and_valid_and_normal_are_in_prev_step_and_normal_last_then_set_prev_url_to_normal_step(self):
-        stored_data = {}
-        with app.app_context() and app.test_request_context():
-            step = EligibilityInputFormSteuerlotseStep(endpoint="lotse")
-            previous_url = step.url_for_step(self.NormalStep.name)
-            step.name = "CURRENT"
-            step._pre_handle()
-            step.render_info.prev_url = previous_url
-            step.previous_steps = [self.InValidPreviousStep,  self.ValidPreviousStep, self.NormalStep]
+            step.previous_steps = [self.InValidPreviousStep, self.ValidPreviousStep, self.SecondValidPreviousStep]
 
             step.set_correct_previous_link(stored_data)
 

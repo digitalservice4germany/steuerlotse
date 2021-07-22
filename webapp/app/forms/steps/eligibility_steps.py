@@ -108,6 +108,7 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSte
                         back_link_url = self.url_for_step(previous_step.name)
                     elif validate_data_with(previous_step.data_model, stored_data):
                         back_link_url = self.url_for_step(previous_step.name)
+                        break
 
             self.render_info.prev_url = back_link_url if back_link_url else self.url_for_step("start")
 
@@ -142,8 +143,9 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlots
 
     def _validate(self, stored_data):
         """
-        Method to find out whether the data entered by the user is eligible for this step or not. If the data is not
-        correct because of data input from another step, raise an IncorrectEligibilityData.
+        Method to find out whether the data entered by the user is eligible for this step or not. The step might
+        depend on data from the steps before. If that data is not correct, in other words if the user could not have
+        come from an expected step to this step by entering the correct data, raise an IncorrectEligibilityData.
         """
         try:
             self.data_model.parse_obj(stored_data)
