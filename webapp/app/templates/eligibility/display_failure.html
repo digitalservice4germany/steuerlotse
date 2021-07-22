@@ -1,43 +1,42 @@
-{% extends 'basis/display_failure.html' %}
-{% import "macros.html" as macros %}
+{% extends 'basis/base_step.html' %}
 {% import "components.html" as components %}
-
-{% block errors %}
-
-    <div class="row m-0 pt-4 mt-4 simple-card">
-        <p class="font-weight-bolder">{{ _('form.eligibility.intro-errors') }}</p>
-        {% if errors is defined %}
-            <ul>
-                {%- for error in errors[:-1] %}
-                    <li>
-                        {{ error }}
-                    </li>
-                {% endfor -%}
-                {%- for error in errors[-1:] %}
-                    <li>
-                        {{ error }}
-                    </li>
-                {% endfor -%}
-            </ul>
-        {% endif %}
-
-    </div>
-{% endblock %}
-
-{% block display_failure_content %}
+{% import "macros.html" as macros %}
 
 
-    <div class="row m-0 pt-4">
-        <h4>{{ _('form.eligibility.use-elster') }}</h4>
-        <p>{{ _('form.eligibility.use-elster-text') }}</p>
-        <ol>
-            <li>{{ _('form.eligibility.use-elster.list-item-1') }}</li>
-            <li>{{ _('form.eligibility.use-elster.list-item-2') }}</li>
-        </ol>
+{% block step_content %}
+    <div class="spacing-b-07">
+        <div class="headline row p-0">
+            <img src="{{ url_for('static', filename='icons/success_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
+            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
+        </div>
+
+        <p class="result-text">{{ render_info.step_intro }}</p>
     </div>
 
 
-    <div class="row m-0 pt-4">
+    <div class="spacing-b-07 spacing-b-09">
+        <div class="spacing-b-07 row p-0">
+            <img src="{{ url_for('static', filename='icons/failure_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
+            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
+        </div>
+        <span class="result-text">
+            <p>{{ error_text }} {{ render_info.step_intro }}</p>
+        </span>
+    </span>
+
+    <div class="spacing-b-07 row m-0">
+        <h2>{{ _('form.eligibility.use-elster') }}</h2>
+        <span class="result-text">
+            <p>{{ _('form.eligibility.use-elster-text') }}</p>
+            <ol>
+                <li>{{ _('form.eligibility.use-elster.list-item-1') }}</li>
+                <li>{{ _('form.eligibility.use-elster.list-item-2') }}</li>
+            </ol>
+        </span>
+    </div>
+
+
+    <div class="spacing-b-11 row m-0">
         {{ components.primaryButtonWithIcon(
             text=_('form.eligibility.use-elster-button'),
             url="https://www.elster.de/eportal/start",
@@ -45,10 +44,5 @@
             target="_blank"
         )}}
     </div>
-
-    <div class="row m-0 pt-4">
-        <h4>{{ _('form.eligibility.impact-development') }}</h4>
-        <p>{{ _('form.eligibility.impact-development-text') }}</p>
-
     </div>
 {% endblock %}

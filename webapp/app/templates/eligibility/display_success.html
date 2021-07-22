@@ -1,13 +1,35 @@
-{% extends 'basis/display_success.html' %}
-{% import "macros.html" as macros %}
+{% extends 'basis/base_step.html' %}
 {% import "components.html" as components %}
+{% import "macros.html" as macros %}
 
-{% block display_success_content %}
-    <div class="row m-0 pt-4">
-        <h4>{{ _('form.eligibility.success-next-step') }}</h4>
-        <p>{{ _('form.eligibility.success-next-step-text') }}</p>
+
+{% block step_content %}
+    <div class="section-intro">
+        <div class="headline row p-0">
+            <img src="{{ url_for('static', filename='icons/success_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
+            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
+        </div>
+        <span class="result-text">
+            <p>{{ render_info.step_intro }}</p>
+        </span>
     </div>
-    <div class="row m-0 pt-4">
+
+    <div class="spacing-b-07 row m-0 ">
+        <h2>{{ _('form.eligibility.success-next-step') }}</h2>
+        <span class="result-text">
+            <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
+            {% if 'dependent_notes' in render_info.additional_info %}
+                <ul class="form-list">
+                    {% for dependent_note in render_info.additional_info['dependent_notes']%}
+                        <li>{{ dependent_note }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif%}
+        </span>
+    </div>
+
+    <div class="spacing-b-11 row m-0">
         {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
+    </div>
     </div>
 {% endblock %}
