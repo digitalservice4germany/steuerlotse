@@ -1,0 +1,7 @@
+{% extends 'basis/form_full_width.html' %}
+{% import "macros.html" as macros %}
+
+{% block additional_stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
+{% endblock %}

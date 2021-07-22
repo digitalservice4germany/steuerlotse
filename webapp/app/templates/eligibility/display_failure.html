@@ -2,6 +2,10 @@
 {% import "components.html" as components %}
 {% import "macros.html" as macros %}
 
+{% block additional_stylesheets %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
+{% endblock %}
 
 {% block step_content %}
     <div class="spacing-b-07">
