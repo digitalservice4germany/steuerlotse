@@ -5,6 +5,10 @@ from pydantic import BaseModel, ValidationError
 from pydantic.errors import MissingError
 
 
+class PreviousFieldsMissingError(MissingError):
+    """Raised in case all the previous fields are missing."""
+
+
 class RecursiveDataModel(BaseModel):
     """This model can be used to model dependent nested models. That means that you your model would have at least on
     field with the data type of a nested model. These fields are stored in previous fields. The model relies on the
@@ -42,15 +46,11 @@ class RecursiveDataModel(BaseModel):
         fields = list(self.__class__.__fields__.values())
         self.__class__._previous_fields = []
 
-        non_found = False
         for field in fields:
             if issubclass(field.type_, BaseModel):
                 self.__class__._previous_fields.append(field.name)
-                if self._set_data_for_previous_field(enriched_data, field.name, field.type_):
-                   non_found = True
+                self._set_data_for_previous_field(enriched_data, field.name, field.type_)
 
-        if non_found:
-            print(self.__class__.__name__)
         return enriched_data
 
     @staticmethod
@@ -58,16 +58,14 @@ class RecursiveDataModel(BaseModel):
         try:
             possible_data = field_type.parse_obj(enriched_data).dict()
             enriched_data[field_name] = possible_data
-            return True
-
-        except ValidationError as e:
-            return False
+        except ValidationError:
+            return
 
     def one_previous_field_has_to_be_set(cls, v, values):
         """Validator used to ensure that at least one of the needed previous fields has been set. Make sure to use
         this validator in the subclass @validator(<LAST_PREV_FIELD_NAME>, always=True, check_fields=False) """
         if not v and all([values.get(previous_field) is None for previous_field in cls._previous_fields]):
-            raise MissingError
+            raise PreviousFieldsMissingError
         return v
 
     @classmethod

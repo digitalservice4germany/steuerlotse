@@ -14,6 +14,7 @@ from app.model.eligibility_data import InvalidEligiblityError, OtherIncomeEligib
     DivorcedJointTaxesEligibilityData, UserBElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
     UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData
+from app.model.recursive_data import PreviousFieldsMissingError
 
 _ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
 
@@ -147,10 +148,10 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlots
         try:
             self.data_model.parse_obj(stored_data)
         except ValidationError as e:
-            if any([isinstance(raw_e.exc, InvalidEligiblityError) for raw_e in e.raw_errors]):
-                return False
-            else:
+            if any([isinstance(raw_e.exc, PreviousFieldsMissingError) for raw_e in e.raw_errors]):
                 raise IncorrectEligibilityData
+            else:
+                return False
         return True
 
 

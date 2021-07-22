@@ -1,6 +1,5 @@
 from typing import Optional
 
-from flask_babel import lazy_gettext as _l
 from pydantic import BaseModel, validator
 from pydantic.fields import ModelField
 
@@ -95,7 +94,7 @@ class DivorcedEligibilityData(BaseModel):
 
 
 class SeparatedEligibilityData(RecursiveDataModel):
-    is_married: MarriedEligibilityData
+    is_married: Optional[MarriedEligibilityData]
     separated_since_last_year_eligibility: str
 
     @validator('separated_since_last_year_eligibility')
@@ -108,7 +107,7 @@ class SeparatedEligibilityData(RecursiveDataModel):
 
 
 class NotSeparatedEligibilityData(RecursiveDataModel):
-    is_married: MarriedEligibilityData
+    is_married: Optional[MarriedEligibilityData]
     separated_since_last_year_eligibility: str
 
     @validator('separated_since_last_year_eligibility')
@@ -121,7 +120,7 @@ class NotSeparatedEligibilityData(RecursiveDataModel):
 
 
 class MarriedJointTaxesEligibilityData(RecursiveDataModel):
-    not_separated: NotSeparatedEligibilityData
+    not_separated: Optional[NotSeparatedEligibilityData]
     joint_taxes_eligibility: str
 
     @validator('joint_taxes_eligibility')
@@ -148,7 +147,7 @@ class AlimonyMarriedEligibilityData(RecursiveDataModel):
 
 
 class UserANoElsterAccountEligibilityData(RecursiveDataModel):
-    alimony: AlimonyMarriedEligibilityData
+    alimony: Optional[AlimonyMarriedEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
@@ -161,7 +160,7 @@ class UserANoElsterAccountEligibilityData(RecursiveDataModel):
 
 
 class UserAElsterAccountEligibilityData(RecursiveDataModel):
-    alimony: AlimonyMarriedEligibilityData
+    alimony: Optional[AlimonyMarriedEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
@@ -174,7 +173,7 @@ class UserAElsterAccountEligibilityData(RecursiveDataModel):
 
 
 class UserBElsterAccountEligibilityData(RecursiveDataModel):
-    user_a_has_elster_account: UserAElsterAccountEligibilityData
+    user_a_has_elster_account: Optional[UserAElsterAccountEligibilityData]
     user_b_has_elster_account_eligibility: str
 
     @validator('user_b_has_elster_account_eligibility')
@@ -187,7 +186,7 @@ class UserBElsterAccountEligibilityData(RecursiveDataModel):
 
 
 class DivorcedJointTaxesEligibilityData(RecursiveDataModel):
-    familienstand: DivorcedEligibilityData
+    familienstand: Optional[DivorcedEligibilityData]
     joint_taxes_eligibility: str
 
     @validator('joint_taxes_eligibility')
@@ -215,7 +214,7 @@ class AlimonyEligibilityData(RecursiveDataModel):
 
 
 class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
-    no_alimony: AlimonyEligibilityData
+    no_alimony: Optional[AlimonyEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
@@ -243,7 +242,7 @@ class PensionEligibilityData(RecursiveDataModel):
 
 
 class InvestmentIncomeEligibilityData(RecursiveDataModel):
-    has_pension: PensionEligibilityData
+    has_pension: Optional[PensionEligibilityData]
     investment_income_eligibility: str
 
     @validator('investment_income_eligibility')
@@ -256,7 +255,7 @@ class InvestmentIncomeEligibilityData(RecursiveDataModel):
 
 
 class MinimalInvestmentIncome(RecursiveDataModel):
-    has_investment_income: InvestmentIncomeEligibilityData
+    has_investment_income: Optional[InvestmentIncomeEligibilityData]
     minimal_investment_income_eligibility: str
 
     @validator('minimal_investment_income_eligibility')
@@ -269,7 +268,7 @@ class MinimalInvestmentIncome(RecursiveDataModel):
 
 
 class MoreThanMinimalInvestmentIncome(RecursiveDataModel):
-    has_investment_income: InvestmentIncomeEligibilityData
+    has_investment_income: Optional[InvestmentIncomeEligibilityData]
     minimal_investment_income_eligibility: str
 
     @validator('minimal_investment_income_eligibility')
@@ -282,7 +281,7 @@ class MoreThanMinimalInvestmentIncome(RecursiveDataModel):
 
 
 class NoTaxedInvestmentIncome(RecursiveDataModel):
-    has_more_than_minimal_inv_income: MoreThanMinimalInvestmentIncome
+    has_more_than_minimal_inv_income: Optional[MoreThanMinimalInvestmentIncome]
     taxed_investment_income_eligibility: str
 
     @validator('taxed_investment_income_eligibility')
@@ -295,7 +294,7 @@ class NoTaxedInvestmentIncome(RecursiveDataModel):
 
 
 class CheaperCheckEligibilityData(RecursiveDataModel):
-    has_taxed_investment_income: NoTaxedInvestmentIncome
+    has_taxed_investment_income: Optional[NoTaxedInvestmentIncome]
     cheaper_check_eligibility: str
 
     @validator('cheaper_check_eligibility')
@@ -308,7 +307,7 @@ class CheaperCheckEligibilityData(RecursiveDataModel):
 
 
 class NoInvestmentIncomeEligibilityData(RecursiveDataModel):
-    has_pension: PensionEligibilityData
+    has_pension: Optional[PensionEligibilityData]
     investment_income_eligibility: str
 
     @validator('investment_income_eligibility')
@@ -351,7 +350,7 @@ class EmploymentIncomeEligibilityData(RecursiveDataModel):
 
 
 class MarginalEmploymentEligibilityData(RecursiveDataModel):
-    has_other_empl_income: EmploymentIncomeEligibilityData
+    has_other_empl_income: Optional[EmploymentIncomeEligibilityData]
     marginal_employment_eligibility: str
 
     @validator('marginal_employment_eligibility')
@@ -378,7 +377,7 @@ class OtherIncomeEligibilityData(RecursiveDataModel):
 
 
 class ForeignCountryEligibility(RecursiveDataModel):
-    has_no_other_income: OtherIncomeEligibilityData
+    has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
 
     @validator('foreign_country_eligibility')

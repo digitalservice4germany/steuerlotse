@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 
 from flask.sessions import SecureCookieSession
-from flask_babel import _
+from flask_babel import _, lazy_gettext as _l
 
 from pydantic import MissingError, ValidationError
 from werkzeug.exceptions import NotFound
@@ -34,6 +34,7 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, _ELIGIBILITY_DATA_KEY, \
     EligibilityStepSpecificsMixin, DecisionEligibilityInputFormSteuerlotseStep, EligibilityInputFormSteuerlotseStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
+from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep
 from tests.utils import create_session_form_data
 
@@ -326,7 +327,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'separated_since_last_year_eligibility': 'yes'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 SeparatedEligibilityInputFormSteuerlotseStep.name)
 
@@ -425,9 +426,9 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with app.app_context() and app.test_request_context(method='POST', data={'joint_taxes': 'yes'}), \
+        with app.app_context() and app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'yes'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -533,7 +534,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -636,7 +637,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'user_a_has_elster_account_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
 
@@ -755,7 +756,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'user_b_has_elster_account_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -868,7 +869,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -969,7 +970,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1078,7 +1079,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'user_a_has_elster_account_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1189,7 +1190,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'pension_eligibility': 'yes'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 PensionDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1303,7 +1304,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'investment_income_eligibility': 'yes'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1420,9 +1421,10 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST',
-                                                            data={'investment_income_eligibility': 'yes'}), \
+                                                            data={'investment_income_eligibility': 'yes',
+                                                                  'minimal_investment_income_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1557,7 +1559,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'taxed_investment_income_eligibility': 'yes'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1696,7 +1698,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'cheaper_check_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1830,7 +1832,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'employment_income_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -1980,7 +1982,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'marginal_employment_eligibility': 'yes'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -2134,7 +2136,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'other_income_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -2291,9 +2293,10 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with app.app_context() and app.test_request_context(method='POST', data={'other_income_eligibility': 'no'}), \
+        with app.app_context() and app.test_request_context(method='POST', data={'other_income_eligibility': 'no',
+                                                                                 'foreign_country_eligibility': 'no'}),\
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
-                      MagicMock(side_effect=MissingError)):
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
 
@@ -2412,7 +2415,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'user_b_has_elster_account_eligibility': 'no',
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no', }
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context() as req, \
+                patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
             step.handle()
@@ -2429,7 +2433,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context() as req, \
+                patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
             step.handle()
@@ -2451,7 +2456,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
-        with app.app_context() and app.test_request_context() as req:
+        with app.app_context() and app.test_request_context() as req, \
+                patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
             step.handle()
