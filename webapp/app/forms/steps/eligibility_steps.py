@@ -35,7 +35,7 @@ def validate_data_with(data_model, stored_data):
     return True
 
 
-class EligibilityStepSpecificsMixin:
+class EligibilityStepPluralizeMixin:
 
     def number_of_users(self, input_data):
         if validate_data_with(MarriedJointTaxesEligibilityData, input_data):
@@ -44,7 +44,7 @@ class EligibilityStepSpecificsMixin:
             return 1
 
 
-class EligibilityDisplaySteuerlotseStep(EligibilityStepSpecificsMixin, DisplaySteuerlotseStep):
+class EligibilityDisplaySteuerlotseStep(EligibilityStepPluralizeMixin, DisplaySteuerlotseStep):
     session_data_identifier = _ELIGIBILITY_DATA_KEY
 
 
@@ -70,7 +70,7 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep
         return super().render(error_text=self.eligibility_error)
 
 
-class EligibilityInputFormSteuerlotseStep(EligibilityStepSpecificsMixin, FormSteuerlotseStep):
+class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSteuerlotseStep):
     template = 'eligibility/form_full_width.html'
     data_model: BaseModel = None
     session_data_identifier = _ELIGIBILITY_DATA_KEY

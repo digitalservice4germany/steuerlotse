@@ -32,7 +32,7 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
     ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, EligibilitySuccessDisplaySteuerlotseStep, \
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, _ELIGIBILITY_DATA_KEY, \
-    EligibilityStepSpecificsMixin, DecisionEligibilityInputFormSteuerlotseStep, EligibilityInputFormSteuerlotseStep
+    EligibilityStepPluralizeMixin, DecisionEligibilityInputFormSteuerlotseStep, EligibilityInputFormSteuerlotseStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep
@@ -82,7 +82,7 @@ class TestEligibilityStepSpecificsMixin(unittest.TestCase):
         input_data = {'marital_status_eligibility': 'married',
                       'separated_since_last_year_eligibility': 'no',
                       'joint_taxes_eligibility': 'yes', }
-        num_of_users = EligibilityStepSpecificsMixin().number_of_users(input_data)
+        num_of_users = EligibilityStepPluralizeMixin().number_of_users(input_data)
 
         self.assertEqual(2, num_of_users)
 
@@ -90,13 +90,13 @@ class TestEligibilityStepSpecificsMixin(unittest.TestCase):
         input_data = {'marital_status_eligibility': 'married',
                       'separated_since_last_year_eligibility': 'no',
                       'joint_taxes_eligibility': 'yes', }
-        num_of_users = EligibilityStepSpecificsMixin().number_of_users(input_data)
+        num_of_users = EligibilityStepPluralizeMixin().number_of_users(input_data)
 
         self.assertEqual(2, num_of_users)
 
     def test_if_data_incorrect_then_return_1(self):
         input_data = {'marital_status_eligibility': 'widowed'}
-        num_of_users = EligibilityStepSpecificsMixin().number_of_users(input_data)
+        num_of_users = EligibilityStepPluralizeMixin().number_of_users(input_data)
 
         self.assertEqual(1, num_of_users)
 
