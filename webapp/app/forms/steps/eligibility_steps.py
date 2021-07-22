@@ -73,6 +73,7 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepSpecificsMixin, FormSte
     template = 'eligibility/form_full_width.html'
     data_model: BaseModel = None
     session_data_identifier = _ELIGIBILITY_DATA_KEY
+    previous_steps = None
 
     class InputForm(SteuerlotseBaseForm):
         pass
@@ -87,6 +88,27 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepSpecificsMixin, FormSte
             header_title=_('form.eligibility.header-title'),
             **kwargs,
         )
+
+    def _main_handle(self, stored_data):
+        stored_data = super()._main_handle(stored_data)
+        self.set_correct_previous_link(stored_data)
+        return stored_data
+
+    def set_correct_previous_link(self, stored_data):
+        if self.previous_steps:
+            back_link_url = None
+
+            if len(self.previous_steps) == 1:
+                back_link_url = self.url_for_step(self.previous_steps[0].name)
+            else:
+                for previous_step in self.previous_steps:
+
+                    if not issubclass(previous_step, DecisionEligibilityInputFormSteuerlotseStep):
+                        back_link_url = self.url_for_step(previous_step.name)
+                    elif validate_data_with(previous_step.data_model, stored_data):
+                        back_link_url = self.url_for_step(previous_step.name)
+
+            self.render_info.prev_url = back_link_url if back_link_url else self.url_for_step("start")
 
 
 class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep):
@@ -193,6 +215,8 @@ class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormS
     main_next_step_name = 'married_alimony'
     alternative_next_step_name = 'married_joint_taxes'
     title = _l('form.eligibility.separated_since_last_year-title')
+    previous_steps = [MaritalStatusInputFormSteuerlotseStep]
+
     data_model = SeparatedEligibilityData
 
     class InputForm(SteuerlotseBaseForm):
@@ -218,6 +242,7 @@ class MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligi
     alternative_next_step_name = MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.joint_taxes-title')
     data_model = MarriedJointTaxesEligibilityData
+    previous_steps = [SeparatedEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         joint_taxes_eligibility = RadioField(
@@ -242,6 +267,7 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
     alternative_next_step_name = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.alimony-title')
     data_model = AlimonyMarriedEligibilityData
+    previous_steps = [MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, SeparatedEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         alimony_eligibility = RadioField(
@@ -272,6 +298,7 @@ class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
     alternative_next_step_name = 'user_b_has_elster_account'
     title = _l('form.eligibility.user_a_has_elster_account-title')
     data_model = UserANoElsterAccountEligibilityData
+    previous_steps = [MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         user_a_has_elster_account_eligibility = RadioField(
@@ -297,6 +324,7 @@ class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
     alternative_next_step_name = UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_b_has_elster_account-title')
     data_model = UserBElsterAccountEligibilityData
+    previous_steps = [UserAElsterAccountEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         user_b_has_elster_account_eligibility = RadioField(
@@ -319,6 +347,7 @@ class DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
     alternative_next_step_name = DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.joint_taxes-title')
     data_model = DivorcedJointTaxesEligibilityData
+    previous_steps = [MaritalStatusInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         joint_taxes_eligibility = RadioField(
@@ -343,6 +372,7 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
     alternative_next_step_name = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.alimony-title')
     data_model = AlimonyEligibilityData
+    previous_steps = [MaritalStatusInputFormSteuerlotseStep, DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         alimony_eligibility = RadioField(
@@ -367,6 +397,7 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
     alternative_next_step_name = SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_a_has_elster_account-title')
     data_model = SingleUserElsterAccountEligibilityData
+    previous_steps = [SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         user_a_has_elster_account_eligibility = RadioField(
@@ -392,6 +423,9 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
     title = _l('form.eligibility.pension-title')
     intro = _l('form.eligibility.pension-intro')
     data_model = PensionEligibilityData
+    previous_steps = [UserAElsterAccountEligibilityInputFormSteuerlotseStep,
+                      UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+                      SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         pension_eligibility = RadioField(
@@ -418,6 +452,7 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
     alternative_next_step_name = 'employment_income'
     title = _l('form.eligibility.investment_income-title')
     data_model = InvestmentIncomeEligibilityData
+    previous_steps = [PensionDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         investment_income_eligibility = RadioField(
@@ -448,6 +483,7 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
     alternative_next_step_name = 'taxed_investment'
     title = _l('form.eligibility.minimal_investment_income-title')
     data_model = MinimalInvestmentIncome
+    previous_steps = [InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         minimal_investment_income_eligibility = RadioField(
@@ -472,6 +508,7 @@ class TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionE
     alternative_next_step_name = TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.taxed_investment-title')
     data_model = NoTaxedInvestmentIncome
+    previous_steps = [MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         taxed_investment_income_eligibility = RadioField(
@@ -496,6 +533,7 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
     alternative_next_step_name = CheaperCheckEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.cheaper_check-title')
     data_model = CheaperCheckEligibilityData
+    previous_steps = [TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         cheaper_check_eligibility = RadioField(
@@ -526,6 +564,9 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
     alternative_next_step_name = 'marginal_employment'
     title = _l('form.eligibility.employment_income-title')
     data_model = NoEmploymentIncomeEligibilityData
+    previous_steps = [InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+                      MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+                      CheaperCheckDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         employment_income_eligibility = RadioField(
@@ -561,6 +602,7 @@ class MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisi
     alternative_next_step_name = MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.marginal_employment-title')
     data_model = MarginalEmploymentEligibilityData
+    previous_steps = [EmploymentDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         marginal_employment_eligibility = RadioField(
@@ -585,6 +627,8 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
     alternative_next_step_name = IncomeOtherEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.income-other-title')
     data_model = OtherIncomeEligibilityData
+    previous_steps = [EmploymentDecisionEligibilityInputFormSteuerlotseStep,
+                      MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         other_income_eligibility = RadioField(
@@ -620,6 +664,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
     alternative_next_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
     data_model = ForeignCountryEligibility
+    previous_steps = [IncomeOtherEligibilityFailureDisplaySteuerlotseStep]
 
     class InputForm(SteuerlotseBaseForm):
         foreign_country_eligibility = RadioField(
