@@ -89,11 +89,12 @@ class IdNrField(SteuerlotseStringField):
         # As we know that it is correct, we can just separate it in chunks here.
         split_data = []
         chunk_sizes = self.widget.input_field_lengths
-        current_idx = 0
+        start_idx = 0
         for chunk_size in chunk_sizes:
+            end_index = start_idx + chunk_size
             if self.data:
-                split_data.append(self.data[current_idx: current_idx + chunk_size])
-            current_idx += chunk_size
+                split_data.append(self.data[start_idx: end_index])
+            start_idx = end_index
         return split_data
 
     def post_validate(self, form, validation_stopped):
