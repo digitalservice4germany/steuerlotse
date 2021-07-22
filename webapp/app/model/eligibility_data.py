@@ -9,33 +9,7 @@ from app.model.recursive_data import RecursiveDataModel
 
 class InvalidEligiblityError(ValueError):
     """Exception thrown in case the eligibility check failed."""
-    _ERROR_MESSAGES = {
-        'separated_since_last_year_eligibility': _l('form.eligibility.incorrect-separated_since_last_year'),
-        'married_joint_taxes_eligibility': _l('form.eligibility.incorrect-married_joint_taxes'),
-        'married_alimony_eligibility': _l('form.eligibility.incorrect-married_alimony'),
-        'user_a_has_elster_account_eligibility': _l('form.eligibility.incorrect-user_a_has_elster_account'),
-        'user_b_has_elster_account_eligibility': _l('form.eligibility.incorrect-user_b_has_elster_account'),
-        'divorced_joint_taxes_eligibility': _l('form.eligibility.incorrect-divorced_joint_taxes'),
-        'single_user_has_elster_account_eligibility': _l('form.eligibility.incorrect-single_user_has_elster_account'),
-        'alimony_eligibility': _l('form.eligibility.incorrect-alimony'),
-        'pension_eligibility': _l('form.eligibility.incorrect-pension'),
-        'investment_income_eligibility': _l('form.eligibility.incorrect-investment_income'),
-        'minimal_investment_income_eligibility': _l('form.eligibility.incorrect-minimal_investment_income'),
-        'more_than_minimal_investment_income_eligibility': _l('form.eligibility.incorrect-more_than_minimal_investment_income'),
-        'taxed_investment_income_eligibility': _l('form.eligibility.incorrect-taxed_investment_income'),
-        'cheaper_check_eligibility': _l('form.eligibility.incorrect-cheaper_check'),
-        'no_investment_income_eligibility': _l('form.eligibility.incorrect-no_investment_income'),
-        'only_taxed_investment_income_eligibility': _l('form.eligibility.incorrect-only_taxed_investment_income'),
-        'no_employment_income_eligibility': _l('form.eligibility.incorrect-no_employment_income'),
-        'employment_income_eligibility': _l('form.eligibility.incorrect-employment_income'),
-        'marginal_employment_eligibility': _l('form.eligibility.incorrect-marginal_employment'),
-        'other_income_eligibility': _l('form.eligibility.incorrect-other_income'),
-        'foreign_country_eligibility': _l('form.eligibility.incorrect-foreign_country')
-    }
-
-    def __init__(self, field):
-        self.message = self._ERROR_MESSAGES[field]
-        super().__init__(self.message)
+    pass
 
 
 class ExpectedEligibility(BaseModel):
@@ -58,25 +32,25 @@ class ExpectedEligibility(BaseModel):
     @validator('renten')
     def declarations_must_be_set_yes(cls, v, field: ModelField):
         if not v == 'yes':
-            raise InvalidEligiblityError(field.name)
+            raise InvalidEligiblityError
         return v
 
     @validator('kapitaleink_ohne_steuerabzug', 'kapitaleink_guenstiger', 'erwerbstaetigkeit', 'unterhalt', 'ausland', 'other', 'verheiratet_einzelveranlagung', 'geschieden_zusammenveranlagung', 'elster_account')
-    def declarations_must_be_set_no(cls, v, field):
+    def declarations_must_be_set_no(cls, v):
         if not v == 'no':
-            raise InvalidEligiblityError(field.name)
+            raise InvalidEligiblityError
         return v
 
 
-def declarations_must_be_set_yes(v, error_key):
+def declarations_must_be_set_yes(v):
     if not v == 'yes':
-        raise InvalidEligiblityError(error_key)
+        raise InvalidEligiblityError
     return v
 
 
-def declarations_must_be_set_no(v, error_key):
+def declarations_must_be_set_no(v):
     if not v == 'no':
-        raise InvalidEligiblityError(error_key)
+        raise InvalidEligiblityError
     return v
 
 
@@ -125,8 +99,8 @@ class SeparatedEligibilityData(RecursiveDataModel):
     separated_since_last_year_eligibility: str
 
     @validator('separated_since_last_year_eligibility')
-    def separated_couple_must_be_separated_since_last_year(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def separated_couple_must_be_separated_since_last_year(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('is_married', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -138,8 +112,8 @@ class NotSeparatedEligibilityData(RecursiveDataModel):
     separated_since_last_year_eligibility: str
 
     @validator('separated_since_last_year_eligibility')
-    def married_couples_are_not_separated_since_last_year(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def married_couples_are_not_separated_since_last_year(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('is_married', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -152,7 +126,7 @@ class MarriedJointTaxesEligibilityData(RecursiveDataModel):
 
     @validator('joint_taxes_eligibility')
     def married_couples_must_do_joint_taxes(cls, v):
-        return declarations_must_be_set_yes(v, 'married_joint_taxes_eligibility')
+        return declarations_must_be_set_yes(v)
 
     @validator('not_separated', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -166,7 +140,7 @@ class AlimonyMarriedEligibilityData(RecursiveDataModel):
 
     @validator('alimony_eligibility')
     def do_not_receive_or_pay_alimony(cls, v):
-        return declarations_must_be_set_no(v, 'married_alimony_eligibility')
+        return declarations_must_be_set_no(v)
 
     @validator('separated_living', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -178,8 +152,8 @@ class UserANoElsterAccountEligibilityData(RecursiveDataModel):
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
-    def must_not_have_elster_account(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def must_not_have_elster_account(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('alimony', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -191,8 +165,8 @@ class UserAElsterAccountEligibilityData(RecursiveDataModel):
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
-    def has_elster_account(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_elster_account(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('alimony', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -204,8 +178,8 @@ class UserBElsterAccountEligibilityData(RecursiveDataModel):
     user_b_has_elster_account_eligibility: str
 
     @validator('user_b_has_elster_account_eligibility')
-    def user_b_must_not_have_elster_account(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def user_b_must_not_have_elster_account(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('user_a_has_elster_account', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -217,8 +191,8 @@ class DivorcedJointTaxesEligibilityData(RecursiveDataModel):
     joint_taxes_eligibility: str
 
     @validator('joint_taxes_eligibility')
-    def divorced_couples_must_do_joint_taxes(cls, v, values):
-        return declarations_must_be_set_no(v, 'divorced_joint_taxes_eligibility')
+    def divorced_couples_must_do_separate_taxes(cls, v, values):
+        return declarations_must_be_set_no(v)
 
     @validator('familienstand', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -232,8 +206,8 @@ class AlimonyEligibilityData(RecursiveDataModel):
     alimony_eligibility: str
 
     @validator('alimony_eligibility')
-    def do_not_receive_or_pay_alimony(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def do_not_receive_or_pay_alimony(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('no_divorced_joint_taxes', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -246,7 +220,7 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
 
     @validator('user_a_has_elster_account_eligibility')
     def must_not_have_elster_account(cls, v):
-        return declarations_must_be_set_no(v, 'single_user_has_elster_account_eligibility')
+        return declarations_must_be_set_no(v)
 
     @validator('no_alimony', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -260,8 +234,8 @@ class PensionEligibilityData(RecursiveDataModel):
     pension_eligibility: str
 
     @validator('pension_eligibility')
-    def has_to_get_pension(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_to_get_pension(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('user_b_has_no_elster_account', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -273,8 +247,8 @@ class InvestmentIncomeEligibilityData(RecursiveDataModel):
     investment_income_eligibility: str
 
     @validator('investment_income_eligibility')
-    def has_to_get_pension(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_to_get_pension(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('has_pension', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -286,8 +260,8 @@ class MinimalInvestmentIncome(RecursiveDataModel):
     minimal_investment_income_eligibility: str
 
     @validator('minimal_investment_income_eligibility')
-    def has_only_minimal_invesment_income(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_only_minimal_invesment_income(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('has_investment_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -300,7 +274,7 @@ class MoreThanMinimalInvestmentIncome(RecursiveDataModel):
 
     @validator('minimal_investment_income_eligibility')
     def has_more_than_minimal_investment_income(cls, v):
-        return declarations_must_be_set_no(v, 'more_than_minimal_investment_income_eligibility')
+        return declarations_must_be_set_no(v)
 
     @validator('has_investment_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -312,8 +286,8 @@ class NoTaxedInvestmentIncome(RecursiveDataModel):
     taxed_investment_income_eligibility: str
 
     @validator('taxed_investment_income_eligibility')
-    def has_to_have_taxed_investment_income(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_to_have_taxed_investment_income(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('has_more_than_minimal_inv_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -325,8 +299,8 @@ class CheaperCheckEligibilityData(RecursiveDataModel):
     cheaper_check_eligibility: str
 
     @validator('cheaper_check_eligibility')
-    def has_to_get_pension(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def has_to_want_no_cheaper_check(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('has_taxed_investment_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -339,7 +313,7 @@ class NoInvestmentIncomeEligibilityData(RecursiveDataModel):
 
     @validator('investment_income_eligibility')
     def has_no_investment_income(cls, v):
-        return declarations_must_be_set_no(v, 'no_investment_income_eligibility')
+        return declarations_must_be_set_no(v)
 
     @validator('has_pension', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -354,7 +328,7 @@ class NoEmploymentIncomeEligibilityData(RecursiveDataModel):
 
     @validator('employment_income_eligibility')
     def has_no_employment_income(cls, v):
-        return declarations_must_be_set_no(v, 'no_employment_income_eligibility')
+        return declarations_must_be_set_no(v)
 
     @validator('has_no_investment_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -368,8 +342,8 @@ class EmploymentIncomeEligibilityData(RecursiveDataModel):
     employment_income_eligibility: str
 
     @validator('employment_income_eligibility')
-    def has_employment_income(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_employment_income(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('only_taxed_inv_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -381,8 +355,8 @@ class MarginalEmploymentEligibilityData(RecursiveDataModel):
     marginal_employment_eligibility: str
 
     @validator('marginal_employment_eligibility')
-    def has_only_taxed_investment_income(cls, v, field):
-        return declarations_must_be_set_yes(v, field.name)
+    def has_only_taxed_investment_income(cls, v):
+        return declarations_must_be_set_yes(v)
 
     @validator('has_other_empl_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -395,8 +369,8 @@ class OtherIncomeEligibilityData(RecursiveDataModel):
     other_income_eligibility: str
 
     @validator('other_income_eligibility')
-    def has_only_taxed_investment_income(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def has_only_taxed_investment_income(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('only_marginal_empl_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -408,8 +382,8 @@ class ForeignCountryEligibility(RecursiveDataModel):
     foreign_country_eligibility: str
 
     @validator('foreign_country_eligibility')
-    def has_only_taxed_investment_income(cls, v, field):
-        return declarations_must_be_set_no(v, field.name)
+    def has_only_taxed_investment_income(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('has_no_other_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
