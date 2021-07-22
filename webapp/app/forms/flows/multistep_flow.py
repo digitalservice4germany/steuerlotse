@@ -4,6 +4,7 @@ from typing import Optional
 
 from cryptography.fernet import InvalidToken
 from flask import redirect, request, url_for, session, json, abort
+from wtforms import Form
 
 from app import app
 
@@ -17,7 +18,7 @@ class RenderInfo(object):
         self.step_title = step_title
         self.step_intro = step_intro
         self.header_title = None
-        self.form = form
+        self.form: Form = form
         self.prev_url = prev_url
         self.next_url = next_url
         self.submit_url = submit_url

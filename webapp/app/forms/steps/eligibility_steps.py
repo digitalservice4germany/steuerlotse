@@ -34,6 +34,15 @@ def validate_data_with(data_model, stored_data):
     return True
 
 
+class EligibilityStepSpecificsMixin:
+
+    def number_of_users(self, input_data):
+        if validate_data_with(MarriedJointTaxesEligibilityData, input_data):
+            return 2
+        else:
+            return 1
+
+
 class EligibilityDisplaySteuerlotseStep(EligibilityStepSpecificsMixin, DisplaySteuerlotseStep):
     session_data_identifier = _ELIGIBILITY_DATA_KEY
 
@@ -60,17 +69,20 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep
         return super().render(error_text=self.eligibility_error)
 
 
-class EligibilityInputFormSteuerlotseStep(FormSteuerlotseStep):
-    template = 'eligibility/form_incomes.html'
+class EligibilityInputFormSteuerlotseStep(EligibilityStepSpecificsMixin, FormSteuerlotseStep):
+    template = 'eligibility/form_full_width.html'
     data_model: BaseModel = None
     session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     class InputForm(SteuerlotseBaseForm):
         pass
 
+    InputMultipleForm = None
+
     def __init__(self, endpoint, **kwargs):
         super(EligibilityInputFormSteuerlotseStep, self).__init__(
             form=self.InputForm,
+            form_multiple=self.InputMultipleForm,
             endpoint=endpoint,
             header_title=_('form.eligibility.header-title'),
             **kwargs,
@@ -242,6 +254,17 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
                      ],
             validators=[InputRequired()])
 
+    class InputMultipleForm(SteuerlotseBaseForm):
+        alimony_eligibility = RadioField(
+            label=_l('form.eligibility.alimony-label'),
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.alimony.detail.title'),
+                                  'text': _l('form.eligibility.alimony.detail.text')}},
+            choices=[('yes', _l('form.eligibility.alimony.multiple.yes')),
+                     ('no', _l('form.eligibility.alimony.multiple.no')),
+                     ],
+            validators=[InputRequired()])
+
 
 class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "user_a_has_elster_account"
@@ -379,6 +402,15 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
                      ],
             validators=[InputRequired()])
 
+    class InputMultipleForm(SteuerlotseBaseForm):
+        pension_eligibility = RadioField(
+            label=_l('form.eligibility.pension-label'),
+            render_kw={'hide_label': True},
+            choices=[('yes', _l('form.eligibility.pension.multiple.yes')),
+                     ('no', _l('form.eligibility.pension.multiple.no')),
+                     ],
+            validators=[InputRequired()])
+
 
 class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "investment_income"
@@ -395,6 +427,17 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
                                   'text': _l('form.eligibility.investment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.investment_income.yes')),
                      ('no', _l('form.eligibility.investment_income.no')),
+                     ],
+            validators=[InputRequired()])
+
+    class InputMultipleForm(SteuerlotseBaseForm):
+        investment_income_eligibility = RadioField(
+            label=_l('form.eligibility.investment_income-label'),
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.investment_income.detail.title'),
+                                  'text': _l('form.eligibility.investment_income.detail.text')}},
+            choices=[('yes', _l('form.eligibility.investment_income.multiple.yes')),
+                     ('no', _l('form.eligibility.investment_income.multiple.no')),
                      ],
             validators=[InputRequired()])
 
@@ -465,6 +508,17 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
                      ],
             validators=[InputRequired()])
 
+    class InputMultipleForm(SteuerlotseBaseForm):
+        cheaper_check_eligibility = RadioField(
+            label=_l('form.eligibility.cheaper_check-label'),
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.cheaper_check.detail.title'),
+                                  'text': _l('form.eligibility.cheaper_check.detail.text')}},
+            choices=[('yes', _l('form.eligibility.cheaper_check_eligibility.multiple.yes')),
+                     ('no', _l('form.eligibility.cheaper_check_eligibility.multiple.no')),
+                     ],
+            validators=[InputRequired()])
+
 
 class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "employment_income"
@@ -481,6 +535,17 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
                                   'text': _l('form.eligibility.employment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.employment_income.yes')),
                      ('no', _l('form.eligibility.employment_income.no')),
+                     ],
+            validators=[InputRequired()])
+
+    class InputMultipleForm(SteuerlotseBaseForm):
+        employment_income_eligibility = RadioField(
+            label=_l('form.eligibility.employment_income-label'),
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.employment_income.detail.title'),
+                                  'text': _l('form.eligibility.employment_income.detail.text')}},
+            choices=[('yes', _l('form.eligibility.employment_income.multiple.yes')),
+                     ('no', _l('form.eligibility.employment_income.multiple.no')),
                      ],
             validators=[InputRequired()])
 
@@ -532,6 +597,17 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
                      ],
             validators=[InputRequired()])
 
+    class InputMultipleForm(SteuerlotseBaseForm):
+        other_income_eligibility = RadioField(
+            label=_l('form.eligibility.income-other-label'),
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.income-other.detail.title'),
+                                  'text': _l('form.eligibility.income-other.detail.text')}},
+            choices=[('yes', _l('form.eligibility.income-other.multiple.yes')),
+                     ('no', _l('form.eligibility.income-other.multiple.no')),
+                     ],
+            validators=[InputRequired()])
+
 
 class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'foreign_country_failure'
@@ -553,6 +629,17 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
                                   'text': _l('form.eligibility.foreign-country.detail.text')}},
             choices=[('yes', _l('form.eligibility.foreign-country.yes')),
                      ('no', _l('form.eligibility.foreign-country.no')),
+                     ],
+            validators=[InputRequired()])
+
+    class InputMultipleForm(SteuerlotseBaseForm):
+        foreign_country_eligibility = RadioField(
+            label=_l('form.eligibility.foreign-country-label'),
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
+                                  'text': _l('form.eligibility.foreign-country.detail.text')}},
+            choices=[('yes', _l('form.eligibility.foreign-country.multiple.yes')),
+                     ('no', _l('form.eligibility.foreign-country.multiple.no')),
                      ],
             validators=[InputRequired()])
 

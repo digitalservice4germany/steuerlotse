@@ -11,7 +11,7 @@ from werkzeug.utils import redirect
 from app import app
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, serialize_session_data, deserialize_session_data, \
-    RedirectSteuerlotseStep
+    RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
     MockRenderStep, MockYesNoStep
 from tests.utils import create_session_form_data
@@ -356,6 +356,86 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
 
             self.assertEqual(data, return_stored_data)
 
+    def test_if_title_multiple_set_and_number_of_users_is_2_then_set_render_info_title_to_multiple(self):
+        correct_endpoint = "lotse"
+        overview_step = MockFinalStep
+        correct_multiple_title = "We are more than one"
+
+        with app.app_context() and app.test_request_context() as req, \
+            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+            req.request.args = {'link_overview': "True"}
+            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
+                                               header_title=None,
+                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step.title_multiple = correct_multiple_title
+            steuerlotse_step.name = "This is the one"
+
+            steuerlotse_step._pre_handle()
+
+            self.assertEqual(correct_multiple_title, steuerlotse_step.render_info.step_title)
+
+    def test_if_title_multiple_set_and_number_of_users_is_1_then_set_render_info_title_to_single(self):
+        correct_endpoint = "lotse"
+        overview_step = MockFinalStep
+        correct_single_title = "We are only one"
+        correct_multiple_title = "We are more than one"
+
+        with app.app_context() and app.test_request_context() as req, \
+            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+            req.request.args = {'link_overview': "True"}
+            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
+                                               header_title=None,
+                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step.title = correct_single_title
+            steuerlotse_step.title_multiple = correct_multiple_title
+            steuerlotse_step.name = "This is the one"
+
+            steuerlotse_step._pre_handle()
+
+            self.assertEqual(correct_single_title, steuerlotse_step.render_info.step_title)
+
+    def test_if_intro_multiple_set_and_number_of_users_is_2_then_set_render_info_intro_to_multiple(self):
+        correct_endpoint = "lotse"
+        overview_step = MockFinalStep
+        correct_multiple_intro = "We are more than one"
+
+        with app.app_context() and app.test_request_context() as req, \
+            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+            req.request.args = {'link_overview': "True"}
+            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
+                                               header_title=None,
+                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step.intro_multiple = correct_multiple_intro
+            steuerlotse_step.name = "This is the one"
+
+            steuerlotse_step._pre_handle()
+
+            self.assertEqual(correct_multiple_intro, steuerlotse_step.render_info.step_intro)
+
+    def test_if_intro_multiple_set_and_number_of_users_is_1_then_set_render_info_intro_to_single(self):
+        correct_endpoint = "lotse"
+        overview_step = MockFinalStep
+        correct_single_intro = "We are only one"
+        correct_multiple_intro = "We are more than one"
+
+        with app.app_context() and app.test_request_context() as req, \
+            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+            req.request.args = {'link_overview': "True"}
+            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
+                                               header_title=None,
+                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step.intro = correct_single_intro
+            steuerlotse_step.intro_multiple = correct_multiple_intro
+            steuerlotse_step.name = "This is the one"
+
+            steuerlotse_step._pre_handle()
+
+            self.assertEqual(correct_single_intro, steuerlotse_step.render_info.step_intro)
+
 
 class TestSteuerlotseStepPostHandle(unittest.TestCase):
 
@@ -503,7 +583,7 @@ class TestSteuerlotseFormStepOverrideSessionData(unittest.TestCase):
                 self.assertIn('form_data', req.session)
                 self.assertEqual(new_data, req.session['form_data'])
 
-    def test_if_data_stored_with_other_identifiert_then_it_is_not_changed(self):
+    def test_if_data_stored_with_other_identifier_then_it_is_not_changed(self):
         new_data = {'brother': 'Luigi'}
         other_data = {'enemy': 'Bowser'}
         with app.app_context() and app.test_request_context() as req:
@@ -525,3 +605,49 @@ class TestSteuerlotseFormStepOverrideSessionData(unittest.TestCase):
                 step.session_data_identifier = new_identifier
                 step._override_session_data(new_data)
                 self.assertEqual(new_data, req.session[new_identifier])
+
+
+class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
+
+    def test_if_multiple_form_and_is_multiple_user_then_return_multiple_form(self):
+        with app.app_context() and app.test_request_context() as req:
+            req.form = MagicMock()
+            form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, form=MagicMock())
+            form_multiple = MagicMock()
+            form_multiple_constructor = MagicMock(return_value=form_multiple)
+            form_step.form_multiple = form_multiple_constructor
+
+            with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+                created_form = form_step.create_form(req, {})
+
+            form_multiple_constructor.assert_called_once()
+            self.assertEqual(form_multiple, created_form)
+
+    def test_if_multiple_form_is_none_and_is_multiple_user_then_return_single_form(self):
+        with app.app_context() and app.test_request_context() as req:
+            req.form = MagicMock()
+            form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, form=MagicMock())
+            form_single = MagicMock()
+            form_single_constructor = MagicMock(return_value=form_single)
+            form_step.form = form_single_constructor
+            form_step.form_multiple = None
+
+            with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+                created_form = form_step.create_form(req, {})
+
+            form_single_constructor.assert_called_once()
+            self.assertEqual(form_single, created_form)
+
+    def test_if_multiple_form_and_not_multiple_user_then_return_single_form(self):
+        with app.app_context() and app.test_request_context() as req:
+            req.form = MagicMock()
+            form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, form=MagicMock())
+            form_single = MagicMock()
+            form_single_constructor = MagicMock(return_value=form_single)
+            form_step.form = form_single_constructor
+
+            with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+                created_form = form_step.create_form(req, {})
+
+            form_single_constructor.assert_called_once()
+            self.assertEqual(form_single, created_form)
