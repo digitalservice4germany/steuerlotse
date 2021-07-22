@@ -154,7 +154,8 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
 
     def test_if_session_data_then_return_session_data(self):
         with app.app_context() and app.test_request_context() as req:
-            req.session = SecureCookieSession({SteuerlotseStep.session_data_identifier: create_session_form_data(self.session_data)})
+            req.session = SecureCookieSession(
+                {SteuerlotseStep.session_data_identifier: create_session_form_data(self.session_data)})
             session_data = self.steuerlotse_step._get_session_data()
 
             self.assertEqual(self.session_data, session_data)
@@ -164,7 +165,8 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
         expected_data = {**self.session_data, **default_data}
 
         with app.app_context() and app.test_request_context() as req:
-            req.session = SecureCookieSession({SteuerlotseStep.session_data_identifier: create_session_form_data(self.session_data)})
+            req.session = SecureCookieSession(
+                {SteuerlotseStep.session_data_identifier: create_session_form_data(self.session_data)})
             steuerlotse_step_with_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
                                                                  default_data=default_data, header_title=None,
                                                                  overview_step=None,
@@ -176,18 +178,19 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
 
     def test_if_session_data_in_incorrect_identifier_then_return_only_data_from_correct_identifier(self):
         form_data = {"brother": "Luigi"}
-        incorrect_identifier = {"enemy": "Bowser"}
+        incorrect_identifier_data = {"enemy": "Bowser"}
         expected_data = {**form_data}
 
         with app.app_context() and app.test_request_context() as req:
-            req.session = SecureCookieSession({SteuerlotseStep.session_data_identifier: create_session_form_data(form_data),
-                                               "INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier)})
-            steuerlotse_step_with_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
-                                                                 default_data={}, header_title=None,
-                                                                 overview_step=None,
-                                                                 prev_step=None, next_step=None)
+            req.session = SecureCookieSession(
+                {SteuerlotseStep.session_data_identifier: create_session_form_data(form_data),
+                 "INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier_data)})
+            steuerlotse_step_without_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                    default_data={}, header_title=None,
+                                                                    overview_step=None,
+                                                                    prev_step=None, next_step=None)
 
-            session_data = steuerlotse_step_with_default_data._get_session_data()
+            session_data = steuerlotse_step_without_default_data._get_session_data()
 
             self.assertEqual(expected_data, session_data)
 
@@ -196,12 +199,12 @@ class TestSteuerlotseStepGetSessionData(unittest.TestCase):
 
         with app.app_context() and app.test_request_context() as req:
             req.session = SecureCookieSession({"INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier)})
-            steuerlotse_step_with_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
-                                                                 default_data={}, header_title=None,
-                                                                 overview_step=None,
-                                                                 prev_step=None, next_step=None)
+            steuerlotse_step_without_default_data = SteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                    default_data={}, header_title=None,
+                                                                    overview_step=None,
+                                                                    prev_step=None, next_step=None)
 
-            session_data = steuerlotse_step_with_default_data._get_session_data()
+            session_data = steuerlotse_step_without_default_data._get_session_data()
 
             self.assertEqual({}, session_data)
 
@@ -349,7 +352,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
                 patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._get_session_data",
                       MagicMock(return_value=data)):
             steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, overview_step=None,
-                                   default_data=None, prev_step=None, next_step=None)
+                                               default_data=None, prev_step=None, next_step=None)
             steuerlotse_step.name = "This is the one"
 
             return_stored_data = steuerlotse_step._pre_handle()
@@ -362,7 +365,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_multiple_title = "We are more than one"
 
         with app.app_context() and app.test_request_context() as req, \
-            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
             req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
@@ -382,7 +385,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_multiple_title = "We are more than one"
 
         with app.app_context() and app.test_request_context() as req, \
-            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
@@ -402,7 +405,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_multiple_intro = "We are more than one"
 
         with app.app_context() and app.test_request_context() as req, \
-            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
             req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
@@ -422,7 +425,7 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_multiple_intro = "We are more than one"
 
         with app.app_context() and app.test_request_context() as req, \
-            patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
@@ -443,7 +446,7 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, overview_step=None,
-                                   default_data=None, prev_step=None, next_step=None)
+                                               default_data=None, prev_step=None, next_step=None)
             steuerlotse_step.name = "This is the one"
             steuerlotse_step._pre_handle()
 
@@ -457,7 +460,7 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         with app.app_context() and app.test_request_context():
             steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, overview_step=None,
-                                   default_data=None, prev_step=None, next_step=None)
+                                               default_data=None, prev_step=None, next_step=None)
             steuerlotse_step.name = "This is the one"
             steuerlotse_step._pre_handle()
 
