@@ -13,7 +13,8 @@ from app.model.eligibility_data import InvalidEligiblityError, OtherIncomeEligib
     PensionEligibilityData, SingleUserElsterAccountEligibilityData, AlimonyEligibilityData, \
     DivorcedJointTaxesEligibilityData, UserBElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
-    UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData
+    UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData, MarriedEligibilityData, WidowedEligibilityData, \
+    SingleEligibilityData, DivorcedEligibilityData, MaritalStatusEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
 
 _ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
@@ -92,6 +93,8 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSte
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
+        if request.method == "GET":
+            stored_data = self.delete_not_dependent_data(stored_data)
         self.set_correct_previous_link(stored_data)
         return stored_data
 
@@ -104,39 +107,11 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSte
             else:
                 for previous_step in self.previous_steps:
 
-                    if not issubclass(previous_step, DecisionEligibilityInputFormSteuerlotseStep):
-                        back_link_url = self.url_for_step(previous_step.name)
-                    elif validate_data_with(previous_step.data_model, stored_data):
+                    if validate_data_with(previous_step.data_model, stored_data):
                         back_link_url = self.url_for_step(previous_step.name)
                         break
 
             self.render_info.prev_url = back_link_url if back_link_url else self.url_for_step("start")
-
-
-class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep):
-    main_next_step_name = None
-    alternative_next_step_name = None
-
-    def __init__(self, *args, **kwargs):
-        super(DecisionEligibilityInputFormSteuerlotseStep, self).__init__(*args,
-                                                                          **kwargs,
-                                                                          )
-        if self.main_next_step_name is None:
-            self.main_next_step_name = self._next_step.name
-
-    def _main_handle(self, stored_data):
-        stored_data = super()._main_handle(stored_data)
-
-        self.render_info.back_link_text = _('form.eligibility.back_link_text')
-
-        if request.method == "GET":
-            stored_data = self.delete_not_dependent_data(stored_data)
-        if request.method == "POST" and self.render_info.form.validate():
-            if not self._validate(stored_data):
-                self.render_info.next_url = self.url_for_step(self.alternative_next_step_name)
-            else:
-                self.render_info.next_url = self.url_for_step(self.main_next_step_name)
-        return stored_data
 
     def delete_not_dependent_data(self, stored_data):
         return dict(filter(lambda elem: elem[0] in self.data_model.get_all_potential_keys(), stored_data.items()))
@@ -158,6 +133,49 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlots
             return True
 
 
+class DecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep):
+    main_next_step_name = None
+    alternative_next_step_name = None
+
+    def __init__(self, *args, **kwargs):
+        super(DecisionEligibilityInputFormSteuerlotseStep, self).__init__(*args,
+                                                                          **kwargs,
+                                                                          )
+        if self.main_next_step_name is None:
+            self.main_next_step_name = self._next_step.name
+
+    def _main_handle(self, stored_data):
+        stored_data = super()._main_handle(stored_data)
+
+        self.render_info.back_link_text = _('form.eligibility.back_link_text')
+
+        if request.method == "POST" and self.render_info.form.validate():
+            if not self._validate(stored_data):
+                self.render_info.next_url = self.url_for_step(self.alternative_next_step_name)
+            else:
+                self.render_info.next_url = self.url_for_step(self.main_next_step_name)
+        return stored_data
+
+
+class MultipleDecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep):
+    next_step_data_models = None # List of tuples of data models and next step names
+
+    def _main_handle(self, stored_data):
+        stored_data = super()._main_handle(stored_data)
+
+        if request.method == "POST" and self.render_info.form.validate():
+            found_next_step_url = None
+            for data_model, step_name in self.next_step_data_models:
+                if validate_data_with(data_model, stored_data):
+                    found_next_step_url = self.url_for_step(step_name)
+                    break
+            if not found_next_step_url:
+                raise IncorrectEligibilityData
+            self.render_info.next_url = found_next_step_url
+
+        return stored_data
+
+
 class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     name = 'welcome'
     title = _l('form.eligibility.start-title')
@@ -176,14 +194,15 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         return stored_data
 
 
-class MaritalStatusInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep):
+class MaritalStatusInputFormSteuerlotseStep(MultipleDecisionEligibilityInputFormSteuerlotseStep):
     name = "marital_status"
     title = _l('form.eligibility.marital_status-title')
-    next_steps = {
-        'married': "separated",
-        'widowed': "single_alimony",
-        'single': "single_alimony",
-        'divorced': "divorced_joint_taxes",
+    data_model = MaritalStatusEligibilityData
+    next_step_data_models = {
+        (MarriedEligibilityData, "separated"),
+        (WidowedEligibilityData, "single_alimony"),
+        (SingleEligibilityData, "single_alimony"),
+        (DivorcedEligibilityData, "divorced_joint_taxes"),
     }
 
     class InputForm(SteuerlotseBaseForm):
@@ -201,15 +220,6 @@ class MaritalStatusInputFormSteuerlotseStep(EligibilityInputFormSteuerlotseStep)
         stored_data = super()._main_handle(stored_data)
 
         self.render_info.back_link_text = _('form.eligibility.marital_status.back_link_text')
-
-        stored_data = dict(filter(lambda elem: elem[0] == 'marital_status_eligibility', stored_data.items()))
-
-        marital_status = stored_data.get('marital_status_eligibility')
-        if request.method == "POST" and self.render_info.form.validate():
-            if marital_status not in self.next_steps:
-                raise IncorrectEligibilityData
-            self.render_info.next_url = self.url_for_step(
-                self.next_steps[stored_data.get('marital_status_eligibility')])
 
         return stored_data
 

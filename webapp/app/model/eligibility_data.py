@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, validator
 from pydantic.fields import ModelField
 
-from app.model.recursive_data import RecursiveDataModel
+from app.model.recursive_data import RecursiveDataModel, PotentialDataModelKeysMixin
 
 
 class InvalidEligiblityError(ValueError):
@@ -51,6 +51,16 @@ def declarations_must_be_set_no(v):
     if not v == 'no':
         raise InvalidEligiblityError
     return v
+
+
+class MaritalStatusEligibilityData(BaseModel, PotentialDataModelKeysMixin):
+    marital_status_eligibility: str
+
+    @validator('marital_status_eligibility')
+    def must_be_correct_marital_status(cls, v):
+        if v not in ['married', 'widowed', 'single', 'divorced',]:
+            raise ValueError
+        return v
 
 
 class MarriedEligibilityData(BaseModel):

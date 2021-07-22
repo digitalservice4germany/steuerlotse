@@ -9,7 +9,22 @@ class PreviousFieldsMissingError(MissingError):
     """Raised in case all the previous fields are missing."""
 
 
-class RecursiveDataModel(BaseModel):
+class PotentialDataModelKeysMixin:
+
+    @classmethod
+    def get_all_potential_keys(cls):
+        potential_keys = []
+        potential_keys += cls.schema().get('properties').keys()
+        definitions = cls.schema().get('definitions')
+
+        if definitions:
+            for definition in definitions.values():
+                potential_keys += definition.get('properties').keys()
+
+        return potential_keys
+
+
+class RecursiveDataModel(PotentialDataModelKeysMixin, BaseModel):
     """This model can be used to model dependent nested models. That means that you your model would have at least on
     field with the data type of a nested model. These fields are stored in previous fields. The model relies on the
     check of at least one of these previous fields being successful. This can be used to have kind of a recursive
@@ -68,14 +83,3 @@ class RecursiveDataModel(BaseModel):
         if not v and all([values.get(previous_field) is None for previous_field in cls._previous_fields]):
             raise PreviousFieldsMissingError
         return v
-
-    @classmethod
-    def get_all_potential_keys(cls):
-        potential_keys = []
-        potential_keys += cls.schema().get('properties').keys()
-        definitions = cls.schema().get('definitions')
-
-        for definition in definitions.values():
-            potential_keys += definition.get('properties').keys()
-
-        return potential_keys

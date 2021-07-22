@@ -12,7 +12,24 @@ from app.model.eligibility_data import SeparatedEligibilityData, \
     NoEmploymentIncomeEligibilityData, EmploymentIncomeEligibilityData, MarginalEmploymentEligibilityData, \
     OtherIncomeEligibilityData, ForeignCountryEligibility, MarriedJointTaxesEligibilityData, MarriedEligibilityData, \
     SingleEligibilityData, WidowedEligibilityData, DivorcedEligibilityData, MoreThanMinimalInvestmentIncome, \
-    MinimalInvestmentIncome, UserAElsterAccountEligibilityData
+    MinimalInvestmentIncome, UserAElsterAccountEligibilityData, MaritalStatusEligibilityData
+
+
+class TestMaritalStatusEligibilityData(unittest.TestCase):
+
+    def test_if_value_not_valid_then_raise_validation_error(self):
+        non_valid_data = {'marital_status_eligibility': 'INVALID'}
+
+        self.assertRaises(ValidationError, MarriedEligibilityData.parse_obj, non_valid_data)
+
+    def test_if_value_valid_then_raise_no_validation_error(self):
+        valid_values = ['married', 'widowed', 'single', 'divorced']
+
+        for valid_value in valid_values:
+            try:
+                MaritalStatusEligibilityData.parse_obj({'marital_status_eligibility': valid_value})
+            except ValidationError:
+                self.fail("MaritalStatusEligibilityData.parse_obj should not raise validation error")
 
 
 class TestMarriedEligibilityData(unittest.TestCase):
