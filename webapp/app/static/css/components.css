@@ -313,7 +313,7 @@
 .back-link::before {
     --total-line-height: var(--lineheight-s);
     --size: var(--back-link-size);
-    content: "";
+    content: url("/static/icons/arrow_back.svg");
     margin: 3px;
     position: absolute;
 
@@ -324,8 +324,6 @@
 
     text-align: center;
     color: var(--text-color);
-
-    background: var(--icon-default-color) url("/static/icons/arrow_back.svg") no-repeat center/var(--size);
 
     border-radius: 50%;
 }

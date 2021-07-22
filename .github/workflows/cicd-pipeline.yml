@@ -29,7 +29,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-deps-webapp-${{ hashFiles('webapp/Pipfile.lock') }}
+        key: ${{ runner.os }}-deps-webapp-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('webapp/Pipfile.lock') }}
 
     - name: Install dependencies
       if: steps.cache-deps-webapp.outputs.cache-hit != 'true'
@@ -82,7 +82,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-deps-erica-${{ hashFiles('erica_app/Pipfile.lock') }}
+        key: ${{ runner.os }}-deps-erica-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('erica_app/Pipfile.lock') }}
 
     - name: Install dependencies
       if: steps.cache-deps-erica.outputs.cache-hit != 'true'
@@ -218,7 +218,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-acceptance-test-node-modules-${{ hashFiles('acceptance_tests/package-lock.json') }}
+        key: ${{ runner.os }}-acceptance-test-node-modules-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('acceptance_tests/package-lock.json') }}
 
     - name: Install dependencies
       run: cd acceptance_tests && npm install
