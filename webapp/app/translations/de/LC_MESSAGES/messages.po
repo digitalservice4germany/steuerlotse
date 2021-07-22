@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-21 11:38+0200\n"
+"POT-Creation-Date: 2021-07-22 17:46+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -278,7 +278,7 @@ msgstr "Aktivierung des Freischaltcodes"
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:31
+#: app/forms/flows/unlock_code_revocation_flow.py:32
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
@@ -2322,11 +2322,11 @@ msgstr "Ändern"
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:217
+#: app/templates/components.html:216
 msgid "button.help"
 msgstr "Weitere Informationen"
 
-#: app/templates/components.html:226
+#: app/templates/components.html:225
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
@@ -2356,6 +2356,10 @@ msgstr ""
 #: app/templates/basis/base.html:26
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
+
+#: app/templates/basis/base.html:32
+msgid "skip-to-content-link"
+msgstr "Direkt zum Seiteninhalt"
 
 #: app/templates/basis/footer.html:6
 msgid "footer.help-contact"

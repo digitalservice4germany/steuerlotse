@@ -24,14 +24,17 @@
         <script async defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/plausible.js"></script>
     {% endif %}
     <title>{{ _('page.title.error-prefix') if form and form.errors else '' }}
-        {{ header_title if header_title else render_info.header_title if render_info and render_info.header_title else _('page.title') }}</title>
+        {{ header_title if header_title else (render_info.header_title if render_info and render_info.header_title else _('page.title')) }}</title>
 </head>
 
 <body>
+<div id="skip-to-content-div" class="col">
+    <a href="#main" id="skip-to-content-link">{{ _('skip-to-content-link') }}</a>
+</div>
 <div class="container-fluid p-0">
     {% include 'basis/mobile_nav.html' %}
     {% include 'basis/sidebar.html' %}
-    <div class="main">
+    <main id="main" class="main">
         <div class="container-fluid p-0 d-flex flex-column min-vh-100">
             {% block flashed_messages %}
                 {% for category, message in get_flashed_messages(with_categories=True) %}
@@ -62,11 +65,9 @@
             {% endblock %}
             {% block full_width_final_area %}
             {% endblock %}
-            {% block footer %}
-                {% include 'basis/footer.html' %}
-            {% endblock %}
+            {% include 'basis/footer.html' %}
         </div>
-    </div>
+    </main>
 </div>
 <!-- Optional JavaScript -->
 <script src="{{ url_for('static', filename='js/popper.min.js') }}" type=text/javascript></script>
