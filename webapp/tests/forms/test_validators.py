@@ -3,7 +3,8 @@ import unittest
 from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet
+from app.forms.fields import UnlockCodeField
+from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode
 
 
 class TestDecimalOnly(unittest.TestCase):
@@ -148,6 +149,28 @@ class TestValidIdNr(unittest.TestCase):
     def test_wrong_checksum_returns_validation_error(self):
         # 0 instead of 7
         self.field.data = "04452397680"
+        self.assertRaises(ValidationError, self.validator.__call__, self.form, self.field)
+
+
+class TestValidUnlockCode(unittest.TestCase):
+    def setUp(self):
+        self.field = UnlockCodeField()
+        self.form = SteuerlotseBaseForm()
+        self.validator = ValidUnlockCode()
+
+    def test_valid_unlock_code_returns_no_validation_error(self):
+        try:
+            self.field.data = "OTNL-J0OS-EI70"
+            self.validator.__call__(self.form, self.field)
+        except ValidationError:
+            self.fail("ValidUnlockCode raised ValidationError unexpectedly!")
+
+    def test_unlock_code_of_wrong_length_returns_validation_error(self):
+        self.field.data = "OTNL-J0OS-EI70P"
+        self.assertRaises(ValidationError, self.validator.__call__, self.form, self.field)
+
+    def test_unlock_code_without_dashes_returns_validation_error(self):
+        self.field.data = "OTNLJ0OSEI70"
         self.assertRaises(ValidationError, self.validator.__call__, self.form, self.field)
 
 

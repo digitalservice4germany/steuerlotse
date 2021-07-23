@@ -12,12 +12,12 @@
     <p>
         {{ _('pdf_not_found.reasons.intro') }}
     </p>
-    <h4 class="mt-4">{{ _('pdf_not_found.reasons.expired.title') }}</h4>
+    <h2 class="mt-4 h4">{{ _('pdf_not_found.reasons.expired.title') }}</h2>
     <p>{{ _('pdf_not_found.reasons.expired.intro') }}</p>
-    <h4 class="mt-4">{{ _('pdf_not_found.reasons.no_tax_declaration.title') }}</h4>
+    <h2 class="mt-4 h4">{{ _('pdf_not_found.reasons.no_tax_declaration.title') }}</h2>
     <p>{{ _('pdf_not_found.reasons.no_tax_declaration.intro') }}</p>
     {{ components.primaryButton( text=_('pdf_not_found.to_tax_declaration'), url=url_for('lotse', step='start')) }}
-    <h4 class="mt-4">{{ _('pdf_not_found.reasons.not_activated.title') }}</h4>
+    <h2 class="mt-4 h4">{{ _('pdf_not_found.reasons.not_activated.title') }}</h2>
     <p>{{ _('pdf_not_found.reasons.not_activated.intro') }}</p>
     {{ components.primaryButton( text=_('login.input-code'), url=url_for('unlock_code_activation', step='data_input')) }}
 {% endblock %}

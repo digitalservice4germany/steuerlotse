@@ -1,7 +1,7 @@
 {% extends 'basis/display_success.html' %}
 
 {% block display_success_content %}
-    <h3 class="mt-5">{{ _('register.success.next-steps.heading') }}</h3>
+    <h2 class="mt-5">{{ _('register.success.next-steps.heading') }}</h2>
     <ol>
         <li>{{ _('register.success.next-steps.step-1') }}</li>
         <li>{{ _('register.success.next-steps.step-2', link=url_for('download_preparation')) }}</li>
@@ -9,13 +9,13 @@
         <li>{{ _('register.success.next-steps.step-4', link=url_for('unlock_code_activation', step='start')) }}</li>
     </ol>
 
-    <h3 class="mt-5">{{ _('register.success.letter.heading') }}</h3>
+    <h2 class="mt-5">{{ _('register.success.letter.heading') }}</h2>
     <p>{{ _('register.success.letter.intro') }}</p>
     <img class="w-50"
          src="{{ url_for('static', filename='images/elster_letter_example.png') }}"
          alt="elster_letter">
 
-    <h3 class="mt-5">{{ _('register.success.preparation.heading') }}</h3>
+    <h2 class="mt-5">{{ _('register.success.preparation.heading') }}</h2>
     <p>{{ _('register.success.preparation.intro') }}</p>
     <a class="btn btn-primary" href="{{ url_for('download_preparation') }}"
        download>{{ _('register.success.preparation.button') }}</a>

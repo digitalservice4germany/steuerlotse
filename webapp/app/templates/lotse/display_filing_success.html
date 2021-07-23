@@ -3,7 +3,7 @@
 
 {% block display_main_content %}
 
-    <h4>{{ _('form.lotse.filing.transfer_ticket.heading') }}</h4>
+    <h2 class="h4">{{ _('form.lotse.filing.transfer_ticket.heading') }}</h2>
     <p>
         {{ _('form.lotse.filing.transfer_ticket.text') }} <br><br>
         <span class="text-monospace font-weight-bolder">
@@ -12,7 +12,7 @@
     </p>
 
 
-    <h4>{{ _('form.lotse.filing.pdf.heading') }}</h4>
+    <h2 class="h2">{{ _('form.lotse.filing.pdf.heading') }}</h2>
     <p>{{ _('form.lotse.filing.pdf.text') }}</p>
 
     {{ components.downloadLink(text=_('form.lotse.ack-pdf-download-button'), url=url_for('download_pdf'), large=True) }}
