@@ -19,6 +19,50 @@ class SteuerlotseStringField(StringField):
         ValidElsterCharacterSet().__call__(form, self)
 
 
+class MultipleInputFieldWidget(TextInput):
+    """A divided input field."""
+    separator = ''
+    input_field_lengths = []
+
+    def __call__(self, field, **kwargs):
+        if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
+            kwargs['required'] = True
+        kwargs['class'] = 'form-control'
+
+        joined_input_fields = Markup()
+        for idx, input_field_length in enumerate(self.input_field_lengths):
+            kwargs['maxlength'] = input_field_length
+
+            kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
+            kwargs['id'] = f'{field.id}_{idx + 1}'
+            joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
+            if self.separator and idx < len(self.input_field_lengths) - 1:
+                joined_input_fields += Markup(self.separator)
+
+        return Markup(joined_input_fields)
+
+
+class UnlockCodeWidget(MultipleInputFieldWidget):
+    """A divided input field with three text input fields, limited to four chars."""
+    separator = '-'
+    input_field_lengths = [4, 4, 4]
+
+
+class UnlockCodeField(SteuerlotseStringField):
+    def __init__(self, label='', validators=None, **kwargs):
+        super(UnlockCodeField, self).__init__(label, validators, **kwargs)
+        self.widget = UnlockCodeWidget()
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = '-'.join(valuelist)
+        elif self.data is None:
+            self.data = ''
+
+    def _value(self):
+        return self.data.split('-') if self.data else ''
+
+
 class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 

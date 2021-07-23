@@ -40,6 +40,10 @@ class Step(object):
             return self._next_step
 
     @classmethod
+    def get_label(cls, data=None):
+        return cls.label
+
+    @classmethod
     def get_redirection_info_if_skipped(cls, input_data):
         if cls.SKIP_COND is None:
             return None, None
