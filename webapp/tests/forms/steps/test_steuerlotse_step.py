@@ -654,3 +654,132 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
 
             form_single_constructor.assert_called_once()
             self.assertEqual(form_single, created_form)
+
+
+class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):
+
+    def setUp(self):
+        self.example_data = {
+            'animal': 'butterfly',
+            'animagus': 'stag',
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+
+    def test_single_matching_prefix_deleted(self):
+        expected_data = {
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['ani'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_single_matching_postfix_deleted(self):
+        expected_data = {
+            'animal': 'butterfly',
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), post_fixes=['us'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_single_matching_pre_and_postfix_deleted(self):
+        expected_data = {
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['ani'], post_fixes=['us'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_single_complete_matching_prefix_then_item_deleted(self):
+        expected_data = {
+            'animal': 'butterfly',
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['animagus'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_single_complete_matching_postfix_then_item_deleted(self):
+        expected_data = {
+            'animal': 'butterfly',
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), post_fixes=['animagus'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_single_complete_matching_pre_and_postfix_then_item_deleted(self):
+        expected_data = {
+            'animal': 'butterfly',
+            'another_animal': 'pangolin',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['animagus'], post_fixes=['animagus'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_multiple_matching_prefix_deleted(self):
+        expected_data = {
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['ani', 'another'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_multiple_matching_postfix_deleted(self):
+        expected_data = {
+            'animal': 'butterfly',
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), post_fixes=['us', 'another_animal'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_multiple_matching_pre_and_postfix_deleted(self):
+        expected_data = {
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['ani', 'another'], post_fixes=['us', 'another_animal'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_multiple_complete_matching_prefix_then_items_deleted(self):
+        expected_data = {
+            'animagus': 'stag',
+            'yet_another_animal': 'penguin'
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['animal', 'another_animal'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_multiple_complete_matching_postfix_then_items_deleted(self):
+        expected_data = {
+            'animal': 'butterfly',
+            'another_animal': 'pangolin',
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), post_fixes=['animagus', 'yet_another_animal'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_multiple_complete_matching_pre_and_postfix_then_items_deleted(self):
+        expected_data = {
+        }
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['animal', 'another_animal'], post_fixes=['animagus', 'yet_another_animal'])
+        self.assertEqual(expected_data, returned_data)
+
+    def test_if_prefixes_empty_list_then_nothing_is_deleted(self):
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=[])
+        self.assertEqual(self.example_data, returned_data)
+
+    def test_if_postfixes_empty_list_then_nothing_is_deleted(self):
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), post_fixes=[])
+        self.assertEqual(self.example_data, returned_data)
+
+    def test_if_prefixes_and_postfixes_empty_list_then_nothing_is_deleted(self):
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=[], post_fixes=[])
+        self.assertEqual(self.example_data, returned_data)
+
+    def test_non_matching_prefixes_not_deleted(self):
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['plant'])
+        self.assertEqual(self.example_data, returned_data)
+
+    def test_non_matching_postfixes_not_deleted(self):
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), post_fixes=['plant'])
+        self.assertEqual(self.example_data, returned_data)
+
+    def test_non_matching_prefixes_and_postfixes_not_deleted(self):
+        returned_data = FormSteuerlotseStep._delete_dependent_data(self.example_data.copy(), pre_fixes=['plant'], post_fixes=['plant'])
+        self.assertEqual(self.example_data, returned_data)

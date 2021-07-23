@@ -150,14 +150,17 @@ class FormSteuerlotseStep(SteuerlotseStep):
         )
 
     @staticmethod
-    def _delete_dependent_data(data_field_identifier: list, stored_data: dict):
+    def _delete_dependent_data(stored_data: dict, pre_fixes:list=None, post_fixes:list=None):
         """This method filters the stored data. It deletes all the elements where the key includes the
         data_field_identifier. """
-        return dict(filter(
-            lambda elem: not any([elem[0].startswith(data_field_prefix) for data_field_prefix in data_field_identifier])
-                         and not any(
-                [elem[0].endswith(data_field_prefix) for data_field_prefix in data_field_identifier]),
-            stored_data.items()))
+        filtered_data = stored_data
+        if pre_fixes:
+            filtered_data = dict(filter(lambda elem: not any([elem[0].startswith(data_field_prefix)
+                                                              for data_field_prefix in pre_fixes]), filtered_data.items()))
+        if post_fixes:
+            filtered_data = dict(filter(lambda elem: not any([elem[0].endswith(data_field_postfix)
+                                                              for data_field_postfix in post_fixes]), filtered_data.items()))
+        return filtered_data
 
     def _override_session_data(self, stored_data, session_data_identifier=None):
         if session_data_identifier is None:
