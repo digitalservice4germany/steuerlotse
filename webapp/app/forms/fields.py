@@ -70,18 +70,32 @@ class IdNrWidget(MultipleInputFieldWidget):
 
 
 class IdNrField(SteuerlotseStringField):
+    """
+        Field to store the IdNr in four separate input fields.
+
+        We get the formdata as a list of four strings (e.g. ['04', '452', '397', '687'])
+        but want to handle it in the rest of the program as one string (e.g. '04452397687').
+        At the same time, in case of a validation error (e.g. for ['04', '452', '3', '687']) we want to keep the order
+        of inputs to not confuse the user. Thus, we only concatenate the strings to one string on succeeded validation
+        in post_validate().
+        Once the input validates, we can be sure to have the complete, valid string in our data and
+        can split it into the expected chunks as seen in _value().
+    """
     def __init__(self, label='', validators=None, **kwargs):
         super(IdNrField, self).__init__(label, validators, **kwargs)
         self.widget = IdNrWidget()
 
     def process_formdata(self, valuelist):
+        # The formdata (from the request) is written to self.data as is (as a list of inputted strings)
         if valuelist:
             self.data = valuelist
         elif self.data is None:
             self.data = []
 
     def _value(self):
-        # In case the validation was not successful, we already have the data as a list of values.
+        """ Returns the representation of data as needed by the widget. In this case: a list of strings. """
+        # In case the validation was not successful, we already have the data as a list of strings
+        # (as it is not concatenated in post_validate()).
         if isinstance(self.data, list):
             return self.data
 
@@ -99,7 +113,7 @@ class IdNrField(SteuerlotseStringField):
 
     def post_validate(self, form, validation_stopped):
         # Once the validation has gone through, we know that the idnr is correct.
-        # We can therefore store it as a string and just separate it in chunks in self._value().
+        # We can therefore store it as a string and just separate it into chunks in self._value().
         if not validation_stopped and len(self.errors) == 0:
             self.data = ''.join(self.data)
 

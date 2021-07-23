@@ -63,6 +63,8 @@ class ValidIdNr:
         # if not is_valid(idnr_formatted):
         #     raise ValidationError(_('validate.invalid-idnr'))
 
+        # field.data is a list of strings
+        # It only gets concatenated if the validation succeeds (in post_validate() of the field).
         input_str = ''.join(field.data)
         # must contain only digits
         if not input_str.isdigit():
