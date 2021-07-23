@@ -68,11 +68,11 @@
     </fieldset>
 {%- endmacro %}
 
-{% macro separated_field(field) -%}
+{% macro separated_field(field,first_field=False) -%}
     <fieldset id="{{ field.id }}">
         {{ field_label(field) }}
         <div class="form-row-center">
-            {{ _field(field) }}
+            {{ _field(field, first_field=first_field) }}
         </div>
         {{ field_errors(field) }}
     </fieldset>
