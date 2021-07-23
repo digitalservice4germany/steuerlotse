@@ -3,7 +3,7 @@
 
 {% block form_content %}
     <div class="form-row-center mt-3">
-        {{ macros.render_field(form.dob) }}
+        {{ macros.render_field(form.dob, first_field=True if not render_info.form.errors) }}
     </div>
     <div class="form-row-center mt-3">
         {{ macros.render_field(form.idnr) }}

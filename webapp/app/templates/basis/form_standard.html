@@ -6,7 +6,7 @@
     {% endblock %}
     {% for field in form %}
         <div class="form-row-center">
-            {{ macros.render_field(field) }}
+            {{ macros.render_field(field, first_field=field == render_info.form.first_field if not render_info.form.errors) }}
         </div>
     {% endfor %}
 {% endblock %}

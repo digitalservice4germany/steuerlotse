@@ -50,19 +50,19 @@
     {{ components.field_errors(field) }}
 {%- endmacro %}
 
-{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False) %}
+{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False) %}
     {% if field.type == 'ConfirmationField' %}
-        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors) }}
+        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
     {% elif field.type == 'BooleanField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
     {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True, first_field=first_field) }}
     {% else %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=hide_label, hide_errors=hide_errors) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field) }}
     {% endif %}
 {% endmacro %}
 
-{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False) %}
+{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False) %}
     {% if field.errors %}
         {% set field_div_classes = field_div_classes + " error-found-line" %}
     {% endif %}
@@ -80,15 +80,15 @@
 
         {% if d_block %}<div class="d-block">{% endif %}
             {% if field.type == 'ConfirmationField' %}
-                {{ components.consent_box(field, classes=classes, position_details_after=position_details_after) }}
+                {{ components.consent_box(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'BooleanField' %}
-                {{ components.checkbox(field, classes=classes, position_details_after=position_details_after) }}
+                {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'RadioField' %}
-                {{ components.radio_field(field, position_details_after=position_details_after) }}
+                {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'UnlockCodeField' %}
-                {{ components.separated_field(field, position_details_after=position_details_after) }}
+                {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% else %}
-                {% if field.errors %}
+                {% if first_field or field.errors %}
                     {{ field(class=classes, autofocus=True) }}
                 {% else %}
                     {{ field(class=classes) }}
