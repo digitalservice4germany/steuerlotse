@@ -35,6 +35,13 @@
     {% endif %}
 {%- endmacro %}
 
+{% macro render_detail(field) %}
+    {%- set detail = field.render_kw['detail'] -%}
+    {%- if detail %}
+        {{ details(detail.title, [detail.text], details_id=field.id) }}
+    {% endif %}
+{% endmacro %}
+
 {% macro checkbox(field, classes="", position_details_after=False, first_field=False) %}
     <div class="form-row checkbox">
         {{ _field(field, first_field=first_field) }}
@@ -65,10 +72,7 @@
             </div>
         {% endfor %}
         {%- if position_details_after %}
-            {%- set detail = field.render_kw['detail'] -%}
-            {%- if detail %}
-                {{ details(detail.title, [detail.text], details_id=field.id) }}
-            {% endif %}
+            {{ render_detail(field) }}
         {% endif %}
         {{ field_errors(field) }}
     </fieldset>
@@ -81,10 +85,7 @@
             {{ _field(field, first_field=first_field) }}
         </div>
         {%- if position_details_after %}
-            {%- set detail = field.render_kw['detail'] -%}
-            {%- if detail %}
-                {{ details(detail.title, [detail.text], details_id=field.id) }}
-            {% endif %}
+            {{ render_detail(field) }}
         {% endif %}
         {{ field_errors(field) }}
     </fieldset>
