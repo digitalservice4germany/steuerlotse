@@ -4,6 +4,6 @@
 
 {% block form_content %}
     {% for field in form %}
-        {{ macros.render_field(field, 10, d_block=True, as_card=True) }}
+        {{ macros.render_field(field, 10, d_block=True, as_card=True, first_field=field == render_info.form.first_field if not render_info.form.errors) }}
     {% endfor %}
 {% endblock %}

@@ -830,8 +830,40 @@ img.icon {
     font-weight: var(--font-bold);
 }
 
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
+}
+
+#skip-to-content-div {
+    background-color: var(--bg-highlight-color);
+    display: flex;
+}
+
+#skip-to-content-link {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+#skip-to-content-link:focus {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-top: var(--spacing-02);
+    margin-bottom: var(--spacing-01);
+    border: none;
+    font-weight: var(--font-bold);
+    color: var(--text-color);
+}
+
+@media (max-width: 1024px) {
+    #skip-to-content-link:focus {
+        margin-top: var(--spacing-04);
+        margin-bottom: var(--spacing-03);
+    }
 }
 
 .hidden {

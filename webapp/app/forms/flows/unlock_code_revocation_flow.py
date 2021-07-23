@@ -11,7 +11,8 @@ from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
 from flask import request, url_for
 
-from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRequestIdUnkownError
+from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, \
+    ElsterRequestAlreadyRevoked
 from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationInputStep, UnlockCodeRevocationSuccessStep, \
     UnlockCodeRevocationFailureStep
 
@@ -79,7 +80,7 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
         form_data = {'idnr': idnr, 'elster_request_id': user.elster_request_id}
         try:
             elster_client.send_unlock_code_revocation_with_elster(form_data, request.remote_addr)
-        except ElsterRequestIdUnkownError:
+        except (ElsterRequestIdUnkownError, ElsterRequestAlreadyRevoked):
             # In case we have the user stored and elster does not have a request (anymore)
             # we want to delete the user in our db anyways.
             app.logger.info("Could not revoke unlock code for user", exc_info=True)

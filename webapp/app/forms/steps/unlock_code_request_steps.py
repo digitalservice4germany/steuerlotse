@@ -47,6 +47,7 @@ class UnlockCodeRequestInputStep(FormStep):
             template='unlock_code/registration_data_input.html')
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info,
                                explanatory_button_text=_l('form.unlock-code-request.got-fsc',
                                                           link=url_for('unlock_code_activation', step='start')),
