@@ -35,46 +35,58 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro checkbox(field, classes="") %}
+{% macro checkbox(field, classes="", position_details_after=False) %}
     <div class="form-row checkbox">
         {{ _field(field) }}
         <label class="checkmark" for="{{ field.name }}"></label>
-        {{ field_label(field, class="col-sm-10 col-form-label ml-3 pt-0") }}
+        {{ field_label(field, class="col-sm-10 col-form-label ml-3 pt-0", position_details_after=position_details_after) }}
     </div>
 {% endmacro %}
 
-{% macro consent_box(field, classes="") %}
+{% macro consent_box(field, classes="", position_details_after=False) %}
     <div class="form-row checkbox consent-box col-lg-10">
         {{ _field(field) }}
         <label class="checkmark" for="{{ field.name }}"></label>
-        {{ field_label(field, class="col-sm-10 col-form-label ml-3 pt-0") }}
+        {{ field_label(field, class="col-sm-10 col-form-label ml-3 pt-0", position_details_after=position_details_after) }}
     </div>
 {% endmacro %}
 
-{% macro radio_field(field) -%}
+{% macro radio_field(field, position_details_after=False) -%}
     <fieldset>
-        {{ field_label(field) }}
+        {{ field_label(field, position_details_after=position_details_after) }}
         {% for subfield in field %}
             <div>
                 {{ subfield(class="") }}
-                {{ field_label(subfield, class="col-sm-10 col-form-label") }}
+                {{ field_label(subfield, class="col-sm-10 col-form-label", position_details_after=position_details_after) }}
             </div>
         {% endfor %}
+        {%- if position_details_after %}
+            {%- set detail = field.render_kw['detail'] -%}
+            {%- if detail %}
+                {{ details(detail.title, [detail.text], details_id=field.id) }}
+            {% endif %}
+        {% endif %}
         {{ field_errors(field) }}
     </fieldset>
 {%- endmacro %}
 
-{% macro separated_field(field) -%}
+{% macro separated_field(field, position_details_after=False) -%}
     <fieldset id="{{ field.id }}">
-        {{ field_label(field) }}
+        {{ field_label(field, position_details_after=position_details_after) }}
         <div class="form-row-center">
             {{ _field(field) }}
         </div>
+        {%- if position_details_after %}
+            {%- set detail = field.render_kw['detail'] -%}
+            {%- if detail %}
+                {{ details(detail.title, [detail.text], details_id=field.id) }}
+            {% endif %}
+        {% endif %}
         {{ field_errors(field) }}
     </fieldset>
 {%- endmacro %}
 
-{% macro field_label(field, class="") %}
+{% macro field_label(field, class="", position_details_after=False) %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
@@ -97,7 +109,7 @@
             {{ field.render_kw["example_input"] }}
         </div>
     {% endif %}
-    {%- if detail %}{{ details(detail.title, [detail.text], details_id=field.id) }}{% endif %}
+    {%- if detail and not position_details_after %}{{ details(detail.title, [detail.text], details_id=field.id) }}{% endif %}
 {%- endmacro %}
 
 {% macro field_errors(field) -%}
