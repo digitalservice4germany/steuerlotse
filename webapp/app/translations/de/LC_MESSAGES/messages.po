@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-19 18:16+0200\n"
+"POT-Creation-Date: 2021-07-21 10:19+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -134,27 +134,27 @@ msgstr ""
 "Bitte prüfen Sie Ihre Angaben. Es sind nicht alle notwendigen "
 "Formularfelder ausgefüllt."
 
-#: app/forms/fields.py:90
+#: app/forms/fields.py:96
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:130 app/forms/fields.py:133
+#: app/forms/fields.py:136 app/forms/fields.py:139
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 31.06.1951"
 
-#: app/forms/fields.py:141
+#: app/forms/fields.py:147
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:160
+#: app/forms/fields.py:166
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:223
+#: app/forms/fields.py:229
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:223
+#: app/forms/fields.py:229
 msgid "switch.no"
 msgstr "Nein"
 
@@ -2717,15 +2717,15 @@ msgstr ""
 msgid "form.lotse.summary-button-edit"
 msgstr "Ändern"
 
-#: app/templates/components.html:97
+#: app/templates/components.html:107
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:209
+#: app/templates/components.html:216
 msgid "button.help"
 msgstr "Weitere Informationen"
 
-#: app/templates/components.html:218
+#: app/templates/components.html:225
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
@@ -2733,11 +2733,11 @@ msgstr "Schließen"
 msgid "form.back"
 msgstr "Zurück"
 
-#: app/templates/macros.html:107 app/templates/macros.html:125
+#: app/templates/macros.html:108 app/templates/macros.html:126
 msgid "form.back_to_overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/templates/macros.html:113 app/templates/macros.html:132
+#: app/templates/macros.html:114 app/templates/macros.html:133
 msgid "form.next"
 msgstr "Weiter"
 
@@ -2755,6 +2755,10 @@ msgstr ""
 #: app/templates/basis/base.html:26
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
+
+#: app/templates/basis/base.html:32
+msgid "skip-to-content-link"
+msgstr "Direkt zum Seiteninhalt"
 
 #: app/templates/basis/footer.html:6
 msgid "footer.help-contact"
@@ -4796,13 +4800,13 @@ msgstr ""
 "Sie können die vollumfänglichen Steuererklärungsvordrucke nutzen. Die "
 "notwendigen Formulare dazu erhalten Sie zum Beispiel in Ihrem Finanzamt."
 
-#: app/templates/eligibility/display_failure.html:19
+#: app/templates/eligibility/display_failure.html:35
 msgid "form.eligibility.use-elster.list-item-2"
 msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:26
+#: app/templates/eligibility/display_failure.html:37
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
