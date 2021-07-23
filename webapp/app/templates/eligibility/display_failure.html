@@ -8,25 +8,15 @@
 {% endblock %}
 
 {% block step_content %}
-    <div class="spacing-b-07">
+    <div class="section-intro">
         <div class="headline row p-0">
-            <img src="{{ url_for('static', filename='icons/success_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
-            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
-        </div>
-
-        <p class="result-text">{{ render_info.step_intro }}</p>
-    </div>
-
-
-    <div class="spacing-b-07 spacing-b-09">
-        <div class="spacing-b-07 row p-0">
             <img src="{{ url_for('static', filename='icons/failure_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
             <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
         </div>
         <span class="result-text">
             <p>{{ error_text }} {{ render_info.step_intro }}</p>
         </span>
-    </span>
+    </div>
 
     <div class="spacing-b-07 row m-0">
         <h2>{{ _('form.eligibility.use-elster') }}</h2>
