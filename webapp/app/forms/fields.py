@@ -84,12 +84,9 @@ class SteuerlotseDateField(DateField):
         kwargs.setdefault('format', "%d %m %Y")
 
         if kwargs.get('render_kw'):
-            if kwargs['render_kw'].get('class'):
-                kwargs['render_kw']['class'] = kwargs['render_kw']['class'] + " date_input form-control"
-            else:
-                kwargs['render_kw']['class'] = "date_input form-control"
-            if 'example_input' not in kwargs['render_kw']:
-                kwargs['render_kw']['example_input'] = _('fields.date_field.example_input.text')
+            kwargs['render_kw']['class'] = kwargs['render_kw'].get('class', '') + " date_input form-control"
+            kwargs['render_kw']['example_input'] = kwargs['render_kw'].get('example_input',
+                                                                           _('fields.date_field.example_input.text'))
         else:
             kwargs['render_kw'] = {'class': "date_input form-control",
                                    'example_input': _('fields.date_field.example_input.text')}
