@@ -30,6 +30,7 @@ class MultipleInputFieldWidget(TextInput):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
         kwargs['class'] = 'form-control'
+        kwargs['placeholder'] = ' '
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
