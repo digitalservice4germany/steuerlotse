@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-22 17:46+0200\n"
+"POT-Creation-Date: 2021-07-27 14:09+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -139,34 +139,34 @@ msgid "date-field.day"
 msgstr "Tag"
 
 #: app/forms/fields.py:78
-msgid "date-field-month"
+msgid "date-field.month"
 msgstr "Monat"
 
 #: app/forms/fields.py:78
-msgid "date-field-year"
+msgid "date-field.year"
 msgstr "Jahr"
 
-#: app/forms/fields.py:92 app/forms/fields.py:95
+#: app/forms/fields.py:89 app/forms/fields.py:92
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 31.06.1951"
 
-#: app/forms/fields.py:136
+#: app/forms/fields.py:133
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:167
+#: app/forms/fields.py:164
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:186
+#: app/forms/fields.py:183
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:249
+#: app/forms/fields.py:246
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:249
+#: app/forms/fields.py:246
 msgid "switch.no"
 msgstr "Nein"
 

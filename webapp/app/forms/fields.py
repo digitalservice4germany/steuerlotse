@@ -9,6 +9,7 @@ from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
 
 from flask_babel import _
+from flask_babel import lazy_gettext as _l
 from babel.numbers import format_decimal, parse_decimal
 
 from app.forms.validators import ValidElsterCharacterSet
@@ -75,7 +76,7 @@ class UnlockCodeField(SteuerlotseStringField):
 class SteuerlotseDateWidget(MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
-    input_field_labels = [_('date-field.day'), _('date-field-month'), _('date-field-year')]
+    input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
 
 
 class SteuerlotseDateField(DateField):
