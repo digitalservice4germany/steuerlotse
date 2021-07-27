@@ -69,6 +69,7 @@ class StepVorsorge(FormStep):
         )
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info,
                                post_list_text=_('form.lotse.vorsorge.post-list-text'),
                                list_items=[
@@ -200,6 +201,7 @@ class StepHaushaltsnahe(FormStep):
         )
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
             _('form.lotse.haushaltsnahe-list-item-1'),
             _('form.lotse.haushaltsnahe-list-item-2'),
@@ -260,6 +262,7 @@ class StepHandwerker(FormStep):
         )
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
             _('form.lotse.handwerker-list-item-1'),
             _('form.lotse.handwerker-list-item-2'),
@@ -317,6 +320,7 @@ class StepGemeinsamerHaushalt(FormStep):
         )
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
             _('form.lotse.gem_haushalt-list-item-1'),
             _('form.lotse.gem_haushalt-list-item-2')
@@ -352,6 +356,7 @@ class StepReligion(FormStep):
         )
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[],
                                header_title=_('form.lotse.steuerminderungen.header-title'))
 

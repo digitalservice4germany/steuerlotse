@@ -6,7 +6,7 @@
 
     <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-allgemein') }}</h2>
     <div class="form-row-center">
-        {{ macros.render_field(form.person_a_first_name) }}
+        {{ macros.render_field(form.person_a_first_name, first_field=True if not render_info.form.errors) }}
     </div>
 
     <div class="form-row-center">

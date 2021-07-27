@@ -3,6 +3,6 @@
 
 {% block form_content %}
     {% for field in form %}
-        {{ macros.render_field(field, 12) }}
+        {{ macros.render_field(field, 12, first_field= field == render_info.form.first_field if not render_info.form.errors) }}
     {% endfor %}
 {% endblock %}

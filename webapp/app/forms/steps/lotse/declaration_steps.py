@@ -28,6 +28,7 @@ class StepDeclarationIncomes(FormStep):
             template='basis/form_standard_with_list.html')
 
     def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
             _('form.lotse.declaration_incomes.list-item-1'),
             _('form.lotse.declaration_incomes.list-item-2'),

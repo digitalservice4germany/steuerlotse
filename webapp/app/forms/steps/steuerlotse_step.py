@@ -120,6 +120,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         """
         Renders a Form step. Use the render_info to provide all the needed data for rendering.
         """
+        self.render_info.form.first_field = next(iter(self.render_info.form))
         return render_template(
             template_name_or_list=self.template,
             form=self.render_info.form,

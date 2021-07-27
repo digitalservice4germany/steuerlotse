@@ -35,28 +35,32 @@
     {% endif %}
 {%- endmacro %}
 
-{% macro checkbox(field, classes="") %}
+{% macro checkbox(field, classes="", first_field=False) %}
     <div class="form-row checkbox">
-        {{ _field(field) }}
+        {{ _field(field, first_field=first_field) }}
         <label class="checkmark" for="{{ field.name }}"></label>
         {{ field_label(field, class="col-sm-10 col-form-label ml-3 pt-0") }}
     </div>
 {% endmacro %}
 
-{% macro consent_box(field, classes="") %}
+{% macro consent_box(field, classes="", first_field=False) %}
     <div class="form-row checkbox consent-box col-lg-10">
-        {{ _field(field) }}
+        {{ _field(field, first_field=first_field) }}
         <label class="checkmark" for="{{ field.name }}"></label>
         {{ field_label(field, class="col-sm-10 col-form-label ml-3 pt-0") }}
     </div>
 {% endmacro %}
 
-{% macro radio_field(field) -%}
+{% macro radio_field(field, first_field=False) -%}
     <fieldset>
         {{ field_label(field) }}
         {% for subfield in field %}
             <div>
-                {{ subfield(class="") }}
+                {% if (first_field or field.errors) and loop.index0==0 %}
+                    {{ subfield(class="", autofocus=True) }}
+                {% else %}
+                    {{ subfield(class="") }}
+                {% endif%}
                 {{ field_label(subfield, class="col-sm-10 col-form-label") }}
             </div>
         {% endfor %}
@@ -64,11 +68,11 @@
     </fieldset>
 {%- endmacro %}
 
-{% macro separated_field(field) -%}
+{% macro separated_field(field,first_field=False) -%}
     <fieldset id="{{ field.id }}">
         {{ field_label(field) }}
         <div class="form-row-center">
-            {{ _field(field) }}
+            {{ _field(field, first_field=first_field) }}
         </div>
         {{ field_errors(field) }}
     </fieldset>
@@ -109,12 +113,12 @@
     {% endfor %}
 {%- endmacro %}
 
-{% macro _field(field) %}
-    {% if field.errors %}
+{% macro _field(field, first_field=False) %}
+    {% if first_field or field.errors %}
         {{ field(autofocus=True) }}
     {% else %}
         {{ field() }}
-    {% endif %}
+    {% endif%}
 {% endmacro %}
 
 
