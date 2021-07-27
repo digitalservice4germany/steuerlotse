@@ -9,6 +9,7 @@ from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
 
 from flask_babel import _
+from flask_babel import lazy_gettext as _l
 from babel.numbers import format_decimal, parse_decimal
 
 from app.forms.validators import ValidElsterCharacterSet
@@ -23,6 +24,7 @@ class MultipleInputFieldWidget(TextInput):
     """A divided input field."""
     sub_field_separator = ''
     input_field_lengths = []
+    input_field_labels = []
 
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
@@ -33,9 +35,18 @@ class MultipleInputFieldWidget(TextInput):
         for idx, input_field_length in enumerate(self.input_field_lengths):
             kwargs['maxlength'] = input_field_length
 
+            sub_field_id = f'{field.id}_{idx + 1}'
+            kwargs['id'] = sub_field_id
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
-            kwargs['id'] = f'{field.id}_{idx + 1}'
-            joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
+
+            if len(self.input_field_labels) > idx:
+                joined_input_fields += Markup(
+                    f'<div>'
+                    f'<label for="{sub_field_id}" class="sub-field-label">{self.input_field_labels[idx]}</label>')
+                joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
+                joined_input_fields += Markup('</div>')
+            else:
+                joined_input_fields += (super(MultipleInputFieldWidget, self).__call__(field, **kwargs))
             if self.sub_field_separator and idx < len(self.input_field_lengths) - 1:
                 joined_input_fields += Markup(self.sub_field_separator)
 
@@ -61,6 +72,34 @@ class UnlockCodeField(SteuerlotseStringField):
 
     def _value(self):
         return self.data.split('-') if self.data else ''
+
+
+class SteuerlotseDateWidget(MultipleInputFieldWidget):
+    separator = ''
+    input_field_lengths = [2, 2, 4]
+    input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
+
+
+class SteuerlotseDateField(DateField):
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault('format', "%d %m %Y")
+
+        if kwargs.get('render_kw'):
+            kwargs['render_kw']['class'] = kwargs['render_kw'].get('class', '') + " date_input form-control"
+            kwargs['render_kw']['example_input'] = kwargs['render_kw'].get('example_input',
+                                                                           _('fields.date_field.example_input.text'))
+        else:
+            kwargs['render_kw'] = {'class': "date_input form-control",
+                                   'example_input': _('fields.date_field.example_input.text')}
+        super(SteuerlotseDateField, self).__init__(**kwargs)
+        self.widget = SteuerlotseDateWidget()
+
+    def _value(self):
+        if self.data:
+            return [self.data.day, self.data.month, self.data.year]
+        else:
+            return self.raw_data if self.raw_data else []
 
 
 class IdNrWidget(MultipleInputFieldWidget):
@@ -174,26 +213,6 @@ class SteuerlotseSelectField(SelectField):
         else:
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
         super(SteuerlotseSelectField, self).__init__(**kwargs)
-
-
-class SteuerlotseDateField(DateField):
-
-    def __init__(self, **kwargs):
-        if not kwargs.get('format'):
-            kwargs['format'] = "%d.%m.%Y"
-
-        if kwargs.get('render_kw'):
-            if kwargs['render_kw'].get('class'):
-                kwargs['render_kw']['class'] = kwargs['render_kw']['class'] + " date_input form-control"
-            else:
-                kwargs['render_kw']['class'] = "date_input form-control"
-            if 'example_input' not in kwargs['render_kw']:
-                kwargs['render_kw']['example_input'] = _('fields.date_field.example_input.text')
-        else:
-            kwargs['render_kw'] = {'class': "date_input form-control",
-                                   'example_input': _('fields.date_field.example_input.text')}
-        super(SteuerlotseDateField, self).__init__(**kwargs)
-
 
 class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""

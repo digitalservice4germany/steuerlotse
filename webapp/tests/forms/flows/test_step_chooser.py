@@ -95,7 +95,7 @@ class TestInteractionBetweenSteps(unittest.TestCase):
     def test_if_form_step_after_render_step_then_keep_data_from_older_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
         endpoint_correct = "lotse"
-        original_data = {'pet': 'Yoshi', 'date': '09.07.1981', 'decimal': '60.000'}
+        original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
         with app.app_context() and app.test_request_context():
             step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
@@ -109,8 +109,8 @@ class TestInteractionBetweenSteps(unittest.TestCase):
     def test_if_form_step_after_form_step_then_keep_data_from_newer_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
         endpoint_correct = "lotse"
-        original_data = {'pet': 'Yoshi', 'date': '09.07.1981', 'decimal': '60.000'}
-        adapted_data = {'pet': 'Goomba', 'date': '09.07.1981', 'decimal': '60.000'}
+        original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
+        adapted_data = {'pet': 'Goomba', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
         with app.app_context() and app.test_request_context():
             step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)

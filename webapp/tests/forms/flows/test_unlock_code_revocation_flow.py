@@ -164,8 +164,8 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_exists_and_dob_correct_and_unlock_code_revocation_got_through_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
-        correct_dob = '01.01.1985'
-        create_user(existing_idnr, correct_dob, '0000')
+        correct_dob = ['1', '1', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
                                                                   'dob': correct_dob}):
@@ -179,8 +179,8 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_exists_and_dob_correct_and_unlock_code_revocation_got_through_then_user_is_deleted(self):
         existing_idnr = '04452397687'
-        correct_dob = '01.01.1985'
-        create_user(existing_idnr, correct_dob, '0000')
+        correct_dob = ['1', '1', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
                                                                   'dob': correct_dob}):
@@ -192,8 +192,8 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_exists_but_elster_returns_no_antrag_found_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
-        date_of_birth = '01.01.1985'
-        create_user(existing_idnr, date_of_birth, '0000')
+        date_of_birth = ['1', '1', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
 
         with open('tests/samples/sample_vast_revocation_response_failure.xml') as failue_sample:
             failure_server_response = failue_sample.read()
@@ -213,8 +213,8 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_exists_but_elster_returns_no_antrag_found_then_user_is_deleted(self):
         existing_idnr = '04452397687'
-        date_of_birth = '01.01.1985'
-        create_user(existing_idnr, date_of_birth, '0000')
+        date_of_birth = ['1', '1', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
 
         with open('tests/samples/sample_vast_revocation_response_failure.xml') as failue_sample:
             failure_server_response = failue_sample.read()
@@ -233,11 +233,11 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_user_exists_but_elster_returns_already_revoked_then_user_is_deleted(self):
         existing_idnr = '04452397687'
-        date_of_birth = '01.01.1985'
-        create_user(existing_idnr, date_of_birth, '0000')
+        date_of_birth = ['01', '01', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
 
-        with open('tests/samples/sample_vast_revocation_response_failure.xml') as failue_sample:
-            failure_server_response = failue_sample.read()
+        with open('tests/samples/sample_vast_revocation_response_failure.xml') as failure_sample:
+            failure_server_response = failure_sample.read()
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr, 'dob': date_of_birth}):
             with patch("app.forms.flows.unlock_code_revocation_flow.elster_client.send_unlock_code_revocation_with_elster") \
@@ -253,8 +253,8 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_unlock_code_revocation_did_not_get_through_then_next_url_is_failure_step(self):
         existing_idnr = '04452397687'
-        correct_dob = '01.01.1985'
-        create_user(existing_idnr, correct_dob, '0000')
+        correct_dob = ['1', '1', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
                                                                   'dob': correct_dob}):
@@ -269,8 +269,8 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_unlock_code_revocation_did_not_get_through_then_user_is_not_deleted(self):
         existing_idnr = '04452397687'
-        correct_dob = '01.01.1985'
-        create_user(existing_idnr, correct_dob, '0000')
+        correct_dob = ['1', '1', '1985']
+        create_user(existing_idnr, '01.01.1985', '0000')
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr,
                                                                   'dob': correct_dob}):

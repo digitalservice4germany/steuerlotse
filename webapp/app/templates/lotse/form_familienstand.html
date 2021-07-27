@@ -38,16 +38,18 @@
     <script>
         const FIRST_DAY_OF_TAX_PERIOD = new Date(2020, 0, 1)
 
-        function convertStringToDate(date) {
-            const parts = date.split('.');
-            return new Date(parts[2], parts[1] - 1, parts[0]);
+        function convertStringToDate(day, month, year) {
+            return new Date(year, month - 1, day);
         }
 
         function has_relationship_changed_last_year(selector, including_first_day=true) {
+            const inputted_date = convertStringToDate(document.querySelector(selector + '_1').value,
+                document.querySelector(selector + '_2').value,
+                document.querySelector(selector + '_3').value)
             if (including_first_day) {
-                return convertStringToDate(document.querySelector(selector).value) >= FIRST_DAY_OF_TAX_PERIOD
+                return inputted_date >= FIRST_DAY_OF_TAX_PERIOD
             } else {
-                return convertStringToDate(document.querySelector(selector).value) > FIRST_DAY_OF_TAX_PERIOD
+                return inputted_date > FIRST_DAY_OF_TAX_PERIOD
             }
         }
 

@@ -837,6 +837,7 @@ img.icon {
 #skip-to-content-div {
     background-color: var(--bg-highlight-color);
     display: flex;
+    width: 100%;
 }
 
 #skip-to-content-link {
@@ -850,11 +851,12 @@ img.icon {
 
 #skip-to-content-link:focus {
     position: static;
-    width: 100%;
     height: auto;
+    width: auto;
     margin-top: var(--spacing-02);
     margin-bottom: var(--spacing-01);
     border: none;
+    font-size: var(--text-base);
     font-weight: var(--font-bold);
     color: var(--text-color);
 }

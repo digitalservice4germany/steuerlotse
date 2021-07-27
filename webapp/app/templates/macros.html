@@ -54,7 +54,7 @@
         {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
     {% elif field.type == 'BooleanField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
-    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' %}
+    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=True, first_field=first_field) }}
     {% else %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field) }}
@@ -87,7 +87,7 @@
                 {{ components.checkbox(field, classes=classes, first_field=first_field) }}
             {% elif field.type == 'RadioField' %}
                 {{ components.radio_field(field, first_field=first_field) }}
-            {% elif field.type == 'UnlockCodeField' or field.type == 'IdNrField' %}
+            {% elif field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
                 {{ components.separated_field(field, first_field=first_field) }}
             {% else %}
                 {% if first_field or field.errors %}
