@@ -691,6 +691,7 @@ footer a{
 .text-input-field-label {
     padding-top: var(--spacing-08);
     font-size: var(--text-lg);
+    font-weight: var(--font-bold);
 }
 
 .nav-button-row {
