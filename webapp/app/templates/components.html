@@ -56,7 +56,7 @@
         {{ field_label(field) }}
         {% for subfield in field %}
             <div>
-                {% if (first_field or field.errors) and loop.index0==0 %}
+                {% if field.errors and loop.index0==0 %}
                     {{ subfield(class="", autofocus=True) }}
                 {% else %}
                     {{ subfield(class="") }}
