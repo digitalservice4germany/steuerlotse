@@ -689,12 +689,12 @@ footer a{
 }
 
 .text-input-field-label {
-    padding-top: var(--spacing-06);
+    padding-top: var(--spacing-08);
     font-size: var(--text-lg);
 }
 
 .nav-button-row {
-    margin-top: var(--spacing-06);
+    margin-top: var(--spacing-08);
 }
 
 .form-row-center {
