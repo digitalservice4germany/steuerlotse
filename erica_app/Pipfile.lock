@@ -50,11 +50,11 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:34c8b151a25616ed7791218f6d7780c3a97725fe3ceeaa28085b345a8513af6e",
-                "sha256:dcf399d21170bb899e00d2a693bddcc79e61471fbfead8500a65578700a3190a"
+                "sha256:437cdcd518e6f9db72ec87f170cc66d54081c8abc347abb9f9a3cd9c8e993bd1",
+                "sha256:e51ac230169af1325ab64c9935e679fb54f6d3fdf0978fe67a31931febdf94f9"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.21.7"
+            "version": "==1.21.8"
         },
         "click": {
             "hashes": [
@@ -205,10 +205,11 @@
         },
         "python-json-logger": {
             "hashes": [
-                "sha256:f26eea7898db40609563bed0a7ca11af12e2a79858632706d835a0f961b7d398"
+                "sha256:202a4f29901a4b8002a6d1b958407eeb2dd1d83c18b18b816f5b64476dde9096",
+                "sha256:99310d148f054e858cd5f4258794ed6777e7ad2c3fd7e1c1b527f1cba4d08420"
             ],
             "index": "pypi",
-            "version": "==2.0.1"
+            "version": "==2.0.2"
         },
         "pytz": {
             "hashes": [
