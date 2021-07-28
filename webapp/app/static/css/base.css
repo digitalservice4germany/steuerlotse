@@ -703,6 +703,10 @@ legend {
     float: left;
 }
 
+fieldset {
+    width: 100%;
+}
+
 .nav-button-row {
     margin-top: var(--spacing-09);
 }
