@@ -693,6 +693,11 @@ footer a{
     font-size: var(--text-lg);
 }
 
+.optional-hint {
+    font-size: var(--text-medium);
+    font-weight: var(--font-normal);
+}
+
 .nav-button-row {
     margin-top: var(--spacing-08);
 }

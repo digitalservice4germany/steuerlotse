@@ -41,36 +41,36 @@
 
 {# ------------------------ #}
 
-{% macro field_label(field, class="") %}
-    {{ components.field_label(field, class) }}
+{% macro field_label(field, class="", optional=False) %}
+    {{ components.field_label(field, class, optional) }}
 {%- endmacro %}
 
 {% macro field_errors(field) -%}
     {{ components.field_errors(field) }}
 {%- endmacro %}
 
-{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False, hide_errors=False, first_field=False) %}
+{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False, hide_errors=False, first_field=False, optional=False) %}
     {% if field.type == 'ConfirmationField' %}
-        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
+        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% elif field.type == 'BooleanField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=True, first_field=first_field) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=True, hide_errors=True, first_field=first_field, optional=optional) }}
     {% else %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% endif %}
 {% endmacro %}
 
-{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False, hide_errors=False, first_field=False) %}
+{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, hide_label=False, hide_errors=False, first_field=False, optional=False) %}
     {% if field.errors %}
         {% set field_div_classes = field_div_classes + " error-found-line" %}
     {% endif %}
     <div class="col-md-{{ cols }} {% if as_card %} simple-card {% else %} px-0 {% endif %} {{ field_div_classes }}">
         {% if not hide_label and not (field.render_kw and 'hide_label' in field.render_kw and field.render_kw["hide_label"]) %}
             {% if as_card %}
-                {{ field_label(field) }}
+                {{ field_label(field, optional=optional) }}
             {% else %}
-                {{ field_label(field, class="text-input-field-label") }}
+                {{ field_label(field, class="text-input-field-label", optional=optional) }}
             {% endif %}
         {% endif %}
 
