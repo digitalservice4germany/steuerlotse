@@ -7,7 +7,7 @@
         {{ macros.render_field(form.familienstand, 10) }}
     </div>
     <div id="familienstand_date_field" class="form-row-center hidden">
-        {{ macros.render_field(form.familienstand_date, first_field=True if not render_info.form.errors) }}
+        {{ macros.render_field(form.familienstand_date) }}
     </div>
     <div id="familienstand_married_lived_separated_field" class="hidden">
         {{ macros.render_field(form.familienstand_married_lived_separated) }}
