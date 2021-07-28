@@ -71,7 +71,7 @@
 {% macro separated_field(field,first_field=False) -%}
     <fieldset id="{{ field.id }}">
         {{ field_label(field, class="text-input-field-label") }}
-        <div class="form-row-center">
+        <div class="form-row-center separated-field">
             {{ _field(field, first_field=first_field) }}
         </div>
         {{ field_errors(field) }}

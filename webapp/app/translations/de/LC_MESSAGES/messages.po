@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-07-28 09:56+0200\n"
+"POT-Creation-Date: 2021-07-28 11:04+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -4639,22 +4639,22 @@ msgstr ""
 msgid "form.lotse.person-header-allgemein"
 msgstr "Allgemeine Informationen"
 
-#: app/templates/lotse/form_person_a.html:24
+#: app/templates/lotse/form_person_a.html:26
 #: app/templates/lotse/form_person_b.html:21
 msgid "form.lotse.person-header-addresse"
 msgstr "Aktuelle Adresse"
 
-#: app/templates/lotse/form_person_a.html:40
+#: app/templates/lotse/form_person_a.html:42
 #: app/templates/lotse/form_person_b.html:39
 msgid "form.lotse.person-header-religion"
 msgstr "Religion"
 
-#: app/templates/lotse/form_person_a.html:45
+#: app/templates/lotse/form_person_a.html:49
 #: app/templates/lotse/form_person_b.html:44
 msgid "form.lotse.person-header-beh"
 msgstr "Pauschbetrag für Menschen mit Behinderung"
 
-#: app/templates/lotse/form_person_a.html:46
+#: app/templates/lotse/form_person_a.html:50
 #: app/templates/lotse/form_person_b.html:45
 msgid "form.lotse.person-header-beh-intro"
 msgstr ""
@@ -4665,6 +4665,10 @@ msgstr ""
 "vorgewiesen werden. Der Pauschbetrag kann auch bei Vorlage des Bescheids "
 "über die Einstufung als Schwerstpflegebedürftiger (Pflegegrad 4 oder 5) "
 "gewährt werden."
+
+#: app/templates/lotse/form_person_a.html:57
+msgid "form.lotse.person-merkzeichen.title"
+msgstr "Angaben zum Merkzeichen"
 
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
