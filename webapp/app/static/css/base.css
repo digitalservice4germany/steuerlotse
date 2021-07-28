@@ -37,11 +37,6 @@ body {
     font-size: var(--text-medium);
 }
 
-/* SPACING */
-.spacing-t-07 {
-    padding-top: var(--spacing-07);
-}
-
 /* LINKS */
 a{
     text-decoration: underline;

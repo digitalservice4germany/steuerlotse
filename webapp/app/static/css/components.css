@@ -446,7 +446,11 @@ a.back-link:focus a.back-link:active{
     border: 2px solid var(--text-color);
 }
 
-/* SECONDARY */
+/* YES NO FIELDS */
+.yes-no-field-label {
+    padding-top: var(--spacing-07);
+}
+
 .switch-yes, .switch-no {
     padding: 1rem 1.45rem;
     color: var(--text-color) !important;

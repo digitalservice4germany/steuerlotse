@@ -69,7 +69,7 @@
 {%- endmacro %}
 
 {% macro yes_no_field(field, first_field=False) %}
-    {{ field_label(field, class='spacing-t-07') }}
+    {{ field_label(field, class='yes-no-field-label') }}
     {{ _field(field, first_field=first_field) }}
 {% endmacro %}
 
