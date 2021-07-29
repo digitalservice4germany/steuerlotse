@@ -191,7 +191,7 @@ ol li::before {
         max-height: 900px;
     }
 
-    .hero__inner h1{
+    .hero__inner h1 {
         font-size: var( --text-3xl);
     }
 
@@ -227,12 +227,8 @@ ol li::before {
         max-height: 800px;
     }
 
-    .hero__inner  h1{
-        font-size: var( --text-4xl);
-    }
-
     .hero__inner_headline {
-        margin-top: var( --spacing-10);
+        margin-top: var( --spacing-08);
     }
 
     .hero__inner_image {
@@ -440,7 +436,8 @@ ol li::before {
 /* Navigation Bars: Sidebar + Mobile */
 
 .logo-wrapper {
-    margin-top: var(--spacing-06);
+    margin-top: var(--spacing-07);
+    margin-bottom: 4.5rem;
 }
 
 .logo-mobile-wrapper {
@@ -603,7 +600,16 @@ span.nav-link.inactive, span.inactive {
 
 /* HEAD-NAVIGATION */
 .header-navigation{
-    height: var(--header-navigation-height);;
+    height: var(--header-navigation-height);
+    margin-bottom: var(--spacing-09);
+}
+
+@media (max-width: 1024px) {
+    .header-navigation {
+        height: auto;
+        padding-bottom: var(--spacing-02);
+        margin-bottom: 0;
+    }
 }
 
 /* Footer */

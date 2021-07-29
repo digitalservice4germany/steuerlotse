@@ -3,7 +3,7 @@
 
 {% macro step_header_buttons(render_info) %}
     {% if render_info.prev_url %}
-        <div class="mt-3 mb-5">
+        <div class="mt-3">
             {{ components.backLink(text=_('form.back'), url=render_info.prev_url) }}
         </div>
     {% endif %}
