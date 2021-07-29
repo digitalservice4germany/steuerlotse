@@ -442,7 +442,6 @@ ol li::before {
 }
 
 .logo-mobile-wrapper {
-    padding-right: var(--spacing-06);
     border-right: var(--text-color) 1px solid;
     margin-right: var(--spacing-02);
 }
