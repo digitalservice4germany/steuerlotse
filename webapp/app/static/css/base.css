@@ -35,6 +35,8 @@ html, body{
 body {
     background: var(--body-color);
     font-size: var(--text-medium);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* LINKS */
