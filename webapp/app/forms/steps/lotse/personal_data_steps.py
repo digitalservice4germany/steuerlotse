@@ -39,14 +39,16 @@ class StepFamilienstand(FormStep):
             validators=())
         familienstand_married_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_married_lived_separated'),
-            render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated.data_label')})
+            render_kw={'example_input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
+                       'data_label': _l('form.lotse.familienstand_married_lived_separated.data_label')})
         familienstand_married_lived_separated_since = SteuerlotseDateField(
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
             validators=())
         familienstand_widowed_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
-            render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated.data_label')})
+            render_kw={'example_input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
+                       'data_label': _l('form.lotse.familienstand_widowed_lived_separated.data_label')})
         familienstand_widowed_lived_separated_since = SteuerlotseDateField(
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
@@ -361,7 +363,7 @@ class StepPersonB(FormStep):
             validators=[InputRequired(), validators.length(max=25)])
 
         person_b_same_address = RadioField(
-            label=_l('form.lotse.field_person_b_same_address'),
+            label="",
             render_kw={'data_label': _l('form.lotse.field_person_b_same_address.data_label'),
                        'hide_label': True},
             choices=[('yes', _l('form.lotse.field_person_b_same_address-yes')),
