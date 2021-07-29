@@ -254,8 +254,9 @@ ol li::before {
         min-height: 80vh;
     }
 
-    .hero__inner  h1{
-        font-size: var( --text-4xl);
+    .hero__inner h1 {
+        font-size: var( --text-3xl);
+        margin-top: var(--spacing-08);
     }
 
     .hero__inner_headline {
@@ -757,8 +758,18 @@ fieldset {
     font-size: var(--text-medium);
  }
 
+h1, h2, h3 {
+    font-weight: var(--font-bold) !important;
+}
+
 h1 {
-    font-size: var(--text-5xl);
+    font-size: var(--text-4xl);
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: var(--text-3xl);
+    }
 }
 
 h3 {
@@ -768,6 +779,18 @@ h3 {
 h4 {
     padding-bottom: var(--spacing-02);
     padding-top: var(--spacing-02);
+}
+
+.form-sub-heading {
+    font-size: var(--text-2xl);
+    margin-top: var(--spacing-08);
+    margin-bottom: 0;
+}
+
+.form-sub-heading-smaller {
+    font-size: var(--text-medium);
+    margin-top: var(--spacing-09);
+    margin-bottom: var(--spacing-03);
 }
 
 ul.margin-only-between li {

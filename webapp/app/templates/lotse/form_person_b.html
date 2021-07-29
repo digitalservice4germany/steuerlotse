@@ -5,7 +5,7 @@
 {% block form_content %}
     <fieldset class="grouped-input-fields">
         <legend class="mb-0">
-            <h2 class="mt-5 mb-0">{{ _('form.lotse.person-header-allgemein') }}</h2>
+            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-allgemein') }}</h2>
         </legend>
         <div class="form-row-center">
             {{ macros.render_field(form.person_b_first_name, first_field=True if not render_info.form.errors) }}
@@ -22,8 +22,8 @@
     </fieldset>
 
     <fieldset class="grouped-input-fields">
-        <legend class="mb-0">
-            <h2 class="mt-5 mb-0">{{ _('form.lotse.person-header-addresse') }}</h2>
+        <legend class="mb-3">
+            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-addresse') }}</h2>
         </legend>
         {{ macros.render_field(form.person_b_same_address, 10, class='w-100') }}
 
@@ -45,7 +45,7 @@
 
     <fieldset class="grouped-input-fields">
         <legend class="mb-0">
-            <h2 class="mt-5 mb-0">{{ _('form.lotse.person-header-religion') }}</h2>
+            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-religion') }}</h2>
         </legend>
         <div class="form-row-center">
             {{ macros.render_field(form.person_b_religion, 6) }}
@@ -54,14 +54,14 @@
 
     <fieldset class="grouped-input-fields">
         <legend class="mb-0">
-            <h2 class="mt-5 mb-0">{{ _('form.lotse.person-header-beh') }}</h2>
+            <h2 class="form-sub-heading mb-3">{{ _('form.lotse.person-header-beh') }}</h2>
         </legend>
         <p>{{ _('form.lotse.person-header-beh-intro') }}</p>
         <div class="form-row-center">
             {{ macros.render_field(form.person_b_beh_grad, 4) }}
         </div>
         <div class="form-row-center w-100">
-            <span class="text-input-field-label w-100">{{ _('form.lotse.person-merkzeichen.title') }}</span>
+            <span class="text-input-field-label w-100 mb-1">{{ _('form.lotse.person-merkzeichen.title') }}</span>
             {{ macros.render_field(form.person_b_blind, 12, d_block=True, hide_label=True) }}
             {{ macros.render_field(form.person_b_gehbeh, 12, d_block=True, hide_label=True) }}
         </div>
