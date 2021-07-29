@@ -447,10 +447,6 @@ a.back-link:focus a.back-link:active{
 }
 
 /* YES NO FIELDS */
-.yes-no-field-label {
-    padding-top: var(--spacing-07);
-}
-
 .switch-yes, .switch-no {
     padding: 1rem 1.45rem;
     color: var(--text-color) !important;
