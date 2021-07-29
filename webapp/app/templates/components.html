@@ -52,8 +52,8 @@
 {% endmacro %}
 
 {% macro radio_field(field, first_field=False) -%}
-    <fieldset>
-        {{ field_label(field) }}
+    <fieldset class="grouped-input-fields">
+        {{ field_label(field, class="text-input-field-label") }}
         {% for subfield in field %}
             <div>
                 {% if field.errors and loop.index0==0 %}
@@ -69,7 +69,7 @@
 {%- endmacro %}
 
 {% macro yes_no_field(field, first_field=False) %}
-    {{ field_label(field, class='yes-no-field-label') }}
+    {{ field_label(field, class='yes-no-field-label text-input-field-label') }}
     {{ _field(field, first_field=first_field) }}
 {% endmacro %}
 

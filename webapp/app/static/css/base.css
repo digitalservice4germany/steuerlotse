@@ -714,10 +714,6 @@ legend {
     float: left;
 }
 
-fieldset {
-    width: 100%;
-}
-
 .nav-button-row {
     margin-top: var(--spacing-09);
 }
@@ -744,6 +740,10 @@ fieldset {
 
 .form-row-center > * {
     margin: 0 var(--spacing-02);
+}
+
+.grouped-input-fields {
+    width: 100%;
 }
 
 .grouped-input-fields > .form-row-center {

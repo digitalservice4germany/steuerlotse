@@ -254,7 +254,7 @@
     border: 0;
 }
 
-.details-card .card-header .details-icon{
+.details-card .card-header .details-icon {
     width: 100%;
     background:  url("/static/icons/details_arrow_down.svg") no-repeat center;
 }
