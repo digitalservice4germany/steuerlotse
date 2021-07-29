@@ -4,7 +4,7 @@
 {% block form_content %}
 
     <div id="familienstand_field" class="mb-3">
-        {{ macros.render_field(form.familienstand, 10, first_field=True if not render_info.form.errors) }}
+        {{ macros.render_field(form.familienstand, 10) }}
     </div>
     <div id="familienstand_date_field" class="form-row-center hidden">
         {{ macros.render_field(form.familienstand_date) }}

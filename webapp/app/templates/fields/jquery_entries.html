@@ -6,7 +6,7 @@
 <div id="{{id}}-div">
     {%- for item in kwargs['data'] %}
     <div class="{{dynamic_div_classes}}">
-        <input class="dynamic-entry {{dynamic_input_classes}}" type="text" value="{{item}}">{{remove_button()}}
+        <input {% if 'autofocus' in kwargs %}autofocus {% endif %}class="dynamic-entry {{dynamic_input_classes}}" type="text" value="{{item}}">{{remove_button()}}
     </div>
     {%- endfor -%}
 </div>

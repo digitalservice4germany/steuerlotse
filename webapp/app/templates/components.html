@@ -56,7 +56,7 @@
         {{ field_label(field) }}
         {% for subfield in field %}
             <div>
-                {% if (first_field or field.errors) and loop.index0==0 %}
+                {% if field.errors and loop.index0==0 %}
                     {{ subfield(class="", autofocus=True) }}
                 {% else %}
                     {{ subfield(class="") }}
@@ -67,6 +67,11 @@
         {{ field_errors(field) }}
     </fieldset>
 {%- endmacro %}
+
+{% macro yes_no_field(field, first_field=False) %}
+    {{ field_label(field, class='yes-no-field-label') }}
+    {{ _field(field, first_field=first_field) }}
+{% endmacro %}
 
 {% macro separated_field(field,first_field=False) -%}
     <fieldset id="{{ field.id }}">

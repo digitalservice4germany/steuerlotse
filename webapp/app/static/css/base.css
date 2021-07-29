@@ -691,6 +691,7 @@ footer a{
 .text-input-field-label {
     margin-top: var(--spacing-06);
     font-size: var(--text-lg);
+    font-weight: var(--font-bold);
 }
 
 .optional-hint {
