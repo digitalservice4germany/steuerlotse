@@ -408,7 +408,6 @@ a.back-link:focus a.back-link:active{
 
 .checkbox {
     padding: 0;
-    margin-bottom: var(--spacing-02);
     margin-top: var(--spacing-02);
     flex-wrap: inherit;
 }
