@@ -233,19 +233,14 @@
 
 .details-card .card-header .collapsed span {
     color: var(--link-color);
-    text-decoration: underline;
-    text-decoration-color: var(--icon-default-color);
 }
 
 .details-card .card-header .collapsed span:hover {
     color: var(--link-hover-color);
-    text-decoration-color: var(--link-hover-color);
 }
 
 .details-card .card-header button:focus span {
     color: var(--focus-text-color);
-    text-decoration: underline;
-    text-decoration-color: var(--focus-text-color);
 
     background: var(--focus-color);
 
