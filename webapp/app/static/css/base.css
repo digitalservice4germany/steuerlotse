@@ -23,10 +23,10 @@
 }
 
 html {
-    font-size: 16px;
+    font-size: 17px;
 }
 
-html,body{
+html, body{
     margin:0 !important;
     padding: 0 !important;
     font-family: "BundesSansWeb", sans-serif;
@@ -524,6 +524,7 @@ ol li::before {
     padding-left: var(--spacing-02);
 
     text-decoration: none;
+    font-size: var(--text-base);
     color: var(--text-color);
     letter-spacing: var(--tracking-wide);
 }
@@ -690,7 +691,7 @@ footer a{
 
 .text-input-field-label {
     margin-top: var(--spacing-06);
-    font-size: var(--text-lg);
+    font-size: var(--text-medium);
     font-weight: var(--font-bold);
 }
 
@@ -751,7 +752,7 @@ fieldset {
 }
 
 .section-intro p {
-    font-size: var(--text-lg);
+    font-size: var(--text-medium);
  }
 
 h1 {
