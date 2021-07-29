@@ -193,6 +193,12 @@
 }
 
 /* DETAILS */
+.details-card {
+    display: block;
+    width: 100%;
+    overflow: auto;
+}
+
 .details-card .card {
     border: 0;
     border-radius: 0;

@@ -76,14 +76,14 @@
 {% macro separated_field(field,first_field=False) -%}
     <fieldset id="{{ field.id }}">
         {{ field_label(field, class="text-input-field-label") }}
-        <div class="form-row-center">
+        <div class="form-row-center separated-field">
             {{ _field(field, first_field=first_field) }}
         </div>
         {{ field_errors(field) }}
     </fieldset>
 {%- endmacro %}
 
-{% macro field_label(field, class="") %}
+{% macro field_label(field, class="", optional=False) %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
@@ -91,12 +91,14 @@
     {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
             <legend class="field-label {{ class }}">{{ label.text }}
+                {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
                 {% if help %}{{ help_button(label.field_id) }}{% endif %}
             </legend>
         {% endif %}
     {% else %}
         <label for="{{ label.field_id }}"
                class="field-label {{ class }}">{{ label.text }}
+            {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
             {% if help %}{{ help_button(label.field_id) }}{% endif %}
         </label>
     {% endif %}
