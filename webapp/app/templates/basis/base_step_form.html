@@ -41,11 +41,7 @@
     <script src="{{ url_for('static', filename='js/jquery.mask.min.js') }}" type=text/javascript></script>
     <script>
         $(document).ready(function(){
-            const idnr_mask = '00000000000'
           $('.date_input').mask('00.00.0000');
-          $('#idnr').mask(idnr_mask);
-          $('#person_a_idnr').mask(idnr_mask);
-          $('#person_b_idnr').mask(idnr_mask);
         });
     </script>
 {% endblock %}

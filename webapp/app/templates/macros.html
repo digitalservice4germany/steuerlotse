@@ -3,7 +3,7 @@
 
 {% macro step_header_buttons(render_info ) %}
     {% if render_info.prev_url %}
-        <div class="mt-3 mb-5">
+        <div class="mt-3">
             {{ components.backLink(text=render_info.back_link_text if render_info.back_link_text else _('form.back'),
                                     url=render_info.prev_url) }}
         </div>
@@ -42,33 +42,37 @@
 
 {# ------------------------ #}
 
-{% macro field_label(field, class="", position_details_after=False) %}
-    {{ components.field_label(field, class, position_details_after=position_details_after) }}
+{% macro field_label(field, class="", position_details_after=False, optional=False) %}
+    {{ components.field_label(field, class, position_details_after=position_details_after, optional) }}
 {%- endmacro %}
 
 {% macro field_errors(field) -%}
     {{ components.field_errors(field) }}
 {%- endmacro %}
 
-{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False) %}
+{% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False, optional=False) %}
     {% if field.type == 'ConfirmationField' %}
-        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
-    {% elif field.type == 'BooleanField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field) }}
-    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True, first_field=first_field) }}
+        {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
+    {% elif field.type in ('BooleanField', 'YesNoField') %}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
+    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True, first_field=first_field, optional=optional) }}
     {% else %}
-        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field) }}
+        {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% endif %}
 {% endmacro %}
 
-{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False) %}
+{% macro _render_field(field, cols, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False, optional=False) %}
     {% if field.errors %}
         {% set field_div_classes = field_div_classes + " error-found-line" %}
     {% endif %}
     <div class="col-md-{{ cols }} {% if as_card %} simple-card {% else %} px-0 {% endif %} {{ field_div_classes }}">
         {% if not hide_label and not (field.render_kw and 'hide_label' in field.render_kw and field.render_kw["hide_label"]) %}
-            {{ field_label(field, position_details_after=position_details_after) }}
+            {% if as_card %}
+                {{ field_label(field, position_details_after=position_details_after, optional=optional) }}
+            {% else %}
+                {{ field_label(field, class="text-input-field-label", position_details_after=position_details_after, optional=optional) }}
+            {% endif %}
         {% endif %}
 
         {% set classes = "form-control " + class %}
@@ -85,7 +89,9 @@
                 {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'RadioField' %}
                 {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'UnlockCodeField' %}
+            {% elif field.type == 'YesNoField' %}
+                {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
+            {% elif field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
                 {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% else %}
                 {% if first_field or field.errors %}
@@ -102,7 +108,7 @@
 {# ------------------------ #}
 
 {% macro form_nav_buttons(render_info, explanatory_button_text=None) -%}
-    <div class="form-row">
+    <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
             <button type="submit"
                     class="btn btn-outline-primary mr-2"

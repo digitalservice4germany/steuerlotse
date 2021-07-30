@@ -193,6 +193,12 @@
 }
 
 /* DETAILS */
+.details-card {
+    display: block;
+    width: 100%;
+    overflow: auto;
+}
+
 .details-card .card {
     border: 0;
     border-radius: 0;
@@ -227,19 +233,14 @@
 
 .details-card .card-header .collapsed span {
     color: var(--link-color);
-    text-decoration: underline;
-    text-decoration-color: var(--icon-default-color);
 }
 
 .details-card .card-header .collapsed span:hover {
     color: var(--link-hover-color);
-    text-decoration-color: var(--link-hover-color);
 }
 
 .details-card .card-header button:focus span {
     color: var(--focus-text-color);
-    text-decoration: underline;
-    text-decoration-color: var(--focus-text-color);
 
     background: var(--focus-color);
 
@@ -248,7 +249,7 @@
     border: 0;
 }
 
-.details-card .card-header .details-icon{
+.details-card .card-header .details-icon {
     width: 100%;
     background:  url("/static/icons/details_arrow_down.svg") no-repeat center;
 }
@@ -407,7 +408,6 @@ a.back-link:focus a.back-link:active{
 
 .checkbox {
     padding: 0;
-    margin-bottom: var(--spacing-02);
     margin-top: var(--spacing-02);
     flex-wrap: inherit;
 }
@@ -446,7 +446,7 @@ a.back-link:focus a.back-link:active{
     border: 2px solid var(--text-color);
 }
 
-/* SECONDARY */
+/* YES NO FIELDS */
 .switch-yes, .switch-no {
     padding: 1rem 1.45rem;
     color: var(--text-color) !important;
@@ -522,8 +522,13 @@ input[type="radio"]:checked:focus + label::before{
 }
 
 .field-label{
+    margin-bottom: var(--spacing-01);
+}
+
+.sub-field-label {
     margin-bottom: 0 !important;
-    font-size: var(--text-l);
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
 }
 
 /* ALERTS */

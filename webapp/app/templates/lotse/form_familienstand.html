@@ -4,30 +4,30 @@
 {% block form_content %}
 
     <div id="familienstand_field" class="mb-3">
-        {{ macros.render_field(form.familienstand, 10, first_field=True if not render_info.form.errors) }}
+        {{ macros.render_field(form.familienstand, 10) }}
     </div>
     <div id="familienstand_date_field" class="form-row-center hidden">
         {{ macros.render_field(form.familienstand_date) }}
     </div>
-    <div id="familienstand_married_lived_separated_field" class="hidden">
-        {{ macros.render_field(form.familienstand_married_lived_separated) }}
+    <div id="familienstand_married_lived_separated_field" class="form-row-center hidden">
+        {{ macros.render_field(form.familienstand_married_lived_separated, 10) }}
     </div>
-    <div id="familienstand_married_lived_separated_since_field" class="hidden">
+    <div id="familienstand_married_lived_separated_since_field" class="form-row-center hidden">
         {{ macros.render_field(form.familienstand_married_lived_separated_since) }}
     </div>
-    <div id="familienstand_widowed_lived_separated_field" class="hidden">
-        {{ macros.render_field(form.familienstand_widowed_lived_separated) }}
+    <div id="familienstand_widowed_lived_separated_field" class="form-row-center hidden">
+        {{ macros.render_field(form.familienstand_widowed_lived_separated, 10) }}
     </div>
-    <div id="familienstand_widowed_lived_separated_since_field" class="hidden">
+    <div id="familienstand_widowed_lived_separated_since_field" class="form-row-center hidden">
         {{ macros.render_field(form.familienstand_widowed_lived_separated_since) }}
     </div>
-    <div id="familienstand_zusammenveranlagung_field" class="hidden">
+    <div id="familienstand_zusammenveranlagung_field" class="form-row-center hidden">
         {{ macros.render_field(form.familienstand_zusammenveranlagung) }}
     </div>
-    <div id="familienstand_confirm_zusammenveranlagung_field" class="hidden">
+    <div id="familienstand_confirm_zusammenveranlagung_field" class="mt-5 form-row-center hidden">
         {{ macros.render_field(form.familienstand_confirm_zusammenveranlagung, 10, hide_label=True) }}
     </div>
-    <div id="familienstand_zusammenveranlagung_clause" class="mb-3 font-weight-bold hidden">
+    <div id="familienstand_zusammenveranlagung_clause" class="mt-5 mb-3 font-weight-bold hidden">
         {{ _('form.lotse.familienstand.zusamenveranlagung-clause') }}
     </div>
 
@@ -38,16 +38,18 @@
     <script>
         const FIRST_DAY_OF_TAX_PERIOD = new Date(2020, 0, 1)
 
-        function convertStringToDate(date) {
-            const parts = date.split('.');
-            return new Date(parts[2], parts[1] - 1, parts[0]);
+        function convertStringToDate(day, month, year) {
+            return new Date(year, month - 1, day);
         }
 
         function has_relationship_changed_last_year(selector, including_first_day=true) {
+            const inputted_date = convertStringToDate(document.querySelector(selector + '_1').value,
+                document.querySelector(selector + '_2').value,
+                document.querySelector(selector + '_3').value)
             if (including_first_day) {
-                return convertStringToDate(document.querySelector(selector).value) >= FIRST_DAY_OF_TAX_PERIOD
+                return inputted_date >= FIRST_DAY_OF_TAX_PERIOD
             } else {
-                return convertStringToDate(document.querySelector(selector).value) > FIRST_DAY_OF_TAX_PERIOD
+                return inputted_date > FIRST_DAY_OF_TAX_PERIOD
             }
         }
 
@@ -172,6 +174,9 @@
 
             $(`#familienstand_date`).on('input', show_hide_familienstand_married_lived_separated_field);
             $(`#familienstand_date`).on('input', show_hide_familienstand_widowed_lived_separated_field);
+            $(`#familienstand_date`).on('input', show_hide_familienstand_married_lived_separated_since_field);
+            $(`#familienstand_date`).on('input', show_hide_familienstand_widowed_lived_separated_since_field);
+            $(`#familienstand_date`).on('input', show_hide_familienstand_confirm_zusammenveranlagung_field);
 
             $(`#familienstand_married_lived_separated_since`).on('input', show_hide_familienstand_zusammenveranlagung_field);
             $(`#familienstand_widowed_lived_separated_since`).on('input', show_hide_familienstand_zusammenveranlagung_field);

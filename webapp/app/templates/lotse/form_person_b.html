@@ -3,55 +3,69 @@
 {% import "components.html" as components %}
 
 {% block form_content %}
+    <fieldset class="grouped-input-fields">
+        <legend class="mb-0">
+            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-allgemein') }}</h2>
+        </legend>
+        <div class="form-row-center">
+            {{ macros.render_field(form.person_b_first_name, first_field=True if not render_info.form.errors) }}
+        </div>
+        <div class="form-row-center">
+            {{ macros.render_field(form.person_b_last_name) }}
+        </div>
+        <div class="form-row-center">
+            {{ macros.render_field(form.person_b_dob) }}
+        </div>
+        <div class="form-row-center">
+            {{ macros.render_field(form.person_b_idnr) }}
+        </div>
+    </fieldset>
 
-  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-allgemein') }}</h2>
-   <div class="form-row-center">
-    {{ macros.render_field(form.person_b_first_name, first_field=True if not render_info.form.errors) }}
-  </div>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_last_name) }}
-  </div>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_dob) }}
-  </div>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_idnr) }}
-  </div>
+    <fieldset class="grouped-input-fields">
+        <legend class="mb-3">
+            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-addresse') }}</h2>
+        </legend>
+        {{ macros.render_field(form.person_b_same_address, 10, class='w-100') }}
 
-  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-addresse') }}</h2>
-  {{ macros.render_field(form.person_b_same_address, 10) }}
+        <div id="form_address_fields" class="grouped-input-fields hidden">
+            <div class="form-row-center">
+                {{ macros.render_field(form.person_b_street) }}
+                {{ macros.render_field(form.person_b_street_number, 2) }}
+                {{ macros.render_field(form.person_b_street_number_ext, 2, field_div_classes='text-nowrap', optional=True) }}
+            </div>
+            <div class="form-row-center">
+                {{ macros.render_field(form.person_b_address_ext, optional=True) }}
+            </div>
+            <div class="form-row-center">
+                {{ macros.render_field(form.person_b_plz, 3) }}
+                {{ macros.render_field(form.person_b_town) }}
+            </div>
+        </div>
+    </fieldset>
 
-  <div id="form_address_fields" class="hidden">
-    <div class="form-row-center">
-      {{ macros.render_field(form.person_b_street) }}
-      {{ macros.render_field(form.person_b_street_number, 2) }}
-    </div>
-    <div class="form-row-center">
-      {{ macros.render_field(form.person_b_street_number_ext) }}
-      {{ macros.render_field(form.person_b_address_ext) }}
-    </div>
-    <div class="form-row-center">
-      {{ macros.render_field(form.person_b_plz) }}
-      {{ macros.render_field(form.person_b_town) }}
-    </div>
-  </div>
+    <fieldset class="grouped-input-fields">
+        <legend class="mb-0">
+            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-religion') }}</h2>
+        </legend>
+        <div class="form-row-center">
+            {{ macros.render_field(form.person_b_religion, 6) }}
+        </div>
+    </fieldset>
 
-  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-religion') }}</h2>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_religion, 6) }}
-  </div>
-
-  <h2 class="mt-5 my-3">{{ _('form.lotse.person-header-beh') }}</h2>
-  <p class="mb-4">{{ _('form.lotse.person-header-beh-intro') }}</p>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_beh_grad, 4) }}
-  </div>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_blind, 4, d_block=True, hide_label=True) }}
-  </div>
-  <div class="form-row-center">
-    {{ macros.render_field(form.person_b_gehbeh, 4, d_block=True, hide_label=True) }}
-  </div>
+    <fieldset class="grouped-input-fields">
+        <legend class="mb-0">
+            <h2 class="form-sub-heading mb-3">{{ _('form.lotse.person-header-beh') }}</h2>
+        </legend>
+        <p>{{ _('form.lotse.person-header-beh-intro') }}</p>
+        <div class="form-row-center">
+            {{ macros.render_field(form.person_b_beh_grad, 4) }}
+        </div>
+        <div class="form-row-center w-100">
+            <span class="text-input-field-label w-100 mb-1">{{ _('form.lotse.person-merkzeichen.title') }}</span>
+            {{ macros.render_field(form.person_b_blind, 12, d_block=True, hide_label=True) }}
+            {{ macros.render_field(form.person_b_gehbeh, 12, d_block=True, hide_label=True) }}
+        </div>
+    </fieldset>
 
 {% endblock %}
 

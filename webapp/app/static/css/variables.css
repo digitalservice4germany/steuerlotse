@@ -1,7 +1,7 @@
 :root {
   /* Colors */
   --text-color: #0b0c0c;
-  --secondary-text-color: #5e5e5e;
+  --secondary-text-color: #545454;
   --inverse-text-color: #FFFFFF;
 
   --border-color: #bababa;
@@ -34,12 +34,10 @@
   --text-s: 0.9rem;  
   --text-base: 1rem;
   --text-medium: 1.125rem;
-  --text-lg: 1.25rem;
   --text-xl: 1.375rem;
   --text-2xl: 1.625rem;
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
-  --text-5xl: 3rem;
 
   /* Font Weight */
   --font-normal: 400;

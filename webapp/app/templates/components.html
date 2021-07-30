@@ -59,11 +59,11 @@
 {% endmacro %}
 
 {% macro radio_field(field, position_details_after=False, first_field=False) -%}
-    <fieldset>
-        {{ field_label(field, position_details_after=position_details_after) }}
+    <fieldset class="grouped-input-fields">
+        {{ field_label(field, class="text-input-field-label", position_details_after=position_details_after) }}
         {% for subfield in field %}
             <div>
-                {% if (first_field or field.errors) and loop.index0==0 %}
+                {% if field.errors and loop.index0==0 %}
                     {{ subfield(class="", autofocus=True) }}
                 {% else %}
                     {{ subfield(class="") }}
@@ -78,10 +78,15 @@
     </fieldset>
 {%- endmacro %}
 
+{% macro yes_no_field(field, first_field=False) %}
+    {{ field_label(field, class='text-input-field-label') }}
+    {{ _field(field, first_field=first_field) }}
+{% endmacro %}
+
 {% macro separated_field(field, position_details_after=False, first_field=False) -%}
     <fieldset id="{{ field.id }}">
-        {{ field_label(field, position_details_after=position_details_after) }}
-        <div class="form-row-center">
+        {{ field_label(field, class="text-input-field-label", position_details_after=position_details_after) }}
+        <div class="form-row-center separated-field">
             {{ _field(field, first_field=first_field) }}
         </div>
         {%- if position_details_after %}
@@ -91,20 +96,22 @@
     </fieldset>
 {%- endmacro %}
 
-{% macro field_label(field, class="", position_details_after=False) %}
+{% macro field_label(field, class="", position_details_after=False, optional=False) %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
 
-    {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' %}
+    {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
             <legend class="field-label {{ class }}">{{ label.text }}
+                {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
                 {% if help %}{{ help_button(label.field_id) }}{% endif %}
             </legend>
         {% endif %}
     {% else %}
         <label for="{{ label.field_id }}"
                class="field-label {{ class }}">{{ label.text }}
+            {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
             {% if help %}{{ help_button(label.field_id) }}{% endif %}
         </label>
     {% endif %}

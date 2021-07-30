@@ -23,10 +23,10 @@
 }
 
 html {
-    font-size: 16px;
+    font-size: 17px;
 }
 
-html,body{
+html, body{
     margin:0 !important;
     padding: 0 !important;
     font-family: "BundesSansWeb", sans-serif;
@@ -35,6 +35,8 @@ html,body{
 body {
     background: var(--body-color);
     font-size: var(--text-medium);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* LINKS */
@@ -135,6 +137,7 @@ img.invalid-feedback{
 }
 
 .example-input{
+    color: var(--secondary-text-color);
     margin-bottom: var(--spacing-02);
 }
 
@@ -189,7 +192,7 @@ ol li::before {
         max-height: 900px;
     }
 
-    .hero__inner h1{
+    .hero__inner h1 {
         font-size: var( --text-3xl);
     }
 
@@ -225,12 +228,8 @@ ol li::before {
         max-height: 800px;
     }
 
-    .hero__inner  h1{
-        font-size: var( --text-4xl);
-    }
-
     .hero__inner_headline {
-        margin-top: var( --spacing-10);
+        margin-top: var( --spacing-08);
     }
 
     .hero__inner_image {
@@ -252,8 +251,9 @@ ol li::before {
         min-height: 80vh;
     }
 
-    .hero__inner  h1{
-        font-size: var( --text-4xl);
+    .hero__inner h1 {
+        font-size: var( --text-3xl);
+        margin-top: var(--spacing-08);
     }
 
     .hero__inner_headline {
@@ -437,11 +437,11 @@ ol li::before {
 /* Navigation Bars: Sidebar + Mobile */
 
 .logo-wrapper {
-    margin-top: var(--spacing-06);
+    margin-top: var(--spacing-07);
+    margin-bottom: 4.5rem;
 }
 
 .logo-mobile-wrapper {
-    padding-right: var(--spacing-06);
     border-right: var(--text-color) 1px solid;
     margin-right: var(--spacing-02);
 }
@@ -524,6 +524,7 @@ ol li::before {
     padding-left: var(--spacing-02);
 
     text-decoration: none;
+    font-size: var(--text-base);
     color: var(--text-color);
     letter-spacing: var(--tracking-wide);
 }
@@ -599,7 +600,16 @@ span.nav-link.inactive, span.inactive {
 
 /* HEAD-NAVIGATION */
 .header-navigation{
-    height: var(--header-navigation-height);;
+    height: var(--header-navigation-height);
+    margin-bottom: var(--spacing-09);
+}
+
+@media (max-width: 1024px) {
+    .header-navigation {
+        height: auto;
+        padding-bottom: var(--spacing-02);
+        margin-bottom: 0;
+    }
 }
 
 /* Footer */
@@ -688,35 +698,84 @@ footer a{
     justify-content: center;
 }
 
-.form-container > * {
-    margin-top: var(--spacing-07);
+.text-input-field-label {
+    margin-top: var(--spacing-06);
+    font-size: var(--text-medium);
+    font-weight: var(--font-bold);
 }
 
-@media (max-width: 1024px) {
-    .form-container > * {
-        margin-top: var(--spacing-06);
-    }
+.optional-hint {
+    font-size: var(--text-medium);
+    font-weight: var(--font-normal);
+}
+
+/* Place legend inside the fieldset, not at its border */
+legend {
+    float: left;
+}
+
+.nav-button-row {
+    margin-top: var(--spacing-09);
 }
 
 .form-row-center {
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
+    margin-top: var(--spacing-03);
     /* This moved the border further outside to allow for the children to fill that space with margin,
     allowing the children to have space between them. See the bootstrap row/column technique. */
     margin-left: calc(-1 * var(--spacing-02));
     margin-right: calc(-1 * var(--spacing-02));
 }
 
+.separated-field {
+    flex-wrap: nowrap;
+    margin-top: 0;
+}
+
+.entries-field {
+    flex-wrap: nowrap;
+}
+
 .form-row-center > * {
     margin: 0 var(--spacing-02);
 }
 
+.grouped-input-fields {
+    width: 100%;
+}
+
+.grouped-input-fields > .form-row-center {
+    margin-top: 0;
+}
+
+.grouped-input-fields .text-input-field-label {
+    margin-top: var(--spacing-06);
+}
+
+@media (max-width: 360px) {
+    .grouped-input-fields .text-input-field-label {
+        margin-top: var(--spacing-04);
+    }
+}
+
 .section-intro p {
-    font-size: var(--text-lg);
+    font-size: var(--text-medium);
  }
 
+h1, h2, h3 {
+    font-weight: var(--font-bold) !important;
+}
+
 h1 {
-    font-size: var(--text-5xl);
+    font-size: var(--text-4xl);
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: var(--text-3xl);
+    }
 }
 
 h3 {
@@ -726,6 +785,18 @@ h3 {
 h4 {
     padding-bottom: var(--spacing-02);
     padding-top: var(--spacing-02);
+}
+
+.form-sub-heading {
+    font-size: var(--text-2xl);
+    margin-top: var(--spacing-08);
+    margin-bottom: 0;
+}
+
+.form-sub-heading-smaller {
+    font-size: var(--text-medium);
+    margin-top: var(--spacing-09);
+    margin-bottom: var(--spacing-03);
 }
 
 ul.margin-only-between li {
@@ -766,6 +837,7 @@ ul.reasons-success li.and {
 .simple-card {
     background-color: var(--bg-white);
     padding: var(--spacing-07);
+    margin-top: var(--spacing-06)
 }
 
 .simple-card .field-label{
@@ -837,6 +909,7 @@ img.icon {
 #skip-to-content-div {
     background-color: var(--bg-highlight-color);
     display: flex;
+    width: 100%;
 }
 
 #skip-to-content-link {
@@ -850,11 +923,12 @@ img.icon {
 
 #skip-to-content-link:focus {
     position: static;
-    width: 100%;
     height: auto;
+    width: auto;
     margin-top: var(--spacing-02);
     margin-bottom: var(--spacing-01);
     border: none;
+    font-size: var(--text-base);
     font-weight: var(--font-bold);
     color: var(--text-color);
 }
