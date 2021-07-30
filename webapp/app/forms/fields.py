@@ -3,7 +3,7 @@ from decimal import Decimal
 from flask import request
 from flask.templating import render_template
 from wtforms import RadioField, Field, StringField
-from wtforms.fields.core import BooleanField, DateField, SelectField
+from wtforms.fields.core import BooleanField, DateField, SelectField, IntegerField
 from wtforms.utils import unset_value
 from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
@@ -15,7 +15,21 @@ from babel.numbers import format_decimal, parse_decimal
 from app.forms.validators import ValidElsterCharacterSet
 
 
+class SteuerlotseIntegerField(IntegerField):
+    def __init__(self, label='', validators=None, **kwargs):
+        if kwargs.get('render_kw') and kwargs['render_kw'].get('max_characters'):
+            kwargs['render_kw']['class'] = kwargs['render_kw'].get('class', '') + \
+                                           f' input-width-{kwargs["render_kw"].get("max_characters")}'
+        super().__init__(label, validators, **kwargs)
+
+
 class SteuerlotseStringField(StringField):
+    def __init__(self, label='', validators=None, **kwargs):
+        if kwargs.get('render_kw') and kwargs['render_kw'].get('max_characters'):
+            kwargs['render_kw']['class'] = kwargs['render_kw'].get('class', '') + \
+                                           f' input-width-{kwargs["render_kw"].get("max_characters")}'
+        super().__init__(label, validators, **kwargs)
+
     def pre_validate(self, form):
         ValidElsterCharacterSet().__call__(form, self)
 
