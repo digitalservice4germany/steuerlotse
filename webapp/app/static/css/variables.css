@@ -72,6 +72,15 @@
   --spacing-10: 5.625rem;
   --spacing-11: 7.5rem;
 
+  /* Input Field Widths */
+  --input-width-2: 60px;
+  --input-width-3: 65px;
+  --input-width-4: 85px;
+  --input-width-5: 100px;
+  --input-width-6: 120px;
+  --input-width-10: 280px;
+  --input-width-25: 400px;
+
   /* Specifics */
   
   --sidebar-width: 220px;
