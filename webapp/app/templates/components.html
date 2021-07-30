@@ -78,8 +78,8 @@
     </fieldset>
 {%- endmacro %}
 
-{% macro yes_no_field(field, first_field=False) %}
-    {{ field_label(field, class='text-input-field-label') }}
+{% macro yes_no_field(field, position_details_after=False, first_field=False) %}
+    {{ field_label(field, class='text-input-field-label', position_details_after=position_details_after) }}
     {{ _field(field, first_field=first_field) }}
 {% endmacro %}
 

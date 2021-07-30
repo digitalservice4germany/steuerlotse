@@ -43,7 +43,7 @@
 {# ------------------------ #}
 
 {% macro field_label(field, class="", position_details_after=False, optional=False) %}
-    {{ components.field_label(field, class, position_details_after=position_details_after, optional) }}
+    {{ components.field_label(field, class, position_details_after, optional) }}
 {%- endmacro %}
 
 {% macro field_errors(field) -%}
