@@ -232,6 +232,7 @@ class SteuerlotseSelectField(SelectField):
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
         super(SteuerlotseSelectField, self).__init__(**kwargs)
 
+
 class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""
 
@@ -260,6 +261,8 @@ class JqueryEntriesWidget(object):
             kwargs['value'] = field._value()
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
+        if 'max_characters' not in kwargs:
+            kwargs['max_characters'] = 25
         return Markup(render_template('fields/jquery_entries.html', kwargs=kwargs))
 
 
