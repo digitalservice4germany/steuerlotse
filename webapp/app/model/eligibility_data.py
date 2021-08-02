@@ -11,36 +11,6 @@ class InvalidEligiblityError(ValueError):
     pass
 
 
-class ExpectedEligibility(BaseModel):
-
-    renten: str
-    kapitaleink_mit_steuerabzug: str
-    kapitaleink_ohne_steuerabzug: str
-    kapitaleink_mit_pauschalbetrag: str
-    kapitaleink_guenstiger: str
-    geringf: str
-    erwerbstaetigkeit: str
-    unterhalt: str
-    ausland: str
-    other: str
-    verheiratet_zusammenveranlagung: str
-    verheiratet_einzelveranlagung: str
-    geschieden_zusammenveranlagung: str
-    elster_account: str
-
-    @validator('renten')
-    def declarations_must_be_set_yes(cls, v, field: ModelField):
-        if not v == 'yes':
-            raise InvalidEligiblityError
-        return v
-
-    @validator('kapitaleink_ohne_steuerabzug', 'kapitaleink_guenstiger', 'erwerbstaetigkeit', 'unterhalt', 'ausland', 'other', 'verheiratet_einzelveranlagung', 'geschieden_zusammenveranlagung', 'elster_account')
-    def declarations_must_be_set_no(cls, v):
-        if not v == 'no':
-            raise InvalidEligiblityError
-        return v
-
-
 def declarations_must_be_set_yes(v):
     if not v == 'yes':
         raise InvalidEligiblityError
