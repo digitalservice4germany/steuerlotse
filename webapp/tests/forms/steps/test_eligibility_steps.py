@@ -32,7 +32,8 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
     ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, EligibilitySuccessDisplaySteuerlotseStep, \
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, _ELIGIBILITY_DATA_KEY, \
-    EligibilityStepPluralizeMixin, DecisionEligibilityInputFormSteuerlotseStep, EligibilityInputFormSteuerlotseStep
+    EligibilityStepPluralizeMixin, EligibilityInputFormSteuerlotseStep, \
+    MultipleDecisionEligibilityInputFormSteuerlotseStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep
@@ -103,7 +104,7 @@ class TestEligibilityStepSpecificsMixin(unittest.TestCase):
 
 class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.TestCase):
 
-    class ValidPreviousStep(DecisionEligibilityInputFormSteuerlotseStep):
+    class ValidPreviousStep(MultipleDecisionEligibilityInputFormSteuerlotseStep):
         name = "VALID_STEP"
         valid_data_model = MagicMock()
         valid_data_model.parse_obj = MagicMock(return_value=None)
@@ -112,7 +113,7 @@ class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.Tes
     class SecondValidPreviousStep(ValidPreviousStep):
         name = "SECOND_VALID_STEP"
 
-    class InValidPreviousStep(DecisionEligibilityInputFormSteuerlotseStep):
+    class InValidPreviousStep(MultipleDecisionEligibilityInputFormSteuerlotseStep):
         name = "INVALID_STEP"
         invalid_data_model = MagicMock()
         invalid_data_model.parse_obj = MagicMock(side_effect=ValidationError([], None))
