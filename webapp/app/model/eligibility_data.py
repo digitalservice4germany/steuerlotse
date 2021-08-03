@@ -23,17 +23,7 @@ def declarations_must_be_set_no(v):
     return v
 
 
-class MaritalStatusEligibilityData(BaseModel, PotentialDataModelKeysMixin):
-    marital_status_eligibility: str
-
-    @validator('marital_status_eligibility')
-    def must_be_correct_marital_status(cls, v):
-        if v not in ['married', 'widowed', 'single', 'divorced',]:
-            raise ValueError
-        return v
-
-
-class MarriedEligibilityData(BaseModel):
+class MarriedEligibilityData(RecursiveDataModel):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -43,7 +33,7 @@ class MarriedEligibilityData(BaseModel):
         return v
 
 
-class WidowedEligibilityData(BaseModel):
+class WidowedEligibilityData(RecursiveDataModel):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -53,7 +43,7 @@ class WidowedEligibilityData(BaseModel):
         return v
 
 
-class SingleEligibilityData(BaseModel):
+class SingleEligibilityData(RecursiveDataModel):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -63,7 +53,7 @@ class SingleEligibilityData(BaseModel):
         return v
 
 
-class DivorcedEligibilityData(BaseModel):
+class DivorcedEligibilityData(RecursiveDataModel):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')

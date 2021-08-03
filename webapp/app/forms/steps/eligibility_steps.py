@@ -14,7 +14,7 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     DivorcedJointTaxesEligibilityData, UserBNoElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
     UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData, MarriedEligibilityData, WidowedEligibilityData, \
-    SingleEligibilityData, DivorcedEligibilityData, MaritalStatusEligibilityData, NotSeparatedEligibilityData, \
+    SingleEligibilityData, DivorcedEligibilityData, NotSeparatedEligibilityData, \
     UserAElsterAccountEligibilityData, EmploymentIncomeEligibilityData, NoInvestmentIncomeEligibilityData, \
     MoreThanMinimalInvestmentIncome
 from app.model.recursive_data import PreviousFieldsMissingError
@@ -138,7 +138,7 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
 
     def delete_not_dependent_data(self, stored_data):
         """ Delete the data that is not (recursively) part of the first model in the list of next step data models. """
-        return dict(filter(lambda elem: elem[0] in self.next_step_data_models[0].get_all_potential_keys(),
+        return dict(filter(lambda elem: elem[0] in self.next_step_data_models[0][0].get_all_potential_keys(),
                            stored_data.items()))
 
     @classmethod
@@ -170,12 +170,12 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "marital_status"
     title = _l('form.eligibility.marital_status-title')
-    next_step_data_models = {
+    next_step_data_models = [
         (MarriedEligibilityData, "separated"),
         (WidowedEligibilityData, "single_alimony"),
         (SingleEligibilityData, "single_alimony"),
         (DivorcedEligibilityData, "divorced_joint_taxes"),
-    }
+    ]
 
     class InputForm(SteuerlotseBaseForm):
         marital_status_eligibility = RadioField(
@@ -198,10 +198,10 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
 
 class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "separated"
-    next_step_data_models = {
+    next_step_data_models = [
         (SeparatedEligibilityData, 'married_alimony'),
         (NotSeparatedEligibilityData, "married_joint_taxes"),
-    }
+    ]
     title = _l('form.eligibility.separated_since_last_year-title')
 
     class InputForm(SteuerlotseBaseForm):
@@ -224,9 +224,9 @@ class MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailu
 
 class MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "married_joint_taxes"
-    next_step_data_models = {
+    next_step_data_models = [
         (MarriedJointTaxesEligibilityData, 'married_alimony'),
-    }
+    ]
     failure_step_name = MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.joint_taxes-title')
 
@@ -250,9 +250,9 @@ class MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureD
 
 class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "married_alimony"
-    next_step_data_models = {
+    next_step_data_models = [
         (AlimonyMarriedEligibilityData, 'user_a_has_elster_account'),
-    }
+    ]
     failure_step_name = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.alimony-title')
 
@@ -281,10 +281,10 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
 
 class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "user_a_has_elster_account"
-    next_step_data_models = {
+    next_step_data_models = [
         (UserANoElsterAccountEligibilityData, 'pension'),
         (UserAElsterAccountEligibilityData, 'user_b_has_elster_account'),
-    }
+    ]
     title = _l('form.eligibility.user_a_has_elster_account-title')
 
     class InputForm(SteuerlotseBaseForm):
@@ -307,9 +307,9 @@ class UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFail
 
 class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "user_b_has_elster_account"
-    next_step_data_models = {
+    next_step_data_models = [
         (UserBNoElsterAccountEligibilityData, 'pension'),
-    }
+    ]
     failure_step_name = UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_b_has_elster_account-title')
 
@@ -331,9 +331,9 @@ class DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(EligibilityFail
 
 class DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "divorced_joint_taxes"
-    next_step_data_models = {
+    next_step_data_models = [
         (DivorcedJointTaxesEligibilityData, 'single_alimony'),
-    }
+    ]
     failure_step_name = DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.joint_taxes-title')
 
@@ -357,9 +357,9 @@ class SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDi
 
 class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "single_alimony"
-    next_step_data_models = {
+    next_step_data_models = [
         (AlimonyEligibilityData, 'single_elster_account'),
-    }
+    ]
     failure_step_name = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.alimony-title')
 
@@ -383,9 +383,9 @@ class SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFai
 
 class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "single_elster_account"
-    next_step_data_models = {
+    next_step_data_models = [
         (SingleUserElsterAccountEligibilityData, 'pension'),
-    }
+    ]
     failure_step_name = SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_a_has_elster_account-title')
 
@@ -409,9 +409,9 @@ class PensionEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplayS
 
 class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "pension"
-    next_step_data_models = {
+    next_step_data_models = [
         (PensionEligibilityData, 'investment_income'),
-    }
+    ]
     failure_step_name = PensionEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.pension-title')
     intro = _l('form.eligibility.pension-intro')
@@ -437,10 +437,10 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
 
 class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "investment_income"
-    next_step_data_models = {
+    next_step_data_models = [
         (InvestmentIncomeEligibilityData, 'minimal_investment_income'),
         (NoInvestmentIncomeEligibilityData, 'employment_income'),
-    }
+    ]
     title = _l('form.eligibility.investment_income-title')
 
     class InputForm(SteuerlotseBaseForm):
@@ -468,10 +468,10 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
 
 class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "minimal_investment_income"
-    next_step_data_models = {
+    next_step_data_models = [
         (MinimalInvestmentIncome, 'employment_income'),
         (MoreThanMinimalInvestmentIncome, 'taxed_investment'),
-    }
+    ]
     title = _l('form.eligibility.minimal_investment_income-title')
 
     class InputForm(SteuerlotseBaseForm):
@@ -494,9 +494,9 @@ class TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(EligibilityF
 
 class TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "taxed_investment"
-    next_step_data_models = {
+    next_step_data_models = [
         (NoTaxedInvestmentIncome, 'cheaper_check'),
-    }
+    ]
     failure_step_name = TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.taxed_investment-title')
 
@@ -520,9 +520,9 @@ class CheaperCheckEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDis
 
 class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "cheaper_check"
-    next_step_data_models = {
+    next_step_data_models = [
         (CheaperCheckEligibilityData, 'employment_income'),
-    }
+    ]
     failure_step_name = CheaperCheckEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.cheaper_check-title')
 
@@ -551,10 +551,10 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
 
 class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "employment_income"
-    next_step_data_models = {
+    next_step_data_models = [
         (NoEmploymentIncomeEligibilityData, 'income_other'),
         (EmploymentIncomeEligibilityData, 'marginal_employment'),
-    }
+    ]
     title = _l('form.eligibility.employment_income-title')
 
     class InputForm(SteuerlotseBaseForm):
@@ -588,9 +588,9 @@ class MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(Eligibili
 
 class MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "marginal_employment"
-    next_step_data_models = {
+    next_step_data_models = [
         (MarginalEmploymentEligibilityData, 'income_other'),
-    }
+    ]
     failure_step_name = MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.marginal_employment-title')
 
@@ -614,9 +614,9 @@ class IncomeOtherEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisp
 
 class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "income_other"
-    next_step_data_models = {
+    next_step_data_models = [
         (OtherIncomeEligibilityData, 'foreign_country'),
-    }
+    ]
     failure_step_name = IncomeOtherEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.income-other-title')
 
@@ -651,9 +651,9 @@ class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailur
 
 class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "foreign_country"
-    next_step_data_models = {
+    next_step_data_models = [
         (ForeignCountryEligibility, 'success'),
-    }
+    ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
 
