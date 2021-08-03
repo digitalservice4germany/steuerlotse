@@ -36,7 +36,8 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     MultipleDecisionEligibilityInputFormSteuerlotseStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
-from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep
+from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
+    MockMultipleDecisionEligibilityInputFormSteuerlotseStep
 from tests.utils import create_session_form_data
 
 
@@ -101,6 +102,52 @@ class TestEligibilityStepSpecificsMixin(unittest.TestCase):
         num_of_users = EligibilityStepMixin().number_of_users(input_data)
 
         self.assertEqual(1, num_of_users)
+
+
+class TestEligibilityInputFormSteuerlotseStepIsPreviousStep(unittest.TestCase):
+    def setUp(self):
+        self.step = MockMultipleDecisionEligibilityInputFormSteuerlotseStep
+        self.valid_data_model = MagicMock(parse_obj=MagicMock(return_value=None))
+        self.invalid_data_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
+
+    def test_if_one_model_and_data_valid_for_model_then_return_true(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'next_step_model')]
+        return_value = self.step.is_previous_step('next_step_model', {})
+        self.assertTrue(return_value)
+
+    def test_if_one_model_and_data_invalid_for_model_then_return_false(self):
+        self.step.next_step_data_models = [(self.invalid_data_model, 'next_step_model')]
+        return_value = self.step.is_previous_step('next_step_model', {})
+        self.assertFalse(return_value)
+
+    def test_if_multiple_models_and_data_valid_for_one_model_then_return_true(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'next_step_model_1'),
+                                           (self.invalid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('next_step_model_1', {})
+        self.assertTrue(return_value)
+
+        self.step.next_step_data_models = [(self.invalid_data_model, 'next_step_model_1'),
+                                           (self.valid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('next_step_model_2', {})
+        self.assertTrue(return_value)
+
+    def test_if_multiple_models_and_data_invalid_for_both_model_then_return_false(self):
+        self.step.next_step_data_models = [(self.invalid_data_model, 'next_step_model_1'),
+                                           (self.invalid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('next_step_model_1', {})
+        self.assertFalse(return_value)
+
+    def test_if_given_step_name_is_not_in_next_step_list_then_return_false(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'next_step_1'),
+                                           (self.invalid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('DIFFERENT_STEP', {})
+        self.assertFalse(return_value)
+
+    def test_if_matching_model_is_not_given_next_step_name_then_return_false(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'not_actual_next_step'),
+                                           (self.invalid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('actual_next_step', {})
+        self.assertFalse(return_value)
 
 
 class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.TestCase):
