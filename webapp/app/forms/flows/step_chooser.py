@@ -1,7 +1,10 @@
-from flask import request
+from typing import Optional
+
+from flask import session
 from werkzeug.exceptions import abort
 
 from app import app
+from app.forms.flows.multistep_flow import deserialize_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
 
@@ -39,6 +42,19 @@ class StepChooser:
                 return self.first_step.name
         else:
             return None
+
+    def _get_session_data(self, session_data_identifier=None, ttl: Optional[int] = None):
+        if session_data_identifier is None:
+            session_data_identifier = self.session_data_identifier
+        serialized_session = session.get(session_data_identifier, b"")
+
+        if self.default_data():
+            stored_data = self.default_data() | deserialize_session_data(serialized_session,
+                                                                         ttl)  # updates session_data only with non_existent values
+        else:
+            stored_data = deserialize_session_data(serialized_session, ttl)
+
+        return stored_data
 
     def get_correct_step(self, step_name) -> SteuerlotseStep:
         if self._get_possible_redirect(step_name):

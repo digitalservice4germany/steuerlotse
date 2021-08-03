@@ -1,9 +1,5 @@
-from typing import Optional
-
-from flask import session
 from flask_babel import _
 
-from app.forms.flows.multistep_flow import deserialize_session_data
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     IncomeOtherDecisionEligibilityInputFormSteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, \
@@ -88,16 +84,3 @@ class EligibilityStepChooser(StepChooser):
             if current_step.is_previous_step(step_name, stored_data):
                 return current_step
         return self.steps[self.step_order[0]]
-
-    def _get_session_data(self, session_data_identifier=None, ttl: Optional[int] = None):
-        if session_data_identifier is None:
-            session_data_identifier = self.session_data_identifier
-        serialized_session = session.get(session_data_identifier, b"")
-
-        if self.default_data():
-            stored_data = self.default_data() | deserialize_session_data(serialized_session,
-                                                                       ttl)  # updates session_data only with non_existent values
-        else:
-            stored_data = deserialize_session_data(serialized_session, ttl)
-
-        return stored_data
