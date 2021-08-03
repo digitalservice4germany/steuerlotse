@@ -5,7 +5,7 @@ from wtforms import Form, validators
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
-from app.forms.steps.eligibility_steps import MultipleDecisionEligibilityInputFormSteuerlotseStep
+from app.forms.steps.eligibility_steps import DecisionEligibilityInputFormSteuerlotseStep
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, FormSteuerlotseStep
 
 
@@ -115,7 +115,7 @@ class MockYesNoStep(FormSteuerlotseStep):
         )
 
 
-class MockMultipleDecisionEligibilityInputFormSteuerlotseStep(MultipleDecisionEligibilityInputFormSteuerlotseStep):
+class MockDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = 'multiple_decision_step'
 
 

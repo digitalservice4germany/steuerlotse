@@ -32,12 +32,11 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
     ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, EligibilitySuccessDisplaySteuerlotseStep, \
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, _ELIGIBILITY_DATA_KEY, \
-    EligibilityStepMixin, EligibilityInputFormSteuerlotseStep, \
-    MultipleDecisionEligibilityInputFormSteuerlotseStep
+    EligibilityStepMixin
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
-    MockMultipleDecisionEligibilityInputFormSteuerlotseStep
+    MockDecisionEligibilityInputFormSteuerlotseStep
 from tests.utils import create_session_form_data
 
 
@@ -106,7 +105,7 @@ class TestEligibilityStepSpecificsMixin(unittest.TestCase):
 
 class TestEligibilityInputFormSteuerlotseStepIsPreviousStep(unittest.TestCase):
     def setUp(self):
-        self.step = MockMultipleDecisionEligibilityInputFormSteuerlotseStep
+        self.step = MockDecisionEligibilityInputFormSteuerlotseStep
         self.valid_data_model = MagicMock(parse_obj=MagicMock(return_value=None))
         self.invalid_data_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
 
