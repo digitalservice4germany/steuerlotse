@@ -27,7 +27,7 @@ class IncorrectEligibilityData(Exception):
     pass
 
 
-def validate_data_with(data_model, stored_data):
+def data_fits_data_model(data_model, stored_data):
     """
     Method to find out whether the data entered by the user is eligible or not.
     """
@@ -38,16 +38,20 @@ def validate_data_with(data_model, stored_data):
     return True
 
 
-class EligibilityStepPluralizeMixin:
+class EligibilityStepMixin:
+
+    @classmethod
+    def is_previous_step(cls, possible_next_step_name, stored_data):
+        return False
 
     def number_of_users(self, input_data):
-        if validate_data_with(MarriedJointTaxesEligibilityData, input_data):
+        if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data):
             return 2
         else:
             return 1
 
 
-class EligibilityDisplaySteuerlotseStep(EligibilityStepPluralizeMixin, DisplaySteuerlotseStep):
+class EligibilityDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     session_data_identifier = _ELIGIBILITY_DATA_KEY
 
 
@@ -73,10 +77,11 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep
         return super().render(error_text=self.eligibility_error)
 
 
-class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSteuerlotseStep):
+class EligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteuerlotseStep):
     template = 'eligibility/form_full_width.html'
     data_model: BaseModel = None
     session_data_identifier = _ELIGIBILITY_DATA_KEY
+    # TODO remove
     previous_steps = None
 
     class InputForm(SteuerlotseBaseForm):
@@ -97,9 +102,9 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSte
         stored_data = super()._main_handle(stored_data)
         if request.method == "GET":
             stored_data = self.delete_not_dependent_data(stored_data)
-        self.set_correct_previous_link(stored_data)
         return stored_data
 
+    # TODO remove
     def set_correct_previous_link(self, stored_data):
         if self.previous_steps:
             back_link_url = None
@@ -109,7 +114,7 @@ class EligibilityInputFormSteuerlotseStep(EligibilityStepPluralizeMixin, FormSte
             else:
                 for previous_step in self.previous_steps:
 
-                    if validate_data_with(previous_step.data_model, stored_data):
+                    if data_fits_data_model(previous_step.data_model, stored_data):
                         back_link_url = self.url_for_step(previous_step.name)
                         break
 
@@ -158,6 +163,13 @@ class MultipleDecisionEligibilityInputFormSteuerlotseStep(EligibilityInputFormSt
                 return False
         else:
             return True
+
+    @classmethod
+    def is_previous_step(cls, possible_next_step_name, stored_data):
+        for model, step_name in cls.next_step_data_models:
+            if step_name == possible_next_step_name and data_fits_data_model(model, stored_data):
+                return True
+        return False
 
 
 class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
@@ -739,7 +751,6 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep
     template = 'eligibility/display_success.html'
 
     def __init__(self, endpoint, **kwargs):
-        kwargs['prev_step'] = ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep
         super(EligibilitySuccessDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                        header_title=_('form.eligibility.header-title'),
                                                                        **kwargs)
@@ -748,10 +759,10 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep
         stored_data = super()._main_handle(stored_data)
 
         dependent_notes = []
-        if validate_data_with(UserBNoElsterAccountEligibilityData, stored_data):
+        if data_fits_data_model(UserBNoElsterAccountEligibilityData, stored_data):
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
-        if validate_data_with(CheaperCheckEligibilityData, stored_data):
+        if data_fits_data_model(CheaperCheckEligibilityData, stored_data):
             dependent_notes.append(_('form.eligibility.result-note.cheaper_check'))
 
         self.render_info.additional_info['dependent_notes'] = dependent_notes
