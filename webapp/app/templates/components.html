@@ -103,10 +103,12 @@
 
     {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
-            <legend class="field-label {{ class }}">{{ label.text }}
-                {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
-                {% if help %}{{ help_button(label.field_id) }}{% endif %}
-            </legend>
+            <span>
+                <legend class="field-label {{ class }}">{{ label.text }}
+                    {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
+                    {% if help %}{{ help_button(label.field_id) }}{% endif %}
+                </legend>
+            </span>
         {% endif %}
     {% else %}
         <label for="{{ label.field_id }}"
