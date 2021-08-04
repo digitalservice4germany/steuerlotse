@@ -204,6 +204,7 @@ class MaritalStatusInputFormSteuerlotseStep(MultipleDecisionEligibilityInputForm
         (SingleEligibilityData, "single_alimony"),
         (DivorcedEligibilityData, "divorced_joint_taxes"),
     }
+    template = 'eligibility/form_marital_status_input.html'
 
     class InputForm(SteuerlotseBaseForm):
         marital_status_eligibility = RadioField(
