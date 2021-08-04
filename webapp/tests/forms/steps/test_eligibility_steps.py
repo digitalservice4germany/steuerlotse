@@ -453,6 +453,108 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
                              deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
+class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCase):
+    def setUp(self):
+        self.correct_session_data = {'marital_status_eligibility': 'married',
+                                     'separated_since_last_year_eligibility': 'yes',
+                                     'separated_lived_together_eligibility': 'yes'}
+
+    def test_if_post_and_session_data_correct_and_input_data_correct_then_set_next_input_step(self):
+        with app.app_context() and app.test_request_context(method='POST', data={
+            'separated_joint_taxes_eligibility': 'yes'}) as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            expected_url = step.url_for_step(MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+        self.assertEqual(expected_url, step.render_info.next_url)
+
+    def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
+        with app.app_context() and app.test_request_context(method='POST', data={
+            'separated_joint_taxes_eligibility': 'no'}) as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+        self.assertEqual(expected_url, step.render_info.next_url)
+
+    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            expected_url = step.url_for_step(SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+        self.assertEqual(expected_url, step.render_info.prev_url)
+
+    def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
+        with app.app_context() and app.test_request_context(method='POST',
+                                                            data={'separated_joint_taxes_eligibility': 'yes'}), \
+                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+                      MagicMock(side_effect=PreviousFieldsMissingError)):
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+
+            self.assertRaises(IncorrectEligibilityData, step.handle)
+
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+        session_data_with_incorrect_key = {**self.correct_session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(self.correct_session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(self.correct_session_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+        session_data = {'marital_status_eligibility': 'married',
+                        'separated_since_last_year_eligibility': 'yes',
+                        'separated_lived_together_eligibility': 'yes',
+                        'separated_joint_taxes_eligibility': 'no',
+                        'user_a_has_elster_account_eligibility': 'no',
+                        'user_b_has_elster_account_eligibility': 'no',
+                        'joint_taxes_eligibility': 'no',
+                        'alimony_eligibility': 'no',
+                        'pension_eligibility': 'yes',
+                        'investment_income_eligibility': 'no',
+                        'minimal_investment_income_eligibility': 'yes',
+                        'taxed_investment_income_eligibility': 'no',
+                        'cheaper_check_eligibility': 'no',
+                        'employment_income_eligibility': 'no',
+                        'marginal_employment_eligibility': 'yes',
+                        'other_income_eligibility': 'no',
+                        'foreign_country_eligibility': 'no'}
+
+        only_necessary_data = {'marital_status_eligibility': 'married',
+                               'separated_since_last_year_eligibility': 'yes',
+                               'separated_lived_together_eligibility': 'yes',
+                               'separated_joint_taxes_eligibility': 'no', }
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(only_necessary_data,
+                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+
 class TestMarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
 
     def test_handle_sets_correct_prev_url(self):
