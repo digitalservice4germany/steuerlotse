@@ -1208,6 +1208,29 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+        alternative_data = {'marital_status_eligibility': 'married',
+                            'separated_since_last_year_eligibility': 'yes',
+                            'separated_lived_together_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            expected_url = step.url_for_step(SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+        self.assertEqual(expected_url, step.render_info.prev_url)
+
+        alternative_data = {'marital_status_eligibility': 'married',
+                            'separated_since_last_year_eligibility': 'yes',
+                            'separated_lived_together_eligibility': 'yes',
+                            'separated_joint_taxes_eligibility': 'no'}
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+            expected_url = step.url_for_step(SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+        self.assertEqual(expected_url, step.render_info.prev_url)
+
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
         with app.app_context() and app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
