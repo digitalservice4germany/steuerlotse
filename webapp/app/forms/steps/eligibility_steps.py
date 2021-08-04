@@ -16,7 +16,8 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData, MarriedEligibilityData, WidowedEligibilityData, \
     SingleEligibilityData, DivorcedEligibilityData, NotSeparatedEligibilityData, \
     UserAElsterAccountEligibilityData, EmploymentIncomeEligibilityData, NoInvestmentIncomeEligibilityData, \
-    MoreThanMinimalInvestmentIncome
+    MoreThanMinimalInvestmentIncome, SeparatedLivedTogetherEligibilityData, SeparatedNotLivedTogetherEligibilityData, \
+    SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
 
 _ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
@@ -199,7 +200,7 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
 class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "separated"
     next_step_data_models = [
-        (SeparatedEligibilityData, 'married_alimony'),
+        (SeparatedEligibilityData, 'separated_lived_together'),
         (NotSeparatedEligibilityData, "married_joint_taxes"),
     ]
     title = _l('form.eligibility.separated_since_last_year-title')
@@ -212,6 +213,46 @@ class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormS
                                   'text': _l('form.eligibility.separated_since_last_year.detail.text')}},
             choices=[('yes', _l('form.eligibility.separated_since_last_year.yes')),
                      ('no', _l('form.eligibility.separated_since_last_year.no')),
+                     ],
+            validators=[InputRequired()])
+
+
+class SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
+    name = "separated_lived_together"
+    next_step_data_models = [
+        (SeparatedLivedTogetherEligibilityData, 'separated_joint_taxes'),
+        (SeparatedNotLivedTogetherEligibilityData, "single_alimony"),
+    ]
+    title = _l('form.eligibility.separated_lived_together-title')
+
+    class InputForm(SteuerlotseBaseForm):
+        separated_lived_together_eligibility = RadioField(
+            label="",
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.separated_lived_together.detail.title'),
+                                  'text': _l('form.eligibility.separated_lived_together.detail.text')}},
+            choices=[('yes', _l('form.eligibility.separated_lived_together.yes')),
+                     ('no', _l('form.eligibility.separated_lived_together.no')),
+                     ],
+            validators=[InputRequired()])
+
+
+class SeparatedJointTaxesEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
+    name = "separated_joint_taxes"
+    next_step_data_models = [
+        (SeparatedJointTaxesEligibilityData, 'married_alimony'),
+        (SeparatedNoJointTaxesEligibilityData, "single_alimony"),
+    ]
+    title = _l('form.eligibility.separated_joint_taxes-title')
+
+    class InputForm(SteuerlotseBaseForm):
+        separated_joint_taxes_eligibility = RadioField(
+            label="",
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.separated_joint_taxes.detail.title'),
+                                  'text': _l('form.eligibility.separated_joint_taxes.detail.text')}},
+            choices=[('yes', _l('form.eligibility.separated_joint_taxes.yes')),
+                     ('no', _l('form.eligibility.separated_joint_taxes.no')),
                      ],
             validators=[InputRequired()])
 
