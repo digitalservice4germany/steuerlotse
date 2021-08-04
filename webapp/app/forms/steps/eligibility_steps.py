@@ -189,7 +189,10 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
             **kwargs)
 
     def _main_handle(self, stored_data):
-        stored_data = super()._main_handle(stored_data)
+        super()._main_handle(stored_data)
+        # Remove all eligibility data as the flow is restarting
+        stored_data = {}
+        self._override_session_data(stored_data)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
         return stored_data
 

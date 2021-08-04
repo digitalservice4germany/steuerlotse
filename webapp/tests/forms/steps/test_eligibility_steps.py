@@ -32,7 +32,8 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
     ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, EligibilitySuccessDisplaySteuerlotseStep, \
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, _ELIGIBILITY_DATA_KEY, \
-    EligibilityStepPluralizeMixin, DecisionEligibilityInputFormSteuerlotseStep, EligibilityInputFormSteuerlotseStep
+    EligibilityStepPluralizeMixin, DecisionEligibilityInputFormSteuerlotseStep, EligibilityInputFormSteuerlotseStep, \
+    EligibilityStartDisplaySteuerlotseStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep
@@ -173,6 +174,36 @@ class TestEligibilityInputFormSteuerlotseStepSetCorrectPreviousLink(unittest.Tes
             step.set_correct_previous_link(stored_data)
 
             self.assertEqual(previous_url, step.render_info.prev_url)
+
+
+class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
+    def test_sets_correct_session_data_to_empty_dict(self):
+        session_data = {
+            _ELIGIBILITY_DATA_KEY: create_session_form_data({'marital_status_eligibility': 'single'})
+        }
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession(session_data)
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                EligibilityStartDisplaySteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual({}, deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+
+    def test_does_not_change_other_session_data(self):
+        other_session_key = 'OTHER_SESSION_KEY'
+        other_session_data = {'Galileo': 'Figaro - magnificoo'}
+        session_data = {
+            _ELIGIBILITY_DATA_KEY: create_session_form_data({'marital_status_eligibility': 'single'}),
+            other_session_key: create_session_form_data(other_session_data)
+        }
+
+        with app.app_context() and app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession(session_data)
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                EligibilityStartDisplaySteuerlotseStep.name)
+            step.handle()
+
+            self.assertEqual(other_session_data, deserialize_session_data(req.session[other_session_key]))
 
 
 class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
