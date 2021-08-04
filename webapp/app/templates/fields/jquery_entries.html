@@ -1,5 +1,7 @@
 {% set id = kwargs['id'] -%}
 {% set dynamic_div_classes = "my-2 form-row-center entries-field" %}
+{# max_characters is set in the instantiation of the field in the WTForm.
+We set a corresponding class determining the width depending on max_characters. #}
 {% if kwargs['max_characters'] %}
     {% set dynamic_input_classes = "form-control input-width-" + kwargs['max_characters'] | string %}
 {% else %}
