@@ -68,12 +68,12 @@ class StepChooser:
             next_step=self.determine_next_step(step_name)
         )
 
-    def determine_prev_step(self, step_name):
-        idx = self.step_order.index(step_name)
+    def determine_prev_step(self, current_step_name):
+        idx = self.step_order.index(current_step_name)
         return self.steps[self.step_order[idx - 1]] if idx > 0 else None
 
-    def determine_next_step(self, step_name):
-        idx = self.step_order.index(step_name)
+    def determine_next_step(self, current_step_name):
+        idx = self.step_order.index(current_step_name)
         return self.steps[self.step_order[idx + 1]] if idx < len(self.step_order) - 1 else None
 
     def default_data(self):
