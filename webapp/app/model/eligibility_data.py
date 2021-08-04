@@ -23,7 +23,7 @@ def declarations_must_be_set_no(v):
     return v
 
 
-class MarriedEligibilityData(RecursiveDataModel):
+class MarriedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -33,7 +33,7 @@ class MarriedEligibilityData(RecursiveDataModel):
         return v
 
 
-class WidowedEligibilityData(RecursiveDataModel):
+class WidowedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -43,7 +43,7 @@ class WidowedEligibilityData(RecursiveDataModel):
         return v
 
 
-class SingleEligibilityData(RecursiveDataModel):
+class SingleEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -53,7 +53,7 @@ class SingleEligibilityData(RecursiveDataModel):
         return v
 
 
-class DivorcedEligibilityData(RecursiveDataModel):
+class DivorcedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
