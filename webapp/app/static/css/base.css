@@ -711,7 +711,6 @@ footer a{
 
 /* Place legend inside the fieldset, not at its border */
 legend {
-    float: left;
 }
 
 .nav-button-row {
