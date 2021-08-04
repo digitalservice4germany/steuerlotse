@@ -228,9 +228,7 @@ class SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(DecisionEligibil
     class InputForm(SteuerlotseBaseForm):
         separated_lived_together_eligibility = RadioField(
             label="",
-            render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.separated_lived_together.detail.title'),
-                                  'text': _l('form.eligibility.separated_lived_together.detail.text')}},
+            render_kw={'hide_label': True},
             choices=[('yes', _l('form.eligibility.separated_lived_together.yes')),
                      ('no', _l('form.eligibility.separated_lived_together.no')),
                      ],
