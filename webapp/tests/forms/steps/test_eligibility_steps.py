@@ -192,9 +192,12 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
     def test_does_not_change_other_session_data(self):
         other_session_key = 'OTHER_SESSION_KEY'
         other_session_data = {'Galileo': 'Figaro - magnificoo'}
+        another_session_key = 'ANOTHER_SESSION_KEY'
+        another_session_data = {'Scaramouch': 'Fandango'}
         session_data = {
             _ELIGIBILITY_DATA_KEY: create_session_form_data({'marital_status_eligibility': 'single'}),
-            other_session_key: create_session_form_data(other_session_data)
+            other_session_key: create_session_form_data(other_session_data),
+            another_session_key: create_session_form_data(another_session_data)
         }
 
         with app.app_context() and app.test_request_context(method='GET') as req:
@@ -204,6 +207,7 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(other_session_data, deserialize_session_data(req.session[other_session_key]))
+            self.assertEqual(another_session_data, deserialize_session_data(req.session[another_session_key]))
 
 
 class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
