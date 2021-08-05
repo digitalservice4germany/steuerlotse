@@ -4815,7 +4815,7 @@ msgstr "400 - Fehlerhafte Anfrage"
 msgid "400.description"
 msgstr ""
 "In Ihrer Anfrage waren Werte (nicht) enthalten, die dazu führen, dass die"
-" Anfrage nicht verartbeitet werden kann."
+" Anfrage nicht verarbeitet werden kann."
 
 #: app/templates/error/400.html:9 app/templates/error/404.html:9
 #: app/templates/error/429.html:9 app/templates/error/500.html:9
