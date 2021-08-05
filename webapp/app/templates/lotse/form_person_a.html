@@ -4,9 +4,11 @@
 
 {% block form_content %}
     <fieldset class="grouped-input-fields">
-        <legend class="mb-0">
-            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-allgemein') }}</h2>
-        </legend>
+        <span>
+            <legend class="mb-0">
+                <h2 class="form-sub-heading">{{ _('form.lotse.person-header-allgemein') }}</h2>
+            </legend>
+        </span>
         <div class="form-row-center">
             {{ macros.render_field(form.person_a_first_name, first_field=True if not render_info.form.errors) }}
         </div>
@@ -25,9 +27,11 @@
     </fieldset>
 
     <fieldset class="grouped-input-fields">
-        <legend class="mb-0">
-            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-addresse') }}</h2>
-        </legend>
+        <span>
+            <legend class="mb-0">
+                <h2 class="form-sub-heading">{{ _('form.lotse.person-header-addresse') }}</h2>
+            </legend>
+        </span>
         <div class="form-row-center">
             {{ macros.render_field(form.person_a_street) }}
             {{ macros.render_field(form.person_a_street_number, 2) }}
@@ -43,18 +47,22 @@
     </fieldset>
 
     <fieldset class="grouped-input-fields">
-        <legend class="mb-0">
-            <h2 class="form-sub-heading">{{ _('form.lotse.person-header-religion') }}</h2>
-        </legend>
+        <span>
+            <legend class="mb-0">
+                <h2 class="form-sub-heading">{{ _('form.lotse.person-header-religion') }}</h2>
+            </legend>
+        </span>
         <div class="form-row-center">
             {{ macros.render_field(form.person_a_religion) }}
         </div>
     </fieldset>
 
     <fieldset class="grouped-input-fields">
-        <legend class="mb-0">
-            <h2 class="form-sub-heading mb-3">{{ _('form.lotse.person-header-beh') }}</h2>
-        </legend>
+        <span>
+            <legend class="mb-0">
+                <h2 class="form-sub-heading mb-3">{{ _('form.lotse.person-header-beh') }}</h2>
+            </legend>
+        </span>
         <p>{{ _('form.lotse.person-header-beh-intro') }}</p>
         <div class="form-row-center">
             {{ macros.render_field(form.person_a_beh_grad, 4) }}
