@@ -709,11 +709,6 @@ footer a{
     font-weight: var(--font-normal);
 }
 
-/* Place legend inside the fieldset, not at its border */
-legend {
-    float: left;
-}
-
 .nav-button-row {
     margin-top: var(--spacing-09);
 }

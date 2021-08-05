@@ -1,7 +1,10 @@
-from flask import request
+from typing import Optional
+
+from flask import session
 from werkzeug.exceptions import abort
 
 from app import app
+from app.forms.flows.multistep_flow import deserialize_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
 
@@ -12,10 +15,12 @@ class StepChooser:
     the session cookie.
     """
     _DEBUG_DATA = None
+    session_data_identifier = None
 
     def __init__(self, title, steps, endpoint, overview_step=None):
         self.title = title
         self.steps = {s.name: s for s in steps}
+        self.step_order = [s.name for s in steps]
         self.first_step = next(iter(self.steps.values()))
         self.endpoint = endpoint
         self.overview_step = overview_step
@@ -38,20 +43,38 @@ class StepChooser:
         else:
             return None
 
+    def _get_session_data(self, session_data_identifier=None, ttl: Optional[int] = None):
+        if session_data_identifier is None:
+            session_data_identifier = self.session_data_identifier
+        serialized_session = session.get(session_data_identifier, b"")
+
+        if self.default_data():
+            stored_data = self.default_data() | deserialize_session_data(serialized_session,
+                                                                         ttl)  # updates session_data only with non_existent values
+        else:
+            stored_data = deserialize_session_data(serialized_session, ttl)
+
+        return stored_data
+
     def get_correct_step(self, step_name) -> SteuerlotseStep:
         if self._get_possible_redirect(step_name):
             return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
-
-        step_names, step_types = list(self.steps.keys()), list(self.steps.values())
-        idx = step_names.index(step_name)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
             endpoint=self.endpoint,
             overview_step=self.overview_step,
-            prev_step=step_types[idx - 1] if idx > 0 else None,
-            next_step=step_types[idx + 1] if idx < len(step_types) - 1 else None
+            prev_step=self.determine_prev_step(step_name),
+            next_step=self.determine_next_step(step_name)
         )
+
+    def determine_prev_step(self, step_name):
+        idx = self.step_order.index(step_name)
+        return self.steps[self.step_order[idx - 1]] if idx > 0 else None
+
+    def determine_next_step(self, step_name):
+        idx = self.step_order.index(step_name)
+        return self.steps[self.step_order[idx + 1]] if idx < len(self.step_order) - 1 else None
 
     def default_data(self):
         if app.config['DEBUG_DATA']:
