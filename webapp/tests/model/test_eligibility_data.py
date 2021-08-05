@@ -409,14 +409,44 @@ class TestAlimonyEligibilityData(unittest.TestCase):
                 patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.parse_obj'):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_widowed_and_single_status_and_divorced_joint_taxes_invalid_and_alimony_no_then_raise_validation_error(self):
+    def test_if_not_separated_living_valid_and_alimony_yes_then_raise_validation_error(self):
+        non_valid_data = {'alimony_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
+                patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
+                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.parse_obj'), \
+                patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedNoJointTaxesEligibilityData))):
+            self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
+
+    def test_if_not_joint_taxes_valid_and_alimony_yes_then_raise_validation_error(self):
+        non_valid_data = {'alimony_eligibility': 'yes'}
+        with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
+                patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
+                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedNotLivedTogetherEligibilityData))), \
+                patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.parse_obj'):
+            self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
+
+    def test_if_all_previous_data_is_invalid_and_alimony_no_then_raise_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
         with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
                 patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
                 patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.parse_obj',
-                      MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))):
+                      MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
+             patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedNotLivedTogetherEligibilityData))), \
+            patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedNoJointTaxesEligibilityData))):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, valid_data)
 
     def test_if_widowed_valid_and_alimony_no_then_raise_no_validation_error(self):
@@ -453,6 +483,38 @@ class TestAlimonyEligibilityData(unittest.TestCase):
                     patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
                           MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
                     patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
+                          MagicMock(return_value=None)):
+                AlimonyEligibilityData.parse_obj(valid_data)
+        except ValidationError as e:
+            self.fail("AlimonyEligibilityData.parse_obj should not raise validation error")
+
+    def test_if_not_separated_living_valid_and_alimony_no_then_raise_no_validation_error(self):
+        valid_data = {'alimony_eligibility': 'no'}
+        try:
+            with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
+                       MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
+                    patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
+                          MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
+                    patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__',
+                          MagicMock(return_value=None)):
+                AlimonyEligibilityData.parse_obj(valid_data)
+        except ValidationError as e:
+            self.fail("AlimonyEligibilityData.parse_obj should not raise validation error")
+
+    def test_if_not_separated_joint_taxes_valid_and_alimony_no_then_raise_no_validation_error(self):
+        valid_data = {'alimony_eligibility': 'no'}
+        try:
+            with patch('app.model.eligibility_data.WidowedEligibilityData.parse_obj',
+                       MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
+                    patch('app.model.eligibility_data.SingleEligibilityData.parse_obj',
+                          MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
+                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.parse_obj',
+                      MagicMock(side_effect=ValidationError([], SeparatedNotLivedTogetherEligibilityData))), \
+                    patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__',
                           MagicMock(return_value=None)):
                 AlimonyEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
