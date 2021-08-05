@@ -46,7 +46,8 @@ class EligibilityStepMixin:
         return False
 
     def number_of_users(self, input_data):
-        if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data):
+        if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data) \
+                or data_fits_data_model(SeparatedJointTaxesEligibilityData, input_data):
             return 2
         else:
             return 1
