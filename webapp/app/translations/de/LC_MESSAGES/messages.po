@@ -4878,11 +4878,11 @@ msgid "forms.eligibility.incorrect_data.description"
 msgstr ""
 "Die gesendeten Daten konnten nicht verarbeitet werden. Bitte versuchen "
 "Sie es erneut. Benutzen Sie dafür den Zurück-Knopf in Ihrem Browser oder "
-"gehen Sie zurück zu Voraussetzungen prüfen."
+"gehen Sie zurück zu Nutzung prüfen."
 
 #: app/templates/error/incorrect_eligiblity_data.html:9
 msgid "form.eligibility.back-to-form"
-msgstr "Zurück zu Voraussetzungen prüfen"
+msgstr "Zurück zu Nutzung prüfen"
 
 #: app/templates/error/pdf_not_found.html:8
 msgid "pdf_not_found.title"
