@@ -531,7 +531,7 @@ msgstr ""
 "wenn Sie noch kein Konto bei Mein ELSTER haben. Zurzeit können Sie den "
 "Steuerlotsen daher nicht nutzen.</p><p>Es gibt bereits Überlegungen, den "
 "Steuerlotsen so weiterzuentwickeln, dass er auch genutzt werden kann, "
-"wenn bereits ein Konto bei Mein ELSTER  vorhanden ist."
+"wenn bereits ein Konto bei Mein ELSTER vorhanden ist."
 
 #: app/forms/steps/eligibility_steps.py:354
 msgid "form.eligibility.user_b_has_elster_account-title"
@@ -5184,4 +5184,3 @@ msgstr "Vorbereitungshilfe herunterladen"
 
 #~ msgid "form.eligibility.foreign-country-label"
 #~ msgstr "Im Ausland lebend"
-
