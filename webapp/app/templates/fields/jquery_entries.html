@@ -9,11 +9,12 @@ We set a corresponding class determining the width depending on max_characters. 
 {% endif %}
 {% macro remove_button() %}<button type="button" id="{{id}}-remove" class="remove-button" aria-label="{{ _('jquery_entries.remove.aria-label') }}">×</button>{% endmacro -%}
 
+
+{% macro entry(kwargs, item=None) %}<div class="{{dynamic_div_classes}}"><input {% if 'autofocus' in kwargs %}autofocus {% endif %} {% if 'placeholder' in kwargs %}placeholder="{{kwargs['placeholder']}}" {% endif %} class="dynamic-entry {{dynamic_input_classes}}" type="text" {% if item %}value="{{item}}"{% endif %}>{{remove_button()}}</div>{% endmacro %}
+
 <div id="{{id}}-div">
     {%- for item in kwargs['data'] %}
-    <div class="{{dynamic_div_classes}}">
-        <input {% if 'autofocus' in kwargs %}autofocus {% endif %}class="dynamic-entry {{dynamic_input_classes}}" type="text" value="{{item}}">{{remove_button()}}
-    </div>
+        {{ entry(kwargs, item) }}
     {%- endfor -%}
 </div>
 <input name="{{id}}" type="hidden" value="{{kwargs['value']}}" />
@@ -30,7 +31,7 @@ We set a corresponding class determining the width depending on max_characters. 
 
         $('#{{id}}-add').on('click', function (event) {
             event.preventDefault();
-            $app.append($('<div class="{{dynamic_div_classes}}"><input class="dynamic-entry {{dynamic_input_classes}}" type="text">{{remove_button()}}</div>'))
+            $app.append($('{{entry(kwargs)}}'))
                 .find('input').focus();
         });
 
