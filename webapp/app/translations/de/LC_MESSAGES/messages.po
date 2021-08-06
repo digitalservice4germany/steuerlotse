@@ -669,7 +669,7 @@ msgstr "Nein, das trifft auf die Kapitalerträge nicht zu."
 msgid "form.eligibility.minimal_investment_income.multiple.yes"
 msgstr ""
 "Ja, alle unsere Kapitalerträge liegen unter dem Sparerpauschbetrag, den "
-"ich in Anspruch genommen habe."
+"wir in Anspruch genommen haben."
 
 #: app/forms/steps/eligibility_steps.py:539
 msgid "form.eligibility.minimal_investment_income.multiple.no"
