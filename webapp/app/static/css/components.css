@@ -9,7 +9,6 @@
     text-decoration: none;
     color: var(--inverse-text-color);
     background: var(--link-color);
-    background-clip: padding-box;
     display: inline-block;
     position: relative;
     border: none;
