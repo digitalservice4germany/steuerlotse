@@ -529,6 +529,17 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
                      ],
             validators=[InputRequired()])
 
+    class InputMultipleForm(SteuerlotseBaseForm):
+        minimal_investment_income_eligibility = RadioField(
+            label="",
+            render_kw={'hide_label': True,
+                       'detail': {'title': _l('form.eligibility.minimal_investment_income.detail.title'),
+                                  'text': _l('form.eligibility.minimal_investment_income.detail.text')}},
+            choices=[('yes', _l('form.eligibility.minimal_investment_income.multiple.yes')),
+                     ('no', _l('form.eligibility.minimal_investment_income.multiple.no')),
+                     ],
+            validators=[InputRequired()])
+
 
 class TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'taxed_investment_failure'
