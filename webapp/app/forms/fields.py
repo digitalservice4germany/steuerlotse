@@ -44,6 +44,10 @@ class MultipleInputFieldWidget(TextInput):
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
             kwargs['class'] = kwargs.get('class', '') + f' input-width-{input_field_length}'
 
+            if idx > 0:
+                # Make sure that autofocus is only set for the first input field
+                kwargs['autofocus'] = False
+
             if len(self.input_field_labels) > idx:
                 joined_input_fields += Markup(
                     f'<div>'
