@@ -88,6 +88,10 @@
             }
         }
 
+        function remove_familienstand_date_input(){
+            delete_date_field_value('familienstand_date');
+        }
+
         function show_hide_familienstand_date_field() {
             show_hide_date_field($('input[value="married"]').is(':checked') ||
                 $('input[value="widowed"]').is(':checked') ||
