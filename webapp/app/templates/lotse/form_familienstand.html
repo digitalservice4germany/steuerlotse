@@ -53,12 +53,17 @@
             }
         }
 
+
+        function delete_date_field_value(input_name){
+            $('#' + input_name + ' :input').val('');
+        }
+
         function show_hide_date_field(show_condition, input_name) {
             if (show_condition) {
                 $('#' + input_name + '_field').show();
             } else {
                 $('#' + input_name + '_field').hide();
-                $('#' + input_name).attr('value', '');
+                delete_date_field_value(input_name);
             }
         }
 
@@ -153,6 +158,7 @@
         }
 
         function show_hide_all_fields() {
+            remove_familienstand_date_input();
             show_hide_familienstand_date_field()
             show_hide_familienstand_married_lived_separated_field()
             show_hide_familienstand_married_lived_separated_since_field()
