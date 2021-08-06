@@ -66,6 +66,34 @@ a:visited{
 
 /* INPUTS */
 
+.input-width-2 {
+    width: var(--input-width-2);
+}
+
+.input-width-3 {
+    width: var(--input-width-3);
+}
+
+.input-width-4 {
+    width: var(--input-width-4);
+}
+
+.input-width-5 {
+    width: var(--input-width-5);
+}
+
+.input-width-6 {
+    width: var(--input-width-6);
+}
+
+.input-width-10 {
+    width: var(--input-width-10);
+}
+
+.input-width-25 {
+    max-width: var(--input-width-25);
+}
+
 input.form-control{
     border: 2px solid var(--border-color);
     border-radius: 0;

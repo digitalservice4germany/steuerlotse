@@ -223,7 +223,8 @@ class DivorcedJointTaxesEligibilityData(RecursiveDataModel):
 class AlimonyEligibilityData(RecursiveDataModel):
     is_widowed: Optional[WidowedEligibilityData]
     is_single: Optional[SingleEligibilityData]
-    no_divorced_joint_taxes: Optional[DivorcedJointTaxesEligibilityData]
+    divorced_joint_taxes: Optional[DivorcedJointTaxesEligibilityData]
+    no_separated_lived_together: Optional[SeparatedNotLivedTogetherEligibilityData]
     no_separated_joint_taxes: Optional[SeparatedNoJointTaxesEligibilityData]
     alimony_eligibility: str
 

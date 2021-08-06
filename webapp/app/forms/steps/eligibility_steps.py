@@ -46,7 +46,8 @@ class EligibilityStepMixin:
         return False
 
     def number_of_users(self, input_data):
-        if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data):
+        if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data) \
+                or data_fits_data_model(SeparatedJointTaxesEligibilityData, input_data):
             return 2
         else:
             return 1
@@ -164,6 +165,9 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
 
     def _main_handle(self, stored_data):
         stored_data = super()._main_handle(stored_data)
+        # Remove all eligibility data as the flow is restarting
+        stored_data = {}
+        self._override_session_data(stored_data)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
         return stored_data
 
@@ -177,6 +181,7 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
         (SingleEligibilityData, "single_alimony"),
         (DivorcedEligibilityData, "divorced_joint_taxes"),
     ]
+    template = 'eligibility/form_marital_status_input.html'
 
     class InputForm(SteuerlotseBaseForm):
         marital_status_eligibility = RadioField(
