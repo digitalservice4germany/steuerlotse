@@ -782,7 +782,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
-    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
+    def test_if_not_separated_then_set_prev_input_step_correctly(self):
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -791,6 +791,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_separated_correct_session_data_then_set_prev_input_step_correctly(self):
         alternative_data = {**self.correct_session_data, **{'separated_since_last_year_eligibility': 'yes',
                                                             'separated_lived_together_eligibility': 'yes',
                                                             'separated_joint_taxes_eligibility': 'yes'}}
@@ -1257,7 +1258,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
-    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
+    def test_if_divorced_session_data_correct_then_set_prev_input_step_correctly(self):
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -1266,6 +1267,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_single_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {'marital_status_eligibility': 'single'}
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
@@ -1275,6 +1277,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_widowed_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {'marital_status_eligibility': 'widowed'}
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
@@ -1284,6 +1287,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_separated_not_lived_together_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {'marital_status_eligibility': 'married',
                             'separated_since_last_year_eligibility': 'yes',
                             'separated_lived_together_eligibility': 'no'}
@@ -1295,6 +1299,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_separated_not_joint_taxes_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {'marital_status_eligibility': 'married',
                             'separated_since_last_year_eligibility': 'yes',
                             'separated_lived_together_eligibility': 'yes',
@@ -1527,7 +1532,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
-    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
+    def test_if_no_joint_taxes_session_data_correct_then_set_prev_input_step_correctly(self):
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -1536,12 +1541,13 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_joint_taxes_user_a_no_elster_account_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {'marital_status_eligibility': 'married',
                             'separated_since_last_year_eligibility': 'no',
                             'joint_taxes_eligibility': 'yes',
-                            'alimony_eligibility': 'no'}
+                            'alimony_eligibility': 'no',
+                            'user_a_has_elster_account_eligibility': 'no'}
 
-        alternative_data = {**alternative_data, **{'user_a_has_elster_account_eligibility': 'no'}}
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -1550,8 +1556,13 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
-        alternative_data = {**alternative_data, **{'user_a_has_elster_account_eligibility': 'yes',
-                                                   'user_b_has_elster_account_eligibility': 'no'}}
+    def test_if_joint_taxes_user_b_no_elster_account_session_data_correct_then_set_prev_input_step_correctly(self):
+        alternative_data = {'marital_status_eligibility': 'married',
+                            'separated_since_last_year_eligibility': 'no',
+                            'joint_taxes_eligibility': 'yes',
+                            'alimony_eligibility': 'no',
+                            'user_a_has_elster_account_eligibility': 'yes',
+                            'user_b_has_elster_account_eligibility': 'no'}
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -2209,7 +2220,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
-    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
+    def test_if_incomes_but_no_cheaper_check_session_data_correct_then_set_prev_input_step_correctly(self):
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -2218,6 +2229,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_incomes_but_minimal_investment_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {**self.correct_session_data.copy(), **{'minimal_investment_income_eligibility': 'yes'}}
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
@@ -2227,6 +2239,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    def test_if_no_incomes_session_data_correct_then_set_prev_input_step_correctly(self):
         alternative_data = {**self.correct_session_data.copy(), **{'investment_income_eligibility': 'no'}}
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
@@ -2534,7 +2547,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
-    def test_if_session_data_correct_then_set_prev_url_correct(self):
+    def test_if_no_employment_income_session_data_correct_then_set_prev_url_correct(self):
         with app.app_context() and app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
@@ -2544,12 +2557,13 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
 
         self.assertEqual(expected_url, step.render_info.prev_url)
 
-        alternative_path_data = {**self.correct_session_data.copy(),
-                                 **{'employment_income_eligibility': 'yes',
-                                    'marginal_employment_eligibility': 'yes'}}
+    def test_if_employment_income_but_marginal_session_data_correct_then_set_prev_url_correct(self):
+        alternative_data = {**self.correct_session_data.copy(),
+                            **{'employment_income_eligibility': 'yes',
+                               'marginal_employment_eligibility': 'yes'}}
 
         with app.app_context() and app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_path_data)})
+            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
             expected_url = step.url_for_step(MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
