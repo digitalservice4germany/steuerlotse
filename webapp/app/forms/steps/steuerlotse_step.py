@@ -73,6 +73,11 @@ class SteuerlotseStep(object):
 
         return stored_data
 
+    def _override_session_data(self, stored_data, session_data_identifier=None):
+        if session_data_identifier is None:
+            session_data_identifier = self.session_data_identifier
+        session[session_data_identifier] = serialize_session_data(stored_data)
+
     def _handle_redirects(self):
         if self.render_info.redirect_url:
             return redirect(self.render_info.redirect_url)
@@ -162,11 +167,6 @@ class FormSteuerlotseStep(SteuerlotseStep):
             filtered_data = dict(filter(lambda elem: not any([elem[0].endswith(data_field_postfix)
                                                               for data_field_postfix in post_fixes]), filtered_data.items()))
         return filtered_data
-
-    def _override_session_data(self, stored_data, session_data_identifier=None):
-        if session_data_identifier is None:
-            session_data_identifier = self.session_data_identifier
-        session[session_data_identifier] = serialize_session_data(stored_data)
 
 
 class DisplaySteuerlotseStep(SteuerlotseStep):

@@ -3,7 +3,7 @@ from decimal import Decimal
 from flask import request
 from flask.templating import render_template
 from wtforms import RadioField, Field, StringField
-from wtforms.fields.core import BooleanField, DateField, SelectField
+from wtforms.fields.core import BooleanField, DateField, SelectField, IntegerField
 from wtforms.utils import unset_value
 from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
@@ -16,6 +16,7 @@ from app.forms.validators import ValidElsterCharacterSet
 
 
 class SteuerlotseStringField(StringField):
+
     def pre_validate(self, form):
         ValidElsterCharacterSet().__call__(form, self)
 
@@ -41,6 +42,7 @@ class MultipleInputFieldWidget(TextInput):
             sub_field_id = f'{field.id}_{idx + 1}'
             kwargs['id'] = sub_field_id
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
+            kwargs['class'] = kwargs.get('class', '') + f' input-width-{input_field_length}'
 
             if len(self.input_field_labels) > idx:
                 joined_input_fields += Markup(
@@ -217,6 +219,7 @@ class SteuerlotseSelectField(SelectField):
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
         super(SteuerlotseSelectField, self).__init__(**kwargs)
 
+
 class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""
 
@@ -245,6 +248,8 @@ class JqueryEntriesWidget(object):
             kwargs['value'] = field._value()
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
+        if 'max_characters' not in kwargs:
+            kwargs['max_characters'] = 25
         return Markup(render_template('fields/jquery_entries.html', kwargs=kwargs))
 
 

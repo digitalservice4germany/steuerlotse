@@ -7,7 +7,7 @@ from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelect
 
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
-from wtforms import IntegerField, RadioField, validators, BooleanField
+from wtforms import RadioField, validators, BooleanField, IntegerField
 from wtforms.validators import InputRequired
 
 from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
@@ -238,35 +238,43 @@ class StepPersonA(FormStep):
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired()])
         person_a_first_name = SteuerlotseStringField(
             label=_l('form.lotse.field_person_first_name'),
-            render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
+                       'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
         person_a_last_name = SteuerlotseStringField(
             label=_l('form.lotse.field_person_last_name'),
-            render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
+                       'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
         person_a_street = SteuerlotseStringField(
             label=_l('form.lotse.field_person_street'),
-            render_kw={'data_label': _l('form.lotse.field_person_street.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_street.data_label'),
+                       'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
         person_a_street_number = IntegerField(
             label=_l('form.lotse.field_person_street_number'),
-            render_kw={'data_label': _l('form.lotse.field_person_street_number.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_street_number.data_label'),
+                       'max_characters': 4},
             validators=[InputRequired(), IntegerLength(max=4)])
         person_a_street_number_ext = SteuerlotseStringField(
             label=_l('form.lotse.field_person_street_number_ext'),
-            render_kw={'data_label': _l('form.lotse.field_person_street_number_ext.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_street_number_ext.data_label'),
+                       'max_characters': 6},
             validators=[validators.length(max=6)])
         person_a_address_ext = SteuerlotseStringField(
             label=_l('form.lotse.field_person_address_ext'),
-            render_kw={'data_label': _l('form.lotse.field_person_address_ext.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_address_ext.data_label'),
+                       'max_characters': 25},
             validators=[validators.length(max=25)])
         person_a_plz = SteuerlotseStringField(
             label=_l('form.lotse.field_person_plz'),
-            render_kw={'data_label': _l('form.lotse.field_person_plz.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
+                       'max_characters': 5},
             validators=[InputRequired(), DecimalOnly(), validators.length(max=5)])
         person_a_town = SteuerlotseStringField(
             label=_l('form.lotse.field_person_town'),
-            render_kw={'data_label': _l('form.lotse.field_person_town.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_town.data_label'),
+                       'max_characters': 25},
             validators=[InputRequired(), validators.length(max=20)])
         person_a_religion = get_religion_field()
 
@@ -276,7 +284,8 @@ class StepPersonA(FormStep):
                 validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'example_input': _l('form.lotse.field_person_beh_grad.example_input')})
+                       'example_input': _l('form.lotse.field_person_beh_grad.example_input'),
+                       'max_characters': 3})
         person_a_blind = BooleanField(
             label=_l('form.lotse.field_person_blind'),
             render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
@@ -355,11 +364,13 @@ class StepPersonB(FormStep):
             validators=[InputRequired()])
         person_b_first_name = SteuerlotseStringField(
             label=_l('form.lotse.field_person_first_name'),
-            render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
+                       'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
         person_b_last_name = SteuerlotseStringField(
             label=_l('form.lotse.field_person_last_name'),
-            render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
+                       'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
 
         person_b_same_address = RadioField(
@@ -372,31 +383,36 @@ class StepPersonB(FormStep):
         person_b_street = SteuerlotseStringField(
             label=_l('form.lotse.field_person_street'),
             render_kw={'data_label': _l('form.lotse.field_person_street.data_label'),
+                       'max_characters': 25,
                        'required_if_shown': True},
             validators=[input_required_if_not_same_address, validators.length(max=25)])
         person_b_street_number = IntegerField(
             label=_l('form.lotse.field_person_street_number'),
             render_kw={'data_label': _l('form.lotse.field_person_street_number'
                                         '.data_label'),
+                       'max_characters': 4,
                        'required_if_shown': True},
             validators=[input_required_if_not_same_address, IntegerLength(max=4)])
         person_b_street_number_ext = SteuerlotseStringField(
             label=_l('form.lotse.field_person_street_number_ext'),
-            render_kw={'data_label': _l('form.lotse.field_person_street_number_ext.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_street_number_ext.data_label'),
+                       'max_characters': 6},
             validators=[validators.length(max=6)])
         person_b_address_ext = SteuerlotseStringField(
             label=_l('form.lotse.field_person_address_ext'),
-            render_kw={
-                'data_label': _l('form.lotse.field_person_address_ext.data_label')},
+            render_kw={'data_label': _l('form.lotse.field_person_address_ext.data_label'),
+                       'max_characters': 25},
             validators=[validators.length(max=25)])
         person_b_plz = SteuerlotseStringField(
             label=_l('form.lotse.field_person_plz'),
             render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
+                       'max_characters': 5,
                        'required_if_shown': True},
             validators=[input_required_if_not_same_address, DecimalOnly(), validators.length(max=5)])
         person_b_town = SteuerlotseStringField(
             label=_l('form.lotse.field_person_town'),
             render_kw={'data_label': _l('form.lotse.field_person_town.data_label'),
+                       'max_characters': 25,
                        'required_if_shown': True},
             validators=[input_required_if_not_same_address, validators.length(max=20)])
         person_b_religion = get_religion_field()
@@ -406,7 +422,8 @@ class StepPersonB(FormStep):
             validators=[validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'example_input': _l('form.lotse.field_person_beh_grad.example_input')})
+                       'example_input': _l('form.lotse.field_person_beh_grad.example_input'),
+                       'max_characters': 3})
         person_b_blind = BooleanField(
             label=_l('form.lotse.field_person_blind'),
             render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
@@ -451,7 +468,8 @@ class StepIban(FormStep):
         iban = SteuerlotseStringField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
-                       'example_input': _l('form.loste.field_iban.example_input')},
+                       'example_input': _l('form.loste.field_iban.example_input'),
+                       'max_characters': 25},
             validators=[InputRequired(), ValidIban()],
             filters=[lambda value: value.replace(' ', '') if value else value])
 
@@ -462,7 +480,8 @@ class StepIban(FormStep):
         iban = SteuerlotseStringField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
-                       'example_input': _l('form.loste.field_iban.example_input')},
+                       'example_input': _l('form.loste.field_iban.example_input'),
+                       'max_characters': 25},
             validators=[InputRequired(), ValidIban()],
             filters=[lambda value: value.replace(' ', '') if value else value])
 
