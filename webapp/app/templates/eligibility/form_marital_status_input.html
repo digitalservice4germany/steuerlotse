@@ -1,0 +1,24 @@
+{% extends 'eligibility/form_full_width.html' %}
+{% import "macros.html" as macros %}
+
+{% block form_content %}
+    {{ super() }}
+    <div id="marital_status_widowed_note" class="hidden mt-4">
+        <span>{{ _('eligibility.marital_status.widowed_note') }}</span>
+    </div>
+{% endblock %}
+
+{% block optional_js %}
+    {{ super() }}
+    <script>
+        function show_hide_widowed_note() {
+            if ($('input[value="widowed"]').is(':checked')) {
+                $('#marital_status_widowed_note').show();
+            } else {
+                $('#marital_status_widowed_note').hide();
+            }
+        }
+
+        $(`input[type="radio"]`).change(show_hide_widowed_note)
+    </script>
+{% endblock %}

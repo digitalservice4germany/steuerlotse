@@ -23,7 +23,8 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep, SingleAlimonyEligibilityFailureDisplaySteuerlotseStep, \
     SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep, PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
-    _ELIGIBILITY_DATA_KEY
+    _ELIGIBILITY_DATA_KEY, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
+    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
 
 
@@ -43,6 +44,8 @@ class EligibilityStepChooser(StepChooser):
                 EligibilityStartDisplaySteuerlotseStep,
                 MaritalStatusInputFormSteuerlotseStep,
                 SeparatedEligibilityInputFormSteuerlotseStep,
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep,
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep,
                 MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
                 MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep,
                 UserAElsterAccountEligibilityInputFormSteuerlotseStep,

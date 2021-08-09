@@ -14,4 +14,4 @@ with open('logging.json') as f:
 
 workers = 4
 bind = '0.0.0.0:5000'
-worker_tmp_dir = '/dev/shm'
+worker_tmp_dir = '/tmp'

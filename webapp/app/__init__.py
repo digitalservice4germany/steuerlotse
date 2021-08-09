@@ -42,7 +42,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = 'strong'
 
-db = SQLAlchemy(app)
+# Set pool_pre_ping to fix problems with stale connection we've been seeing.
+db = SQLAlchemy(app, engine_options={'pool_pre_ping': True})
 migrate = Migrate(app, db)
 
 register_commands(app)

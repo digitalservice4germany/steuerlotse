@@ -78,7 +78,13 @@
         {% set classes = "form-control " + class %}
         {% if field.render_kw and 'class' in field.render_kw %}
             {% set classes = classes + field.render_kw['class'] %}
-        {% elif field.errors %}
+        {% endif %}
+        {# max_characters is set in the instantiation of the field in the WTForm.
+        We set a corresponding class determining the width depending on max_characters. #}
+        {% if field.render_kw and 'max_characters' in field.render_kw %}
+            {% set classes = classes + ' input-width-' + field.render_kw['max_characters'] | string %}
+        {% endif %}
+        {% if field.errors %}
             {% set classes = classes + " field-error-found" %}
         {% endif %}
 
