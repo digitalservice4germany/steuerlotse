@@ -131,10 +131,28 @@ class TestEligibilityInputFormSteuerlotseStepIsPreviousStep(unittest.TestCase):
         return_value = self.step.is_previous_step('next_step_model_2', {})
         self.assertTrue(return_value)
 
-    def test_if_multiple_models_and_data_invalid_for_both_model_then_return_false(self):
+    def test_if_multiple_models_and_data_valid_for_both_models_then_return_true_for_first_model(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'next_step_model_1'),
+                                           (self.valid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('next_step_model_1', {})
+        self.assertTrue(return_value)
+
+    def test_if_multiple_models_and_data_valid_for_both_models_then_return_true_for_second_model(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'next_step_model_1'),
+                                           (self.valid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('next_step_model_2', {})
+        self.assertTrue(return_value)
+
+    def test_if_multiple_models_and_data_invalid_for_both_models_then_return_false(self):
         self.step.next_step_data_models = [(self.invalid_data_model, 'next_step_model_1'),
                                            (self.invalid_data_model, 'next_step_model_2')]
         return_value = self.step.is_previous_step('next_step_model_1', {})
+        self.assertFalse(return_value)
+
+    def test_if_multiple_models_and_data_valid_for_both_models_but_next_step_not_matching_then_return_false(self):
+        self.step.next_step_data_models = [(self.valid_data_model, 'next_step_model_1'),
+                                           (self.valid_data_model, 'next_step_model_2')]
+        return_value = self.step.is_previous_step('next_step_model_3', {})
         self.assertFalse(return_value)
 
     def test_if_given_step_name_is_not_in_next_step_list_then_return_false(self):
