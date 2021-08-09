@@ -15,13 +15,13 @@ from babel.numbers import format_decimal, parse_decimal
 from app.forms.validators import ValidElsterCharacterSet
 
 
-class SafariBaselineBugFixMixin:
-    """ Safari has a bug where empty input fields do not align correctly with baseline alignment. The reason is that
+class BaselineBugFixMixin:
+    """ Safari and Firefox have a bug where empty input fields do not align correctly with baseline alignment. The reason is that
     if an input field is empty its bottom border is used as the baseline instead of the baseline of the text input.
     This can be fixed by setting a placeholder text. """
 
     def __call__(self, field, **kwargs):
-        # Safari has a bug where empty input fields do not align correctly with baseline alignment.
+        # Safari and Firefox have has a bug where empty input fields do not align correctly with baseline alignment.
         # Thus, we add a placeholder.
         kwargs.setdefault('placeholder', ' ')
         return kwargs
@@ -33,14 +33,14 @@ class SteuerlotseStringField(StringField):
         ValidElsterCharacterSet().__call__(form, self)
 
 
-class MultipleInputFieldWidget(TextInput, SafariBaselineBugFixMixin):
+class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
     """A divided input field."""
     sub_field_separator = ''
     input_field_lengths = []
     input_field_labels = []
 
     def __call__(self, field, **kwargs):
-        kwargs = SafariBaselineBugFixMixin.__call__(self, field, **kwargs)
+        kwargs = BaselineBugFixMixin.__call__(self, field, **kwargs)
 
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
@@ -243,7 +243,7 @@ class ConfirmationField(BooleanField):
         )
 
 
-class JqueryEntriesWidget(SafariBaselineBugFixMixin, object):
+class JqueryEntriesWidget(BaselineBugFixMixin, object):
     """A custom multi-entry widget that is based on jquery."""
     html_params = staticmethod(html_params)
 
