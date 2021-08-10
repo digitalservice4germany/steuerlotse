@@ -15,10 +15,28 @@ from babel.numbers import format_decimal, parse_decimal
 from app.forms.validators import ValidElsterCharacterSet
 
 
+class NumericInputMixin:
+
+    @staticmethod
+    def set_inputmode(**kwargs):
+        kwargs.setdefault('inputmode', 'numeric')
+        kwargs.setdefault('pattern', '[0-9]*')
+
+        return kwargs
+
+
 class SteuerlotseStringField(StringField):
 
     def pre_validate(self, form):
         ValidElsterCharacterSet().__call__(form, self)
+
+
+class SteuerlotseIntegerField(NumericInputMixin, IntegerField):
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(**kwargs)
+
+        return super().__call__(**kwargs)
 
 
 class MultipleInputFieldWidget(TextInput):
@@ -27,6 +45,10 @@ class MultipleInputFieldWidget(TextInput):
     input_field_lengths = []
     input_field_labels = []
 
+    @staticmethod
+    def set_inputmode(**kwargs):
+        return kwargs
+
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
@@ -34,6 +56,8 @@ class MultipleInputFieldWidget(TextInput):
         # Safari has a bug where empty input fields do not align correctly with baseline alignment.
         # Thus, we add a placeholder.
         kwargs['placeholder'] = ' '
+
+        kwargs = self.set_inputmode(**kwargs)
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
@@ -79,7 +103,7 @@ class UnlockCodeField(SteuerlotseStringField):
         return self.data.split('-') if self.data else ''
 
 
-class SteuerlotseDateWidget(MultipleInputFieldWidget):
+class SteuerlotseDateWidget(NumericInputMixin, MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
@@ -107,7 +131,7 @@ class SteuerlotseDateField(DateField):
             return self.raw_data if self.raw_data else []
 
 
-class IdNrWidget(MultipleInputFieldWidget):
+class IdNrWidget(NumericInputMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]

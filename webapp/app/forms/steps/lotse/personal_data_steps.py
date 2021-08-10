@@ -3,7 +3,7 @@ from pydantic import ValidationError
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
-    SteuerlotseStringField, IdNrField
+    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField
 
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
@@ -176,7 +176,9 @@ class StepSteuernummer(FormStep):
                                               validators=[InputRequired(), DecimalOnly(),
                                                           IntegerLength(min=10, max=11)],
                                               render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
-                                                         'example_input': _l('form.lotse.steuernummer.example_input')})
+                                                         'example_input': _l('form.lotse.steuernummer.example_input'),
+                                                         'input_mode': 'numeric',
+                                                         'pattern': '[0-9]*'})
 
     def __init__(self, **kwargs):
         super(StepSteuernummer, self).__init__(
@@ -251,7 +253,7 @@ class StepPersonA(FormStep):
             render_kw={'data_label': _l('form.lotse.field_person_street.data_label'),
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
-        person_a_street_number = IntegerField(
+        person_a_street_number = SteuerlotseIntegerField(
             label=_l('form.lotse.field_person_street_number'),
             render_kw={'data_label': _l('form.lotse.field_person_street_number.data_label'),
                        'max_characters': 4},
@@ -269,7 +271,9 @@ class StepPersonA(FormStep):
         person_a_plz = SteuerlotseStringField(
             label=_l('form.lotse.field_person_plz'),
             render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
-                       'max_characters': 5},
+                       'max_characters': 5,
+                       'input_mode': 'numeric',
+                       'pattern': '[0-9]*'},
             validators=[InputRequired(), DecimalOnly(), validators.length(max=5)])
         person_a_town = SteuerlotseStringField(
             label=_l('form.lotse.field_person_town'),
@@ -278,7 +282,7 @@ class StepPersonA(FormStep):
             validators=[InputRequired(), validators.length(max=20)])
         person_a_religion = get_religion_field()
 
-        person_a_beh_grad = IntegerField(
+        person_a_beh_grad = SteuerlotseIntegerField(
             label=_l('form.lotse.field_person_beh_grad'),
             validators=[
                 validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
@@ -386,7 +390,7 @@ class StepPersonB(FormStep):
                        'max_characters': 25,
                        'required_if_shown': True},
             validators=[input_required_if_not_same_address, validators.length(max=25)])
-        person_b_street_number = IntegerField(
+        person_b_street_number = SteuerlotseIntegerField(
             label=_l('form.lotse.field_person_street_number'),
             render_kw={'data_label': _l('form.lotse.field_person_street_number'
                                         '.data_label'),
@@ -407,7 +411,9 @@ class StepPersonB(FormStep):
             label=_l('form.lotse.field_person_plz'),
             render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
                        'max_characters': 5,
-                       'required_if_shown': True},
+                       'required_if_shown': True,
+                       'input_mode': 'numeric',
+                       'pattern': '[0-9]*'},
             validators=[input_required_if_not_same_address, DecimalOnly(), validators.length(max=5)])
         person_b_town = SteuerlotseStringField(
             label=_l('form.lotse.field_person_town'),
@@ -417,7 +423,7 @@ class StepPersonB(FormStep):
             validators=[input_required_if_not_same_address, validators.length(max=20)])
         person_b_religion = get_religion_field()
 
-        person_b_beh_grad = IntegerField(
+        person_b_beh_grad = SteuerlotseIntegerField(
             label=_l('form.lotse.field_person_beh_grad'),
             validators=[validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
