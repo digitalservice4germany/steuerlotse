@@ -388,7 +388,8 @@ class LotseMultiStepFlow(MultiStepFlow):
             value_representation = ', '.join(value)
         elif field.field_class == EuroField:
             value_representation = str(value) + " €"
-        elif field.field_class == SteuerlotseStringField or field.field_class == IdNrField or SteuerlotseNumericStringField:
+        elif field.field_class == SteuerlotseStringField or field.field_class == IdNrField \
+                or field.field_class == SteuerlotseNumericStringField:
             value_representation = value
         elif field.field_class == IntegerField or field.field_class == SteuerlotseIntegerField:
             value_representation = value

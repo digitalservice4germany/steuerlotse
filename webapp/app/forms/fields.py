@@ -39,11 +39,23 @@ class SteuerlotseIntegerField(NumericInputMixin, IntegerField):
         return super().__call__(**kwargs)
 
 
+class SteuerlotseNumericStringField(NumericInputMixin, StringField):
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(**kwargs)
+
+        return super().__call__(**kwargs)
+
+
 class MultipleInputFieldWidget(TextInput):
     """A divided input field."""
     sub_field_separator = ''
     input_field_lengths = []
     input_field_labels = []
+
+    @staticmethod
+    def set_inputmode(**kwargs):
+        return kwargs
 
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
