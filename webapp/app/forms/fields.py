@@ -45,10 +45,6 @@ class MultipleInputFieldWidget(TextInput):
     input_field_lengths = []
     input_field_labels = []
 
-    @staticmethod
-    def set_inputmode(**kwargs):
-        return kwargs
-
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
