@@ -23,17 +23,18 @@ class NumericInputMixin:
         kwargs.setdefault('pattern', '[0-9]*')
         return kwargs
 
+
 class BaselineBugFixMixin:
     """ Safari and Firefox have a bug where empty input fields do not align correctly with baseline alignment. The reason is that
     if an input field is empty its bottom border is used as the baseline instead of the baseline of the text input.
     This can be fixed by setting a placeholder text. """
 
-    def __call__(self, field, **kwargs):
+    @staticmethod
+    def set_inputmode(**kwargs):
         # Safari and Firefox have has a bug where empty input fields do not align correctly with baseline alignment.
         # Thus, we add a placeholder.
         kwargs.setdefault('placeholder', ' ')
         return kwargs
-        
 
 
 class SteuerlotseStringField(StringField):
@@ -65,7 +66,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
     input_field_labels = []
 
     def __call__(self, field, **kwargs):
-        kwargs = BaselineBugFixMixin.__call__(self, field, **kwargs)
+        kwargs = BaselineBugFixMixin.set_inputmode(kwargs)
 
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
