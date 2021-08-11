@@ -21,8 +21,19 @@ class NumericInputMixin:
     def set_inputmode(**kwargs):
         kwargs.setdefault('inputmode', 'numeric')
         kwargs.setdefault('pattern', '[0-9]*')
-
         return kwargs
+
+class BaselineBugFixMixin:
+    """ Safari and Firefox have a bug where empty input fields do not align correctly with baseline alignment. The reason is that
+    if an input field is empty its bottom border is used as the baseline instead of the baseline of the text input.
+    This can be fixed by setting a placeholder text. """
+
+    def __call__(self, field, **kwargs):
+        # Safari and Firefox have has a bug where empty input fields do not align correctly with baseline alignment.
+        # Thus, we add a placeholder.
+        kwargs.setdefault('placeholder', ' ')
+        return kwargs
+        
 
 
 class SteuerlotseStringField(StringField):
@@ -47,19 +58,18 @@ class SteuerlotseNumericStringField(NumericInputMixin, StringField):
         return super().__call__(**kwargs)
 
 
-class MultipleInputFieldWidget(TextInput):
+class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
     """A divided input field."""
     sub_field_separator = ''
     input_field_lengths = []
     input_field_labels = []
 
     def __call__(self, field, **kwargs):
+        kwargs = BaselineBugFixMixin.__call__(self, field, **kwargs)
+
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
         kwargs['class'] = 'form-control'
-        # Safari has a bug where empty input fields do not align correctly with baseline alignment.
-        # Thus, we add a placeholder.
-        kwargs['placeholder'] = ' '
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
@@ -69,6 +79,10 @@ class MultipleInputFieldWidget(TextInput):
             kwargs['id'] = sub_field_id
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
             kwargs['class'] = kwargs.get('class', '') + f' input-width-{input_field_length}'
+
+            if idx > 0:
+                # Make sure that autofocus is only set for the first input field
+                kwargs['autofocus'] = False
 
             if len(self.input_field_labels) > idx:
                 joined_input_fields += Markup(
@@ -270,7 +284,7 @@ class ConfirmationField(BooleanField):
         )
 
 
-class JqueryEntriesWidget(object):
+class JqueryEntriesWidget(BaselineBugFixMixin, object):
     """A custom multi-entry widget that is based on jquery."""
     html_params = staticmethod(html_params)
 
@@ -278,6 +292,7 @@ class JqueryEntriesWidget(object):
         self.input_type = None
 
     def __call__(self, field, **kwargs):
+        kwargs = super().__call__(field, **kwargs)
         kwargs.setdefault('id', field.id)
         kwargs.setdefault('data', field.data)
         kwargs.setdefault('split_chars', field.split_chars)

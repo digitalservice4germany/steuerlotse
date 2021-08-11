@@ -81,6 +81,9 @@ class EligibilityStepChooser(StepChooser):
 
     def determine_prev_step(self, step_name):
         idx = self.step_order.index(step_name)
+        if idx == 0:
+            # Start step has no previous step
+            return None
         stored_data = self._get_session_data()
         for i in range(idx - 1, 0, -1):
             current_step = self.steps[self.step_order[i]]
