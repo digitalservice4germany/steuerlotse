@@ -1,8 +1,11 @@
+import zlib
 from typing import Optional
 
-from flask import session
+from cryptography.fernet import InvalidToken
+from flask import session, json
 
-from app.forms.flows.multistep_flow import deserialize_session_data
+from app import app
+from app.crypto.encryption import encrypt, decrypt
 
 
 def get_session_data(session_data_identifier, ttl: Optional[int] = None, default_data=None):
@@ -15,3 +18,28 @@ def get_session_data(session_data_identifier, ttl: Optional[int] = None, default
         stored_data = deserialize_session_data(serialized_session, ttl)
 
     return stored_data
+
+
+def serialize_session_data(data):
+    json_bytes = json.dumps(data).encode()
+    compressed = zlib.compress(json_bytes)
+    encrypted = encrypt(compressed)
+
+    return encrypted
+
+
+def deserialize_session_data(serialized_session, ttl: Optional[int] = None):
+    session_data = {}
+    if serialized_session:
+        try:
+            decrypted = decrypt(serialized_session, ttl)
+            decompressed = zlib.decompress(decrypted)
+            session_data = json.loads(decompressed.decode())
+        except InvalidToken:
+            app.logger.warning("Session decryption failed", exc_info=True)
+            session_data = {}
+    return session_data
+
+
+def override_session_data(stored_data, session_data_identifier='form_data'):
+    session[session_data_identifier] = serialize_session_data(stored_data)

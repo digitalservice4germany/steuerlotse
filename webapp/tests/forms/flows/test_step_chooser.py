@@ -5,7 +5,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app import app
-from app.forms.flows.multistep_flow import deserialize_session_data, serialize_session_data
+from app.forms.session_data import serialize_session_data, deserialize_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \

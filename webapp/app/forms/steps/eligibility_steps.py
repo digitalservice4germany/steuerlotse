@@ -6,6 +6,7 @@ from wtforms import RadioField
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
+from app.forms.session_data import override_session_data
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
     ForeignCountryEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
@@ -166,7 +167,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         super()._main_handle()
         # Remove all eligibility data as the flow is restarting
         stored_data = {}
-        self._override_session_data(stored_data)
+        override_session_data(stored_data, session_data_identifier=self.session_data_identifier)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
         return stored_data
 

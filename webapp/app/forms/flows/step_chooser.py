@@ -4,8 +4,7 @@ from flask import session
 from werkzeug.exceptions import abort
 
 from app import app
-from app.forms.flows.multistep_flow import deserialize_session_data
-from app.forms.session_data import get_session_data
+from app.forms.session_data import get_session_data, deserialize_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
 

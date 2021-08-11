@@ -9,7 +9,8 @@ from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
 from app import app
-from app.forms.flows.multistep_flow import RenderInfo, deserialize_session_data
+from app.forms.flows.multistep_flow import RenderInfo
+from app.forms.session_data import deserialize_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, \
     RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
@@ -437,14 +438,14 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
         next_step = MockFinalStep
         expected_data = {'brother': 'Luigi'}
         with app.app_context() and app.test_request_context():
-            with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep._override_session_data') as update_fun, \
+            with patch('app.forms.steps.steuerlotse_step.override_session_data') as update_fun, \
                     app.app_context() and app.test_request_context(
                         path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
                         method='GET') as req:
                 form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step)
                 form_step.handle()
 
-                update_fun.assert_called_once_with(expected_data)
+                update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
 
     def test_yes_no_field_content_overriden_if_empty(self):
         with app.app_context() and app.test_request_context(method='POST') as req:
@@ -461,51 +462,6 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
             data_after_second_handle = mock_yesno_step.stored_data
 
         self.assertEqual({'yes_no_field': None}, data_after_second_handle)
-
-
-class TestSteuerlotseFormStepOverrideSessionData(unittest.TestCase):
-
-    def test_data_is_saved_to_empty_session(self):
-        new_data = {'brother': 'Luigi'}
-        with app.app_context() and app.test_request_context() as req:
-            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
-                self.assertNotIn('form_data', req.session)
-                MockFormStep(endpoint="lotse")._override_session_data(new_data)
-                self.assertIn('form_data', req.session)
-                self.assertEqual(new_data, req.session['form_data'])
-
-    def test_data_is_saved_to_prefilled_session(self):
-        new_data = {'brother': 'Luigi'}
-        with app.app_context() and app.test_request_context() as req:
-            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
-                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'}}
-                self.assertIn('form_data', req.session)
-                MockFormStep(endpoint="lotse")._override_session_data(new_data)
-                self.assertIn('form_data', req.session)
-                self.assertEqual(new_data, req.session['form_data'])
-
-    def test_if_data_stored_with_other_identifier_then_it_is_not_changed(self):
-        new_data = {'brother': 'Luigi'}
-        other_data = {'enemy': 'Bowser'}
-        with app.app_context() and app.test_request_context() as req:
-            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
-                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'},
-                               'OTHER_IDENTIFIER': other_data}
-                MockFormStep(endpoint="lotse")._override_session_data(new_data)
-                self.assertEqual(other_data, req.session['OTHER_IDENTIFIER'])
-
-    def test_if_stored_data_identifier_is_set_then_override_session_data_with_that_new_identifier(self):
-        new_data = {'brother': 'Luigi'}
-        other_data = {'enemy': 'Bowser'}
-        new_identifier = "NEW_IDENTIFIER"
-        with app.app_context() and app.test_request_context() as req:
-            with patch('app.forms.steps.steuerlotse_step.serialize_session_data', MagicMock(side_effect=lambda _: _)):
-                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'},
-                               'OTHER_IDENTIFIER': other_data}
-                step = MockFormStep(endpoint="lotse")
-                step.session_data_identifier = new_identifier
-                step._override_session_data(new_data)
-                self.assertEqual(new_data, req.session[new_identifier])
 
 
 class TestFormSteuerlotseStepCreateForm(unittest.TestCase):

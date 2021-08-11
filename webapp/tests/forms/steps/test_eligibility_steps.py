@@ -9,7 +9,7 @@ from werkzeug.exceptions import NotFound
 
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
-from app.forms.flows.multistep_flow import deserialize_session_data
+from app.forms.session_data import deserialize_session_data
 from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
     MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
     MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, IncorrectEligibilityData, \

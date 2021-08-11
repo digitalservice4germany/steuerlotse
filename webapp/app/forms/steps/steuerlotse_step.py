@@ -4,7 +4,8 @@ from flask import request, session, url_for, render_template
 from flask_babel import ngettext
 from werkzeug.utils import redirect
 
-from app.forms.flows.multistep_flow import RenderInfo, serialize_session_data
+from app.forms.flows.multistep_flow import RenderInfo
+from app.forms.session_data import serialize_session_data, override_session_data
 
 
 class SteuerlotseStep(object):
@@ -105,7 +106,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         self.render_info.form = form
 
     def _post_handle(self):
-        self._override_session_data(self.stored_data)
+        override_session_data(self.stored_data, self.session_data_identifier)
 
         redirection = self._handle_redirects()
         if redirection:
