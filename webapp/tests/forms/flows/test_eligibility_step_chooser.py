@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
@@ -82,7 +82,6 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
         self.step_chooser = EligibilityStepChooser('eligibility')
         self.step_chooser.step_order = []
         self.step_chooser.steps = {}
-        self.step_chooser._get_session_data = MagicMock()
 
     def set_up_steps(self, steps_definitions):
         for step_definition in steps_definitions:
@@ -99,7 +98,8 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
             {'name': 'step-2', 'is_previous_step': False}
         ])
 
-        prev_step = self.step_chooser.determine_prev_step('step-2')
+        with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
+            prev_step = self.step_chooser.determine_prev_step('step-2')
 
         self.assertEqual('step-0', prev_step.name)
 
@@ -111,7 +111,8 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
             {'name': 'step-3', 'is_previous_step': False}
         ])
 
-        self.step_chooser.determine_prev_step('step-2')
+        with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
+            self.step_chooser.determine_prev_step('step-2')
 
         self.step_chooser.steps['step-0'].is_previous_step.assert_not_called()
         self.step_chooser.steps['step-1'].is_previous_step.assert_called()
@@ -126,6 +127,7 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
             {'name': 'step-3', 'is_previous_step': False}
         ])
 
-        prev_step = self.step_chooser.determine_prev_step('step-3')
+        with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
+            prev_step = self.step_chooser.determine_prev_step('step-3')
 
         self.assertEqual('step-2', prev_step.name)
