@@ -54,7 +54,8 @@ class StepChooser:
             stored_data=stored_data,
             overview_step=self.overview_step,
             prev_step=self.determine_prev_step(step_name),
-            next_step=self.determine_next_step(step_name)
+            next_step=self.determine_next_step(step_name),
+            session_data_identifier=self.session_data_identifier
         )
 
     def determine_prev_step(self, current_step_name):

@@ -16,9 +16,9 @@ class SteuerlotseStep(object):
     intro = None
     intro_multiple = None
     template = None
-    session_data_identifier = 'form_data'
 
-    def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step):
+    def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
+                 session_data_identifier='form_data'):
         self.endpoint = endpoint
         self.header_title = header_title
         self.stored_data = stored_data
@@ -26,6 +26,7 @@ class SteuerlotseStep(object):
         self._prev_step = prev_step
         self._next_step = next_step
         self.render_info: Optional[RenderInfo] = None
+        self.session_data_identifier = session_data_identifier
 
         self.default_data = default_data
 
@@ -91,10 +92,9 @@ class FormSteuerlotseStep(SteuerlotseStep):
     template = 'basis/form_full_width.html'
 
     def __init__(self, form, endpoint, header_title, stored_data, form_multiple=None, overview_step=None, default_data=None,
-                 prev_step=None,
-                 next_step=None):
+                 prev_step=None, next_step=None, session_data_identifier='form_data'):
         super(FormSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
-                                                  next_step)
+                                                  next_step, session_data_identifier=session_data_identifier)
         self.form = form
         self.form_multiple = form_multiple
 
@@ -157,9 +157,10 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
-    def __init__(self, endpoint, header_title, stored_data, overview_step=None, default_data=None, prev_step=None, next_step=None):
+    def __init__(self, endpoint, header_title, stored_data, overview_step=None, default_data=None, prev_step=None,
+                 next_step=None, session_data_identifier=None):
         super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
-                                                     next_step)
+                                                     next_step, session_data_identifier)
 
     def render(self, **kwargs):
         """
@@ -175,9 +176,9 @@ class RedirectSteuerlotseStep(SteuerlotseStep):
     """
 
     def __init__(self, redirection_step_name, endpoint, header_title=None, stored_data=None, overview_step=None, default_data=None,
-                 prev_step=None, next_step=None):
+                 prev_step=None, next_step=None, session_data_identifier=None):
         super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
-                                                      next_step)
+                                                      next_step, session_data_identifier)
         self.redirection_step_name = redirection_step_name
 
     def handle(self):

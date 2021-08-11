@@ -24,9 +24,12 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep, SingleAlimonyEligibilityFailureDisplaySteuerlotseStep, \
     SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep, PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
-    _ELIGIBILITY_DATA_KEY, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
+    SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
     SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
+
+
+_ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
 
 
 class NotAllEligibilityCheckParametersProvided(Exception):

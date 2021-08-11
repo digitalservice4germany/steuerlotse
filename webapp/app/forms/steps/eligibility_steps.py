@@ -21,8 +21,6 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
 
-_ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
-
 
 class IncorrectEligibilityData(Exception):
     """Raised in case of incorrect data from the eligible form. This might happen because of an empty session cookie"""
@@ -54,16 +52,11 @@ class EligibilityStepMixin:
             return 1
 
 
-class EligibilityDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
-
-
-class EligibilityFailureDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep):
+class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     name = 'result'
     template = 'eligibility/display_failure.html'
     eligibility_error = None
     input_step_name = ''
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
     title = _l('form.eligibility.failure.title')
     intro = _l('form.eligibility.failure.intro')
 
@@ -86,7 +79,6 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     failure_step_name = None
 
     template = 'eligibility/form_full_width.html'
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     class InputForm(SteuerlotseBaseForm):
         pass
@@ -155,7 +147,6 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     title = _l('form.eligibility.start-title')
     intro = _l('form.eligibility.start-intro')
     template = 'basis/display_standard.html'
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     def __init__(self, stored_data=None, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(
@@ -732,7 +723,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
 
-class EligibilitySuccessDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep):
+class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     name = 'success'
     title = _l('form.eligibility.result-title')
     intro = _l('form.eligibility.result-intro')
