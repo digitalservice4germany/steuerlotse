@@ -18,7 +18,7 @@ from app.forms.validators import ValidElsterCharacterSet
 class NumericInputMixin:
 
     @staticmethod
-    def set_inputmode(**kwargs):
+    def set_inputmode(kwargs):
         kwargs.setdefault('inputmode', 'numeric')
         kwargs.setdefault('pattern', '[0-9]*')
         return kwargs
@@ -30,7 +30,7 @@ class BaselineBugFixMixin:
     This can be fixed by setting a placeholder text. """
 
     @staticmethod
-    def set_inputmode(**kwargs):
+    def set_placeholder(kwargs):
         # Safari and Firefox have has a bug where empty input fields do not align correctly with baseline alignment.
         # Thus, we add a placeholder.
         kwargs.setdefault('placeholder', ' ')
@@ -46,7 +46,7 @@ class SteuerlotseStringField(StringField):
 class SteuerlotseIntegerField(NumericInputMixin, IntegerField):
 
     def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(**kwargs)
+        kwargs = self.set_inputmode(kwargs)
 
         return super().__call__(**kwargs)
 
@@ -54,7 +54,7 @@ class SteuerlotseIntegerField(NumericInputMixin, IntegerField):
 class SteuerlotseNumericStringField(NumericInputMixin, StringField):
 
     def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(**kwargs)
+        kwargs = self.set_inputmode(kwargs)
 
         return super().__call__(**kwargs)
 
@@ -66,7 +66,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
     input_field_labels = []
 
     def __call__(self, field, **kwargs):
-        kwargs = BaselineBugFixMixin.set_inputmode(kwargs)
+        kwargs = self.set_placeholder(kwargs)
 
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
@@ -126,7 +126,7 @@ class SteuerlotseDateWidget(NumericInputMixin, MultipleInputFieldWidget):
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
 
     def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(**kwargs)
+        kwargs = self.set_inputmode(kwargs)
 
         return super().__call__(*args, **kwargs)
 
@@ -159,7 +159,7 @@ class IdNrWidget(NumericInputMixin, MultipleInputFieldWidget):
     input_field_lengths = [2, 3, 3, 3]
 
     def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(**kwargs)
+        kwargs = self.set_inputmode(kwargs)
 
         return super().__call__(*args, **kwargs)
 
@@ -217,7 +217,7 @@ class EuroFieldWidget(NumericInputMixin, TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
     def __call__(self, field, **kwargs):
-        kwargs = self.set_inputmode(**kwargs)
+        kwargs = self.set_inputmode(kwargs)
         kwargs['pattern'] = '[0-9,.]*'
         kwargs['class'] = 'euro_field form-control'
         kwargs['onwheel'] = 'this.blur()'
