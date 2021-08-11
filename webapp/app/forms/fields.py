@@ -53,10 +53,6 @@ class MultipleInputFieldWidget(TextInput):
     input_field_lengths = []
     input_field_labels = []
 
-    @staticmethod
-    def set_inputmode(**kwargs):
-        return kwargs
-
     def __call__(self, field, **kwargs):
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
@@ -64,8 +60,6 @@ class MultipleInputFieldWidget(TextInput):
         # Safari has a bug where empty input fields do not align correctly with baseline alignment.
         # Thus, we add a placeholder.
         kwargs['placeholder'] = ' '
-
-        kwargs = self.set_inputmode(**kwargs)
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
@@ -116,6 +110,11 @@ class SteuerlotseDateWidget(NumericInputMixin, MultipleInputFieldWidget):
     input_field_lengths = [2, 2, 4]
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
 
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(**kwargs)
+
+        return super().__call__(*args, **kwargs)
+
 
 class SteuerlotseDateField(DateField):
 
@@ -143,6 +142,11 @@ class IdNrWidget(NumericInputMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(**kwargs)
+
+        return super().__call__(*args, **kwargs)
 
 
 class IdNrField(SteuerlotseStringField):
@@ -194,10 +198,12 @@ class IdNrField(SteuerlotseStringField):
             self.data = ''.join(self.data)
 
 
-class EuroFieldWidget(TextInput):
+class EuroFieldWidget(NumericInputMixin, TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
     def __call__(self, field, **kwargs):
+        kwargs = self.set_inputmode(**kwargs)
+        kwargs['pattern'] = '[0-9,.]*'
         kwargs['class'] = 'euro_field form-control'
         kwargs['onwheel'] = 'this.blur()'
         markup_input = super(EuroFieldWidget, self).__call__(field, **kwargs)
