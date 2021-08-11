@@ -2814,10 +2814,9 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'user_b_has_elster_account_eligibility': 'no',
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no', }
-        with app.app_context() and app.test_request_context() as req, \
+        with app.app_context() and app.test_request_context(), \
                 patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -2832,10 +2831,9 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
-        with app.app_context() and app.test_request_context() as req, \
+        with app.app_context() and app.test_request_context(), \
                 patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -2855,10 +2853,9 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
-        with app.app_context() and app.test_request_context() as req, \
+        with app.app_context() and app.test_request_context(), \
                 patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])

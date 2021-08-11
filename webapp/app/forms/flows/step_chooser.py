@@ -59,10 +59,12 @@ class StepChooser:
     def get_correct_step(self, step_name) -> SteuerlotseStep:
         if self._get_possible_redirect(step_name):
             return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
+        stored_data = self._get_session_data()
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
             endpoint=self.endpoint,
+            stored_data=stored_data,
             overview_step=self.overview_step,
             prev_step=self.determine_prev_step(step_name),
             next_step=self.determine_next_step(step_name)
