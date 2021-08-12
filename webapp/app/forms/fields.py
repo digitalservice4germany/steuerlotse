@@ -59,6 +59,14 @@ class SteuerlotseNumericStringField(NumericInputMixin, StringField):
         return super().__call__(**kwargs)
 
 
+class SteuerlotseNameStringField(StringField):
+
+    def __call__(self, *args, **kwargs):
+        kwargs.setdefault('spellcheck', 'false')
+
+        return super().__call__(**kwargs)
+
+
 class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
     """A divided input field."""
     sub_field_separator = ''

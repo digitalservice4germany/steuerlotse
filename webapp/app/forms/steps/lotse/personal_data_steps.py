@@ -3,7 +3,8 @@ from pydantic import ValidationError
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
-    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField
+    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
+    SteuerlotseNameStringField
 
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
@@ -236,12 +237,12 @@ class StepPersonA(FormStep):
         person_a_dob = SteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired()])
-        person_a_first_name = SteuerlotseStringField(
+        person_a_first_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_first_name'),
             render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
-        person_a_last_name = SteuerlotseStringField(
+        person_a_last_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_last_name'),
             render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
                        'max_characters': 25},
@@ -362,12 +363,12 @@ class StepPersonB(FormStep):
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')},
             validators=[InputRequired()])
-        person_b_first_name = SteuerlotseStringField(
+        person_b_first_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_first_name'),
             render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
-        person_b_last_name = SteuerlotseStringField(
+        person_b_last_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_last_name'),
             render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
                        'max_characters': 25},
