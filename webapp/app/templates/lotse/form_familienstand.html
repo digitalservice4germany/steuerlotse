@@ -175,7 +175,7 @@
         $(document).ready(function () {
             show_hide_all_fields()
 
-            $(`input[type="radio"]`).change(remove_familienstand_date_input);
+            $(`input[type="radio"][name="familienstand"]`).change(remove_familienstand_date_input);
             $(`input[type="radio"]`).change(show_hide_all_fields);
             $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_married_lived_separated_since_field);
             $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
