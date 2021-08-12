@@ -293,7 +293,7 @@ class JqueryEntriesWidget(BaselineBugFixMixin, object):
         self.input_type = None
 
     def __call__(self, field, **kwargs):
-        kwargs = super().__call__(field, **kwargs)
+        kwargs = super().set_placeholder(kwargs)
         kwargs.setdefault('id', field.id)
         kwargs.setdefault('data', field.data)
         kwargs.setdefault('split_chars', field.split_chars)
