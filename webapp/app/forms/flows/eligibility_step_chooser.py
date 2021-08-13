@@ -90,6 +90,8 @@ class EligibilityStepChooser(StepChooser):
             If no such step is found, returns the first step in the flow.
         """
         current_step_idx = self.step_order.index(current_step_name)
+        if current_step_idx == 0:  # Start step has no previous step
+            return None
         stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
         for possible_previous_step_idx in range(current_step_idx - 1, 0, -1):
             possible_previous_step = self.steps[self.step_order[possible_previous_step_idx]]

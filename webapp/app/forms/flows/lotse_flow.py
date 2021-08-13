@@ -6,7 +6,8 @@ from wtforms.fields.core import UnboundField, SelectField, BooleanField, RadioFi
 from app import app
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
 from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
-    ConfirmationField, EntriesField, EuroField, IdNrField, IntegerField
+    ConfirmationField, EntriesField, EuroField, IdNrField, IntegerField, SteuerlotseIntegerField, \
+    SteuerlotseNumericStringField
 from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
     IdNrMismatchInputValidationError
@@ -387,9 +388,10 @@ class LotseMultiStepFlow(MultiStepFlow):
             value_representation = ', '.join(value)
         elif field.field_class == EuroField:
             value_representation = str(value) + " €"
-        elif field.field_class == SteuerlotseStringField or field.field_class == IdNrField:
+        elif field.field_class == SteuerlotseStringField or field.field_class == IdNrField \
+                or field.field_class == SteuerlotseNumericStringField:
             value_representation = value
-        elif field.field_class == IntegerField or field.field_class == IntegerField:
+        elif field.field_class == IntegerField or field.field_class == SteuerlotseIntegerField:
             value_representation = value
         elif field.field_class == ConfirmationField:
             value_representation = "Ja" if value else "Nein"
