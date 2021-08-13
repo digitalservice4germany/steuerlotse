@@ -91,6 +91,18 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
             self.step_chooser.step_order.append(step_name)
             self.step_chooser.steps[step_name] = mocked_step
 
+    def test_if_step_is_first_step_then_return_none(self):
+        self.set_up_steps([
+            {'name': 'step-0', 'is_previous_step': False},
+            {'name': 'step-1', 'is_previous_step': False},
+            {'name': 'step-2', 'is_previous_step': False}
+        ])
+
+        with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
+            prev_step = self.step_chooser.determine_prev_step('step-0')
+
+        self.assertIsNone(prev_step)
+
     def test_if_no_step_returns_is_previous_step_true_then_return_first_in_list(self):
         self.set_up_steps([
             {'name': 'step-0', 'is_previous_step': False},
