@@ -160,7 +160,6 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         stored_data = {}
         override_session_data(stored_data, session_data_identifier=self.session_data_identifier)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
-        return stored_data
 
 
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
