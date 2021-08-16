@@ -544,3 +544,8 @@ input[type="radio"]:checked:focus + label::before{
         border: 0;
     border-radius: 0;
 }
+
+/* INPUT FIELDS */
+.iban-input{
+    text-transform: uppercase;
+}
