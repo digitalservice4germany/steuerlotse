@@ -74,6 +74,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
+            kwargs['data-field-length'] = input_field_length
             kwargs['maxlength'] = input_field_length
 
             sub_field_id = f'{field.id}_{idx + 1}'
