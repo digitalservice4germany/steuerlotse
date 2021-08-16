@@ -31,7 +31,7 @@
     </script>
     <script src="{{ url_for('static', filename='js/autonumeric.js') }}" type=text/javascript></script>
     <script>
-        new AutoNumeric.multiple('.euro_field', {decimalCharacter: ",", digitGroupSeparator: "."});
+        new AutoNumeric.multiple('.euro_field', {decimalCharacter: ",", digitGroupSeparator: ".", minimumValue: 0});
         // in order for AutoNumeric to work, autocomplete has to be turned off for the respective components
         $('.euro_field').attr('autocomplete', 'off');
     </script>
