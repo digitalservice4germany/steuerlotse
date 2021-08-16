@@ -4,7 +4,7 @@ import datetime as dt
 from werkzeug.datastructures import MultiDict
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import IdNrField, SteuerlotseDateField
+from app.forms.fields import IdNrField, SteuerlotseDateField, UnlockCodeField
 from app.forms.validators import ValidIdNr
 
 
@@ -151,6 +151,7 @@ class TestSteuerlotseDateFieldData(unittest.TestCase):
 
 
 class TestSteuerlotseDateFieldValue(unittest.TestCase):
+
     def setUp(self):
         self.form = DateForm()
 
@@ -194,3 +195,21 @@ class TestSteuerlotseDateFieldValue(unittest.TestCase):
                           data={'date_field': dt.date(1979, 9, 19)})
         self.form.validate()
         self.assertEqual([31, 7, 1980], self.form.date_field._value())
+
+
+class UnlockCodeForm(SteuerlotseBaseForm):
+    unlock_code = UnlockCodeField()
+
+
+class TestUnlockCodeFieldValue(unittest.TestCase):
+
+    def setUp(self):
+        self.form = UnlockCodeForm()
+
+    def test_if_data_given_and_lowercase_then_value_equals_uppercase_data(self):
+        """ Simulates a POST request with valid formdata and no prefilled data."""
+        unlock_input = ['aaaa', '12ade', '1l2ö']
+        self.form.process(formdata=MultiDict({'unlock_code': unlock_input}))
+        self.form.validate()
+        self.assertEqual(['AAAA', '12ADE', '1L2Ö'], self.form.unlock_code._value())
+
