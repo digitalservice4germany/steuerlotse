@@ -20,7 +20,7 @@ class NumericInputMixin:
     @staticmethod
     def set_inputmode(kwargs):
         kwargs.setdefault('inputmode', 'numeric')
-        kwargs.setdefault('pattern', '[0-9]*')
+        kwargs.setdefault('data-mask', '0#')
         return kwargs
 
 
