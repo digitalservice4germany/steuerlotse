@@ -361,10 +361,18 @@ class TestFamilienstand(unittest.TestCase):
 
 class TestStepIban(unittest.TestCase):
 
+    def test_if_lowercase_input_then_uppercase_input(self):
+        step = StepIban(prev_step='', next_step='')
+        data = {'iban': "thisIsLowerCase"}
+        expected_output = "THISISLOWERCASE"
+        with app.test_request_context(method='POST', data=data):
+            form = step.create_form(request, prefilled_data={})
+            self.assertEqual(expected_output, form.data['iban'])
+
     def test_if_whitespace_input_then_strip_whitespace(self):
         step = StepIban(prev_step='', next_step='')
-        data = {'iban': "Here is whitespace "}
-        expected_output = "Hereiswhitespace"
+        data = {'iban': "HERE IS WHITESPACE "}
+        expected_output = "HEREISWHITESPACE"
         with app.test_request_context(method='POST', data=data):
             form = step.create_form(request, prefilled_data={})
             self.assertEqual(expected_output, form.data['iban'])
