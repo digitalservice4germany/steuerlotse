@@ -78,7 +78,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
 
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
-        kwargs['class'] = 'form-control'
+        kwargs['class'] = kwargs.get('class', '') + ' form-control'
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
@@ -118,9 +118,14 @@ class UnlockCodeField(SteuerlotseStringField):
         super(UnlockCodeField, self).__init__(label, validators, **kwargs)
         self.widget = UnlockCodeWidget()
 
+    def __call__(self, *args, **kwargs):
+        kwargs['class'] = kwargs.get('class', '') + ' unlock-input'
+
+        return super().__call__(**kwargs)
+
     def process_formdata(self, valuelist):
         if valuelist:
-            self.data = '-'.join(valuelist)
+            self.data = '-'.join(valuelist).upper()
         elif self.data is None:
             self.data = ''
 
