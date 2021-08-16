@@ -7,7 +7,7 @@ from wtforms import ValidationError
 
 from stdnum.iso7064.mod_11_10 import is_valid
 
-from app.forms.valid_characters import VALID_ELSTER_CHARACTERS
+from app.forms.valid_characters import VALID_ELSTER_CHARACTERS, VALID_UNLOCK_CODE_CHARACTERS
 
 # TODO: Unify validation and error messages (some is done on the client, some on the backend)
 #       and potentially move more into client.
@@ -106,4 +106,12 @@ class ValidElsterCharacterSet:
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_ELSTER_CHARACTERS:
+                raise ValidationError(_('validate.invalid-character'))
+
+
+class ValidUnlockCodeCharacterSet:
+    def __call__(self, form, field):
+        input_str = str(field.data)
+        for char in input_str:
+            if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))

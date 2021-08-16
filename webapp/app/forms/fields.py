@@ -113,7 +113,7 @@ class UnlockCodeWidget(MultipleInputFieldWidget):
     input_field_lengths = [4, 4, 4]
 
 
-class UnlockCodeField(SteuerlotseStringField):
+class UnlockCodeField(StringField):
     def __init__(self, label='', validators=None, **kwargs):
         super(UnlockCodeField, self).__init__(label, validators, **kwargs)
         self.widget = UnlockCodeWidget()
@@ -131,6 +131,9 @@ class UnlockCodeField(SteuerlotseStringField):
 
     def _value(self):
         return self.data.split('-') if self.data else ''
+
+    def pre_validate(self, form):
+        ValidElsterCharacterSet().__call__(form, self)
 
 
 class SteuerlotseDateWidget(NumericInputMixin, MultipleInputFieldWidget):
