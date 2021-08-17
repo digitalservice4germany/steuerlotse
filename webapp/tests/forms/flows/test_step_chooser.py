@@ -1,14 +1,16 @@
 import unittest
 
+from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app import app
-from app.forms.flows.multistep_flow import deserialize_session_data
+from app.forms.session_data import serialize_session_data, deserialize_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
     MockRenderStep, MockFormStep
+from tests.utils import create_session_form_data
 
 
 class TestStepChooserInit(unittest.TestCase):
@@ -95,32 +97,36 @@ class TestInteractionBetweenSteps(unittest.TestCase):
     def test_if_form_step_after_render_step_then_keep_data_from_older_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
         endpoint_correct = "lotse"
+        session_data_identifier = 'form_data'
         original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
         with app.app_context() and app.test_request_context():
             step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
+            step_chooser.session_data_identifier = session_data_identifier
 
         session = self.run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(step_chooser, MockRenderStep.name, method='GET', session=session)
         session = self.run_handle(step_chooser, MockFormStep.name, method='GET', session=session)
         self.assertTrue(set(original_data).issubset(
-            set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
+            set(deserialize_session_data(session[session_data_identifier], app.config['PERMANENT_SESSION_LIFETIME']))))
 
     def test_if_form_step_after_form_step_then_keep_data_from_newer_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
         endpoint_correct = "lotse"
+        session_data_identifier = 'form_data'
         original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
         adapted_data = {'pet': 'Goomba', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
         with app.app_context() and app.test_request_context():
             step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
+            step_chooser.session_data_identifier = session_data_identifier
 
         session = self.run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(step_chooser, MockFormWithInputStep.name, method='POST', form_data=adapted_data, session=session)
         session = self.run_handle(step_chooser, MockRenderStep.name, method='GET', session=session)
         session = self.run_handle(step_chooser, MockFormStep.name, method='GET', session=session)
         self.assertTrue(set(adapted_data).issubset(
-            set(deserialize_session_data(session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))))
+            set(deserialize_session_data(session[session_data_identifier], app.config['PERMANENT_SESSION_LIFETIME']))))
 
     @staticmethod
     def run_handle(step_chooser: StepChooser, step_name, method='GET', form_data=None, session=None):

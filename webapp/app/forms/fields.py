@@ -20,7 +20,7 @@ class NumericInputMixin:
     @staticmethod
     def set_inputmode(kwargs):
         kwargs.setdefault('inputmode', 'numeric')
-        kwargs.setdefault('pattern', '[0-9]*')
+        kwargs.setdefault('data-mask', '0#')
         return kwargs
 
 
@@ -65,6 +65,23 @@ class SteuerlotseNameStringField(StringField):
         kwargs.setdefault('spellcheck', 'false')
 
         return super().__call__(**kwargs)
+
+
+class SteuerlotseIbanField(SteuerlotseStringField):
+
+    def __call__(self, *args, **kwargs):
+        if 'class' in kwargs:
+            kwargs['class'] = kwargs['class'] + ' iban-input'
+        else:
+            kwargs['class'] = 'iban-input'
+
+        kwargs.setdefault('data-mask', 'AA00 0000 0000 0000 0000 00## ##')
+
+        return super().__call__(**kwargs)
+
+    def process_formdata(self, valuelist):
+        valuelist = [value.upper() for value in valuelist]
+        super().process_formdata(valuelist)
 
 
 class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
@@ -293,7 +310,7 @@ class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""
 
     def __init__(self, label=None, false_values=None, input_required=True, **kwargs):
-        validators = [InputRequired(message=_('confirmation_field_must_be_set'))] if input_required else []
+        validators = [InputRequired(message=_l('confirmation_field_must_be_set'))] if input_required else []
         super(BooleanField, self).__init__(
             label,
             validators=validators,

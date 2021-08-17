@@ -1,10 +1,8 @@
 import datetime
-import time
 import unittest
 from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
-from cryptography.fernet import InvalidToken
 from flask import json
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
@@ -13,8 +11,8 @@ from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
 from app import app
-from app.forms.flows.multistep_flow import MultiStepFlow, RenderInfo, serialize_session_data, deserialize_session_data, \
-    override_session_data
+from app.forms.flows.multistep_flow import MultiStepFlow, RenderInfo
+from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data
 
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, MockForm, \
     MockRenderStep, MockFormWithInputStep, MockYesNoStep
@@ -332,27 +330,6 @@ class TestMultiStepFlowGetSessionData(unittest.TestCase):
             self.assertEqual(self.session_data, deserialize_session_data(req.session['form_data'], app.config['PERMANENT_SESSION_LIFETIME']))
 
 
-class TestUpdateSessionData(unittest.TestCase):
-    def test_data_is_saved_to_empty_session(self):
-        new_data = {'brother': 'Luigi'}
-        with app.app_context() and app.test_request_context() as req:
-            with patch('app.forms.flows.multistep_flow.serialize_session_data', MagicMock(side_effect=lambda _: _)):
-                self.assertNotIn('form_data', req.session)
-                override_session_data(new_data)
-                self.assertIn('form_data', req.session)
-                self.assertEqual(new_data, req.session['form_data'])
-
-    def test_data_is_saved_to_prefilled_session(self):
-        new_data = {'brother': 'Luigi'}
-        with app.app_context() and app.test_request_context() as req:
-            with patch('app.forms.flows.multistep_flow.serialize_session_data', MagicMock(side_effect=lambda _: _)):
-                req.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'}}
-                self.assertIn('form_data', req.session)
-                override_session_data(new_data)
-                self.assertIn('form_data', req.session)
-                self.assertEqual(new_data, req.session['form_data'])
-
-
 class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):
 
     def setUp(self):
@@ -462,84 +439,6 @@ class TestMultiStepFlowGenerateSteps(unittest.TestCase):
         _, _, next_step = self.flow._generate_steps(MockFinalStep.name)
         self.assertEqual('', prev_step)
         self.assertEqual('', next_step)
-
-
-class TestMultiStepFlowSerializeSessionData(unittest.TestCase):
-
-    def test_deserialized_dict_should_equal_original(self):
-        original_data = {"name": "Tom Riddle", "dob": datetime.date(1926, 12, 31)}
-        with app.app_context() and app.test_request_context():
-            serialized_data = serialize_session_data(original_data)
-            deserialized_data = deserialize_session_data(serialized_data, app.config['PERMANENT_SESSION_LIFETIME'])
-            self.assertEqual(original_data, deserialized_data)
-
-    def test_serialization_should_encrypt_and_compress(self):
-        from zlib import compress
-        from app.crypto.encryption import encrypt
-
-        original_data = {"name": "Tom Riddle", "dob": datetime.date(1926, 12, 31)}
-
-        with app.app_context() and app.test_request_context(), \
-            patch("app.forms.flows.multistep_flow.encrypt", MagicMock(wraps=encrypt)) as encrypt_mock, \
-            patch("app.forms.flows.multistep_flow.zlib.compress", MagicMock(wraps=compress)) as compress_mock:
-
-            serialize_session_data(original_data)
-
-            encrypt_mock.assert_called()
-            compress_mock.assert_called()
-
-
-class TestMultiStepFlowDeserializeSessionData(unittest.TestCase):
-
-    def test_if_ttl_smaller_than_passed_time_then_return_original_data(self):
-        original_data = {"name": "Tom Riddle", "dob": datetime.date(1926, 12, 31)}
-        creation_time = time.time()
-        passed_time = creation_time + 5
-        ttl = 5
-
-        with app.app_context() and app.test_request_context(), \
-             patch("time.time") as mocked_time:
-            mocked_time.return_value = creation_time
-            serialized_data = serialize_session_data(original_data)
-
-            mocked_time.return_value = passed_time
-            deserialized_data = deserialize_session_data(serialized_data, ttl)
-
-            self.assertEqual(original_data, deserialized_data)
-
-    def test_if_ttl_greater_than_passed_time_then_return_empty_dict(self):
-        original_data = {"name": "Tom Riddle", "dob": datetime.date(1926, 12, 31)}
-        creation_time = time.time()
-        passed_time = creation_time + 5
-        ttl = 2
-
-        with app.app_context() and app.test_request_context(), \
-             patch("time.time") as mocked_time:
-            mocked_time.return_value = creation_time
-            serialized_data = serialize_session_data(original_data)
-
-            mocked_time.return_value = passed_time
-            deserialized_data = deserialize_session_data(serialized_data, ttl)
-
-            self.assertEqual({}, deserialized_data)
-
-    def test_if_deserialize_raises_invalid_token_then_return_empty_dict(self):
-        original_data = {"name": "Tom Riddle", "dob": datetime.date(1926, 12, 31)}
-
-        with app.app_context() and app.test_request_context(), \
-             patch("app.forms.flows.multistep_flow.decrypt", MagicMock(side_effect=InvalidToken)):
-            serialized_data = serialize_session_data(original_data)
-            deserialized_data = deserialize_session_data(serialized_data, app.config['PERMANENT_SESSION_LIFETIME'])
-
-            self.assertEqual({}, deserialized_data)
-
-    def test_if_session_data_empty_do_not_log_error(self):
-        with app.app_context() and app.test_request_context(), \
-                patch("app.forms.flows.multistep_flow.app.logger.warn") as log_fun:
-            deserialized_data = deserialize_session_data(b'', app.config['PERMANENT_SESSION_LIFETIME'])
-
-            self.assertEqual({}, deserialized_data)
-            log_fun.assert_not_called()
 
 
 class TestDeleteDependentData(unittest.TestCase):
