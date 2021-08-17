@@ -18,7 +18,10 @@
 {%- endmacro %}
 
 {% macro backLink(text, url) -%}
-          <a class='back-link' href="{{ url }}">{{text}}</a>
+      <a class='back-link' href="{{ url }}">
+          <span class="back-link-element back-link-icon"></span>
+          <span class="back-link-element">{{text}}</span>
+      </a>
 {%- endmacro %}
 
 {% macro downloadLink(text, url, large=False) -%}
