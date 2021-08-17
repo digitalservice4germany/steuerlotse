@@ -6,6 +6,7 @@ from wtforms import RadioField
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
+from app.forms.session_data import override_session_data
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
     ForeignCountryEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
@@ -19,8 +20,6 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     MoreThanMinimalInvestmentIncome, SeparatedLivedTogetherEligibilityData, SeparatedNotLivedTogetherEligibilityData, \
     SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
-
-_ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
 
 
 class IncorrectEligibilityData(Exception):
@@ -53,25 +52,21 @@ class EligibilityStepMixin:
             return 1
 
 
-class EligibilityDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
-
-
-class EligibilityFailureDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep):
+class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     name = 'result'
     template = 'eligibility/display_failure.html'
     eligibility_error = None
     input_step_name = ''
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
     title = _l('form.eligibility.failure.title')
     intro = _l('form.eligibility.failure.intro')
 
-    def __init__(self, endpoint, **kwargs):
+    def __init__(self, endpoint, stored_data=None, **kwargs):
         super(EligibilityFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
+                                                                       stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
                                                                        **kwargs)
 
-    def _main_handle(self, stored_data):
+    def _main_handle(self):
         self.render_info.prev_url = self.url_for_step(self.input_step_name)
         self.render_info.next_url = None
 
@@ -84,7 +79,6 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     failure_step_name = None
 
     template = 'eligibility/form_full_width.html'
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
     class InputForm(SteuerlotseBaseForm):
         pass
@@ -100,17 +94,16 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
             **kwargs,
         )
 
-    def _main_handle(self, stored_data):
-        stored_data = super()._main_handle(stored_data)
-
+    def _main_handle(self):
+        super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.back_link_text')
 
         if request.method == "GET":
-            stored_data = self.delete_not_dependent_data(stored_data)
+            self.delete_not_dependent_data()
         if request.method == "POST" and self.render_info.form.validate():
             found_next_step_url = None
             for data_model, step_name in self.next_step_data_models:
-                if self._validate(data_model, stored_data):
+                if self._validate(data_model):
                     found_next_step_url = self.url_for_step(step_name)
                     break
             if not found_next_step_url:
@@ -120,16 +113,14 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
                     raise IncorrectEligibilityData
             self.render_info.next_url = found_next_step_url
 
-        return stored_data
-
-    def _validate(self, data_model, stored_data):
+    def _validate(self, data_model):
         """
         Method to find out whether the data entered by the user is eligible for this step or not. The step might
         depend on data from the steps before. If that data is not correct, in other words if the user could not have
         come from an expected step to this step by entering the correct data, raise an IncorrectEligibilityData.
         """
         try:
-            data_model.parse_obj(stored_data)
+            data_model.parse_obj(self.stored_data)
         except ValidationError as e:
             if any([isinstance(raw_e.exc, PreviousFieldsMissingError) for raw_e in e.raw_errors]):
                 raise IncorrectEligibilityData
@@ -138,10 +129,10 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
         else:
             return True
 
-    def delete_not_dependent_data(self, stored_data):
+    def delete_not_dependent_data(self):
         """ Delete the data that is not (recursively) part of the first model in the list of next step data models. """
-        return dict(filter(lambda elem: elem[0] in self.next_step_data_models[0][0].get_all_potential_keys(),
-                           stored_data.items()))
+        self.stored_data = dict(filter(lambda elem: elem[0] in self.next_step_data_models[0][0].get_all_potential_keys(),
+                           self.stored_data.items()))
 
     @classmethod
     def is_previous_step(cls, possible_next_step_name, stored_data):
@@ -156,20 +147,19 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     title = _l('form.eligibility.start-title')
     intro = _l('form.eligibility.start-intro')
     template = 'basis/display_standard.html'
-    session_data_identifier = _ELIGIBILITY_DATA_KEY
 
-    def __init__(self, **kwargs):
+    def __init__(self, stored_data=None, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(
             header_title=_('form.eligibility.header-title'),
+            stored_data=stored_data,
             **kwargs)
 
-    def _main_handle(self, stored_data):
-        stored_data = super()._main_handle(stored_data)
+    def _main_handle(self):
+        super()._main_handle()
         # Remove all eligibility data as the flow is restarting
         stored_data = {}
-        self._override_session_data(stored_data)
+        override_session_data(stored_data, session_data_identifier=self.session_data_identifier)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
-        return stored_data
 
 
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -194,12 +184,9 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
                      ],
             validators=[InputRequired()])
 
-    def _main_handle(self, stored_data):
-        stored_data = super()._main_handle(stored_data)
-
+    def _main_handle(self):
+        super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.marital_status.back_link_text')
-
-        return stored_data
 
 
 class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -735,28 +722,27 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
 
-class EligibilitySuccessDisplaySteuerlotseStep(EligibilityDisplaySteuerlotseStep):
+class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     name = 'success'
     title = _l('form.eligibility.result-title')
     intro = _l('form.eligibility.result-intro')
     template = 'eligibility/display_success.html'
 
-    def __init__(self, endpoint, **kwargs):
+    def __init__(self, endpoint, stored_data=None, **kwargs):
         super(EligibilitySuccessDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
+                                                                       stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
                                                                        **kwargs)
 
-    def _main_handle(self, stored_data):
-        stored_data = super()._main_handle(stored_data)
+    def _main_handle(self):
+        super()._main_handle()
 
         dependent_notes = []
-        if data_fits_data_model(UserBNoElsterAccountEligibilityData, stored_data):
+        if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
-        if data_fits_data_model(CheaperCheckEligibilityData, stored_data):
+        if data_fits_data_model(CheaperCheckEligibilityData, self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.cheaper_check'))
 
         self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.next_url = None
-
-        return stored_data

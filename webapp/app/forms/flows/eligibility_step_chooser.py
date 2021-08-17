@@ -1,5 +1,6 @@
 from flask_babel import _
 
+from app.forms.session_data import get_session_data
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     IncomeOtherDecisionEligibilityInputFormSteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, \
@@ -23,9 +24,12 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep, SingleAlimonyEligibilityFailureDisplaySteuerlotseStep, \
     SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep, PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
-    _ELIGIBILITY_DATA_KEY, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
+    SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
     SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
+
+
+_ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
 
 
 class NotAllEligibilityCheckParametersProvided(Exception):
@@ -79,14 +83,18 @@ class EligibilityStepChooser(StepChooser):
             endpoint=endpoint,
         )
 
-    def determine_prev_step(self, step_name):
-        idx = self.step_order.index(step_name)
-        if idx == 0:
-            # Start step has no previous step
+    def determine_prev_step(self, current_step_name):
+        """
+            Loops through each step in the list up, starting from the current step.
+            Asks each step if it is the previous step and returns the correct previous step.
+            If no such step is found, returns the first step in the flow.
+        """
+        current_step_idx = self.step_order.index(current_step_name)
+        if current_step_idx == 0:  # Start step has no previous step
             return None
-        stored_data = self._get_session_data()
-        for i in range(idx - 1, 0, -1):
-            current_step = self.steps[self.step_order[i]]
-            if current_step.is_previous_step(step_name, stored_data):
-                return current_step
+        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
+        for possible_previous_step_idx in range(current_step_idx - 1, 0, -1):
+            possible_previous_step = self.steps[self.step_order[possible_previous_step_idx]]
+            if possible_previous_step.is_previous_step(current_step_name, stored_data):
+                return possible_previous_step
         return self.steps[self.step_order[0]]

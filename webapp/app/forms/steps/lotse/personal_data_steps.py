@@ -3,7 +3,8 @@ from pydantic import ValidationError
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
-    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField
+    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
+    SteuerlotseNameStringField, SteuerlotseIbanField
 
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
@@ -168,7 +169,7 @@ class StepSteuernummer(FormStep):
                 ('SH', _l('form.lotse.field_bundesland_sh')),
                 ('TH', _l('form.lotse.field_bundesland_th'))
             ],
-            validators=[InputRequired(message=_('form.lotse.field_bundesland_required'))],
+            validators=[InputRequired(message=_l('form.lotse.field_bundesland_required'))],
             render_kw={'data_label': _l('form.lotse.field_bundesland.data_label'),
                        'input_req_err_msg': _l('form.lotse.field_bundesland_required')}
         )
@@ -236,12 +237,12 @@ class StepPersonA(FormStep):
         person_a_dob = SteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired()])
-        person_a_first_name = SteuerlotseStringField(
+        person_a_first_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_first_name'),
             render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
-        person_a_last_name = SteuerlotseStringField(
+        person_a_last_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_last_name'),
             render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
                        'max_characters': 25},
@@ -362,12 +363,12 @@ class StepPersonB(FormStep):
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')},
             validators=[InputRequired()])
-        person_b_first_name = SteuerlotseStringField(
+        person_b_first_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_first_name'),
             render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
-        person_b_last_name = SteuerlotseStringField(
+        person_b_last_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_last_name'),
             render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
                        'max_characters': 25},
@@ -465,7 +466,7 @@ class StepIban(FormStep):
             choices=[('yes', _l('form.lotse.field_is_person_a_account_holder-person-a')),
                      ('no', _l('form.lotse.field_is_person_a_account_holder-person-b')),
                      ])
-        iban = SteuerlotseStringField(
+        iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
                        'example_input': _l('form.loste.field_iban.example_input'),
@@ -477,7 +478,7 @@ class StepIban(FormStep):
         is_person_a_account_holder = ConfirmationField(
             label=_l('form.lotse.field_is_person_a_account_holder_single'),
             render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder_single.data_label')})
-        iban = SteuerlotseStringField(
+        iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
                        'example_input': _l('form.loste.field_iban.example_input'),
