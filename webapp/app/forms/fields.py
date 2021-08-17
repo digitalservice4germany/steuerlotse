@@ -285,7 +285,7 @@ class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""
 
     def __init__(self, label=None, false_values=None, input_required=True, **kwargs):
-        validators = [InputRequired(message=_('confirmation_field_must_be_set'))] if input_required else []
+        validators = [InputRequired(message=_l('confirmation_field_must_be_set'))] if input_required else []
         super(BooleanField, self).__init__(
             label,
             validators=validators,

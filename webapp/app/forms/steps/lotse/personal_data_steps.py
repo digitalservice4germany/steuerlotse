@@ -169,7 +169,7 @@ class StepSteuernummer(FormStep):
                 ('SH', _l('form.lotse.field_bundesland_sh')),
                 ('TH', _l('form.lotse.field_bundesland_th'))
             ],
-            validators=[InputRequired(message=_('form.lotse.field_bundesland_required'))],
+            validators=[InputRequired(message=_l('form.lotse.field_bundesland_required'))],
             render_kw={'data_label': _l('form.lotse.field_bundesland.data_label'),
                        'input_req_err_msg': _l('form.lotse.field_bundesland_required')}
         )
