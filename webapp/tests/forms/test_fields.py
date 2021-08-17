@@ -4,8 +4,44 @@ import datetime as dt
 from werkzeug.datastructures import MultiDict
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import IdNrField, SteuerlotseDateField, UnlockCodeField
+from app.forms.fields import IdNrField, SteuerlotseDateField, UnlockCodeField, _add_classes_to_kwargs
 from app.forms.validators import ValidIdNr
+
+
+class TestAddClassesToKwargs(unittest.TestCase):
+
+    def test_if_kwargs_is_empty_and_one_class_then_set_correctly(self):
+        kwargs = {}
+        classes = ['one_class']
+        correct_classes = 'one_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
+    def test_if_kwargs_is_empty_and_many_classes_then_set_correctly(self):
+        kwargs = {}
+        classes = ['one_class', 'second_class', 'third_class']
+        correct_classes = 'one_class second_class third_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
+    def test_if_kwargs_is_not_empty_and_one_class_then_set_correctly(self):
+        kwargs = {'class': 'old_class'}
+        classes = ['one_class']
+        correct_classes = 'old_class one_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
+    def test_if_kwargs_is_not_empty_and_many_classes_then_set_correctly(self):
+        kwargs = {'class': 'old_class'}
+        classes = ['one_class', 'second_class', 'third_class']
+        correct_classes = 'old_class one_class second_class third_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
 
 
 class IdNrForm(SteuerlotseBaseForm):
