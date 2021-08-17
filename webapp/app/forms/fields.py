@@ -73,7 +73,9 @@ class SteuerlotseIbanField(SteuerlotseStringField):
         if 'class' in kwargs:
             kwargs['class'] = kwargs['class'] + ' iban-input'
         else:
-            kwargs.setdefault('class', 'iban-input')
+            kwargs['class'] = 'iban-input'
+
+        kwargs.setdefault('data-mask', 'AA00 0000 0000 0000 0000 00## ##')
 
         return super().__call__(**kwargs)
 
