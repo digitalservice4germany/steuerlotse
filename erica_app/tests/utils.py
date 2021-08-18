@@ -51,8 +51,8 @@ def create_form_data(correct=True, with_tax_number=True):
     if correct:
         form_data = FormDataEst(
             steuernummer='19811310010'if with_tax_number else None,
-            new_admission= True if not with_tax_number else None,
-            bufa_nr='1981' if not with_tax_number else None,
+            new_admission=True if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             bundesland='BY',
             familienstand='married',
             familienstand_date=date(2000, 1, 31),
@@ -97,7 +97,7 @@ def create_form_data(correct=True, with_tax_number=True):
         form_data = FormDataEst(
             steuernummer="123456789"if with_tax_number else None,
             new_admission= False if not with_tax_number else None,
-            bufa_nr='1981' if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             iban="DE35133713370000012345",
             is_person_a_account_holder=True,
             familienstand="single",
@@ -124,8 +124,8 @@ def create_form_data_single(correct=True, with_tax_number=True):
     if correct:
         form_data = FormDataEst(
             steuernummer='19811310010' if with_tax_number else None,
-            new_admission= True if not with_tax_number else None,
-            bufa_nr='1981' if not with_tax_number else None,
+            new_admission=True if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             bundesland='BY',
             familienstand='single',
 
@@ -151,8 +151,8 @@ def create_form_data_single(correct=True, with_tax_number=True):
     else:
         form_data = FormDataEst(
             steuernummer='9198011310010'if with_tax_number else None,
-            new_admission= False if not with_tax_number else None,
-            bufa_nr='1981' if not with_tax_number else None,
+            new_admission=False if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             familienstand='single',
             familienstand_date=date(2000, 1, 31),
 

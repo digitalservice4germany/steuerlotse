@@ -87,10 +87,15 @@ class EstValidationRequestController(TransferTicketRequestController):
         # Translate our form data structure into the fields from
         # the Elster specification (see `Jahresdokumentation_10_2020.xml`)
         fields = est_mapping.check_and_generate_entries(self.input_data.est_data.__dict__)
-        electronic_steuernummer = est_mapping.generate_electronic_steuernummer(self.input_data.est_data.steuernummer,
+
+        if self.input_data.est_data.new_admission:
+            empfaenger = self.input_data.est_data.bufa_nr
+            electronic_steuernummer = None
+        else:
+            electronic_steuernummer = est_mapping.generate_electronic_steuernummer(self.input_data.est_data.steuernummer,
                                                                                self.input_data.est_data.bundesland,
                                                                                use_testmerker=self._is_testmerker_used())
-        empfaenger = electronic_steuernummer[:4]
+            empfaenger = electronic_steuernummer[:4]
 
         xml = elster_xml_generator.generate_full_est_xml(fields,
                                                          electronic_steuernummer,
@@ -104,7 +109,8 @@ class EstValidationRequestController(TransferTicketRequestController):
                                                          self.input_data.est_data.person_a_town,
                                                          empfaenger,
                                                          person_b_idnr=self.input_data.est_data.person_b_idnr,
-                                                         use_testmerker=self._is_testmerker_used())
+                                                         use_testmerker=self._is_testmerker_used(),
+                                                         new_admission=self.input_data.est_data.new_admission)
 
         pyeric_controller = self._PYERIC_CONTROLLER(xml, self.input_data.meta_data.year)
         pyeric_response = pyeric_controller.get_eric_response()

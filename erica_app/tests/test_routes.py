@@ -13,7 +13,7 @@ from tests.utils import create_unlock_request, create_unlock_activation, create_
 @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
 class TestValidateEst(unittest.TestCase):
 
-    def test_if_request_correct_and_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_est_include = create_est(correct_form_data=True)
 
         try:
@@ -24,7 +24,7 @@ class TestValidateEst(unittest.TestCase):
         self.assertIn('eric_response', response)
         self.assertIn('server_response', response)
 
-    def test_if_request_correct_and_no_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_no_include_then_no_error_and_correct_response(self):
         correct_est_include = create_est(correct_form_data=True)
 
         try:
@@ -39,7 +39,20 @@ class TestValidateEst(unittest.TestCase):
 @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
 class TestSendEst(unittest.TestCase):
 
-    def test_if_request_correct_and_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_new_admission_then_no_error_and_correct_response(self):
+        correct_est_include = create_est(correct_form_data=True, with_tax_number=False)
+
+        try:
+            response = send_est(correct_est_include, include_elster_responses=True)
+        except HTTPException:
+            self.fail("send_est raise unexpected HTTP exception")
+
+        self.assertIn('transfer_ticket', response)
+        self.assertIn('pdf', response)
+        self.assertIn('eric_response', response)
+        self.assertIn('server_response', response)
+
+    def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_est_include = create_est(correct_form_data=True)
 
         try:
@@ -52,7 +65,7 @@ class TestSendEst(unittest.TestCase):
         self.assertIn('eric_response', response)
         self.assertIn('server_response', response)
 
-    def test_if_request_correct_and_no_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_no_include_then_no_error_and_correct_response(self):
         correct_est_include = create_est(correct_form_data=True)
 
         try:
@@ -88,7 +101,7 @@ class TestRequestUnlockCode(unittest.TestCase):
         self.assertNotIn('eric_response', response)
         self.assertNotIn('server_response', response)
 
-    def test_if_request_correct_and_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_request_include = create_unlock_request(correct=True)
 
         try:
@@ -104,7 +117,7 @@ class TestRequestUnlockCode(unittest.TestCase):
         self.assertIn('eric_response', response)
         self.assertIn('server_response', response)
 
-    def test_if_request_correct_and_no_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_no_include_then_no_error_and_correct_response(self):
         correct_request_no_include = create_unlock_request(correct=True)
 
         try:
@@ -139,7 +152,7 @@ class TestActivateUnlockCode(unittest.TestCase):
 
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_request_correct_and_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_activation_include = create_unlock_activation(correct=True)
 
         try:
@@ -157,7 +170,7 @@ class TestActivateUnlockCode(unittest.TestCase):
 
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_request_correct_and_no_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_no_include_then_no_error_and_correct_response(self):
         correct_activation_no_include = create_unlock_activation(correct=True)
 
         try:
@@ -182,7 +195,7 @@ class TestRevokeUnlockCode(unittest.TestCase):
 
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_request_correct_and_include_and_antrag_stored_for_id_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_revocation_include = create_unlock_revocation(correct=True)
 
         try:
