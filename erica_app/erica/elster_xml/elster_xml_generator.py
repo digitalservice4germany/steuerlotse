@@ -31,10 +31,12 @@ Vorsatz = namedtuple(
 )
 
 
-def _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town):
+def _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town, new_admission=False):
     """Creates a `Vorsatz` for Elster XML."""
     return Vorsatz(
-        unterfallart='10', ordNrArt='S', vorgang='04',
+        unterfallart='10',
+        ordNrArt='O' if new_admission else 'S',
+        vorgang='04',
         StNr=steuernummer,
         IDPersonA=person_a_idnr,
         IDPersonB=person_b_idnr,

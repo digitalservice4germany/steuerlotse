@@ -24,7 +24,8 @@ from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set
 
 
 class TestGenerateVorsatz(unittest.TestCase):
-    def test_fields_set_correctly(self):
+
+    def test_if_steuernummer_given_then_fields_set_correctly(self):
         steuernummer = '123456789'
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
@@ -37,7 +38,9 @@ class TestGenerateVorsatz(unittest.TestCase):
         town = 'Phantasialand'
 
         expected_vorsatz = Vorsatz(
-            unterfallart='10', ordNrArt='S', vorgang='04',
+            unterfallart='10',
+            ordNrArt='S',
+            vorgang='04',
             StNr=steuernummer,
             IDPersonA=person_a_idnr,
             IDPersonB=person_b_idnr,
@@ -50,6 +53,35 @@ class TestGenerateVorsatz(unittest.TestCase):
         )
         actual_vorsatz = _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name,
                                            street, street_nr, plz, town)
+        self.assertEqual(expected_vorsatz, actual_vorsatz)
+
+    def test_if_no_steuernummer_given_and_new_admission_then_fields_set_correctly(self):
+        person_a_idnr = '04452397687'
+        person_b_idnr = '02293417683'
+        year = 2019
+        first_name = 'Herbert'
+        last_name = 'Müller'
+        street = 'Schlossallee'
+        street_nr = '1b'
+        plz = '12345'
+        town = 'Phantasialand'
+
+        expected_vorsatz = Vorsatz(
+            unterfallart='10',
+            ordNrArt='O',
+            vorgang='04',
+            StNr=None,
+            IDPersonA=person_a_idnr,
+            IDPersonB=person_b_idnr,
+            Zeitraum=str(year),
+            AbsName=first_name + ' ' + last_name,
+            AbsStr=street + ' ' + street_nr,
+            AbsPlz=plz,
+            AbsOrt=town,
+            Copyright='(C) 2021 DigitalService4Germany'
+        )
+        actual_vorsatz = _generate_vorsatz(None, year, person_a_idnr, person_b_idnr, first_name, last_name,
+                                           street, street_nr, plz, town, new_admission=True)
         self.assertEqual(expected_vorsatz, actual_vorsatz)
 
 
