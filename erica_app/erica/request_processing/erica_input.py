@@ -6,7 +6,9 @@ from pydantic import BaseModel, validator
 
 
 class FormDataEst(BaseModel):
-    steuernummer: str
+    steuernummer: Optional[str]
+    new_admission: Optional[bool]
+    bufa_nr: Optional[str]
     bundesland: str
     iban: Optional[str]
     is_person_a_account_holder: bool
@@ -78,10 +80,26 @@ class FormDataEst(BaseModel):
     stmind_gem_haushalt_count: Optional[int]
     stmind_gem_haushalt_entries: Optional[List[str]]
 
+    @validator('new_admission', always=True)
+    def if_no_tax_number_must_be_new_admission(cls, v, values):
+        if values.get('steuernummer') and v:
+            raise ValueError('can not be a new admission if tax number given')
+        if not v and not values.get('steuernummer'):
+            raise ValueError('must be new admission if no tax number given')
+        return v
+
     @validator('steuernummer')
     def must_be_correct_length(cls, v):
-        if not 10 <= len(v) <= 11:
+        if v and not 10 <= len(v) <= 11:
             raise ValueError('must be 10 or 11 numbers long')
+        return v
+
+
+
+    @validator('bufa_nr', always=True)
+    def if_new_admission_bufa_nr_must_be_set_correctly(cls, v, values):
+        if values.get('new_admission') and (not v or not len(v) == 4):
+            raise ValueError('must be 4 numbers long for new admission')
         return v
 
     @validator('familienstand_married_lived_separated_since', always=True)
