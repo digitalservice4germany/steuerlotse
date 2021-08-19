@@ -39,7 +39,7 @@ class TestValidateEst(unittest.TestCase):
 @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
 class TestSendEst(unittest.TestCase):
 
-    def test_if_request_correct_and_new_admission_then_no_error_and_correct_response(self):
+    def test_if_request_correct_and_submission_without_tax_nr_then_no_error_and_correct_response(self):
         correct_est_include = create_est(correct_form_data=True, with_tax_number=False)
 
         try:

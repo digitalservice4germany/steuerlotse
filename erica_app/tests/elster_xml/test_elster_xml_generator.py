@@ -55,7 +55,7 @@ class TestGenerateVorsatz(unittest.TestCase):
                                            street, street_nr, plz, town)
         self.assertEqual(expected_vorsatz, actual_vorsatz)
 
-    def test_if_no_steuernummer_given_and_new_admission_then_fields_set_correctly(self):
+    def test_if_no_steuernummer_given_and_submission_without_tax_nr_then_fields_set_correctly(self):
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
         year = 2019
@@ -81,7 +81,7 @@ class TestGenerateVorsatz(unittest.TestCase):
             Copyright='(C) 2021 DigitalService4Germany'
         )
         actual_vorsatz = _generate_vorsatz(None, year, person_a_idnr, person_b_idnr, first_name, last_name,
-                                           street, street_nr, plz, town, new_admission=True)
+                                           street, street_nr, plz, town, submission_without_tax_nr=True)
         self.assertEqual(expected_vorsatz, actual_vorsatz)
 
 
@@ -616,7 +616,7 @@ class TestElsterXml(unittest.TestCase):
             Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
         )
 
-    def _dummy_vorsatz_new_admission(self):
+    def _dummy_vorsatz_submission_without_tax_nr(self):
         return Vorsatz(
             unterfallart='10',
             ordNrArt='O',
@@ -664,9 +664,9 @@ class TestElsterXml(unittest.TestCase):
         self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
 
-    def test_add_vorsatz_new_admission(self):
+    def test_add_vorsatz_submission_without_tax_nr(self):
         xml_top = Element('main')
-        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_new_admission())
+        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_submission_without_tax_nr())
         xml_string = tostring(xml_top).decode()
 
         self.assertNotIn("<StNr>", xml_string)
@@ -780,26 +780,26 @@ class TestGenerateFullEstXML(unittest.TestCase):
             'E0100602': 'Musterort',
         }
 
-    def _call_generate_full_est_xml(self, form_data, use_testmerker=False, new_admission=False):
+    def _call_generate_full_est_xml(self, form_data, use_testmerker=False, submission_without_tax_nr=False):
         return generate_full_est_xml(form_data=form_data,
-                                     steuernummer='9198011310010' if not new_admission else None,
+                                     steuernummer='9198011310010' if not submission_without_tax_nr else None,
                                      year='2020',
                                      person_a_idnr='04452397687', first_name='Manfred', last_name='Mustername',
                                      street='Musterstraße', street_nr='42', plz='12345', town='Hamburg',
                                      empfaenger='9198', nutzdaten_ticket='nutzdatenTicket123',
-                                     new_admission=new_admission, use_testmerker=use_testmerker)
+                                     submission_without_tax_nr=submission_without_tax_nr, use_testmerker=use_testmerker)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_new_admission_then_set_vorsatz_correctly(self):
-        xml_string = self._call_generate_full_est_xml(self.dummy_fields, new_admission=True)
+    def test_if_submission_without_tax_nr_then_set_vorsatz_correctly(self):
+        xml_string = self._call_generate_full_est_xml(self.dummy_fields, submission_without_tax_nr=True)
 
         self.assertNotIn("<StNr>", xml_string)
         self.assertIn("<OrdNrArt>O</OrdNrArt>", xml_string)
         self.assertNotIn("<OrdNrArt>S</OrdNrArt>", xml_string)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_not_new_admission_then_set_vorsatz_correctly(self):
-        xml_string = self._call_generate_full_est_xml(self.dummy_fields, new_admission=False)
+    def test_if_not_submission_without_tax_nr_then_set_vorsatz_correctly(self):
+        xml_string = self._call_generate_full_est_xml(self.dummy_fields, submission_without_tax_nr=False)
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
         self.assertIn("<OrdNrArt>S</OrdNrArt>", xml_string)

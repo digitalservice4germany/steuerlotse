@@ -88,7 +88,7 @@ class EstValidationRequestController(TransferTicketRequestController):
         # the Elster specification (see `Jahresdokumentation_10_2020.xml`)
         fields = est_mapping.check_and_generate_entries(self.input_data.est_data.__dict__)
 
-        if self.input_data.est_data.new_admission:
+        if self.input_data.est_data.submission_without_tax_nr:
             empfaenger = self.input_data.est_data.bufa_nr
             electronic_steuernummer = None
         else:
@@ -110,7 +110,7 @@ class EstValidationRequestController(TransferTicketRequestController):
                                                          empfaenger,
                                                          person_b_idnr=self.input_data.est_data.person_b_idnr,
                                                          use_testmerker=self._is_testmerker_used(),
-                                                         new_admission=self.input_data.est_data.new_admission)
+                                                         submission_without_tax_nr=self.input_data.est_data.submission_without_tax_nr)
 
         pyeric_controller = self._PYERIC_CONTROLLER(xml, self.input_data.meta_data.year)
         pyeric_response = pyeric_controller.get_eric_response()

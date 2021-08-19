@@ -53,53 +53,53 @@ def standard_est_data():
 
 class TestFormDataEstNewAdmission(unittest.TestCase):
 
-    def test_if_steuernummer_given_and_new_admission_set_then_raise_exception(self):
+    def test_if_steuernummer_given_and_submission_without_tax_nr_set_then_raise_exception(self):
         est_data = standard_est_data()
-        est_data['new_admission'] = True
+        est_data['submission_without_tax_nr'] = True
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
-    def test_if_steuernummer_none_and_no_new_admission_set_then_raise_exception(self):
+    def test_if_steuernummer_none_and_no_submission_without_tax_nr_set_then_raise_exception(self):
         est_data = standard_est_data()
         est_data['steuernummer'] = None
-        est_data.pop('new_admission', None)
+        est_data.pop('submission_without_tax_nr', None)
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
-    def test_if_no_steuernummer_and_no_new_admission_set_then_raise_exception(self):
+    def test_if_no_steuernummer_and_no_submission_without_tax_nr_set_then_raise_exception(self):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
-        est_data.pop('new_admission', None)
+        est_data.pop('submission_without_tax_nr', None)
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
-    def test_if_no_steuernummer_and_new_admission_false_then_raise_exception(self):
+    def test_if_no_steuernummer_and_submission_without_tax_nr_false_then_raise_exception(self):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
-        est_data['new_admission'] = False
+        est_data['submission_without_tax_nr'] = False
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
-    def test_if_new_admission_and_no_bufa_nr_then_raise_exception(self):
+    def test_if_submission_without_tax_nr_and_no_bufa_nr_then_raise_exception(self):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
-        est_data['new_admission'] = True
+        est_data['submission_without_tax_nr'] = True
         est_data.pop('bufa_nr', None)
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
-    def test_if_new_admission_and_bufa_nr_too_short_then_raise_exception(self):
+    def test_if_submission_without_tax_nr_and_bufa_nr_too_short_then_raise_exception(self):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
-        est_data['new_admission'] = True
+        est_data['submission_without_tax_nr'] = True
         est_data['bufa_nr'] = '19'
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
-    def test_if_new_admission_and_bufa_nr_then_raise_no_exception(self):
+    def test_if_submission_without_tax_nr_and_bufa_nr_then_raise_no_exception(self):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
-        est_data['new_admission'] = True
+        est_data['submission_without_tax_nr'] = True
         est_data['bufa_nr'] = '1981'
 
 
@@ -108,9 +108,9 @@ class TestFormDataEstNewAdmission(unittest.TestCase):
         except ValidationError as e:
             self.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_steuernummer_given_and_no_new_admission_then_raise_no_exception(self):
+    def test_if_steuernummer_given_and_no_submission_without_tax_nr_then_raise_no_exception(self):
         est_data = standard_est_data()
-        est_data.pop('new_admission', None)
+        est_data.pop('submission_without_tax_nr', None)
         est_data.pop('bufa_nr', None)
 
         try:

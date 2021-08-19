@@ -136,7 +136,7 @@ class TestEstRequestProcess(unittest.TestCase):
 
             self.assertFalse(generate_xml_fun.call_args.kwargs['use_testmerker'])
 
-    def test_if_new_admission_then_create_xml_is_called_with_new_admission_true_and_empfaenger(self):
+    def test_if_submission_without_tax_nr_then_create_xml_is_called_with_submission_without_tax_nr_true_and_empfaenger(self):
         empfaenger = '9198'
         correct_est = create_est(correct_form_data=True, with_tax_number=False)
         correct_est.est_data.bufa_nr = empfaenger
@@ -149,7 +149,7 @@ class TestEstRequestProcess(unittest.TestCase):
             est_request = EstRequestController(correct_est)
             est_request.process()
 
-            self.assertTrue(generate_xml_fun.call_args.kwargs['new_admission'])
+            self.assertTrue(generate_xml_fun.call_args.kwargs['submission_without_tax_nr'])
             self.assertEqual(empfaenger, generate_xml_fun.call_args.args[-1])  #empfaenger should be the last args
 
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
@@ -163,7 +163,7 @@ class TestEstRequestProcess(unittest.TestCase):
 
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_new_admission_then_return_not_none_response(self):
+    def test_if_submission_without_tax_nr_then_return_not_none_response(self):
         est_request = EstRequestController(create_est(correct_form_data=True, with_tax_number=False))
 
         response = est_request.process()

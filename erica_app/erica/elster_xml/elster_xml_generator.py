@@ -31,11 +31,11 @@ Vorsatz = namedtuple(
 )
 
 
-def _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town, new_admission=False):
+def _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town, submission_without_tax_nr=False):
     """Creates a `Vorsatz` for Elster XML."""
     return Vorsatz(
         unterfallart='10',
-        ordNrArt='O' if new_admission else 'S',
+        ordNrArt='O' if submission_without_tax_nr else 'S',
         vorgang='04',
         StNr=steuernummer,
         IDPersonA=person_a_idnr,
@@ -111,7 +111,7 @@ def generate_full_xml(th_fields, nutzdaten_header_generator, nutzdaten_generator
 
 
 def generate_full_est_xml(form_data, steuernummer, year, person_a_idnr, first_name, last_name, street, street_nr, plz,
-                          town, empfaenger, nutzdaten_ticket="1", new_admission=False, th_fields=None, use_testmerker=False,
+                          town, empfaenger, nutzdaten_ticket="1", submission_without_tax_nr=False, th_fields=None, use_testmerker=False,
                           person_b_idnr=None):
     """Generates the full XML for the given `vorsatz` and `fields`. In a first step the
     <Nutzdaten> part is generated before the ERiC library is called for generating the
@@ -125,7 +125,7 @@ def generate_full_est_xml(form_data, steuernummer, year, person_a_idnr, first_na
     nutzdaten_block_xml = SubElement(datenteil_xml, 'Nutzdatenblock')
 
     vorsatz = _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street,
-                                street_nr, plz, town, new_admission)
+                                street_nr, plz, town, submission_without_tax_nr)
 
     _add_xml_nutzdaten_header(nutzdaten_block_xml, nutzdaten_ticket, empfaenger)
     _add_est_xml_nutzdaten(nutzdaten_block_xml, form_data, vorsatz, year)
