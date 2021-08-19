@@ -11,9 +11,14 @@
                     data.getAsString(str => {
                         let start_idx = 0
                         sub_fields.forEach(sub_field => {
-                            masked_str = $(sub_field).masked(str);
+                            try{
+                                masked_str = $(sub_field).masked(str);
+                            }catch (TypeError) {
+                                masked_str = str;
+                            }
                             const length = parseInt(sub_field.dataset.fieldLength);
                             const paste_content = masked_str.substr(start_idx, length);
+                            console.log(masked_str, length, paste_content);
                             sub_field.value = paste_content || '';
                             start_idx += length;
                         });
