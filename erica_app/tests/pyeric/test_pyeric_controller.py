@@ -7,7 +7,7 @@ from erica.pyeric.eric_errors import EricGlobalValidationError, EricIOError
 from erica.pyeric.pyeric_controller import PyericController, EstPyericController, EstValidationPyericController, \
     UnlockCodeRequestPyericController, UnlockCodeActivationPyericController, AbrufcodeRequestPyericController, \
     UnlockCodeRevocationPyericController, BelegIdRequestPyericController, DecryptBelegePyericController, \
-    BelegRequestPyericController
+    BelegRequestPyericController, GetTaxOfficesPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
@@ -199,6 +199,25 @@ class TestDecryptBelegePyericControllerRunEric(unittest.TestCase):
         self.mocked_decrypt_data.reset_mock()
         returned_belege = DecryptBelegePyericController().run_eric(self.mocked_eric_wrapper, self.encrypted_belege)
         self.assertEqual(self.encrypted_belege, returned_belege)
+
+
+class TestGetTaxOfficesPyericControllerRunEric(unittest.TestCase):
+    def setUp(self):
+        self.test_tax_office = "Intergalactic tax office of the Vogons"
+        self.mocked_get_tax_offices = MagicMock(side_effect=lambda _: self.test_tax_office)
+        self.mocked_eric_wrapper = MagicMock(get_tax_offices=self.mocked_get_tax_offices)
+
+    def test_calls_eric_get_tax_offices(self):
+        county_id = "28"
+        self.mocked_get_tax_offices.reset_mock()
+        GetTaxOfficesPyericController().run_eric(self.mocked_eric_wrapper, county_id)
+        self.mocked_get_tax_offices.assert_called_once_with(county_id)
+
+    def test_returns_list_of_decrypted_belege_for_each_encrypted_beleg(self):
+        county_id = "28"
+        self.mocked_get_tax_offices.reset_mock()
+        returned_tax_offices = GetTaxOfficesPyericController().run_eric(self.mocked_eric_wrapper, county_id)
+        self.assertEqual(self.test_tax_office, returned_tax_offices)
 
 
 class TestBelegIdRequestPyericControllerRunEric(unittest.TestCase):

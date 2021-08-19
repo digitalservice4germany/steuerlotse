@@ -101,3 +101,15 @@ class DecryptBelegePyericController:
             response = self.run_eric(eric_wrapper, encrypted_belege)
 
         return response
+
+
+class GetTaxOfficesPyericController:
+
+    def get_eric_response(self, county_id):
+        with get_eric_wrapper() as eric_wrapper:
+            response = self.run_eric(eric_wrapper, county_id)
+
+        return response
+
+    def run_eric(self, eric_wrapper, county_id):
+        return eric_wrapper.get_tax_offices(county_id)
