@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 
 from pydantic import ValidationError
 
+from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.request_processing.erica_input import FormDataEst, MetaDataEst
 
 
@@ -93,7 +94,7 @@ class TestFormDataEstNewAdmission(unittest.TestCase):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
         est_data['submission_without_tax_nr'] = True
-        est_data['bufa_nr'] = '19'
+        est_data['bufa_nr'] = '91'
 
         self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
@@ -126,7 +127,7 @@ class TestFormDataEstNewAdmission(unittest.TestCase):
         est_data['bufa_nr'] = '1981'
 
         with patch('erica.request_processing.erica_input.is_valid_bufa', MagicMock(return_value=False)):
-            self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+            self.assertRaises(InvalidBufaNumberError, FormDataEst.parse_obj, est_data)
 
 
 class TestFormDataEstSteuernummer(unittest.TestCase):
