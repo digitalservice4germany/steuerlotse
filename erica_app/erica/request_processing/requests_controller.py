@@ -1,6 +1,7 @@
 import base64
 
-from erica.elster_xml.elster_xml_generator import get_belege_xml
+from erica.elster_xml.elster_xml_generator import get_belege_xml, generate_vorsatz_without_tax_number, \
+    generate_vorsatz_with_tax_number
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
@@ -12,7 +13,6 @@ from erica.pyeric.pyeric_controller import EstPyericController, EstValidationPye
     DecryptBelegePyericController, BelegIdRequestPyericController, \
     BelegRequestPyericController
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
-
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
 
@@ -90,27 +90,39 @@ class EstValidationRequestController(TransferTicketRequestController):
 
         if self.input_data.est_data.submission_without_tax_nr:
             empfaenger = self.input_data.est_data.bufa_nr
-            electronic_steuernummer = None
+            vorsatz = generate_vorsatz_without_tax_number(
+                self.input_data.meta_data.year,
+                self.input_data.est_data.person_a_idnr,
+                self.input_data.est_data.person_b_idnr,
+                self.input_data.est_data.person_a_first_name,
+                self.input_data.est_data.person_a_last_name,
+                self.input_data.est_data.person_a_street,
+                self.input_data.est_data.person_a_street_number,
+                self.input_data.est_data.person_a_plz,
+                self.input_data.est_data.person_a_town)
         else:
-            electronic_steuernummer = est_mapping.generate_electronic_steuernummer(self.input_data.est_data.steuernummer,
-                                                                               self.input_data.est_data.bundesland,
-                                                                               use_testmerker=self._is_testmerker_used())
+            electronic_steuernummer = est_mapping.generate_electronic_steuernummer(
+                self.input_data.est_data.steuernummer,
+                self.input_data.est_data.bundesland,
+                use_testmerker=self._is_testmerker_used())
+            vorsatz = generate_vorsatz_with_tax_number(
+                electronic_steuernummer,
+                self.input_data.meta_data.year,
+                self.input_data.est_data.person_a_idnr,
+                self.input_data.est_data.person_b_idnr,
+                self.input_data.est_data.person_a_first_name,
+                self.input_data.est_data.person_a_last_name,
+                self.input_data.est_data.person_a_street,
+                self.input_data.est_data.person_a_street_number,
+                self.input_data.est_data.person_a_plz,
+                self.input_data.est_data.person_a_town)
             empfaenger = electronic_steuernummer[:4]
 
         xml = elster_xml_generator.generate_full_est_xml(fields,
-                                                         electronic_steuernummer,
+                                                         vorsatz,
                                                          self.input_data.meta_data.year,
-                                                         self.input_data.est_data.person_a_idnr,
-                                                         self.input_data.est_data.person_a_first_name,
-                                                         self.input_data.est_data.person_a_last_name,
-                                                         self.input_data.est_data.person_a_street,
-                                                         self.input_data.est_data.person_a_street_number,
-                                                         self.input_data.est_data.person_a_plz,
-                                                         self.input_data.est_data.person_a_town,
                                                          empfaenger,
-                                                         person_b_idnr=self.input_data.est_data.person_b_idnr,
-                                                         use_testmerker=self._is_testmerker_used(),
-                                                         submission_without_tax_nr=self.input_data.est_data.submission_without_tax_nr)
+                                                         use_testmerker=self._is_testmerker_used())
 
         pyeric_controller = self._PYERIC_CONTROLLER(xml, self.input_data.meta_data.year)
         pyeric_response = pyeric_controller.get_eric_response()

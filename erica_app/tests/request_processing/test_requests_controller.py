@@ -136,20 +136,21 @@ class TestEstRequestProcess(unittest.TestCase):
 
             self.assertFalse(generate_xml_fun.call_args.kwargs['use_testmerker'])
 
-    def test_if_submission_without_tax_nr_then_create_xml_is_called_with_submission_without_tax_nr_true_and_empfaenger(self):
+    def test_if_submission_without_tax_nr_then_generate_vorsatz_without_tax_nr_is_called(self):
         empfaenger = '9198'
         correct_est = create_est(correct_form_data=True, with_tax_number=False)
         correct_est.est_data.bufa_nr = empfaenger
 
         with patch('erica.request_processing.requests_controller.EstValidationRequestController._reformat_date',
                    MagicMock(side_effect=lambda _: _)), \
+                patch('erica.request_processing.requests_controller.generate_vorsatz_without_tax_number') as generate_vorsatz_without_tax_number, \
                 patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.EstPyericController.get_eric_response'), \
                 patch('erica.request_processing.requests_controller.EstRequestController.generate_json'):
             est_request = EstRequestController(correct_est)
             est_request.process()
 
-            self.assertTrue(generate_xml_fun.call_args.kwargs['submission_without_tax_nr'])
+            generate_vorsatz_without_tax_number.assert_called()
             self.assertEqual(empfaenger, generate_xml_fun.call_args.args[-1])  #empfaenger should be the last args
 
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")

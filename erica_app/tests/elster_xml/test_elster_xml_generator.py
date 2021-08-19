@@ -14,7 +14,7 @@ from erica.elster_xml.elster_xml_generator import _pretty, _add_xml_nutzdaten_he
     _add_vast_beleg_ids_request_nutzdaten, generate_full_vast_beleg_ids_request_xml, \
     _add_abrufcode_request_nutzdaten, generate_full_abrufcode_request_xml, _add_vast_beleg_request_xml_nutzdaten, \
     generate_full_vast_beleg_request_xml, _add_vast_revocation_xml_nutzdaten, generate_full_vast_revocation_xml, \
-    _generate_vorsatz, _compute_valid_until_date
+    generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number
 from erica.elster_xml.elster_xml_parser import remove_declaration_and_namespace
 from erica.elster_xml.elster_xml_tree import ElsterXmlTreeNode
 from erica.elster_xml.est_mapping import PersonSpecificFieldId
@@ -23,9 +23,9 @@ from erica.elster_xml.transfer_header_fields import TransferHeaderFields
 from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false
 
 
-class TestGenerateVorsatz(unittest.TestCase):
+class TestGenerateVorsatzWithTaxNumber(unittest.TestCase):
 
-    def test_if_steuernummer_given_then_fields_set_correctly(self):
+    def test_if_fields_set_correctly(self):
         steuernummer = '123456789'
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
@@ -51,11 +51,15 @@ class TestGenerateVorsatz(unittest.TestCase):
             AbsOrt=town,
             Copyright='(C) 2021 DigitalService4Germany'
         )
-        actual_vorsatz = _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name,
-                                           street, street_nr, plz, town)
+        actual_vorsatz = generate_vorsatz_with_tax_number(steuernummer, year, person_a_idnr, person_b_idnr, first_name,
+                                                          last_name,
+                                                          street, street_nr, plz, town)
         self.assertEqual(expected_vorsatz, actual_vorsatz)
 
-    def test_if_no_steuernummer_given_and_submission_without_tax_nr_then_fields_set_correctly(self):
+
+class TestGenerateVorsatzWithoutTaxNumber(unittest.TestCase):
+
+    def test_if_no_steuernummer_given_then_fields_set_correctly(self):
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
         year = 2019
@@ -80,8 +84,8 @@ class TestGenerateVorsatz(unittest.TestCase):
             AbsOrt=town,
             Copyright='(C) 2021 DigitalService4Germany'
         )
-        actual_vorsatz = _generate_vorsatz(None, year, person_a_idnr, person_b_idnr, first_name, last_name,
-                                           street, street_nr, plz, town, submission_without_tax_nr=True)
+        actual_vorsatz = generate_vorsatz_without_tax_number(year, person_a_idnr, person_b_idnr, first_name, last_name,
+                                                             street, street_nr, plz, town)
         self.assertEqual(expected_vorsatz, actual_vorsatz)
 
 
@@ -425,11 +429,13 @@ class TestAddSterklFields(unittest.TestCase):
 
     def test_adds_repeated_element_if_element_is_repatable(self):
         xml_top = Element('top')
-        fields = fields = {'field_repeat_1': ['a', 'b'], 'field1': 'a', 'field_repeat_2': ['c', 'd'], 'field_repeat_3': ['e', 'f']}
+        fields = fields = {'field_repeat_1': ['a', 'b'], 'field1': 'a', 'field_repeat_2': ['c', 'd'],
+                           'field_repeat_3': ['e', 'f']}
         sterkl_tree = ElsterXmlTreeNode('parent1',
                                         [ElsterXmlTreeNode('parent11', ['field_repeat_1'], is_repeatable=True),
                                          ElsterXmlTreeNode('parent12', ['field1']),
-                                         ElsterXmlTreeNode('parent13', ['field_repeat_2', 'field_repeat_3'], is_repeatable=True)])
+                                         ElsterXmlTreeNode('parent13', ['field_repeat_2', 'field_repeat_3'],
+                                                           is_repeatable=True)])
 
         _add_sterkl_fields(xml_top, fields, sterkl_tree)
 
@@ -576,7 +582,6 @@ class TestAddPersonSpecificSterklFields(unittest.TestCase):
 
 class TestElsterXml(unittest.TestCase):
     def setUp(self):
-
         self.dummy_fields = {
             'E0100201': 'Maier',
             'E0100301': 'Hans',
@@ -781,13 +786,23 @@ class TestGenerateFullEstXML(unittest.TestCase):
         }
 
     def _call_generate_full_est_xml(self, form_data, use_testmerker=False, submission_without_tax_nr=False):
+        if submission_without_tax_nr:
+            vorsatz = generate_vorsatz_without_tax_number(
+                year='2020',
+                person_a_idnr='04452397687', person_b_idnr=None, first_name='Manfred',
+                last_name='Mustername',
+                street='Musterstraße', street_nr='42', plz='12345',
+                town='Hamburg')
+        else:
+            vorsatz = generate_vorsatz_with_tax_number(
+                steuernummer='9198011310010', year='2020',
+                person_a_idnr='04452397687', person_b_idnr=None,  first_name='Manfred', last_name='Mustername',
+                street='Musterstraße', street_nr='42', plz='12345', town='Hamburg')
         return generate_full_est_xml(form_data=form_data,
-                                     steuernummer='9198011310010' if not submission_without_tax_nr else None,
+                                     vorsatz=vorsatz,
                                      year='2020',
-                                     person_a_idnr='04452397687', first_name='Manfred', last_name='Mustername',
-                                     street='Musterstraße', street_nr='42', plz='12345', town='Hamburg',
                                      empfaenger='9198', nutzdaten_ticket='nutzdatenTicket123',
-                                     submission_without_tax_nr=submission_without_tax_nr, use_testmerker=use_testmerker)
+                                     use_testmerker=use_testmerker)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_submission_without_tax_nr_then_set_vorsatz_correctly(self):
@@ -804,7 +819,6 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
         self.assertIn("<OrdNrArt>S</OrdNrArt>", xml_string)
         self.assertNotIn("<OrdNrArt>O</OrdNrArt>", xml_string)
-
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_full_xml(self):
@@ -903,8 +917,9 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn(
             '<Handw_L><Einz><E0111217>3</E0111217><E0170601>4</E0170601><E0111214>5</E0111214></Einz><Sum><E0111215>5</E0111215></Sum></Handw_L>',
             "".join(xml_string.split()))
-        self.assertIn('<Alleinst><E0107606>6</E0107606><Pers_gem_HH><E0104706>7a</E0104706></Pers_gem_HH><Pers_gem_HH><E0104706>7b</E0104706></Pers_gem_HH></Alleinst>',
-                      "".join(xml_string.split()))
+        self.assertIn(
+            '<Alleinst><E0107606>6</E0107606><Pers_gem_HH><E0104706>7a</E0104706></Pers_gem_HH><Pers_gem_HH><E0104706>7b</E0104706></Pers_gem_HH></Alleinst>',
+            "".join(xml_string.split()))
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
@@ -962,7 +977,8 @@ class TestVastRequest(unittest.TestCase):
         self.assertIn(
             '<DateninhaberIdNr>04452397687</DateninhaberIdNr><DateninhaberGeburtstag>1985-01-01</DateninhaberGeburtstag>',
             "".join(xml_string.split()))
-        self.assertIn(f"<DatenabruferMail>{get_settings().testing_email_address}</DatenabruferMail>", "".join(xml_string.split()))
+        self.assertIn(f"<DatenabruferMail>{get_settings().testing_email_address}</DatenabruferMail>",
+                      "".join(xml_string.split()))
 
     @freeze_time("2020-05-04")
     def test_compute_valid_until_date_returns_correct_date_if_during_a_year(self):
@@ -1031,7 +1047,6 @@ class TestVastActivation(unittest.TestCase):
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_activation_xml_generates_correct_datenart(self):
-
         xml_string = generate_full_vast_activation_xml(self.valid_user_data)
 
         self.assertIn('<Verfahren>ElsterBRM</Verfahren><DatenArt>SpezRechtFreischaltung</DatenArt>',
