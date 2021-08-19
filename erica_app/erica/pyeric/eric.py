@@ -331,6 +331,29 @@ class EricWrapper(object):
         finally:
             self.close_cert_handle(cert_handle)
 
+    def get_tax_offices(self, county_id):
+        """
+        Get all the tax offices for a specific county
+
+        :param county_id: A valid county id for which the tax office list is provided
+        """
+
+        fun_get_tax_offices = self.eric.EricMtHoleFinanzaemter
+        fun_get_tax_offices.argtypes = [c_void_p, c_char_p, c_void_p]
+        fun_get_tax_offices.restype = int
+
+        buf = self.create_buffer()
+        try:
+            res = fun_get_tax_offices(self.eric_instance, county_id.encode(), buf)
+            check_result(res)
+            logger.debug(f"fun_decrypt_data res {res}")
+
+            returned_xml = self.read_buffer(buf)
+            check_xml(returned_xml)
+            return returned_xml
+        finally:
+            self.close_buffer(buf)
+
     def get_error_message_from_xml_response(self, xml_response):
         """Extract error message from server response"""
         fun_get_error_message = self.eric.EricMtGetErrormessagesFromXMLAnswer

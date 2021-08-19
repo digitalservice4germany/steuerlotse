@@ -928,10 +928,65 @@ class TestDecryptData(unittest.TestCase):
         self.eric_api_with_mocked_binaries.create_buffer = MagicMock()
         self.eric_api_with_mocked_binaries.create_buffer.side_effect = lambda: gen_random_key()
         self.mock_fun_decode_successful.side_effect = _change_buffer_contents
-        self.eric_api_with_mocked_binaries.read_buffer = MagicMock()
         self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
 
         result = self.eric_api_with_mocked_binaries.decrypt_data(self.encrypted_data)
+
+        self.assertEqual(buffer, result)
+
+
+class TestGetTaxOffices(unittest.TestCase):
+    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def setUp(self):
+        self.eric_api_with_mocked_binaries = EricWrapper()
+        self.mock_eric = MagicMock()
+        self.mock_fun_hole_finanzaemter_successful = MagicMock(return_value=0)
+        self.mock_fun_hole_finanzaemter_unsuccessful = MagicMock(return_value=-1)
+        self.mock_fun_close_buffer_successful = MagicMock(return_value=0)
+        self.mock_eric.EricMtHoleFinanzaemter = self.mock_fun_hole_finanzaemter_successful
+        self.mock_eric.EricMtRueckgabepufferFreigeben = self.mock_fun_close_buffer_successful
+        self.eric_api_with_mocked_binaries.eric = self.mock_eric
+        self.eric_api_with_mocked_binaries.read_buffer = MagicMock(return_value=b'')
+
+        self.encrypted_data = 'SpeakFriendAndEnter'
+
+    def test_correct_library_is_called(self):
+        self.eric_api_with_mocked_binaries.get_tax_offices(self.encrypted_data)
+
+        self.mock_fun_hole_finanzaemter_successful.assert_called_once()
+
+    def test_if_eric_hole_finanzaemter_returns_unsuccessful_res_code_error_is_thrown(self):
+        self.mock_eric.EricMtHoleFinanzaemter = self.mock_fun_hole_finanzaemter_unsuccessful
+
+        self.assertRaises(EricProcessNotSuccessful,
+                          self.eric_api_with_mocked_binaries.get_tax_offices,
+                          self.encrypted_data)
+
+    def test_if_eric_hole_finanzaemter_ends_with_return_code_zero_then_raise_no_exception(self):
+        self.mock_fun_hole_finanzaemter_successful.reset_mock()
+
+        try:
+            self.eric_api_with_mocked_binaries.get_tax_offices(self.encrypted_data)
+        except EricProcessNotSuccessful:
+            self.fail("Decrypt Data raised EricProcessNotSuccessful unexpectedly!")
+
+    def test_if_eric_hole_finanzaemter_called_then_result_is_content_of_a_generated_buffer(self):
+        self.mock_fun_hole_finanzaemter_unsuccessful.reset_mock()
+
+        buffer_contents = {}
+        buffer = r"<text>Send it over into ELSTER land \o/ </text>"
+
+        def _change_buffer_contents(*args):
+            buffer_contents[args[2]] = buffer
+            return 0
+
+        self.eric_api_with_mocked_binaries.create_buffer = MagicMock()
+        self.eric_api_with_mocked_binaries.create_buffer.side_effect = lambda: gen_random_key()
+        self.mock_fun_hole_finanzaemter_successful.side_effect = _change_buffer_contents
+        self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
+
+        result = self.eric_api_with_mocked_binaries.get_tax_offices(self.encrypted_data)
 
         self.assertEqual(buffer, result)
 
