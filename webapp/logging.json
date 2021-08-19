@@ -6,10 +6,16 @@
             "class": "pythonjsonlogger.jsonlogger.JsonFormatter"
         }
     },
+    "filters": {
+        "default": {
+            "()": "app.logging.AddRequestIdFilter"
+        }
+    },
     "handlers": {
         "wsgi": {
             "class": "logging.StreamHandler",
             "stream": "ext://flask.logging.wsgi_errors_stream",
+            "filters": ["default"],
             "formatter": "default"
         }
     },
@@ -20,6 +26,9 @@
     "loggers": {
         "gunicorn": {
             "level": "DEBUG"
+        },
+        "sqlalchemy.engine": {
+            "level": "INFO"
         }
     },
     "disable_existing_loggers": false

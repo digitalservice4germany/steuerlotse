@@ -111,6 +111,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
+            kwargs['data-field-length'] = input_field_length
             kwargs['maxlength'] = input_field_length
 
             sub_field_id = f'{field.id}_{idx + 1}'
@@ -133,7 +134,10 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
             if self.sub_field_separator and idx < len(self.input_field_lengths) - 1:
                 joined_input_fields += Markup(self.sub_field_separator)
 
-        return Markup(joined_input_fields)
+        return Markup(render_template('fields/multiple_input_field.html',
+                                      joined_input_fields=joined_input_fields,
+                                      name=field.id,
+                                      input_field_lengths=self.input_field_lengths))
 
 
 class UnlockCodeWidget(AlphaNumericInputMixin, MultipleInputFieldWidget):

@@ -1,10 +1,8 @@
 from decimal import Decimal, ROUND_UP
-from logging.config import dictConfig
-import json
-import os
 
-with open(os.path.join(os.path.dirname(__file__), '..', 'logging.json')) as f:
-    dictConfig(json.load(f))
+# This needs to be run before any extensions and libraries configure their logging.
+from .logging import configure_logging, log_flask_request
+configure_logging()
 
 from flask import Flask
 from flask_babel import Babel
@@ -15,6 +13,7 @@ from flask_migrate import Migrate
 from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
+from prometheus_client import Gauge
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -42,8 +41,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = 'strong'
 
-# Set pool_pre_ping to fix problems with stale connection we've been seeing.
-db = SQLAlchemy(app, engine_options={'pool_pre_ping': True})
+# SQLAlchemy options
+# - pool_pre_ping: fix problems with stale connection we've been seeing (see also:
+#   https://docs.syseleven.de/syseleven-stack/de/reference/network/known-issues#idle-tcp-sessions-being-closed).
+# - hide_parameters: don't log any parameters with errors or when logging SQL statements (
+#   https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters)
+db = SQLAlchemy(app, engine_options={'pool_pre_ping': True, 'hide_parameters': True})
 migrate = Migrate(app, db)
 
 register_commands(app)
@@ -52,7 +55,12 @@ app.json_decoder = SteuerlotseJSONDecoder
 
 if app.config['PROMETHEUS_EXPORTER_ENABLED']:
     metrics = GunicornInternalPrometheusMetrics(app)
-    metrics.info('up', 'WebApp is up')
+    up_gauge = Gauge('up', 'WebApp is up')
+    up_gauge.set(1.0)
+    app.before_first_request(lambda: up_gauge.set(1.0))
+
+
+app.before_request(log_flask_request)
 
 
 @babel.localeselector

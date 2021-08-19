@@ -32,12 +32,15 @@ _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since
 
 
 def send_to_erica(*args, **kwargs):
+    app.logger.info(f'Making Erica request with args {args!r}')
     if app.config['USE_MOCK_API']:
         from tests.elster_client.mock_erica import MockErica
-        return MockErica.mocked_elster_requests(*args, **kwargs)
+        response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
-        return requests.post(*args, headers=headers, **kwargs)
+        response = requests.post(*args, headers=headers, **kwargs)
+    app.logger.info(f'Completed Erica request with args {args!r}, got code {response.status_code}')
+    return response
 
 
 def send_est_with_elster(form_data, ip_address, year=2020, include_elster_responses=True):

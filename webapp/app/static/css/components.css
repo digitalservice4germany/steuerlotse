@@ -313,33 +313,12 @@
 
 
 /* LINKS */
-.back-link {
-    position: relative;
-    margin-left: calc(var(--back-link-size) + 7px); /* Use the margin to push the back-link the width of the before-element to the right. Plus 7px because the before element is positioned -10px to the left with a margin of +3px = 7px.*/
-
+.back-link{
     font-weight: var(--font-bold);
     font-size: var(--text-sm);
     line-height: var(--lineheight-s);
     text-transform: uppercase;
     letter-spacing: var(--tracking-extra-wide);
-}
-
-.back-link::before {
-    --total-line-height: var(--lineheight-s);
-    --size: var(--back-link-size);
-    content: url("/static/icons/arrow_back.svg");
-    margin: 3px;
-    position: absolute;
-
-    left: calc(-1 * var(--size) - 10px);
-    line-height: var(--total-line-height);
-    width: var(--size);
-    height: var(--size);
-
-    text-align: center;
-    color: var(--text-color);
-
-    border-radius: 50%;
 }
 
 a.back-link{
@@ -357,6 +336,23 @@ a.back-link:visited{
 a.back-link:focus a.back-link:active{
     color: var(--text-color);
     background-color:none;
+}
+
+.back-link-icon {
+    --size: var(--back-link-size);
+    content: url("/static/icons/arrow_back.svg");
+    margin: 3px 3px 3px 0px;
+
+    width: var(--size);
+    height: var(--size);
+
+    color: var(--text-color);
+
+    border-radius: 50%;
+}
+
+.back-link-element{
+    vertical-align: middle;
 }
 
 .edit-button {
