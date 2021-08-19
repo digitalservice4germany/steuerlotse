@@ -32,6 +32,14 @@ class NumericInputMixin:
         return kwargs
 
 
+class AlphaNumericInputMixin:
+
+    @staticmethod
+    def set_inputmode(kwargs):
+        kwargs.setdefault('data-mask', 'A#')
+        return kwargs
+
+
 class BaselineBugFixMixin:
     """ Safari and Firefox have a bug where empty input fields do not align correctly with baseline alignment. The reason is that
     if an input field is empty its bottom border is used as the baseline instead of the baseline of the text input.
@@ -128,10 +136,15 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
         return Markup(joined_input_fields)
 
 
-class UnlockCodeWidget(MultipleInputFieldWidget):
+class UnlockCodeWidget(AlphaNumericInputMixin, MultipleInputFieldWidget):
     """A divided input field with three text input fields, limited to four chars."""
     sub_field_separator = '-'
     input_field_lengths = [4, 4, 4]
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+
+        return super().__call__(*args, **kwargs)
 
 
 class UnlockCodeField(StringField):
