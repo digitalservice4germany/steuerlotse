@@ -5,6 +5,7 @@ from typing import Optional, List
 from pydantic import BaseModel, validator
 
 from erica.elster_xml.est_validation import is_valid_bufa
+from erica.pyeric.eric_errors import InvalidBufaNumberError
 
 
 class FormDataEst(BaseModel):
@@ -101,7 +102,7 @@ class FormDataEst(BaseModel):
         if values.get('submission_without_tax_nr') and (not v or not len(v) == 4):
             raise ValueError('must be 4 numbers long for new admission')
         if values.get('submission_without_tax_nr') and not is_valid_bufa(v):
-            raise ValueError(f'{v} is not a valid BUFA number')
+            raise InvalidBufaNumberError
         return v
 
     @validator('familienstand_married_lived_separated_since', always=True)
