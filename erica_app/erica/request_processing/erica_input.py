@@ -4,6 +4,8 @@ from typing import Optional, List
 
 from pydantic import BaseModel, validator
 
+from erica.elster_xml.est_validation import is_valid_bufa
+
 
 class FormDataEst(BaseModel):
     steuernummer: Optional[str]
@@ -94,12 +96,12 @@ class FormDataEst(BaseModel):
             raise ValueError('must be 10 or 11 numbers long')
         return v
 
-
-
     @validator('bufa_nr', always=True)
     def if_submission_without_tax_nr_bufa_nr_must_be_set_correctly(cls, v, values):
         if values.get('submission_without_tax_nr') and (not v or not len(v) == 4):
             raise ValueError('must be 4 numbers long for new admission')
+        if values.get('submission_without_tax_nr') and not is_valid_bufa(v):
+            raise ValueError(f'{v} is not a valid BUFA number')
         return v
 
     @validator('familienstand_married_lived_separated_since', always=True)

@@ -1,6 +1,7 @@
 import unittest
 from datetime import date
 from decimal import Decimal
+from unittest.mock import MagicMock, patch
 
 from pydantic import ValidationError
 
@@ -100,7 +101,7 @@ class TestFormDataEstNewAdmission(unittest.TestCase):
         est_data = standard_est_data()
         est_data.pop('steuernummer', None)
         est_data['submission_without_tax_nr'] = True
-        est_data['bufa_nr'] = '1981'
+        est_data['bufa_nr'] = '9198'
 
 
         try:
@@ -117,6 +118,15 @@ class TestFormDataEstNewAdmission(unittest.TestCase):
             FormDataEst.parse_obj(est_data)
         except ValidationError as e:
             self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+
+    def test_if_not_valid_bufa_then_raise_exception(self):
+        est_data = standard_est_data()
+        est_data.pop('steuernummer', None)
+        est_data['submission_without_tax_nr'] = True
+        est_data['bufa_nr'] = '1981'
+
+        with patch('erica.request_processing.erica_input.is_valid_bufa', MagicMock(return_value=False)):
+            self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
 
 
 class TestFormDataEstSteuernummer(unittest.TestCase):
