@@ -301,24 +301,6 @@ class EricWrapper(object):
         finally:
             self.close_buffer(buf)
 
-    def decrypt_data(self, data):
-        fun_decrypt_data = self.eric.EricMtDekodiereDaten
-        fun_decrypt_data.argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
-        fun_decrypt_data.restype = int
-
-        buf = self.create_buffer()
-        cert_handle = self.get_cert_handle()
-        try:
-            res = fun_decrypt_data(self.eric_instance, cert_handle, EricWrapper.cert_pin.encode(), data.encode(), buf)
-            check_result(res)
-            logger.debug(f"fun_decrypt_data res {res}")
-
-            returned_xml = self.read_buffer(buf)
-            check_xml(returned_xml)
-            return returned_xml
-        finally:
-            self.close_buffer(buf)
-
     def process_verfahren(self, xml_string, verfahren, abruf_code=None, transfer_handle=None) \
             -> EricResponse:
         """ Send the xml_string to Elster with given verfahren and certificate parameters. """
@@ -331,6 +313,21 @@ class EricWrapper(object):
         finally:
             self.close_cert_handle(cert_handle)
 
+    def decrypt_data(self, data):
+        fun_decrypt_data = self.eric.EricMtDekodiereDaten
+        argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
+        restype = int
+
+        cert_handle = self.get_cert_handle()
+
+        return self._run_buffer_method(
+            fun_decrypt_data,
+            argtypes,
+            restype,
+            cert_handle,
+            EricWrapper.cert_pin.encode(),
+            data.encode())
+
     def get_tax_offices(self, county_id):
         """
         Get all the tax offices for a specific county
@@ -339,12 +336,36 @@ class EricWrapper(object):
         """
 
         fun_get_tax_offices = self.eric.EricMtHoleFinanzaemter
-        fun_get_tax_offices.argtypes = [c_void_p, c_char_p, c_void_p]
-        fun_get_tax_offices.restype = int
+        argtypes = [c_void_p, c_char_p, c_void_p]
+        restype = int
+
+        return self._run_buffer_method(
+            fun_get_tax_offices,
+            argtypes,
+            restype,
+            county_id.encode())
+
+    def get_county_id_list(self):
+        """
+        Get a list of all the county codes
+        """
+
+        fun_get_tax_offices = self.eric.EricMtHoleFinanzamtLandNummern
+        argtypes = [c_void_p, c_void_p]
+        restype = int
+
+        return self._run_buffer_method(
+            fun_get_tax_offices,
+            argtypes,
+            restype)
+
+    def _run_buffer_method(self, function, argtypes, restype, *args):
+        function.argtypes = argtypes
+        function.restype = restype
 
         buf = self.create_buffer()
         try:
-            res = fun_get_tax_offices(self.eric_instance, county_id.encode(), buf)
+            res = function(self.eric_instance, *args, buf)
             check_result(res)
             logger.debug(f"fun_decrypt_data res {res}")
 
