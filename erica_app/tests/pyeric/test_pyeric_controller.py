@@ -4,10 +4,10 @@ from unittest.mock import MagicMock, patch, call
 from erica.config import get_settings
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.eric_errors import EricGlobalValidationError, EricIOError
-from erica.pyeric.pyeric_controller import PyericController, EstPyericController, EstValidationPyericController, \
-    UnlockCodeRequestPyericController, UnlockCodeActivationPyericController, AbrufcodeRequestPyericController, \
-    UnlockCodeRevocationPyericController, BelegIdRequestPyericController, DecryptBelegePyericController, \
-    BelegRequestPyericController, GetTaxOfficesPyericController
+from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericProcessController, EstValidationPyericController, \
+    UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, AbrufcodeRequestPyericProcessController, \
+    UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
+    BelegRequestPyericProcessController, GetTaxOfficesPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
@@ -15,7 +15,7 @@ class TestPyericControllerInit(unittest.TestCase):
     def test_if_called_with_xml_then_set_it_correctly(self):
         expected_xml = '<xml></xml>'
 
-        pyeric_controller = PyericController('<xml></xml>')
+        pyeric_controller = PyericProcessController('<xml></xml>')
 
         self.assertEqual(expected_xml, pyeric_controller.xml)
 
@@ -24,11 +24,11 @@ class TestPyericControllerGetEricResponse(unittest.TestCase):
 
     def setUp(self):
         self.xml = "<xml></xml>"
-        self.pyeric_controller = PyericController(self.xml)
+        self.pyeric_controller = PyericProcessController(self.xml)
 
     def test_run_pyeric_called_with_eric_wrapper(self):
         mock_eric_wrapper = MagicMock()
-        with patch("erica.pyeric.pyeric_controller.PyericController.run_eric") as mock_run_eric, \
+        with patch("erica.pyeric.pyeric_controller.PyericProcessController.run_eric") as mock_run_eric, \
                 patch("erica.pyeric.pyeric_controller.get_eric_wrapper") as mock_get_eric_wrapper:
             mock_get_eric_wrapper.return_value.__enter__.return_value = mock_eric_wrapper
             self.pyeric_controller.get_eric_response()
@@ -40,7 +40,7 @@ class TestPyericControllerRunPyeric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_args(self):
         xml = "<xml></xml>"
-        pyeric_controller = PyericController(xml)
+        pyeric_controller = PyericProcessController(xml)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
@@ -63,7 +63,7 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
         expected_eric_response = b'ERIC was here'
         expected_server_response = b'How can I help you?'
         expected_response = EricResponse(0, expected_eric_response, expected_server_response)
-        pyeric_controller = EstPyericController(self.correct_input_xml, 2020)
+        pyeric_controller = EstPyericProcessController(self.correct_input_xml, 2020)
 
         with patch("erica.pyeric.eric.EricWrapper.process", MagicMock(return_value=expected_response)):
             result = pyeric_controller.get_eric_response()
@@ -74,7 +74,7 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_xml_then_responses_filled_accordingly(self):
-        pyeric_controller = EstPyericController(self.problematic_input_xml, 2020)
+        pyeric_controller = EstPyericProcessController(self.problematic_input_xml, 2020)
         try:
             pyeric_controller.get_eric_response()
             self.fail("Get eric response should raise an exception")
@@ -86,7 +86,7 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_xml_then_raise_error(self):
-        pyeric_controller = EstPyericController(self.incorrect_input_xml, 2020)
+        pyeric_controller = EstPyericProcessController(self.incorrect_input_xml, 2020)
         self.assertRaises(EricIOError, pyeric_controller.get_eric_response)
 
 
@@ -95,7 +95,7 @@ class TestEstPyericControllerRunPyEric(unittest.TestCase):
     def test_if_pyeric_initialised_then_call_process_verfahren_and_send_with_correct_verfahren(self):
         xml = "<xml></xml>"
         year = 2020
-        pyeric_controller = EstPyericController(xml, year)
+        pyeric_controller = EstPyericProcessController(xml, year)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
@@ -122,7 +122,7 @@ class TestUnlockCodeRequestPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        pyeric_controller = UnlockCodeRequestPyericController(xml)
+        pyeric_controller = UnlockCodeRequestPyericProcessController(xml)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
@@ -134,7 +134,7 @@ class TestUnlockCodeActivationPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        pyeric_controller = UnlockCodeActivationPyericController(xml)
+        pyeric_controller = UnlockCodeActivationPyericProcessController(xml)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
@@ -146,7 +146,7 @@ class TestUnlockCodeRevocationPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        pyeric_controller = UnlockCodeRevocationPyericController(xml)
+        pyeric_controller = UnlockCodeRevocationPyericProcessController(xml)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
@@ -158,7 +158,7 @@ class TestAbrufcodeRequestPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        pyeric_controller = AbrufcodeRequestPyericController(xml)
+        pyeric_controller = AbrufcodeRequestPyericProcessController(xml)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
@@ -170,7 +170,7 @@ class TestBelegIdRequestPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        pyeric_controller = BelegIdRequestPyericController(xml)
+        pyeric_controller = BelegIdRequestPyericProcessController(xml)
         mock_eric_wrapper = MagicMock()
         transfer_handle = 0
 
@@ -231,7 +231,7 @@ class TestBelegIdRequestPyericControllerRunEric(unittest.TestCase):
         with patch('erica.pyeric.pyeric_controller.pointer', MagicMock(return_value=transfer_handle)):
             xml = '</xml'
             self.mocked_process_verfahren.reset_mock()
-            BelegIdRequestPyericController(xml).run_eric(self.mocked_eric_wrapper)
+            BelegIdRequestPyericProcessController(xml).run_eric(self.mocked_eric_wrapper)
             self.mocked_process_verfahren.assert_called_once_with(xml, 'ElsterVaStDaten',
                                                                   abruf_code=get_settings().abruf_code,
                                                                   transfer_handle=transfer_handle)
@@ -248,7 +248,7 @@ class TestBelegRequestPyericControllerRunPyEric(unittest.TestCase):
         with patch('erica.pyeric.pyeric_controller.pointer', MagicMock(return_value=transfer_handle)):
             xml = '</xml'
             self.mocked_process_verfahren.reset_mock()
-            BelegRequestPyericController(xml).run_eric(self.mocked_eric_wrapper)
+            BelegRequestPyericProcessController(xml).run_eric(self.mocked_eric_wrapper)
             self.mocked_process_verfahren.assert_called_once_with(xml, 'ElsterVaStDaten',
                                                                   abruf_code=get_settings().abruf_code,
                                                                   transfer_handle=transfer_handle)

@@ -11,7 +11,7 @@ _INSTANCES_FOLDER = os.path.join('erica', 'instances')
 _BLUEPRINT_FOLDER = os.path.join(_INSTANCES_FOLDER, 'blueprint')
 
 
-class PyericController:
+class PyericProcessController:
     _VERFAHREN = None
 
     def __init__(self, xml):
@@ -28,7 +28,7 @@ class PyericController:
         return eric_wrapper.process_verfahren(self.xml, self._VERFAHREN)
 
 
-class EstPyericController(PyericController):
+class EstPyericProcessController(PyericProcessController):
     _VERFAHREN = "ESt_"
 
     def __init__(self, xml, year):
@@ -42,7 +42,7 @@ class EstPyericController(PyericController):
         return self._VERFAHREN + str(self.year)
 
 
-class EstValidationPyericController(EstPyericController):
+class EstValidationPyericController(EstPyericProcessController):
 
     def run_eric(self, eric_wrapper):
         response = eric_wrapper.validate(
@@ -50,27 +50,27 @@ class EstValidationPyericController(EstPyericController):
         return response
 
 
-class UnlockCodeRequestPyericController(PyericController):
+class UnlockCodeRequestPyericProcessController(PyericProcessController):
     _VERFAHREN = "SpezRechtAntrag"
 
 
-class UnlockCodeActivationPyericController(PyericController):
+class UnlockCodeActivationPyericProcessController(PyericProcessController):
     _VERFAHREN = "SpezRechtFreischaltung"
 
 
-class UnlockCodeRevocationPyericController(PyericController):
+class UnlockCodeRevocationPyericProcessController(PyericProcessController):
     _VERFAHREN = "SpezRechtStorno"
 
 
-class PermitListingPyericController(PyericController):
+class PermitListingPyericProcessController(PyericProcessController):
     _VERFAHREN = "SpezRechtListe"
 
 
-class AbrufcodeRequestPyericController(PyericController):
+class AbrufcodeRequestPyericProcessController(PyericProcessController):
     _VERFAHREN = "AbrufcodeAntrag"
 
 
-class BelegIdRequestPyericController(PyericController):
+class BelegIdRequestPyericProcessController(PyericProcessController):
     _VERFAHREN = "ElsterVaStDaten"
 
     def run_eric(self, eric_wrapper):
@@ -78,7 +78,7 @@ class BelegIdRequestPyericController(PyericController):
                                               abruf_code=_ABRUF_CODE, transfer_handle=pointer(c_int(0)))
 
 
-class BelegRequestPyericController(PyericController):
+class BelegRequestPyericProcessController(PyericProcessController):
     _VERFAHREN = "ElsterVaStDaten"
 
     def run_eric(self, eric_wrapper):

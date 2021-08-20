@@ -1,7 +1,7 @@
 import os
 
 from erica.elster_xml import elster_xml_generator
-from erica.pyeric.pyeric_controller import AbrufcodeRequestPyericController
+from erica.pyeric.pyeric_controller import AbrufcodeRequestPyericProcessController
 from tests.utils import remove_declaration_and_namespace
 
 
@@ -13,7 +13,7 @@ from tests.utils import remove_declaration_and_namespace
 def get_new_abruf_code():
     xml = elster_xml_generator.generate_full_abrufcode_request_xml()
 
-    result = AbrufcodeRequestPyericController(xml=xml).get_eric_response()
+    result = AbrufcodeRequestPyericProcessController(xml=xml).get_eric_response()
     with open('your_abruf_code', 'w+') as f:
         f.write(result.server_response)
     xml = remove_declaration_and_namespace(result.server_response)
