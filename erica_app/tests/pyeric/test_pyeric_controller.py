@@ -4,10 +4,12 @@ from unittest.mock import MagicMock, patch, call
 from erica.config import get_settings
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.eric_errors import EricGlobalValidationError, EricIOError
-from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericProcessController, EstValidationPyericController, \
-    UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, AbrufcodeRequestPyericProcessController, \
+from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericProcessController, \
+    EstValidationPyericController, \
+    UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, \
+    AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
-    BelegRequestPyericProcessController, GetTaxOfficesPyericController
+    BelegRequestPyericProcessController, GetTaxOfficesPyericController, GetCountyIdListPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
@@ -213,11 +215,28 @@ class TestGetTaxOfficesPyericControllerRunEric(unittest.TestCase):
         GetTaxOfficesPyericController().run_eric(self.mocked_eric_wrapper, county_id)
         self.mocked_get_tax_offices.assert_called_once_with(county_id)
 
-    def test_returns_list_of_decrypted_belege_for_each_encrypted_beleg(self):
+    def test_returns_test_tax_office(self):
         county_id = "28"
         self.mocked_get_tax_offices.reset_mock()
         returned_tax_offices = GetTaxOfficesPyericController().run_eric(self.mocked_eric_wrapper, county_id)
         self.assertEqual(self.test_tax_office, returned_tax_offices)
+
+
+class TestGetCountyIdListPyericControllerRunEric(unittest.TestCase):
+    def setUp(self):
+        self.list_county_ids = "<County of the Vogons nubmer=10/>"
+        self.mocked_get_county_id_list = MagicMock(side_effect=lambda: self.list_county_ids)
+        self.mocked_eric_wrapper = MagicMock(get_county_id_list=self.mocked_get_county_id_list)
+
+    def test_calls_eric_get_county_id_list(self):
+        self.mocked_get_county_id_list.reset_mock()
+        GetCountyIdListPyericController().run_eric(self.mocked_eric_wrapper)
+        self.mocked_get_county_id_list.assert_called_once_with()
+
+    def test_returns_list_of_county_ids(self):
+        self.mocked_get_county_id_list.reset_mock()
+        returned_tax_offices = GetCountyIdListPyericController().run_eric(self.mocked_eric_wrapper)
+        self.assertEqual(self.list_county_ids, returned_tax_offices)
 
 
 class TestBelegIdRequestPyericControllerRunEric(unittest.TestCase):

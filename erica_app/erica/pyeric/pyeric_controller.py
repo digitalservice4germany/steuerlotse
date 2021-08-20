@@ -113,3 +113,15 @@ class GetTaxOfficesPyericController:
 
     def run_eric(self, eric_wrapper, county_id):
         return eric_wrapper.get_tax_offices(county_id)
+
+
+class GetCountyIdListPyericController:
+
+    def get_eric_response(self):
+        with get_eric_wrapper() as eric_wrapper:
+            response = self.run_eric(eric_wrapper)
+
+        return response
+
+    def run_eric(self, eric_wrapper):
+        return eric_wrapper.get_county_id_list()
