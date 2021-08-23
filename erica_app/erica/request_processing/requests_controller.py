@@ -1,16 +1,18 @@
 import base64
 
 from erica.elster_xml.elster_xml_generator import get_belege_xml
+from erica.elster_xml.xml_parsing.elster_tax_offices_xml_parsing import get_county_ids, get_tax_offices
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
-from erica.elster_xml.elster_xml_parser import get_antrag_id_from_xml, get_transfer_ticket_from_xml, \
+from erica.elster_xml.xml_parsing.elster_xml_parser import get_antrag_id_from_xml, get_transfer_ticket_from_xml, \
     get_address_from_xml, get_elements_text_from_xml, get_relevant_beleg_ids
 
 from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValidationPyericController, \
-    UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, UnlockCodeRevocationPyericProcessController, \
+    UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, \
+    UnlockCodeRevocationPyericProcessController, \
     DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
-    BelegRequestPyericProcessController
+    BelegRequestPyericProcessController, GetCountyIdListPyericController, GetTaxOfficesPyericController
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
 
 
@@ -212,3 +214,76 @@ class GetAddressRequestController(GetBelegeRequestController):
         response = super().generate_json(pyeric_response)
         response['address'] = get_address_from_xml(pyeric_response.server_response)
         return response
+
+
+class GetTaxOfficesRequestController:
+
+    _COUNTY_ABBREVATIONS = {
+                        "Baden-Württemberg": 'bw',
+                        "Bayern": 'by',
+                        "Berlin": 'be',
+                        "Brandenburg": 'bb',
+                        "Bremen": 'hb',
+                        "Hamburg": 'hh',
+                        "Hessen": 'he',
+                        "Mecklenburg-Vorpommern": 'mv',
+                        "Niedersachsen": 'nd',
+                        "Nordrhein-Westfalen": 'nw',
+                        "Rheinland-Pfalz": 'rp',
+                        "Saarland": 'sl',
+                        "Sachsen": 'sn',
+                        "Sachsen-Anhalt": 'st',
+                        "Schleswig-Holstein": 'sh',
+                        "Thüringen": 'th'
+    }
+
+    def process(self):
+        counties = self._request_county_id_list()
+        county_tax_offices = []
+
+        for county_name, county_ids in counties.items():
+            county_abbrevation = self._COUNTY_ABBREVATIONS[county_name]
+            tax_offices = []
+            for county_id in county_ids:
+                tax_offices += self._request_tax_offices(county_id)
+
+            county_tax_offices.append({
+                'county_abbrevation': county_abbrevation,
+                'name': county_name,
+                'tax_offices': tax_offices
+                                      })
+
+        return self.generate_json(county_tax_offices)
+
+    @staticmethod
+    def standardise_county_id_list(counties_id_list):
+        counties = {}
+
+        for county in counties_id_list:
+            try:
+                standardised_county_name = county['name'].split(" ")[0]
+            except TypeError:
+                print("jk")
+            county_ids = counties.get(standardised_county_name, [])
+            county_ids.append(county['id'])
+            counties[standardised_county_name] = county_ids
+
+        return counties
+
+    @staticmethod
+    def generate_json(county_tax_offices):
+        return {'tax_offices': county_tax_offices}
+
+    @staticmethod
+    def _request_county_id_list():
+        pyeric_response = GetCountyIdListPyericController().get_eric_response()
+        counties = GetTaxOfficesRequestController.standardise_county_id_list(get_county_ids(pyeric_response.decode()))
+
+        return counties
+
+    @staticmethod
+    def _request_tax_offices(county_id):
+        pyeric_response = GetTaxOfficesPyericController().get_eric_response(county_id)
+        tax_offices = get_tax_offices(pyeric_response.decode())
+
+        return tax_offices
