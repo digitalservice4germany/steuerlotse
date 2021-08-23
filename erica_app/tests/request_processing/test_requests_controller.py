@@ -842,20 +842,20 @@ class TestGetAddressGenerateJson(unittest.TestCase):
 class TestGetTaxOfficesRequestController(unittest.TestCase):
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_county_id_list_has_correct_length(self):
-        result = GetTaxOfficesRequestController()._request_county_id_list()
+    def test_request_state_id_list_has_correct_length(self):
+        result = GetTaxOfficesRequestController()._request_state_id_list()
 
         self.assertEqual(16, len(result))
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_county_id_list_contains_bayern(self):
-        result = GetTaxOfficesRequestController()._request_county_id_list()
+    def test_request_state_id_list_contains_bayern(self):
+        result = GetTaxOfficesRequestController()._request_state_id_list()
 
         self.assertEqual(['91', '92'], result['Bayern'])
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_county_id_list_has_correct_format(self):
-        result = GetTaxOfficesRequestController()._request_county_id_list()
+    def test_request_state_id_list_has_correct_format(self):
+        result = GetTaxOfficesRequestController()._request_state_id_list()
 
         self.assertIsInstance(list(result.values())[0], list)
 
@@ -886,19 +886,19 @@ class TestGetTaxOfficesRequestController(unittest.TestCase):
         self.assertEqual(1, len(result))
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_process_result_contains_all_counties(self):
-        county_abbrevations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
+    def test_process_result_contains_all_states(self):
+        state_abbrevations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
                                'th']
         result = GetTaxOfficesRequestController().process()
 
-        self.assertEqual(county_abbrevations, [county['county_abbrevation'] for county in result['tax_offices']])
+        self.assertEqual(state_abbrevations, [state['state_abbrevation'] for state in result['tax_offices']])
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_process_result_contains_all_tax_offices(self):
         valid_bufa_numbers = VALID_BUFA_NUMBERS
         result = GetTaxOfficesRequestController().process()
 
-        all_tax_offices = reduce(lambda tax_offices_list, county: tax_offices_list + county['tax_offices'],
+        all_tax_offices = reduce(lambda tax_offices_list, state: tax_offices_list + state['tax_offices'],
                                  result['tax_offices'], [])
         all_bufas = reduce(lambda bufa_list, tax_office: bufa_list + [tax_office['bufa_nr']], all_tax_offices, [])
         self.assertEqual(valid_bufa_numbers.sort(), all_bufas.sort())

@@ -316,11 +316,11 @@ class EricWrapper(object):
             if cert_handle:
                 self.close_cert_handle(cert_handle)
 
-    def get_tax_offices(self, county_id):
+    def get_tax_offices(self, state_id):
         """
-        Get all the tax offices for a specific county
+        Get all the tax offices for a specific state
 
-        :param county_id: A valid county id for which the tax office list is provided
+        :param state_id: A valid state id for which the tax office list is provided
         """
 
         fun_get_tax_offices = self.eric.EricMtHoleFinanzaemter
@@ -331,11 +331,11 @@ class EricWrapper(object):
             fun_get_tax_offices,
             argtypes,
             restype,
-            county_id.encode())
+            state_id.encode())
 
-    def get_county_id_list(self):
+    def get_state_id_list(self):
         """
-        Get a list of all the county codes
+        Get a list of all the state codes
         """
 
         fun_get_tax_offices = self.eric.EricMtHoleFinanzamtLandNummern

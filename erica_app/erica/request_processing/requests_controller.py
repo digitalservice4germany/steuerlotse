@@ -2,7 +2,7 @@ import base64
 
 from erica.elster_xml.elster_xml_generator import get_belege_xml, generate_vorsatz_without_tax_number, \
     generate_vorsatz_with_tax_number
-from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_county_ids, get_tax_offices, \
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_state_ids, get_tax_offices, \
     get_antrag_id_from_xml, get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
@@ -13,7 +13,7 @@ from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValida
     UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, \
     DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
-    BelegRequestPyericProcessController, GetCountyIdListPyericController, GetTaxOfficesPyericController
+    BelegRequestPyericProcessController, GetStateIdListPyericController, GetTaxOfficesPyericController
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
@@ -225,7 +225,7 @@ class GetAddressRequestController(GetBelegeRequestController):
 
 class GetTaxOfficesRequestController:
 
-    _COUNTY_ABBREVATIONS = {
+    _STATE_ABBREVATIONS = {
                         "Baden-Württemberg": 'bw',
                         "Bayern": 'by',
                         "Berlin": 'be',
@@ -245,49 +245,49 @@ class GetTaxOfficesRequestController:
     }
 
     def process(self):
-        counties = self._request_county_id_list()
-        county_tax_offices = []
+        states = self._request_state_id_list()
+        state_tax_offices = []
 
-        for county_name, county_ids in counties.items():
-            county_abbrevation = self._COUNTY_ABBREVATIONS[county_name]
+        for state_name, state_ids in states.items():
+            state_abbrevation = self._STATE_ABBREVATIONS[state_name]
             tax_offices = []
-            for county_id in county_ids:
-                tax_offices += self._request_tax_offices(county_id)
+            for state_id in state_ids:
+                tax_offices += self._request_tax_offices(state_id)
 
-            county_tax_offices.append({
-                'county_abbrevation': county_abbrevation,
-                'name': county_name,
+            state_tax_offices.append({
+                'state_abbrevation': state_abbrevation,
+                'name': state_name,
                 'tax_offices': tax_offices
                                       })
 
-        return self.generate_json(county_tax_offices)
+        return self.generate_json(state_tax_offices)
 
     @staticmethod
-    def standardise_county_id_list(counties_id_list):
-        counties = {}
+    def standardise_state_id_list(states_id_list):
+        states = {}
 
-        for county in counties_id_list:
-            standardised_county_name = county['name'].split(" ")[0]
-            county_ids = counties.get(standardised_county_name, [])
-            county_ids.append(county['id'])
-            counties[standardised_county_name] = county_ids
+        for state in states_id_list:
+            standardised_state_name = state['name'].split(" ")[0]
+            state_ids = states.get(standardised_state_name, [])
+            state_ids.append(state['id'])
+            states[standardised_state_name] = state_ids
 
-        return counties
-
-    @staticmethod
-    def generate_json(county_tax_offices):
-        return {'tax_offices': county_tax_offices}
+        return states
 
     @staticmethod
-    def _request_county_id_list():
-        pyeric_response = GetCountyIdListPyericController().get_eric_response()
-        counties = GetTaxOfficesRequestController.standardise_county_id_list(get_county_ids(pyeric_response.decode()))
-
-        return counties
+    def generate_json(state_tax_offices):
+        return {'tax_offices': state_tax_offices}
 
     @staticmethod
-    def _request_tax_offices(county_id):
-        pyeric_response = GetTaxOfficesPyericController().get_eric_response(county_id)
+    def _request_state_id_list():
+        pyeric_response = GetStateIdListPyericController().get_eric_response()
+        states = GetTaxOfficesRequestController.standardise_state_id_list(get_state_ids(pyeric_response.decode()))
+
+        return states
+
+    @staticmethod
+    def _request_tax_offices(state_id):
+        pyeric_response = GetTaxOfficesPyericController().get_eric_response(state_id)
         tax_offices = get_tax_offices(pyeric_response.decode())
 
         return tax_offices

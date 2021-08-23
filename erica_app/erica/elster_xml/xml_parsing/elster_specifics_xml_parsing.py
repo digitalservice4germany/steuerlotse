@@ -2,16 +2,16 @@ from erica.elster_xml.xml_parsing.erica_xml_parsing import get_elements_text_fro
     get_elements_from_xml, get_elements_text_from_xml_element, _get_element_from_xml, remove_declaration_and_namespace
 
 
-def get_county_ids(xml_string):
-    counties = get_elements_from_xml(xml_string, "FinanzamtLand")
-    county_ids = []
-    for county in counties:
-        county_name = get_elements_text_from_xml_element(county, "Name")[0]
-        county_id = get_elements_text_from_xml_element(county, "FinanzamtLandNummer")[0]
+def get_state_ids(xml_string):
+    states = get_elements_from_xml(xml_string, "FinanzamtLand")
+    state_ids = []
+    for state in states:
+        state_name = get_elements_text_from_xml_element(state, "Name")[0]
+        state_id = get_elements_text_from_xml_element(state, "FinanzamtLandNummer")[0]
 
-        county_ids.append({'name': county_name, 'id': county_id})
+        state_ids.append({'name': state_name, 'id': state_id})
 
-    return county_ids
+    return state_ids
 
 
 def get_tax_offices(xml_string):

@@ -949,10 +949,10 @@ class TestGetTaxOffices(unittest.TestCase):
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
         self.eric_api_with_mocked_binaries.read_buffer = MagicMock(return_value=b'')
 
-        self.county_code = '91'
+        self.state_code = '91'
 
     def test_correct_library_is_called(self):
-        self.eric_api_with_mocked_binaries.get_tax_offices(self.county_code)
+        self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
 
         self.mock_fun_hole_finanzaemter_successful.assert_called_once()
 
@@ -961,13 +961,13 @@ class TestGetTaxOffices(unittest.TestCase):
 
         self.assertRaises(EricProcessNotSuccessful,
                           self.eric_api_with_mocked_binaries.get_tax_offices,
-                          self.county_code)
+                          self.state_code)
 
     def test_if_eric_hole_finanzaemter_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_hole_finanzaemter_successful.reset_mock()
 
         try:
-            self.eric_api_with_mocked_binaries.get_tax_offices(self.county_code)
+            self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
         except EricProcessNotSuccessful:
             self.fail("Decrypt Data raised EricProcessNotSuccessful unexpectedly!")
 
@@ -986,12 +986,12 @@ class TestGetTaxOffices(unittest.TestCase):
         self.mock_fun_hole_finanzaemter_successful.side_effect = _change_buffer_contents
         self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
 
-        result = self.eric_api_with_mocked_binaries.get_tax_offices(self.county_code)
+        result = self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
 
         self.assertEqual(buffer, result)
 
 
-class TestGetCountyIdList(unittest.TestCase):
+class TestGetstateIdList(unittest.TestCase):
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
@@ -1006,7 +1006,7 @@ class TestGetCountyIdList(unittest.TestCase):
         self.eric_api_with_mocked_binaries.read_buffer = MagicMock(return_value=b'')
 
     def test_correct_library_is_called(self):
-        self.eric_api_with_mocked_binaries.get_county_id_list()
+        self.eric_api_with_mocked_binaries.get_state_id_list()
 
         self.mock_fun_hole_finanzamtlandnummern_successful.assert_called_once()
 
@@ -1014,14 +1014,14 @@ class TestGetCountyIdList(unittest.TestCase):
         self.mock_eric.EricMtHoleFinanzamtLandNummern = self.mock_fun_hole_finanzamtlandnummern_unsuccessful
 
         self.assertRaises(EricProcessNotSuccessful,
-                          self.eric_api_with_mocked_binaries.get_county_id_list,
+                          self.eric_api_with_mocked_binaries.get_state_id_list,
                           )
 
     def test_if_eric_hole_finanzamtlandnummern_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_hole_finanzamtlandnummern_successful.reset_mock()
 
         try:
-            self.eric_api_with_mocked_binaries.get_county_id_list()
+            self.eric_api_with_mocked_binaries.get_state_id_list()
         except EricProcessNotSuccessful:
             self.fail("Decrypt Data raised EricProcessNotSuccessful unexpectedly!")
 
@@ -1040,7 +1040,7 @@ class TestGetCountyIdList(unittest.TestCase):
         self.mock_fun_hole_finanzamtlandnummern_successful.side_effect = _change_buffer_contents
         self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
 
-        result = self.eric_api_with_mocked_binaries.get_county_id_list()
+        result = self.eric_api_with_mocked_binaries.get_state_id_list()
 
         self.assertEqual(buffer, result)
 

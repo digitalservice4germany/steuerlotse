@@ -112,7 +112,7 @@ def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include
 @app.get(ERICA_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK)
 def get_tax_offices():
     """
-    The list of tax offices for all counties is requested and returned.
+    The list of tax offices for all states is requested and returned.
     """
     return FileResponse("erica/static/tax_offices.json", media_type="application/json; charset=utf-8")
 

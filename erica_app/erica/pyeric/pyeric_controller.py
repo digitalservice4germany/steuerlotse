@@ -107,16 +107,16 @@ class GetTaxOfficesPyericController:
     """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
     @staticmethod
-    def get_eric_response(county_id):
+    def get_eric_response(state_id):
         with get_eric_wrapper() as eric_wrapper:
-            return eric_wrapper.get_tax_offices(county_id)
+            return eric_wrapper.get_tax_offices(state_id)
 
 
 
-class GetCountyIdListPyericController:
+class GetStateIdListPyericController:
     """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
     @staticmethod
     def get_eric_response():
         with get_eric_wrapper() as eric_wrapper:
-            return eric_wrapper.get_county_id_list()
+            return eric_wrapper.get_state_id_list()

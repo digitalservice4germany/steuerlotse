@@ -1,24 +1,24 @@
 import unittest
 
-from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_county_ids, get_tax_offices
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_state_ids, get_tax_offices
 
 
-class TestGetCountyIds(unittest.TestCase):
+class TestGetstateIds(unittest.TestCase):
 
-    def test_if_valid_xml_then_correct_county_ids_are_extracted(self):
-        expected_county_ids = [{'id': '28', 'name': 'Baden-Württemberg'},
+    def test_if_valid_xml_then_correct_state_ids_are_extracted(self):
+        expected_state_ids = [{'id': '28', 'name': 'Baden-Württemberg'},
                                 {'id': '91', 'name': 'Bayern (Zuständigkeit LfSt - München)'},
                                 {'id': '92', 'name': 'Bayern (Zuständigkeit LfSt - Nürnberg)'},
                                 {'id': '11', 'name': 'Berlin'}]
-        with open("tests/samples/sample_county_list.xml", "r") as county_list_file:
-            county_list_xml = county_list_file.read()
-        county_ids = get_county_ids(county_list_xml)
-        self.assertEqual(expected_county_ids, county_ids)
+        with open("tests/samples/sample_state_list.xml", "r") as state_list_file:
+            state_list_xml = state_list_file.read()
+        state_ids = get_state_ids(state_list_xml)
+        self.assertEqual(expected_state_ids, state_ids)
 
 
 class TestGetTaxOffices(unittest.TestCase):
 
-    def test_if_valid_xml_then_correct_county_ids_are_extracted(self):
+    def test_if_valid_xml_then_correct_state_ids_are_extracted(self):
         expected_tax_offices = [{'bufa_nr': '2801', 'name': 'Finanzamt Offenburg Außenstelle Achern'},
                                 {'bufa_nr': '2804', 'name': 'Finanzamt Villingen-Schwenningen Außenstelle Donaueschingen'},
                                 {'bufa_nr': '2887', 'name': 'Finanzamt Überlingen (Bodensee)'},
