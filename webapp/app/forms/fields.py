@@ -36,7 +36,7 @@ class AlphaNumericInputMixin:
 
     @staticmethod
     def set_inputmode(kwargs):
-        kwargs.setdefault('data-mask', 'A#')
+        kwargs.setdefault('data-alphanumeric-field', 'true')
         return kwargs
 
 

@@ -35,8 +35,16 @@
         // in order for AutoNumeric to work, autocomplete has to be turned off for the respective components
         $('.euro_field').attr('autocomplete', 'off');
     </script>
+    <script src="{{ url_for('static', filename='js/jquery.mask.min.js') }}" type=text/javascript></script>
+
     <script>
         $('input[type="date"]').attr('max', '9999-12-31');
+        $('input[data-alphanumeric-field=true]').mask('W', {
+            translation: {
+                'W': {
+                    pattern: /[a-zA-Z0-9]/, recursive: true
+                }
+            }
+        });
     </script>
-    <script src="{{ url_for('static', filename='js/jquery.mask.min.js') }}" type=text/javascript></script>
 {% endblock %}

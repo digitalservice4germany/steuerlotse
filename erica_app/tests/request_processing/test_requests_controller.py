@@ -138,10 +138,36 @@ class TestEstRequestProcess(unittest.TestCase):
 
             self.assertFalse(generate_xml_fun.call_args.kwargs['use_testmerker'])
 
+    def test_if_submission_without_tax_nr_then_generate_vorsatz_without_tax_nr_is_called(self):
+        empfaenger = '9198'
+        correct_est = create_est(correct_form_data=True, with_tax_number=False)
+        correct_est.est_data.bufa_nr = empfaenger
+
+        with patch('erica.request_processing.requests_controller.EstValidationRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.request_processing.requests_controller.generate_vorsatz_without_tax_number') as generate_vorsatz_without_tax_number, \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
+                patch('erica.pyeric.pyeric_controller.EstPyericProcessController.get_eric_response'), \
+                patch('erica.request_processing.requests_controller.EstRequestController.generate_json'):
+            est_request = EstRequestController(correct_est)
+            est_request.process()
+
+            generate_vorsatz_without_tax_number.assert_called()
+            self.assertEqual(empfaenger, generate_xml_fun.call_args.args[-1])  #empfaenger should be the last args
+
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_then_return_not_none_response(self):
         est_request = EstRequestController(create_est(correct_form_data=True))
+
+        response = est_request.process()
+
+        self.assertIsNotNone(response)
+
+    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_submission_without_tax_nr_then_return_not_none_response(self):
+        est_request = EstRequestController(create_est(correct_form_data=True, with_tax_number=False))
 
         response = est_request.process()
 
@@ -168,16 +194,6 @@ class TestEstRequestProcess(unittest.TestCase):
         response = est_request.process()
 
         self.assertEqual(expected_keys, list(response.keys()))
-
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_full_form_then_raise_no_error(self):
-        est_request = EstRequestController(create_est(correct_form_data=True))
-
-        try:
-            est_request.process()
-        except Exception:
-            self.fail("Processing EstRequestController raised unexpected exception")
 
 
 class TestEstRequestGenerateJson(unittest.TestCase):

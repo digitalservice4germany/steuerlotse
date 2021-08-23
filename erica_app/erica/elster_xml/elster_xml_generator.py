@@ -31,11 +31,31 @@ Vorsatz = namedtuple(
 )
 
 
-def _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town):
+def generate_vorsatz_with_tax_number(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town):
     """Creates a `Vorsatz` for Elster XML."""
     return Vorsatz(
-        unterfallart='10', ordNrArt='S', vorgang='04',
+        unterfallart='10',
+        ordNrArt='S',
+        vorgang='04',
         StNr=steuernummer,
+        IDPersonA=person_a_idnr,
+        IDPersonB=person_b_idnr,
+        Zeitraum=str(year),
+        AbsName=first_name + ' ' + last_name,
+        AbsStr=street + ' ' + street_nr,
+        AbsPlz=plz,
+        AbsOrt=town,
+        Copyright='(C) 2021 DigitalService4Germany',
+    )
+
+
+def generate_vorsatz_without_tax_number(year, person_a_idnr, person_b_idnr, first_name, last_name, street, street_nr, plz, town):
+    """Creates a `Vorsatz` for Elster XML."""
+    return Vorsatz(
+        unterfallart='10',
+        ordNrArt='O',
+        vorgang='04',
+        StNr=None,
         IDPersonA=person_a_idnr,
         IDPersonB=person_b_idnr,
         Zeitraum=str(year),
@@ -108,9 +128,7 @@ def generate_full_xml(th_fields, nutzdaten_header_generator, nutzdaten_generator
     return xml_string_with_th
 
 
-def generate_full_est_xml(form_data, steuernummer, year, person_a_idnr, first_name, last_name, street, street_nr, plz,
-                          town, empfaenger, nutzdaten_ticket="1", th_fields=None, use_testmerker=False,
-                          person_b_idnr=None):
+def generate_full_est_xml(form_data, vorsatz, year, empfaenger, nutzdaten_ticket="1", th_fields=None, use_testmerker=False):
     """Generates the full XML for the given `vorsatz` and `fields`. In a first step the
     <Nutzdaten> part is generated before the ERiC library is called for generating the
     proper <TransferHeader>.
@@ -121,9 +139,6 @@ def generate_full_est_xml(form_data, steuernummer, year, person_a_idnr, first_na
     base_xml = XML(_BASE_XML)
     datenteil_xml = SubElement(base_xml, 'DatenTeil')
     nutzdaten_block_xml = SubElement(datenteil_xml, 'Nutzdatenblock')
-
-    vorsatz = _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name, street,
-                                street_nr, plz, town)
 
     _add_xml_nutzdaten_header(nutzdaten_block_xml, nutzdaten_ticket, empfaenger)
     _add_est_xml_nutzdaten(nutzdaten_block_xml, form_data, vorsatz, year)
@@ -358,7 +373,8 @@ def _add_xml_vorsatz(xml_top, vorsatz, bescheid=2):
 
     SubElement(xml_vorsatz, 'Unterfallart').text = vorsatz.unterfallart
     SubElement(xml_vorsatz, 'Vorgang').text = vorsatz.vorgang
-    SubElement(xml_vorsatz, 'StNr').text = vorsatz.StNr
+    if vorsatz.ordNrArt == 'S':
+        SubElement(xml_vorsatz, 'StNr').text = vorsatz.StNr
     SubElement(xml_vorsatz, 'ID').text = vorsatz.IDPersonA
     if vorsatz.IDPersonB:
         SubElement(xml_vorsatz, 'IDEhefrau').text = vorsatz.IDPersonB

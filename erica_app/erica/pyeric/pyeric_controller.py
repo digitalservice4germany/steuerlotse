@@ -42,7 +42,7 @@ class EstPyericProcessController(PyericProcessController):
         return self._VERFAHREN + str(self.year)
 
 
-class EstValidationPyericController(EstPyericProcessController):
+class EstValidationPyericProcessController(EstPyericProcessController):
 
     def run_eric(self, eric_wrapper):
         response = eric_wrapper.validate(

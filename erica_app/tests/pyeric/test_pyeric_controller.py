@@ -5,7 +5,7 @@ from erica.config import get_settings
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.eric_errors import EricGlobalValidationError, EricIOError
 from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericProcessController, \
-    EstValidationPyericController, \
+    EstValidationPyericProcessController, \
     UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, \
     AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
@@ -110,7 +110,7 @@ class TestEstValidationPyericControllerRunPyEric(unittest.TestCase):
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
         year = 2020
-        pyeric_controller = EstValidationPyericController(xml, year)
+        pyeric_controller = EstValidationPyericProcessController(xml, year)
         mock_eric_wrapper = MagicMock()
 
         pyeric_controller.run_eric(mock_eric_wrapper)
