@@ -184,21 +184,15 @@ class EricWrapper(object):
 
     def get_cert_properties(self):
         fun_get_cert_properties = self.eric.EricMtHoleZertifikatEigenschaften
-        fun_get_cert_properties.argtypes = [c_void_p, c_int, c_char_p, c_void_p]
-        fun_get_cert_properties.restype = c_int
-
-        cert_handle = None
-        buffer = None
+        argtypes = [c_void_p, c_int, c_char_p, c_void_p]
+        restype = c_int
 
         try:
             cert_handle = self.get_cert_handle()
-            buffer = self.create_buffer()
-            res = fun_get_cert_properties(self.eric_instance, cert_handle, EricWrapper.cert_pin.encode(), buffer)
-            check_result(res)
-            return self.read_buffer(buffer).decode()
+
+            return self._run_buffer_method(fun_get_cert_properties, argtypes, restype, cert_handle,
+                                       EricWrapper.cert_pin.encode())
         finally:
-            if buffer:
-                self.close_buffer(buffer)
             if cert_handle:
                 self.close_cert_handle(cert_handle)
 
@@ -281,25 +275,15 @@ class EricWrapper(object):
                   datenLieferant='Softwaretester ERiC',
                   versionClient='1'):
         fun_create_th = self.eric.EricMtCreateTH
-        fun_create_th.argtypes = [c_void_p, c_char_p, c_char_p, c_char_p, c_char_p,
+        argtypes = [c_void_p, c_char_p, c_char_p, c_char_p, c_char_p,
                                   c_char_p, c_char_p, c_char_p, c_char_p,
                                   c_char_p, c_void_p]
-        fun_create_th.restype = int
+        restype = int
 
-        buf = self.create_buffer()
-        try:
-            res = fun_create_th(
-                self.eric_instance, xml.encode(), verfahren.encode(), datenart.encode(), vorgang.encode(),
-                testmerker.encode(), herstellerId.encode(), datenLieferant.encode(), versionClient.encode(),
-                None, buf)
-            check_result(res)
-
-            logger.debug(f"fun_create_th res: {res}")
-            returned_xml = self.read_buffer(buf)
-            check_xml(returned_xml)
-            return returned_xml
-        finally:
-            self.close_buffer(buf)
+        return self._run_buffer_method(
+            fun_create_th, argtypes, restype, xml.encode(), verfahren.encode(), datenart.encode(),
+            vorgang.encode(), testmerker.encode(), herstellerId.encode(), datenLieferant.encode(),
+            versionClient.encode(), None)
 
     def process_verfahren(self, xml_string, verfahren, abruf_code=None, transfer_handle=None) \
             -> EricResponse:
@@ -318,15 +302,19 @@ class EricWrapper(object):
         argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
         restype = int
 
-        cert_handle = self.get_cert_handle()
+        try:
+            cert_handle = self.get_cert_handle()
 
-        return self._run_buffer_method(
-            fun_decrypt_data,
-            argtypes,
-            restype,
-            cert_handle,
-            EricWrapper.cert_pin.encode(),
-            data.encode())
+            return self._run_buffer_method(
+                fun_decrypt_data,
+                argtypes,
+                restype,
+                cert_handle,
+                EricWrapper.cert_pin.encode(),
+                data.encode())
+        finally:
+            if cert_handle:
+                self.close_cert_handle(cert_handle)
 
     def get_tax_offices(self, county_id):
         """
@@ -367,7 +355,7 @@ class EricWrapper(object):
         try:
             res = function(self.eric_instance, *args, buf)
             check_result(res)
-            logger.debug(f"fun_decrypt_data res {res}")
+            logger.debug(f"function run_buffer res {res}")
 
             returned_xml = self.read_buffer(buf)
             check_xml(returned_xml)

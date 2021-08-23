@@ -1142,7 +1142,7 @@ class TestGetCertProperties(unittest.TestCase):
         self.eric_wrapper_with_mock_eric_binaries.close_cert_handle = MagicMock(name="close_cert_handle")
 
         self.eric_wrapper_with_mock_eric_binaries.create_buffer = MagicMock(return_value=1)
-        self.eric_wrapper_with_mock_eric_binaries.read_buffer = MagicMock()
+        self.eric_wrapper_with_mock_eric_binaries.read_buffer = MagicMock(return_value=b"<xml></xml>")
         self.eric_wrapper_with_mock_eric_binaries.close_buffer = MagicMock(name="close_buffer")
 
     def test_should_extract_correct_info(self):
@@ -1150,9 +1150,9 @@ class TestGetCertProperties(unittest.TestCase):
             cert_properties = eric_wrapper.get_cert_properties()
 
         # Verify some expected content is there.
-        self.assertTrue("EricHoleZertifikatEigenschaften" in cert_properties)
-        self.assertTrue("Signaturzertifikateigenschaften" in cert_properties)
-        self.assertTrue("ElsterIdNrSoftTestCA" in cert_properties)
+        self.assertTrue("EricHoleZertifikatEigenschaften" in cert_properties.decode())
+        self.assertTrue("Signaturzertifikateigenschaften" in cert_properties.decode())
+        self.assertTrue("ElsterIdNrSoftTestCA" in cert_properties.decode())
 
     def test_should_raise_error_when_non_zero_result(self):
         self.eric_wrapper_with_mock_eric_binaries.eric.EricMtHoleZertifikatEigenschaften.return_value = -1
