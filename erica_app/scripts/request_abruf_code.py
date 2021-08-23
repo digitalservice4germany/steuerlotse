@@ -1,6 +1,8 @@
 import os
-
 import click
+
+import sys
+sys.path.append(os.getcwd())
 
 from erica.elster_xml import elster_xml_generator
 from erica.pyeric.pyeric_controller import AbrufcodeRequestPyericProcessController
