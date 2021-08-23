@@ -1,3 +1,4 @@
+import json
 import logging
 
 from fastapi import HTTPException, status
@@ -107,6 +108,16 @@ def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include
     except EricProcessNotSuccessful as e:
         logging.getLogger().info("Could not revoke unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
+
+
+@app.get(PYERIC_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK)
+def get_tax_offices():
+    """
+    The list of tax offices for all counties is requested and returned.
+    """
+    with open("erica/static/tax_offices.json", "r") as json_file:
+        response = json.load(json_file)
+    return response
 
 
 @app.post(PYERIC_VERSION_URL + '/address', status_code=status.HTTP_200_OK)
