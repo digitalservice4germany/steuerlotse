@@ -1,9 +1,9 @@
-import json
 import logging
 
 from fastapi import HTTPException, status
+from starlette.responses import FileResponse
 
-from erica import app, UTF8JSONResponse
+from erica import app
 from erica.request_processing.erica_input import EstData, UnlockCodeRequestData, UnlockCodeActivationData, \
     UnlockCodeRevocationData, GetAddressData
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
@@ -90,7 +90,6 @@ def activate_unlock_code(unlock_code_activation: UnlockCodeActivationData, inclu
         logging.getLogger().info("Could not activate unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
-
 @app.post(ERICA_VERSION_URL + '/unlock_code_revocations', status_code=status.HTTP_200_OK)
 def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include_elster_responses: bool = False):
     """
@@ -110,14 +109,12 @@ def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
 
-@app.get(ERICA_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK, response_class=UTF8JSONResponse)
+@app.get(ERICA_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK)
 def get_tax_offices():
     """
     The list of tax offices for all counties is requested and returned.
     """
-    with open("erica/static/tax_offices.json", "r", encoding="utf-8") as json_file:
-        response = json.load(json_file)
-    return response
+    return FileResponse("erica/static/tax_offices.json", media_type="application/json; charset=utf-8")
 
 
 @app.post(ERICA_VERSION_URL + '/address', status_code=status.HTTP_200_OK)

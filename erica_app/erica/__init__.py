@@ -38,9 +38,4 @@ up_metric.labels(job='dongle').set_function(DongleStatus.get)
 # Add default metrics and expose endpoint.
 Instrumentator().instrument(app).expose(app)
 
-
-class UTF8JSONResponse(JSONResponse):
-    media_type = "application/json; charset=utf-8"
-
-
 from erica import routes

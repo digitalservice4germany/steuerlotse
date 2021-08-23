@@ -21,7 +21,7 @@ def create():
     tax_office_list = GetTaxOfficesRequestController().process()
 
     with open(_TAX_OFFICES_JSON_FILE_NAME, 'w', encoding="utf-8") as tax_offices_file:
-        tax_offices_file.write(json.dumps(tax_office_list))
+        json.dump(tax_office_list, tax_offices_file, ensure_ascii=False)
 
 
 if __name__ == "__main__":
