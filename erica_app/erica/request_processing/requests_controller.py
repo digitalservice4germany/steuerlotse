@@ -112,10 +112,7 @@ class EstValidationRequestController(TransferTicketRequestController):
             vorsatz = generate_vorsatz_with_tax_number(electronic_steuernummer, *common_vorsatz_args)
             empfaenger = electronic_steuernummer[:4]
 
-        xml = elster_xml_generator.generate_full_est_xml(fields,
-                                                         vorsatz,
-                                                         self.input_data.meta_data.year,
-                                                         empfaenger,
+        xml = elster_xml_generator.generate_full_est_xml(fields, vorsatz, self.input_data.meta_data.year, empfaenger,
                                                          use_testmerker=self._is_testmerker_used())
 
         pyeric_controller = self._PYERIC_CONTROLLER(xml, self.input_data.meta_data.year)

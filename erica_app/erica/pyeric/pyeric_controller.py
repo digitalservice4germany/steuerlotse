@@ -87,7 +87,7 @@ class BelegRequestPyericProcessController(PyericProcessController):
 
 
 class DecryptBelegePyericController:
-    """This does not inherit from pyeric controller as the needed Eric method does not take an XML as input."""
+    """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
     def run_eric(self, eric_wrapper, encrypted_belege):
         decrypted_belege = []
@@ -104,24 +104,19 @@ class DecryptBelegePyericController:
 
 
 class GetTaxOfficesPyericController:
+    """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
-    def get_eric_response(self, county_id):
+    @staticmethod
+    def get_eric_response(county_id):
         with get_eric_wrapper() as eric_wrapper:
-            response = self.run_eric(eric_wrapper, county_id)
+            return eric_wrapper.get_tax_offices(county_id)
 
-        return response
-
-    def run_eric(self, eric_wrapper, county_id):
-        return eric_wrapper.get_tax_offices(county_id)
 
 
 class GetCountyIdListPyericController:
+    """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
-    def get_eric_response(self):
+    @staticmethod
+    def get_eric_response():
         with get_eric_wrapper() as eric_wrapper:
-            response = self.run_eric(eric_wrapper)
-
-        return response
-
-    def run_eric(self, eric_wrapper):
-        return eric_wrapper.get_county_id_list()
+            return eric_wrapper.get_county_id_list()
