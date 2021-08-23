@@ -20,7 +20,7 @@ def create():
     print(f"Creating Json File under {_TAX_OFFICES_JSON_FILE_NAME}")
     tax_office_list = GetTaxOfficesRequestController().process()
 
-    with open(_TAX_OFFICES_JSON_FILE_NAME, 'w') as tax_offices_file:
+    with open(_TAX_OFFICES_JSON_FILE_NAME, 'w', encoding="utf-8") as tax_offices_file:
         tax_offices_file.write(json.dumps(tax_office_list))
 
 

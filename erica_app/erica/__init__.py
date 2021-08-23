@@ -3,6 +3,7 @@ import time
 from fastapi import FastAPI
 from prometheus_client import Gauge
 from prometheus_fastapi_instrumentator import Instrumentator
+from starlette.responses import JSONResponse
 
 from erica.pyeric.eric import verify_using_stick
 
@@ -36,5 +37,10 @@ up_metric.labels(job='dongle').set_function(DongleStatus.get)
 
 # Add default metrics and expose endpoint.
 Instrumentator().instrument(app).expose(app)
+
+
+class UTF8JSONResponse(JSONResponse):
+    media_type = "application/json; charset=utf-8"
+
 
 from erica import routes
