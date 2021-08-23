@@ -190,8 +190,8 @@ class EricWrapper(object):
         try:
             cert_handle = self.get_cert_handle()
 
-            return self._run_buffer_method(fun_get_cert_properties, argtypes, restype, cert_handle,
-                                       EricWrapper.cert_pin.encode())
+            return self._call_and_return_buffer_contents(fun_get_cert_properties, argtypes, restype, cert_handle,
+                                                         EricWrapper.cert_pin.encode())
         finally:
             if cert_handle:
                 self.close_cert_handle(cert_handle)
@@ -280,7 +280,7 @@ class EricWrapper(object):
                                   c_char_p, c_void_p]
         restype = int
 
-        return self._run_buffer_method(
+        return self._call_and_return_buffer_contents(
             fun_create_th, argtypes, restype, xml.encode(), verfahren.encode(), datenart.encode(),
             vorgang.encode(), testmerker.encode(), herstellerId.encode(), datenLieferant.encode(),
             versionClient.encode(), None)
@@ -305,7 +305,7 @@ class EricWrapper(object):
         try:
             cert_handle = self.get_cert_handle()
 
-            return self._run_buffer_method(
+            return self._call_and_return_buffer_contents(
                 fun_decrypt_data,
                 argtypes,
                 restype,
@@ -327,7 +327,7 @@ class EricWrapper(object):
         argtypes = [c_void_p, c_char_p, c_void_p]
         restype = int
 
-        return self._run_buffer_method(
+        return self._call_and_return_buffer_contents(
             fun_get_tax_offices,
             argtypes,
             restype,
@@ -342,12 +342,12 @@ class EricWrapper(object):
         argtypes = [c_void_p, c_void_p]
         restype = int
 
-        return self._run_buffer_method(
+        return self._call_and_return_buffer_contents(
             fun_get_tax_offices,
             argtypes,
             restype)
 
-    def _run_buffer_method(self, function, argtypes, restype, *args):
+    def _call_and_return_buffer_contents(self, function, argtypes, restype, *args):
         function.argtypes = argtypes
         function.restype = restype
 
