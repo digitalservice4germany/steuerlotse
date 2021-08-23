@@ -1,10 +1,13 @@
 import os
 
+import click
+
 from erica.elster_xml import elster_xml_generator
-from erica.elster_xml.elster_xml_parser import remove_declaration_and_namespace
+from erica.elster_xml.xml_parsing.elster_xml_parser import remove_declaration_and_namespace
 from erica.pyeric.pyeric_controller import PermitListingPyericProcessController
 
 
+@click.command()
 def get_idnr_status_list():
     xml = elster_xml_generator.generate_full_vast_list_xml()
 
@@ -15,5 +18,7 @@ def get_idnr_status_list():
     print(elster_xml_generator._pretty(datenteil_xml))
 
 
-os.chdir('../../')  # Change the working directory to be able to find the eric binaries
-get_idnr_status_list()
+if __name__ == "__main__":
+    os.chdir('../../')  # Change the working directory to be able to find the eric binaries
+    get_idnr_status_list()
+
