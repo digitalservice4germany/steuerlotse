@@ -355,7 +355,7 @@ class EricWrapper(object):
         try:
             res = function(self.eric_instance, *args, buf)
             check_result(res)
-            logger.debug(f"function run_buffer res {res}")
+            logger.debug(f"function {function.__name__} from _run_buffer_method res {res}")
 
             returned_xml = self.read_buffer(buf)
             check_xml(returned_xml)
