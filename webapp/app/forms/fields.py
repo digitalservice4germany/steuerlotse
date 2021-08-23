@@ -25,9 +25,18 @@ def _add_classes_to_kwargs(kwargs, classes):
 
 class NumericInputMixin:
 
-    @staticmethod
-    def set_inputmode(kwargs):
+    @classmethod
+    def set_inputmode(cls, kwargs):
         kwargs.setdefault('inputmode', 'numeric')
+
+        return kwargs
+
+
+class NumericInputMaskMixin(NumericInputMixin):
+
+    @classmethod
+    def set_inputmode(cls, kwargs):
+        kwargs = super().set_inputmode(kwargs)
         kwargs.setdefault('data-mask', '0#')
         return kwargs
 
@@ -59,7 +68,19 @@ class SteuerlotseStringField(StringField):
         ValidElsterCharacterSet().__call__(form, self)
 
 
-class SteuerlotseIntegerField(NumericInputMixin, IntegerField):
+class SteuerlotseIntegerField(NumericInputMaskMixin, IntegerField):
+    """ This field only allows valid integers. Input starting with a zero is therefore no valid input. It only allows
+    digits as input and sets the input mode to numeric (showing a number pad to mobile
+    users)."""
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+
+        return super().__call__(**kwargs)
+
+
+class SteuerlotseNumericStringField(NumericInputMaskMixin, SteuerlotseStringField):
+    """ This field only allows digits as input and sets the input mode to numeric (showing a number pad to mobile
+    users). However, also numbers starting with zero are a valid input. """
 
     def __call__(self, *args, **kwargs):
         kwargs = self.set_inputmode(kwargs)
@@ -67,7 +88,9 @@ class SteuerlotseIntegerField(NumericInputMixin, IntegerField):
         return super().__call__(**kwargs)
 
 
-class SteuerlotseNumericStringField(NumericInputMixin, StringField):
+class SteuerlotseNumericInputStringField(NumericInputMixin, SteuerlotseStringField):
+    """ This field allows all characters but the input mode is numeric.
+    That means a digit pad is shown to mobile users."""
 
     def __call__(self, *args, **kwargs):
         kwargs = self.set_inputmode(kwargs)
@@ -75,7 +98,7 @@ class SteuerlotseNumericStringField(NumericInputMixin, StringField):
         return super().__call__(**kwargs)
 
 
-class SteuerlotseNameStringField(StringField):
+class SteuerlotseNameStringField(SteuerlotseStringField):
 
     def __call__(self, *args, **kwargs):
         kwargs.setdefault('spellcheck', 'false')
@@ -174,7 +197,7 @@ class UnlockCodeField(StringField):
         ValidElsterCharacterSet().__call__(form, self)
 
 
-class SteuerlotseDateWidget(NumericInputMixin, MultipleInputFieldWidget):
+class SteuerlotseDateWidget(NumericInputMaskMixin, MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
@@ -207,7 +230,7 @@ class SteuerlotseDateField(DateField):
             return self.raw_data if self.raw_data else []
 
 
-class IdNrWidget(NumericInputMixin, MultipleInputFieldWidget):
+class IdNrWidget(NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]
