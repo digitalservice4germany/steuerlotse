@@ -3,7 +3,7 @@ import os
 import click
 
 from erica.elster_xml import elster_xml_generator
-from erica.elster_xml.xml_parsing.elster_xml_parser import remove_declaration_and_namespace
+from erica.elster_xml.xml_parsing.erica_xml_parsing import remove_declaration_and_namespace
 from erica.pyeric.pyeric_controller import PermitListingPyericProcessController
 
 

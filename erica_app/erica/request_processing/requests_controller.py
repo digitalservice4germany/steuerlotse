@@ -1,12 +1,12 @@
 import base64
 
 from erica.elster_xml.elster_xml_generator import get_belege_xml
-from erica.elster_xml.xml_parsing.elster_tax_offices_xml_parsing import get_county_ids, get_tax_offices
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_county_ids, get_tax_offices, \
+    get_antrag_id_from_xml, get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
-from erica.elster_xml.xml_parsing.elster_xml_parser import get_antrag_id_from_xml, get_transfer_ticket_from_xml, \
-    get_address_from_xml, get_elements_text_from_xml, get_relevant_beleg_ids
+from erica.elster_xml.xml_parsing.erica_xml_parsing import get_elements_text_from_xml
 
 from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValidationPyericController, \
     UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, \

@@ -1,6 +1,6 @@
 import unittest
 
-from erica.elster_xml.xml_parsing.elster_tax_offices_xml_parsing import get_county_ids, get_tax_offices
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_county_ids, get_tax_offices
 
 
 class TestGetCountyIds(unittest.TestCase):

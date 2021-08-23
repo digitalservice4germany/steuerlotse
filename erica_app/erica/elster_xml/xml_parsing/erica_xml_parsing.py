@@ -10,34 +10,6 @@ def _get_element_from_xml(xml_string: str, element_xpath: str):
     return element.text
 
 
-def get_antrag_id_from_xml(xml_string):
-    return _get_element_from_xml(xml_string, 'AntragsID')
-
-
-def get_idnr_from_xml(xml_string):
-    return _get_element_from_xml(xml_string, 'DateninhaberIdNr')
-
-
-def get_transfer_ticket_from_xml(xml_string):
-    return _get_element_from_xml(xml_string, 'TransferTicket')
-
-
-def get_address_from_xml(xml_string):
-    return _get_element_from_xml(xml_string, 'AdrKette')
-
-
-def get_relevant_beleg_ids(xml_string, beleg_types):
-    beleg_id_xml = remove_declaration_and_namespace(xml_string)
-    beleg_id_elements = beleg_id_xml.findall('.//Id')
-    beleg_ids = []
-    for beleg_id_element in beleg_id_elements:
-        belegart = beleg_id_element.get('belegart')
-        if belegart in beleg_types:
-            beleg_ids.append(beleg_id_element.text.strip())
-
-    return beleg_ids
-
-
 def remove_declaration_and_namespace(xml_string):
     import xml.etree.ElementTree as ET
     xml_string = re.sub(' xmlns="[^"]+"', '', xml_string, count=1)
