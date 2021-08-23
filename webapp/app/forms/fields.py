@@ -78,9 +78,7 @@ class SteuerlotseIntegerField(NumericInputMaskMixin, IntegerField):
         return super().__call__(**kwargs)
 
 
-class SteuerlotseNumericStringField(NumericInputMaskMixin, SteuerlotseStringField):
-    """ This field only allows digits as input and sets the input mode to numeric (showing a number pad to mobile
-    users). However, also numbers starting with zero are a valid input. """
+class SteuerlotseHouseNumberIntegerField(NumericInputMixin, IntegerField):
 
     def __call__(self, *args, **kwargs):
         kwargs = self.set_inputmode(kwargs)
@@ -88,9 +86,9 @@ class SteuerlotseNumericStringField(NumericInputMaskMixin, SteuerlotseStringFiel
         return super().__call__(**kwargs)
 
 
-class SteuerlotseNumericInputStringField(NumericInputMixin, SteuerlotseStringField):
-    """ This field allows all characters but the input mode is numeric.
-    That means a digit pad is shown to mobile users."""
+class SteuerlotseNumericStringField(NumericInputMaskMixin, SteuerlotseStringField):
+    """ This field only allows digits as input and sets the input mode to numeric (showing a number pad to mobile
+    users). However, also numbers starting with zero are a valid input. """
 
     def __call__(self, *args, **kwargs):
         kwargs = self.set_inputmode(kwargs)
