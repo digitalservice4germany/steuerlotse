@@ -15,7 +15,7 @@ from erica.elster_xml.elster_xml_generator import _pretty, _add_xml_nutzdaten_he
     _add_abrufcode_request_nutzdaten, generate_full_abrufcode_request_xml, _add_vast_beleg_request_xml_nutzdaten, \
     generate_full_vast_beleg_request_xml, _add_vast_revocation_xml_nutzdaten, generate_full_vast_revocation_xml, \
     _generate_vorsatz, _compute_valid_until_date
-from erica.elster_xml.elster_xml_parser import remove_declaration_and_namespace
+from erica.elster_xml.xml_parsing.elster_xml_parser import remove_declaration_and_namespace
 from erica.elster_xml.elster_xml_tree import ElsterXmlTreeNode
 from erica.elster_xml.est_mapping import PersonSpecificFieldId
 from erica.pyeric.eric_errors import EricProcessNotSuccessful

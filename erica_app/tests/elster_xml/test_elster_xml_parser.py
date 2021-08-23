@@ -1,7 +1,7 @@
 import unittest
 from xml.etree.ElementTree import tostring, Element, ParseError, SubElement
 
-from erica.elster_xml.elster_xml_parser import get_antrag_id_from_xml, get_idnr_from_xml, \
+from erica.elster_xml.xml_parsing.elster_xml_parser import get_antrag_id_from_xml, get_idnr_from_xml, \
     remove_declaration_and_namespace, get_elements_text_from_xml, get_elements_key_value_from_xml, \
     get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
 from tests.utils import replace_text_in_xml
