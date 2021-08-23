@@ -275,13 +275,13 @@ class EricWrapper(object):
                   datenLieferant='Softwaretester ERiC',
                   versionClient='1'):
         fun_create_th = self.eric.EricMtCreateTH
-        argtypes = [c_void_p, c_char_p, c_char_p, c_char_p, c_char_p,
+        fun_create_th.argtypes = [c_void_p, c_char_p, c_char_p, c_char_p, c_char_p,
                                   c_char_p, c_char_p, c_char_p, c_char_p,
                                   c_char_p, c_void_p]
-        restype = int
+        fun_create_th.restype = int
 
         return self._call_and_return_buffer_contents(
-            fun_create_th, argtypes, restype, xml.encode(), verfahren.encode(), datenart.encode(),
+            fun_create_th, xml.encode(), verfahren.encode(), datenart.encode(),
             vorgang.encode(), testmerker.encode(), herstellerId.encode(), datenLieferant.encode(),
             versionClient.encode(), None)
 
@@ -299,16 +299,14 @@ class EricWrapper(object):
 
     def decrypt_data(self, data):
         fun_decrypt_data = self.eric.EricMtDekodiereDaten
-        argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
-        restype = int
+        fun_decrypt_data.argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
+        fun_decrypt_data.restype = int
 
         try:
             cert_handle = self.get_cert_handle()
 
             return self._call_and_return_buffer_contents(
                 fun_decrypt_data,
-                argtypes,
-                restype,
                 cert_handle,
                 EricWrapper.cert_pin.encode(),
                 data.encode())
@@ -324,13 +322,11 @@ class EricWrapper(object):
         """
 
         fun_get_tax_offices = self.eric.EricMtHoleFinanzaemter
-        argtypes = [c_void_p, c_char_p, c_void_p]
-        restype = int
+        fun_get_tax_offices.argtypes = [c_void_p, c_char_p, c_void_p]
+        fun_get_tax_offices.restype = int
 
         return self._call_and_return_buffer_contents(
             fun_get_tax_offices,
-            argtypes,
-            restype,
             state_id.encode())
 
     def get_state_id_list(self):
@@ -339,17 +335,16 @@ class EricWrapper(object):
         """
 
         fun_get_tax_offices = self.eric.EricMtHoleFinanzamtLandNummern
-        argtypes = [c_void_p, c_void_p]
-        restype = int
+        fun_get_tax_offices.argtypes = [c_void_p, c_void_p]
+        fun_get_tax_offices.restype = int
 
         return self._call_and_return_buffer_contents(
-            fun_get_tax_offices,
-            argtypes,
-            restype)
+            fun_get_tax_offices)
 
-    def _call_and_return_buffer_contents(self, function, argtypes, restype, *args):
-        function.argtypes = argtypes
-        function.restype = restype
+    def _call_and_return_buffer_contents(self, function, *args):
+        """
+        :param function: The ERIC function to be called. The argtypes and restype have to be set before.
+        """
 
         buf = self.create_buffer()
         try:
