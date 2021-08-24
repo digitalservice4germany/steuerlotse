@@ -80,4 +80,6 @@ def inject_template_globals():
     return dict(plausible_domain=app.config['PLAUSIBLE_DOMAIN'])
 
 
-from app import routes
+from app.routes import register_request_handlers, register_error_handlers
+register_request_handlers(app)
+register_error_handlers(app)
