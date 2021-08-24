@@ -4,7 +4,7 @@ from Cryptodome.Cipher import PKCS1_OAEP
 from Cryptodome.PublicKey import RSA
 from cryptography.fernet import Fernet
 
-from app import app
+from app.config import Config
 
 # For hybrid encryption version 1 we're using:
 # Symmetric encryption of data using Fernet (AES-128, 128bit key, CBC mode, PKCS7 padding, HMAC with SHA256)
@@ -13,12 +13,12 @@ HYBRID_ENCRYPTION_VERSION = b'1'
 
 
 def encrypt(plaintext: bytes):
-    cipher = Fernet(app.config['ENCRYPTION_KEY'])
+    cipher = Fernet(Config.ENCRYPTION_KEY)
     return cipher.encrypt(plaintext)
 
 
 def decrypt(cipher_text: bytes, ttl: Optional[int] = None):
-    cipher = Fernet(app.config['ENCRYPTION_KEY'])
+    cipher = Fernet(Config.ENCRYPTION_KEY)
     return cipher.decrypt(cipher_text, ttl)
 
 
@@ -34,7 +34,7 @@ def hybrid_encrypt(plaintext: bytes):
     symm_key = Fernet.generate_key()
     symm_encrypted_data = Fernet(symm_key).encrypt(plaintext)
 
-    asymm_public_key = RSA.import_key(app.config['RSA_ENCRYPT_PUBLIC_KEY'])
+    asymm_public_key = RSA.import_key(Config.RSA_ENCRYPT_PUBLIC_KEY)
     asymm_encrypted_symm_key = PKCS1_OAEP.new(asymm_public_key).encrypt(symm_key)
 
     return HYBRID_ENCRYPTION_VERSION + asymm_encrypted_symm_key + symm_encrypted_data

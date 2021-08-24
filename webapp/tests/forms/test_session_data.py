@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock
 from cryptography.fernet import InvalidToken
 from flask.sessions import SecureCookieSession
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
     override_session_data

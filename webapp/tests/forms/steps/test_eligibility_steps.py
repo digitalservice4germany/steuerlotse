@@ -7,6 +7,7 @@ from flask_babel import _
 from pydantic import ValidationError
 from werkzeug.exceptions import NotFound
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
 from app.forms.session_data import deserialize_session_data

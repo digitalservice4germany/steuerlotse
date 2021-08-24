@@ -2,7 +2,7 @@ import unittest
 
 from cryptography.fernet import InvalidToken
 
-from app import app
+from app.config import Config
 from app.crypto.encryption import encrypt, decrypt, hybrid_encrypt, hybrid_decrypt
 
 PUBLIC_TEST_KEY = b'-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEApLDlzrgFvxqvP91dc0ML\nZZQXWY8Bap4D9qqy2NUiCPTVZ215B7WTKEMzLtIkGj+YR641YKAcTaugo6lDzzA0\naNeJ200OgZRRjyJgQOBkgR1Xoue4POlLyShn8JUA4Yds5IoAjvpVmlm/f+T0CPsi\nQiBXwLad7WfaDvBAqB8zsSIXvQmnTcV7foPpi4ETIWbqQlX5Wi6FaDM9hdNNZrYN\nbJxm02wMW8nF4IHNpTVaOSKGn7xX6YN7gwRYeXYkH27QX6IA4ezecYOGnN/2C14S\nVGiSZegkyH+TQ6IEjzwzmM2iXyW2+a2klzS+wJbv/LcDXhv7oWpA5FDwN3jIIEnF\nIJGF0avaNOaPEYDMSWKwZGpMQ5jGee22XistZgMjmKZuDyqe7r9m2UaKuxeYKHDq\nxgkaxGBxcMXGgcHYxDQVeQJjRf3jrdUq881QaHxdF/I8DmDerkbfwYs5DEombXh6\n+F8DIm0qJBSxAFo1Q2iPRJUh6/kyZgYGZwpmMTU1vtHB8EHNsogdRqnPO1wVWA/H\nxl14CjPl2HEe6ONX52QcvgAmNzP1rhaWqZrDEN6Mn1nCLzfWyW2lz1dGvDhBAdGO\nS5Rb2nH5qkUwgIM948IOHBgGxXgP2XvsJJ57AeQ/8fRDRAGv4MPrbIadFXiAPYt2\nI8kAE2EwADth6d2Hi1gA+EkCAwEAAQ==\n-----END PUBLIC KEY-----'
@@ -13,7 +13,7 @@ PRIVATE_TEST_KEY_WRONG = b'-----BEGIN RSA PRIVATE KEY-----\nMIIHAHAHAAAKCAgEApLD
 class TestEncryptDecrypt(unittest.TestCase):
 
     def setUp(self):
-        self.encryption_key = app.config['ENCRYPTION_KEY']
+        self.encryption_key = Config.ENCRYPTION_KEY
 
     def test_if_same_key_for_encryption_and_decryption_then_return_original_plaintext(self):
         plaintext = b"It was Agatha all along"
@@ -32,18 +32,18 @@ class TestEncryptDecrypt(unittest.TestCase):
     def test_if_different_key_used_for_encryption_and_decryption_then_raise_error(self):
         plaintext = b"It was Agatha all along"
         ciphertext = encrypt(plaintext)
-        app.config['ENCRYPTION_KEY'] = app.config['ENCRYPTION_KEY'][1:2] + app.config['ENCRYPTION_KEY'][1:]
+        Config.ENCRYPTION_KEY = Config.ENCRYPTION_KEY[1:2] + Config.ENCRYPTION_KEY[1:]
 
         self.assertRaises(InvalidToken, decrypt, ciphertext)
 
     def tearDown(self):
-        app.config['ENCRYPTION_KEY'] = self.encryption_key
+        Config.ENCRYPTION_KEY = self.encryption_key
 
 
 class TestHybridEncryptDecrypt(unittest.TestCase):
     def setUp(self):
-        self.original_public_key = app.config['RSA_ENCRYPT_PUBLIC_KEY']
-        app.config['RSA_ENCRYPT_PUBLIC_KEY'] = PUBLIC_TEST_KEY
+        self.original_public_key = Config.RSA_ENCRYPT_PUBLIC_KEY
+        Config.RSA_ENCRYPT_PUBLIC_KEY = PUBLIC_TEST_KEY
 
     def test_version_number_set_correctly_on_encrypt(self):
         original_message = b'I am your father.'
@@ -72,4 +72,4 @@ class TestHybridEncryptDecrypt(unittest.TestCase):
         self.assertRaises(ValueError, hybrid_decrypt, encrypted_message, PRIVATE_TEST_KEY_WRONG)
 
     def tearDown(self):
-        app.config['RSA_ENCRYPT_PUBLIC_KEY'] = self.original_public_key
+        Config.RSA_ENCRYPT_PUBLIC_KEY = self.original_public_key

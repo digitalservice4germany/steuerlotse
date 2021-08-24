@@ -27,6 +27,7 @@ from flask_babel import _, lazy_gettext as _l
 
 import datetime
 
+from app.config import Config
 from app.forms.steps.lotse.confirmation_steps import StepSummary
 from app.forms.steps.step import Section
 
@@ -473,7 +474,7 @@ def show_person_b(personal_data):
 
 
 def is_test_user(user):
-    if app.config['ALLOW_RESEND_FOR_TEST_USER']:
+    if Config.ALLOW_RESEND_FOR_TEST_USER:
         return any([check_idnr(user, special_idnr) for special_idnr in SPECIAL_RESEND_TEST_IDNRS])
     else:
         return False

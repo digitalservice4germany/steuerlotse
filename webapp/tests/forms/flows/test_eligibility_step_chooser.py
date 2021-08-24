@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
@@ -123,7 +124,7 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
             prev_step = self.step_chooser.determine_prev_step(given_step_name)
 
         self.assertEqual('step-2', prev_step.name)
-    
+
     def test_if_step_is_first_step_then_return_none(self):
         given_step_name = 'step-0'
         self.set_up_steps([

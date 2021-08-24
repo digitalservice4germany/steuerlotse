@@ -6,7 +6,7 @@ import requests
 from flask_login import current_user, logout_user
 from markupsafe import escape
 
-from app import app
+from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_address_entry
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -14,7 +14,8 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
     ElsterInvalidBufaNumberError
 
-_PYERIC_API_BASE_URL = app.config['ERICA_BASE_URL']
+
+_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'is_person_a_account_holder', 'person_a_blind', 'person_a_gehbeh',
@@ -33,7 +34,7 @@ _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since
 
 def send_to_erica(*args, **kwargs):
     app.logger.info(f'Making Erica request with args {args!r}')
-    if app.config['USE_MOCK_API']:
+    if Config.USE_MOCK_API:
         from tests.elster_client.mock_erica import MockErica
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:

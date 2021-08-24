@@ -22,7 +22,7 @@ from app.json_serializer import SteuerlotseJSONEncoder, SteuerlotseJSONDecoder
 
 app = Flask(__name__)
 # This needs to happen before any extensions are used that may rely on config values.
-app.config.from_object(f'app.config.{app.env.capitalize()}Config')
+app.config.from_object(f'app.config.Config')
 
 # Because it runs behind an nginx proxy use the X-FORWARDED-FOR header without the last proxy
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)

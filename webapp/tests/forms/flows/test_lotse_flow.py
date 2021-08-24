@@ -16,7 +16,9 @@ from werkzeug.utils import redirect
 from wtforms import Field
 from wtforms.fields.core import UnboundField, IntegerField, SelectField, RadioField
 
+# TODO: replace with app factory / client fixture
 from app import db, app
+from app.config import Config
 from app.crypto.pw_hashing import global_salt_hash
 from app.data_access.user_controller import find_user
 from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalValidationError, EricaIsMissingFieldError, \
@@ -1453,27 +1455,27 @@ class TestLotseDebugData(unittest.TestCase):
     def setUp(self):
         with app.app_context() and app.test_request_context():
             self.flow = LotseMultiStepFlow(endpoint='')
-        self.original_debug_data_config = app.config['DEBUG_DATA']
+        self.original_debug_data_config = Config.DEBUG_DATA
 
     def test_if_debug_data_true_then_debug_data_non_empty(self):
-        app.config['DEBUG_DATA'] = True
+        Config.DEBUG_DATA = True
         debug_data = self.flow.default_data()
         self.assertIsNotNone(debug_data[0])
         self.assertIsNotNone(debug_data[1])
 
     def test_if_debug_data_true_then_debug_data_correct_types(self):
-        app.config['DEBUG_DATA'] = True
+        Config.DEBUG_DATA = True
         debug_data = self.flow.default_data()
         self.assertIsInstance(debug_data[0], type)
         self.assertIsInstance(debug_data[1], dict)
 
     def test_if_debug_data_false_then_debug_data_none(self):
-        app.config['DEBUG_DATA'] = False
+        Config.DEBUG_DATA = False
         debug_data = self.flow.default_data()
         self.assertEqual({}, debug_data)
 
     def tearDown(self):
-        app.config['DEBUG_DATA'] = self.original_debug_data_config
+        Config.DEBUG_DATA = self.original_debug_data_config
 
 
 class TestLotseGetOverviewData(unittest.TestCase):

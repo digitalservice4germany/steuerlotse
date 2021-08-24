@@ -1,7 +1,6 @@
 import unittest
 
-from app import app
-from app.config import ProductionConfig
+from app.config import Config, ProductionConfig
 from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
 
 
@@ -9,14 +8,14 @@ class TestGlobalSaltHash(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.original_config = app.config.copy()
-        app.config['HASH_ALGORITHM'] = ProductionConfig.HASH_ALGORITHM  # To test the real and not the mock hashing_algorithms
+        cls.original_hash_algorithm = Config.HASH_ALGORITHM
+        Config.HASH_ALGORITHM = ProductionConfig.HASH_ALGORITHM  # To test the real and not the mock hashing_algorithms
 
         super().setUpClass()
 
     @classmethod
     def tearDownClass(cls):
-        app.config.update(cls.original_config)
+        Config.HASH_ALGORITHM = cls.original_hash_algorithm
         super().tearDownClass()
 
     def test_hashing_twice_has_same_result(self):
@@ -44,14 +43,14 @@ class TestIndivSaltHash(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.original_config = app.config.copy()
-        app.config['HASH_ALGORITHM'] = ProductionConfig.HASH_ALGORITHM  # To test the real and not the mock hashing_algorithms
+        cls.original_hash_algorithm = Config.HASH_ALGORITHM
+        Config.HASH_ALGORITHM = ProductionConfig.HASH_ALGORITHM  # To test the real and not the mock hashing_algorithms
 
         super().setUpClass()
 
     @classmethod
     def tearDownClass(cls):
-        app.config.update(cls.original_config)
+        Config.HASH_ALGORITHM = cls.original_hash_algorithm
         super().tearDownClass()
 
     def test_hashing_twice_has_different_result(self):
