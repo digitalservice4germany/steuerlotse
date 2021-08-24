@@ -3,12 +3,12 @@ import datetime as dt
 from functools import wraps
 import io
 
-from flask import render_template, request, send_file, session, make_response
+from flask import current_app, render_template, request, send_file, session, make_response
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.exceptions import InternalServerError
 
-from app import app, nav, login_manager, limiter
+from app import nav, login_manager, limiter
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
@@ -77,9 +77,9 @@ login_manager.refresh_view = "unlock_code_activation"
 def load_user(user_id):
     user = User.get_from_hash(user_id)
     if user:
-        app.logger.info(f'Loaded user with id {user.id}')
+        current_app.logger.info(f'Loaded user with id {user.id}')
     else:
-        app.logger.info('No user loaded')
+        current_app.logger.info('No user loaded')
 
     return user
 
@@ -135,10 +135,10 @@ def unlock_code_activation(step='start'):
     # NOTE: If you want to redirect to the protected page, use the url_param next with validating that it is an
     # internal site
     if current_user.is_active:
-        app.logger.info('User active, start lotse flow')
+        current_app.logger.info('User active, start lotse flow')
         return lotse('start')
 
-    app.logger.info('User inactive, start unlock_code_activation flow')
+    current_app.logger.info('User inactive, start unlock_code_activation flow')
     flow = UnlockCodeActivationMultiStepFlow(endpoint='unlock_code_activation')
     return flow.handle(step_name=step)
 
@@ -251,7 +251,7 @@ def download_preparation():
 # General
 @app.errorhandler(GeneralEricaError)
 def error_erica(error):
-    app.logger.exception('A general erica error occurred')
+    current_app.logger.exception('A general erica error occurred')
     return render_template('error/erica_error.html', header_title=_('erica-error.header-title')), 500
 
 
@@ -277,7 +277,7 @@ def error_429(error):
 
 @app.errorhandler(InternalServerError)
 def error_500(error):
-    app.logger.error('An uncaught error occurred', exc_info=error.original_exception)
+    current_app.logger.error('An uncaught error occurred', exc_info=error.original_exception)
     return render_template('error/500.html', header_title=_('500.header-title')), 500
 
 
@@ -291,4 +291,4 @@ def ping():
 @app.route('/robots.txt')
 @add_caching_headers
 def serve_robots_txt():
-    return app.send_static_file('robots.txt')
+    return current_app.send_static_file('robots.txt')
