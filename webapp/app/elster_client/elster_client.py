@@ -1,3 +1,4 @@
+import logging
 import json
 from datetime import datetime
 from decimal import Decimal
@@ -13,6 +14,9 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
     ElsterInvalidBufaNumberError
+
+
+logger = logging.getLogger(__name__)
 
 
 _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
@@ -33,14 +37,14 @@ _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since
 
 
 def send_to_erica(*args, **kwargs):
-    app.logger.info(f'Making Erica request with args {args!r}')
+    logger.info(f'Making Erica request with args {args!r}')
     if Config.USE_MOCK_API:
         from tests.elster_client.mock_erica import MockErica
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
         response = requests.post(*args, headers=headers, **kwargs)
-    app.logger.info(f'Completed Erica request with args {args!r}, got code {response.status_code}')
+    logger.info(f'Completed Erica request with args {args!r}, got code {response.status_code}')
     return response
 
 
@@ -202,7 +206,7 @@ def check_pyeric_response_for_errors(pyeric_response):
             erica_error += f', elster_th_res_code="{th_res_code}", elster_th_error_msg="{th_error_msg}", ' \
                            f'elster_ndh_error_xml="{ndh_error_xml}"'
 
-        app.logger.info(erica_error)
+        logger.info(erica_error)
 
         if error_code == 1:
             raise ElsterGlobalError(message=error_message)
