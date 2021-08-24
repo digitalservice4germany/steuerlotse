@@ -1,16 +1,14 @@
 import unittest
 from datetime import date
-from functools import reduce
 from unittest.mock import patch, MagicMock
 
-from erica.elster_xml.bufa_numbers import VALID_BUFA_NUMBERS
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.request_processing.erica_input import UnlockCodeRequestData, UnlockCodeActivationData, \
     UnlockCodeRevocationData, GetAddressData
 from erica.request_processing.requests_controller import UnlockCodeRequestController, \
     UnlockCodeActivationRequestController, EstRequestController, EstValidationRequestController, \
     UnlockCodeRevocationRequestController, SPECIAL_TESTMERKER_IDNR, GetAddressRequestController, \
-    GetBelegeRequestController, GetTaxOfficesRequestController
+    GetBelegeRequestController
 from tests.utils import create_est, missing_cert, missing_pyeric_lib, replace_text_in_xml, \
     replace_subtree_in_xml
 
@@ -837,68 +835,3 @@ class TestGetAddressGenerateJson(unittest.TestCase):
             actual_response = unlock_code_request.generate_json(pyeric_response)
 
         self.assertEqual(expected_output, actual_response)
-
-
-class TestGetTaxOfficesRequestController(unittest.TestCase):
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_state_id_list_has_correct_length(self):
-        result = GetTaxOfficesRequestController()._request_state_id_list()
-
-        self.assertEqual(16, len(result))
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_state_id_list_contains_bayern(self):
-        result = GetTaxOfficesRequestController()._request_state_id_list()
-
-        self.assertEqual(['91', '92'], result['Bayern'])
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_state_id_list_has_correct_format(self):
-        result = GetTaxOfficesRequestController()._request_state_id_list()
-
-        self.assertIsInstance(list(result.values())[0], list)
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_tax_offices_has_correct_length(self):
-        result = GetTaxOfficesRequestController()._request_tax_offices('28')
-
-        self.assertEqual(79, len(result))
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_tax_offices_contains_schwb_hall(self):
-        result = GetTaxOfficesRequestController()._request_tax_offices('28')
-
-        self.assertIn({'bufa_nr': '2884', 'name': 'Finanzamt Schwäbisch Hall'}, result)
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_request_tax_offices_has_correct_format(self):
-        result = GetTaxOfficesRequestController()._request_tax_offices('28')
-
-        self.assertIsInstance(result, list)
-        self.assertEqual(['name', 'bufa_nr'], list(result[0].keys()))
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_process_result_has_correct_format(self):
-        result = GetTaxOfficesRequestController().process()
-
-        self.assertEqual(["tax_offices"], list(result.keys()))
-        self.assertEqual(1, len(result))
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_process_result_contains_all_states(self):
-        state_abbrevations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
-                               'th']
-        result = GetTaxOfficesRequestController().process()
-
-        self.assertEqual(state_abbrevations, [state['state_abbrevation'] for state in result['tax_offices']])
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_process_result_contains_all_tax_offices(self):
-        valid_bufa_numbers = VALID_BUFA_NUMBERS
-        result = GetTaxOfficesRequestController().process()
-
-        all_tax_offices = reduce(lambda tax_offices_list, state: tax_offices_list + state['tax_offices'],
-                                 result['tax_offices'], [])
-        all_bufas = reduce(lambda bufa_list, tax_office: bufa_list + [tax_office['bufa_nr']], all_tax_offices, [])
-        self.assertEqual(valid_bufa_numbers.sort(), all_bufas.sort())

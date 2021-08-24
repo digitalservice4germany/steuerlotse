@@ -2,6 +2,7 @@ import os
 from ctypes import pointer, c_int
 
 from erica.config import get_settings
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_state_ids, get_tax_offices
 from erica.pyeric.eric import EricWrapper, EricResponse
 from erica.pyeric.eric import get_eric_wrapper
 from erica.pyeric.pyeric_response import PyericResponse
@@ -106,17 +107,69 @@ class DecryptBelegePyericController:
 class GetTaxOfficesPyericController:
     """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
+    _STATE_ABBREVATIONS = {
+                        "Baden-Württemberg": 'bw',
+                        "Bayern": 'by',
+                        "Berlin": 'be',
+                        "Brandenburg": 'bb',
+                        "Bremen": 'hb',
+                        "Hamburg": 'hh',
+                        "Hessen": 'he',
+                        "Mecklenburg-Vorpommern": 'mv',
+                        "Niedersachsen": 'nd',
+                        "Nordrhein-Westfalen": 'nw',
+                        "Rheinland-Pfalz": 'rp',
+                        "Saarland": 'sl',
+                        "Sachsen": 'sn',
+                        "Sachsen-Anhalt": 'st',
+                        "Schleswig-Holstein": 'sh',
+                        "Thüringen": 'th'
+    }
+
+    def get_eric_response(self):
+        states = self._request_state_id_list()
+        state_tax_offices = []
+
+        for state_name, state_ids in states.items():
+            state_abbrevation = self._STATE_ABBREVATIONS[state_name]
+            tax_offices = []
+            for state_id in state_ids:
+                tax_offices += self._request_tax_offices(state_id)
+
+            state_tax_offices.append({
+                'state_abbrevation': state_abbrevation,
+                'name': state_name,
+                'tax_offices': tax_offices
+                                      })
+
+        return self.generate_json(state_tax_offices)
+
     @staticmethod
-    def get_eric_response(state_id):
-        with get_eric_wrapper() as eric_wrapper:
-            return eric_wrapper.get_tax_offices(state_id)
+    def standardise_state_id_list(states_id_list):
+        states = {}
 
+        for state in states_id_list:
+            standardised_state_name = state['name'].split(" ")[0]
+            state_ids = states.get(standardised_state_name, [])
+            state_ids.append(state['id'])
+            states[standardised_state_name] = state_ids
 
-
-class GetStateIdListPyericController:
-    """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
+        return states
 
     @staticmethod
-    def get_eric_response():
+    def generate_json(state_tax_offices):
+        return {'tax_offices': state_tax_offices}
+
+    @staticmethod
+    def _request_state_id_list():
         with get_eric_wrapper() as eric_wrapper:
-            return eric_wrapper.get_state_id_list()
+            pyeric_response = eric_wrapper.get_state_id_list()
+
+        return GetTaxOfficesPyericController.standardise_state_id_list(get_state_ids(pyeric_response.decode()))
+
+    @staticmethod
+    def _request_tax_offices(state_id):
+        with get_eric_wrapper() as eric_wrapper:
+            pyeric_response = eric_wrapper.get_tax_offices(state_id)
+
+        return get_tax_offices(pyeric_response.decode())

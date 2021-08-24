@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 from fastapi.exceptions import HTTPException
 
 from erica.pyeric.eric import EricResponse
-from erica.request_processing.requests_controller import GetTaxOfficesRequestController
+from erica.pyeric.pyeric_controller import GetTaxOfficesPyericController
 from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code, \
     get_tax_offices
 from tests.utils import create_unlock_request, create_unlock_activation, create_est, create_unlock_revocation, \
@@ -238,4 +238,4 @@ class TestGetTaxOffices(unittest.TestCase):
         response = get_tax_offices()
         with open(response.path, "r", encoding="utf-8") as response_file:
             response_content = json.load(response_file)
-        self.assertEqual(GetTaxOfficesRequestController().process(), response_content)
+        self.assertEqual(GetTaxOfficesPyericController().get_eric_response(), response_content)

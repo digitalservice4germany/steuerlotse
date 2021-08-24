@@ -1,7 +1,9 @@
 import unittest
+from functools import reduce
 from unittest.mock import MagicMock, patch, call
 
 from erica.config import get_settings
+from erica.elster_xml.bufa_numbers import VALID_BUFA_NUMBERS
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.eric_errors import EricGlobalValidationError, EricIOError
 from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericProcessController, \
@@ -9,7 +11,7 @@ from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericPro
     UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, \
     AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
-    BelegRequestPyericProcessController, GetTaxOfficesPyericController, GetStateIdListPyericController
+    BelegRequestPyericProcessController, GetTaxOfficesPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
@@ -203,47 +205,69 @@ class TestDecryptBelegePyericControllerRunEric(unittest.TestCase):
         self.assertEqual(self.encrypted_belege, returned_belege)
 
 
-class TestGetTaxOfficesPyericControllerRunEric(unittest.TestCase):
-    def setUp(self):
-        self.test_tax_office = "Intergalactic tax office of the Vogons"
-        self.mocked_get_tax_offices = MagicMock(side_effect=lambda _: self.test_tax_office)
-        self.mocked_eric_wrapper = MagicMock(get_tax_offices=self.mocked_get_tax_offices)
-        self.mocked_eric_wrapper_function = MagicMock(return_value=MagicMock(__enter__=lambda _: self.mocked_eric_wrapper))
+class TestGetTaxOfficesRequestController(unittest.TestCase):
 
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_request_state_id_list_has_correct_length(self):
+        result = GetTaxOfficesPyericController()._request_state_id_list()
 
-    def test_calls_eric_get_tax_offices(self):
-        state_id = "28"
-        self.mocked_get_tax_offices.reset_mock()
-        with patch("erica.pyeric.pyeric_controller.get_eric_wrapper", self.mocked_eric_wrapper_function):
-            GetTaxOfficesPyericController().get_eric_response(state_id)
-        self.mocked_get_tax_offices.assert_called_once_with(state_id)
+        self.assertEqual(16, len(result))
 
-    def test_returns_test_tax_office(self):
-        state_id = "28"
-        self.mocked_get_tax_offices.reset_mock()
-        with patch("erica.pyeric.pyeric_controller.get_eric_wrapper", self.mocked_eric_wrapper_function):
-            returned_tax_offices = GetTaxOfficesPyericController().get_eric_response(state_id)
-        self.assertEqual(self.test_tax_office, returned_tax_offices)
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_request_state_id_list_contains_bayern(self):
+        result = GetTaxOfficesPyericController()._request_state_id_list()
 
+        self.assertEqual(['91', '92'], result['Bayern'])
 
-class TestGetStateIdListPyericControllerRunEric(unittest.TestCase):
-    def setUp(self):
-        self.list_state_ids = "<state of the Vogons nubmer=10/>"
-        self.mocked_get_state_id_list = MagicMock(side_effect=lambda: self.list_state_ids)
-        self.mocked_eric_wrapper = MagicMock(get_state_id_list=self.mocked_get_state_id_list)
-        self.mocked_eric_wrapper_function = MagicMock(return_value=MagicMock(__enter__=lambda _: self.mocked_eric_wrapper))
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_request_state_id_list_has_correct_format(self):
+        result = GetTaxOfficesPyericController()._request_state_id_list()
 
-    def test_calls_eric_get_state_id_list(self):
-        self.mocked_get_state_id_list.reset_mock()
-        with patch("erica.pyeric.pyeric_controller.get_eric_wrapper", self.mocked_eric_wrapper_function):
-            GetStateIdListPyericController().get_eric_response()
-        self.mocked_get_state_id_list.assert_called_once_with()
+        self.assertIsInstance(list(result.values())[0], list)
 
-    def test_returns_list_of_state_ids(self):
-        self.mocked_get_state_id_list.reset_mock()
-        with patch("erica.pyeric.pyeric_controller.get_eric_wrapper", self.mocked_eric_wrapper_function):
-            returned_tax_offices = GetStateIdListPyericController().get_eric_response()
-        self.assertEqual(self.list_state_ids, returned_tax_offices)
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_request_tax_offices_has_correct_length(self):
+        result = GetTaxOfficesPyericController()._request_tax_offices('28')
+
+        self.assertEqual(79, len(result))
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_request_tax_offices_contains_schwb_hall(self):
+        result = GetTaxOfficesPyericController()._request_tax_offices('28')
+
+        self.assertIn({'bufa_nr': '2884', 'name': 'Finanzamt Schwäbisch Hall'}, result)
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_request_tax_offices_has_correct_format(self):
+        result = GetTaxOfficesPyericController()._request_tax_offices('28')
+
+        self.assertIsInstance(result, list)
+        self.assertEqual(['name', 'bufa_nr'], list(result[0].keys()))
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_process_result_has_correct_format(self):
+        result = GetTaxOfficesPyericController().get_eric_response()
+
+        self.assertEqual(["tax_offices"], list(result.keys()))
+        self.assertEqual(1, len(result))
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_process_result_contains_all_states(self):
+        state_abbrevations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
+                               'th']
+        result = GetTaxOfficesPyericController().get_eric_response()
+
+        self.assertEqual(state_abbrevations, [state['state_abbrevation'] for state in result['tax_offices']])
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_process_result_contains_all_tax_offices(self):
+        valid_bufa_numbers = VALID_BUFA_NUMBERS
+        result = GetTaxOfficesPyericController().get_eric_response()
+
+        all_tax_offices = reduce(lambda tax_offices_list, state: tax_offices_list + state['tax_offices'],
+                                 result['tax_offices'], [])
+        all_bufas = reduce(lambda bufa_list, tax_office: bufa_list + [tax_office['bufa_nr']], all_tax_offices, [])
+        self.assertEqual(valid_bufa_numbers.sort(), all_bufas.sort())
 
 
 class TestBelegIdRequestPyericControllerRunEric(unittest.TestCase):

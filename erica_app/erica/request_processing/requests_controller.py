@@ -2,8 +2,7 @@ import base64
 
 from erica.elster_xml.elster_xml_generator import get_belege_xml, generate_vorsatz_without_tax_number, \
     generate_vorsatz_with_tax_number
-from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_state_ids, get_tax_offices, \
-    get_antrag_id_from_xml, get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_antrag_id_from_xml, get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
@@ -13,7 +12,7 @@ from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValida
     UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, \
     DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
-    BelegRequestPyericProcessController, GetStateIdListPyericController, GetTaxOfficesPyericController
+    BelegRequestPyericProcessController
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
@@ -221,73 +220,3 @@ class GetAddressRequestController(GetBelegeRequestController):
         response = super().generate_json(pyeric_response)
         response['address'] = get_address_from_xml(pyeric_response.server_response)
         return response
-
-
-class GetTaxOfficesRequestController:
-
-    _STATE_ABBREVATIONS = {
-                        "Baden-Württemberg": 'bw',
-                        "Bayern": 'by',
-                        "Berlin": 'be',
-                        "Brandenburg": 'bb',
-                        "Bremen": 'hb',
-                        "Hamburg": 'hh',
-                        "Hessen": 'he',
-                        "Mecklenburg-Vorpommern": 'mv',
-                        "Niedersachsen": 'nd',
-                        "Nordrhein-Westfalen": 'nw',
-                        "Rheinland-Pfalz": 'rp',
-                        "Saarland": 'sl',
-                        "Sachsen": 'sn',
-                        "Sachsen-Anhalt": 'st',
-                        "Schleswig-Holstein": 'sh',
-                        "Thüringen": 'th'
-    }
-
-    def process(self):
-        states = self._request_state_id_list()
-        state_tax_offices = []
-
-        for state_name, state_ids in states.items():
-            state_abbrevation = self._STATE_ABBREVATIONS[state_name]
-            tax_offices = []
-            for state_id in state_ids:
-                tax_offices += self._request_tax_offices(state_id)
-
-            state_tax_offices.append({
-                'state_abbrevation': state_abbrevation,
-                'name': state_name,
-                'tax_offices': tax_offices
-                                      })
-
-        return self.generate_json(state_tax_offices)
-
-    @staticmethod
-    def standardise_state_id_list(states_id_list):
-        states = {}
-
-        for state in states_id_list:
-            standardised_state_name = state['name'].split(" ")[0]
-            state_ids = states.get(standardised_state_name, [])
-            state_ids.append(state['id'])
-            states[standardised_state_name] = state_ids
-
-        return states
-
-    @staticmethod
-    def generate_json(state_tax_offices):
-        return {'tax_offices': state_tax_offices}
-
-    @staticmethod
-    def _request_state_id_list():
-        pyeric_response = GetStateIdListPyericController().get_eric_response()
-        states = GetTaxOfficesRequestController.standardise_state_id_list(get_state_ids(pyeric_response.decode()))
-
-        return states
-
-    @staticmethod
-    def _request_tax_offices(state_id):
-        pyeric_response = GetTaxOfficesPyericController().get_eric_response(state_id)
-        tax_offices = get_tax_offices(pyeric_response.decode())
-
-        return tax_offices
