@@ -32,14 +32,26 @@ _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since
 
 
 def send_to_erica(*args, **kwargs):
-    app.logger.info(f'Making Erica request with args {args!r}')
+    app.logger.info(f'Making Erica POST request with args {args!r}')
     if app.config['USE_MOCK_API']:
         from tests.elster_client.mock_erica import MockErica
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
         response = requests.post(*args, headers=headers, **kwargs)
-    app.logger.info(f'Completed Erica request with args {args!r}, got code {response.status_code}')
+    app.logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
+    return response
+
+
+def request_from_erica(*args, **kwargs):
+    app.logger.info(f'Making Erica GET request with args {args!r}')
+    if app.config['USE_MOCK_API']:
+        from tests.elster_client.mock_erica import MockErica
+        response = MockErica.mocked_elster_requests(*args, **kwargs)
+    else:
+        headers = {'Content-type': 'application/json'}
+        response = requests.get(*args, headers=headers, **kwargs)
+    app.logger.info(f'Completed Erica GET request with args {args!r}, got code {response.status_code}')
     return response
 
 
@@ -87,7 +99,7 @@ def send_unlock_code_request_with_elster(form_data, ip_address, include_elster_r
                            form_data['idnr'],
                            response_data['transfer_ticket'],
                            response_data['elster_request_id'])
-    return pyeric_response.json()
+    return response_data
 
 
 def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_address, include_elster_responses=False):
@@ -105,7 +117,7 @@ def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_add
                            form_data['idnr'],
                            response_data['transfer_ticket'],
                            response_data['elster_request_id'])
-    return pyeric_response.json()
+    return response_data
 
 
 def send_unlock_code_revocation_with_elster(form_data, ip_address, include_elster_responses=False):
@@ -121,7 +133,17 @@ def send_unlock_code_revocation_with_elster(form_data, ip_address, include_elste
                            response_data['transfer_ticket'],
                            response_data['elster_request_id'])
 
-    return pyeric_response.json()
+    return response_data
+
+
+def request_tax_offices():
+    pyeric_response = request_from_erica(_PYERIC_API_BASE_URL + '/tax_offices')
+
+    check_pyeric_response_for_errors(pyeric_response)
+
+    response_data = pyeric_response.json()
+
+    return response_data['tax_offices']
 
 
 def _extract_est_response_data(pyeric_response):
