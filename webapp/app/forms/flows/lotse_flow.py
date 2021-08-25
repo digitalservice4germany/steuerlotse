@@ -1,36 +1,32 @@
+import datetime
 import logging
+from decimal import Decimal
 
 from flask import request, flash, url_for
+from flask_babel import _, lazy_gettext as _l
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
 from wtforms.fields.core import UnboundField, SelectField, BooleanField, RadioField
 
+from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
-from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
-    ConfirmationField, EntriesField, EuroField, IdNrField, IntegerField, SteuerlotseIntegerField, \
-    SteuerlotseNumericStringField, SteuerlotseNameStringField, SteuerlotseIbanField
-from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \
-    ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
-    IdNrMismatchInputValidationError
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
+from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
+    ConfirmationField, EntriesField, EuroField, IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow, FlowNavItem
+from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepAck, StepFiling
+from app.forms.steps.lotse.confirmation_steps import StepSummary
 from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data_steps import StepSteuernummer, StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
 from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
-from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepAck, StepFiling
-
-from decimal import Decimal
-from flask_babel import _, lazy_gettext as _l
-
-import datetime
-
-from app.config import Config
-from app.forms.steps.lotse.confirmation_steps import StepSummary
 from app.forms.steps.step import Section
+from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \
+    ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
+    IdNrMismatchInputValidationError
 
 SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
@@ -393,11 +389,9 @@ class LotseMultiStepFlow(MultiStepFlow):
             value_representation = ', '.join(value)
         elif field.field_class == EuroField:
             value_representation = str(value) + " €"
-        elif field.field_class == SteuerlotseStringField or field.field_class == IdNrField \
-                or field.field_class == SteuerlotseNumericStringField or field.field_class == SteuerlotseNameStringField \
-                or field.field_class == SteuerlotseIbanField:
+        elif issubclass(field.field_class, SteuerlotseStringField):
             value_representation = value
-        elif field.field_class == IntegerField or field.field_class == SteuerlotseIntegerField:
+        elif issubclass(field.field_class, IntegerField):
             value_representation = value
         elif field.field_class == ConfirmationField:
             value_representation = "Ja" if value else "Nein"
