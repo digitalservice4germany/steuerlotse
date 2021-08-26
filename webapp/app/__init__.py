@@ -7,7 +7,7 @@ configure_logging()
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from app.cli import register_commands
+from app import commands
 from app.extensions import (
     babel,
     csrf,
@@ -36,8 +36,9 @@ db.init_app(app)
 migrate.init_app(app, db)
 prometheus_exporter.init_app(app)
 
+app.cli.add_command(commands.cronjob_cli)
+app.cli.add_command(commands.populate_database)
 
-register_commands(app)
 app.json_encoder = SteuerlotseJSONEncoder
 app.json_decoder = SteuerlotseJSONDecoder
 app.before_request(log_flask_request)
