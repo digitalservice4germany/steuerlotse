@@ -5,19 +5,19 @@ from .logging import configure_logging, log_flask_request
 configure_logging()
 
 from flask import Flask
-from flask_babel import Babel
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-from flask_login import LoginManager
-from flask_migrate import Migrate
-from flask_navigation import Navigation
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import CSRFProtect
-from prometheus_client import Gauge
-from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.cli import register_commands
+from app.extensions import (
+    babel,
+    csrf,
+    db,
+    limiter,
+    login_manager,
+    migrate,
+    nav,
+    prometheus_exporter,
+)
 from app.json_serializer import SteuerlotseJSONEncoder, SteuerlotseJSONDecoder
 
 app = Flask(__name__)
@@ -26,40 +26,20 @@ app.config.from_object(f'app.config.Config')
 
 # Because it runs behind an nginx proxy use the X-FORWARDED-FOR header without the last proxy
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
-limiter = Limiter(
-    app,
-    key_func=get_remote_address,
-    strategy='moving-window'
-)
 
-babel = Babel(app)
-nav = Navigation(app)
-
-csrf = CSRFProtect(app)
-
-login_manager = LoginManager()
+limiter.init_app(app)
+babel.init_app(app)
+nav.init_app(app)
+csrf.init_app(app)
 login_manager.init_app(app)
-login_manager.session_protection = 'strong'
+db.init_app(app)
+migrate.init_app(app, db)
+prometheus_exporter.init_app(app)
 
-# SQLAlchemy options
-# - pool_pre_ping: fix problems with stale connection we've been seeing (see also:
-#   https://docs.syseleven.de/syseleven-stack/de/reference/network/known-issues#idle-tcp-sessions-being-closed).
-# - hide_parameters: don't log any parameters with errors or when logging SQL statements (
-#   https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters)
-db = SQLAlchemy(app, engine_options={'pool_pre_ping': True, 'hide_parameters': True})
-migrate = Migrate(app, db)
 
 register_commands(app)
 app.json_encoder = SteuerlotseJSONEncoder
 app.json_decoder = SteuerlotseJSONDecoder
-
-if app.config['PROMETHEUS_EXPORTER_ENABLED']:
-    metrics = GunicornInternalPrometheusMetrics(app)
-    up_gauge = Gauge('up', 'WebApp is up')
-    up_gauge.set(1.0)
-    app.before_first_request(lambda: up_gauge.set(1.0))
-
-
 app.before_request(log_flask_request)
 
 
