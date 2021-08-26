@@ -53,20 +53,6 @@ def register_extensions(app: Flask) -> None:
     prometheus_exporter.init_app(app)
 
 
-# def register_error_handlers(app):
-#     """Register error handlers."""
-
-#     def render_error(error):
-#         """Render error template."""
-#         # If a HTTPException, pull the `code` attribute; default to 500
-#         error_code = getattr(error, "code", 500)
-#         return render_template(f"{error_code}.html"), error_code
-
-#     for errcode in [401, 404, 500]:
-#         app.errorhandler(errcode)(render_error)
-#     return None
-
-
 def register_context_processor(app: Flask) -> None:
     """Register variables for use in jinja templates, see https://flask.palletsprojects.com/en/2.0.x/templating/#context-processors."""
     @app.context_processor
