@@ -15,6 +15,7 @@ python-dotenv = "*"
 prometheus-fastapi-instrumentator = "*"
 python-json-logger = "*"
 boto3 = "*"
+aiofiles = "*"
 
 [dev-packages]
 pytest = "*"

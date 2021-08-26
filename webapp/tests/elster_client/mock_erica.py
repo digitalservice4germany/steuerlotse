@@ -64,6 +64,8 @@ class MockErica:
                 response = MockErica.revoke_unlock_code(sent_data, include_elster_responses)
             elif args[0] == _PYERIC_API_BASE_URL + '/address':
                 response = MockErica.get_address_data(sent_data, include_elster_responses)
+            elif args[0] == _PYERIC_API_BASE_URL + '/tax_offices':
+                response = MockErica.get_tax_offices()
             else:
                 return MockResponse(None, 404)
         except UnexpectedInputDataError:
@@ -282,6 +284,11 @@ class MockErica:
                 return get_json_response('get_address_with_resp')
             else:
                 return get_json_response('get_address_no_resp')
+
+    @staticmethod
+    def get_tax_offices():
+
+        return get_json_response('tax_offices')
 
     @staticmethod
     def errors_from_error_flags(show_response):

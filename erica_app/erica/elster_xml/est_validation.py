@@ -5,7 +5,7 @@ from erica.elster_xml.bufa_numbers import VALID_BUFA_NUMBERS, VALID_TEST_BUFA_NU
 def is_valid_bufa(bufa, use_testmerker=False):
     """
     Checks whether a number is a valid bufa. For this it has to be checked against all
-    the different tax offices in different counties
+    the different tax offices in different states
 
     :param bufa: The first four digits of the electronic tax number; representing the Bundesfinanzamt number
     :param use_testmerker: Allows test_bufas even if the settings do not accept test bufas. Use this for special idnrs.

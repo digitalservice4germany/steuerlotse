@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import ParseError
 
-from erica.elster_xml.elster_xml_parser import get_elements_text_from_xml, remove_declaration_and_namespace
+from erica.elster_xml.xml_parsing.erica_xml_parsing import get_elements_text_from_xml, remove_declaration_and_namespace
 
 _ERIC_SUCCESS_CODE = {
     0: "ERIC_OK"

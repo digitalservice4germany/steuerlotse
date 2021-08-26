@@ -3,6 +3,7 @@ import time
 from fastapi import FastAPI
 from prometheus_client import Gauge
 from prometheus_fastapi_instrumentator import Instrumentator
+from starlette.responses import JSONResponse
 
 from erica.pyeric.eric import verify_using_stick
 

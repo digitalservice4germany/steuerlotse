@@ -187,18 +187,12 @@ class EricWrapper(object):
         fun_get_cert_properties.argtypes = [c_void_p, c_int, c_char_p, c_void_p]
         fun_get_cert_properties.restype = c_int
 
-        cert_handle = None
-        buffer = None
-
         try:
             cert_handle = self.get_cert_handle()
-            buffer = self.create_buffer()
-            res = fun_get_cert_properties(self.eric_instance, cert_handle, EricWrapper.cert_pin.encode(), buffer)
-            check_result(res)
-            return self.read_buffer(buffer).decode()
+
+            return self._call_and_return_buffer_contents(fun_get_cert_properties, cert_handle,
+                                                         EricWrapper.cert_pin.encode())
         finally:
-            if buffer:
-                self.close_buffer(buffer)
             if cert_handle:
                 self.close_cert_handle(cert_handle)
 
@@ -286,38 +280,10 @@ class EricWrapper(object):
                                   c_char_p, c_void_p]
         fun_create_th.restype = int
 
-        buf = self.create_buffer()
-        try:
-            res = fun_create_th(
-                self.eric_instance, xml.encode(), verfahren.encode(), datenart.encode(), vorgang.encode(),
-                testmerker.encode(), herstellerId.encode(), datenLieferant.encode(), versionClient.encode(),
-                None, buf)
-            check_result(res)
-
-            logger.debug(f"fun_create_th res: {res}")
-            returned_xml = self.read_buffer(buf)
-            check_xml(returned_xml)
-            return returned_xml
-        finally:
-            self.close_buffer(buf)
-
-    def decrypt_data(self, data):
-        fun_decrypt_data = self.eric.EricMtDekodiereDaten
-        fun_decrypt_data.argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
-        fun_decrypt_data.restype = int
-
-        buf = self.create_buffer()
-        cert_handle = self.get_cert_handle()
-        try:
-            res = fun_decrypt_data(self.eric_instance, cert_handle, EricWrapper.cert_pin.encode(), data.encode(), buf)
-            check_result(res)
-            logger.debug(f"fun_decrypt_data res {res}")
-
-            returned_xml = self.read_buffer(buf)
-            check_xml(returned_xml)
-            return returned_xml
-        finally:
-            self.close_buffer(buf)
+        return self._call_and_return_buffer_contents(
+            fun_create_th, xml.encode(), verfahren.encode(), datenart.encode(),
+            vorgang.encode(), testmerker.encode(), herstellerId.encode(), datenLieferant.encode(),
+            versionClient.encode(), None)
 
     def process_verfahren(self, xml_string, verfahren, abruf_code=None, transfer_handle=None) \
             -> EricResponse:
@@ -330,6 +296,67 @@ class EricWrapper(object):
                                 transfer_handle=transfer_handle, cert_params=pointer(cert_params))
         finally:
             self.close_cert_handle(cert_handle)
+
+    def decrypt_data(self, data):
+        fun_decrypt_data = self.eric.EricMtDekodiereDaten
+        fun_decrypt_data.argtypes = [c_void_p, c_int, c_char_p, c_char_p, c_void_p]
+        fun_decrypt_data.restype = int
+
+        try:
+            cert_handle = self.get_cert_handle()
+
+            return self._call_and_return_buffer_contents(
+                fun_decrypt_data,
+                cert_handle,
+                EricWrapper.cert_pin.encode(),
+                data.encode())
+        finally:
+            if cert_handle:
+                self.close_cert_handle(cert_handle)
+
+    def get_tax_offices(self, state_id):
+        """
+        Get all the tax offices for a specific state
+
+        :param state_id: A valid state id for which the tax office list is provided
+        """
+
+        fun_get_tax_offices = self.eric.EricMtHoleFinanzaemter
+        fun_get_tax_offices.argtypes = [c_void_p, c_char_p, c_void_p]
+        fun_get_tax_offices.restype = int
+
+        return self._call_and_return_buffer_contents(
+            fun_get_tax_offices,
+            state_id.encode())
+
+    def get_state_id_list(self):
+        """
+        Get a list of all the state codes
+        """
+
+        fun_get_tax_offices = self.eric.EricMtHoleFinanzamtLandNummern
+        fun_get_tax_offices.argtypes = [c_void_p, c_void_p]
+        fun_get_tax_offices.restype = int
+
+        return self._call_and_return_buffer_contents(
+            fun_get_tax_offices)
+
+    def _call_and_return_buffer_contents(self, function, *args):
+        """
+        :param function: The ERIC function to be called. The argtypes and restype have to be set before.
+        """
+
+        buf = self.create_buffer()
+        try:
+            res = function(self.eric_instance, *args, buf)
+            check_result(res)
+            logger.debug(f"function {function.__name__} from _call_and_return_buffer_contents res {res}")
+
+            returned_xml = self.read_buffer(buf)
+            check_xml(returned_xml)
+            return returned_xml
+        finally:
+            self.close_buffer(buf)
 
     def get_error_message_from_xml_response(self, xml_response):
         """Extract error message from server response"""

@@ -15,9 +15,10 @@ from erica.elster_xml.elster_xml_generator import _pretty, _add_xml_nutzdaten_he
     _add_abrufcode_request_nutzdaten, generate_full_abrufcode_request_xml, _add_vast_beleg_request_xml_nutzdaten, \
     generate_full_vast_beleg_request_xml, _add_vast_revocation_xml_nutzdaten, generate_full_vast_revocation_xml, \
     generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number
-from erica.elster_xml.elster_xml_parser import remove_declaration_and_namespace
+from erica.elster_xml.xml_parsing.erica_xml_parsing import remove_declaration_and_namespace
 from erica.elster_xml.elster_xml_tree import ElsterXmlTreeNode
 from erica.elster_xml.est_mapping import PersonSpecificFieldId
+from erica.pyeric.eric import get_eric_wrapper
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.elster_xml.transfer_header_fields import TransferHeaderFields
 from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false
@@ -226,7 +227,8 @@ class TestGenerateTransferHeader(unittest.TestCase):
     def test_if_correct_input_then_transfer_header_is_added_and_reference_unchanged(self):
         input_xml_before_use = copy.deepcopy(self.correct_input_xml)
 
-        result = _generate_transfer_header(self.correct_input_xml, self.th_fields)
+        with get_eric_wrapper() as eric_wrapper:
+            result = _generate_transfer_header(self.correct_input_xml, self.th_fields, eric_wrapper)
 
         self.assertIn("TransferHeader", result)
         self.assertIn("<Testmerker>700000004</Testmerker>", result)
@@ -240,13 +242,16 @@ class TestGenerateTransferHeader(unittest.TestCase):
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_input_then_raise_not_successful_error(self):
-        self.assertRaises(EricProcessNotSuccessful, _generate_transfer_header, self.incorrect_input_xml, self.th_fields)
+        with get_eric_wrapper() as eric_wrapper:
+            self.assertRaises(EricProcessNotSuccessful, _generate_transfer_header, self.incorrect_input_xml,
+                              self.th_fields, eric_wrapper)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_calls_run_pyeric(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
-                   MagicMock(return_value=self.xml_with_th_binary)) as fun_create_th:
-            _generate_transfer_header(self.xml, self.th_fields)
+                   MagicMock(return_value=self.xml_with_th_binary)) as fun_create_th, \
+             get_eric_wrapper() as eric_wrapper:
+            _generate_transfer_header(self.xml, self.th_fields, eric_wrapper)
 
             fun_create_th.assert_called_with('<xml/>\n',
                                              datenart=self.th_fields.datenart, testmerker=self.th_fields.testmerker,
@@ -257,8 +262,9 @@ class TestGenerateTransferHeader(unittest.TestCase):
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_returns_xml_with_transfer_header(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
-                   MagicMock(return_value=self.xml_with_th_binary)):
-            res = _generate_transfer_header(self.xml, self.th_fields)
+                   MagicMock(return_value=self.xml_with_th_binary)), \
+             get_eric_wrapper() as eric_wrapper:
+            res = _generate_transfer_header(self.xml, self.th_fields, eric_wrapper)
 
             self.assertEqual(self.xml_with_th_binary.decode(), res)
 

@@ -57,8 +57,8 @@ class TestEricInitialise(unittest.TestCase):
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_init_successful = MagicMock(return_value=0)
-        self.mock_fun_init_res_gt_zero = MagicMock(return_value=1)
+        self.mock_fun_init_successful = MagicMock(__name__="EricMtInstanzErzeugen", return_value=0)
+        self.mock_fun_init_res_gt_zero = MagicMock(__name__="EricMtInstanzErzeugen", return_value=1)
         self.mock_fun_init_res_lt_zero = MagicMock(return_value=-1)
         self.mock_eric.EricMtInstanzErzeugen = self.mock_fun_init_successful
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
@@ -106,7 +106,7 @@ class TestEricShutdown(unittest.TestCase):
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_shutdown_successful = MagicMock(return_value=0)
+        self.mock_fun_shutdown_successful = MagicMock(__name__="EricMtInstanzFreigeben", return_value=0)
         self.mock_fun_shutdown_res_gt_zero = MagicMock(return_value=1)
         self.mock_fun_shutdown_res_lt_zero = MagicMock(return_value=-1)
         self.mock_eric.EricMtInstanzFreigeben = self.mock_fun_shutdown_successful
@@ -302,9 +302,9 @@ class TestGetCertHandle(unittest.TestCase):
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_handle_certificate_successful = MagicMock(return_value=0)
-        self.mock_fun_handle_certificate_res_gt_zero = MagicMock(return_value=1)
-        self.mock_fun_handle_certificate_res_lt_zero = MagicMock(return_value=-1)
+        self.mock_fun_handle_certificate_successful = MagicMock(__name__="EricMtGetHandleToCertificate", return_value=0)
+        self.mock_fun_handle_certificate_res_gt_zero = MagicMock(__name__="EricMtGetHandleToCertificate", return_value=1)
+        self.mock_fun_handle_certificate_res_lt_zero = MagicMock(__name__="EricMtGetHandleToCertificate", return_value=-1)
         self.mock_eric.EricMtGetHandleToCertificate = self.mock_fun_handle_certificate_successful
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
         self.eric_api_with_mocked_binaries.eric_instance = c_int()
@@ -370,9 +370,9 @@ class TestCloseCertHandle(unittest.TestCase):
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_close_certificate_successful = MagicMock(return_value=0)
-        self.mock_fun_close_certificate_res_gt_zero = MagicMock(return_value=1)
-        self.mock_fun_close_certificate_res_lt_zero = MagicMock(return_value=-1)
+        self.mock_fun_close_certificate_successful = MagicMock(__name__="EricMtCloseHandleToCertificate", return_value=0)
+        self.mock_fun_close_certificate_res_gt_zero = MagicMock(__name__="EricMtCloseHandleToCertificate", return_value=1)
+        self.mock_fun_close_certificate_res_lt_zero = MagicMock(__name__="EricMtCloseHandleToCertificate", return_value=-1)
         self.mock_eric.EricMtCloseHandleToCertificate = self.mock_fun_close_certificate_successful
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
 
@@ -431,9 +431,9 @@ class TestProcess(unittest.TestCase):
 
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_process_successful = MagicMock(return_value=0)
-        self.mock_fun_process_res_gt_zero = MagicMock(return_value=1)
-        self.mock_fun_process_res_lt_zero = MagicMock(return_value=-1)
+        self.mock_fun_process_successful = MagicMock(__name__="EricMtBearbeiteVorgang", return_value=0)
+        self.mock_fun_process_res_gt_zero = MagicMock(__name__="EricMtBearbeiteVorgang", return_value=1)
+        self.mock_fun_process_res_lt_zero = MagicMock(__name__="EricMtBearbeiteVorgang", return_value=-1)
         self.mock_eric.EricMtBearbeiteVorgang = self.mock_fun_process_successful
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
         self.eric_api_with_mocked_binaries.eric_instance = c_int()
@@ -679,9 +679,9 @@ class TestCreateTH(unittest.TestCase):
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_create_th_successful = MagicMock(return_value=0)
-        self.mock_fun_create_th_res_gt_zero = MagicMock(return_value=1)
-        self.mock_fun_create_th_res_lt_zero = MagicMock(return_value=-1)
+        self.mock_fun_create_th_successful = MagicMock(__name__="EricMtCreateTH", return_value=0)
+        self.mock_fun_create_th_res_gt_zero = MagicMock(__name__="EricMtCreateTH", return_value=1)
+        self.mock_fun_create_th_res_lt_zero = MagicMock(__name__="EricMtCreateTH", return_value=-1)
         self.mock_eric.EricMtCreateTH = self.mock_fun_create_th_successful
         self.mock_eric.EricMtCreateTH = self.mock_fun_create_th_successful
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
@@ -883,8 +883,8 @@ class TestDecryptData(unittest.TestCase):
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
-        self.mock_fun_decode_successful = MagicMock(return_value=0)
-        self.mock_fun_decode_unsuccessful = MagicMock(return_value=-1)
+        self.mock_fun_decode_successful = MagicMock(__name__="EricMtDekodiereDaten", return_value=0)
+        self.mock_fun_decode_unsuccessful = MagicMock(__name__="EricMtDekodiereDaten", return_value=-1)
         self.mock_fun_close_buffer_successful = MagicMock(return_value=0)
         self.mock_fun_get_cert_handle_successful = MagicMock(return_value=0)
         self.mock_eric.EricMtDekodiereDaten = self.mock_fun_decode_successful
@@ -928,10 +928,119 @@ class TestDecryptData(unittest.TestCase):
         self.eric_api_with_mocked_binaries.create_buffer = MagicMock()
         self.eric_api_with_mocked_binaries.create_buffer.side_effect = lambda: gen_random_key()
         self.mock_fun_decode_successful.side_effect = _change_buffer_contents
-        self.eric_api_with_mocked_binaries.read_buffer = MagicMock()
         self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
 
         result = self.eric_api_with_mocked_binaries.decrypt_data(self.encrypted_data)
+
+        self.assertEqual(buffer, result)
+
+
+class TestGetTaxOffices(unittest.TestCase):
+    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def setUp(self):
+        self.eric_api_with_mocked_binaries = EricWrapper()
+        self.mock_eric = MagicMock()
+        self.mock_fun_hole_finanzaemter_successful = MagicMock(__name__="EricMtCreateTH", return_value=0)
+        self.mock_fun_hole_finanzaemter_unsuccessful = MagicMock(__name__="EricMtCreateTH", return_value=-1)
+        self.mock_fun_close_buffer_successful = MagicMock(__name__="EricMtRueckgabepufferFreigeben", return_value=0)
+        self.mock_eric.EricMtHoleFinanzaemter = self.mock_fun_hole_finanzaemter_successful
+        self.mock_eric.EricMtRueckgabepufferFreigeben = self.mock_fun_close_buffer_successful
+        self.eric_api_with_mocked_binaries.eric = self.mock_eric
+        self.eric_api_with_mocked_binaries.read_buffer = MagicMock(return_value=b'')
+
+        self.state_code = '91'
+
+    def test_correct_library_is_called(self):
+        self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
+
+        self.mock_fun_hole_finanzaemter_successful.assert_called_once()
+
+    def test_if_eric_hole_finanzaemter_returns_unsuccessful_res_code_error_is_thrown(self):
+        self.mock_eric.EricMtHoleFinanzaemter = self.mock_fun_hole_finanzaemter_unsuccessful
+
+        self.assertRaises(EricProcessNotSuccessful,
+                          self.eric_api_with_mocked_binaries.get_tax_offices,
+                          self.state_code)
+
+    def test_if_eric_hole_finanzaemter_ends_with_return_code_zero_then_raise_no_exception(self):
+        self.mock_fun_hole_finanzaemter_successful.reset_mock()
+
+        try:
+            self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
+        except EricProcessNotSuccessful:
+            self.fail("Decrypt Data raised EricProcessNotSuccessful unexpectedly!")
+
+    def test_if_eric_hole_finanzaemter_called_then_result_is_content_of_a_generated_buffer(self):
+        self.mock_fun_hole_finanzaemter_unsuccessful.reset_mock()
+
+        buffer_contents = {}
+        buffer = r"<text>Send it over into ELSTER land \o/ </text>"
+
+        def _change_buffer_contents(*args):
+            buffer_contents[args[2]] = buffer
+            return 0
+
+        self.eric_api_with_mocked_binaries.create_buffer = MagicMock()
+        self.eric_api_with_mocked_binaries.create_buffer.side_effect = lambda: gen_random_key()
+        self.mock_fun_hole_finanzaemter_successful.side_effect = _change_buffer_contents
+        self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
+
+        result = self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
+
+        self.assertEqual(buffer, result)
+
+
+class TestGetstateIdList(unittest.TestCase):
+    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def setUp(self):
+        self.eric_api_with_mocked_binaries = EricWrapper()
+        self.mock_eric = MagicMock()
+        self.mock_fun_hole_finanzamtlandnummern_successful = MagicMock(__name__="EricMtHoleFinanzamtLandNummern", return_value=0)
+        self.mock_fun_hole_finanzamtlandnummern_unsuccessful = MagicMock(__name__="EricMtHoleFinanzamtLandNummern", return_value=-1)
+        self.mock_fun_close_buffer_successful = MagicMock(__name__="EricMtRueckgabepufferFreigeben", return_value=0)
+        self.mock_eric.EricMtHoleFinanzamtLandNummern = self.mock_fun_hole_finanzamtlandnummern_successful
+        self.mock_eric.EricMtRueckgabepufferFreigeben = self.mock_fun_close_buffer_successful
+        self.eric_api_with_mocked_binaries.eric = self.mock_eric
+        self.eric_api_with_mocked_binaries.read_buffer = MagicMock(return_value=b'')
+
+    def test_correct_library_is_called(self):
+        self.eric_api_with_mocked_binaries.get_state_id_list()
+
+        self.mock_fun_hole_finanzamtlandnummern_successful.assert_called_once()
+
+    def test_if_eric_hole_finanzamtlandnummern_returns_unsuccessful_res_code_error_is_thrown(self):
+        self.mock_eric.EricMtHoleFinanzamtLandNummern = self.mock_fun_hole_finanzamtlandnummern_unsuccessful
+
+        self.assertRaises(EricProcessNotSuccessful,
+                          self.eric_api_with_mocked_binaries.get_state_id_list,
+                          )
+
+    def test_if_eric_hole_finanzamtlandnummern_ends_with_return_code_zero_then_raise_no_exception(self):
+        self.mock_fun_hole_finanzamtlandnummern_successful.reset_mock()
+
+        try:
+            self.eric_api_with_mocked_binaries.get_state_id_list()
+        except EricProcessNotSuccessful:
+            self.fail("Decrypt Data raised EricProcessNotSuccessful unexpectedly!")
+
+    def test_if_eric_hole_finanzamtlandnummern_called_then_result_is_content_of_a_generated_buffer(self):
+        self.mock_fun_hole_finanzamtlandnummern_unsuccessful.reset_mock()
+
+        buffer_contents = {}
+        buffer = r"<text>Send it over into ELSTER land \o/ </text>"
+
+        def _change_buffer_contents(*args):
+            buffer_contents[args[1]] = buffer
+            return 0
+
+        self.eric_api_with_mocked_binaries.create_buffer = MagicMock()
+        self.eric_api_with_mocked_binaries.create_buffer.side_effect = lambda: gen_random_key()
+        self.mock_fun_hole_finanzamtlandnummern_successful.side_effect = _change_buffer_contents
+        self.eric_api_with_mocked_binaries.read_buffer = lambda arg: buffer_contents[arg]
+
+        result = self.eric_api_with_mocked_binaries.get_state_id_list()
 
         self.assertEqual(buffer, result)
 
@@ -946,11 +1055,11 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
 
         self.mock_buff_constant = c_int()
         self.eric_instance = c_int()
-        self.mock_fun_get_error_message_successful = MagicMock(return_value=0)
-        self.mock_fun_get_error_message_res_gt_zero = MagicMock(return_value=1)
-        self.mock_fun_get_error_message_res_lt_zero = MagicMock(return_value=-1)
-        self.eric_api_with_mocked_binaries.create_buffer = MagicMock(return_value=self.mock_buff_constant)
-        self.eric_api_with_mocked_binaries.close_buffer = MagicMock()
+        self.mock_fun_get_error_message_successful = MagicMock(__name__="EricMtGetErrormessagesFromXMLAnswer", return_value=0)
+        self.mock_fun_get_error_message_res_gt_zero = MagicMock(__name__="EricMtGetErrormessagesFromXMLAnswer", return_value=1)
+        self.mock_fun_get_error_message_res_lt_zero = MagicMock(__name__="EricMtGetErrormessagesFromXMLAnswer", return_value=-1)
+        self.eric_api_with_mocked_binaries.create_buffer = MagicMock(__name__="EricMtBufferErzeugen", return_value=self.mock_buff_constant)
+        self.eric_api_with_mocked_binaries.close_buffer = MagicMock(__name__="EricMtBufferFreigeben",)
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
         self.eric_api_with_mocked_binaries.eric_instance = self.eric_instance
 
@@ -1027,23 +1136,23 @@ class TestGetCertProperties(unittest.TestCase):
     def setUp(self):
         self.eric_wrapper_with_mock_eric_binaries = EricWrapper()
         self.eric_wrapper_with_mock_eric_binaries.eric = MagicMock()
-        self.eric_wrapper_with_mock_eric_binaries.eric.EricMtHoleZertifikatEigenschaften = MagicMock(return_value=0)
+        self.eric_wrapper_with_mock_eric_binaries.eric.EricMtHoleZertifikatEigenschaften = MagicMock(__name__="EricMtHoleZertifikatEigenschaften", return_value=0)
 
-        self.eric_wrapper_with_mock_eric_binaries.get_cert_handle = MagicMock()
-        self.eric_wrapper_with_mock_eric_binaries.close_cert_handle = MagicMock(name="close_cert_handle")
+        self.eric_wrapper_with_mock_eric_binaries.get_cert_handle = MagicMock(__name__="EricMtBufferErzeugen")
+        self.eric_wrapper_with_mock_eric_binaries.close_cert_handle = MagicMock(__name__="EricMtBufferFreigeben", ame="close_cert_handle")
 
-        self.eric_wrapper_with_mock_eric_binaries.create_buffer = MagicMock(return_value=1)
-        self.eric_wrapper_with_mock_eric_binaries.read_buffer = MagicMock()
-        self.eric_wrapper_with_mock_eric_binaries.close_buffer = MagicMock(name="close_buffer")
+        self.eric_wrapper_with_mock_eric_binaries.create_buffer = MagicMock(__name__="EricMtBufferErzeugen", return_value=1)
+        self.eric_wrapper_with_mock_eric_binaries.read_buffer = MagicMock(__name__="EricMtBufferLesen", return_value=b"<xml></xml>")
+        self.eric_wrapper_with_mock_eric_binaries.close_buffer = MagicMock(__name__="EricMtBufferFreigeben", name="close_buffer")
 
     def test_should_extract_correct_info(self):
         with get_eric_wrapper() as eric_wrapper:
             cert_properties = eric_wrapper.get_cert_properties()
 
         # Verify some expected content is there.
-        self.assertTrue("EricHoleZertifikatEigenschaften" in cert_properties)
-        self.assertTrue("Signaturzertifikateigenschaften" in cert_properties)
-        self.assertTrue("ElsterIdNrSoftTestCA" in cert_properties)
+        self.assertTrue("EricHoleZertifikatEigenschaften" in cert_properties.decode())
+        self.assertTrue("Signaturzertifikateigenschaften" in cert_properties.decode())
+        self.assertTrue("ElsterIdNrSoftTestCA" in cert_properties.decode())
 
     def test_should_raise_error_when_non_zero_result(self):
         self.eric_wrapper_with_mock_eric_binaries.eric.EricMtHoleZertifikatEigenschaften.return_value = -1
