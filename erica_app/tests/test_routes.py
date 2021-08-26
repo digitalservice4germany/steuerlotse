@@ -236,6 +236,6 @@ class TestGetTaxOffices(unittest.TestCase):
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_get_tax_offices_returns_same_as_request_controller_process(self):
         response = get_tax_offices()
-        with open(response.path, "r", encoding="utf-8") as response_file:
+        with open(response.path, "r") as response_file:
             response_content = json.load(response_file)
         self.assertEqual(GetTaxOfficesPyericController().get_eric_response(), response_content)
