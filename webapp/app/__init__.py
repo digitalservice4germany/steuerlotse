@@ -63,11 +63,6 @@ if app.config['PROMETHEUS_EXPORTER_ENABLED']:
 app.before_request(log_flask_request)
 
 
-@babel.localeselector
-def get_locale():
-    return 'de'
-
-
 @app.context_processor
 def utility_processor():
     def EUR(decimal):
