@@ -4,9 +4,8 @@ from typing import Optional
 from flask import redirect, request, url_for, session, abort
 from wtforms import Form
 
-from app import app
-
 # The RenderInfo is provided to all templates
+from app.config import Config
 from app.forms.session_data import deserialize_session_data, override_session_data
 from app.forms.steps.step import FormStep
 
@@ -160,7 +159,7 @@ class MultiStepFlow:
         return render_info, stored_data
 
     def default_data(self):
-        if app.config['DEBUG_DATA']:
+        if Config.DEBUG_DATA:
             return self._DEBUG_DATA
         else:
             return {}

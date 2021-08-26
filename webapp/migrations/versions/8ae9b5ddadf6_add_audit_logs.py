@@ -8,7 +8,7 @@ Create Date: 2021-04-22 12:06:35.642688
 from alembic import op
 import sqlalchemy as sa
 
-from app import app
+from flask import current_app
 
 # revision identifiers, used by Alembic.
 revision = '8ae9b5ddadf6'
@@ -24,7 +24,7 @@ def upgrade():
                     sa.Column('log_data', sa.String(), nullable=False),
                     sa.PrimaryKeyConstraint('id')
                     )
-    if app.config['ENV'] in ('staging', 'production'):
+    if current_app.config['ENV'] in ('staging', 'production'):
         # only INSERT allowed
         op.execute("""
         GRANT INSERT ON TABLE "audit_log" TO steuerlotse;

@@ -1,6 +1,6 @@
 import datetime
+import logging
 
-from app import app
 from app.data_access.db_model.user import User
 
 from app.data_access.user_controller import user_exists, check_dob, delete_user
@@ -15,6 +15,9 @@ from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRe
     ElsterRequestAlreadyRevoked
 from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationInputStep, UnlockCodeRevocationSuccessStep, \
     UnlockCodeRevocationFailureStep
+
+
+logger = logging.getLogger(__name__)
 
 
 class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
@@ -49,7 +52,7 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     # prevent going to failure page as in normal flow
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationSuccessStep.name)
                 except (UserNotExistingError, WrongDateOfBirthError, ElsterProcessNotSuccessful):
-                    app.logger.info("Could not revoke unlock code for user", exc_info=True)
+                    logger.info("Could not revoke unlock code for user", exc_info=True)
                     pass  # go to failure step
         elif isinstance(step, UnlockCodeRevocationFailureStep):
             render_info.next_url = None
@@ -83,6 +86,6 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
         except (ElsterRequestIdUnkownError, ElsterRequestAlreadyRevoked):
             # In case we have the user stored and elster does not have a request (anymore)
             # we want to delete the user in our db anyways.
-            app.logger.info("Could not revoke unlock code for user", exc_info=True)
+            logger.info("Could not revoke unlock code for user", exc_info=True)
             pass
         delete_user(idnr)

@@ -1,4 +1,5 @@
 import datetime as dt
+import logging
 import os
 
 from flask.cli import AppGroup
@@ -8,6 +9,9 @@ from app.elster_client.elster_errors import ElsterProcessNotSuccessful, \
     ElsterRequestAlreadyRevoked, ElsterRequestIdUnkownError
 
 
+logger = logging.getLogger(__name__)
+
+
 def register_commands(app):
     cronjob_cli = AppGroup('cronjob')
 
@@ -15,28 +19,27 @@ def register_commands(app):
     def delete_outdated_users():
         try:
             if os.environ.get('FLASK_ENV') == 'staging':
-                app.logger.warn('Refusing to run lifecycle cron job on staging (would delete users needed for testing)')
+                logger.warn('Refusing to run lifecycle cron job on staging (would delete users needed for testing)')
                 return
 
             _delete_outdated_users()
         except Exception:
-            app.logger.exception('An unexpected error occurred.')
+            logger.exception('An unexpected error occurred.')
 
     app.cli.add_command(cronjob_cli)
 
     @app.cli.command()
     def populate_database():
         try:
-            from app import app
             from app import db
             from app.data_access.db_model.user import User
 
             if os.environ.get('FLASK_ENV') == 'production':
-                app.logger.warn('Refusing to run populate database cron job on production '
+                logger.warn('Refusing to run populate database cron job on production '
                                 '(would create unwanted users).')
                 return
 
-            app.logger.info('Executing populate_database')
+            logger.info('Executing populate_database')
 
             pre_stored_idnrs = [('04452397687', 'DBNH-B8JS-9JE7'),
                                 ('02259674819', 'BMVL-U2YM-AWJ4')]
@@ -46,20 +49,18 @@ def register_commands(app):
                 try:
                     db.session.add(new_user)
                     db.session.commit()
-                    app.logger.info('Added user with IdNr: ' + idnr)
+                    logger.info('Added user with IdNr: ' + idnr)
                 except IntegrityError:
                     db.session.rollback()
-                    app.logger.warn('User with IdNr ' + idnr + ' already exists in database.')
+                    logger.warn('User with IdNr ' + idnr + ' already exists in database.')
         except Exception:
-            from app import app
-            app.logger.exception('An unexpected error occurred.')
+            logger.exception('An unexpected error occurred.')
 
 
 def _delete_outdated_users():
-    from app import app
     from app import db
 
-    app.logger.info('Executing delete_outdated_users')
+    logger.info('Executing delete_outdated_users')
 
     _delete_outdated_not_activated_users()
     _delete_outdated_users_with_completed_process()
@@ -68,7 +69,6 @@ def _delete_outdated_users():
 
 
 def _delete_outdated_not_activated_users():
-    from app import app
     from app import db
     from app.data_access.db_model.user import User
 
@@ -76,7 +76,7 @@ def _delete_outdated_not_activated_users():
         .filter(User.unlock_code_hashed.is_(None),
                 User.last_modified < dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=90)) \
         .delete(synchronize_session=False)
-    app.logger.info('Removed outdated non-activated users: ' + str(num_deleted_rows))
+    logger.info('Removed outdated non-activated users: ' + str(num_deleted_rows))
 
 
 def _delete_outdated_users_with_completed_process():
@@ -103,7 +103,6 @@ def _delete_inactive_users():
 
 
 def _revoke_permission_and_delete_users(users_to_delete, success_message):
-    from app import app
     from app import db
     from app.elster_client import elster_client
     from app.crypto.pw_hashing import global_salt_hash
@@ -122,10 +121,10 @@ def _revoke_permission_and_delete_users(users_to_delete, success_message):
         try:
             elster_client.send_unlock_code_revocation_with_elster(form_data, 'CRONJOB-IP')
             db.session.delete(user_to_delete)
-            app.logger.info(success_message)
+            logger.info(success_message)
         except (ElsterRequestAlreadyRevoked, ElsterRequestIdUnkownError) as e:
-            app.logger.warn(str(e))
+            logger.warn(str(e))
             db.session.delete(user_to_delete)
-            app.logger.info(success_message)
+            logger.info(success_message)
         except ElsterProcessNotSuccessful as e:
-            app.logger.error(str(e))
+            logger.error(str(e))

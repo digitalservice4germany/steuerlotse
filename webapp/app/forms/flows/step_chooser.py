@@ -1,9 +1,8 @@
 from typing import Optional
 
-from flask import session
 from werkzeug.exceptions import abort
 
-from app import app
+from app.config import Config
 from app.forms.session_data import get_session_data, deserialize_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
@@ -67,7 +66,7 @@ class StepChooser:
         return self.steps[self.step_order[idx + 1]] if idx < len(self.step_order) - 1 else None
 
     def default_data(self):
-        if app.config['DEBUG_DATA']:
+        if Config.DEBUG_DATA:
             return self._DEBUG_DATA
         else:
             return {}

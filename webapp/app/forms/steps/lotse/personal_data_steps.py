@@ -4,7 +4,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
     SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
-    SteuerlotseNameStringField, SteuerlotseIbanField
+    SteuerlotseNameStringField, SteuerlotseIbanField, SteuerlotseHouseNumberIntegerField
 
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
@@ -252,7 +252,7 @@ class StepPersonA(FormStep):
             render_kw={'data_label': _l('form.lotse.field_person_street.data_label'),
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=25)])
-        person_a_street_number = SteuerlotseIntegerField(
+        person_a_street_number = SteuerlotseHouseNumberIntegerField(
             label=_l('form.lotse.field_person_street_number'),
             render_kw={'data_label': _l('form.lotse.field_person_street_number.data_label'),
                        'max_characters': 4},
@@ -387,7 +387,7 @@ class StepPersonB(FormStep):
                        'max_characters': 25,
                        'required_if_shown': True},
             validators=[input_required_if_not_same_address, validators.length(max=25)])
-        person_b_street_number = SteuerlotseIntegerField(
+        person_b_street_number = SteuerlotseHouseNumberIntegerField(
             label=_l('form.lotse.field_person_street_number'),
             render_kw={'data_label': _l('form.lotse.field_person_street_number'
                                         '.data_label'),

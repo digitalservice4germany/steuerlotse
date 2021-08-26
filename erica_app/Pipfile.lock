@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "59e8f1a30b967a83a2c0a57dffe1c73230b316c5888a6751932f761094a8562b"
+            "sha256": "38d91251f4017a4fe6c8e62b796ea88a9e1823b9561beda427046f31c249c304"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -50,19 +50,19 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:39ed0f5004b671e4a4241ae23023ad63674cd25f766bfe1617cfc809728bc3e0",
-                "sha256:3eedef0719639892dc263bed7adfc00821544388e3d86a6fa31d82f936a6b613"
+                "sha256:4dc7e346e92c01e8a997daa58a4c990151841d2d2962067325d963f665c7287a",
+                "sha256:79b7e6e0167def749352968ed6eb96954d9e2dd1dca8f297f122414753ce73a3"
             ],
             "index": "pypi",
-            "version": "==1.18.26"
+            "version": "==1.18.29"
         },
         "botocore": {
             "hashes": [
-                "sha256:37f77bf5f72c86d9b5f38e107c3822da66dbf0ef123768a6e80a58590c2796bf",
-                "sha256:911246faac450e13a3ef0e81993dd9bd9c282a7c0f4546bfe8cccf9649364cef"
+                "sha256:1f16998b4f5a88e6844196feee7fa5eef6b36034d377f9845c7df12b8803b3be",
+                "sha256:fec924f63b40bd29b522fa109ecbc45f16eedcbeb22b68c6c79773c22a552b16"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.21.26"
+            "version": "==1.21.29"
         },
         "click": {
             "hashes": [
@@ -74,11 +74,11 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:c9256a89b0436223b45f53fe3a39b178f3da6be5841a2c59deedff4b676d003f",
-                "sha256:f4dba2596b1e0a1f962834c3b9ec4291a7aec387a1031c6c2e25bf239d27fd0f"
+                "sha256:644bb815bae326575c4b2842469fb83053a4b974b82fa792ff9283d17fbbd99d",
+                "sha256:94d2820906c36b9b8303796fb7271337ec89c74223229e3cfcf056b5a7d59e23"
             ],
             "index": "pypi",
-            "version": "==0.68.0"
+            "version": "==0.68.1"
         },
         "freezegun": {
             "hashes": [

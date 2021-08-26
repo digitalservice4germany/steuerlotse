@@ -1,3 +1,4 @@
+import os
 import unittest
 from unittest.mock import patch
 
@@ -6,6 +7,7 @@ from flask.sessions import SecureCookieSession
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 
+# TODO: replace with app factory / client fixture
 from app import app, db
 from app.data_access.user_controller import create_user, find_user
 from app.data_access.user_controller_errors import UserNotExistingError
@@ -17,6 +19,8 @@ from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationFai
     UnlockCodeRevocationSuccessStep, UnlockCodeRevocationInputStep
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockUnlockCodeRevocationFailureStep, MockUnlockCodeRevocationSuccessStep, MockUnlockCodeRevocationInputStep
+
+FIXTURES_PATH = os.path.dirname(os.path.abspath(__file__)) + '/../../samples/'
 
 
 class UnlockCodeRevocationInit(unittest.TestCase):
@@ -195,7 +199,7 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
         date_of_birth = ['1', '1', '1985']
         create_user(existing_idnr, '01.01.1985', '0000')
 
-        with open('tests/samples/sample_vast_revocation_response_failure.xml') as failue_sample:
+        with open(FIXTURES_PATH + 'sample_vast_revocation_response_failure.xml') as failue_sample:
             failure_server_response = failue_sample.read()
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr, 'dob': date_of_birth}):
@@ -216,7 +220,7 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
         date_of_birth = ['1', '1', '1985']
         create_user(existing_idnr, '01.01.1985', '0000')
 
-        with open('tests/samples/sample_vast_revocation_response_failure.xml') as failue_sample:
+        with open(FIXTURES_PATH + 'sample_vast_revocation_response_failure.xml') as failue_sample:
             failure_server_response = failue_sample.read()
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr, 'dob': date_of_birth}):
@@ -236,7 +240,7 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
         date_of_birth = ['01', '01', '1985']
         create_user(existing_idnr, '01.01.1985', '0000')
 
-        with open('tests/samples/sample_vast_revocation_response_failure.xml') as failure_sample:
+        with open(FIXTURES_PATH + 'sample_vast_revocation_response_failure.xml') as failure_sample:
             failure_server_response = failure_sample.read()
         with app.app_context() and app.test_request_context(method='POST',
                                                             data={'idnr': existing_idnr, 'dob': date_of_birth}):
