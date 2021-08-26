@@ -81,15 +81,14 @@ commands should get you up and running:
 git clone git@github.com:digitalservice4germany/steuerlotse.git
 cd steuerlotse/webapp
 pipenv install
+cp .env.example .env
 cd ..
 cd steuerlotse/erica_app
 pipenv install
 
 # At the beginning of every development session
 cd steuerlotse/webapp
-pipenv shell 
-export FLASK_APP=app
-export FLASK_ENV=development
+pipenv shell
 
 # After every translation change (new strings, updated .po file)
 # and also during first-time setup
@@ -158,8 +157,6 @@ Visit the application by pointing your browser at http://localhost.
 ### Using flask migrate for the database
 For database migration and upgrades, you can use Flask-Migrate. Make sure that you are in the pipenv shell
 ````bash
-# Additional env variables
-export FLASK_APP=app/__init__.py  # To tell flask, which app to use
 flask db init  # Only once to create the migrations folder
 
 # After model has been changed
