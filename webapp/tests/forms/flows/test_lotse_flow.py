@@ -17,7 +17,8 @@ from wtforms import Field
 from wtforms.fields.core import UnboundField, IntegerField, SelectField, RadioField
 
 # TODO: replace with app factory / client fixture
-from app import db, app
+from autoapp import app
+from app.extensions import db
 from app.config import Config
 from app.crypto.pw_hashing import global_salt_hash
 from app.data_access.user_controller import find_user

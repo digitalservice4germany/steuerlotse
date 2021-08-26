@@ -3,7 +3,7 @@ import unittest
 from flask import request
 
 # TODO: replace with app factory / client fixture
-from app import app
+from autoapp import app
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import SteuerlotseStringField
 from app.forms.steps.step import FormStep

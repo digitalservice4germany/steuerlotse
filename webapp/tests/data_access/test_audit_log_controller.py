@@ -4,7 +4,7 @@ from json import JSONDecodeError
 from unittest.mock import patch, MagicMock
 
 
-from app import db
+from app.extensions import db
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_confirmation_entry, \
     create_audit_log_address_entry
 from tests.elster_client.mock_erica import MockResponse

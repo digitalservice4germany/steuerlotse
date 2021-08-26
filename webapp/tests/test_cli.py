@@ -2,7 +2,7 @@ import datetime as dt
 import unittest
 from unittest.mock import patch
 
-from app import db
+from app.extensions import db
 from app.commands import _delete_outdated_not_activated_users, _delete_outdated_users_with_completed_process, \
     _delete_inactive_users, _delete_outdated_users
 from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket
@@ -141,7 +141,7 @@ class TestDeleteOutdatedUsers(unittest.TestCase):
 
     def test_commit_is_called(self):
         with patch('app.elster_client.elster_client.send_unlock_code_revocation_with_elster'),\
-             patch('app.db.session.commit') as commit_fun:
+             patch('app.extensions.db.session.commit') as commit_fun:
             _delete_outdated_users()
         commit_fun.assert_called()
 

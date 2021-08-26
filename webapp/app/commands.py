@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 @click.command()
 def populate_database():
     try:
-        from app import db
+        from app.extensions import db
         from app.data_access.db_model.user import User
 
         if os.environ.get('FLASK_ENV') == 'production':
@@ -57,7 +57,7 @@ def delete_outdated_users():
 
 
 def _delete_outdated_users():
-    from app import db
+    from app.extensions import db
 
     logger.info('Executing delete_outdated_users')
 
@@ -68,7 +68,7 @@ def _delete_outdated_users():
 
 
 def _delete_outdated_not_activated_users():
-    from app import db
+    from app.extensions import db
     from app.data_access.db_model.user import User
 
     num_deleted_rows = db.session.query(User) \
@@ -79,7 +79,7 @@ def _delete_outdated_not_activated_users():
 
 
 def _delete_outdated_users_with_completed_process():
-    from app import db
+    from app.extensions import db
     from app.data_access.db_model.user import User
 
     users_to_delete_query = db.session.query(User) \
@@ -91,7 +91,7 @@ def _delete_outdated_users_with_completed_process():
 
 
 def _delete_inactive_users():
-    from app import db
+    from app.extensions import db
     from app.data_access.db_model.user import User
 
     users_to_delete_query = db.session.query(User) \
@@ -102,7 +102,7 @@ def _delete_inactive_users():
 
 
 def _revoke_permission_and_delete_users(users_to_delete, success_message):
-    from app import db
+    from app.extensions import db
     from app.elster_client import elster_client
     from app.crypto.pw_hashing import global_salt_hash
 

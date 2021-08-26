@@ -8,7 +8,8 @@ from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 
 # TODO: replace with app factory / client fixture
-from app import app, db
+from autoapp import app
+from app.extensions import db
 from app.data_access.user_controller import create_user, find_user
 from app.data_access.user_controller_errors import UserNotExistingError
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, \

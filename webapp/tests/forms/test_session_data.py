@@ -7,7 +7,7 @@ from cryptography.fernet import InvalidToken
 from flask.sessions import SecureCookieSession
 
 # TODO: replace with app factory / client fixture
-from app import app
+from autoapp import app
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
     override_session_data
 from tests.utils import create_session_form_data

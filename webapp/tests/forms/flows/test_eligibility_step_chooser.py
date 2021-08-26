@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 # TODO: replace with app factory / client fixture
-from app import app
+from autoapp import app
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     MaritalStatusInputFormSteuerlotseStep, SeparatedEligibilityInputFormSteuerlotseStep, \

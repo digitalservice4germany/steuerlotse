@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 from flask import url_for, session
 
 # TODO: replace with app factory / client fixture
-from app import app
+from autoapp import app
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
 from tests.forms.mock_steps import MockLogoutInputStep

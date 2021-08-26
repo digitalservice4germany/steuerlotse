@@ -7,7 +7,7 @@ from unittest.mock import patch, MagicMock
 from markupsafe import escape
 
 # TODO: replace with app factory / client fixture
-from app import app
+from autoapp import app
 from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \

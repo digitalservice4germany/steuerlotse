@@ -3,7 +3,8 @@ import unittest
 from flask import request
 from werkzeug.datastructures import MultiDict
 
-from app import db, app
+from autoapp import app
+from app.extensions import db
 from app.data_access.user_controller import create_user, activate_user
 from app.forms.steps.lotse.personal_data_steps import StepPersonA, StepFamilienstand, StepPersonB, StepIban
 
@@ -313,7 +314,7 @@ class TestFamilienstand(unittest.TestCase):
         form = self.step.Form(formdata=data)
         self.assertFalse(form.validate())
         self.assertIn('familienstand_widowed_lived_separated_since', form.errors)
-    
+
     def test_if_widowed_and_lived_separated_and_separated_since_is_invalid_date_then_fail_validation(self):
         data = MultiDict({'familienstand': 'widowed',
                           'familienstand_date': ['03', '04', '2008'],

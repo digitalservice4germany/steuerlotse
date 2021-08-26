@@ -1,6 +1,6 @@
 import unittest
 
-from app import db
+from app.extensions import db
 from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
 from app.data_access.db_model.user import User
 
