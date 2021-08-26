@@ -190,7 +190,7 @@ class EricWrapper(object):
         try:
             cert_handle = self.get_cert_handle()
 
-            return self._call_and_return_buffer_contents(fun_get_cert_properties, cert_handle,
+            return self._call_and_return_buffer_contents_and_decode(fun_get_cert_properties, cert_handle,
                                                          EricWrapper.cert_pin.encode())
         finally:
             if cert_handle:
@@ -305,7 +305,7 @@ class EricWrapper(object):
         try:
             cert_handle = self.get_cert_handle()
 
-            return self._call_and_return_buffer_contents(
+            return self._call_and_return_buffer_contents_and_decode(
                 fun_decrypt_data,
                 cert_handle,
                 EricWrapper.cert_pin.encode(),
@@ -325,7 +325,7 @@ class EricWrapper(object):
         fun_get_tax_offices.argtypes = [c_void_p, c_char_p, c_void_p]
         fun_get_tax_offices.restype = int
 
-        return self._call_and_return_buffer_contents(
+        return self._call_and_return_buffer_contents_and_decode(
             fun_get_tax_offices,
             state_id.encode())
 
@@ -338,7 +338,7 @@ class EricWrapper(object):
         fun_get_tax_offices.argtypes = [c_void_p, c_void_p]
         fun_get_tax_offices.restype = int
 
-        return self._call_and_return_buffer_contents(
+        return self._call_and_return_buffer_contents_and_decode(
             fun_get_tax_offices)
 
     def _call_and_return_buffer_contents(self, function, *args):
@@ -357,6 +357,15 @@ class EricWrapper(object):
             return returned_xml
         finally:
             self.close_buffer(buf)
+
+    def _call_and_return_buffer_contents_and_decode(self, function, *args):
+        """
+        This calls the ERIC function, reads the buffer and decodes the returned_xml.
+
+        :param function: The ERIC function to be called. The argtypes and restype have to be set before.
+        """
+
+        return self._call_and_return_buffer_contents(function, *args).decode()
 
     def get_error_message_from_xml_response(self, xml_response):
         """Extract error message from server response"""

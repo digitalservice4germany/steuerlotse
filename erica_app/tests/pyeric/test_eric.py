@@ -919,7 +919,7 @@ class TestDecryptData(unittest.TestCase):
         self.mock_fun_decode_successful.reset_mock()
 
         buffer_contents = {}
-        buffer = r"<text>Send it over into ELSTER land \o/ </text>"
+        buffer = b"<text>Send it over into ELSTER land \o/ </text>"
 
         def _change_buffer_contents(*args):
             buffer_contents[args[4]] = buffer
@@ -932,7 +932,7 @@ class TestDecryptData(unittest.TestCase):
 
         result = self.eric_api_with_mocked_binaries.decrypt_data(self.encrypted_data)
 
-        self.assertEqual(buffer, result)
+        self.assertEqual(buffer.decode(), result)
 
 
 class TestGetTaxOffices(unittest.TestCase):
@@ -975,7 +975,7 @@ class TestGetTaxOffices(unittest.TestCase):
         self.mock_fun_hole_finanzaemter_unsuccessful.reset_mock()
 
         buffer_contents = {}
-        buffer = r"<text>Send it over into ELSTER land \o/ </text>"
+        buffer = b"<text>Send it over into ELSTER land \o/ </text>"
 
         def _change_buffer_contents(*args):
             buffer_contents[args[2]] = buffer
@@ -988,7 +988,7 @@ class TestGetTaxOffices(unittest.TestCase):
 
         result = self.eric_api_with_mocked_binaries.get_tax_offices(self.state_code)
 
-        self.assertEqual(buffer, result)
+        self.assertEqual(buffer.decode(), result)
 
 
 class TestGetstateIdList(unittest.TestCase):
@@ -1029,7 +1029,7 @@ class TestGetstateIdList(unittest.TestCase):
         self.mock_fun_hole_finanzamtlandnummern_unsuccessful.reset_mock()
 
         buffer_contents = {}
-        buffer = r"<text>Send it over into ELSTER land \o/ </text>"
+        buffer = b"<text>Send it over into ELSTER land \o/ </text>"
 
         def _change_buffer_contents(*args):
             buffer_contents[args[1]] = buffer
@@ -1042,7 +1042,7 @@ class TestGetstateIdList(unittest.TestCase):
 
         result = self.eric_api_with_mocked_binaries.get_state_id_list()
 
-        self.assertEqual(buffer, result)
+        self.assertEqual(buffer.decode(), result)
 
 
 class TestGetErrorMessageFromXml(unittest.TestCase):
@@ -1150,9 +1150,9 @@ class TestGetCertProperties(unittest.TestCase):
             cert_properties = eric_wrapper.get_cert_properties()
 
         # Verify some expected content is there.
-        self.assertTrue("EricHoleZertifikatEigenschaften" in cert_properties.decode())
-        self.assertTrue("Signaturzertifikateigenschaften" in cert_properties.decode())
-        self.assertTrue("ElsterIdNrSoftTestCA" in cert_properties.decode())
+        self.assertTrue("EricHoleZertifikatEigenschaften" in cert_properties)
+        self.assertTrue("Signaturzertifikateigenschaften" in cert_properties)
+        self.assertTrue("ElsterIdNrSoftTestCA" in cert_properties)
 
     def test_should_raise_error_when_non_zero_result(self):
         self.eric_wrapper_with_mock_eric_binaries.eric.EricMtHoleZertifikatEigenschaften.return_value = -1
