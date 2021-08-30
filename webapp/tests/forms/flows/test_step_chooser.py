@@ -4,6 +4,7 @@ from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.session_data import serialize_session_data, deserialize_session_data
 from app.forms.flows.step_chooser import StepChooser

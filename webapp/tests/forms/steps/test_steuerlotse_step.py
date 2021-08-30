@@ -8,6 +8,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.session_data import deserialize_session_data

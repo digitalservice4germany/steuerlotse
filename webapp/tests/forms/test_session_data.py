@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock
 from cryptography.fernet import InvalidToken
 from flask.sessions import SecureCookieSession
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
     override_session_data
@@ -167,7 +168,7 @@ class TestDeserializeSessionData(unittest.TestCase):
 
     def test_if_session_data_empty_do_not_log_error(self):
         with app.app_context() and app.test_request_context(), \
-                patch("app.forms.session_data.app.logger.warn") as log_fun:
+                patch("app.forms.session_data.logger.warn") as log_fun:
             deserialized_data = deserialize_session_data(b'', app.config['PERMANENT_SESSION_LIFETIME'])
 
             self.assertEqual({}, deserialized_data)

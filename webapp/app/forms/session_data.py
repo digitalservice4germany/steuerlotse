@@ -1,11 +1,14 @@
+import logging
 import zlib
 from typing import Optional
 
 from cryptography.fernet import InvalidToken
 from flask import session, json
 
-from app import app
 from app.crypto.encryption import encrypt, decrypt
+
+
+logger = logging.getLogger(__name__)
 
 
 def get_session_data(session_data_identifier, ttl: Optional[int] = None, default_data=None):
@@ -36,7 +39,7 @@ def deserialize_session_data(serialized_session, ttl: Optional[int] = None):
             decompressed = zlib.decompress(decrypted)
             session_data = json.loads(decompressed.decode())
         except InvalidToken:
-            app.logger.warning("Session decryption failed", exc_info=True)
+            logger.warning("Session decryption failed", exc_info=True)
             session_data = {}
     return session_data
 

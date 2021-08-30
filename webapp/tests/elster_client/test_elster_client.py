@@ -6,7 +6,9 @@ from unittest.mock import patch, MagicMock
 
 from markupsafe import escape
 
+# TODO: replace with app factory / client fixture
 from app import app
+from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
     send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data
@@ -21,7 +23,7 @@ from app.elster_client.elster_client import send_unlock_code_request_with_elster
 from tests.elster_client.json_responses.sample_responses import get_json_response
 from tests.elster_client.mock_erica import MockErica, MockResponse
 
-_PYERIC_API_BASE_URL = app.config['ERICA_BASE_URL']
+_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
 
 

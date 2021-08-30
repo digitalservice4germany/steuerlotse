@@ -10,6 +10,7 @@ from werkzeug.exceptions import NotFound
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
+# TODO: replace with app factory / client fixture
 from app import app
 from app.forms.flows.multistep_flow import MultiStepFlow, RenderInfo
 from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data

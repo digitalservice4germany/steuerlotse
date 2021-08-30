@@ -6,6 +6,7 @@ from flask import json
 from decimal import Decimal
 from datetime import date
 
+# TODO: replace with app factory
 from app import app
 
 

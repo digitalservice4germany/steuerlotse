@@ -1,11 +1,7 @@
 import secrets
 
-from werkzeug.datastructures import ImmutableMultiDict
-
-from app import app
 from app.data_access.user_controller import create_user, find_user
 from app.forms.session_data import serialize_session_data
-from app.forms.flows.step_chooser import StepChooser
 
 
 def gen_random_key(length=32):

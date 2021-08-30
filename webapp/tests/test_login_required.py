@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
+# TODO: replace with app factory / client fixture
 from app import app, db
 from app.data_access.user_controller import create_user
 from app.elster_client.elster_errors import ElsterRequestIdUnkownError

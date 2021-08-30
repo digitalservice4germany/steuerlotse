@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import HTTPException, status
+from starlette.responses import FileResponse
 
 from erica import app
 from erica.request_processing.erica_input import EstData, UnlockCodeRequestData, UnlockCodeActivationData, \
@@ -89,7 +90,6 @@ def activate_unlock_code(unlock_code_activation: UnlockCodeActivationData, inclu
         logging.getLogger().info("Could not activate unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
-
 @app.post(ERICA_VERSION_URL + '/unlock_code_revocations', status_code=status.HTTP_200_OK)
 def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include_elster_responses: bool = False):
     """
@@ -107,6 +107,14 @@ def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include
     except EricProcessNotSuccessful as e:
         logging.getLogger().info("Could not revoke unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
+
+
+@app.get(ERICA_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK)
+def get_tax_offices():
+    """
+    The list of tax offices for all states is requested and returned.
+    """
+    return FileResponse("erica/static/tax_offices.json")
 
 
 @app.post(ERICA_VERSION_URL + '/address', status_code=status.HTTP_200_OK)

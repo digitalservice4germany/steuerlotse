@@ -123,12 +123,14 @@ def generate_full_xml(th_fields, nutzdaten_header_generator, nutzdaten_generator
     else:
         nutzdaten_generator(nutzdaten_block_xml)
 
-    xml_string_with_th = _generate_transfer_header(daten_teil_xml, th_fields)
+    with get_eric_wrapper() as eric_wrapper:
+        xml_string_with_th = _generate_transfer_header(daten_teil_xml, th_fields, eric_wrapper)
 
     return xml_string_with_th
 
 
-def generate_full_est_xml(form_data, vorsatz, year, empfaenger, nutzdaten_ticket="1", th_fields=None, use_testmerker=False):
+def generate_full_est_xml(form_data, vorsatz, year, empfaenger, nutzdaten_ticket="1", th_fields=None,
+                          use_testmerker=False):
     """Generates the full XML for the given `vorsatz` and `fields`. In a first step the
     <Nutzdaten> part is generated before the ERiC library is called for generating the
     proper <TransferHeader>.
@@ -145,7 +147,8 @@ def generate_full_est_xml(form_data, vorsatz, year, empfaenger, nutzdaten_ticket
 
     if not th_fields:
         th_fields = get_est_th_fields(use_testmerker)
-    xml_string_with_th = _generate_transfer_header(base_xml, th_fields)
+    with get_eric_wrapper() as eric_wrapper:
+        xml_string_with_th = _generate_transfer_header(base_xml, th_fields, eric_wrapper)
 
     return xml_string_with_th
 
@@ -207,7 +210,7 @@ def generate_full_abrufcode_request_xml(th_fields=None, use_testmerker=False):
     return generate_full_xml(th_fields, _add_vast_xml_nutzdaten_header, _add_abrufcode_request_nutzdaten)
 
 
-def generate_full_vast_beleg_request_xml(form_data, beleg_ids, th_fields=None, eric_wrapper=None, use_testmerker=False):
+def generate_full_vast_beleg_request_xml(form_data, beleg_ids, th_fields=None, use_testmerker=False):
     """ Generates the full xml for the Verfahren "ElsterDatenabholung" and the Datenart "ElsterVaStDaten",
         including "Abholung" fields.
         An example xml for the Datenart 'Kontoinformation' can be found in the Eric documentation under
@@ -222,7 +225,9 @@ def generate_full_vast_beleg_request_xml(form_data, beleg_ids, th_fields=None, e
 
     if not th_fields:
         th_fields = get_vast_beleg_request_th_fields(use_testmerker)
-    xml_string_with_th = _generate_transfer_header(daten_teil_xml, th_fields, eric_wrapper=eric_wrapper)
+
+    with get_eric_wrapper() as eric_wrapper:
+        xml_string_with_th = _generate_transfer_header(daten_teil_xml, th_fields, eric_wrapper=eric_wrapper)
 
     return xml_string_with_th
 
@@ -338,19 +343,11 @@ def _generate_transfer_header(xml_top, th_fields, eric_wrapper=None):
     """
     xml_string = _pretty(xml_top)
 
-    if eric_wrapper:
-        xml_string_with_th = eric_wrapper.create_th(
+    xml_string_with_th = eric_wrapper.create_th(
             xml_string,
             datenart=th_fields.datenart, testmerker=th_fields.testmerker,
             herstellerId=th_fields.herstellerId, verfahren=th_fields.verfahren,
             datenLieferant=th_fields.datenLieferant)
-    else:
-        with get_eric_wrapper() as eric_wrapper:
-            xml_string_with_th = eric_wrapper.create_th(
-                xml_string,
-                datenart=th_fields.datenart, testmerker=th_fields.testmerker,
-                herstellerId=th_fields.herstellerId, verfahren=th_fields.verfahren,
-                datenLieferant=th_fields.datenLieferant)
 
     return xml_string_with_th.decode()
 

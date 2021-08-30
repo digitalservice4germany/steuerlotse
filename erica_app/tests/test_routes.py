@@ -1,10 +1,13 @@
+import json
 import unittest
 from unittest.mock import patch, MagicMock
 
 from fastapi.exceptions import HTTPException
 
 from erica.pyeric.eric import EricResponse
-from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code
+from erica.pyeric.pyeric_controller import GetTaxOfficesPyericController
+from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code, \
+    get_tax_offices
 from tests.utils import create_unlock_request, create_unlock_activation, create_est, create_unlock_revocation, \
     missing_cert, missing_pyeric_lib
 
@@ -226,3 +229,13 @@ class TestRevokeUnlockCode(unittest.TestCase):
 
         self.assertNotIn('eric_response', response)
         self.assertNotIn('server_response', response)
+
+
+class TestGetTaxOffices(unittest.TestCase):
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_get_tax_offices_returns_same_as_request_controller_process(self):
+        response = get_tax_offices()
+        with open(response.path, "r") as response_file:
+            response_content = json.load(response_file)
+        self.assertEqual(GetTaxOfficesPyericController().get_eric_response(), response_content)

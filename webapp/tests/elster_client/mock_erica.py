@@ -1,12 +1,13 @@
 from typing import List, Tuple
 
 from flask import json
-from app import app
+
+from app.config import Config
 from tests.elster_client.json_responses.sample_responses import get_json_response
 from tests.utils import gen_random_key
 
 _JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
-_PYERIC_API_BASE_URL = app.config['ERICA_BASE_URL']
+_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _EST_KEYS = ['est_data', 'meta_data']
 _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob", "person_a_last_name",
                        "person_a_first_name", "person_a_religion", "person_a_street", "person_a_street_number",
