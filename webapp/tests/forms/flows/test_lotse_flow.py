@@ -212,9 +212,6 @@ class TestLotseHandle(unittest.TestCase):
             self.flow.steps = testing_steps
             self.flow.first_step = next(iter(testing_steps.values()))
 
-            # We need to set a different get_flow_nav_function that fits the used mocked steps
-            self.flow._get_flow_nav = lambda step: []
-
             # Set sessions up
             self.existing_session = "sessionAvailable"
             self.session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
@@ -472,90 +469,6 @@ class TestLotseLoadStep(unittest.TestCase):
         self.assertRaises(ValueError, self.flow._load_step, "Incorrect Step Name")
 
 
-class TestLotseGetNav(unittest.TestCase):
-
-    def setUp(self):
-        with app.app_context() and app.test_request_context():
-            self.endpoint_correct = "lotse"
-            self.flow = LotseMultiStepFlow(endpoint=self.endpoint_correct)
-            self.steps_in_list = [
-                StepDeclarationIncomes,
-                StepSteuernummer,
-                StepSteuerminderungYesNo,
-                StepSummary
-            ]
-            self.sub_step_of_SectionEinwilligung = StepDeclarationEdaten
-            self.sub_step_of_SectionMeineDaten = StepSteuernummer
-            self.sub_step_of_SectionSteuerminderung = StepReligion
-            self.sub_step_of_SectionConfirmation = StepFiling
-
-    def test_if_step_in_nav_list_then_set_active_flag_correctly(self):
-        first_step_active = self.flow._get_flow_nav(self.steps_in_list[0])
-        second_step_active = self.flow._get_flow_nav(self.steps_in_list[1])
-        third_step_active = self.flow._get_flow_nav(self.steps_in_list[2])
-        fourth_step_active = self.flow._get_flow_nav(self.steps_in_list[3])
-
-        self.assertTrue(first_step_active[0].active)
-        self.assertFalse(first_step_active[1].active)
-        self.assertFalse(first_step_active[2].active)
-        self.assertFalse(first_step_active[3].active)
-
-        self.assertFalse(second_step_active[0].active)
-        self.assertTrue(second_step_active[1].active)
-        self.assertFalse(second_step_active[2].active)
-        self.assertFalse(second_step_active[3].active)
-
-        self.assertFalse(third_step_active[0].active)
-        self.assertFalse(third_step_active[1].active)
-        self.assertTrue(third_step_active[2].active)
-        self.assertFalse(third_step_active[3].active)
-
-        self.assertFalse(fourth_step_active[0].active)
-        self.assertFalse(fourth_step_active[1].active)
-        self.assertFalse(fourth_step_active[2].active)
-        self.assertTrue(fourth_step_active[3].active)
-
-    def test_if_step_substep_of_nav_list_then_set_active_flag_correctly(self):
-        first_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionEinwilligung)
-        second_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionMeineDaten)
-        third_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionSteuerminderung)
-        fourth_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionConfirmation)
-
-        self.assertTrue(first_step_active[0].active)
-        self.assertFalse(first_step_active[1].active)
-        self.assertFalse(first_step_active[2].active)
-        self.assertFalse(first_step_active[3].active)
-
-        self.assertFalse(second_step_active[0].active)
-        self.assertTrue(second_step_active[1].active)
-        self.assertFalse(second_step_active[2].active)
-        self.assertFalse(second_step_active[3].active)
-
-        self.assertFalse(third_step_active[0].active)
-        self.assertFalse(third_step_active[1].active)
-        self.assertTrue(third_step_active[2].active)
-        self.assertFalse(third_step_active[3].active)
-
-        self.assertFalse(fourth_step_active[0].active)
-        self.assertFalse(fourth_step_active[1].active)
-        self.assertFalse(fourth_step_active[2].active)
-        self.assertTrue(fourth_step_active[3].active)
-
-    def test_if_step_not_in_nav_list_then_set_all_steps_inactive(self):
-        all_inactive = self.flow._get_flow_nav(MockStartStep)
-
-        self.assertFalse(all_inactive[0].active)
-        self.assertFalse(all_inactive[1].active)
-        self.assertFalse(all_inactive[2].active)
-        self.assertFalse(all_inactive[3].active)
-
-    def test_if_step_in_nav_list_then_set_correct_numbering_in_nav_items(self):
-        nav_items = self.flow._get_flow_nav(self.steps_in_list[0])
-
-        for index, nav in enumerate(nav_items):
-            self.assertEqual(index + 1, nav.number)
-
-
 class TestLotseGetSessionData(unittest.TestCase):
 
     def setUp(self):
@@ -602,9 +515,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             self.flow.steps = testing_steps
             self.flow.first_step = next(iter(testing_steps.values()))
             self.stored_data = self.flow.default_data()
-
-            # We need to set a different get_flow_nav_function that fits the used mocked steps
-            self.flow._get_flow_nav = lambda step: []
 
             # Set sessions up
             self.existing_session = "sessionAvailable"
