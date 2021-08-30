@@ -47,9 +47,11 @@ class MockErica:
         try:
             if 'json' in kwargs:
                 sent_data = json.dumps(kwargs['json'], indent=4)
-            else:
+            elif 'data' in kwargs:
                 sent_data = kwargs['data']
-            include_elster_responses = kwargs['params']['include_elster_responses']
+            else:
+                sent_data = None
+            include_elster_responses = kwargs['params']['include_elster_responses'] if 'params' in kwargs else False
 
             if args[0] == _PYERIC_API_BASE_URL + '/est_validations':
                 response = MockErica.validate_est(sent_data, include_elster_responses)
