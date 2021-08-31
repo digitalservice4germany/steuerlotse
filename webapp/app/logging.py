@@ -12,7 +12,7 @@ def configure_logging():
 
 
 class AddRequestInformationFilter(logging.Filter):
-    """Add the important request information (id, url) to the log (if present)."""
+    """Add the important request information to the log (if present)."""
 
     def filter(self, record):
         if has_request_context():

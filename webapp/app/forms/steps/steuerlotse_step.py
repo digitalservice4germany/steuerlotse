@@ -113,11 +113,11 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
         redirection = self._handle_redirects()
         if redirection:
-            logger.info(f"Redirect to {redirection.location}", exc_info=True)
+            logger.info(f"Redirect to {redirection.location}")
             return redirection
 
         if request.method == 'POST' and self.render_info.form.validate():
-            logger.info(f"Redirect to next Step {self.render_info.next_url}", exc_info=True)
+            logger.info(f"Redirect to next Step {self.render_info.next_url}")
             return redirect(self.render_info.next_url)
         return self.render()
 
