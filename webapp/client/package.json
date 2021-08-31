@@ -14,11 +14,16 @@
     "react-scripts": "^4.0.3",
     "styled-components": "^5.3.1"
   },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-react": "^7.25.1"
+  },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "BUILD_PATH=../app/static react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "lint": "yarn run eslint src/"
   },
   "eslintConfig": {
     "extends": [
