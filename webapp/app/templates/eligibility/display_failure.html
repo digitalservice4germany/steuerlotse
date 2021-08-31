@@ -4,13 +4,13 @@
 
 {% block additional_stylesheets %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
+<link rel="stylesheet" href="{{ static_url_for('static', filename='css/eligibility.css') }}">
 {% endblock %}
 
 {% block step_content %}
     <div class="section-intro">
         <div class="headline row p-0">
-            <img src="{{ url_for('static', filename='icons/failure_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
+            <img src="{{ static_url_for('static', filename='icons/failure_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
             <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
         </div>
         <span class="result-text">

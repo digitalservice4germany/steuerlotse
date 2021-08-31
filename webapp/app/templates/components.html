@@ -132,7 +132,7 @@
 {% macro field_errors(field) -%}
     {% for error in field.errors %}
         <div class="invalid-feedback d-block" role="alert">
-            <img class="invalid-feedback" src="{{ url_for('static', filename='icons/warning.svg') }}"
+            <img class="invalid-feedback" src="{{ static_url_for('static', filename='icons/warning.svg') }}"
                  aria-label="{{ _('errors.warning-image.aria-label') }}"> {{ error }}
         </div>
     {% endfor %}
@@ -163,10 +163,10 @@
                             <span class="mb-0">{{ card['heading'] }}</span>
                          </button>
                          <button class="col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true">
-                             <img src="{{ url_for('static', filename='icons/plus.svg') }}"/>
+                             <img src="{{ static_url_for('static', filename='icons/plus.svg') }}"/>
                          </button>
                          <button class="col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true">
-                            <img src="{{ url_for('static', filename='icons/minus.svg') }}"/>
+                            <img src="{{ static_url_for('static', filename='icons/minus.svg') }}"/>
                          </button>
                     </div>
                     <div id="{{ card_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"

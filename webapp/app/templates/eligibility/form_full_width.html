@@ -3,7 +3,7 @@
 
 {% block additional_stylesheets %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
+    <link rel="stylesheet" href="{{ static_url_for('static', filename='css/eligibility.css') }}">
 {% endblock %}
 
 {% block form_content %}

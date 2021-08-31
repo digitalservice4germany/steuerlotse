@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-12 logo-wrapper">
                     <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}">
-                        <img src="{{ url_for('static', filename='images/logo_steuerlotse.svg') }}" alt="{{ _('overview') }}" class="logo"/>
+                        <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}" alt="{{ _('overview') }}" class="logo"/>
                     </a>
                 </div>
                 <div class="col-12">
@@ -22,7 +22,7 @@
             </div>
             <div class="col-12">
                 <a href="https://www.bundesfinanzministerium.de">
-                    <img src="{{ url_for('static', filename='images/logo_bmf.svg') }}" alt="{{ _('bmf') }}" class="bmf-img"/>
+                    <img src="{{ static_url_for('static', filename='images/logo_bmf.svg') }}" alt="{{ _('bmf') }}" class="bmf-img"/>
                 </a>
             </div>
         </div>

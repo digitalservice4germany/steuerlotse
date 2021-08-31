@@ -12,6 +12,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
+from flask_static_digest import FlaskStaticDigest
 from flask_wtf import CSRFProtect
 from prometheus_client import Gauge
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
@@ -31,6 +32,9 @@ limiter = Limiter(
     key_func=get_remote_address,
     strategy='moving-window'
 )
+
+flask_static_digest = FlaskStaticDigest()
+flask_static_digest.init_app(app)
 
 babel = Babel(app)
 nav = Navigation(app)

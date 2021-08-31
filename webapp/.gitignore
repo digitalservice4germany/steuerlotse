@@ -2,6 +2,9 @@
 app/static/*
 !app/static/.gitkeep
 
+# flask-static-digest
+app/static/cache_manifest.json
+
 .env
 cronjob_output
 dev.db
