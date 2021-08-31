@@ -97,6 +97,7 @@ def register_request_handlers(app):
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
             "script-src 'self' 'unsafe-inline' plausible.io; "
+            "style-src 'self' 'unsafe-inline'; "
             "connect-src plausible.io; "
             "object-src 'none'; "
         )
