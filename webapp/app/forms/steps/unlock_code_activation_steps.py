@@ -29,8 +29,16 @@ class UnlockCodeActivationInputStep(FormStep):
             intro=_('form.unlock-code-activation.input-intro'),
             form=self.Form,
             **kwargs,
-            header_title=_('form.unlock-code-activation.header-title'),
-            template='basis/form_standard.html')
+            header_title=_('form.unlock-code-activation.header-title'))
+
+    def render(self, data, render_info):
+        render_info.form.first_field = next(iter(render_info.form))
+        return render_template(
+            'unlock_code/login.html',
+            form=render_info.form,
+            render_info=render_info,
+            header_title=self.header_title
+        )
 
 
 class UnlockCodeActivationFailureStep(DisplayStep):

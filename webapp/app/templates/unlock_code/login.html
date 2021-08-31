@@ -1,0 +1,11 @@
+{% extends 'basis/form_standard.html' %}
+
+{% block form_content %}
+  {{ super() }}
+
+  <div
+    data-is-component="yes"
+    data-component-name="LoginPage"
+    data-props-json="{{ {} | tojson | forceescape }}"
+  ></div>
+{% endblock %}

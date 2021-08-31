@@ -1,4 +1,8 @@
+const rewireStyledComponents = require('react-app-rewire-styled-components');
+
 module.exports = function override(config, env) {
+  config = rewireStyledComponents(config, env);
+
   // Remove content hashes from js files (let flask-static-digest handle those).
   config.output.filename = config.output.filename.replace('[contenthash:8].', '');
   config.output.chunkFilename = config.output.chunkFilename.replace('[contenthash:8].', '');

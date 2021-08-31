@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import LoginPage from './pages/LoginPage';
 
 const componentNameMap = {
-  'App': App
+  'LoginPage': LoginPage
 }
 
 document.querySelectorAll('[data-is-component=yes]').forEach( (element) => {
