@@ -19,19 +19,25 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-react": "^7.25.1",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "prettier": "2.3.2"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "BUILD_PATH=../app/static react-app-rewired build",
     "test": "react-app-rewired test",
-    "lint": "yarn run eslint src/"
+    "lint": "yarn run eslint src/",
+    "prepare": "cd ../.. && husky install webapp/client/.husky"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "browserslist": {
     "production": [
