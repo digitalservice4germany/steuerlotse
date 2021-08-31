@@ -1,7 +1,26 @@
+#########
+### Node image for building static assets
+######
+FROM node:16-alpine as node_builder
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+COPY ./client/package.json ./client/package-lock.json ./client/
+RUN cd ./client && npm install --production
+
+COPY ./client ./client
+RUN cd ./client && npm run build
+
+#########
+### Python image for running webapp and cron jobs
+######
 FROM python:3.9.6-slim-buster AS base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+# Required by prometheus-flask-exporter
+ENV prometheus_multiproc_dir '/tmp'
 
 WORKDIR /app
 
@@ -25,12 +44,16 @@ EXPOSE 5000
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-# Required by prometheus-flask-exporter
-ENV prometheus_multiproc_dir '/tmp'
-
+#########
+### cron target
+######
 FROM base AS cron
 CMD ["/usr/sbin/cron", "-f"]
 
+#########
+### webapp target
+######
 FROM base AS webapp
-CMD [ "gunicorn", "--config", "gunicorn_config.py", "app:app" ]
 
+COPY --from=node_builder /app/app/static /app/app/static
+CMD [ "gunicorn", "--config", "gunicorn_config.py", "app:app" ]
