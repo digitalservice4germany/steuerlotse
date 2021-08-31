@@ -20,6 +20,7 @@ class BaseConfig(object):
     PERMANENT_SESSION_LIFETIME = 10800
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PLAUSIBLE_DOMAIN = None
+    REACT_BUNDLE_NAME = 'runtime-main.js'
 
 
 class ProductionConfig(BaseConfig):
@@ -76,6 +77,7 @@ class DevelopmentConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
+    REACT_BUNDLE_NAME = 'bundle.js'
 
 
 class TestingConfig(BaseConfig):

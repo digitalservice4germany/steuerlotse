@@ -83,11 +83,8 @@
 <script src="{{ url_for('static', filename='js/popper.min.js') }}" type=text/javascript></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" type=text/javascript></script>
 <script src="{{ url_for('static', filename='static/js/main.chunk.js') }}" type=text/javascript></script>
-{% if config['ENV'] == 'development' %}
-    <script src="{{ url_for('static', filename='static/js/bundle.js') }}" type=text/javascript></script>
-{% else %}
-    <script src="{{ url_for('static', filename='static/js/runtime-main.js') }}" type=text/javascript></script>
-{% endif %}
+<script src="{{ url_for('static', filename='static/js/' + react_bundle_name) }}" type=text/javascript></script>
+
 {% block optional_js %}{% endblock %}
 </body>
 

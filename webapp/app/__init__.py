@@ -77,7 +77,10 @@ def utility_processor():
 
 @app.context_processor
 def inject_template_globals():
-    return dict(plausible_domain=app.config['PLAUSIBLE_DOMAIN'])
+    return dict(
+        plausible_domain=app.config['PLAUSIBLE_DOMAIN'],
+        react_bundle_name=app.config['REACT_BUNDLE_NAME']
+    )
 
 
 from app.routes import register_request_handlers, register_error_handlers
