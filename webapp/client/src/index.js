@@ -1,17 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import LoginPage from './pages/LoginPage';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import LoginPage from "./pages/LoginPage";
 
 const componentNameMap = {
-  'LoginPage': LoginPage
-}
+  LoginPage: LoginPage,
+};
 
-document.querySelectorAll('[data-is-component=yes]').forEach( (element) => {
+document.querySelectorAll("[data-is-component=yes]").forEach((element) => {
   const name = element.dataset.componentName;
   const Component = componentNameMap[name];
   if (Component !== undefined) {
-    const props = element.dataset.propsJson ? JSON.parse(element.dataset.propsJson) : {}
+    const props = element.dataset.propsJson
+      ? JSON.parse(element.dataset.propsJson)
+      : {};
     ReactDOM.render(
       <React.StrictMode>
         <Component {...props} />
@@ -19,6 +21,6 @@ document.querySelectorAll('[data-is-component=yes]').forEach( (element) => {
       element
     );
   } else {
-    console.log(`No such component "${name}"`)
+    console.log(`No such component "${name}"`);
   }
-})
+});
