@@ -6,11 +6,11 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY ./client/package.json ./client/package-lock.json ./client/
-RUN cd ./client && npm install --production
+COPY ./client/package.json ./client/yarn.lock ./client/
+RUN cd ./client && yarn install --production
 
 COPY ./client ./client
-RUN cd ./client && npm run build
+RUN cd ./client && yarn build
 
 #########
 ### Python image for running webapp and cron jobs
