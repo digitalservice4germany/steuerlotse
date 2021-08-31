@@ -10,6 +10,7 @@ class BaseConfig(object):
     WTF_CSRF_ENABLED = True
     ALLOW_RESEND_FOR_TEST_USER = False
     PROMETHEUS_EXPORTER_ENABLED = False
+    SET_SECURITY_HTTP_HEADERS = True
 
     LANGUAGES = ['de']
     SEND_FILE_MAX_AGE_DEFAULT = 60
@@ -61,6 +62,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     DEBUG_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
+    SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
 
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 

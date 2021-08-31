@@ -20,7 +20,7 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from app.cli import register_commands
 from app.json_serializer import SteuerlotseJSONEncoder, SteuerlotseJSONDecoder
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 # This needs to happen before any extensions are used that may rely on config values.
 app.config.from_object(f'app.config.Config')
 

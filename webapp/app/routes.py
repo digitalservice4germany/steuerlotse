@@ -9,6 +9,7 @@ from flask_login import login_required, current_user
 from werkzeug.exceptions import InternalServerError
 
 from app import nav, login_manager, limiter
+from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
@@ -89,6 +90,9 @@ def register_request_handlers(app):
 
     @app.after_request
     def add_http_header(response):
+        if not Config.SET_SECURITY_HTTP_HEADERS:
+            return response
+
         response.headers['X-Content-Type-Options'] = 'no-sniff'
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
