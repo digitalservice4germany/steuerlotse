@@ -121,7 +121,7 @@ input.form-control.field-error-found{
 .steuerlotse-select{
     border: 2px solid var(--border-color);
     border-radius: 0;
-    background: #fff url("/static/icons/select_icon.svg") no-repeat right .75rem center;
+    background: #fff url("/icons/select_icon.svg") no-repeat right .75rem center;
     min-height: 55px;
 }
 
