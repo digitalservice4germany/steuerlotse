@@ -237,11 +237,6 @@ def register_request_handlers(app):
         """
         return 'pong'
 
-    @app.route('/robots.txt')
-    @add_caching_headers
-    def serve_robots_txt():
-        return current_app.send_static_file('robots.txt')
-
 
 def register_error_handlers(app):
     @app.errorhandler(GeneralEricaError)
