@@ -4,11 +4,10 @@ module.exports = {
         "es2021": true,
         "jest/globals": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:jest/recommended"
-    ],
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "prettier"
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
