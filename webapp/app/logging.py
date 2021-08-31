@@ -20,6 +20,7 @@ class AddRequestInformationFilter(logging.Filter):
                 record.request_id = request.headers['X-Request-ID']
             record.request_method = request.method
             record.request_path = request.path
+            record.remote_addr = request.remote_addr
 
         return True
 

@@ -11,7 +11,7 @@ def get_state_ids(xml_string):
 
         state_ids.append({'name': state_name, 'id': state_id})
 
-    return state_ids
+    return state_ids[]
 
 
 def get_tax_offices(xml_string):
