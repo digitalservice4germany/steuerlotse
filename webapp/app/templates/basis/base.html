@@ -7,11 +7,11 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ _('meta.og.title') }}">
     <meta name="twitter:description" content="{{ _('meta.og.description') }}">
-    <meta name="twitter:image" content="https://www.steuerlotse-rente.de/static/images/STL_og_image.jpg">
+    <meta name="twitter:image" content="https://www.steuerlotse-rente.de{{ url_for('static', filename='/images/STL_og_image.jpg') }}">
     <meta property="og:type" content="website">
     <meta name="title" property="og:title" content="{{ _('meta.og.title') }}">
     <meta name="description" property="og:description" content="{{ _('meta.og.description') }}">
-    <meta name="image" property="og:image" content="https://www.steuerlotse-rente.de/static/images/STL_og_image.jpg">
+    <meta name="image" property="og:image" content="https://www.steuerlotse-rente.de{{ url_for('static', filename='/images/STL_og_image.jpg') }}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">

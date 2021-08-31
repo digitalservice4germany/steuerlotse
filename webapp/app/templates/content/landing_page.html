@@ -67,10 +67,10 @@
                             <picture>
                                <source
                                   media="(min-width: 1024px)"
-                                  srcset="/static/images/hero-image-big.png">
+                                  srcset="{{ url_for('static', filename='/images/hero-image-big.png') }}">
                                <source
                                   media="(min-width: 320px)"
-                                  srcset="static/images/hero-image-small.png">
+                                  srcset="{{ url_for('static', filename='/images/hero-image-small.png') }}">
                                <img
                                alt="{{_('landing.hero-image.alt-text')}}">
                             </picture>
