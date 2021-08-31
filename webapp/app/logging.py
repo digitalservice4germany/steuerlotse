@@ -11,12 +11,15 @@ def configure_logging():
         dictConfig(json.load(f))
 
 
-class AddRequestIdFilter(logging.Filter):
-    """Add the request ID to the log (if present)."""
+class AddRequestInformationFilter(logging.Filter):
+    """Add the important request information (id, url) to the log (if present)."""
 
     def filter(self, record):
-        if has_request_context() and 'X-Request-ID' in request.headers:
-            record.request_id = request.headers['X-Request-ID']
+        if has_request_context():
+            if 'X-Request-ID' in request.headers:
+                record.request_id = request.headers['X-Request-ID']
+            record.request_method = request.method
+            record.request_path = request.path
 
         return True
 
