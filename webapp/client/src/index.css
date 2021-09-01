@@ -292,9 +292,9 @@ ol li::before {
   font-weight: var(--font-normal);
 }
 
-.nav-button-row {
+/* .nav-button-row {
   margin-top: var(--spacing-09);
-}
+} */
 
 .form-row-center {
   display: flex;
@@ -472,7 +472,7 @@ img.icon {
   font-weight: bold;
 }
 
-.explanatory-button-text {
+/* .explanatory-button-text {
   margin-bottom: 0;
   margin-left: var(--spacing-02);
 }
@@ -480,7 +480,7 @@ img.icon {
 .explanatory-button-text a {
   color: var(--text-color);
   font-weight: var(--font-bold);
-}
+} */
 
 .cursor-pointer {
   cursor: pointer;
