@@ -1,9 +1,19 @@
-import styled from "styled-components";
+import PropTypes from "prop-types";
+import StepHeaderButtons from "../components/StepHeaderButtons";
 
-const Placeholder = styled.div`
-  display: none;
-`;
-
-export default function LoginPage() {
-  return <Placeholder>Page content will go here</Placeholder>;
+export default function LoginPage({ prevUrl, backLinkText }) {
+  return (
+    <StepHeaderButtons backLinkUrl={prevUrl} backLinkText={backLinkText} />
+  );
 }
+
+LoginPage.propTypes = {
+  prevUrl: PropTypes.string,
+  backLinkText: PropTypes.string,
+};
+
+LoginPage.defaultProps = {
+  prevUrl: null,
+  // TODO: intl
+  backLinkText: "form.back",
+};
