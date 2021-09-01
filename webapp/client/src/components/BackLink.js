@@ -10,15 +10,15 @@ const Anchor = styled.a`
   letter-spacing: var(--tracking-extra-wide);
   text-decoration: none !important;
 
-  link:focus {
+  &:focus {
     text-decoration: none;
   }
 
-  :visited {
+  &:visited {
     color: var(--text-color);
   }
 
-  :focus :active {
+  &:focus &:active {
     color: var(--text-color);
     background-color: none;
   }
