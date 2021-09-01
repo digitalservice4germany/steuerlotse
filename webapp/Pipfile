@@ -25,6 +25,7 @@ prometheus-flask-exporter = "*"
 pycryptodomex = "*"
 python-json-logger = "*"
 pydantic = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pytest = "*"

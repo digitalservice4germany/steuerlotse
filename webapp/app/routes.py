@@ -8,7 +8,7 @@ from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.exceptions import InternalServerError
 
-from app import nav, login_manager, limiter
+from app.extensions import nav, login_manager, limiter
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
@@ -18,6 +18,7 @@ from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow
 from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepFlow
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
+from app.logging import log_flask_request
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -71,6 +72,8 @@ login_manager.refresh_view = "unlock_code_activation"
 
 
 def register_request_handlers(app):
+    app.before_request(log_flask_request)
+
     # Multistep flows
 
     @login_manager.user_loader

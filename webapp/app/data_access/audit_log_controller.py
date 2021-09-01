@@ -2,7 +2,7 @@ import datetime as dt
 import json
 from dataclasses import dataclass
 
-from app import db
+from app.extensions import db
 from app.crypto.encryption import hybrid_encrypt
 from app.data_access.db_model.audit_log import AuditLog
 
