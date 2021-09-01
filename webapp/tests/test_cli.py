@@ -5,7 +5,7 @@ from unittest.mock import patch
 from app import db
 from app.cli import _delete_outdated_not_activated_users, _delete_outdated_users_with_completed_process, \
     _delete_inactive_users, _delete_outdated_users
-from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket
+from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket, activate_user
 
 
 class TestDeleteOutdatedNotActivatedUsers(unittest.TestCase):
@@ -102,24 +102,34 @@ class TestDeleteInactiveUsers(unittest.TestCase):
 
         self.non_outdated_idnr = "04452397687"
         self.non_outdated_user = create_user(self.non_outdated_idnr, '1985-01-01', '123')
-        self.outdated_idnr = "02293417683"
-        self.outdated_user = create_user(self.outdated_idnr, '1985-01-01', '123')
+        self.outdated_not_activated_idnr = "02293417683"
+        self.outdated_not_activated_user = create_user(self.outdated_not_activated_idnr, '1985-01-01', '123')
+        self.outdated_activated_idnr = "02259417680"
+        self.outdated_activated_user = create_user(self.outdated_activated_idnr, '1985-01-01', '123')
+        activate_user(self.outdated_activated_idnr, "UNLO-CKCO-DE07")
 
-    def test_if_user_older_than_60_days_then_delete_user(self):
-        self.outdated_user.last_modified = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=101)
+    def test_if_activated_user_older_than_60_days_then_delete_user(self):
+        self.outdated_activated_user.last_modified = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=60)
 
         with patch('app.elster_client.elster_client.send_unlock_code_revocation_with_elster') as revoke_fun:
             _delete_inactive_users()
 
-        self.assertFalse(user_exists(self.outdated_idnr))
+        self.assertFalse(user_exists(self.outdated_activated_idnr))
+        self.assertTrue(user_exists(self.outdated_not_activated_idnr))
         self.assertTrue(user_exists(self.non_outdated_idnr))
         revoke_fun.assert_called_once()
+
+    def test_if_not_activated_user_older_than_60_days_then_do_not_delete_user(self):
+        self.outdated_not_activated_user.last_modified = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=60)
+        _delete_inactive_users()
+        self.assertTrue(user_exists(self.outdated_not_activated_idnr))
+        self.assertTrue(user_exists(self.non_outdated_idnr))
 
     def test_if_user_newer_than_60_days_then_do_not_delete_user(self):
         self.non_outdated_user.last_modified = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=59)
         _delete_inactive_users()
         self.assertTrue(user_exists(self.non_outdated_idnr))
-        self.assertTrue(user_exists(self.outdated_idnr))
+        self.assertTrue(user_exists(self.outdated_not_activated_idnr))
 
     def tearDown(self):
         db.drop_all()
