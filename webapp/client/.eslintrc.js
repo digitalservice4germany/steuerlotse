@@ -6,6 +6,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
+    "react-app",
     "plugin:react/recommended",
     "plugin:jest/recommended",
     "prettier",
@@ -31,6 +32,12 @@ module.exports = {
       files: ["src/setupProxy.js"],
       env: {
         node: true,
+      },
+    },
+    {
+      files: ["**/*.stories.*"],
+      rules: {
+        "import/no-anonymous-default-export": "off",
       },
     },
   ],
