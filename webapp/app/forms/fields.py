@@ -291,11 +291,10 @@ class IdNrField(SteuerlotseStringField):
             self.data = ''.join(self.data)
 
 
-class EuroFieldWidget(NumericInputModeMixin, TextInput):
+class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
     def __call__(self, field, **kwargs):
-        kwargs = self.set_inputmode(kwargs)
         _add_classes_to_kwargs(kwargs, ['euro_field form-control'])
         kwargs['onwheel'] = 'this.blur()'
         markup_input = super(EuroFieldWidget, self).__call__(field, **kwargs)

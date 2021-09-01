@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-26 12:56+0200\n"
+"POT-Creation-Date: 2021-08-30 10:25+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -150,23 +150,23 @@ msgstr "Jahr"
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 29.2.1951"
 
-#: app/forms/fields.py:325
+#: app/forms/fields.py:324
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:357
+#: app/forms/fields.py:356
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:377
+#: app/forms/fields.py:376
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:442
+#: app/forms/fields.py:441
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:442
+#: app/forms/fields.py:441
 msgid "switch.no"
 msgstr "Nein"
 
@@ -704,11 +704,11 @@ msgstr ""
 "kirchensteuerpflichtig sind, wird in der Regel mit der Abgeltungsteuer "
 "auch die Kirchensteuer auf Ihre Kapitalerträge einbehalten. Das gilt "
 "jedoch nicht, wenn Sie z.B. dem Datenabruf zur Kirchensteuererhebung "
-"widersprochen haben. Wurde noch keine Kirchensteuer erhoben, obwohl Sie "
-"kirchensteuerpflichtig sind, müssen Sie »Nein« "
-"auswählen.</p><p><strong>Hinweis</strong><br>Haben Sie z.B. privat Geld "
-"verliehen und erhalten dafür Zinsen, müssen Sie dies in Ihrer "
-"Steuererklärung angeben. Auch bei Lebensversicherungen, die ab dem Jahr "
+"widersprochen haben. Wurde noch keine Kirchensteuer auf Ihre "
+"Kapitalerträge erhoben, obwohl Sie kirchensteuerpflichtig sind, müssen "
+"Sie »Nein« auswählen.</p><p><strong>Hinweis</strong><br>Haben Sie z.B. "
+"privat Geld verliehen und erhalten dafür Zinsen, müssen Sie dies in Ihrer"
+" Steuererklärung angeben. Auch bei Lebensversicherungen, die ab dem Jahr "
 "2005 abgeschlossenen wurden, müssen in vielen Fällen die gewonnenen "
 "Erträge bei Ablauf der Versicherung und Auszahlung noch versteuert "
 "werden. Wenn dies auf Sie zutrifft, wählen Sie bitte »Nein« aus.</p>"

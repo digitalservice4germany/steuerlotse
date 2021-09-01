@@ -165,11 +165,11 @@ class GetTaxOfficesPyericController:
         with get_eric_wrapper() as eric_wrapper:
             pyeric_response = eric_wrapper.get_state_id_list()
 
-        return GetTaxOfficesPyericController.standardise_state_id_list(get_state_ids(pyeric_response.decode()))
+        return GetTaxOfficesPyericController.standardise_state_id_list(get_state_ids(pyeric_response))
 
     @staticmethod
     def _request_tax_offices(state_id):
         with get_eric_wrapper() as eric_wrapper:
             pyeric_response = eric_wrapper.get_tax_offices(state_id)
 
-        return get_tax_offices(pyeric_response.decode())
+        return get_tax_offices(pyeric_response)
