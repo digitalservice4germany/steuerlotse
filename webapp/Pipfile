@@ -26,6 +26,7 @@ pycryptodomex = "*"
 python-json-logger = "*"
 pydantic = "*"
 python-dotenv = "*"
+freezegun = "*"
 
 [dev-packages]
 pytest = "*"
