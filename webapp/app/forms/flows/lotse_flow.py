@@ -161,35 +161,6 @@ class LotseMultiStepFlow(MultiStepFlow):
             flash(skip_reason, 'warn')
             return self.url_for_step(redirection_destination)
 
-    def _get_flow_nav(self, active_step):
-        sections = [
-            (StepDeclarationIncomes, _('form.lotse.nav.confirmations')),
-            (StepSteuernummer, _('form.lotse.nav.personal_data')),
-            (StepSteuerminderungYesNo, _('form.lotse.nav.steuerminderungen')),
-            (StepSummary, _('form.lotse.nav.summary'))
-        ]
-
-        # Determine the active index based on name matching
-        active_index = -1
-        current_index = active_index
-        for step in self.steps.values():
-            if [section for section in sections if section[0] == step]:
-                current_index += 1
-            if step.name == active_step.name:
-                active_index = current_index
-                break
-
-        # Create nav items list and set the `active` flag according to `active_index`
-        items = []
-        for index, section in enumerate(sections):
-            items.append(FlowNavItem(
-                number=index + 1,
-                text=section[1],
-                active=(index == active_index)
-            ))
-
-        return items
-
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(LotseMultiStepFlow, self)._handle_specifics_for_step(step, render_info,
