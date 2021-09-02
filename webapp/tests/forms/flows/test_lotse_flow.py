@@ -28,7 +28,8 @@ from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_I
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
 from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data_steps import StepFamilienstand, StepSteuernummer, StepPersonA, StepPersonB, \
+from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer
+from app.forms.steps.lotse.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
@@ -1496,6 +1497,7 @@ class TestLotseValidateInput(unittest.TestCase):
     def setUp(self) -> None:
         db.create_all()
         self.valid_data_single = {
+            'steuernummer_exists': True,
             'steuernummer': '19811310010',
             'bundesland': 'BY',
 
@@ -1520,6 +1522,7 @@ class TestLotseValidateInput(unittest.TestCase):
 
             'steuerminderung': 'yes', }
         self.valid_data_married = {
+            'steuernummer_exists': True,
             'steuernummer': '19811310010',
             'bundesland': 'BY',
 
@@ -1637,6 +1640,7 @@ class TestLotseValidateInput(unittest.TestCase):
             self._create_logged_in_user(existing_idnr)
             form_data = {**self.valid_data_single,
                          **{'person_a_idnr': existing_idnr,
+                            'steuernummer_exists': True,
                             'steuernummer': '19811310010',
                             'bundesland': 'BY',
 
@@ -1700,7 +1704,7 @@ class TestLotseValidateInput(unittest.TestCase):
                               form_data)
 
     def test_if_contains_not_all_mandatory_fields_but_all_confirmations_then_raise_invalidation_error(self):
-        expected_missing_fields = ['steuernummer', 'bundesland', 'familienstand', 'person_a_dob',
+        expected_missing_fields = ['bundesland', 'steuernummer_exists', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
                                    'person_a_gehbeh', 'steuerminderung', 'iban', 'is_person_a_account_holder', ]

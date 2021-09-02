@@ -12,12 +12,19 @@ from app import nav, login_manager, limiter
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
+from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow
 from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepFlow
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
+from app.forms.steps.lotse.confirmation_steps import StepSummary, StepConfirmation, StepFiling, StepAck
+from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
+    StepIban
+from app.forms.steps.lotse.steuerminderungen_steps import StepHaushaltsnahe, StepSpenden, StepHandwerker, \
+    StepGemeinsamerHaushalt, StepReligion, StepAussergBela, StepVorsorge, StepSteuerminderungYesNo
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -106,7 +113,13 @@ def register_request_handlers(app):
     @login_required
     def lotse(step):
         flow = LotseMultiStepFlow(endpoint='lotse')
-        return flow.handle(step_name=step)
+        if step in ["start", StepDeclarationIncomes.name, StepDeclarationEdaten.name, StepSessionNote.name,
+                    StepFamilienstand.name, StepPersonA.name, StepPersonB.name, StepIban.name,
+                    StepSteuerminderungYesNo.name, StepVorsorge.name, StepAussergBela.name, StepHaushaltsnahe.name,
+                    StepHandwerker.name, StepGemeinsamerHaushalt.name, StepReligion.name, StepSpenden.name,
+                    StepSummary.name, StepConfirmation.name, StepFiling.name, StepAck.name]:
+            return flow.handle(step_name=step)
+        return LotseStepChooser(endpoint='lotse').get_correct_step(step_name=step).handle()
 
     @app.route('/unlock_code_request/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_request/step/<step>', methods=['GET', 'POST'])
@@ -115,8 +128,8 @@ def register_request_handlers(app):
     def unlock_code_request(step='start'):
         if current_user.is_authenticated:
             return render_template('unlock_code/already_logged_in.html',
-                                title=_('unlock_code_request.logged_in.title'),
-                                intro=_('unlock_code_request.logged_in.intro'))
+                                   title=_('unlock_code_request.logged_in.title'),
+                                   intro=_('unlock_code_request.logged_in.intro'))
 
         flow = UnlockCodeRequestMultiStepFlow(endpoint='unlock_code_request')
         return flow.handle(step_name=step)
@@ -142,8 +155,8 @@ def register_request_handlers(app):
     def unlock_code_revocation(step):
         if current_user.is_authenticated:
             return render_template('unlock_code/already_logged_in.html',
-                                title=_('unlock_code_revocation.logged_in.title'),
-                                intro=_('unlock_code_revocation.logged_in.intro'))
+                                   title=_('unlock_code_revocation.logged_in.title'),
+                                   intro=_('unlock_code_revocation.logged_in.intro'))
 
         flow = UnlockCodeRevocationMultiStepFlow(endpoint='unlock_code_revocation')
         return flow.handle(step_name=step)
@@ -158,8 +171,8 @@ def register_request_handlers(app):
 
         pdf_file = base64.b64decode(current_user.pdf)
         return send_file(io.BytesIO(pdf_file), mimetype='application/pdf',
-                        attachment_filename='AngabenSteuererklaerung.pdf',
-                        as_attachment=True)
+                         attachment_filename='AngabenSteuererklaerung.pdf',
+                         as_attachment=True)
 
     @app.route('/logout', methods=['GET', 'POST'])
     @login_required
@@ -224,8 +237,8 @@ def register_request_handlers(app):
     @limiter.limit('1000 per day')
     def download_preparation():
         return send_file('static/files/Steuerlotse-Vorbereitungshilfe.pdf', mimetype='application/pdf',
-                        attachment_filename='SteuerlotseVorbereitungshilfe.pdf',
-                        as_attachment=True)
+                         attachment_filename='SteuerlotseVorbereitungshilfe.pdf',
+                         as_attachment=True)
 
     @app.route('/ping')
     def ping():

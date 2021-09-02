@@ -19,7 +19,8 @@ from app.forms.flows.multistep_flow import MultiStepFlow, FlowNavItem
 from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse.confirmation_steps import StepSummary
 from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data_steps import StepSteuernummer, StepPersonA, StepPersonB, StepIban, \
+from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer
+from app.forms.steps.lotse.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
 from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
@@ -41,8 +42,11 @@ class LotseMultiStepFlow(MultiStepFlow):
             'declaration_edaten': True,
             'declaration_incomes': True,
 
-            'steuernummer': '19811310010',
+            'steuernummer_exists': 'no',
             'bundesland': 'BY',
+            # 'steuernummer': '19811310010',
+            'bufa_nr': '9201',
+            'request_new_tax_number': 'yes',
 
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-30 11:29+0200\n"
+"POT-Creation-Date: 2021-08-30 17:54+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -233,40 +233,40 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:127 app/forms/flows/lotse_step_chooser.py:21
+#: app/forms/flows/lotse_flow.py:122 app/forms/flows/lotse_step_chooser.py:20
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:170
+#: app/forms/flows/lotse_flow.py:165
 msgid "form.lotse.nav.confirmations"
 msgstr "Einwilligungen"
 
-#: app/forms/flows/lotse_flow.py:171
+#: app/forms/flows/lotse_flow.py:166
 msgid "form.lotse.nav.personal_data"
 msgstr "Meine Daten"
 
-#: app/forms/flows/lotse_flow.py:172
+#: app/forms/flows/lotse_flow.py:167
 msgid "form.lotse.nav.steuerminderungen"
 msgstr "Steuermindernde Aufwendungen"
 
-#: app/forms/flows/lotse_flow.py:173
+#: app/forms/flows/lotse_flow.py:168
 msgid "form.lotse.nav.summary"
 msgstr "Bestätigung"
 
-#: app/forms/flows/lotse_flow.py:202
+#: app/forms/flows/lotse_flow.py:197
 msgid "form.finish"
 msgstr "Steuererklärung abgeben"
 
-#: app/forms/flows/lotse_flow.py:213
+#: app/forms/flows/lotse_flow.py:208
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:377
+#: app/forms/flows/lotse_flow.py:372
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:429
+#: app/forms/flows/lotse_flow.py:424
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -1372,9 +1372,11 @@ msgstr "Steuernummer"
 #: app/forms/steps/lotse/personal_data_steps.py:174
 msgid "form.lotse.steuernummer-intro"
 msgstr ""
-"Abhängig von dem Bundesland, in dem Sie leben, besteht Ihre Steuernummer "
-"aus 10 oder 11 Ziffern. <br/>Sie finden Ihre Steuernummer zum Beispiel "
-"auf den Briefen Ihres Finanzamtes."
+"Die Steuernummer wird Ihnen vom zuständigen Finanzamt zugeteilt – dort, "
+"wo sich Ihr Wohnsitz befindet. Sie erhalten jeweils eine andere "
+"Steuernummer, wenn sich Ihre Lebenssituation ändert. Gründe können "
+"beispielsweise ein Umzug, eine Heirat oder die Änderung der "
+"Veranlagungsart sein."
 
 #: app/forms/steps/lotse/lotse_steuerlotse_steps.py:47
 #: app/forms/steps/lotse/personal_data_steps.py:139
@@ -1398,118 +1400,130 @@ msgstr "Haben Sie bereits eine Steuernummer?"
 #: app/forms/steps/lotse/lotse_steuerlotse_steps.py:90
 #: app/forms/steps/lotse/personal_data_steps.py:153
 msgid "form.lotse.steuernummer_exists.data_label"
-msgstr "Abfrage Steuernummer vorhanden"
+msgstr "Steuernummer vorhanden"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:93
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:91
+msgid "form.lotse.steuernummer_exists.detail.title"
+msgstr "Wo finde Ich diese Nummer?"
+
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:92
+msgid "form.lotse.steuernummer_exists.detail.text"
+msgstr ""
+"Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch "
+"keine Steuererklärung abgegeben haben, können Sie eine neue Steuernummer "
+"beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-"
+"Identifikationsnummer zwei verschiedene Nummern sind."
+
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:95
 #: app/forms/steps/lotse/personal_data_steps.py:156
 msgid "form.lotse.field_bundesland"
 msgstr "Wählen Sie Ihr Bundesland aus"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:95
-#: app/templates/lotse/form_steuernummer.html:51
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:97
+#: app/templates/lotse/form_steuernummer.html:50
 msgid "form.select_input.default_selection"
 msgstr "Bitte auswählen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:96
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:98
 msgid "form.lotse.field_bundesland_bw"
 msgstr "Baden-Württemberg"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:97
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:99
 msgid "form.lotse.field_bundesland_by"
 msgstr "Bayern"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:98
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:100
 msgid "form.lotse.field_bundesland_be"
 msgstr "Berlin"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:99
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:101
 msgid "form.lotse.field_bundesland_bb"
 msgstr "Brandenburg"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:100
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:102
 msgid "form.lotse.field_bundesland_hb"
 msgstr "Bremen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:101
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:103
 msgid "form.lotse.field_bundesland_hh"
 msgstr "Hamburg"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:102
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:104
 msgid "form.lotse.field_bundesland_he"
 msgstr "Hessen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:103
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:105
 msgid "form.lotse.field_bundesland_mv"
 msgstr "Mecklenburg-Vorpommern "
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:104
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:106
 msgid "form.lotse.field_bundesland_nd"
 msgstr "Niedersachsen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:105
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:107
 msgid "form.lotse.field_bundesland_nw"
 msgstr "Nordrhein-Westfalen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:106
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:108
 msgid "form.lotse.field_bundesland_rp"
 msgstr "Rheinland-Pfalz"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:107
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:109
 msgid "form.lotse.field_bundesland_sl"
 msgstr "Saarland"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:108
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:110
 msgid "form.lotse.field_bundesland_sn"
 msgstr "Sachsen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:109
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:111
 msgid "form.lotse.field_bundesland_st"
 msgstr "Sachsen-Anhalt "
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:110
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:112
 msgid "form.lotse.field_bundesland_sh"
 msgstr "Schleswig-Holstein"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:111
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:113
 msgid "form.lotse.field_bundesland_th"
 msgstr "Thüringen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:114
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:116
 #: app/forms/steps/lotse/personal_data_steps.py:157
 msgid "form.lotse.field_bundesland.data_label"
-msgstr "Bundesland"
+msgstr "Auswahl Bundesland"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:115
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:117
 #: app/forms/steps/lotse/personal_data_steps.py:158
 msgid "form.lotse.field_bundesland_required"
 msgstr "Bundesland auswählen"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:118
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:120
 #: app/forms/steps/lotse/personal_data_steps.py:161
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:123
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:125
 #: app/forms/steps/lotse/personal_data_steps.py:162
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:125
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:127
 #: app/forms/steps/lotse/personal_data_steps.py:164
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:128
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:130
 #: app/forms/steps/lotse/personal_data_steps.py:165
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:129
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:131
 #: app/forms/steps/lotse/personal_data_steps.py:166
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:131
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:133
 #: app/forms/steps/lotse/personal_data_steps.py:168
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgstr ""
@@ -1517,10 +1531,10 @@ msgstr ""
 "bei meinem / unserem Finanzamt haben und eine neue Steuernummer "
 "beantragen möchten. "
 
-#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:133
+#: app/forms/steps/lotse/lotse_steuerlotse_steps.py:135
 #: app/forms/steps/lotse/personal_data_steps.py:169
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
-msgstr "Antrag Steuernummer"
+msgstr "Neue Steuernummer beantragen"
 
 #: app/forms/steps/lotse/personal_data_steps.py:22
 msgid "form.lotse.step_familienstand.label"
@@ -2743,7 +2757,7 @@ msgstr ""
 "Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke sind nur auf "
 "Anforderung des Finanzamts durch eine Bestätigung nachzuweisen. "
 
-#: app/model/form_data.py:169
+#: app/model/form_data.py:186
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2753,11 +2767,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:174
+#: app/model/form_data.py:191
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:180
+#: app/model/form_data.py:197
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "

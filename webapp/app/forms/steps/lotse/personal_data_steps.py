@@ -8,7 +8,7 @@ from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelect
 
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
-from wtforms import RadioField, validators, BooleanField, IntegerField
+from wtforms import RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
 
 from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
@@ -138,55 +138,6 @@ class StepFamilienstand(FormStep):
             **kwargs,
             header_title=_('form.lotse.mandatory_data.header-title'),
             template='lotse/form_familienstand.html'
-        )
-
-
-class StepSteuernummer(FormStep):
-    name = 'steuernummer'
-
-    label = _l('form.lotse.step_steuernummer.label')
-    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-
-    class Form(SteuerlotseBaseForm):
-        bundesland = SteuerlotseSelectField(
-            label=_l('form.lotse.field_bundesland'),
-            choices=[
-                ('', '---'),
-                ('BW', _l('form.lotse.field_bundesland_bw')),
-                ('BY', _l('form.lotse.field_bundesland_by')),
-                ('BE', _l('form.lotse.field_bundesland_be')),
-                ('BB', _l('form.lotse.field_bundesland_bb')),
-                ('HB', _l('form.lotse.field_bundesland_hb')),
-                ('HH', _l('form.lotse.field_bundesland_hh')),
-                ('HE', _l('form.lotse.field_bundesland_he')),
-                ('MV', _l('form.lotse.field_bundesland_mv')),
-                ('ND', _l('form.lotse.field_bundesland_nd')),
-                ('NW', _l('form.lotse.field_bundesland_nw')),
-                ('RP', _l('form.lotse.field_bundesland_rp')),
-                ('SL', _l('form.lotse.field_bundesland_sl')),
-                ('SN', _l('form.lotse.field_bundesland_sn')),
-                ('ST', _l('form.lotse.field_bundesland_st')),
-                ('SH', _l('form.lotse.field_bundesland_sh')),
-                ('TH', _l('form.lotse.field_bundesland_th'))
-            ],
-            validators=[InputRequired(message=_l('form.lotse.field_bundesland_required'))],
-            render_kw={'data_label': _l('form.lotse.field_bundesland.data_label'),
-                       'input_req_err_msg': _l('form.lotse.field_bundesland_required')}
-        )
-        steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
-                                              validators=[InputRequired(), DecimalOnly(),
-                                                          IntegerLength(min=10, max=11)],
-                                              render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
-                                                         'example_input': _l('form.lotse.steuernummer.example_input')})
-
-    def __init__(self, **kwargs):
-        super(StepSteuernummer, self).__init__(
-            title=_l('form.lotse.steuernummer-title'),
-            intro=_l('form.lotse.steuernummer-intro'),
-            form=self.Form,
-            **kwargs,
-            header_title=_('form.lotse.mandatory_data.header-title'),
-            template='basis/form_standard.html'
         )
 
 
