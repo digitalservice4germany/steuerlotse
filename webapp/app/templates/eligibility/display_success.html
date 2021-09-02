@@ -8,14 +8,16 @@
 {% endblock %}
 
 {% block step_content %}
-    <div class="section-intro">
-        <div class="headline row p-0">
-            <img src="{{ url_for('static', filename='icons/success_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
-            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
+    <div class="section-intro simple-card">
+        <div class="row p-0">
+            <div class="col-2 failure-success-icon">
+                <img src="{{ url_for('static', filename='icons/success_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+            </div>
+            <div class="col-10 w-100">
+                <h1>{{ render_info.step_title }}</h1>
+                <p class="result-text">{{ error_text }} {{ render_info.step_intro }}</p>
+            </div>
         </div>
-        <span class="result-text">
-            <p>{{ render_info.step_intro }}</p>
-        </span>
     </div>
 
     <div class="spacing-b-07 row m-0 ">

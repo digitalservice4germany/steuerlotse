@@ -18,11 +18,15 @@
     margin-bottom: var(--spacing-07);
 }
 
+.failure-success-icon {
+    min-width: 100px;
+    padding-bottom: var(--spacing-04);
+}
+
 h1.my-4{
     margin-bottom: 0 !important;
     margin-top: 0 !important;
 }
-
 
 @media (min-width: 320px) {
     h1 {
