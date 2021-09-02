@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-# TODO: replace with app factory / client fixture
-from app import app
+import pytest
+
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     MaritalStatusInputFormSteuerlotseStep, SeparatedEligibilityInputFormSteuerlotseStep, \
@@ -29,6 +29,9 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
 
 
 class TestEligibilityChooserInit(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def setUp(self):
         self.testing_steps = [
@@ -70,12 +73,10 @@ class TestEligibilityChooserInit(unittest.TestCase):
         self.endpoint_correct = "eligibility"
 
     def test_set_attributes_correctly(self):
-        with app.app_context() and app.test_request_context():
-
-            step_chooser = EligibilityStepChooser(endpoint=self.endpoint_correct)
-            self.assertEqual(self.testing_steps[0], step_chooser.first_step)
-            self.assertEqual(self.testing_steps, list(step_chooser.steps.values()))
-            self.assertEqual(None, step_chooser.overview_step)
+        step_chooser = EligibilityStepChooser(endpoint=self.endpoint_correct)
+        self.assertEqual(self.testing_steps[0], step_chooser.first_step)
+        self.assertEqual(self.testing_steps, list(step_chooser.steps.values()))
+        self.assertEqual(None, step_chooser.overview_step)
 
 
 class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):

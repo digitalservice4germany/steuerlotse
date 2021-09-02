@@ -1,17 +1,19 @@
 import unittest
 
+import pytest
 from flask import request
 from werkzeug.datastructures import MultiDict
 
-from app import db, app
 from app.data_access.user_controller import create_user, activate_user
 from app.forms.steps.lotse.personal_data_steps import StepPersonA, StepFamilienstand, StepPersonB, StepIban
 
 
 class TestPersonAStep(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
     def setUp(self):
-        db.create_all()
         self.step = StepPersonA
         self.form = self.step.Form()
 
@@ -71,9 +73,6 @@ class TestPersonAStep(unittest.TestCase):
         self.form.person_a_beh_grad.data = 30
         self.form.person_a_beh_grad.raw_data = "30"
         self.assertTrue(self.form.validate())
-
-    def tearDown(self):
-        db.drop_all()
 
 
 class TestPersonBStep(unittest.TestCase):
@@ -313,7 +312,7 @@ class TestFamilienstand(unittest.TestCase):
         form = self.step.Form(formdata=data)
         self.assertFalse(form.validate())
         self.assertIn('familienstand_widowed_lived_separated_since', form.errors)
-    
+
     def test_if_widowed_and_lived_separated_and_separated_since_is_invalid_date_then_fail_validation(self):
         data = MultiDict({'familienstand': 'widowed',
                           'familienstand_date': ['03', '04', '2008'],
@@ -360,12 +359,15 @@ class TestFamilienstand(unittest.TestCase):
 
 
 class TestStepIban(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, app):
+        self.app = app
 
     def test_if_lowercase_input_then_uppercase_input(self):
         step = StepIban(prev_step='', next_step='')
         data = {'iban': "thisIsLowerCase"}
         expected_output = "THISISLOWERCASE"
-        with app.test_request_context(method='POST', data=data):
+        with self.app.test_request_context(method='POST', data=data):
             form = step.create_form(request, prefilled_data={})
             self.assertEqual(expected_output, form.data['iban'])
 
@@ -373,14 +375,14 @@ class TestStepIban(unittest.TestCase):
         step = StepIban(prev_step='', next_step='')
         data = {'iban': "HERE IS WHITESPACE "}
         expected_output = "HEREISWHITESPACE"
-        with app.test_request_context(method='POST', data=data):
+        with self.app.test_request_context(method='POST', data=data):
             form = step.create_form(request, prefilled_data={})
             self.assertEqual(expected_output, form.data['iban'])
 
     def test_if_empty_input_then_no_error(self):
         step = StepIban(prev_step='', next_step='')
         data = {}
-        with app.test_request_context(method='POST', data=data):
+        with self.app.test_request_context(method='POST', data=data):
             try:
                 step.create_form(request, prefilled_data={})
             except AttributeError:

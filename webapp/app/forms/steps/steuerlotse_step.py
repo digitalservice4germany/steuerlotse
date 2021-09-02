@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 
 from flask import request, session, url_for, render_template
@@ -6,6 +7,8 @@ from werkzeug.utils import redirect
 
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.session_data import serialize_session_data, override_session_data
+
+logger = logging.getLogger(__name__)
 
 
 class SteuerlotseStep(object):
@@ -110,9 +113,11 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
         redirection = self._handle_redirects()
         if redirection:
+            logger.info(f"Redirect to {redirection.location}")
             return redirection
 
         if request.method == 'POST' and self.render_info.form.validate():
+            logger.info(f"Redirect to next Step {self.render_info.next_url}")
             return redirect(self.render_info.next_url)
         return self.render()
 

@@ -3,16 +3,19 @@ import unittest
 from json import JSONDecodeError
 from unittest.mock import patch, MagicMock
 
+import pytest
 
-from app import db
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_confirmation_entry, \
     create_audit_log_address_entry
 from tests.elster_client.mock_erica import MockResponse
 
 
 class TestCreateAuditLogEntry(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
+
     def setUp(self):
-        db.create_all()
         self.event_name = 'great get-together'
         self.ip_address = '127.0.0.1'
         self.idnr = '04452397687'
@@ -23,8 +26,10 @@ class TestCreateAuditLogEntry(unittest.TestCase):
         self.pyeric_response_without_request_id = MockResponse({'transfer_ticket': self.transfer_ticket}, 200)
 
     def test_calls_session_commit(self):
-        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)), \
-                patch('app.data_access.audit_log_controller.db.session.commit') as session_commit_fun:
+        with (
+            patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)),
+            patch('app.data_access.audit_log_controller.db.session.commit') as session_commit_fun
+        ):
             create_audit_log_entry(self.event_name, self.ip_address, self.idnr,
                                    self.pyeric_response_with_request_id.json())
             session_commit_fun.assert_called()
@@ -59,18 +64,17 @@ class TestCreateAuditLogEntry(unittest.TestCase):
         self.assertEqual('', json_data['elster_request_id'])
 
     def test_calls_hybrid_encryption_method(self):
-        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)) \
-                as hybrid_encryption_fun:
+        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)) as hybrid_encryption_fun:
             create_audit_log_entry(self.event_name, self.ip_address, self.idnr, self.pyeric_response_without_request_id.json())
             hybrid_encryption_fun.assert_called_once()
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestCreateAuditLogConfirmationEntry(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
+
     def setUp(self):
-        db.create_all()
         self.event_name = 'great get-together'
         self.ip_address = '127.0.0.1'
         self.idnr = '04452397687'
@@ -78,8 +82,10 @@ class TestCreateAuditLogConfirmationEntry(unittest.TestCase):
         self.confirmation_value = True
 
     def test_calls_session_commit(self):
-        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)), \
-                patch('app.data_access.audit_log_controller.db.session.commit') as session_commit_fun:
+        with (
+            patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)),
+            patch('app.data_access.audit_log_controller.db.session.commit') as session_commit_fun
+        ):
             create_audit_log_confirmation_entry(self.event_name, self.ip_address, self.idnr,
                                                 self.confirmation_field, self.confirmation_value)
             session_commit_fun.assert_called()
@@ -106,27 +112,28 @@ class TestCreateAuditLogConfirmationEntry(unittest.TestCase):
         self.assertEqual(self.confirmation_value, json_data['confirmation_value'])
 
     def test_calls_hybrid_encryption_method(self):
-        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)) \
-                as hybrid_encryption_fun:
+        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)) as hybrid_encryption_fun:
             create_audit_log_confirmation_entry(self.event_name, self.ip_address, self.idnr,
                                                 self.confirmation_field, self.confirmation_value)
             hybrid_encryption_fun.assert_called_once()
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestCreateAuditLogAddressEntry(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
+
     def setUp(self):
-        db.create_all()
         self.event_name = 'great get-together'
         self.ip_address = '127.0.0.1'
         self.idnr = '04452397687'
         self.address = 'address'
 
     def test_calls_session_commit(self):
-        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)), \
-                patch('app.data_access.audit_log_controller.db.session.commit') as session_commit_fun:
+        with (
+            patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)),
+            patch('app.data_access.audit_log_controller.db.session.commit') as session_commit_fun
+        ):
             create_audit_log_address_entry(self.event_name, self.ip_address, self.idnr, self.address)
             session_commit_fun.assert_called()
 
@@ -149,10 +156,6 @@ class TestCreateAuditLogAddressEntry(unittest.TestCase):
         self.assertEqual(self.address, json_data['address'])
 
     def test_calls_hybrid_encryption_method(self):
-        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)) \
-                as hybrid_encryption_fun:
+        with patch('app.data_access.audit_log_controller.hybrid_encrypt', MagicMock(side_effect=lambda _: _)) as hybrid_encryption_fun:
             create_audit_log_address_entry(self.event_name, self.ip_address, self.idnr, self.address)
             hybrid_encryption_fun.assert_called_once()
-
-    def tearDown(self):
-        db.drop_all()

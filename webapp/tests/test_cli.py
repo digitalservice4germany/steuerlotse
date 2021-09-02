@@ -2,16 +2,19 @@ import datetime as dt
 import unittest
 from unittest.mock import patch
 
-from app import db
-from app.cli import _delete_outdated_not_activated_users, _delete_outdated_users_with_completed_process, \
+import pytest
+
+from app.commands import _delete_outdated_not_activated_users, _delete_outdated_users_with_completed_process, \
     _delete_inactive_users, _delete_outdated_users
 from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket
 
 
 class TestDeleteOutdatedNotActivatedUsers(unittest.TestCase):
-    def setUp(self):
-        db.create_all()
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
+    def setUp(self):
         self.non_outdated_idnr = "04452397687"
         self.non_outdated_user = create_user(self.non_outdated_idnr, '1985-01-01', '123')
         self.outdated_idnr = "02293417683"
@@ -47,14 +50,12 @@ class TestDeleteOutdatedNotActivatedUsers(unittest.TestCase):
         self.assertTrue(user_exists(self.non_outdated_idnr))
         self.assertTrue(user_exists(self.outdated_idnr))
 
-    def tearDown(self):
-        db.drop_all()
-
-
 class TestDeleteOutdatedUsersWithCompletedProcess(unittest.TestCase):
-    def setUp(self):
-        db.create_all()
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
+    def setUp(self):
         self.outdated_idnr = "02293417683"
         self.outdated_user = create_user(self.outdated_idnr, '1985-01-01', '123')
         self.non_outdated_idnr = "04452397687"
@@ -92,14 +93,13 @@ class TestDeleteOutdatedUsersWithCompletedProcess(unittest.TestCase):
         self.assertTrue(user_exists(self.non_outdated_idnr))
         self.assertTrue(user_exists(self.outdated_idnr))
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestDeleteInactiveUsers(unittest.TestCase):
-    def setUp(self):
-        db.create_all()
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
+    def setUp(self):
         self.non_outdated_idnr = "04452397687"
         self.non_outdated_user = create_user(self.non_outdated_idnr, '1985-01-01', '123')
         self.outdated_idnr = "02293417683"
@@ -121,14 +121,13 @@ class TestDeleteInactiveUsers(unittest.TestCase):
         self.assertTrue(user_exists(self.non_outdated_idnr))
         self.assertTrue(user_exists(self.outdated_idnr))
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestDeleteOutdatedUsers(unittest.TestCase):
-    def setUp(self):
-        db.create_all()
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
+    def setUp(self):
         self.inactive_non_activated_idnr = "04452397680"
         self.inactive_non_activated_user = create_user(self.inactive_non_activated_idnr, '1985-01-01', '123')
         self.inactive_non_activated_user.last_modified = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=101)
@@ -141,9 +140,6 @@ class TestDeleteOutdatedUsers(unittest.TestCase):
 
     def test_commit_is_called(self):
         with patch('app.elster_client.elster_client.send_unlock_code_revocation_with_elster'),\
-             patch('app.db.session.commit') as commit_fun:
+             patch('app.extensions.db.session.commit') as commit_fun:
             _delete_outdated_users()
         commit_fun.assert_called()
-
-    def tearDown(self):
-        db.drop_all()

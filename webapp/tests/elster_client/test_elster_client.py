@@ -4,10 +4,9 @@ from datetime import date, datetime
 from decimal import Decimal, DecimalException
 from unittest.mock import patch, MagicMock
 
+import pytest
 from markupsafe import escape
 
-# TODO: replace with app factory / client fixture
-from app import app
 from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
@@ -23,11 +22,12 @@ from app.elster_client.elster_client import send_unlock_code_request_with_elster
 from tests.elster_client.json_responses.sample_responses import get_json_response
 from tests.elster_client.mock_erica import MockErica, MockResponse
 
-_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
-_JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
-
 
 class TestSendEst(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
+
     def setUp(self) -> None:
         self.est_including_json = get_json_response('est_including_responses')
         self.est_without_json = get_json_response('est_without_responses')
@@ -35,9 +35,8 @@ class TestSendEst(unittest.TestCase):
 
         self.est_response_including_responses = MockResponse(self.est_including_json, 200)
         self.est_response_without_responses = MockResponse(self.est_without_json, 200)
-        with app.app_context() and app.test_request_context():
-            self.valid_form_data = {**LotseMultiStepFlow(None).default_data()[1],
-                                    **{'idnr': LotseMultiStepFlow(None).default_data()[1]['person_a_idnr']}}
+        self.valid_form_data = {**LotseMultiStepFlow(None).default_data()[1],
+                                **{'idnr': LotseMultiStepFlow(None).default_data()[1]['person_a_idnr']}}
 
         self.invalid_form_data = copy.deepcopy(self.valid_form_data)
         self.invalid_form_data['person_a_idnr'] = MockErica.INVALID_ID
@@ -55,8 +54,7 @@ class TestSendEst(unittest.TestCase):
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
-            with app.app_context():  # for correct json serializer
-                actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
+            actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
 
         self.assertEqual(expected_data, actual_returned_data)
 
@@ -71,8 +69,7 @@ class TestSendEst(unittest.TestCase):
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
-            with app.app_context():  # for correct json serializer
-                actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=False)
+            actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=False)
 
         self.assertEqual(expected_data, actual_returned_data)
 
@@ -88,8 +85,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 send_est_with_elster(self.invalid_form_data, 'IP', include_elster_responses=False)
                 self.fail("No validation error raised")
         except ElsterGlobalValidationError as e:
@@ -101,9 +97,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
-                with app.app_context():  # for correct json serializer
-                    self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP',
-                                      include_elster_responses=False)
+                self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP', include_elster_responses=False)
         finally:
             MockErica.eric_transfer_error_occurred = False
 
@@ -113,8 +107,7 @@ class TestSendEst(unittest.TestCase):
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
                     patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
-                with app.app_context():  # for correct json serializer
-                    send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
+                send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
         except ElsterTransferError as e:
             self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
                              e.eric_response)
@@ -127,8 +120,7 @@ class TestSendEst(unittest.TestCase):
         MockErica.eric_process_not_successful_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 self.assertRaises(ElsterProcessNotSuccessful, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -140,8 +132,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    patch('app.elster_client.elster_client._log_address_data'), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client._log_address_data'):
                 self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -152,8 +143,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 self.assertRaises(ElsterInvalidBufaNumberError, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -161,6 +151,10 @@ class TestSendEst(unittest.TestCase):
 
 
 class TestValidateEst(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
+
     def setUp(self) -> None:
         self.est_including_json = get_json_response('est_including_responses')
         self.est_without_json = get_json_response('est_without_responses')
@@ -168,8 +162,7 @@ class TestValidateEst(unittest.TestCase):
 
         self.est_response_including_responses = MockResponse(self.est_including_json, 200)
         self.est_response_without_responses = MockResponse(self.est_without_json, 200)
-        with app.app_context() and app.test_request_context():
-            self.valid_form_data = LotseMultiStepFlow(None).default_data()[1]
+        self.valid_form_data = LotseMultiStepFlow(None).default_data()[1]
 
         self.invalid_form_data = copy.deepcopy(self.valid_form_data)
         self.invalid_form_data['person_a_idnr'] = MockErica.INVALID_ID
@@ -185,8 +178,7 @@ class TestValidateEst(unittest.TestCase):
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
-            with app.app_context():  # for correct json serializer
-                actual_returned_data = validate_est_with_elster(self.valid_form_data, include_elster_responses=True)
+            actual_returned_data = validate_est_with_elster(self.valid_form_data, include_elster_responses=True)
 
         self.assertEqual(expected_data, actual_returned_data)
 
@@ -199,16 +191,14 @@ class TestValidateEst(unittest.TestCase):
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
-            with app.app_context():  # for correct json serializer
-                actual_returned_data = validate_est_with_elster(self.valid_form_data, include_elster_responses=False)
+            actual_returned_data = validate_est_with_elster(self.valid_form_data, include_elster_responses=False)
 
         self.assertEqual(expected_data, actual_returned_data)
 
     def test_if_validation_error_occurred_raise_error(self):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 validate_est_with_elster(self.invalid_form_data, include_elster_responses=False)
                 self.fail("No validation error occurred.")
         except ElsterGlobalValidationError as e:
@@ -219,8 +209,7 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 self.assertRaises(ElsterTransferError, validate_est_with_elster, self.valid_form_data,
                                   include_elster_responses=False)
         finally:
@@ -230,8 +219,7 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 validate_est_with_elster(self.valid_form_data, include_elster_responses=True)
         except ElsterTransferError as e:
             self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
@@ -245,8 +233,7 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_process_not_successful_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    app.app_context():  # for correct json serializer
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
                 self.assertRaises(ElsterProcessNotSuccessful, validate_est_with_elster, self.valid_form_data,
                                   include_elster_responses=False)
         finally:
@@ -523,10 +510,12 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
 
 
 class TestGenerateEStRequestData(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_set_form_data_dict_results_in_dict_with_est_data_field_and_meta_data_field(self):
-        with app.app_context() and app.test_request_context():
-            form_data = LotseMultiStepFlow(None).default_data()[1]
+        form_data = LotseMultiStepFlow(None).default_data()[1]
 
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
             result = _generate_est_request_data(form_data)
@@ -535,8 +524,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertIn('meta_data', result)
 
     def test_set_form_data_dict_results_in_est_data_dict_with_same_keys(self):
-        with app.app_context() and app.test_request_context():
-            form_data = LotseMultiStepFlow(None).default_data()[1]
+        form_data = LotseMultiStepFlow(None).default_data()[1]
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
             result = _generate_est_request_data(form_data)
 
@@ -684,16 +672,14 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertEqual(True, result['meta_data']['is_digitally_signed'])
 
     def test_inactive_user_results_in_correct_attribute_set_false(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False)), \
-                app.test_request_context():
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False)):
             result = _generate_est_request_data({})
 
         self.assertEqual(False, result['meta_data']['is_digitally_signed'])
 
     def test_if_inactive_user_logout_user_is_called(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun, \
-                app.test_request_context():
+                patch('app.elster_client.elster_client.logout_user') as logout_fun:
             _generate_est_request_data({})
 
             logout_fun.assert_called_once()

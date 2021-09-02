@@ -1,16 +1,17 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
+import pytest
 from flask import json
 
 from decimal import Decimal
 from datetime import date
 
-# TODO: replace with app factory
-from app import app
-
 
 class TestJsonEncodeDecode(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, app):
+        self.app = app
 
     def test_json_encode_decode_if_correct_data_used(self):
         data = {
@@ -19,9 +20,8 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_decimal': Decimal('42.00'),
         }
 
-        with app.app_context():
-            json_data = json.dumps(data)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data)
+        returned_data = json.loads(json_data)
 
         self.assertEqual(data, returned_data)
 
@@ -31,9 +31,8 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_date': date(2020, 1, 31),
             'test_decimal': Decimal('42.00')
         }
-        with app.app_context():
-            json_data = json.dumps(data_string_is_none)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_string_is_none)
+        returned_data = json.loads(json_data)
         self.assertEqual(data_string_is_none, returned_data)
 
         data_date_is_none = {
@@ -41,9 +40,8 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_date': None,
             'test_decimal': Decimal('42.00')
         }
-        with app.app_context():
-            json_data = json.dumps(data_date_is_none)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_date_is_none)
+        returned_data = json.loads(json_data)
         self.assertEqual(data_date_is_none, returned_data)
 
         data_decimal_is_none = {
@@ -51,26 +49,23 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_date': date(2020, 1, 31),
             'test_decimal': None
         }
-        with app.app_context():
-            json_data = json.dumps(data_decimal_is_none)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_decimal_is_none)
+        returned_data = json.loads(json_data)
         self.assertEqual(data_decimal_is_none, returned_data)
 
     def test_json_encode_decode_if_float_integer_used(self):
         data_floating_point = {
             'test_number': 42.0
         }
-        with app.app_context():
-            json_data = json.dumps(data_floating_point)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_floating_point)
+        returned_data = json.loads(json_data)
         self.assertEqual(data_floating_point, returned_data)
 
         data_integer = {
             'test_number': 42
         }
-        with app.app_context():
-            json_data = json.dumps(data_integer)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_integer)
+        returned_data = json.loads(json_data)
         self.assertEqual(data_integer, returned_data)
 
     def test_json_encode_decode_if_boolean_used(self):
@@ -79,9 +74,8 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_false': False,
         }
 
-        with app.app_context():
-            json_data = json.dumps(data_boolean)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_boolean)
+        returned_data = json.loads(json_data)
         self.assertEqual(data_boolean, returned_data)
 
     def test_json_encode_decode_if_list_used(self):
@@ -91,9 +85,8 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_string_list': ["D", "a", "r", "t", "h"],
         }
 
-        with app.app_context():
-            json_data = json.dumps(data_lists)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_lists)
+        returned_data = json.loads(json_data)
 
         self.assertEqual(data_lists, returned_data)
 
@@ -103,9 +96,8 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_dict': {"name": "Luke Skywalker", "sword": "green", "deceased": True}
         }
 
-        with app.app_context():
-            json_data = json.dumps(data_dict)
-            returned_data = json.loads(json_data)
+        json_data = json.dumps(data_dict)
+        returned_data = json.loads(json_data)
 
         self.assertEqual(data_dict, returned_data)
 
@@ -124,8 +116,7 @@ class TestJsonEncodeDecode(unittest.TestCase):
             'test_special_datatype':  special_object
         }
 
-        with app.app_context(), \
-                patch("flask.json.JSONEncoder.default") as flask_encoder:
+        with patch("flask.json.JSONEncoder.default") as flask_encoder:
             flask_encoder.side_effect = default
             json.dumps(data_dict)
 
@@ -137,10 +128,9 @@ class TestJsonEncodeDecode(unittest.TestCase):
                     '{"_type": "decimal", "v": "42.00"}, ' \
                     '"test_special_datatype": {"is_it_special": "yes"}} '
 
-        with app.app_context():
-            mock_object_hook = MagicMock(name="object_hook")
-            mock_object_hook.side_effect = lambda x: x
+        mock_object_hook = MagicMock(name="object_hook")
+        mock_object_hook.side_effect = lambda x: x
 
-            json.loads(json_data, object_hook=mock_object_hook)
+        json.loads(json_data, object_hook=mock_object_hook)
 
-            mock_object_hook.assert_any_call({"is_it_special": 'yes'})
+        mock_object_hook.assert_any_call({"is_it_special": 'yes'})

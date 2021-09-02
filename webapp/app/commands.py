@@ -1,6 +1,7 @@
 import datetime as dt
 import logging
 import os
+import click
 
 from flask.cli import AppGroup
 from sqlalchemy.exc import IntegrityError
@@ -12,53 +13,51 @@ from app.elster_client.elster_errors import ElsterProcessNotSuccessful, \
 logger = logging.getLogger(__name__)
 
 
-def register_commands(app):
-    cronjob_cli = AppGroup('cronjob')
+@click.command()
+def populate_database():
+    try:
+        from app.extensions import db
+        from app.data_access.db_model.user import User
 
-    @cronjob_cli.command('delete_outdated_users')
-    def delete_outdated_users():
-        try:
-            if os.environ.get('FLASK_ENV') == 'staging':
-                logger.warn('Refusing to run lifecycle cron job on staging (would delete users needed for testing)')
-                return
+        if os.environ.get('FLASK_ENV') == 'production':
+            logger.warn('Refusing to run populate database cron job on production '
+                            '(would create unwanted users).')
+            return
 
-            _delete_outdated_users()
-        except Exception:
-            logger.exception('An unexpected error occurred.')
+        logger.info('Executing populate_database')
 
-    app.cli.add_command(cronjob_cli)
+        pre_stored_idnrs = [('04452397687', 'DBNH-B8JS-9JE7'),
+                            ('02259674819', 'BMVL-U2YM-AWJ4')]
+        for idnr, unlock_code in pre_stored_idnrs:
+            new_user = User(idnr, '1985-01-01', '123')
+            new_user.activate(unlock_code)
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                logger.info('Added user with IdNr: ' + idnr)
+            except IntegrityError:
+                db.session.rollback()
+                logger.warn('User with IdNr ' + idnr + ' already exists in database.')
+    except Exception:
+        logger.exception('An unexpected error occurred.')
 
-    @app.cli.command()
-    def populate_database():
-        try:
-            from app import db
-            from app.data_access.db_model.user import User
 
-            if os.environ.get('FLASK_ENV') == 'production':
-                logger.warn('Refusing to run populate database cron job on production '
-                                '(would create unwanted users).')
-                return
+cronjob_cli = AppGroup('cronjob')
 
-            logger.info('Executing populate_database')
+@cronjob_cli.command('delete_outdated_users')
+def delete_outdated_users():
+    try:
+        if os.environ.get('FLASK_ENV') == 'staging':
+            logger.warn('Refusing to run lifecycle cron job on staging (would delete users needed for testing)')
+            return
 
-            pre_stored_idnrs = [('04452397687', 'DBNH-B8JS-9JE7'),
-                                ('02259674819', 'BMVL-U2YM-AWJ4')]
-            for idnr, unlock_code in pre_stored_idnrs:
-                new_user = User(idnr, '1985-01-01', '123')
-                new_user.activate(unlock_code)
-                try:
-                    db.session.add(new_user)
-                    db.session.commit()
-                    logger.info('Added user with IdNr: ' + idnr)
-                except IntegrityError:
-                    db.session.rollback()
-                    logger.warn('User with IdNr ' + idnr + ' already exists in database.')
-        except Exception:
-            logger.exception('An unexpected error occurred.')
+        _delete_outdated_users()
+    except Exception:
+        logger.exception('An unexpected error occurred.')
 
 
 def _delete_outdated_users():
-    from app import db
+    from app.extensions import db
 
     logger.info('Executing delete_outdated_users')
 
@@ -69,7 +68,7 @@ def _delete_outdated_users():
 
 
 def _delete_outdated_not_activated_users():
-    from app import db
+    from app.extensions import db
     from app.data_access.db_model.user import User
 
     num_deleted_rows = db.session.query(User) \
@@ -80,7 +79,7 @@ def _delete_outdated_not_activated_users():
 
 
 def _delete_outdated_users_with_completed_process():
-    from app import db
+    from app.extensions import db
     from app.data_access.db_model.user import User
 
     users_to_delete_query = db.session.query(User) \
@@ -92,7 +91,7 @@ def _delete_outdated_users_with_completed_process():
 
 
 def _delete_inactive_users():
-    from app import db
+    from app.extensions import db
     from app.data_access.db_model.user import User
 
     users_to_delete_query = db.session.query(User) \
@@ -103,7 +102,7 @@ def _delete_inactive_users():
 
 
 def _revoke_permission_and_delete_users(users_to_delete, success_message):
-    from app import db
+    from app.extensions import db
     from app.elster_client import elster_client
     from app.crypto.pw_hashing import global_salt_hash
 

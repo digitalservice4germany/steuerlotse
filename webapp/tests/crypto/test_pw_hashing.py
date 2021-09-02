@@ -5,7 +5,6 @@ from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
 
 
 class TestGlobalSaltHash(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.original_hash_algorithm = Config.HASH_ALGORITHM
@@ -40,7 +39,6 @@ class TestGlobalSaltHash(unittest.TestCase):
 
 
 class TestIndivSaltHash(unittest.TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.original_hash_algorithm = Config.HASH_ALGORITHM
