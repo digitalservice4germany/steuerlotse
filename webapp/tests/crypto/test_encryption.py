@@ -11,7 +11,6 @@ PRIVATE_TEST_KEY_WRONG = b'-----BEGIN RSA PRIVATE KEY-----\nMIIHAHAHAAAKCAgEApLD
 
 
 class TestEncryptDecrypt(unittest.TestCase):
-
     def setUp(self):
         self.encryption_key = Config.ENCRYPTION_KEY
 

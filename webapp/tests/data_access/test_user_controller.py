@@ -1,6 +1,7 @@
 import unittest
 
-from app import db
+import pytest
+
 from app.crypto.pw_hashing import global_salt_hash, indiv_salt_hash
 from app.data_access.db_model.user import User
 from app.data_access.user_controller import create_user, user_exists, delete_user, activate_user, \
@@ -9,9 +10,11 @@ from app.data_access.user_controller_errors import UserAlreadyExistsError
 
 
 class TestUserExists(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
     def setUp(self):
-        db.create_all()
         self.existing_idnr = "123"
         create_user(self.existing_idnr, '1985-01-01', '789')
 
@@ -23,14 +26,13 @@ class TestUserExists(unittest.TestCase):
         response = user_exists('non_existent_user')
         self.assertFalse(response)
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestCreateUser(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
     def setUp(self):
-        db.create_all()
         self.existing_idnr = "123"
         create_user(self.existing_idnr, '1985-01-01', '789')
 
@@ -76,70 +78,65 @@ class TestCreateUser(unittest.TestCase):
         self.assertEqual(req_id, created_user.elster_request_id)
         self.assertFalse(created_user.is_active)
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestDeleteUser(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
     def setUp(self):
-        db.create_all()
         create_user('Added_user', '1985-01-01', '123')
 
     def test_if_user_is_deleted_then_user_is_removed_from_storage(self):
         delete_user('Added_user')
-        db.session.rollback()  # Verify changes have actually been written to the database.
+        self.session.rollback()  # Verify changes have actually been written to the database.
         self.assertEqual(0, User.query.count())
-
-    def tearDown(self):
-        db.drop_all()
 
 
 class TestActivateUser(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
     def setUp(self):
-        db.create_all()
         self.user = create_user('1234', '1985-01-01', '5678')
 
     def test_activates_user_and_commits_changes(self):
         activate_user('1234', '5678')
-        db.session.rollback()  # Verify changes have actually been written to the database.
+        self.session.rollback()  # Verify changes have actually been written to the database.
         self.assertTrue(self.user.is_active)
 
     def test_activate_user_returns_an_activated_user(self):
         returned_user = activate_user('1234', '5678')
         self.assertTrue(returned_user.is_active)
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestStorePdfAndTransferTicket(unittest.TestCase):
-
-    def setUp(self):
-        db.create_all()
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
 
     def test_pdf_is_set_in_user(self):
         expected_pdf = b'thisisagreatPDFforya'
         user = User('123', '123', '123')
         store_pdf_and_transfer_ticket(user, expected_pdf, 'Passierschein A38')
-        db.session.rollback()
+        self.session.rollback()
         self.assertEqual(expected_pdf, user.pdf)
 
     def test_transfer_ticket_is_set_in_user(self):
         expected_transfer_ticket = 'Passierschein A38'
         user = User('123', '123', '123')
         store_pdf_and_transfer_ticket(user, b'pdf', expected_transfer_ticket)
-        db.session.rollback()
+        self.session.rollback()
         self.assertEqual(expected_transfer_ticket, user.transfer_ticket)
-
-    def tearDown(self):
-        db.drop_all()
 
 
 class TestCheckIdnr(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
+
     def setUp(self):
-        db.create_all()
         self.correct_idnr = '1234567890'
         self.existing_user = create_user(self.correct_idnr, '1985-01-01', '000')
 
@@ -149,13 +146,13 @@ class TestCheckIdnr(unittest.TestCase):
     def test_if_idnr_incorrect_return_false(self):
         self.assertFalse(check_idnr(self.existing_user, 'INCORRECT'))
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestCheckDob(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session):
+        self.session = transactional_session
+
     def setUp(self):
-        db.create_all()
         self.correct_dob = '1985-01-01'
         self.existing_user = create_user('1234', self.correct_dob, '000')
 
@@ -164,6 +161,3 @@ class TestCheckDob(unittest.TestCase):
 
     def test_if_dob_incorrect_return_false(self):
         self.assertFalse(check_dob(self.existing_user, 'INCORRECT'))
-
-    def tearDown(self):
-        db.drop_all()

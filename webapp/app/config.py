@@ -13,6 +13,7 @@ class BaseConfig(object):
     SET_SECURITY_HTTP_HEADERS = True
 
     LANGUAGES = ['de']
+    BABEL_DEFAULT_LOCALE = 'de'
     SEND_FILE_MAX_AGE_DEFAULT = 60
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'

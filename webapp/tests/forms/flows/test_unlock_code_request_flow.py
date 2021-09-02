@@ -3,12 +3,11 @@ import unittest
 import datetime as dt
 from unittest.mock import patch, call
 
+import pytest
 from flask import json
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 
-# TODO: replace with app factory / client fixture
-from app import app, db
 from app.data_access.user_controller import create_user, user_exists, find_user
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
 from app.forms.flows.multistep_flow import RenderInfo
@@ -20,9 +19,13 @@ from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep,
 
 
 class UnlockCodeRequestInit(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session, app, test_request_context):
+        self.session = transactional_session
+        self.app = app
+        self.req = test_request_context
 
     def setUp(self):
-        db.create_all()
         self.testing_steps = [MockStartStep, MockMiddleStep, MockFinalStep]
         self.endpoint_correct = "unlock_code_request"
         self.incorrect_session = "r2D2"
@@ -35,77 +38,72 @@ class UnlockCodeRequestInit(unittest.TestCase):
 
     def test_if_request_has_params_then_set_attributes_correctly(self):
         # Only current link_overview is set from request
-        with app.app_context() and app.test_request_context() as req:
-            req.request.args = {'link_overview': self.set_link_overview}
+        self.req.request.args = {'link_overview': self.set_link_overview}
 
-            flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
+        flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
 
-            self.assertTrue(flow.has_link_overview)
-            self.assertEqual(self.expected_steps, list(flow.steps.values()))
-            self.assertEqual(self.expected_steps[0], flow.first_step)
-            self.assertIsNone(flow.overview_step)
+        self.assertTrue(flow.has_link_overview)
+        self.assertEqual(self.expected_steps, list(flow.steps.values()))
+        self.assertEqual(self.expected_steps[0], flow.first_step)
+        self.assertIsNone(flow.overview_step)
 
     def test_if_request_has_no_params_then_set_correct_defaults(self):
-        with app.app_context() and app.test_request_context():
-            flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
+        flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
 
-            self.assertFalse(flow.has_link_overview)
-            self.assertEqual(self.expected_steps[0], flow.first_step)
-            self.assertIsNone(flow.overview_step)
-
-    def tearDown(self):
-        db.drop_all()
+        self.assertFalse(flow.has_link_overview)
+        self.assertEqual(self.expected_steps[0], flow.first_step)
+        self.assertIsNone(flow.overview_step)
 
 
 class TestUnlockCodeRequestHandle(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session, app, test_request_context):
+        self.session = transactional_session
+        self.app = app
+        self.req = test_request_context
 
     def setUp(self):
-        db.create_all()
-        with app.app_context() and app.test_request_context():
-            testing_steps = [MockStartStep, MockRenderStep, MockFormStep, MockFinalStep]
-            testing_steps = {s.name: s for s in testing_steps}
-            self.endpoint_correct = "unlock_code_request"
-            self.flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
-            self.flow.steps = testing_steps
-            self.flow.first_step = next(iter(testing_steps.values()))
-            self.stored_data = self.flow.default_data()
+        testing_steps = [MockStartStep, MockRenderStep, MockFormStep, MockFinalStep]
+        testing_steps = {s.name: s for s in testing_steps}
+        self.endpoint_correct = "unlock_code_request"
+        self.flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
+        self.flow.steps = testing_steps
+        self.flow.first_step = next(iter(testing_steps.values()))
+        self.stored_data = self.flow.default_data()
 
-            # We need to set a different get_flow_nav_function that fits the used mocked steps
-            self.flow._get_flow_nav = lambda step: []
+        # We need to set a different get_flow_nav_function that fits the used mocked steps
+        self.flow._get_flow_nav = lambda step: []
 
-            # Set sessions up
-            self.existing_session = "sessionAvailable"
-            self.session_data = {'idnr': '04452397687', 'dob': '1985-01-01',  'registration_confirm_incomes': True,
-                                 'registration_confirm_data_privacy': True, 'registration_confirm_e_data': True,
-                                 'registration_confirm_terms_of_service': True}
+        # Set sessions up
+        self.existing_session = "sessionAvailable"
+        self.session_data = {'idnr': '04452397687', 'dob': '1985-01-01',  'registration_confirm_incomes': True,
+                                'registration_confirm_data_privacy': True, 'registration_confirm_e_data': True,
+                                'registration_confirm_terms_of_service': True}
 
     def test_if_correct_step_name_then_return_code_correct(self):
-        with app.app_context() and app.test_request_context():
-            response = self.flow.handle(MockRenderStep.name)
+        response = self.flow.handle(MockRenderStep.name)
 
-            self.assertEqual(200, response.status_code)
+        self.assertEqual(200, response.status_code)
 
     def test_if_incorrect_step_name_then_raise_404_exception(self):
-        with app.app_context() and app.test_request_context():
-            self.assertRaises(NotFound, self.flow.handle, "Incorrect Step Name")
+        self.assertRaises(NotFound, self.flow.handle, "Incorrect Step Name")
 
     def test_if_start_step_then_return_redirect_to_first_step(self):
-        with app.app_context() and app.test_request_context():
-            debug = self.flow.default_data
-            self.flow.default_data = lambda: None
-            response = self.flow.handle("start")
+        debug = self.flow.default_data
+        self.flow.default_data = lambda: None
+        response = self.flow.handle("start")
 
-            self.assertEqual(
-                redirect(
-                    "/" + self.endpoint_correct + "/step/" + MockStartStep.name
-                    + "?link_overview=" + str(self.flow.has_link_overview)).location,
-                response.location
-            )
+        self.assertEqual(
+            redirect(
+                "/" + self.endpoint_correct + "/step/" + MockStartStep.name
+                + "?link_overview=" + str(self.flow.has_link_overview)).location,
+            response.location
+        )
 
-            self.flow.default_data = debug
+        self.flow.default_data = debug
 
     def test_if_form_step_correct_and_post_then_return_redirect_to_next_step(self):
-        with app.app_context() and app.test_request_context(
+        with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
                 method='POST'):
             response = self.flow.handle(MockFormStep.name)
@@ -118,7 +116,7 @@ class TestUnlockCodeRequestHandle(unittest.TestCase):
             )
 
     def test_if_form_step_and_not_post_then_return_render(self):
-        with app.app_context() and app.test_request_context(
+        with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name,
                 method='GET'):
             response = self.flow.handle(MockRenderStep.name)
@@ -127,65 +125,63 @@ class TestUnlockCodeRequestHandle(unittest.TestCase):
             # Check response data because that's where our Mock returns. Decode because response stores as bytestring
             self.assertEqual(self.session_data, json.loads(str(response.get_data(), 'utf-8'))[0])
 
-    def tearDown(self):
-        db.drop_all()
-
 
 class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, transactional_session, app, test_request_context):
+        self.session = transactional_session
+        self.app = app
+        self.req = test_request_context
 
     def setUp(self):
-        db.create_all()
-        with app.app_context() and app.test_request_context():
-            testing_steps = [MockStartStep, MockUnlockCodeRequestInputStep, MockUnlockCodeRequestFailureStep,
-                             MockUnlockCodeRequestSuccessStep]
-            testing_steps = {s.name: s for s in testing_steps}
-            self.endpoint_correct = "unlock_code_request"
-            self.flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
-            self.flow.steps = testing_steps
-            self.flow.first_step = next(iter(testing_steps.values()))
+        testing_steps = [MockStartStep, MockUnlockCodeRequestInputStep, MockUnlockCodeRequestFailureStep,
+                            MockUnlockCodeRequestSuccessStep]
+        testing_steps = {s.name: s for s in testing_steps}
+        self.endpoint_correct = "unlock_code_request"
+        self.flow = UnlockCodeRequestMultiStepFlow(endpoint=self.endpoint_correct)
+        self.flow.steps = testing_steps
+        self.flow.first_step = next(iter(testing_steps.values()))
 
-            # We need to set a different get_flow_nav_function that fits the used mocked steps
-            self.flow._get_flow_nav = lambda step: []
+        # We need to set a different get_flow_nav_function that fits the used mocked steps
+        self.flow._get_flow_nav = lambda step: []
 
-            # Set sessions up
-            self.valid_idnr = '04452397687'
-            self.session_data = {'idnr': self.valid_idnr, 'dob': dt.date(1985, 1, 1)}
-            self.valid_input_data = {'idnr': self.valid_idnr, 'dob': ['1', '1', '1980'],
-                                     'registration_confirm_data_privacy': True,
-                                     'registration_confirm_terms_of_service': True,
-                                     'registration_confirm_incomes': True,
-                                     'registration_confirm_e_data': True}
+        # Set sessions up
+        self.valid_idnr = '04452397687'
+        self.session_data = {'idnr': self.valid_idnr, 'dob': dt.date(1985, 1, 1)}
+        self.valid_input_data = {'idnr': self.valid_idnr, 'dob': ['1', '1', '1980'],
+                                    'registration_confirm_data_privacy': True,
+                                    'registration_confirm_terms_of_service': True,
+                                    'registration_confirm_incomes': True,
+                                    'registration_confirm_e_data': True}
 
-            prev_step, self.success_step, next_step = self.flow._generate_steps(MockUnlockCodeRequestSuccessStep.name)
-            self.render_info_success_step = RenderInfo(step_title=self.success_step.title,
-                                                       step_intro=self.success_step.intro, form=None,
-                                                       prev_url=self.flow.url_for_step(prev_step.name),
-                                                       next_url=self.flow.url_for_step(
-                                                           next_step.name) if next_step else None,
-                                                       submit_url=self.flow.url_for_step(self.success_step),
-                                                       overview_url="Overview URL")
+        prev_step, self.success_step, next_step = self.flow._generate_steps(MockUnlockCodeRequestSuccessStep.name)
+        self.render_info_success_step = RenderInfo(step_title=self.success_step.title,
+                                                    step_intro=self.success_step.intro, form=None,
+                                                    prev_url=self.flow.url_for_step(prev_step.name),
+                                                    next_url=self.flow.url_for_step(
+                                                        next_step.name) if next_step else None,
+                                                    submit_url=self.flow.url_for_step(self.success_step),
+                                                    overview_url="Overview URL")
 
-            prev_step, self.input_step, next_step = self.flow._generate_steps(MockUnlockCodeRequestInputStep.name)
-            self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
-                                                     form=None, prev_url=self.flow.url_for_step(prev_step.name),
-                                                     next_url=self.flow.url_for_step(
-                                                         next_step.name) if next_step else None,
-                                                     submit_url=self.flow.url_for_step(self.input_step),
-                                                     overview_url="Overview URL")
+        prev_step, self.input_step, next_step = self.flow._generate_steps(MockUnlockCodeRequestInputStep.name)
+        self.render_info_input_step = RenderInfo(step_title=self.input_step.title, step_intro=self.input_step.intro,
+                                                    form=None, prev_url=self.flow.url_for_step(prev_step.name),
+                                                    next_url=self.flow.url_for_step(
+                                                        next_step.name) if next_step else None,
+                                                    submit_url=self.flow.url_for_step(self.input_step),
+                                                    overview_url="Overview URL")
 
     def test_if_success_step_then_remove_next_url(self):
-        with app.app_context() and app.test_request_context():
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.success_step, self.render_info_success_step, self.session_data)
-            self.assertEqual(None, render_info.next_url)
+        render_info, _ = self.flow._handle_specifics_for_step(
+            self.success_step, self.render_info_success_step, self.session_data)
+        self.assertEqual(None, render_info.next_url)
 
     def test_if_unlock_code_request_got_through_then_next_url_is_success_step(self):
         success_url = '/' + self.endpoint_correct + '/step/' + MockUnlockCodeRequestSuccessStep.name + \
                                '?link_overview=' + str(self.flow.has_link_overview)
 
         idnr = '04452397687'
-        with app.app_context() and app.test_request_context(method='POST',
-                                                            data=self.valid_input_data):
+        with self.app.test_request_context(method='POST', data=self.valid_input_data):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
@@ -201,8 +197,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
         idnr = '04452397687'
         expected_elster_request_id = '12345'
 
-        with app.app_context() and app.test_request_context(method='POST',
-                                                            data=self.valid_input_data):
+        with self.app.test_request_context(method='POST', data=self.valid_input_data):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
@@ -218,8 +213,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
         failure_url = '/' + self.endpoint_correct + '/step/' + MockUnlockCodeRequestFailureStep.name + \
                                '?link_overview=' + str(self.flow.has_link_overview)
 
-        with app.app_context() and app.test_request_context(method='POST',
-                                                            data=self.valid_input_data):
+        with self.app.test_request_context(method='POST', data=self.valid_input_data):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
@@ -238,8 +232,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
         failure_url = '/' + self.endpoint_correct + '/step/' + MockUnlockCodeRequestFailureStep.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
 
-        with app.app_context() and app.test_request_context(method='POST',
-                                                            data=self.valid_input_data):
+        with self.app.test_request_context(method='POST', data=self.valid_input_data):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
@@ -251,7 +244,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_step_is_input_step_and_valid_form_then_call_create_auditlog_for_all_fields(self):
         ip_address = '127.0.0.1'
-        with app.app_context() and app.test_request_context(method='POST',
+        with self.app.test_request_context(method='POST',
                                                             environ_base={'REMOTE_ADDR': ip_address},
                                                             data=self.valid_input_data):
             with patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster"),\
@@ -294,7 +287,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
                           'registration_confirm_terms_of_service': True,
                           'registration_confirm_incomes': True}]
         for invalid_data in invalid_datas:
-            with app.app_context() and app.test_request_context(method='POST', data=invalid_data):
+            with self.app.test_request_context(method='POST', data=invalid_data):
                 with patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster"),\
                         patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry") as \
                         create_audit_log_fun:
@@ -302,6 +295,3 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
                         self.input_step, copy.deepcopy(self.render_info_input_step), {})
 
                     create_audit_log_fun.assert_not_called()
-
-    def tearDown(self):
-        db.drop_all()

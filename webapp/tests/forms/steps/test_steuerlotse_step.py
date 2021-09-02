@@ -2,16 +2,14 @@ import json
 import unittest
 from unittest.mock import patch, MagicMock, call
 
+import pytest
 from flask import url_for
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
-# TODO: replace with app factory / client fixture
-from app import app
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import deserialize_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, \
     RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
@@ -20,258 +18,255 @@ from tests.utils import create_session_form_data
 
 
 class TestSteuerlotseStepInit(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_if_request_has_params_then_set_attributes_correctly(self):
         # Only current link_overview is set from request
-        with app.app_context() and app.test_request_context() as req:
-            req.request.args = {'link_overview': "True"}
+        self.req.request.args = {'link_overview': "True"}
 
-            step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
-                                   default_data=None, prev_step=None, next_step=None)
+        step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
+                                default_data=None, prev_step=None, next_step=None)
 
-            self.assertTrue(step.has_link_overview)
+        self.assertTrue(step.has_link_overview)
 
-        with app.app_context() and app.test_request_context() as req:
-            req.request.args = {'link_overview': "False"}
+        self.req.request.args = {'link_overview': "False"}
 
-            step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
-                                   default_data=None, prev_step=None, next_step=None)
+        step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
+                                default_data=None, prev_step=None, next_step=None)
 
-            self.assertFalse(step.has_link_overview)
+        self.assertFalse(step.has_link_overview)
 
     def test_if_request_has_no_params_then_set_correct_defaults(self):
         # Only link_overview and session are set from request
-        with app.app_context() and app.test_request_context():
-            step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
-                                   default_data=None, prev_step=None, next_step=None)
+        step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
+                                default_data=None, prev_step=None, next_step=None)
 
-            self.assertFalse(step.has_link_overview)
+        self.assertFalse(step.has_link_overview)
 
 
 class TestSteuerlotseStepUrlForStep(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     @staticmethod
     def helper_build_test_url(endpoint, step):
         return "/" + endpoint + "/step/" + step.name
 
     def setUp(self):
-        with app.app_context() and app.test_request_context():
-            testing_steps = [MockStartStep, MockMiddleStep, MockFinalStep]
+        testing_steps = [MockStartStep, MockMiddleStep, MockFinalStep]
 
-            self.endpoint_correct = "lotse"
-            self.endpoint_incorrect = "IT_IS_A_TRAP"
-            self.correct_session = "C3PO"
-            self.incorrect_session = "r2D2"
-            self.set_link_overview = True
-            self.expected_url_params_if_attribute_set = "?link_overview=" + str(self.set_link_overview)
-            self.empty_url_params = ""
+        self.endpoint_correct = "lotse"
+        self.endpoint_incorrect = "IT_IS_A_TRAP"
+        self.correct_session = "C3PO"
+        self.incorrect_session = "r2D2"
+        self.set_link_overview = True
+        self.expected_url_params_if_attribute_set = "?link_overview=" + str(self.set_link_overview)
+        self.empty_url_params = ""
 
-            self.steuerlotse_step_with_overlink_view = SteuerlotseStep(endpoint=self.endpoint_correct,
-                                                                       header_title=None, stored_data=None,
-                                                                       overview_step=None,
-                                                                       default_data=None, prev_step=None,
-                                                                       next_step=None)
-            self.steuerlotse_step_with_overlink_view.has_link_overview = True
+        self.steuerlotse_step_with_overlink_view = SteuerlotseStep(endpoint=self.endpoint_correct,
+                                                                    header_title=None, stored_data=None,
+                                                                    overview_step=None,
+                                                                    default_data=None, prev_step=None,
+                                                                    next_step=None)
+        self.steuerlotse_step_with_overlink_view.has_link_overview = True
 
     def test_if_step_given_and_attributes_correct_then_return_correct_url(self):
-        with app.app_context() and app.test_request_context():
-            created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockStartStep.name)
-            expected_url = self.helper_build_test_url(
-                self.endpoint_correct, MockStartStep) + \
-                           self.expected_url_params_if_attribute_set
-            self.assertEqual(expected_url, created_url)
+        created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockStartStep.name)
+        expected_url = self.helper_build_test_url(
+            self.endpoint_correct, MockStartStep) + \
+                        self.expected_url_params_if_attribute_set
+        self.assertEqual(expected_url, created_url)
 
-            created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockMiddleStep.name)
-            expected_url = self.helper_build_test_url(
-                self.endpoint_correct, MockMiddleStep) + \
-                           self.expected_url_params_if_attribute_set
-            self.assertEqual(expected_url, created_url)
+        created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockMiddleStep.name)
+        expected_url = self.helper_build_test_url(
+            self.endpoint_correct, MockMiddleStep) + \
+                        self.expected_url_params_if_attribute_set
+        self.assertEqual(expected_url, created_url)
 
-            created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockFinalStep.name)
-            expected_url = self.helper_build_test_url(
-                self.endpoint_correct, MockFinalStep) + \
-                           self.expected_url_params_if_attribute_set
-            self.assertEqual(expected_url, created_url)
+        created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockFinalStep.name)
+        expected_url = self.helper_build_test_url(
+            self.endpoint_correct, MockFinalStep) + \
+                        self.expected_url_params_if_attribute_set
+        self.assertEqual(expected_url, created_url)
 
     def test_if_attributes_empty_then_correct_url(self):
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            created_url = steuerlotse_step.url_for_step(MockStartStep.name)
-            expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=False"
-            self.assertEqual(expected_url, created_url)
+        steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        created_url = steuerlotse_step.url_for_step(MockStartStep.name)
+        expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=False"
+        self.assertEqual(expected_url, created_url)
 
     def test_if_attributes_correct_then_correct_url(self):
-        with app.app_context() and app.test_request_context():
-            created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockStartStep.name)
-            expected_url = self.helper_build_test_url(self.endpoint_correct,
-                                                      MockStartStep) + self.expected_url_params_if_attribute_set
-            self.assertEqual(expected_url, created_url)
+        created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockStartStep.name)
+        expected_url = self.helper_build_test_url(self.endpoint_correct,
+                                                    MockStartStep) + self.expected_url_params_if_attribute_set
+        self.assertEqual(expected_url, created_url)
 
     def test_if_link_overview_param_set_then_used_in_url(self):
-        with app.app_context() and app.test_request_context() as req:
-            req.request.args = {'link_overview': "True"}
-            steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            created_url = steuerlotse_step.url_for_step(MockStartStep.name)
-            expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=True"
-            self.assertEqual(expected_url, created_url)
+        self.req.request.args = {'link_overview': "True"}
+        steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        created_url = steuerlotse_step.url_for_step(MockStartStep.name)
+        expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=True"
+        self.assertEqual(expected_url, created_url)
 
-        with app.app_context() and app.test_request_context() as req:
-            req.request.args = {'link_overview': "False"}
-            steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            created_url = steuerlotse_step.url_for_step(MockStartStep.name)
-            expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=False"
-            self.assertEqual(expected_url, created_url)
+        self.req.request.args = {'link_overview': "False"}
+        steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        created_url = steuerlotse_step.url_for_step(MockStartStep.name)
+        expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=False"
+        self.assertEqual(expected_url, created_url)
 
     def test_if_incorrect_endpoint_then_throw_error(self):
-        with app.app_context() and app.test_request_context():
-            steuerlotse_incorrect_endpoint = SteuerlotseStep(endpoint="IncorrectEndpoint", header_title=None,
-                                                             stored_data=None,
-                                                             overview_step=None, default_data=None, prev_step=None,
-                                                             next_step=None)
-            self.assertRaises(BuildError, steuerlotse_incorrect_endpoint.url_for_step, MockStartStep.name)
+        steuerlotse_incorrect_endpoint = SteuerlotseStep(endpoint="IncorrectEndpoint", header_title=None,
+                                                            stored_data=None,
+                                                            overview_step=None, default_data=None, prev_step=None,
+                                                            next_step=None)
+        self.assertRaises(BuildError, steuerlotse_incorrect_endpoint.url_for_step, MockStartStep.name)
 
     def test_if_additional_attr_provided_then_append_to_url(self):
-        with app.app_context() and app.test_request_context():
-            created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockStartStep.name,
-                                                                                additional_attr1="did_not_expect",
-                                                                                additional_attr2="to_see_you_here")
-            expected_url = self.helper_build_test_url(self.endpoint_correct,
-                                                      MockStartStep) + self.expected_url_params_if_attribute_set + \
-                           "&additional_attr1=did_not_expect" \
-                           "&additional_attr2=to_see_you_here"
-            self.assertEqual(expected_url, created_url)
+        created_url = self.steuerlotse_step_with_overlink_view.url_for_step(MockStartStep.name,
+                                                                            additional_attr1="did_not_expect",
+                                                                            additional_attr2="to_see_you_here")
+        expected_url = self.helper_build_test_url(self.endpoint_correct,
+                                                    MockStartStep) + self.expected_url_params_if_attribute_set + \
+                        "&additional_attr1=did_not_expect" \
+                        "&additional_attr2=to_see_you_here"
+        self.assertEqual(expected_url, created_url)
 
 
 class TestSteuerlotseStepHandle(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_handle_calls_methods_in_correct_order(self):
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle") as mock_pre_handle, \
-                    patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle") as mock_main_handle, \
-                    patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._post_handle") as mock_post_handle:
-                call_order = MagicMock()
-                call_order.attach_mock(mock_pre_handle, "mock_pre_handle")
-                call_order.attach_mock(mock_main_handle, "mock_main_handle")
-                call_order.attach_mock(mock_post_handle, "mock_post_handle")
+        steuerlotse_step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        with (
+            patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle") as mock_pre_handle,
+            patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle") as mock_main_handle,
+            patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._post_handle") as mock_post_handle
+        ):
+            call_order = MagicMock()
+            call_order.attach_mock(mock_pre_handle, "mock_pre_handle")
+            call_order.attach_mock(mock_main_handle, "mock_main_handle")
+            call_order.attach_mock(mock_post_handle, "mock_post_handle")
 
-                steuerlotse_step.handle()
-                call_order.assert_has_calls(
-                    [call.mock_pre_handle(), call.mock_main_handle(), call.mock_post_handle()])
+            steuerlotse_step.handle()
+            call_order.assert_has_calls(
+                [call.mock_pre_handle(), call.mock_main_handle(), call.mock_post_handle()])
 
     def test_handle_returns_result_from_post_handle(self):
         post_handle_stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle"), \
-                    patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle"), \
-                    patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._post_handle",
-                          MagicMock(return_value=post_handle_stored_data)):
-                handle_result = steuerlotse_step.handle()
-                self.assertEqual(post_handle_stored_data, handle_result)
+        steuerlotse_step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        with (
+            patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle"),
+            patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle"),
+            patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._post_handle", MagicMock(return_value=post_handle_stored_data))
+        ):
+            handle_result = steuerlotse_step.handle()
+            self.assertEqual(post_handle_stored_data, handle_result)
 
 
 class TestSteuerlotseStepPreHandle(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_if_no_prev_next_step_set_then_render_info_is_set_correctly(self):
         correct_endpoint = "lotse"
 
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None, overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle()
+        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None, overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step.name = "This is the one"
+        steuerlotse_step._pre_handle()
 
-            expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
-                                              form=None, prev_url=None,
-                                              next_url=None, submit_url=url_for(endpoint=correct_endpoint,
-                                                                                step=steuerlotse_step.name,
-                                                                                link_overview=steuerlotse_step.has_link_overview),
-                                              overview_url=None)
+        expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
+                                            form=None, prev_url=None,
+                                            next_url=None, submit_url=url_for(endpoint=correct_endpoint,
+                                                                            step=steuerlotse_step.name,
+                                                                            link_overview=steuerlotse_step.has_link_overview),
+                                            overview_url=None)
 
-            self.assertEqual(expected_render_info, steuerlotse_step.render_info)
+        self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
     def test_if_prev_and_next_step_set_then_render_info_is_set_correctly(self):
         correct_endpoint = "lotse"
         prev_step = MockStartStep
         next_step = MockFormStep
 
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, stored_data=None,
-                                               prev_step=prev_step,
-                                               next_step=next_step, header_title=None, overview_step=None,
-                                               default_data=None)
-            steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle()
+        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, stored_data=None,
+                                            prev_step=prev_step,
+                                            next_step=next_step, header_title=None, overview_step=None,
+                                            default_data=None)
+        steuerlotse_step.name = "This is the one"
+        steuerlotse_step._pre_handle()
 
-            expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
-                                              form=None,
-                                              prev_url=url_for(endpoint=correct_endpoint,
-                                                               step=prev_step.name,
-                                                               link_overview=steuerlotse_step.has_link_overview),
-                                              next_url=url_for(endpoint=correct_endpoint,
-                                                               step=next_step.name,
-                                                               link_overview=steuerlotse_step.has_link_overview),
-                                              submit_url=url_for(endpoint=correct_endpoint,
-                                                                 step=steuerlotse_step.name,
-                                                                 link_overview=steuerlotse_step.has_link_overview),
-                                              overview_url=None)
+        expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
+                                            form=None,
+                                            prev_url=url_for(endpoint=correct_endpoint,
+                                                            step=prev_step.name,
+                                                            link_overview=steuerlotse_step.has_link_overview),
+                                            next_url=url_for(endpoint=correct_endpoint,
+                                                            step=next_step.name,
+                                                            link_overview=steuerlotse_step.has_link_overview),
+                                            submit_url=url_for(endpoint=correct_endpoint,
+                                                                step=steuerlotse_step.name,
+                                                                link_overview=steuerlotse_step.has_link_overview),
+                                            overview_url=None)
 
-            self.assertEqual(expected_render_info, steuerlotse_step.render_info)
+        self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
     def test_render_info_is_set_correctly(self):
         correct_endpoint = "lotse"
         overview_step = MockFinalStep
 
-        with app.app_context() and app.test_request_context() as req:
-            req.request.args = {'link_overview': "True"}
-            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
-                                               header_title=None, stored_data=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            steuerlotse_step.name = "This is the one"
-            expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
-                                              form=None, prev_url=None,
-                                              next_url=None, submit_url=url_for(endpoint=correct_endpoint,
-                                                                                step=steuerlotse_step.name,
-                                                                                link_overview=steuerlotse_step.has_link_overview),
-                                              overview_url=overview_url)
+        self.req.request.args = {'link_overview': "True"}
+        overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
+        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
+                                            header_title=None, stored_data=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step.name = "This is the one"
+        expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
+                                            form=None, prev_url=None,
+                                            next_url=None, submit_url=url_for(endpoint=correct_endpoint,
+                                                                            step=steuerlotse_step.name,
+                                                                            link_overview=steuerlotse_step.has_link_overview),
+                                            overview_url=overview_url)
 
-            steuerlotse_step._pre_handle()
+        steuerlotse_step._pre_handle()
 
-            self.assertEqual(expected_render_info, steuerlotse_step.render_info)
+        self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
     def test_pre_handle_leaves_stored_data_untouched(self):
         data = {'father': 'Mufasa'}
 
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=data,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            steuerlotse_step.name = "This is the one"
+        steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=data,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step.name = "This is the one"
 
-            steuerlotse_step._pre_handle()
+        steuerlotse_step._pre_handle()
 
-            self.assertEqual(data, steuerlotse_step.stored_data)
+        self.assertEqual(data, steuerlotse_step.stored_data)
 
     def test_if_title_multiple_set_and_number_of_users_is_2_then_set_render_info_title_to_multiple(self):
         correct_endpoint = "lotse"
         overview_step = MockFinalStep
         correct_multiple_title = "We are more than one"
 
-        with app.app_context() and app.test_request_context() as req, \
-                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
-            req.request.args = {'link_overview': "True"}
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+            self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
                                                header_title=None, stored_data=None,
@@ -289,9 +284,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_single_title = "We are only one"
         correct_multiple_title = "We are more than one"
 
-        with app.app_context() and app.test_request_context() as req, \
-                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
-            req.request.args = {'link_overview': "True"}
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+            self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
                                                header_title=None, stored_data=None,
@@ -309,9 +303,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         overview_step = MockFinalStep
         correct_multiple_intro = "We are more than one"
 
-        with app.app_context() and app.test_request_context() as req, \
-                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
-            req.request.args = {'link_overview': "True"}
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+            self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
                                                header_title=None, stored_data=None,
@@ -329,9 +322,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_single_intro = "We are only one"
         correct_multiple_intro = "We are more than one"
 
-        with app.app_context() and app.test_request_context() as req, \
-                patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
-            req.request.args = {'link_overview': "True"}
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+            self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
             steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
                                                header_title=None, stored_data=None,
@@ -346,61 +338,67 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
 
 
 class TestSteuerlotseStepPostHandle(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_if_post_handle_called_then_return_render_result(self):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=None, overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle()
+        steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=None, overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step.name = "This is the one"
+        steuerlotse_step._pre_handle()
 
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()) as step_render:
-                post_result = steuerlotse_step._post_handle()
+        with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()) as step_render:
+            post_result = steuerlotse_step._post_handle()
 
-                self.assertEqual(step_render.return_value, post_result)
-                step_render.assert_called()
+            self.assertEqual(step_render.return_value, post_result)
+            step_render.assert_called()
 
     def test_if_redirection_url_set_then_return_redirect(self):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
-        with app.app_context() and app.test_request_context():
-            steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=stored_data,
-                                               overview_step=None,
-                                               default_data=None, prev_step=None, next_step=None)
-            steuerlotse_step.name = "This is the one"
-            steuerlotse_step._pre_handle()
+        steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=stored_data,
+                                            overview_step=None,
+                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step.name = "This is the one"
+        steuerlotse_step._pre_handle()
 
-            redirect_url = url_for(endpoint="lotse", step="RedirectToThis",
-                                   link_overview=steuerlotse_step.has_link_overview)
-            steuerlotse_step.render_info.redirect_url = redirect_url
+        redirect_url = url_for(endpoint="lotse", step="RedirectToThis",
+                                link_overview=steuerlotse_step.has_link_overview)
+        steuerlotse_step.render_info.redirect_url = redirect_url
 
-            with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()):
-                # We need to patch this because the render function in the SteuerlotseStep is not implemented but
-                # called by _post_handle
-                post_result = steuerlotse_step._post_handle()
+        with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.render", MagicMock()):
+            # We need to patch this because the render function in the SteuerlotseStep is not implemented but
+            # called by _post_handle
+            post_result = steuerlotse_step._post_handle()
 
-            self.assertEqual(302, post_result.status_code)
-            self.assertEqual(
-                redirect(redirect_url).location,
-                post_result.location)
+        self.assertEqual(302, post_result.status_code)
+        self.assertEqual(
+            redirect(redirect_url).location,
+            post_result.location)
 
 
 class TestRedirectSteuerlotseStep(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_if_redirect_url_provided_then_return_redirect_on_specified_page(self):
-        with app.app_context() and app.test_request_context():
-            redirection_step = RedirectSteuerlotseStep(redirection_step_name="RedirectToThis", endpoint="lotse")
+        redirection_step = RedirectSteuerlotseStep(redirection_step_name="RedirectToThis", endpoint="lotse")
 
-            returned_redirect = redirection_step.handle()
+        returned_redirect = redirection_step.handle()
 
-            self.assertEqual(302, returned_redirect.status_code)
-            self.assertEqual(
-                redirect(url_for(endpoint="lotse", step="RedirectToThis",
-                                 link_overview=redirection_step.has_link_overview)).location,
-                returned_redirect.location)
+        self.assertEqual(302, returned_redirect.status_code)
+        self.assertEqual(
+            redirect(url_for(endpoint="lotse", step="RedirectToThis",
+                                link_overview=redirection_step.has_link_overview)).location,
+            returned_redirect.location)
 
 
 class TestSteuerlotseFormStepHandle(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, app):
+        self.app = app
 
     def setUp(self) -> None:
         self.endpoint_correct = 'lotse'
@@ -408,7 +406,7 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
 
     def test_if_post_then_return_redirect_to_next_step(self):
         next_step = MockFinalStep
-        with app.app_context() and app.test_request_context(
+        with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
                 method='POST') as req:
             req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
@@ -424,7 +422,7 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
 
     def test_if_not_post_then_return_render(self):
         next_step = MockFinalStep
-        with app.app_context() and app.test_request_context(
+        with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
                 method='GET') as req:
             req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
@@ -438,9 +436,9 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
     def test_update_session_data_is_called(self):
         next_step = MockFinalStep
         expected_data = {'brother': 'Luigi'}
-        with app.app_context() and app.test_request_context():
+        with self.app.test_request_context():
             with patch('app.forms.steps.steuerlotse_step.override_session_data') as update_fun, \
-                    app.app_context() and app.test_request_context(
+                    self.app.test_request_context(
                         path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
                         method='GET') as req:
                 form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step)
@@ -449,13 +447,13 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
                 update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
 
     def test_yes_no_field_content_overriden_if_empty(self):
-        with app.app_context() and app.test_request_context(method='POST') as req:
+        with self.app.test_request_context(method='POST') as req:
             req.request.form = ImmutableMultiDict({'yes_no_field': 'yes'})
             mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data={}, next_step=MockRenderStep)
             mock_yesno_step.handle()
             data_after_first_handle = mock_yesno_step.stored_data
 
-        with app.app_context() and app.test_request_context(method='POST') as req:
+        with self.app.test_request_context(method='POST') as req:
             req.request.form = ImmutableMultiDict({})
             mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data=data_after_first_handle,
                                             next_step=MockRenderStep)
@@ -466,49 +464,49 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
 
 
 class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
 
     def test_if_multiple_form_and_is_multiple_user_then_return_multiple_form(self):
-        with app.app_context() and app.test_request_context() as req:
-            req.form = MagicMock()
-            form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
-            form_multiple = MagicMock()
-            form_multiple_constructor = MagicMock(return_value=form_multiple)
-            form_step.form_multiple = form_multiple_constructor
+        self.req.form = MagicMock()
+        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
+        form_multiple = MagicMock()
+        form_multiple_constructor = MagicMock(return_value=form_multiple)
+        form_step.form_multiple = form_multiple_constructor
 
-            with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
-                created_form = form_step.create_form(req, {})
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+            created_form = form_step.create_form(self.req, {})
 
-            form_multiple_constructor.assert_called_once()
-            self.assertEqual(form_multiple, created_form)
+        form_multiple_constructor.assert_called_once()
+        self.assertEqual(form_multiple, created_form)
 
     def test_if_multiple_form_is_none_and_is_multiple_user_then_return_single_form(self):
-        with app.app_context() and app.test_request_context() as req:
-            req.form = MagicMock()
-            form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
-            form_single = MagicMock()
-            form_single_constructor = MagicMock(return_value=form_single)
-            form_step.form = form_single_constructor
-            form_step.form_multiple = None
+        self.req.form = MagicMock()
+        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
+        form_single = MagicMock()
+        form_single_constructor = MagicMock(return_value=form_single)
+        form_step.form = form_single_constructor
+        form_step.form_multiple = None
 
-            with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
-                created_form = form_step.create_form(req, {})
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
+            created_form = form_step.create_form(self.req, {})
 
-            form_single_constructor.assert_called_once()
-            self.assertEqual(form_single, created_form)
+        form_single_constructor.assert_called_once()
+        self.assertEqual(form_single, created_form)
 
     def test_if_multiple_form_and_not_multiple_user_then_return_single_form(self):
-        with app.app_context() and app.test_request_context() as req:
-            req.form = MagicMock()
-            form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
-            form_single = MagicMock()
-            form_single_constructor = MagicMock(return_value=form_single)
-            form_step.form = form_single_constructor
+        self.req.form = MagicMock()
+        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
+        form_single = MagicMock()
+        form_single_constructor = MagicMock(return_value=form_single)
+        form_step.form = form_single_constructor
 
-            with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
-                created_form = form_step.create_form(req, {})
+        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
+            created_form = form_step.create_form(self.req, {})
 
-            form_single_constructor.assert_called_once()
-            self.assertEqual(form_single, created_form)
+        form_single_constructor.assert_called_once()
+        self.assertEqual(form_single, created_form)
 
 
 class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):
