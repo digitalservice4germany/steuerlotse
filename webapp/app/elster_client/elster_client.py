@@ -2,6 +2,7 @@ import logging
 import json
 from datetime import datetime
 from decimal import Decimal
+from functools import lru_cache
 
 import requests
 from flask_login import current_user, logout_user
@@ -24,7 +25,7 @@ _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'is_person_a_account_holder', 'person_a_blind', 'person_a_gehbeh',
               'person_b_same_address', 'person_b_blind', 'person_b_gehbeh', 'steuerminderung',
-              'is_digitally_signed']
+              'is_digitally_signed', 'request_new_tax_number', 'steuernummer_exists']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -49,14 +50,14 @@ def send_to_erica(*args, **kwargs):
 
 
 def request_from_erica(*args, **kwargs):
-    app.logger.info(f'Making Erica GET request with args {args!r}')
-    if app.config['USE_MOCK_API']:
+    logger.info(f'Making Erica GET request with args {args!r}')
+    if Config.USE_MOCK_API:
         from tests.elster_client.mock_erica import MockErica
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
         response = requests.get(*args, headers=headers, **kwargs)
-    app.logger.info(f'Completed Erica GET request with args {args!r}, got code {response.status_code}')
+    logger.info(f'Completed Erica GET request with args {args!r}, got code {response.status_code}')
     return response
 
 
@@ -141,6 +142,7 @@ def send_unlock_code_revocation_with_elster(form_data, ip_address, include_elste
     return response_data
 
 
+@lru_cache
 def request_tax_offices():
     pyeric_response = request_from_erica(_PYERIC_API_BASE_URL + '/tax_offices')
 
@@ -192,6 +194,9 @@ def _generate_est_request_data(form_data, year=2020):
     for key in list(set(_DATE_KEYS) & set(adapted_form_data.keys())):
         if isinstance(adapted_form_data[key], str):
             adapted_form_data[key] = datetime.strptime(adapted_form_data[key], '%Y-%m-%d').date()
+
+    if not adapted_form_data.get('steuernummer_exists') and adapted_form_data.get('request_new_tax_number'):
+        adapted_form_data['submission_without_tax_nr'] = True
 
     if not current_user.is_active:
         # no non-active user should come until here, but they should certainly not be able to send a tax
