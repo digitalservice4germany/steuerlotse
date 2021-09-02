@@ -11,6 +11,7 @@ from werkzeug.exceptions import InternalServerError
 from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
+from app.extensions import nav, login_manager, limiter
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
