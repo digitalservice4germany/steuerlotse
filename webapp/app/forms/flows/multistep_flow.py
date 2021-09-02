@@ -1,3 +1,4 @@
+import logging
 from collections import namedtuple
 from typing import Optional
 
@@ -8,6 +9,8 @@ from wtforms import Form
 from app.config import Config
 from app.forms.session_data import deserialize_session_data, override_session_data
 from app.forms.steps.step import FormStep
+
+logger = logging.getLogger(__name__)
 
 
 class RenderInfo(object):
@@ -91,8 +94,10 @@ class MultiStepFlow:
         override_session_data(stored_data)
 
         if render_info.redirect_url:
+            logger.info(f"Redirect to {render_info.redirect_url}")
             return redirect(render_info.redirect_url)
         elif isinstance(step, FormStep) and request.method == 'POST' and render_info.form.validate():
+            logger.info(f"Redirect to next Step {render_info.next_url}")
             return redirect(render_info.next_url)
         else:
             return step.render(stored_data, render_info)

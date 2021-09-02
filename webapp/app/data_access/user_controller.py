@@ -2,7 +2,7 @@ from typing import ByteString
 
 from flask_login.utils import login_user
 
-from app import db
+from app.extensions import db
 from app.crypto.pw_hashing import indiv_salt_hash, global_salt_hash
 
 from app.data_access.db_model.user import User

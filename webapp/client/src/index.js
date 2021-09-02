@@ -9,7 +9,7 @@ const componentNameMap = {
   LoginPage: LoginPage,
 };
 
-document.querySelectorAll("[data-is-component=yes]").forEach((element) => {
+function mountComponent(element) {
   const name = element.dataset.componentName;
   const Component = componentNameMap[name];
   if (Component !== undefined) {
@@ -25,4 +25,6 @@ document.querySelectorAll("[data-is-component=yes]").forEach((element) => {
   } else {
     console.log(`No such component "${name}"`);
   }
-});
+}
+
+document.querySelectorAll("[data-is-component=yes]").forEach(mountComponent);

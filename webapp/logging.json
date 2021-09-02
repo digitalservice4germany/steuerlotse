@@ -8,7 +8,7 @@
     },
     "filters": {
         "default": {
-            "()": "app.logging.AddRequestIdFilter"
+            "()": "app.logging.AddRequestInformationFilter"
         }
     },
     "handlers": {
