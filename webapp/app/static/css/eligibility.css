@@ -54,6 +54,7 @@ h1.my-4{
 
     .result-text{
         font-size: var(--text-medium);
+        margin: 0;
     }
 }
 
