@@ -16,6 +16,7 @@ from app.forms.validators import DecimalOnly, IntegerLength
 
 class LosteFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
+    header_title = None
     InputForm = None
     InputMultipleForm = None
     prev_step_name = None
