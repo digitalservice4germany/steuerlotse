@@ -20,19 +20,21 @@
         </div>
     </div>
 
-    <div class="spacing-b-07 row m-0 ">
+    <div class="spacing-b-08">
         <h2>{{ _('form.eligibility.success-next-step') }}</h2>
-        <span class="result-text">
-            <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
-            {% if 'dependent_notes' in render_info.additional_info %}
-                <ul class="form-list">
-                    {% for dependent_note in render_info.additional_info['dependent_notes']%}
-                        <li>{{ dependent_note }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif%}
-        </span>
+        <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
     </div>
+
+    {% if 'dependent_notes' in render_info.additional_info %}
+        <div class="spacing-b-08">
+            <h2 class="dependent-notes-heading">{{ _('form.eligibility.success-attention.heading') }}</h2>
+            <ul class="form-list">
+                {% for dependent_note in render_info.additional_info['dependent_notes'] %}
+                    <li>{{ dependent_note }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     <div class="spacing-b-11 row m-0">
         {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}

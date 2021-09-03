@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-30 10:25+0200\n"
+"POT-Creation-Date: 2021-09-03 10:09+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,109 +18,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:57
+#: app/routes.py:58
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:58
+#: app/routes.py:59
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:59
+#: app/routes.py:60
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:60
+#: app/routes.py:61
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:62
+#: app/routes.py:63
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:64
+#: app/routes.py:65
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:68
+#: app/routes.py:69
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:118
+#: app/routes.py:121
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:119
+#: app/routes.py:122
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:145
+#: app/routes.py:148
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:146
+#: app/routes.py:149
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:157 app/routes.py:254
+#: app/routes.py:160 app/routes.py:257
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:175 app/templates/basis/base.html:30
+#: app/routes.py:178 app/templates/basis/base.html:30
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:180
+#: app/routes.py:183
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:185
+#: app/routes.py:188
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:190
+#: app/routes.py:193
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:195
+#: app/routes.py:198
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:200
+#: app/routes.py:203
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:205
+#: app/routes.py:208
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:215
+#: app/routes.py:218
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:220
+#: app/routes.py:223
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:246
+#: app/routes.py:249
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:250 app/routes.py:258
+#: app/routes.py:253 app/routes.py:261
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:262
+#: app/routes.py:265
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:267
+#: app/routes.py:270
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -4786,48 +4786,52 @@ msgstr ""
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
-#: app/templates/eligibility/display_failure.html:13
-#: app/templates/eligibility/display_success.html:13
+#: app/templates/eligibility/display_failure.html:14
+#: app/templates/eligibility/display_success.html:14
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
-#: app/templates/eligibility/display_failure.html:22
+#: app/templates/eligibility/display_failure.html:24
 msgid "form.eligibility.use-elster"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_failure.html:24
+#: app/templates/eligibility/display_failure.html:26
 msgid "form.eligibility.use-elster-text"
 msgstr ""
 "Es gibt zwei mögliche Wege Ihre Steuererklärung ohne den Steuerlotsen zu "
 "machen:"
 
-#: app/templates/eligibility/display_failure.html:26
+#: app/templates/eligibility/display_failure.html:28
 msgid "form.eligibility.use-elster.list-item-1"
 msgstr ""
 "Sie können die vollumfänglichen Steuererklärungsvordrucke nutzen. Die "
 "notwendigen Formulare dazu erhalten Sie zum Beispiel in Ihrem Finanzamt."
 
-#: app/templates/eligibility/display_failure.html:27
+#: app/templates/eligibility/display_failure.html:29
 msgid "form.eligibility.use-elster.list-item-2"
 msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:35
+#: app/templates/eligibility/display_failure.html:37
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
-#: app/templates/eligibility/display_success.html:22
+#: app/templates/eligibility/display_success.html:24
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_success.html:24
+#: app/templates/eligibility/display_success.html:25
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:36
+#: app/templates/eligibility/display_success.html:29
+msgid "form.eligibility.success-attention.heading"
+msgstr "Bitte beachten Sie."
+
+#: app/templates/eligibility/display_success.html:40
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
