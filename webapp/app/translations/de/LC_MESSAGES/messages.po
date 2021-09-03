@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-03 09:51+0200\n"
+"POT-Creation-Date: 2021-09-03 14:51+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -680,42 +680,42 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:543
 msgid "form.eligibility.taxed_investment-title"
 msgstr ""
-"Sind die Kapitalerträge besteuert, weil die erforderlichen Steuern "
-"bereits abgeführt wurden?"
+"Sind die Kapitalerträge besteuert, weil die Abgeltungsteuer bereits "
+"abgeführt wurde?"
 
 #: app/forms/steps/eligibility_steps.py:549
 msgid "form.eligibility.taxed_investment.detail.title"
-msgstr "Ich weiß nicht, um welche Steuern es sich handelt."
+msgstr "Ich weiß nicht, wann die Abgeltungsteuer abgeführt wird."
 
 #: app/forms/steps/eligibility_steps.py:550
 msgid "form.eligibility.taxed_investment.detail.text"
 msgstr ""
-"<p><strong>Abgeltungsteuer</strong><br>Die Abgeltungsteuer wird auf Ihre "
-"Kapitalerträge erhoben. Banken oder Versicherungen führen beispielsweise "
-"pauschal 25% Steuern auf Kapitalerträge ab. Dies betrifft z.B. Zinsen auf"
-" Sparguthaben, Aktien oder Wertpapiere. Wenn Sie also ausschließlich "
-"derartig besteuerte Kapitalerträge haben, können Sie »Ja« auswählen. Eine"
-" Ausnahme wird im nächsten Abschnitt »Kirchensteuer« "
-"beschrieben.</p><p><strong>Kirchensteuer</strong><br>Wenn Sie "
-"kirchensteuerpflichtig sind, wird in der Regel mit der Abgeltungsteuer "
-"auch die Kirchensteuer auf Ihre Kapitalerträge einbehalten. Das gilt "
-"jedoch nicht, wenn Sie z.B. dem Datenabruf zur Kirchensteuererhebung "
-"widersprochen haben. Wurde noch keine Kirchensteuer auf Ihre "
-"Kapitalerträge erhoben, obwohl Sie kirchensteuerpflichtig sind, müssen "
-"Sie »Nein« auswählen.</p><p><strong>Hinweis</strong><br>Haben Sie z.B. "
-"privat Geld verliehen und erhalten dafür Zinsen, müssen Sie dies in Ihrer"
-" Steuererklärung angeben. Auch bei Lebensversicherungen, die ab dem Jahr "
-"2005 abgeschlossenen wurden, müssen in vielen Fällen die gewonnenen "
-"Erträge bei Ablauf der Versicherung und Auszahlung noch versteuert "
-"werden. Wenn dies auf Sie zutrifft, wählen Sie bitte »Nein« aus.</p>"
+"Die Abgeltungsteuer hat den Effekt, dass die Steuerschuld auf "
+"Kapitalerträge voll beglichen ist. Beispielsweise führen Banken oder "
+"Versicherungen pauschal 25% Steuern auf Kapitalerträge ab. Dies betrifft "
+"z.B. Zinsen auf Sparguthaben, Aktien oder Wertpapiere. Wenn Sie also "
+"ausschließlich derartige Kapitalerträge haben, wurden diese bereits "
+"besteuert und Sie können „Ja“ auswählen.</p>Wenn Sie einer "
+"Religionsgemeinschaft angehören, die berechtigt ist Kirchensteuer zu "
+"erheben, dann wird mit der Abgeltungsteuer auch die Kirchensteuer auf "
+"Ihre Kapitalerträge einbehalten. Wenn Sie einer solchen "
+"Religionsgemeinschaft angehören und keine Kirchensteuer auf Ihre "
+"Kapitalerträge erhoben wurde, dann erhalten Sie zum weiteren Vorgehen "
+"automatisch eine Nachricht von Ihrem Finanzamt. Auch in diesem Fall "
+"können Sie »Ja« auswählen.</p><p>Haben Sie z.B. privat Geld verliehen und"
+" erhalten dafür Zinsen, müssen Sie dies in Ihrer  Steuererklärung "
+"angeben. Auch bei Lebensversicherungen, die ab dem Jahr 2005 "
+"abgeschlossenen wurden, müssen in vielen Fällen die gewonnenen Erträge "
+"bei Ablauf der Versicherung und Auszahlung noch versteuert werden. Wenn "
+"dies auf Sie zutrifft, wählen Sie bitte »Nein« aus.</p>"
 
 #: app/forms/steps/eligibility_steps.py:551
 msgid "form.eligibility.taxed_investment.yes"
-msgstr "Ja, alle Steuern wurden bereits abgeführt."
+msgstr "Ja, die Abgeltungsteuer wurde bereits abgeführt."
 
 #: app/forms/steps/eligibility_steps.py:552
 msgid "form.eligibility.taxed_investment.no"
-msgstr "Nein, es gibt Steuern, die noch nicht abgeführt wurden."
+msgstr "Nein, die Abgeltungsteuer wurde noch nicht abgeführt."
 
 #: app/forms/steps/eligibility_steps.py:559
 msgid "form.eligibility.cheaper_check_failure-error"
@@ -1282,10 +1282,9 @@ msgstr ""
 #: app/forms/steps/lotse/declaration_steps.py:34
 msgid "form.lotse.declaration_incomes.list-item-2"
 msgstr ""
-"Kapitaleinkünfte, von denen bereits Abgeltungsteuer und, falls Sie "
-"kirchensteuerpflichtig sind, Kirchensteuer an das Finanzamt abgeführt "
-"oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde "
-"(Freistellungsauftrag), und ggf."
+"Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt "
+"abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde"
+" (Freistellungsauftrag), und ggf."
 
 #: app/forms/steps/lotse/declaration_steps.py:35
 msgid "form.lotse.declaration_incomes.list-item-3"
@@ -3044,10 +3043,9 @@ msgstr ""
 #: app/templates/content/agb.html:22
 msgid "agb.programmumfang-list-2"
 msgstr ""
-"Kapitaleinkünfte, von denen bereits Abgeltungsteuer und, falls Sie "
-"kirchensteuerpflichtig sind, Kirchensteuer an das Finanzamt abgeführt "
-"oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde "
-"(Freistellungsauftrag), und ggf."
+"Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt "
+"abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde"
+" (Freistellungsauftrag), und ggf."
 
 #: app/templates/content/agb.html:23
 msgid "agb.programmumfang-list-3"
@@ -4782,48 +4780,52 @@ msgstr ""
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
-#: app/templates/eligibility/display_failure.html:13
-#: app/templates/eligibility/display_success.html:13
+#: app/templates/eligibility/display_failure.html:14
+#: app/templates/eligibility/display_success.html:14
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
-#: app/templates/eligibility/display_failure.html:22
+#: app/templates/eligibility/display_failure.html:24
 msgid "form.eligibility.use-elster"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_failure.html:24
+#: app/templates/eligibility/display_failure.html:26
 msgid "form.eligibility.use-elster-text"
 msgstr ""
 "Es gibt zwei mögliche Wege Ihre Steuererklärung ohne den Steuerlotsen zu "
 "machen:"
 
-#: app/templates/eligibility/display_failure.html:26
+#: app/templates/eligibility/display_failure.html:28
 msgid "form.eligibility.use-elster.list-item-1"
 msgstr ""
 "Sie können die vollumfänglichen Steuererklärungsvordrucke nutzen. Die "
 "notwendigen Formulare dazu erhalten Sie zum Beispiel in Ihrem Finanzamt."
 
-#: app/templates/eligibility/display_failure.html:27
+#: app/templates/eligibility/display_failure.html:29
 msgid "form.eligibility.use-elster.list-item-2"
 msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:35
+#: app/templates/eligibility/display_failure.html:37
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
-#: app/templates/eligibility/display_success.html:22
+#: app/templates/eligibility/display_success.html:24
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_success.html:24
+#: app/templates/eligibility/display_success.html:25
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:36
+#: app/templates/eligibility/display_success.html:29
+msgid "form.eligibility.success-attention.heading"
+msgstr "Bitte beachten Sie."
+
+#: app/templates/eligibility/display_success.html:40
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 

@@ -8,29 +8,33 @@
 {% endblock %}
 
 {% block step_content %}
-    <div class="section-intro">
-        <div class="headline row p-0">
-            <img src="{{ url_for('static', filename='icons/success_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
-            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
+    <div class="section-intro simple-card">
+        <div class="row p-0">
+            <div class="col-2 failure-success-icon">
+                <img src="{{ url_for('static', filename='icons/success_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+            </div>
+            <div class="col-10">
+                <h1 class="headline">{{ render_info.step_title }}</h1>
+                <p class="result-text">{{ error_text }} {{ render_info.step_intro }}</p>
+            </div>
         </div>
-        <span class="result-text">
-            <p>{{ render_info.step_intro }}</p>
-        </span>
     </div>
 
-    <div class="spacing-b-07 row m-0 ">
+    <div class="spacing-b-08">
         <h2>{{ _('form.eligibility.success-next-step') }}</h2>
-        <span class="result-text">
-            <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
-            {% if 'dependent_notes' in render_info.additional_info %}
-                <ul class="form-list">
-                    {% for dependent_note in render_info.additional_info['dependent_notes']%}
-                        <li>{{ dependent_note }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif%}
-        </span>
+        <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
     </div>
+
+    {% if 'dependent_notes' in render_info.additional_info %}
+        <div class="spacing-b-08">
+            <h2 class="dependent-notes-heading">{{ _('form.eligibility.success-attention.heading') }}</h2>
+            <ul class="form-list">
+                {% for dependent_note in render_info.additional_info['dependent_notes'] %}
+                    <li>{{ dependent_note }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
     <div class="spacing-b-11 row m-0">
         {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
