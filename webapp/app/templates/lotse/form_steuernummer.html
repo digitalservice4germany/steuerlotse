@@ -41,6 +41,19 @@
         }
         let taxNumberFormState = TAX_NUMBER_FORM_STATES.NothingSelected;
 
+        document.addEventListener('DOMContentLoaded', () => {
+            // Register event handlers
+            document.querySelectorAll('input[type=radio][name=steuernummer_exists]').forEach((field)=>{
+                field.addEventListener("click",() => {changeTaxNumberExists(); runThroughAllStates(); handleState();});
+            });
+            document.getElementById('bundesland').addEventListener("change",() => {changeBundesland(); runThroughAllStates(); handleState();});
+            document.getElementById('bufa_nr').addEventListener("change",() => {changeTaxOffice(); runThroughAllStates(); handleState();});
+            // Check if input data should change state
+            runThroughAllStates();
+            assignAssociatedContent();
+            handleState();
+        });
+
         function updateTaxOfficeList() {
             let stateDropdown = document.getElementById("bundesland");
             let bufaNrDropdown = document.getElementById("bufa_nr");
@@ -168,17 +181,5 @@
             changeBundesland();
             changeTaxOffice();
         }
-        document.addEventListener('DOMContentLoaded', () => {
-            // Register event handlers
-            document.querySelectorAll('input[type=radio][name=steuernummer_exists]').forEach((field)=>{
-                field.addEventListener("click",() => {changeTaxNumberExists(); runThroughAllStates(); handleState();});
-            });
-            document.getElementById('bundesland').addEventListener("change",() => {changeBundesland(); runThroughAllStates(); handleState();});
-            document.getElementById('bufa_nr').addEventListener("change",() => {changeTaxOffice(); runThroughAllStates(); handleState();});
-            // Check if input data should change state
-            runThroughAllStates();
-            assignAssociatedContent();
-            handleState();
-        });
     </script>
 {% endblock %}
