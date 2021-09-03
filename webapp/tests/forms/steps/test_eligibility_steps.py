@@ -2596,7 +2596,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.cheaper_check']
+        expected_information = ['form.eligibility.result-note.capital_investment']
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -2611,10 +2611,25 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
+    def test_if_user_has_no_minimal_investment_income_then_set_correct_info(self):
+        expected_information = ['form.eligibility.result-note.capital_investment']
+        session_data = {'marital_status_eligibility': 'single',
+                        'user_a_has_elster_account_eligibility': 'no',
+                        'alimony_eligibility': 'no',
+                        'pension_eligibility': 'yes',
+                        'investment_income_eligibility': 'yes',
+                        'minimal_investment_income_eligibility': 'yes',
+                        'taxed_investment_income_eligibility': 'yes', }
+        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+
     def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
         expected_information = ['form.eligibility.result-note.user_b_elster_account',
                                 'form.eligibility.result-note.user_b_elster_account-registration',
-                                'form.eligibility.result-note.cheaper_check']
+                                'form.eligibility.result-note.capital_investment']
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
@@ -2626,6 +2641,26 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
+        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+
+    def test_if_user_b_has_no_elster_account_and_user_has_minimal_investment_income_check_then_set_correct_info(self):
+        expected_information = ['form.eligibility.result-note.user_b_elster_account',
+                                'form.eligibility.result-note.user_b_elster_account-registration',
+                                'form.eligibility.result-note.capital_investment']
+        session_data = {'marital_status_eligibility': 'married',
+                        'separated_since_last_year_eligibility': 'no',
+                        'user_a_has_elster_account_eligibility': 'yes',
+                        'user_b_has_elster_account_eligibility': 'no',
+                        'joint_taxes_eligibility': 'yes',
+                        'alimony_eligibility': 'no',
+                        'pension_eligibility': 'yes',
+                        'investment_income_eligibility': 'yes',
+                        'minimal_investment_income_eligibility': 'yes',
+                        'taxed_investment_income_eligibility': 'yes', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
             step.handle()
