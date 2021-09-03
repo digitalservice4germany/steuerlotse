@@ -6,7 +6,8 @@ from flask_babel import lazy_gettext as _l, _
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField
+from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField, \
+    SteuernummerField
 from app.forms.steps.lotse.confirmation_steps import StepSummary
 from app.forms.steps.lotse.personal_data_steps import StepFamilienstand, StepPersonA
 from app.forms.steps.step import SectionLink
@@ -125,7 +126,7 @@ class StepSteuernummer(LosteFormSteuerlotseStep):
             validators=[require_bufanr_input],
             render_kw={'data_label': _l('form.lotse.bufa_nr.data_label')}
         )
-        steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
+        steuernummer = SteuernummerField(label=_l('form.lotse.steuernummer'),
                                               validators=[require_tax_number_input, DecimalOnly(),
                                                           IntegerLength(min=10, max=11)],
                                               render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
