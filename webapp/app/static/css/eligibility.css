@@ -41,7 +41,7 @@ h1.my-4{
     }
 
     .headline{
-        margin-bottom: var(--spacing-06);
+        margin-bottom: var(--spacing-05);
     }
 
     .result-text{
@@ -55,7 +55,7 @@ h1.my-4{
     }
 
     .headline{
-        margin-bottom: var(--spacing-07);
+        margin-bottom: var(--spacing-06);
     }
 }
 
