@@ -1,3 +1,4 @@
+"use strict";
 function assignAssociatedContent(selector='label, .example-input, .additional-input-content, .invalid-feedback'){
     let associated_content = document.querySelectorAll(selector);
         for (let i = 0; i < associated_content.length; i++) {
