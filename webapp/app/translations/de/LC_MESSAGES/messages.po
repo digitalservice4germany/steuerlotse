@@ -4784,48 +4784,52 @@ msgstr ""
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
-#: app/templates/eligibility/display_failure.html:13
-#: app/templates/eligibility/display_success.html:13
+#: app/templates/eligibility/display_failure.html:14
+#: app/templates/eligibility/display_success.html:14
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
-#: app/templates/eligibility/display_failure.html:22
+#: app/templates/eligibility/display_failure.html:24
 msgid "form.eligibility.use-elster"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_failure.html:24
+#: app/templates/eligibility/display_failure.html:26
 msgid "form.eligibility.use-elster-text"
 msgstr ""
 "Es gibt zwei mögliche Wege Ihre Steuererklärung ohne den Steuerlotsen zu "
 "machen:"
 
-#: app/templates/eligibility/display_failure.html:26
+#: app/templates/eligibility/display_failure.html:28
 msgid "form.eligibility.use-elster.list-item-1"
 msgstr ""
 "Sie können die vollumfänglichen Steuererklärungsvordrucke nutzen. Die "
 "notwendigen Formulare dazu erhalten Sie zum Beispiel in Ihrem Finanzamt."
 
-#: app/templates/eligibility/display_failure.html:27
+#: app/templates/eligibility/display_failure.html:29
 msgid "form.eligibility.use-elster.list-item-2"
 msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:35
+#: app/templates/eligibility/display_failure.html:37
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
-#: app/templates/eligibility/display_success.html:22
+#: app/templates/eligibility/display_success.html:24
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_success.html:24
+#: app/templates/eligibility/display_success.html:25
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:36
+#: app/templates/eligibility/display_success.html:29
+msgid "form.eligibility.success-attention.heading"
+msgstr "Bitte beachten Sie."
+
+#: app/templates/eligibility/display_success.html:40
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
