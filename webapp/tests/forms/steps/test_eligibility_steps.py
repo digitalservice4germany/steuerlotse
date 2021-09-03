@@ -32,7 +32,7 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, \
     EligibilityStepMixin, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
     EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
-    data_fits_one_data_model, data_fits_data_model
+    data_fits_data_model_from_list, data_fits_data_model
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
@@ -141,7 +141,7 @@ class TestDataFitsOneDataModel:
     def test_if_all_models_fail_then_return_false(self):
         failing_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
         models = [failing_model, failing_model,failing_model]
-        result = data_fits_one_data_model(models, {})
+        result = data_fits_data_model_from_list(models, {})
 
         assert result is False
 
@@ -149,14 +149,14 @@ class TestDataFitsOneDataModel:
         failing_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
         succeeding_model = MagicMock()
         models = [failing_model, succeeding_model, failing_model]
-        result = data_fits_one_data_model(models, {})
+        result = data_fits_data_model_from_list(models, {})
 
         assert result is True
 
     def test_if_all_models_does_not_fail_then_return_true(self):
         succeeding_model = MagicMock()
         models = [succeeding_model, succeeding_model,succeeding_model]
-        result = data_fits_one_data_model(models, {})
+        result = data_fits_data_model_from_list(models, {})
 
         assert result is True
 

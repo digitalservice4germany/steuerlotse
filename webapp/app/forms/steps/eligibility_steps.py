@@ -38,7 +38,7 @@ def data_fits_data_model(data_model, stored_data):
     return True
 
 
-def data_fits_one_data_model(data_models, stored_data):
+def data_fits_data_model_from_list(data_models, stored_data):
     """
     Method to find out whether the data entered by the user fits at least one model
     """
@@ -749,7 +749,7 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
-        if data_fits_one_data_model(
+        if data_fits_data_model_from_list(
                 [CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.capital_investment'))
