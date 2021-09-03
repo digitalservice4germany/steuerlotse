@@ -31,7 +31,8 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, EligibilitySuccessDisplaySteuerlotseStep, \
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, \
     EligibilityStepMixin, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
-    EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
+    EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
+    data_fits_one_data_model, data_fits_data_model
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
@@ -118,6 +119,46 @@ class TestEligibilityStepSpecificsMixin(unittest.TestCase):
         num_of_users = EligibilityStepMixin().number_of_users(input_data)
 
         self.assertEqual(1, num_of_users)
+
+
+class TestDataFitsDataModel:
+
+    def test_if_model_fails_then_return_false(self):
+        failing_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
+        result = data_fits_data_model(failing_model, {})
+
+        assert result is False
+
+    def test_if_model_does_not_fail_then_return_true(self):
+        succeeding_model = MagicMock()
+        result = data_fits_data_model(succeeding_model, {})
+
+        assert result is True
+
+
+class TestDataFitsOneDataModel:
+
+    def test_if_all_models_fail_then_return_false(self):
+        failing_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
+        models = [failing_model, failing_model,failing_model]
+        result = data_fits_one_data_model(models, {})
+
+        assert result is False
+
+    def test_if_one_model_does_not_fail_then_return_true(self):
+        failing_model = MagicMock(parse_obj=MagicMock(side_effect=ValidationError([], None)))
+        succeeding_model = MagicMock()
+        models = [failing_model, succeeding_model, failing_model]
+        result = data_fits_one_data_model(models, {})
+
+        assert result is True
+
+    def test_if_all_models_does_not_fail_then_return_true(self):
+        succeeding_model = MagicMock()
+        models = [succeeding_model, succeeding_model,succeeding_model]
+        result = data_fits_one_data_model(models, {})
+
+        assert result is True
 
 
 class TestEligibilityInputFormSteuerlotseStepIsPreviousStep(unittest.TestCase):
