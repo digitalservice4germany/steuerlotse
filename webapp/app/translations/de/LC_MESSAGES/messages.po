@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-30 10:25+0200\n"
+"POT-Creation-Date: 2021-09-03 10:21+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,109 +18,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:57
+#: app/routes.py:58
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:58
+#: app/routes.py:59
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:59
+#: app/routes.py:60
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:60
+#: app/routes.py:61
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:62
+#: app/routes.py:63
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:64
+#: app/routes.py:65
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:68
+#: app/routes.py:69
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:118
+#: app/routes.py:121
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:119
+#: app/routes.py:122
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:145
+#: app/routes.py:148
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:146
+#: app/routes.py:149
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:157 app/routes.py:254
+#: app/routes.py:160 app/routes.py:257
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:175 app/templates/basis/base.html:30
+#: app/routes.py:178 app/templates/basis/base.html:30
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:180
+#: app/routes.py:183
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:185
+#: app/routes.py:188
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:190
+#: app/routes.py:193
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:195
+#: app/routes.py:198
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:200
+#: app/routes.py:203
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:205
+#: app/routes.py:208
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:215
+#: app/routes.py:218
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:220
+#: app/routes.py:223
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:246
+#: app/routes.py:249
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:250 app/routes.py:258
+#: app/routes.py:253 app/routes.py:261
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:262
+#: app/routes.py:265
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:267
+#: app/routes.py:270
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -684,42 +684,42 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:543
 msgid "form.eligibility.taxed_investment-title"
 msgstr ""
-"Sind die Kapitalerträge besteuert, weil die erforderlichen Steuern "
-"bereits abgeführt wurden?"
+"Sind die Kapitalerträge besteuert, weil die Abgeltungsteuer bereits "
+"abgeführt wurde?"
 
 #: app/forms/steps/eligibility_steps.py:549
 msgid "form.eligibility.taxed_investment.detail.title"
-msgstr "Ich weiß nicht, um welche Steuern es sich handelt."
+msgstr "Ich weiß nicht, wann die Abgeltungsteuer abgeführt wird."
 
 #: app/forms/steps/eligibility_steps.py:550
 msgid "form.eligibility.taxed_investment.detail.text"
 msgstr ""
-"<p><strong>Abgeltungsteuer</strong><br>Die Abgeltungsteuer wird auf Ihre "
-"Kapitalerträge erhoben. Banken oder Versicherungen führen beispielsweise "
-"pauschal 25% Steuern auf Kapitalerträge ab. Dies betrifft z.B. Zinsen auf"
-" Sparguthaben, Aktien oder Wertpapiere. Wenn Sie also ausschließlich "
-"derartig besteuerte Kapitalerträge haben, können Sie »Ja« auswählen. Eine"
-" Ausnahme wird im nächsten Abschnitt »Kirchensteuer« "
-"beschrieben.</p><p><strong>Kirchensteuer</strong><br>Wenn Sie "
-"kirchensteuerpflichtig sind, wird in der Regel mit der Abgeltungsteuer "
-"auch die Kirchensteuer auf Ihre Kapitalerträge einbehalten. Das gilt "
-"jedoch nicht, wenn Sie z.B. dem Datenabruf zur Kirchensteuererhebung "
-"widersprochen haben. Wurde noch keine Kirchensteuer auf Ihre "
-"Kapitalerträge erhoben, obwohl Sie kirchensteuerpflichtig sind, müssen "
-"Sie »Nein« auswählen.</p><p><strong>Hinweis</strong><br>Haben Sie z.B. "
-"privat Geld verliehen und erhalten dafür Zinsen, müssen Sie dies in Ihrer"
-" Steuererklärung angeben. Auch bei Lebensversicherungen, die ab dem Jahr "
-"2005 abgeschlossenen wurden, müssen in vielen Fällen die gewonnenen "
-"Erträge bei Ablauf der Versicherung und Auszahlung noch versteuert "
-"werden. Wenn dies auf Sie zutrifft, wählen Sie bitte »Nein« aus.</p>"
+"Die Abgeltungsteuer hat den Effekt, dass die Steuerschuld auf "
+"Kapitalerträge voll beglichen ist. Beispielsweise führen Banken oder "
+"Versicherungen pauschal 25% Steuern auf Kapitalerträge ab. Dies betrifft "
+"z.B. Zinsen auf Sparguthaben, Aktien oder Wertpapiere. Wenn Sie also "
+"ausschließlich derartige Kapitalerträge haben, wurden diese bereits "
+"besteuert und Sie können „Ja“ auswählen.</p>Wenn Sie einer "
+"Religionsgemeinschaft angehören, die berechtigt ist Kirchensteuer zu "
+"erheben, dann wird mit der Abgeltungsteuer auch die Kirchensteuer auf "
+"Ihre Kapitalerträge einbehalten. Wenn keine Kirchensteuer auf Ihre "
+"Kapitalerträge erhoben wurde, dann erhalten Sie zum weiteren Vorgehen "
+"automatisch eine Nachricht von Ihrem Finanzamt. Den Steuerlotsen können "
+"Sie für die Abgabe Ihrer Einkommensteuererklärung aber "
+"nutzen.</p><p>Haben Sie z.B. privat Geld verliehen und erhalten dafür "
+"Zinsen, müssen Sie dies in Ihrer  Steuererklärung angeben. Auch bei "
+"Lebensversicherungen, die ab dem Jahr 2005 abgeschlossenen wurden, müssen"
+" in vielen Fällen die gewonnenen Erträge bei Ablauf der Versicherung und "
+"Auszahlung noch versteuert werden. Wenn dies auf Sie zutrifft, wählen Sie"
+" bitte »Nein« aus.</p>"
 
 #: app/forms/steps/eligibility_steps.py:551
 msgid "form.eligibility.taxed_investment.yes"
-msgstr "Ja, alle Steuern wurden bereits abgeführt."
+msgstr "Ja, die Abgeltungsteuer wurde bereits abgeführt."
 
 #: app/forms/steps/eligibility_steps.py:552
 msgid "form.eligibility.taxed_investment.no"
-msgstr "Nein, es gibt Steuern, die noch nicht abgeführt wurden."
+msgstr "Nein, die Abgeltungsteuer wurde noch nicht abgeführt."
 
 #: app/forms/steps/eligibility_steps.py:559
 msgid "form.eligibility.cheaper_check_failure-error"
@@ -1286,10 +1286,9 @@ msgstr ""
 #: app/forms/steps/lotse/declaration_steps.py:34
 msgid "form.lotse.declaration_incomes.list-item-2"
 msgstr ""
-"Kapitaleinkünfte, von denen bereits Abgeltungsteuer und, falls Sie "
-"kirchensteuerpflichtig sind, Kirchensteuer an das Finanzamt abgeführt "
-"oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde "
-"(Freistellungsauftrag), und ggf."
+"Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt "
+"abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde"
+" (Freistellungsauftrag), und ggf."
 
 #: app/forms/steps/lotse/declaration_steps.py:35
 msgid "form.lotse.declaration_incomes.list-item-3"
@@ -3048,10 +3047,9 @@ msgstr ""
 #: app/templates/content/agb.html:22
 msgid "agb.programmumfang-list-2"
 msgstr ""
-"Kapitaleinkünfte, von denen bereits Abgeltungsteuer und, falls Sie "
-"kirchensteuerpflichtig sind, Kirchensteuer an das Finanzamt abgeführt "
-"oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde "
-"(Freistellungsauftrag), und ggf."
+"Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt "
+"abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde"
+" (Freistellungsauftrag), und ggf."
 
 #: app/templates/content/agb.html:23
 msgid "agb.programmumfang-list-3"
