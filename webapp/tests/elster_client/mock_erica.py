@@ -40,6 +40,7 @@ class MockErica:
     value_error_missing_fields_occurred = False
     request_code_already_revoked_error_occurred = False
     invalid_bufa_number_error_occurred = False
+    invalid_tax_number_error_occurred = False
 
     INVALID_ID = 'C3PO'
 
@@ -314,3 +315,7 @@ class MockErica:
         # InvalidBufaNumberError
         if MockErica.invalid_bufa_number_error_occurred:
             return get_json_response('invalid_bufa_number')
+
+        # InvalidTaxNumberError
+        if MockErica.invalid_tax_number_error_occurred:
+            return get_json_response('invalid_tax_number')
