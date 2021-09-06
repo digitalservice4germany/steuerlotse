@@ -9,11 +9,8 @@ class SummaryStep(object):
     pass
 
 
+@pytest.mark.usefixtures("app", "test_request_context")
 class TestLotseFormSteuerlotseStep:
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, app, test_request_context):
-        self.app = app
-        self.req = test_request_context
 
     def test_if_prev_and_next_step_name_set_then_set_correct_urls(self):
         step = LotseFormSteuerlotseStep(endpoint="lotse")
@@ -32,14 +29,12 @@ class TestLotseFormSteuerlotseStep:
 
 class TestStepSteuernummer:
     @pytest.fixture(autouse=True)
-    def attach_fixtures(self, app, test_request_context):
-        self.app = app
-        self.req = test_request_context
+    def prepare_step(self, app, test_request_context):
         self.step = StepSteuernummer()
         tax_offices = request_tax_offices()
         self.step._set_bufa_choices(tax_offices)
 
-    def test_if_steuernummer_exists_missing_then_fail_validation(self):
+    def test_if_steuernummer_exists_missing_then_fail_validation(self, test_request_context):
         data = MultiDict({'bundesland': 'BY',
                           'steuernummer': '19811310010', })
         form = self.step.InputForm(formdata=data)
