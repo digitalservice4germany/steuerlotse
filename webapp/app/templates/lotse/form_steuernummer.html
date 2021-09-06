@@ -57,15 +57,15 @@
         function updateTaxOfficeList() {
             let stateDropdown = document.getElementById("bundesland");
             let bufaNrDropdown = document.getElementById("bufa_nr");
-            var selectedState = stateDropdown.options[stateDropdown.selectedIndex].value.toLowerCase();
-            var selectedTaxOffices = taxOffices.find(taxOffice => taxOffice.state_abbreviation === selectedState)
+            let selectedStateAbbreviation = stateDropdown.options[stateDropdown.selectedIndex].value.toLowerCase();
+            let selectedState = taxOffices.find(taxOffice => taxOffice.state_abbreviation === selectedStateAbbreviation)
             let oldBufaNrValue = bufaNrDropdown.value
             deleteSelectOptions(bufaNrDropdown, defaultOptionText="{{ _('form.select_input.default_selection') }}");
 
-            if(selectedTaxOffices){
-                selectedTaxOffices = selectedTaxOffices.tax_offices;
+            if(selectedState){
+                selectedTaxOffices = selectedState.tax_offices;
                 selectedTaxOffices && selectedTaxOffices.sort(function (a, b) {
-                    return ('' + a.name).localeCompare(b.name);
+                    return (String(a.name)).localeCompare(b.name);
                 });
                 for (var i = 0; i < selectedTaxOffices.length; i++) {
                   var tax_office = new Option(selectedTaxOffices[i].name.replace("Finanzamt ", ""), selectedTaxOffices[i].bufa_nr);
@@ -96,10 +96,8 @@
                 taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxNumberInput;
             }else if(bundeslandField.value
                      && (taxNumberFormState === TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists
-                            || taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxOfficeSelection)){
-                taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
-                updateTaxOfficeList();
-            }else if(bundeslandField.value && taxNumberFormState === TAX_NUMBER_FORM_STATES.RequestNewTaxNumber){
+                            || taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxOfficeSelection
+                            || taxNumberFormState === TAX_NUMBER_FORM_STATES.RequestNewTaxNumber)){
                 taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
                 updateTaxOfficeList();
             }else if(!bundeslandField.value && taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxNumberInput){

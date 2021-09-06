@@ -3,12 +3,12 @@ function assignAssociatedContent(selector='label, .example-input, .additional-in
   let associated_content = document.querySelectorAll(selector);
     for (let i = 0; i < associated_content.length; i++) {
       if (associated_content[i].getAttribute('for') != '') {
-         let assignedElement = document.getElementById(associated_content[i].getAttribute('for'));
-         if (assignedElement){
-          if (assignedElement.associatedContent){
-            assignedElement.associatedContent.push(associated_content[i]);
+         let elementWithAssociatedContent = document.getElementById(associated_content[i].getAttribute('for'));
+         if (elementWithAssociatedContent){
+          if (elementWithAssociatedContent.associatedContent){
+            elementWithAssociatedContent.associatedContent.push(associated_content[i]);
           } else {
-            assignedElement.associatedContent = [associated_content[i]];
+            elementWithAssociatedContent.associatedContent = [associated_content[i]];
           }
          }
       }
