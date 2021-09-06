@@ -62,30 +62,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
     class InputForm(SteuerlotseBaseForm):
 
-        def require_bundesland_input(form, field):
-            if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
-                validators.InputRequired()(form, field)
-            else:
-                validators.Optional()(form, field)
-
-        def require_tax_number_input(form, field):
-            if form.steuernummer_exists.data == 'yes' and form.bundesland:
-                validators.InputRequired()(form, field)
-            else:
-                validators.Optional()(form, field)
-
-        def require_bufanr_input(form, field):
-            if form.steuernummer_exists.data == 'no' and form.bundesland:
-                validators.InputRequired()(form, field)
-            else:
-                validators.Optional()(form, field)
-
-        def require_new_tax_number_confirmation(form, field):
-            if form.steuernummer_exists.data == 'no' and form.bufa_nr:
-                validators.InputRequired()(form, field)
-            else:
-                validators.Optional()(form, field)
-
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
@@ -113,7 +89,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                 ('SH', _l('form.lotse.field_bundesland_sh')),
                 ('TH', _l('form.lotse.field_bundesland_th'))
             ],
-            validators=[require_bundesland_input],
             render_kw={'data_label': _l('form.lotse.field_bundesland.data_label'),
                        'input_req_err_msg': _l('form.lotse.field_bundesland_required')}
         )
@@ -122,18 +97,41 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             choices=[
                 ('', '---'),
             ],
-            validators=[require_bufanr_input],
             render_kw={'data_label': _l('form.lotse.bufa_nr.data_label')}
         )
         steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
-                                              validators=[require_tax_number_input, DecimalOnly(),
+                                              validators=[DecimalOnly(),
                                                           IntegerLength(min=10, max=11)],
                                               render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
                                                          'example_input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
+            input_required=False,
             label=_l('form.lotse.steuernummer.request_new_tax_number'),
-            validators=[require_new_tax_number_confirmation],
             render_kw={'data_label': _l('form.lotse.steuernummer.request_new_tax_number.data_label')})
+
+        def validate_bundesland(form, field):
+            if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
+                validators.InputRequired()(form, field)
+            else:
+                validators.Optional()(form, field)
+
+        def validate_steuernummer(form, field):
+            if form.steuernummer_exists.data == 'yes' and form.bundesland:
+                validators.InputRequired()(form, field)
+            else:
+                validators.Optional()(form, field)
+
+        def validate_bufa_nr(form, field):
+            if form.steuernummer_exists.data == 'no' and form.bundesland:
+                validators.InputRequired()(form, field)
+            else:
+                validators.Optional()(form, field)
+
+        def validate_request_new_tax_number(form, field):
+            if form.steuernummer_exists.data == 'no' and form.bufa_nr:
+                validators.InputRequired()(form, field)
+            else:
+                validators.Optional()(form, field)
 
     def _set_bufa_choices(self, tax_offices):
         choices = []
@@ -143,6 +141,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
     def _pre_handle(self):
         tax_offices = request_tax_offices()
+
+        # Set bufa choices here because WTForms will otherwise not accept choices because they are invalid
         self._set_bufa_choices(tax_offices)
 
         super()._pre_handle()

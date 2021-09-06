@@ -10,11 +10,11 @@ _LOTSE_DATA_KEY = 'form_data'
 class LotseStepChooser(StepChooser):
     session_data_identifier = _LOTSE_DATA_KEY
     _DEBUG_DATA = {
-            'steuernummer_exists': 'no',
+            'steuernummer_exists': 'yes',
             'bundesland': 'BY',
-            # 'steuernummer': '19811310010',
-            'bufa_nr': '9201',
-            'request_new_tax_number': 'yes'
+            'steuernummer': '19811310010',
+            # 'bufa_nr': '9201',
+            # 'request_new_tax_number': 'yes',
         }
 
     def __init__(self, endpoint="lotse"):

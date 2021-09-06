@@ -170,7 +170,7 @@ class TestMandatoryFormData(unittest.TestCase):
         self.assertIsInstance(validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual('familienstand', validation_error.exception.raw_errors[0]._loc)
 
-    def test_if_steuernummer_and_steuernummer_then_raise_missing_error(self):
+    def test_if_steuernummer_exists_and_no_steuernummer_given_then_raise_missing_error(self):
         invalid_tax_nr_data = {
             'steuernummer_exists': True,
             'bundesland': 'BY',
