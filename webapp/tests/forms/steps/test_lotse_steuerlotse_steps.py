@@ -2,21 +2,21 @@ import pytest
 from werkzeug.datastructures import MultiDict
 
 from app.elster_client.elster_client import request_tax_offices
-from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer, LosteFormSteuerlotseStep
+from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer, LotseFormSteuerlotseStep
 
 
 class SummaryStep(object):
     pass
 
 
-class TestLosteFormSteuerlotseStep:
+class TestLotseFormSteuerlotseStep:
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, app, test_request_context):
         self.app = app
         self.req = test_request_context
 
     def test_if_prev_and_next_step_name_set_then_set_correct_urls(self):
-        step = LosteFormSteuerlotseStep(endpoint="lotse")
+        step = LotseFormSteuerlotseStep(endpoint="lotse")
         step.create_form = lambda *a, **k: None
         step.render = lambda *a, **k: None
         step.name = "TESTING_STEP"
