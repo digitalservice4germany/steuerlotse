@@ -356,7 +356,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                     break
         elif field.field_class == YesNoField:
             value_representation = "Ja" if value == "yes" else "Nein"
-        elif field.field_class == ConfirmationField or field.field_class == BooleanField:
+        elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"
         elif field.field_class == SteuerlotseDateField:
             value_representation = value.strftime("%d.%m.%Y")
@@ -369,7 +369,7 @@ class LotseMultiStepFlow(MultiStepFlow):
         elif issubclass(field.field_class, IntegerField):
             value_representation = value
         elif field.field_class == ConfirmationField:
-            value_representation = "Ja" if value else "Nein"
+            value_representation = "Ja" if value else None
         else:
             raise ValueError
 
