@@ -1,4 +1,4 @@
-FROM python:3.9.6-slim-buster AS base
+FROM python:3.9.7-slim-buster AS base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -32,5 +32,4 @@ FROM base AS cron
 CMD ["/usr/sbin/cron", "-f"]
 
 FROM base AS webapp
-CMD [ "gunicorn", "--config", "gunicorn_config.py", "app:app" ]
-
+CMD [ "gunicorn", "--config", "gunicorn_config.py", "autoapp:app" ]

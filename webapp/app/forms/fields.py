@@ -3,7 +3,7 @@ from decimal import Decimal
 from flask import request
 from flask.templating import render_template
 from wtforms import RadioField, Field, StringField
-from wtforms.fields.core import BooleanField, DateField, SelectField
+from wtforms.fields.core import BooleanField, DateField, SelectField, IntegerField
 from wtforms.utils import unset_value
 from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
@@ -15,32 +15,135 @@ from babel.numbers import format_decimal, parse_decimal
 from app.forms.validators import ValidElsterCharacterSet
 
 
+def _add_classes_to_kwargs(kwargs, classes):
+    joined_classes = ' '.join(classes)
+    if 'class' in kwargs:
+        kwargs['class'] += ' ' + joined_classes
+    else:
+        kwargs['class'] = joined_classes
+
+
+class NumericInputModeMixin:
+
+    @staticmethod
+    def set_inputmode(kwargs):
+        kwargs.setdefault('inputmode', 'numeric')
+
+        return kwargs
+
+
+class NumericInputMaskMixin:
+
+    @staticmethod
+    def set_masking(kwargs):
+        kwargs.setdefault('data-mask', '0#')
+        return kwargs
+
+
+class AlphaNumericInputMixin:
+
+    @staticmethod
+    def set_inputmode(kwargs):
+        kwargs.setdefault('data-alphanumeric-field', 'true')
+        return kwargs
+
+
+class BaselineBugFixMixin:
+    """ Safari and Firefox have a bug where empty input fields do not align correctly with baseline alignment. The reason is that
+    if an input field is empty its bottom border is used as the baseline instead of the baseline of the text input.
+    This can be fixed by setting a placeholder text. """
+
+    @staticmethod
+    def set_placeholder(kwargs):
+        # Safari and Firefox have has a bug where empty input fields do not align correctly with baseline alignment.
+        # Thus, we add a placeholder.
+        kwargs.setdefault('placeholder', ' ')
+        return kwargs
+
+
 class SteuerlotseStringField(StringField):
+
     def pre_validate(self, form):
         ValidElsterCharacterSet().__call__(form, self)
 
 
-class MultipleInputFieldWidget(TextInput):
+class SteuerlotseIntegerField(NumericInputModeMixin, NumericInputMaskMixin, IntegerField):
+    """ This field only allows valid integers. Input starting with a zero is therefore no valid input. It only allows
+    digits as input and sets the input mode to numeric (showing a number pad to mobile
+    users)."""
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+        kwargs = self.set_masking(kwargs)
+
+        return super().__call__(**kwargs)
+
+
+class SteuerlotseHouseNumberIntegerField(NumericInputModeMixin, IntegerField):
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+
+        return super().__call__(**kwargs)
+
+
+class SteuerlotseNumericStringField(NumericInputModeMixin, NumericInputMaskMixin, SteuerlotseStringField):
+    """ This field only allows digits as input and sets the input mode to numeric (showing a number pad to mobile
+    users). However, also numbers starting with zero are a valid input. """
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+        kwargs = self.set_masking(kwargs)
+
+        return super().__call__(**kwargs)
+
+
+class SteuerlotseNameStringField(SteuerlotseStringField):
+
+    def __call__(self, *args, **kwargs):
+        kwargs.setdefault('spellcheck', 'false')
+
+        return super().__call__(**kwargs)
+
+
+class SteuerlotseIbanField(SteuerlotseStringField):
+
+    def __call__(self, *args, **kwargs):
+        _add_classes_to_kwargs(kwargs, ['iban-input'])
+        kwargs.setdefault('data-mask', 'AA00 0000 0000 0000 0000 00## ##')
+
+        return super().__call__(**kwargs)
+
+    def process_formdata(self, valuelist):
+        valuelist = [value.upper() for value in valuelist]
+        super().process_formdata(valuelist)
+
+
+class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
     """A divided input field."""
     sub_field_separator = ''
     input_field_lengths = []
     input_field_labels = []
 
     def __call__(self, field, **kwargs):
+        kwargs = self.set_placeholder(kwargs)
+
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
-        kwargs['class'] = 'form-control'
-        # Safari has a bug where empty input fields do not align correctly with baseline alignment.
-        # Thus, we add a placeholder.
-        kwargs['placeholder'] = ' '
+        _add_classes_to_kwargs(kwargs, ['form-control'])
 
         joined_input_fields = Markup()
         for idx, input_field_length in enumerate(self.input_field_lengths):
+            kwargs['data-field-length'] = input_field_length
             kwargs['maxlength'] = input_field_length
 
             sub_field_id = f'{field.id}_{idx + 1}'
             kwargs['id'] = sub_field_id
             kwargs['value'] = field._value()[idx] if len(field._value()) >= idx + 1 else ''
+            _add_classes_to_kwargs(kwargs, [f'input-width-{input_field_length}'])
+
+            if idx > 0:
+                # Make sure that autofocus is only set for the first input field
+                kwargs['autofocus'] = False
 
             if len(self.input_field_labels) > idx:
                 joined_input_fields += Markup(
@@ -53,34 +156,56 @@ class MultipleInputFieldWidget(TextInput):
             if self.sub_field_separator and idx < len(self.input_field_lengths) - 1:
                 joined_input_fields += Markup(self.sub_field_separator)
 
-        return Markup(joined_input_fields)
+        return Markup(render_template('fields/multiple_input_field.html',
+                                      joined_input_fields=joined_input_fields,
+                                      name=field.id,
+                                      input_field_lengths=self.input_field_lengths))
 
 
-class UnlockCodeWidget(MultipleInputFieldWidget):
+class UnlockCodeWidget(AlphaNumericInputMixin, MultipleInputFieldWidget):
     """A divided input field with three text input fields, limited to four chars."""
     sub_field_separator = '-'
     input_field_lengths = [4, 4, 4]
 
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
 
-class UnlockCodeField(SteuerlotseStringField):
+        return super().__call__(*args, **kwargs)
+
+
+class UnlockCodeField(StringField):
     def __init__(self, label='', validators=None, **kwargs):
         super(UnlockCodeField, self).__init__(label, validators, **kwargs)
         self.widget = UnlockCodeWidget()
 
+    def __call__(self, *args, **kwargs):
+        kwargs['class'] = kwargs.get('class', '') + ' unlock-input'
+
+        return super().__call__(**kwargs)
+
     def process_formdata(self, valuelist):
         if valuelist:
-            self.data = '-'.join(valuelist)
+            self.data = '-'.join(valuelist).upper()
         elif self.data is None:
             self.data = ''
 
     def _value(self):
         return self.data.split('-') if self.data else ''
 
+    def pre_validate(self, form):
+        ValidElsterCharacterSet().__call__(form, self)
 
-class SteuerlotseDateWidget(MultipleInputFieldWidget):
+
+class SteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+        kwargs = self.set_masking(kwargs)
+
+        return super().__call__(*args, **kwargs)
 
 
 class SteuerlotseDateField(DateField):
@@ -89,7 +214,7 @@ class SteuerlotseDateField(DateField):
         kwargs.setdefault('format', "%d %m %Y")
 
         if kwargs.get('render_kw'):
-            kwargs['render_kw']['class'] = kwargs['render_kw'].get('class', '') + " date_input form-control"
+            _add_classes_to_kwargs(kwargs['render_kw'], ['date_input', 'form-control'])
             kwargs['render_kw']['example_input'] = kwargs['render_kw'].get('example_input',
                                                                            _('fields.date_field.example_input.text'))
         else:
@@ -105,10 +230,16 @@ class SteuerlotseDateField(DateField):
             return self.raw_data if self.raw_data else []
 
 
-class IdNrWidget(MultipleInputFieldWidget):
+class IdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]
+
+    def __call__(self, *args, **kwargs):
+        kwargs = self.set_inputmode(kwargs)
+        kwargs = self.set_masking(kwargs)
+
+        return super().__call__(*args, **kwargs)
 
 
 class IdNrField(SteuerlotseStringField):
@@ -164,7 +295,7 @@ class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
     def __call__(self, field, **kwargs):
-        kwargs['class'] = 'euro_field form-control'
+        _add_classes_to_kwargs(kwargs, ['euro_field form-control'])
         kwargs['onwheel'] = 'this.blur()'
         markup_input = super(EuroFieldWidget, self).__call__(field, **kwargs)
 
@@ -210,18 +341,19 @@ class SteuerlotseSelectField(SelectField):
     def __init__(self, **kwargs):
         if kwargs.get('render_kw'):
             if kwargs['render_kw'].get('class'):
-                kwargs['render_kw']['class'] = kwargs['render_kw']['class'] + " custom-select steuerlotse-select"
+                _add_classes_to_kwargs(kwargs['render_kw'], ['custom-select', 'steuerlotse-select'])
             else:
                 kwargs['render_kw']['class'] = "custom-select steuerlotse-select"
         else:
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
         super(SteuerlotseSelectField, self).__init__(**kwargs)
 
+
 class ConfirmationField(BooleanField):
     """A CheckBox that will not validate unless checked."""
 
     def __init__(self, label=None, false_values=None, input_required=True, **kwargs):
-        validators = [InputRequired(message=_('confirmation_field_must_be_set'))] if input_required else []
+        validators = [InputRequired(message=_l('confirmation_field_must_be_set'))] if input_required else []
         super(BooleanField, self).__init__(
             label,
             validators=validators,
@@ -229,7 +361,7 @@ class ConfirmationField(BooleanField):
         )
 
 
-class JqueryEntriesWidget(object):
+class JqueryEntriesWidget(BaselineBugFixMixin, object):
     """A custom multi-entry widget that is based on jquery."""
     html_params = staticmethod(html_params)
 
@@ -237,6 +369,7 @@ class JqueryEntriesWidget(object):
         self.input_type = None
 
     def __call__(self, field, **kwargs):
+        kwargs = super().set_placeholder(kwargs)
         kwargs.setdefault('id', field.id)
         kwargs.setdefault('data', field.data)
         kwargs.setdefault('split_chars', field.split_chars)
@@ -245,6 +378,8 @@ class JqueryEntriesWidget(object):
             kwargs['value'] = field._value()
         if 'required' not in kwargs and 'required' in getattr(field, 'flags', []):
             kwargs['required'] = True
+        if 'max_characters' not in kwargs:
+            kwargs['max_characters'] = 25
         return Markup(render_template('fields/jquery_entries.html', kwargs=kwargs))
 
 

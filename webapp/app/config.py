@@ -2,7 +2,7 @@ import base64
 from os import environ
 
 
-class Config(object):
+class BaseConfig(object):
     DEBUG = False
     TESTING = False
     DEBUG_DATA = False
@@ -12,6 +12,7 @@ class Config(object):
     PROMETHEUS_EXPORTER_ENABLED = False
 
     LANGUAGES = ['de']
+    BABEL_DEFAULT_LOCALE = 'de'
     SEND_FILE_MAX_AGE_DEFAULT = 60
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
@@ -21,7 +22,7 @@ class Config(object):
     PLAUSIBLE_DOMAIN = None
 
 
-class ProductionConfig(Config):
+class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
     PLAUSIBLE_DOMAIN = 'steuerlotse-rente.de'
 
@@ -38,7 +39,7 @@ class ProductionConfig(Config):
     SECRET_KEY = environ.get('SECRET_KEY')
 
 
-class StagingConfig(Config):
+class StagingConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
     PLAUSIBLE_DOMAIN = 'www-staging.stl.ds4g.dev'
 
@@ -57,7 +58,7 @@ class StagingConfig(Config):
     SECRET_KEY = environ.get('SECRET_KEY')
 
 
-class DevelopmentConfig(Config):
+class DevelopmentConfig(BaseConfig):
     DEBUG = True
     DEBUG_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
@@ -76,7 +77,7 @@ class DevelopmentConfig(Config):
     SECRET_KEY = 'dev'
 
 
-class TestingConfig(Config):
+class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
     DEBUG_DATA = True
@@ -93,3 +94,13 @@ class TestingConfig(Config):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
+
+try:
+    Config = {
+        'development': DevelopmentConfig,
+        'testing': TestingConfig,
+        'staging': StagingConfig,
+        'production': ProductionConfig
+    }[environ['FLASK_ENV']]
+except KeyError:
+    raise RuntimeError(f'Unknown FLASK_ENV "{environ["FLASK_ENV"]}"')

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EricHoleFinanzaemter xmlns="http://www.elster.de/EricXML/1.0/EricHoleFinanzaemter">
+	<Finanzamt>
+		<BuFaNummer>2801</BuFaNummer>
+		<Name>Finanzamt Offenburg Außenstelle Achern</Name>
+	</Finanzamt>
+	<Finanzamt>
+		<BuFaNummer>2804</BuFaNummer>
+		<Name>Finanzamt Villingen-Schwenningen Außenstelle Donaueschingen</Name>
+	</Finanzamt>
+	<Finanzamt>
+		<BuFaNummer>2887</BuFaNummer>
+		<Name>Finanzamt Überlingen (Bodensee)</Name>
+	</Finanzamt>
+	<Finanzamt>
+		<BuFaNummer>2806</BuFaNummer>
+		<Name>Finanzamt Freiburg-Stadt</Name>
+	</Finanzamt>
+	<Finanzamt>
+		<BuFaNummer>2884</BuFaNummer>
+		<Name>Finanzamt Schwäbisch Hall</Name>
+	</Finanzamt>
+</EricHoleFinanzaemter>

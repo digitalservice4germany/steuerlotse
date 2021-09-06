@@ -11,36 +11,6 @@ class InvalidEligiblityError(ValueError):
     pass
 
 
-class ExpectedEligibility(BaseModel):
-
-    renten: str
-    kapitaleink_mit_steuerabzug: str
-    kapitaleink_ohne_steuerabzug: str
-    kapitaleink_mit_pauschalbetrag: str
-    kapitaleink_guenstiger: str
-    geringf: str
-    erwerbstaetigkeit: str
-    unterhalt: str
-    ausland: str
-    other: str
-    verheiratet_zusammenveranlagung: str
-    verheiratet_einzelveranlagung: str
-    geschieden_zusammenveranlagung: str
-    elster_account: str
-
-    @validator('renten')
-    def declarations_must_be_set_yes(cls, v, field: ModelField):
-        if not v == 'yes':
-            raise InvalidEligiblityError
-        return v
-
-    @validator('kapitaleink_ohne_steuerabzug', 'kapitaleink_guenstiger', 'erwerbstaetigkeit', 'unterhalt', 'ausland', 'other', 'verheiratet_einzelveranlagung', 'geschieden_zusammenveranlagung', 'elster_account')
-    def declarations_must_be_set_no(cls, v):
-        if not v == 'no':
-            raise InvalidEligiblityError
-        return v
-
-
 def declarations_must_be_set_yes(v):
     if not v == 'yes':
         raise InvalidEligiblityError
@@ -53,17 +23,7 @@ def declarations_must_be_set_no(v):
     return v
 
 
-class MaritalStatusEligibilityData(BaseModel, PotentialDataModelKeysMixin):
-    marital_status_eligibility: str
-
-    @validator('marital_status_eligibility')
-    def must_be_correct_marital_status(cls, v):
-        if v not in ['married', 'widowed', 'single', 'divorced',]:
-            raise ValueError
-        return v
-
-
-class MarriedEligibilityData(BaseModel):
+class MarriedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -73,7 +33,7 @@ class MarriedEligibilityData(BaseModel):
         return v
 
 
-class WidowedEligibilityData(BaseModel):
+class WidowedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -83,7 +43,7 @@ class WidowedEligibilityData(BaseModel):
         return v
 
 
-class SingleEligibilityData(BaseModel):
+class SingleEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -93,7 +53,7 @@ class SingleEligibilityData(BaseModel):
         return v
 
 
-class DivorcedEligibilityData(BaseModel):
+class DivorcedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
@@ -129,6 +89,58 @@ class NotSeparatedEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
+class SeparatedLivedTogetherEligibilityData(RecursiveDataModel):
+    is_separated: Optional[SeparatedEligibilityData]
+    separated_lived_together_eligibility: str
+
+    @validator('separated_lived_together_eligibility')
+    def separated_couple_must_have_lived_together(cls, v):
+        return declarations_must_be_set_yes(v)
+
+    @validator('is_separated', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
+
+
+class SeparatedNotLivedTogetherEligibilityData(RecursiveDataModel):
+    is_separated: Optional[SeparatedEligibilityData]
+    separated_lived_together_eligibility: str
+
+    @validator('separated_lived_together_eligibility')
+    def married_couples_must_not_have_lived_together(cls, v):
+        return declarations_must_be_set_no(v)
+
+    @validator('is_separated', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
+
+
+class SeparatedJointTaxesEligibilityData(RecursiveDataModel):
+    separated_lived_together: Optional[SeparatedLivedTogetherEligibilityData]
+    separated_joint_taxes_eligibility: str
+
+    @validator('separated_joint_taxes_eligibility')
+    def separated_couple_must_do_joint_taxes(cls, v):
+        return declarations_must_be_set_yes(v)
+
+    @validator('separated_lived_together', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
+
+
+class SeparatedNoJointTaxesEligibilityData(RecursiveDataModel):
+    separated_lived_together: Optional[SeparatedLivedTogetherEligibilityData]
+    separated_joint_taxes_eligibility: str
+
+    @validator('separated_joint_taxes_eligibility')
+    def married_couples_must_not_do_joint_taxes(cls, v):
+        return declarations_must_be_set_no(v)
+
+    @validator('separated_lived_together', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
+
+
 class MarriedJointTaxesEligibilityData(RecursiveDataModel):
     not_separated: Optional[NotSeparatedEligibilityData]
     joint_taxes_eligibility: str
@@ -144,14 +156,14 @@ class MarriedJointTaxesEligibilityData(RecursiveDataModel):
 
 class AlimonyMarriedEligibilityData(RecursiveDataModel):
     married_joint_taxes: Optional[MarriedJointTaxesEligibilityData]
-    separated_living: Optional[SeparatedEligibilityData]
+    separated_joint_taxes: Optional[SeparatedJointTaxesEligibilityData]
     alimony_eligibility: str
 
     @validator('alimony_eligibility')
     def do_not_receive_or_pay_alimony(cls, v):
         return declarations_must_be_set_no(v)
 
-    @validator('separated_living', always=True, check_fields=False)
+    @validator('separated_joint_taxes', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
@@ -182,7 +194,7 @@ class UserAElsterAccountEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
-class UserBElsterAccountEligibilityData(RecursiveDataModel):
+class UserBNoElsterAccountEligibilityData(RecursiveDataModel):
     user_a_has_elster_account: Optional[UserAElsterAccountEligibilityData]
     user_b_has_elster_account_eligibility: str
 
@@ -211,14 +223,16 @@ class DivorcedJointTaxesEligibilityData(RecursiveDataModel):
 class AlimonyEligibilityData(RecursiveDataModel):
     is_widowed: Optional[WidowedEligibilityData]
     is_single: Optional[SingleEligibilityData]
-    no_divorced_joint_taxes: Optional[DivorcedJointTaxesEligibilityData]
+    divorced_joint_taxes: Optional[DivorcedJointTaxesEligibilityData]
+    no_separated_lived_together: Optional[SeparatedNotLivedTogetherEligibilityData]
+    no_separated_joint_taxes: Optional[SeparatedNoJointTaxesEligibilityData]
     alimony_eligibility: str
 
     @validator('alimony_eligibility')
     def do_not_receive_or_pay_alimony(cls, v):
         return declarations_must_be_set_no(v)
 
-    @validator('no_divorced_joint_taxes', always=True, check_fields=False)
+    @validator('no_separated_joint_taxes', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
@@ -239,7 +253,7 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
 class PensionEligibilityData(RecursiveDataModel):
     single_user_has_no_elster_account: Optional[SingleUserElsterAccountEligibilityData]
     user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
-    user_b_has_no_elster_account: Optional[UserBElsterAccountEligibilityData]
+    user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
     pension_eligibility: str
 
     @validator('pension_eligibility')

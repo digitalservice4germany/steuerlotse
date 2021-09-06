@@ -38,23 +38,21 @@ def create_unlock_revocation(correct=True):
     return unlock_revocation
 
 
-def create_est(correct_form_data=True, correct_meta_data=True):
-    return EstData(est_data=create_form_data(correct_form_data), meta_data=create_meta_data(correct_meta_data))
+def create_est(correct_form_data=True, correct_meta_data=True, with_tax_number=True):
+    return EstData(est_data=create_form_data(correct_form_data, with_tax_number), meta_data=create_meta_data(correct_meta_data))
 
 
-def create_est_single(correct=True):
-    if correct:
-        est = EstData(est_data=create_form_data_single(correct=True), meta_data=create_meta_data(correct=True))
-    else:
-        est = EstData(est_data=create_form_data_single(correct=False), meta_data=create_meta_data(correct=False))
-
+def create_est_single(correct=True, with_tax_number=True):
+    est = EstData(est_data=create_form_data_single(correct=correct, with_tax_number=with_tax_number), meta_data=create_meta_data(correct=correct))
     return est
 
 
-def create_form_data(correct=True):
+def create_form_data(correct=True, with_tax_number=True):
     if correct:
         form_data = FormDataEst(
-            steuernummer='19811310010',
+            steuernummer='19811310010'if with_tax_number else None,
+            submission_without_tax_nr=True if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             bundesland='BY',
             familienstand='married',
             familienstand_date=date(2000, 1, 31),
@@ -97,7 +95,9 @@ def create_form_data(correct=True):
         )
     else:
         form_data = FormDataEst(
-            steuernummer="123456789",
+            steuernummer="123456789"if with_tax_number else None,
+            submission_without_tax_nr= False if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             iban="DE35133713370000012345",
             is_person_a_account_holder=True,
             familienstand="single",
@@ -120,10 +120,12 @@ def create_form_data(correct=True):
     return form_data
 
 
-def create_form_data_single(correct=True):
+def create_form_data_single(correct=True, with_tax_number=True):
     if correct:
         form_data = FormDataEst(
-            steuernummer='19811310010',
+            steuernummer='19811310010' if with_tax_number else None,
+            submission_without_tax_nr=True if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             bundesland='BY',
             familienstand='single',
 
@@ -148,7 +150,9 @@ def create_form_data_single(correct=True):
         )
     else:
         form_data = FormDataEst(
-            steuernummer='9198011310010',
+            steuernummer='9198011310010'if with_tax_number else None,
+            submission_without_tax_nr=False if not with_tax_number else None,
+            bufa_nr='9198' if not with_tax_number else None,
             familienstand='single',
             familienstand_date=date(2000, 1, 31),
 

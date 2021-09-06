@@ -4,9 +4,14 @@ from typing import Optional, List
 
 from pydantic import BaseModel, validator
 
+from erica.elster_xml.est_validation import is_valid_bufa
+from erica.pyeric.eric_errors import InvalidBufaNumberError
+
 
 class FormDataEst(BaseModel):
-    steuernummer: str
+    steuernummer: Optional[str]
+    submission_without_tax_nr: Optional[bool]
+    bufa_nr: Optional[str]
     bundesland: str
     iban: Optional[str]
     is_person_a_account_holder: bool
@@ -78,10 +83,26 @@ class FormDataEst(BaseModel):
     stmind_gem_haushalt_count: Optional[int]
     stmind_gem_haushalt_entries: Optional[List[str]]
 
+    @validator('submission_without_tax_nr', always=True)
+    def if_no_tax_number_must_be_submission_without_tax_nr(cls, v, values):
+        if values.get('steuernummer') and v:
+            raise ValueError('can not be a new admission if tax number given')
+        if not v and not values.get('steuernummer'):
+            raise ValueError('must be new admission if no tax number given')
+        return v
+
     @validator('steuernummer')
     def must_be_correct_length(cls, v):
-        if not 10 <= len(v) <= 11:
+        if v and not 10 <= len(v) <= 11:
             raise ValueError('must be 10 or 11 numbers long')
+        return v
+
+    @validator('bufa_nr', always=True)
+    def if_submission_without_tax_nr_bufa_nr_must_be_set_correctly(cls, v, values):
+        if values.get('submission_without_tax_nr') and (not v or not len(v) == 4):
+            raise ValueError('must be 4 numbers long for new admission')
+        if values.get('submission_without_tax_nr') and not is_valid_bufa(v):
+            raise InvalidBufaNumberError
         return v
 
     @validator('familienstand_married_lived_separated_since', always=True)

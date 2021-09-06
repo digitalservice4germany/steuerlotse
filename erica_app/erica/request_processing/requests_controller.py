@@ -1,18 +1,19 @@
 import base64
 
-from erica.elster_xml.elster_xml_generator import get_belege_xml
+from erica.elster_xml.elster_xml_generator import get_belege_xml, generate_vorsatz_without_tax_number, \
+    generate_vorsatz_with_tax_number
+from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_antrag_id_from_xml, get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
-from erica.elster_xml.elster_xml_parser import get_antrag_id_from_xml, get_transfer_ticket_from_xml, \
-    get_address_from_xml, get_elements_text_from_xml, get_relevant_beleg_ids
+from erica.elster_xml.xml_parsing.erica_xml_parsing import get_elements_text_from_xml
 
-from erica.pyeric.pyeric_controller import EstPyericController, EstValidationPyericController, \
-    UnlockCodeActivationPyericController, UnlockCodeRequestPyericController, UnlockCodeRevocationPyericController, \
-    DecryptBelegePyericController, BelegIdRequestPyericController, \
-    BelegRequestPyericController
+from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValidationPyericProcessController, \
+    UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, \
+    UnlockCodeRevocationPyericProcessController, \
+    DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
+    BelegRequestPyericProcessController
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
-
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
 
@@ -72,7 +73,7 @@ class TransferTicketRequestController(EricaRequestController):
 
 
 class EstValidationRequestController(TransferTicketRequestController):
-    _PYERIC_CONTROLLER = EstValidationPyericController
+    _PYERIC_CONTROLLER = EstValidationPyericProcessController
 
     def __init__(self, input_data: EstData, include_elster_responses: bool = False):
         super().__init__(input_data, include_elster_responses)
@@ -87,23 +88,30 @@ class EstValidationRequestController(TransferTicketRequestController):
         # Translate our form data structure into the fields from
         # the Elster specification (see `Jahresdokumentation_10_2020.xml`)
         fields = est_mapping.check_and_generate_entries(self.input_data.est_data.__dict__)
-        electronic_steuernummer = est_mapping.generate_electronic_steuernummer(self.input_data.est_data.steuernummer,
-                                                                               self.input_data.est_data.bundesland,
-                                                                               use_testmerker=self._is_testmerker_used())
-        empfaenger = electronic_steuernummer[:4]
 
-        xml = elster_xml_generator.generate_full_est_xml(fields,
-                                                         electronic_steuernummer,
-                                                         self.input_data.meta_data.year,
-                                                         self.input_data.est_data.person_a_idnr,
-                                                         self.input_data.est_data.person_a_first_name,
-                                                         self.input_data.est_data.person_a_last_name,
-                                                         self.input_data.est_data.person_a_street,
-                                                         self.input_data.est_data.person_a_street_number,
-                                                         self.input_data.est_data.person_a_plz,
-                                                         self.input_data.est_data.person_a_town,
-                                                         empfaenger,
-                                                         person_b_idnr=self.input_data.est_data.person_b_idnr,
+        common_vorsatz_args = (
+                self.input_data.meta_data.year,
+                self.input_data.est_data.person_a_idnr,
+                self.input_data.est_data.person_b_idnr,
+                self.input_data.est_data.person_a_first_name,
+                self.input_data.est_data.person_a_last_name,
+                self.input_data.est_data.person_a_street,
+                self.input_data.est_data.person_a_street_number,
+                self.input_data.est_data.person_a_plz,
+                self.input_data.est_data.person_a_town
+        )
+        if self.input_data.est_data.submission_without_tax_nr:
+            empfaenger = self.input_data.est_data.bufa_nr
+            vorsatz = generate_vorsatz_without_tax_number(*common_vorsatz_args)
+        else:
+            electronic_steuernummer = est_mapping.generate_electronic_steuernummer(
+                self.input_data.est_data.steuernummer,
+                self.input_data.est_data.bundesland,
+                use_testmerker=self._is_testmerker_used())
+            vorsatz = generate_vorsatz_with_tax_number(electronic_steuernummer, *common_vorsatz_args)
+            empfaenger = electronic_steuernummer[:4]
+
+        xml = elster_xml_generator.generate_full_est_xml(fields, vorsatz, self.input_data.meta_data.year, empfaenger,
                                                          use_testmerker=self._is_testmerker_used())
 
         pyeric_controller = self._PYERIC_CONTROLLER(xml, self.input_data.meta_data.year)
@@ -113,7 +121,7 @@ class EstValidationRequestController(TransferTicketRequestController):
 
 
 class EstRequestController(EstValidationRequestController):
-    _PYERIC_CONTROLLER = EstPyericController
+    _PYERIC_CONTROLLER = EstPyericProcessController
 
     def generate_json(self, pyeric_response: PyericResponse):
         response = super().generate_json(pyeric_response)
@@ -122,7 +130,7 @@ class EstRequestController(EstValidationRequestController):
 
 
 class UnlockCodeRequestController(TransferTicketRequestController):
-    _PYERIC_CONTROLLER = UnlockCodeRequestPyericController
+    _PYERIC_CONTROLLER = UnlockCodeRequestPyericProcessController
 
     standard_date_format = "%Y-%m-%d"
 
@@ -144,7 +152,7 @@ class UnlockCodeRequestController(TransferTicketRequestController):
 
 
 class UnlockCodeActivationRequestController(TransferTicketRequestController):
-    _PYERIC_CONTROLLER = UnlockCodeActivationPyericController
+    _PYERIC_CONTROLLER = UnlockCodeActivationPyericProcessController
 
     def generate_full_xml(self, use_testmerker):
         return elster_xml_generator.generate_full_vast_activation_xml(self.input_data.__dict__,
@@ -158,7 +166,7 @@ class UnlockCodeActivationRequestController(TransferTicketRequestController):
 
 
 class UnlockCodeRevocationRequestController(TransferTicketRequestController):
-    _PYERIC_CONTROLLER = UnlockCodeRevocationPyericController
+    _PYERIC_CONTROLLER = UnlockCodeRevocationPyericProcessController
 
     def generate_full_xml(self, use_testmerker):
         return elster_xml_generator.generate_full_vast_revocation_xml(self.input_data.__dict__,
@@ -173,8 +181,8 @@ class UnlockCodeRevocationRequestController(TransferTicketRequestController):
 class GetBelegeRequestController(EricaRequestController):
     """This serves as an abstract class to implement all request controllers that request belege.
     Override the following constants in the subclasses."""
-    _BELEG_ID_REQUEST_PYERIC_CONTROLLER = BelegIdRequestPyericController
-    _BELEG_REQUEST_PYERIC_CONTROLLER = BelegRequestPyericController
+    _BELEG_ID_REQUEST_PYERIC_CONTROLLER = BelegIdRequestPyericProcessController
+    _BELEG_REQUEST_PYERIC_CONTROLLER = BelegRequestPyericProcessController
     _NEEDED_BELEG_ART = None
 
     def process(self):

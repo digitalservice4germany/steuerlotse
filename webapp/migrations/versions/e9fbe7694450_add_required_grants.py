@@ -8,7 +8,7 @@ Create Date: 2021-04-19 12:59:52.861502
 from alembic import op
 import sqlalchemy as sa
 
-from app import app
+from flask import current_app
 
 
 # revision identifiers, used by Alembic.
@@ -19,7 +19,7 @@ depends_on = None
 
 
 def upgrade():
-    if app.config['ENV'] in ('staging', 'production'):
+    if current_app.config['ENV'] in ('staging', 'production'):
         op.execute("""
         GRANT ALL ON TABLE "user" TO steuerlotse;
         GRANT ALL ON SEQUENCE user_id_seq TO steuerlotse;

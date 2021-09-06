@@ -14,17 +14,19 @@ from erica.elster_xml.elster_xml_generator import _pretty, _add_xml_nutzdaten_he
     _add_vast_beleg_ids_request_nutzdaten, generate_full_vast_beleg_ids_request_xml, \
     _add_abrufcode_request_nutzdaten, generate_full_abrufcode_request_xml, _add_vast_beleg_request_xml_nutzdaten, \
     generate_full_vast_beleg_request_xml, _add_vast_revocation_xml_nutzdaten, generate_full_vast_revocation_xml, \
-    _generate_vorsatz, _compute_valid_until_date
-from erica.elster_xml.elster_xml_parser import remove_declaration_and_namespace
+    generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number
+from erica.elster_xml.xml_parsing.erica_xml_parsing import remove_declaration_and_namespace
 from erica.elster_xml.elster_xml_tree import ElsterXmlTreeNode
 from erica.elster_xml.est_mapping import PersonSpecificFieldId
+from erica.pyeric.eric import get_eric_wrapper
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.elster_xml.transfer_header_fields import TransferHeaderFields
 from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false
 
 
-class TestGenerateVorsatz(unittest.TestCase):
-    def test_fields_set_correctly(self):
+class TestGenerateVorsatzWithTaxNumber(unittest.TestCase):
+
+    def test_if_fields_set_correctly(self):
         steuernummer = '123456789'
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
@@ -37,7 +39,9 @@ class TestGenerateVorsatz(unittest.TestCase):
         town = 'Phantasialand'
 
         expected_vorsatz = Vorsatz(
-            unterfallart='10', ordNrArt='S', vorgang='04',
+            unterfallart='10',
+            ordNrArt='S',
+            vorgang='04',
             StNr=steuernummer,
             IDPersonA=person_a_idnr,
             IDPersonB=person_b_idnr,
@@ -48,8 +52,41 @@ class TestGenerateVorsatz(unittest.TestCase):
             AbsOrt=town,
             Copyright='(C) 2021 DigitalService4Germany'
         )
-        actual_vorsatz = _generate_vorsatz(steuernummer, year, person_a_idnr, person_b_idnr, first_name, last_name,
-                                           street, street_nr, plz, town)
+        actual_vorsatz = generate_vorsatz_with_tax_number(steuernummer, year, person_a_idnr, person_b_idnr, first_name,
+                                                          last_name,
+                                                          street, street_nr, plz, town)
+        self.assertEqual(expected_vorsatz, actual_vorsatz)
+
+
+class TestGenerateVorsatzWithoutTaxNumber(unittest.TestCase):
+
+    def test_if_no_steuernummer_given_then_fields_set_correctly(self):
+        person_a_idnr = '04452397687'
+        person_b_idnr = '02293417683'
+        year = 2019
+        first_name = 'Herbert'
+        last_name = 'Müller'
+        street = 'Schlossallee'
+        street_nr = '1b'
+        plz = '12345'
+        town = 'Phantasialand'
+
+        expected_vorsatz = Vorsatz(
+            unterfallart='10',
+            ordNrArt='O',
+            vorgang='04',
+            StNr=None,
+            IDPersonA=person_a_idnr,
+            IDPersonB=person_b_idnr,
+            Zeitraum=str(year),
+            AbsName=first_name + ' ' + last_name,
+            AbsStr=street + ' ' + street_nr,
+            AbsPlz=plz,
+            AbsOrt=town,
+            Copyright='(C) 2021 DigitalService4Germany'
+        )
+        actual_vorsatz = generate_vorsatz_without_tax_number(year, person_a_idnr, person_b_idnr, first_name, last_name,
+                                                             street, street_nr, plz, town)
         self.assertEqual(expected_vorsatz, actual_vorsatz)
 
 
@@ -190,7 +227,8 @@ class TestGenerateTransferHeader(unittest.TestCase):
     def test_if_correct_input_then_transfer_header_is_added_and_reference_unchanged(self):
         input_xml_before_use = copy.deepcopy(self.correct_input_xml)
 
-        result = _generate_transfer_header(self.correct_input_xml, self.th_fields)
+        with get_eric_wrapper() as eric_wrapper:
+            result = _generate_transfer_header(self.correct_input_xml, self.th_fields, eric_wrapper)
 
         self.assertIn("TransferHeader", result)
         self.assertIn("<Testmerker>700000004</Testmerker>", result)
@@ -204,13 +242,16 @@ class TestGenerateTransferHeader(unittest.TestCase):
     @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_input_then_raise_not_successful_error(self):
-        self.assertRaises(EricProcessNotSuccessful, _generate_transfer_header, self.incorrect_input_xml, self.th_fields)
+        with get_eric_wrapper() as eric_wrapper:
+            self.assertRaises(EricProcessNotSuccessful, _generate_transfer_header, self.incorrect_input_xml,
+                              self.th_fields, eric_wrapper)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_calls_run_pyeric(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
-                   MagicMock(return_value=self.xml_with_th_binary)) as fun_create_th:
-            _generate_transfer_header(self.xml, self.th_fields)
+                   MagicMock(return_value=self.xml_with_th_binary)) as fun_create_th, \
+             get_eric_wrapper() as eric_wrapper:
+            _generate_transfer_header(self.xml, self.th_fields, eric_wrapper)
 
             fun_create_th.assert_called_with('<xml/>\n',
                                              datenart=self.th_fields.datenart, testmerker=self.th_fields.testmerker,
@@ -221,8 +262,9 @@ class TestGenerateTransferHeader(unittest.TestCase):
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_returns_xml_with_transfer_header(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
-                   MagicMock(return_value=self.xml_with_th_binary)):
-            res = _generate_transfer_header(self.xml, self.th_fields)
+                   MagicMock(return_value=self.xml_with_th_binary)), \
+             get_eric_wrapper() as eric_wrapper:
+            res = _generate_transfer_header(self.xml, self.th_fields, eric_wrapper)
 
             self.assertEqual(self.xml_with_th_binary.decode(), res)
 
@@ -393,11 +435,13 @@ class TestAddSterklFields(unittest.TestCase):
 
     def test_adds_repeated_element_if_element_is_repatable(self):
         xml_top = Element('top')
-        fields = fields = {'field_repeat_1': ['a', 'b'], 'field1': 'a', 'field_repeat_2': ['c', 'd'], 'field_repeat_3': ['e', 'f']}
+        fields = fields = {'field_repeat_1': ['a', 'b'], 'field1': 'a', 'field_repeat_2': ['c', 'd'],
+                           'field_repeat_3': ['e', 'f']}
         sterkl_tree = ElsterXmlTreeNode('parent1',
                                         [ElsterXmlTreeNode('parent11', ['field_repeat_1'], is_repeatable=True),
                                          ElsterXmlTreeNode('parent12', ['field1']),
-                                         ElsterXmlTreeNode('parent13', ['field_repeat_2', 'field_repeat_3'], is_repeatable=True)])
+                                         ElsterXmlTreeNode('parent13', ['field_repeat_2', 'field_repeat_3'],
+                                                           is_repeatable=True)])
 
         _add_sterkl_fields(xml_top, fields, sterkl_tree)
 
@@ -544,6 +588,140 @@ class TestAddPersonSpecificSterklFields(unittest.TestCase):
 
 class TestElsterXml(unittest.TestCase):
     def setUp(self):
+        self.dummy_fields = {
+            'E0100201': 'Maier',
+            'E0100301': 'Hans',
+            'E0100401': '05.05.1955',
+            'E0100602': 'Musterort',
+        }
+
+    def _dummy_vorsatz_single(self):
+        return Vorsatz(
+            unterfallart='10',
+            ordNrArt='S',
+            vorgang='01',
+            StNr='9198011310010',
+            Zeitraum='2020',
+            IDPersonA='04452397687',
+            IDPersonB=None,
+            AbsName='Testfall ERiC',
+            AbsStr='Teststrasse 42',
+            AbsPlz='12345',
+            AbsOrt='Berlin',
+            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+        )
+
+    def _dummy_vorsatz_married(self):
+        return Vorsatz(
+            unterfallart='10',
+            ordNrArt='S',
+            vorgang='01',
+            StNr='9198011310010',
+            Zeitraum='2020',
+            IDPersonA='04452397687',
+            IDPersonB='02293417683',
+            AbsName='Testfall ERiC',
+            AbsStr='Teststrasse 42',
+            AbsPlz='12345',
+            AbsOrt='Berlin',
+            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+        )
+
+    def _dummy_vorsatz_submission_without_tax_nr(self):
+        return Vorsatz(
+            unterfallart='10',
+            ordNrArt='O',
+            vorgang='01',
+            StNr=None,
+            Zeitraum='2020',
+            IDPersonA='04452397687',
+            IDPersonB='02293417683',
+            AbsName='Testfall ERiC',
+            AbsStr='Teststrasse 42',
+            AbsPlz='12345',
+            AbsOrt='Berlin',
+            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+        )
+
+    def test_add_vorsatz_single(self):
+        xml_top = Element('main')
+        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_single())
+        xml_string = tostring(xml_top).decode()
+
+        self.assertIn("<StNr>9198011310010</StNr>", xml_string)
+        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn("<ID>04452397687</ID>", xml_string)
+        self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
+        self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
+        self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
+        self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn('<Rueckuebermittlung>', xml_string)
+        self.assertNotIn("IDEhefrau", xml_string)
+
+    def test_add_vorsatz_married(self):
+        xml_top = Element('main')
+        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_married())
+        xml_string = tostring(xml_top).decode()
+
+        self.assertIn("<StNr>9198011310010</StNr>", xml_string)
+        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn("<ID>04452397687</ID>", xml_string)
+        self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
+        self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
+        self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
+        self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
+        self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn('<Rueckuebermittlung>', xml_string)
+
+    def test_add_vorsatz_submission_without_tax_nr(self):
+        xml_top = Element('main')
+        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_submission_without_tax_nr())
+        xml_string = tostring(xml_top).decode()
+
+        self.assertNotIn("<StNr>", xml_string)
+        self.assertIn("<OrdNrArt>O</OrdNrArt>", xml_string)
+        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn("<ID>04452397687</ID>", xml_string)
+        self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
+        self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
+        self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
+        self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
+        self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn('<Rueckuebermittlung>', xml_string)
+
+    def test_add_fields(self):
+        xml_top = Element('main')
+        _add_xml_fields(xml_top, self.dummy_fields)
+        xml_string = tostring(xml_top).decode()
+
+        self.assertIn('<E0100201>Maier</E0100201>', xml_string)
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_add_nutzdaten(self):
+        xml_top = Element('main')
+        _add_est_xml_nutzdaten(xml_top, self.dummy_fields, self._dummy_vorsatz_single(), '2020')
+        xml_string = tostring(xml_top).decode()
+
+        self.assertIn("<StNr>9198011310010</StNr>", xml_string)
+        self.assertIn('<E0100201>Maier</E0100201>', xml_string)
+
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_add_nutzdaten_header(self):
+        xml_top = Element('main')
+        _add_xml_nutzdaten_header(xml_top, 'nutzdatenTicket123', '9198')
+        xml_string = tostring(xml_top).decode()
+
+        self.assertIn("<NutzdatenTicket>nutzdatenTicket123</NutzdatenTicket>", xml_string)
+        self.assertIn('<Empfaenger id="F">9198</Empfaenger>', xml_string)
+
+
+class TestGenerateFullEstXML(unittest.TestCase):
+
+    def setUp(self) -> None:
+
         self.dummy_fields_beh = {
             'E0100201': 'Maier',
             'E0100301': 'Hans',
@@ -606,113 +784,51 @@ class TestElsterXml(unittest.TestCase):
             'E0104706': ['7a', '7b'],
         }
 
-    def _dummy_vorsatz_single(self):
-        return Vorsatz(
-            unterfallart='10',
-            ordNrArt='S',
-            vorgang='01',
-            StNr='9198011310010',
-            Zeitraum='2020',
-            IDPersonA='04452397687',
-            IDPersonB=None,
-            AbsName='Testfall ERiC',
-            AbsStr='Teststrasse 42',
-            AbsPlz='12345',
-            AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
-        )
-
-    def _dummy_vorsatz_married(self):
-        return Vorsatz(
-            unterfallart='10',
-            ordNrArt='S',
-            vorgang='01',
-            StNr='9198011310010',
-            Zeitraum='2020',
-            IDPersonA='04452397687',
-            IDPersonB='02293417683',
-            AbsName='Testfall ERiC',
-            AbsStr='Teststrasse 42',
-            AbsPlz='12345',
-            AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
-        )
-
-    def _dummy_fields(self):
-        return {
+        self.dummy_fields = {
             'E0100201': 'Maier',
             'E0100301': 'Hans',
             'E0100401': '05.05.1955',
             'E0100602': 'Musterort',
         }
 
-    def _call_generate_full_est_xml(self, form_data, use_testmerker=False):
-        return generate_full_est_xml(form_data=form_data, steuernummer='9198011310010', year='2020',
-                                     person_a_idnr='04452397687', first_name='Manfred', last_name='Mustername',
-                                     street='Musterstraße', street_nr='42', plz='12345', town='Hamburg',
+    def _call_generate_full_est_xml(self, form_data, use_testmerker=False, submission_without_tax_nr=False):
+        if submission_without_tax_nr:
+            vorsatz = generate_vorsatz_without_tax_number(
+                year='2020',
+                person_a_idnr='04452397687', person_b_idnr=None, first_name='Manfred',
+                last_name='Mustername',
+                street='Musterstraße', street_nr='42', plz='12345',
+                town='Hamburg')
+        else:
+            vorsatz = generate_vorsatz_with_tax_number(
+                steuernummer='9198011310010', year='2020',
+                person_a_idnr='04452397687', person_b_idnr=None,  first_name='Manfred', last_name='Mustername',
+                street='Musterstraße', street_nr='42', plz='12345', town='Hamburg')
+        return generate_full_est_xml(form_data=form_data,
+                                     vorsatz=vorsatz,
+                                     year='2020',
                                      empfaenger='9198', nutzdaten_ticket='nutzdatenTicket123',
                                      use_testmerker=use_testmerker)
 
-    def test_add_vorsatz_single(self):
-        xml_top = Element('main')
-        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_single())
-        xml_string = tostring(xml_top).decode()
+    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_submission_without_tax_nr_then_set_vorsatz_correctly(self):
+        xml_string = self._call_generate_full_est_xml(self.dummy_fields, submission_without_tax_nr=True)
 
-        self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
-        self.assertIn("<ID>04452397687</ID>", xml_string)
-        self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
-        self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
-        self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
-        self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
-        self.assertIn('<Rueckuebermittlung>', xml_string)
-        self.assertNotIn("IDEhefrau", xml_string)
-
-    def test_add_vorsatz_married(self):
-        xml_top = Element('main')
-        _add_xml_vorsatz(xml_top, self._dummy_vorsatz_married())
-        xml_string = tostring(xml_top).decode()
-
-        self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
-        self.assertIn("<ID>04452397687</ID>", xml_string)
-        self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
-        self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
-        self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
-        self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
-        self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
-        self.assertIn('<Rueckuebermittlung>', xml_string)
-
-    def test_add_fields(self):
-        xml_top = Element('main')
-        _add_xml_fields(xml_top, self._dummy_fields())
-        xml_string = tostring(xml_top).decode()
-
-        self.assertIn('<E0100201>Maier</E0100201>', xml_string)
+        self.assertNotIn("<StNr>", xml_string)
+        self.assertIn("<OrdNrArt>O</OrdNrArt>", xml_string)
+        self.assertNotIn("<OrdNrArt>S</OrdNrArt>", xml_string)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_add_nutzdaten(self):
-        xml_top = Element('main')
-        _add_est_xml_nutzdaten(xml_top, self._dummy_fields(), self._dummy_vorsatz_single(), '2020')
-        xml_string = tostring(xml_top).decode()
+    def test_if_not_submission_without_tax_nr_then_set_vorsatz_correctly(self):
+        xml_string = self._call_generate_full_est_xml(self.dummy_fields, submission_without_tax_nr=False)
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn('<E0100201>Maier</E0100201>', xml_string)
-
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
-    def test_add_nutzdaten_header(self):
-        xml_top = Element('main')
-        _add_xml_nutzdaten_header(xml_top, 'nutzdatenTicket123', '9198')
-        xml_string = tostring(xml_top).decode()
-
-        self.assertIn("<NutzdatenTicket>nutzdatenTicket123</NutzdatenTicket>", xml_string)
-        self.assertIn('<Empfaenger id="F">9198</Empfaenger>', xml_string)
+        self.assertIn("<OrdNrArt>S</OrdNrArt>", xml_string)
+        self.assertNotIn("<OrdNrArt>O</OrdNrArt>", xml_string)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_full_xml(self):
-        xml_string = self._call_generate_full_est_xml(self._dummy_fields())
+        xml_string = self._call_generate_full_est_xml(self.dummy_fields)
 
         # Check Transfer Header
         self.assertIn("<DatenArt>ESt</DatenArt>", xml_string)
@@ -777,7 +893,7 @@ class TestElsterXml(unittest.TestCase):
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_person_b_account_holder_then_generate_full_xml(self):
-        input_data = {**self._dummy_fields(), **{'E0102402': 'X'}}
+        input_data = {**self.dummy_fields, **{'E0102402': 'X'}}
         xml_string = self._call_generate_full_est_xml(input_data)
         self.assertIn('<BV><E0102402>X</E0102402></BV>', "".join(xml_string.split()))
 
@@ -807,25 +923,26 @@ class TestElsterXml(unittest.TestCase):
         self.assertIn(
             '<Handw_L><Einz><E0111217>3</E0111217><E0170601>4</E0170601><E0111214>5</E0111214></Einz><Sum><E0111215>5</E0111215></Sum></Handw_L>',
             "".join(xml_string.split()))
-        self.assertIn('<Alleinst><E0107606>6</E0107606><Pers_gem_HH><E0104706>7a</E0104706></Pers_gem_HH><Pers_gem_HH><E0104706>7b</E0104706></Pers_gem_HH></Alleinst>',
-                      "".join(xml_string.split()))
+        self.assertIn(
+            '<Alleinst><E0107606>6</E0107606><Pers_gem_HH><E0104706>7a</E0104706></Pers_gem_HH><Pers_gem_HH><E0104706>7b</E0104706></Pers_gem_HH></Alleinst>',
+            "".join(xml_string.split()))
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
-        xml_string = self._call_generate_full_est_xml(self._dummy_fields())
+        xml_string = self._call_generate_full_est_xml(self.dummy_fields)
         self.assertIn("<Testmerker>700000004</Testmerker>", xml_string)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
-            xml_string = self._call_generate_full_est_xml(self._dummy_fields())
+            xml_string = self._call_generate_full_est_xml(self.dummy_fields)
             self.assertNotIn("<Testmerker>700000004</Testmerker>", xml_string)
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
-            xml_string = self._call_generate_full_est_xml(self._dummy_fields(), use_testmerker=True)
+            xml_string = self._call_generate_full_est_xml(self.dummy_fields, use_testmerker=True)
             self.assertIn("<Testmerker>700000004</Testmerker>", xml_string)
 
 
@@ -866,7 +983,8 @@ class TestVastRequest(unittest.TestCase):
         self.assertIn(
             '<DateninhaberIdNr>04452397687</DateninhaberIdNr><DateninhaberGeburtstag>1985-01-01</DateninhaberGeburtstag>',
             "".join(xml_string.split()))
-        self.assertIn(f"<DatenabruferMail>{get_settings().testing_email_address}</DatenabruferMail>", "".join(xml_string.split()))
+        self.assertIn(f"<DatenabruferMail>{get_settings().testing_email_address}</DatenabruferMail>",
+                      "".join(xml_string.split()))
 
     @freeze_time("2020-05-04")
     def test_compute_valid_until_date_returns_correct_date_if_during_a_year(self):
@@ -935,7 +1053,6 @@ class TestVastActivation(unittest.TestCase):
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_activation_xml_generates_correct_datenart(self):
-
         xml_string = generate_full_vast_activation_xml(self.valid_user_data)
 
         self.assertIn('<Verfahren>ElsterBRM</Verfahren><DatenArt>SpezRechtFreischaltung</DatenArt>',

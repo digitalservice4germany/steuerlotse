@@ -4,8 +4,44 @@ import datetime as dt
 from werkzeug.datastructures import MultiDict
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import IdNrField, SteuerlotseDateField
+from app.forms.fields import IdNrField, SteuerlotseDateField, UnlockCodeField, _add_classes_to_kwargs
 from app.forms.validators import ValidIdNr
+
+
+class TestAddClassesToKwargs(unittest.TestCase):
+
+    def test_if_kwargs_is_empty_and_one_class_then_set_correctly(self):
+        kwargs = {}
+        classes = ['one_class']
+        correct_classes = 'one_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
+    def test_if_kwargs_is_empty_and_many_classes_then_set_correctly(self):
+        kwargs = {}
+        classes = ['one_class', 'second_class', 'third_class']
+        correct_classes = 'one_class second_class third_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
+    def test_if_kwargs_is_not_empty_and_one_class_then_set_correctly(self):
+        kwargs = {'class': 'old_class'}
+        classes = ['one_class']
+        correct_classes = 'old_class one_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
+    def test_if_kwargs_is_not_empty_and_many_classes_then_set_correctly(self):
+        kwargs = {'class': 'old_class'}
+        classes = ['one_class', 'second_class', 'third_class']
+        correct_classes = 'old_class one_class second_class third_class'
+        _add_classes_to_kwargs(kwargs, classes)
+
+        self.assertEqual(correct_classes, kwargs.get('class'))
+
 
 
 class IdNrForm(SteuerlotseBaseForm):
@@ -151,6 +187,7 @@ class TestSteuerlotseDateFieldData(unittest.TestCase):
 
 
 class TestSteuerlotseDateFieldValue(unittest.TestCase):
+
     def setUp(self):
         self.form = DateForm()
 
@@ -194,3 +231,21 @@ class TestSteuerlotseDateFieldValue(unittest.TestCase):
                           data={'date_field': dt.date(1979, 9, 19)})
         self.form.validate()
         self.assertEqual([31, 7, 1980], self.form.date_field._value())
+
+
+class UnlockCodeForm(SteuerlotseBaseForm):
+    unlock_code = UnlockCodeField()
+
+
+class TestUnlockCodeFieldValue(unittest.TestCase):
+
+    def setUp(self):
+        self.form = UnlockCodeForm()
+
+    def test_if_data_given_and_lowercase_then_value_equals_uppercase_data(self):
+        """ Simulates a POST request with valid formdata and no prefilled data."""
+        unlock_input = ['aaaa', '12ade', '1l2ö']
+        self.form.process(formdata=MultiDict({'unlock_code': unlock_input}))
+        self.form.validate()
+        self.assertEqual(['AAAA', '12ADE', '1L2Ö'], self.form.unlock_code._value())
+

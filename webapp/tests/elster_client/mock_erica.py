@@ -1,14 +1,18 @@
 from typing import List, Tuple
 
 from flask import json
-from app import app
+
+from app.config import Config
 from tests.elster_client.json_responses.sample_responses import get_json_response
 from tests.utils import gen_random_key
 
 _JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
-_PYERIC_API_BASE_URL = app.config['ERICA_BASE_URL']
+_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _EST_KEYS = ['est_data', 'meta_data']
-_REQUIRED_FORM_KEYS = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob", "person_a_last_name",
+_REQUIRED_FORM_KEYS_WITH_STEUERNUMMER = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob", "person_a_last_name",
+                       "person_a_first_name", "person_a_religion", "person_a_street", "person_a_street_number",
+                       "person_a_plz", "person_a_town", "person_a_blind", "steuerminderung", "is_person_a_account_holder"]
+_REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER = ["new_admission", "bufa_nr", "bundesland", "familienstand", "person_a_idnr", "person_a_dob", "person_a_last_name",
                        "person_a_first_name", "person_a_religion", "person_a_street", "person_a_street_number",
                        "person_a_plz", "person_a_town", "person_a_blind", "steuerminderung", "is_person_a_account_holder"]
 _METADATA_KEYS = ["year", "is_digitally_signed"]
@@ -60,6 +64,8 @@ class MockErica:
                 response = MockErica.revoke_unlock_code(sent_data, include_elster_responses)
             elif args[0] == _PYERIC_API_BASE_URL + '/address':
                 response = MockErica.get_address_data(sent_data, include_elster_responses)
+            elif args[0] == _PYERIC_API_BASE_URL + '/tax_offices':
+                response = MockErica.get_tax_offices()
             else:
                 return MockResponse(None, 404)
         except UnexpectedInputDataError:
@@ -77,7 +83,8 @@ class MockErica:
         input_data = json.loads(input_body)
 
         if (not all(key in input_data for key in _EST_KEYS)) or \
-                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS)) or \
+                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and \
+                    not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER ))or \
                 (not all(key in input_data['meta_data'] for key in _METADATA_KEYS)):
             raise UnexpectedInputDataError()
 
@@ -97,16 +104,23 @@ class MockErica:
 
         # Successful cases
         if show_response:
-            return get_json_response('est_including_responses')
+            if 'new_admission' in input_data['est_data']:
+                return get_json_response('est_without_tax_number_including_responses')
+            else:
+                return get_json_response('est_including_responses')
         else:
-            return get_json_response('est_without_responses')
+            if 'new_admission' in input_data['est_data']:
+                return get_json_response('est_without_tax_number_without_responses')
+            else:
+                return get_json_response('est_without_responses')
 
     @staticmethod
     def send_est(input_body, show_response: bool):
         input_data = json.loads(input_body)
 
         if (not all(key in input_data for key in _EST_KEYS)) or \
-                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS)) or \
+                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and \
+                    not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER ))or \
                 (not all(key in input_data['meta_data'] for key in _METADATA_KEYS)):
             raise UnexpectedInputDataError()
 
@@ -126,9 +140,15 @@ class MockErica:
 
         # Successful cases
         if show_response:
-            return get_json_response('est_including_responses')
+            if 'new_admission' in input_data['est_data']:
+                return get_json_response('est_without_tax_number_including_responses')
+            else:
+                return get_json_response('est_including_responses')
         else:
-            return get_json_response('est_without_responses')
+            if 'new_admission' in input_data['est_data']:
+                return get_json_response('est_without_tax_number_without_responses')
+            else:
+                return get_json_response('est_without_responses')
 
     @staticmethod
     def request_unlock_code(input_body, show_response: bool):
@@ -264,6 +284,11 @@ class MockErica:
                 return get_json_response('get_address_with_resp')
             else:
                 return get_json_response('get_address_no_resp')
+
+    @staticmethod
+    def get_tax_offices():
+
+        return get_json_response('tax_offices')
 
     @staticmethod
     def errors_from_error_flags(show_response):

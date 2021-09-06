@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EricHoleFinanzamtLandNummern xmlns="http://www.elster.de/EricXML/1.0/EricHoleFinanzamtLandNummern">
+	<FinanzamtLand>
+		<FinanzamtLandNummer>28</FinanzamtLandNummer>
+		<Name>Baden-Württemberg</Name>
+	</FinanzamtLand>
+	<FinanzamtLand>
+		<FinanzamtLandNummer>91</FinanzamtLandNummer>
+		<Name>Bayern (Zuständigkeit LfSt - München)</Name>
+	</FinanzamtLand>
+	<FinanzamtLand>
+		<FinanzamtLandNummer>92</FinanzamtLandNummer>
+		<Name>Bayern (Zuständigkeit LfSt - Nürnberg)</Name>
+	</FinanzamtLand>
+	<FinanzamtLand>
+		<FinanzamtLandNummer>11</FinanzamtLandNummer>
+		<Name>Berlin</Name>
+	</FinanzamtLand>
+</EricHoleFinanzamtLandNummern>

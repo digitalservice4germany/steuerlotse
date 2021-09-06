@@ -1,10 +1,10 @@
 import datetime
+import logging
 
 from flask import request
 from flask_babel import _
 from markupsafe import escape
 
-from app import app
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
 from app.data_access.user_controller import user_exists, create_user
 from app.data_access.user_controller_errors import UserAlreadyExistsError
@@ -13,6 +13,9 @@ from app.elster_client.elster_errors import ElsterProcessNotSuccessful
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.unlock_code_request_steps import UnlockCodeRequestInputStep, UnlockCodeRequestSuccessStep, \
     UnlockCodeRequestFailureStep
+
+
+logger = logging.getLogger(__name__)
 
 
 class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
@@ -64,7 +67,7 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                     # prevent going to failure page as in normal flow
                     render_info.next_url = self.url_for_step(UnlockCodeRequestSuccessStep.name)
                 except (UserAlreadyExistsError, ElsterProcessNotSuccessful):
-                    app.logger.info("Could not request unlock code for user", exc_info=True)
+                    logger.info("Could not request unlock code for user", exc_info=True)
                     pass  # go to failure step
         elif isinstance(step, UnlockCodeRequestFailureStep):
             render_info.next_url = None

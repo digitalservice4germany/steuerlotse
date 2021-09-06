@@ -1,6 +1,7 @@
 import logging
 
 from fastapi import HTTPException, status
+from starlette.responses import FileResponse
 
 from erica import app
 from erica.request_processing.erica_input import EstData, UnlockCodeRequestData, UnlockCodeActivationData, \
@@ -10,10 +11,10 @@ from erica.request_processing.requests_controller import UnlockCodeRequestContro
     UnlockCodeActivationRequestController, EstValidationRequestController, EstRequestController, \
     UnlockCodeRevocationRequestController
 
-PYERIC_VERSION_URL = '/01'
+ERICA_VERSION_URL = '/01'
 
 
-@app.get(PYERIC_VERSION_URL + '/est_validations')
+@app.get(ERICA_VERSION_URL + '/est_validations')
 def validate_est(est: EstData, include_elster_responses: bool = False):
     """
     Data for a Est is validated using ERiC. If the validation is successful then this should return
@@ -33,7 +34,7 @@ def validate_est(est: EstData, include_elster_responses: bool = False):
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
 
-@app.post(PYERIC_VERSION_URL + '/ests', status_code=status.HTTP_201_CREATED)
+@app.post(ERICA_VERSION_URL + '/ests', status_code=status.HTTP_201_CREATED)
 def send_est(est: EstData, include_elster_responses: bool = False):
     """
     An Est is validated and then send to ELSTER using ERiC. If it is successful, this should return a 200 HTTP
@@ -54,7 +55,7 @@ def send_est(est: EstData, include_elster_responses: bool = False):
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
 
-@app.post(PYERIC_VERSION_URL + '/unlock_code_requests', status_code=status.HTTP_201_CREATED)
+@app.post(ERICA_VERSION_URL + '/unlock_code_requests', status_code=status.HTTP_201_CREATED)
 def request_unlock_code(unlock_code_request: UnlockCodeRequestData, include_elster_responses: bool = False):
     """
     A new unlock code for the sent id_nr is requested. If everything is successful, return a 200 HTTP response
@@ -72,7 +73,7 @@ def request_unlock_code(unlock_code_request: UnlockCodeRequestData, include_elst
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
 
-@app.post(PYERIC_VERSION_URL + '/unlock_code_activations', status_code=status.HTTP_201_CREATED)
+@app.post(ERICA_VERSION_URL + '/unlock_code_activations', status_code=status.HTTP_201_CREATED)
 def activate_unlock_code(unlock_code_activation: UnlockCodeActivationData, include_elster_responses: bool = False):
     """
     An unlock code is used activated for the sent id_nr. If everything is successful, return a 200 HTTP response
@@ -89,8 +90,7 @@ def activate_unlock_code(unlock_code_activation: UnlockCodeActivationData, inclu
         logging.getLogger().info("Could not activate unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
-
-@app.post(PYERIC_VERSION_URL + '/unlock_code_revocations', status_code=status.HTTP_200_OK)
+@app.post(ERICA_VERSION_URL + '/unlock_code_revocations', status_code=status.HTTP_200_OK)
 def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include_elster_responses: bool = False):
     """
     The permission at Elster is revoked. If everything is successful, return a 200 HTTP response
@@ -109,7 +109,15 @@ def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
 
-@app.post(PYERIC_VERSION_URL + '/address', status_code=status.HTTP_200_OK)
+@app.get(ERICA_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK)
+def get_tax_offices():
+    """
+    The list of tax offices for all states is requested and returned.
+    """
+    return FileResponse("erica/static/tax_offices.json")
+
+
+@app.post(ERICA_VERSION_URL + '/address', status_code=status.HTTP_200_OK)
 def get_address(get_address: GetAddressData, include_elster_responses: bool = False):
     """
     The address data of the given idnr is requested at Elster and returned. Be aware, that you need a permission
@@ -122,7 +130,7 @@ def get_address(get_address: GetAddressData, include_elster_responses: bool = Fa
     raise NotImplementedError()
 
 
-@app.get(PYERIC_VERSION_URL + '/ping')
+@app.get(ERICA_VERSION_URL + '/ping')
 def ping():
     """Simple route that can be used to check if the app has started.
     """

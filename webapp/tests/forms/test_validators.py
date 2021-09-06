@@ -4,7 +4,8 @@ from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import UnlockCodeField
-from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode
+from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
+    ValidUnlockCodeCharacterSet
 
 
 class TestDecimalOnly(unittest.TestCase):
@@ -178,13 +179,12 @@ class TestValidCharacterSet(unittest.TestCase):
     def setUp(self):
         self.field = StringField()
         self.form = SteuerlotseBaseForm()
-        self.validator = ValidElsterCharacterSet()
 
     def test_invalid_character_raises_error(self):
         invalid_chars = ['ć', '\\', '❤️']
         for invalid_char in invalid_chars:
             self.field.data = invalid_char
-            self.assertRaises(ValidationError, self.validator.__call__, self.form, self.field)
+            self.assertRaises(ValidationError, ValidElsterCharacterSet().__call__, self.form, self.field)
 
     def test_valid_character_does_not_raise_error(self):
         valid_string = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`abcdefghijklmnopqrstuvwxyz' \
@@ -192,13 +192,40 @@ class TestValidCharacterSet(unittest.TestCase):
                        'šŸŽž€'
         try:
             self.field.data = valid_string
-            self.validator.__call__(self.form, self.field)
+            ValidElsterCharacterSet().__call__(self.form, self.field)
         except ValidationError:
             self.fail("ValidCharacterSet raised ValidationError unexpectedly!")
 
     def test_empty_string_does_not_raise_error(self):
         try:
             self.field.data = ''
-            self.validator.__call__(self.form, self.field)
+            ValidElsterCharacterSet().__call__(self.form, self.field)
+        except ValidationError:
+            self.fail("ValidCharacterSet raised ValidationError unexpectedly!")
+
+
+class TestValidUnlockCodeCharacterSet(unittest.TestCase):
+    def setUp(self):
+        self.field = StringField()
+        self.form = SteuerlotseBaseForm()
+
+    def test_invalid_character_raises_error(self):
+        invalid_chars = ['ć', '\\', '❤️', 'a', 'é']
+        for invalid_char in invalid_chars:
+            self.field.data = invalid_char
+            self.assertRaises(ValidationError, ValidUnlockCodeCharacterSet().__call__, self.form, self.field)
+
+    def test_valid_character_does_not_raise_error(self):
+        valid_string = '-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ'
+        try:
+            self.field.data = valid_string
+            ValidUnlockCodeCharacterSet().__call__(self.form, self.field)
+        except ValidationError:
+            self.fail("ValidCharacterSet raised ValidationError unexpectedly!")
+
+    def test_empty_string_does_not_raise_error(self):
+        try:
+            self.field.data = ''
+            ValidUnlockCodeCharacterSet().__call__(self.form, self.field)
         except ValidationError:
             self.fail("ValidCharacterSet raised ValidationError unexpectedly!")

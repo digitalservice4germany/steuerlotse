@@ -1,0 +1,30 @@
+{{ joined_input_fields }}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sub_fields = document.querySelectorAll('input[name={{ name }}]');
+        sub_fields.forEach(input => {
+            input.addEventListener('paste', e => {
+                const data = e.clipboardData.items[0];
+                if(data.kind == 'string' && data.type == 'text/plain') {
+                    data.getAsString(str => {
+                        let start_idx = 0
+                        sub_fields.forEach(sub_field => {
+                            try{
+                                masked_str = $(sub_field).masked(str);
+                            }catch (TypeError) {
+                                masked_str = str;
+                            }
+                            const length = parseInt(sub_field.dataset.fieldLength);
+                            const paste_content = masked_str.substr(start_idx, length);
+                            console.log(masked_str, length, paste_content);
+                            sub_field.value = paste_content || '';
+                            start_idx += length;
+                        });
+                    });
+                }
+            });
+        });
+    });
+</script>

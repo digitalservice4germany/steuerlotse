@@ -1,7 +1,7 @@
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.lotse.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import FormStep, SectionLink
-from app.forms.fields import EntriesField, EuroField
+from app.forms.fields import EntriesField, EuroField, SteuerlotseIntegerField
 
 from flask import render_template
 from flask_babel import _
@@ -286,7 +286,7 @@ class StepGemeinsamerHaushalt(FormStep):
     ]
 
     class Form(SteuerlotseBaseForm):
-        stmind_gem_haushalt_count = IntegerField(
+        stmind_gem_haushalt_count = SteuerlotseIntegerField(
             label=_l('form.lotse.field_gem_haushalt_count'),
             render_kw={'data_label': _l('form.lotse.field_gem_haushalt_count.data_label')},
             validators=[IntegerLength(max=15)])

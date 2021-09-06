@@ -1,3 +1,4 @@
+import logging
 import json
 from datetime import datetime
 from decimal import Decimal
@@ -6,7 +7,7 @@ import requests
 from flask_login import current_user, logout_user
 from markupsafe import escape
 
-from app import app
+from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_address_entry
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -14,7 +15,11 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
     ElsterInvalidBufaNumberError
 
-_PYERIC_API_BASE_URL = app.config['ERICA_BASE_URL']
+
+logger = logging.getLogger(__name__)
+
+
+_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'is_person_a_account_holder', 'person_a_blind', 'person_a_gehbeh',
@@ -32,12 +37,15 @@ _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since
 
 
 def send_to_erica(*args, **kwargs):
-    if app.config['USE_MOCK_API']:
+    logger.info(f'Making Erica request with args {args!r}')
+    if Config.USE_MOCK_API:
         from tests.elster_client.mock_erica import MockErica
-        return MockErica.mocked_elster_requests(*args, **kwargs)
+        response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
-        return requests.post(*args, headers=headers, **kwargs)
+        response = requests.post(*args, headers=headers, **kwargs)
+    logger.info(f'Completed Erica request with args {args!r}, got code {response.status_code}')
+    return response
 
 
 def send_est_with_elster(form_data, ip_address, year=2020, include_elster_responses=True):
@@ -198,7 +206,7 @@ def check_pyeric_response_for_errors(pyeric_response):
             erica_error += f', elster_th_res_code="{th_res_code}", elster_th_error_msg="{th_error_msg}", ' \
                            f'elster_ndh_error_xml="{ndh_error_xml}"'
 
-        app.logger.info(erica_error)
+        logger.info(erica_error)
 
         if error_code == 1:
             raise ElsterGlobalError(message=error_message)
