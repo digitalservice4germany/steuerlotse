@@ -1,3 +1,15 @@
+.spacing-b-04 {
+    margin-bottom: var(--spacing-04);
+}
+
+.spacing-b-09 {
+    margin-bottom: var(--spacing-09);
+}
+
+.spacing-b-11 {
+    margin-bottom: var(--spacing-11);
+}
+
 .section-intro {
     margin-bottom: var(--spacing-08);
 }
@@ -50,14 +62,6 @@
     }
 }
 
-.spacing-b-04 {
-    margin-bottom: var(--spacing-04);
-}
-
-.spacing-b-09 {
-    margin-bottom: var(--spacing-09);
-}
-
-.spacing-b-11 {
+.explanatory-text{
     margin-bottom: var(--spacing-11);
 }
