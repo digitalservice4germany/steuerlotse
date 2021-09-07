@@ -1,8 +1,8 @@
 from flask_babel import _
 
 from app.forms.flows.step_chooser import StepChooser
-from app.forms.steps.lotse.confirmation_steps import StepSummary
-from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse.personal_data import StepSteuernummer
 
 _LOTSE_DATA_KEY = 'form_data'
 

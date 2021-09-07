@@ -2,7 +2,7 @@ import pytest
 from werkzeug.datastructures import MultiDict
 
 from app.elster_client.elster_client import request_tax_offices
-from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer, LotseFormSteuerlotseStep
+from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteuerlotseStep
 
 
 class SummaryStep(object):

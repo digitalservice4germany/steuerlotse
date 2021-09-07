@@ -15,14 +15,14 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
     ElsterInvalidBufaNumberError
 from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, IntegerField
-from app.forms.flows.multistep_flow import MultiStepFlow, FlowNavItem
-from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepAck, StepFiling
-from app.forms.steps.lotse.confirmation_steps import StepSummary
-from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.lotse_steuerlotse_steps import StepSteuernummer
-from app.forms.steps.lotse.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
+from app.forms.flows.multistep_flow import MultiStepFlow
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse.personal_data import StepSteuernummer
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
-from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \

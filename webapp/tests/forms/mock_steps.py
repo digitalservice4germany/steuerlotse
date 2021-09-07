@@ -6,10 +6,10 @@ from wtforms import Form, validators
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
 from app.forms.steps.logout_steps import LogoutInputStep
-from app.forms.steps.lotse.confirmation_steps import StepFiling, StepSummary, StepConfirmation
-from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
-from app.forms.steps.lotse.personal_data_steps import StepPersonA, StepIban, StepPersonB, StepFamilienstand
-from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepHandwerker, \
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepSummary, StepConfirmation
+from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepPersonB, StepFamilienstand
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepHandwerker, \
     StepReligion, StepGemeinsamerHaushalt, StepHaushaltsnahe
 from app.forms.steps.step import Step, FormStep
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
