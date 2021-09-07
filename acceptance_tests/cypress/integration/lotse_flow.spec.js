@@ -232,6 +232,40 @@ context('Acceptance tests', () => {
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('not.be.visible')
         })
 
+        it('Enter different tax number data ', () => {
+            cy.visit('/lotse/step/steuernummer?link_overview=True')
+
+            // Tax number exists
+            cy.get('label[for=steuernummer_exists-yes]').click()
+            cy.get('#steuernummer').should('not.be.visible')
+            cy.get('select[id=bufa_nr]').should('not.be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+
+            // Select state
+            cy.get('select[id=bundesland]').select('BY')
+            cy.get('#steuernummer').should('be.visible')
+            cy.get('select[id=bufa_nr]').should('not.be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+
+            // Tax number does not exist
+            cy.get('label[for=steuernummer_exists-no]').click()
+            cy.get('select[id=bundesland]').should('be.visible').and('have.value', 'BY')
+            cy.get('select[id=bufa_nr]').should('be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+            cy.get('#steuernummer').should('not.be.visible')
+
+            // Select state
+            cy.get('select[id=bundesland]').select('BY')
+            cy.get('select[id=bufa_nr]').should('be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+            cy.get('#steuernummer').should('not.be.visible')
+
+            //Select bufa_nr
+            cy.get('select[id=bufa_nr]').select('9203')
+            cy.get('label[for=request_new_tax_number]').should('be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.checked')
+        })
+
         context('Submitting tax returns', () => {
             beforeEach(() => {
                 // Step 1: accept opt-ins
@@ -284,6 +318,7 @@ context('Acceptance tests', () => {
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
                 // Get PDF - can't click on it as it opens a new window, so we request it directly
                 cy.request('/download_pdf/print.pdf').its('body').should('not.be.empty')
+
                 cy.get(submitBtnSelector).click()
                 cy.get('body').contains('Herzlichen Glückwunsch!')
             });
@@ -332,7 +367,14 @@ context('Acceptance tests', () => {
                 // Verify success.
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
                 // Get PDF - can't click on it as it opens a new window, so we request it directly
-                cy.request('/download_pdf/print.pdf').its('body').should('not.be.empty')
+                cy.downloadFile(Cypress.config('baseUrl') + '/download_pdf/print.pdf',
+                    'cypress/fixtures/Download', 'print.pdf')
+                cy.task('getPdfContent', 'cypress/fixtures/Download/print.pdf').then(content => {
+                    //Test if pdf contains 'Ordnungsbegriff'
+                    cy.expect(content.text).contains('Ordnungsbegriff')
+                  })
+
+
                 cy.get(submitBtnSelector).click()
                 cy.get('body').contains('Herzlichen Glückwunsch!')
             });
@@ -461,6 +503,9 @@ context('Acceptance tests', () => {
                 cy.visit('/unlock_code_activation/step/data_input')
                 cy.get('#idnr_1').should('have.value', '')
                 cy.get('#unlock_code_1').should('have.value', '')
+
+                // Clean up
+                cy.task('removeDownloadFolder', 'cypress/fixtures')
             });
         });
         // These tests could be split. However, to avoid hitting rate limits, keep it simple, and reduce the run time it is one test.
