@@ -9,6 +9,15 @@ class SummaryStep(object):
     pass
 
 
+@pytest.fixture
+def step_with_bufa_choices(app, test_request_context):
+    step = StepSteuernummer()
+    tax_offices = request_tax_offices()
+    step._set_bufa_choices(tax_offices)
+
+    yield step
+
+
 @pytest.mark.usefixtures("app", "test_request_context")
 class TestLotseFormSteuerlotseStep:
 
@@ -28,62 +37,57 @@ class TestLotseFormSteuerlotseStep:
 
 
 class TestStepSteuernummer:
-    @pytest.fixture(autouse=True)
-    def prepare_step(self, app, test_request_context):
-        self.step = StepSteuernummer()
-        tax_offices = request_tax_offices()
-        self.step._set_bufa_choices(tax_offices)
 
-    def test_if_steuernummer_exists_missing_then_fail_validation(self, test_request_context):
+    def test_if_steuernummer_exists_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'bundesland': 'BY',
                           'steuernummer': '19811310010', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_steuernummer_exists_and_bundesland_missing_then_fail_validation(self):
+    def test_if_steuernummer_exists_and_bundesland_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'steuernummer': '19811310010', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_steuernummer_exists_and_steuernummer_missing_then_fail_validation(self):
+    def test_if_steuernummer_exists_and_steuernummer_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'bundesland': 'BY', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_steuernummer_exists_and_nothing_is_missing_then_succeed_validation(self):
+    def test_if_steuernummer_exists_and_nothing_is_missing_then_succeed_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'bundesland': 'BY',
                           'steuernummer': '19811310010', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is True
 
-    def test_if_no_steuernummer_and_bundesland_missing_then_fail_validation(self):
+    def test_if_no_steuernummer_and_bundesland_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bufa_nr': '9201',
                           'request_new_tax_number': 'y', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_no_steuernummer_and_bufa_nr_missing_then_fail_validation(self):
+    def test_if_no_steuernummer_and_bufa_nr_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bundesland': 'BY',
                           'request_new_tax_number': 'y', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_no_steuernummer_and_request_new_tax_number_missing_then_fail_validation(self):
+    def test_if_no_steuernummer_and_request_new_tax_number_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bundesland': 'BY',
                           'bufa_nr': '9201', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_no_steuernummer_and_nothing_is_missing_then_succeed_validation(self):
+    def test_if_no_steuernummer_and_nothing_is_missing_then_succeed_validation(self, step_with_bufa_choices):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bundesland': 'BY',
                           'bufa_nr': '9201',
                           'request_new_tax_number': 'y', })
-        form = self.step.InputForm(formdata=data)
+        form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is True

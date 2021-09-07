@@ -46,14 +46,10 @@
             document.querySelectorAll('input[type="radio"][name="familienstand"]').forEach(field => field.addEventListener('change', remove_familienstand_date_input));
             document.querySelectorAll('input[type="radio"]').forEach(field => field.addEventListener('change', show_hide_all_fields));
 
-            document.querySelectorAll('input[type=radio][name=familienstand_married_lived_separated]').forEach((field) => {
-                field.addEventListener('click', show_hide_familienstand_married_lived_separated_since_field);
-                field.addEventListener('click', show_hide_familienstand_confirm_zusammenveranlagung_field);
-            });
-            document.querySelectorAll('input[type=radio][name=familienstand_widowed_lived_separated]').forEach((field) => {
-                field.addEventListener('click', show_hide_familienstand_widowed_lived_separated_since_field);
-                field.addEventListener('click', show_hide_familienstand_confirm_zusammenveranlagung_field);
-            });
+            $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_married_lived_separated_since_field);
+            $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
+            $(`#familienstand_widowed_lived_separated`).change(show_hide_familienstand_widowed_lived_separated_since_field);
+            $(`#familienstand_widowed_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
 
             document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_married_lived_separated_field);
             document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_widowed_lived_separated_field);

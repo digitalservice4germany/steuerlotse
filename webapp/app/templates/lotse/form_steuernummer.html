@@ -43,9 +43,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // Register event handlers
-            document.querySelectorAll('input[type=radio][name=steuernummer_exists]').forEach((field)=>{
-                field.addEventListener("click",() => {changeTaxNumberExists(); runThroughAllStates(); handleState();});
-            });
+            $(`input[type=radio][name=steuernummer_exists]`).change(() => {changeTaxNumberExists(); runThroughAllStates(); handleState();});
             document.getElementById('bundesland').addEventListener("change",() => {changeBundesland(); runThroughAllStates(); handleState();});
             document.getElementById('bufa_nr').addEventListener("change",() => {changeTaxOffice(); runThroughAllStates(); handleState();});
             // Check if input data should change state
