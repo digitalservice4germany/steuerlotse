@@ -531,7 +531,7 @@ msgstr ""
 
 #: app/forms/steps/eligibility_steps.py:353
 msgid "form.eligibility.user_b_has_elster_account-title"
-msgstr "Hat Ihr Partner beziehungsweise Ihre Partnerin ein Konto bei Mein ELSTER?"
+msgstr "Hat die Person, mit der Sie zusammen veranlagen möchten, ein Konto bei Mein ELSTER?"
 
 #: app/forms/steps/eligibility_steps.py:359
 msgid "form.eligibility.user_b_has_elster_account.yes"
