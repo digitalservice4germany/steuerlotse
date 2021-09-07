@@ -10,6 +10,7 @@ from app.extensions import (
     babel,
     csrf,
     db,
+    flask_static_digest,
     limiter,
     login_manager,
     migrate,
@@ -22,7 +23,10 @@ from app.routes import register_request_handlers, register_error_handlers
 
 def create_app() -> Flask:
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/."""
-    app = Flask(__name__.split(".")[0])
+    app = Flask(
+        __name__.split(".")[0],
+        static_url_path="",
+    )
     app.config.from_object(f'app.config.Config')
 
     register_middleware(app)
@@ -51,6 +55,7 @@ def register_extensions(app: Flask) -> None:
     db.init_app(app)
     migrate.init_app(app, db)
     prometheus_exporter.init_app(app)
+    flask_static_digest.init_app(app)
 
 
 def register_context_processor(app: Flask) -> None:
@@ -59,7 +64,8 @@ def register_context_processor(app: Flask) -> None:
     def context_processor() -> dict[str, Any]:
         return {
             'EUR': lambda decimal: u"%s€" % decimal.quantize(Decimal('1.00'), rounding=ROUND_UP),
-            'plausible_domain': app.config['PLAUSIBLE_DOMAIN']
+            'plausible_domain': app.config['PLAUSIBLE_DOMAIN'],
+            'react_bundle_name': app.config['REACT_BUNDLE_NAME']
         }
 
 

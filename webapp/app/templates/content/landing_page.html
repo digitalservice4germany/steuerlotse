@@ -67,10 +67,10 @@
                             <picture>
                                <source
                                   media="(min-width: 1024px)"
-                                  srcset="/static/images/hero-image-big.png">
+                                  srcset="{{ static_url_for('static', filename='/images/hero-image-big.png') }}">
                                <source
                                   media="(min-width: 320px)"
-                                  srcset="static/images/hero-image-small.png">
+                                  srcset="{{ static_url_for('static', filename='/images/hero-image-small.png') }}">
                                <img
                                alt="{{_('landing.hero-image.alt-text')}}">
                             </picture>
@@ -84,7 +84,7 @@
                     url=url_for('eligibility', step='start'),
                     title= _('landing.card1.title'),
                     description=_('landing.card1.desc'),
-                    img_url=url_for('static', filename='icons/arrow_left.svg'),
+                    img_url=static_url_for('static', filename='icons/arrow_left.svg'),
                     direction="left", heading_level=2)
                 }}
 
@@ -92,7 +92,7 @@
                     url=url_for('unlock_code_request', step='start'),
                     title= _('landing.card2.title'),
                     description=_('landing.card2.desc'),
-                    img_url=url_for('static', filename='icons/arrow_left.svg'),
+                    img_url=static_url_for('static', filename='icons/arrow_left.svg'),
                     direction="middle", heading_level=2)
                 }}
 
@@ -100,7 +100,7 @@
                     url=url_for('unlock_code_activation', step='start'),
                     title= _('landing.card3.title'),
                     description=_('landing.card3.desc'),
-                    img_url=url_for('static', filename='icons/arrow_left.svg'),
+                    img_url=static_url_for('static', filename='icons/arrow_left.svg'),
                     direction="right", heading_level=2)
                 }}
             </div>

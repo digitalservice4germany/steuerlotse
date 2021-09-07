@@ -16,7 +16,6 @@ redis = "*"
 python-stdnum = "*"
 requests = "*"
 flask-sqlalchemy = "*"
-pytest = "*"
 bcrypt = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
@@ -25,11 +24,12 @@ prometheus-flask-exporter = "*"
 pycryptodomex = "*"
 python-json-logger = "*"
 pydantic = "*"
+flask-static-digest = "*"
 python-dotenv = "*"
-freezegun = "*"
 
 [dev-packages]
 pytest = "*"
+freezegun = "*"
 flake8 = "*"
 
 [requires]

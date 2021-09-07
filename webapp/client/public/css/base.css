@@ -3,21 +3,21 @@
 /* GENERAL */
 @font-face {
     font-family: "BundesSansWeb";
-    src: url("/static/fonts/BundesSansWeb-Regular.ttf");
+    src: url("/fonts/BundesSansWeb-Regular.ttf");
 }
 @font-face {
     font-family: "BundesSansWeb";
-    src: url("/static/fonts/BundesSansWeb-Bold.ttf");
+    src: url("/fonts/BundesSansWeb-Bold.ttf");
     font-weight: bold;
 }
 @font-face {
     font-family: "BundesSansWeb";
-    src: url("/static/fonts/BundesSansWeb-Italic.ttf");
+    src: url("/fonts/BundesSansWeb-Italic.ttf");
     font-style: italic;
 }
 @font-face {
     font-family: "BundesSansWeb";
-    src: url("/static/fonts/BundesSansWeb-BoldItalic.ttf");
+    src: url("/fonts/BundesSansWeb-BoldItalic.ttf");
     font-weight: bold;
     font-style: italic;
 }
@@ -121,7 +121,7 @@ input.form-control.field-error-found{
 .steuerlotse-select{
     border: 2px solid var(--border-color);
     border-radius: 0;
-    background: #fff url("/static/icons/select_icon.svg") no-repeat right .75rem center;
+    background: #fff url("/icons/select_icon.svg") no-repeat right .75rem center;
     min-height: 55px;
 }
 

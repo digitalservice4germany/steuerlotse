@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_navigation import Navigation
 from flask_sqlalchemy import SQLAlchemy
+from flask_static_digest import FlaskStaticDigest
 from flask_wtf import CSRFProtect
 from prometheus_client import Gauge
 from prometheus_flask_exporter.multiprocess import GunicornInternalPrometheusMetrics
@@ -42,6 +43,8 @@ csrf = CSRFProtect()
 # - hide_parameters: don't log any parameters with errors or when logging SQL statements (
 #   https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters)
 db = SQLAlchemy(engine_options={'pool_pre_ping': True, 'hide_parameters': True})
+
+flask_static_digest = FlaskStaticDigest()
 
 limiter = Limiter(
     key_func=get_remote_address,

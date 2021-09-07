@@ -8,9 +8,10 @@ from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.exceptions import InternalServerError
 
-from app.extensions import nav, login_manager, limiter
+from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
+from app.extensions import nav, login_manager, limiter
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
@@ -92,10 +93,14 @@ def register_request_handlers(app):
 
     @app.after_request
     def add_http_header(response):
+        if not Config.SET_SECURITY_HTTP_HEADERS:
+            return response
+
         response.headers['X-Content-Type-Options'] = 'no-sniff'
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
             "script-src 'self' 'unsafe-inline' plausible.io; "
+            "style-src 'self' 'unsafe-inline'; "
             "connect-src plausible.io; "
             "object-src 'none'; "
         )
@@ -235,11 +240,6 @@ def register_request_handlers(app):
         """Simple route that can be used to check if the app has started.
         """
         return 'pong'
-
-    @app.route('/robots.txt')
-    @add_caching_headers
-    def serve_robots_txt():
-        return current_app.send_static_file('robots.txt')
 
 
 def register_error_handlers(app):
