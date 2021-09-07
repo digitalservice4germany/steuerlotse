@@ -9,3 +9,26 @@
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
 {% endblock %}
+
+{% block next_steps %}
+    <div class="spacing-b-09">
+        <h2>{{ _('form.eligibility.use-elster') }}</h2>
+        <div class="result-text">
+            <p class="use-elster-intro">{{ _('form.eligibility.use-elster-text') }}</p>
+            <ol>
+                <li>{{ _('form.eligibility.use-elster.list-item-1') }}</li>
+                <li>{{ _('form.eligibility.use-elster.list-item-2') }}</li>
+            </ol>
+        </div>
+    </div>
+
+
+    <div class="spacing-b-11 row m-0">
+        {{ components.primaryButtonWithIcon(
+            text=_('form.eligibility.use-elster-button'),
+            url="https://www.elster.de/eportal/start",
+            icon="↗",
+            target="_blank"
+        ) }}
+    </div>
+{% endblock %}

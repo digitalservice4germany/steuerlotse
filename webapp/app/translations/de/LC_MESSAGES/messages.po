@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-03 14:23+0200\n"
+"POT-Creation-Date: 2021-09-07 12:06+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2773,6 +2773,11 @@ msgstr "Fehler: "
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
+#: app/templates/basis/display_failure_icon.html:14
+#: app/templates/eligibility/display_success.html:14
+msgid "success_icon"
+msgstr "Abgehakt Icon auf grünem Kreis"
+
 #: app/templates/basis/footer.html:6
 msgid "footer.help-contact"
 msgstr "Hilfe und Kontakt"
@@ -4793,34 +4798,29 @@ msgstr ""
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
-#: app/templates/eligibility/display_failure.html:14
-#: app/templates/eligibility/display_success.html:14
-msgid "success_icon"
-msgstr "Abgehakt Icon auf grünem Kreis"
-
-#: app/templates/eligibility/display_failure.html:24
+#: app/templates/eligibility/display_failure.html:15
 msgid "form.eligibility.use-elster"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_failure.html:26
+#: app/templates/eligibility/display_failure.html:17
 msgid "form.eligibility.use-elster-text"
 msgstr ""
 "Es gibt zwei mögliche Wege Ihre Steuererklärung ohne den Steuerlotsen zu "
 "machen:"
 
-#: app/templates/eligibility/display_failure.html:28
+#: app/templates/eligibility/display_failure.html:19
 msgid "form.eligibility.use-elster.list-item-1"
 msgstr ""
 "Sie können die vollumfänglichen Steuererklärungsvordrucke nutzen. Die "
 "notwendigen Formulare dazu erhalten Sie zum Beispiel in Ihrem Finanzamt."
 
-#: app/templates/eligibility/display_failure.html:29
+#: app/templates/eligibility/display_failure.html:20
 msgid "form.eligibility.use-elster.list-item-2"
 msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:35
+#: app/templates/eligibility/display_failure.html:28
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
@@ -4834,7 +4834,7 @@ msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:29
+#: app/templates/eligibility/display_success.html:30
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie."
 
@@ -5003,9 +5003,26 @@ msgstr ""
 " Transferticket notiert und Ihre Übersicht der übermittelten Daten "
 "gespeichert oder ausgedruckt? Dann melden Sie sich ab. "
 
-#: app/templates/lotse/display_filing_failure.html:5
+#: app/templates/lotse/display_filing_failure.html:3
 msgid "form.lotse.filing.failure.alert.title"
-msgstr "Es ist ein Fehler aufgetreten."
+msgstr "Ihre Steuererklärung kann nicht übermittelt werden."
+
+#: app/templates/lotse/display_filing_failure.html:8
+msgid "form.filing.failure.next-step.heading"
+msgstr "Wie geht es weiter?"
+
+#: app/templates/lotse/display_filing_failure.html:9
+msgid "form.filing.failure.next-step.text"
+msgstr ""
+"Bitte wenden Sie sich mit einer E-Mail an <a href=\"mailto:kontakt"
+"@steuerlotse-rente.de\">kontakt@steuerlotse-rente.de</a> und schildern "
+"Sie uns das Problem. Vermeiden Sie aber unbedingt, uns persönliche Daten,"
+" wie Ihren Freischaltcode oder Ihre Steuer-Identifikationsnummer zu "
+"senden."
+
+#: app/templates/lotse/display_filing_failure.html:14
+msgid "form.filing.failure.text-us"
+msgstr "Schreiben Sie uns"
 
 #: app/templates/lotse/display_filing_success.html:6
 msgid "form.lotse.filing.transfer_ticket.heading"
