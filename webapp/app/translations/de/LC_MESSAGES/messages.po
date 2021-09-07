@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-03 14:23+0200\n"
+"POT-Creation-Date: 2021-09-07 12:05+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,93 +18,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:58
+#: app/routes.py:59
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:59
+#: app/routes.py:60
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:60
+#: app/routes.py:61
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:61
+#: app/routes.py:62
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:63
+#: app/routes.py:64
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:65
+#: app/routes.py:66
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:69
+#: app/routes.py:70
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:121
+#: app/routes.py:126
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:122
+#: app/routes.py:127
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:148
+#: app/routes.py:153
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:149
+#: app/routes.py:154
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:161 app/routes.py:258
+#: app/routes.py:165 app/routes.py:257
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:179 app/templates/basis/base.html:30
+#: app/routes.py:183 app/templates/basis/base.html:33
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:184
+#: app/routes.py:188
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:189
+#: app/routes.py:193
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:194
+#: app/routes.py:198
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:199
+#: app/routes.py:203
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:204
+#: app/routes.py:208
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:209
+#: app/routes.py:213
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:219
+#: app/routes.py:223
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:224
+#: app/routes.py:228
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
@@ -531,7 +531,9 @@ msgstr ""
 
 #: app/forms/steps/eligibility_steps.py:353
 msgid "form.eligibility.user_b_has_elster_account-title"
-msgstr "Hat Ihr Partner beziehungsweise Ihre Partnerin ein Konto bei Mein ELSTER?"
+msgstr ""
+"Hat die Person, mit der Sie zusammen veranlagen möchten, ein Konto bei "
+"Mein ELSTER?"
 
 #: app/forms/steps/eligibility_steps.py:359
 msgid "form.eligibility.user_b_has_elster_account.yes"
@@ -1014,11 +1016,11 @@ msgstr ""
 " können Sie mit Ihrer Steuererklärung 2020 beginnen."
 
 #: app/forms/steps/unlock_code_activation_steps.py:32
-#: app/forms/steps/unlock_code_activation_steps.py:45
+#: app/forms/steps/unlock_code_activation_steps.py:53
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:41
+#: app/forms/steps/unlock_code_activation_steps.py:49
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben"
 
@@ -1570,9 +1572,7 @@ msgstr "seit dem"
 
 #: app/forms/steps/lotse/personal_data_steps.py:42
 msgid "form.lotse.familienstand_married_lived_separated"
-msgstr ""
-"Haben Sie und Ihr Partner/Ihre Partnerin vor dem 01.01.2021 dauernd "
-"getrennt gelebt?"
+msgstr "Haben Sie als Paar vor dem 01.01.2021 dauernd getrennt gelebt?"
 
 #: app/forms/steps/lotse/personal_data_steps.py:43
 msgid "form.lotse.familienstand_married_lived_separated.example_input"
@@ -1627,8 +1627,8 @@ msgstr "Zusammenveranlagung wenn geschieden oder getrennt"
 #: app/forms/steps/lotse/personal_data_steps.py:62
 msgid "form.lotse.familienstand_confirm_zusammenveranlagung"
 msgstr ""
-"Ich bin damit einverstanden, meine Steuererklärung mit meinem Partner / "
-"meiner Partnerin gemeinsam zu machen (Zusammenveranlagung)."
+"Ich bin damit einverstanden, dass wir unsere Steuererklärung gemeinsam "
+"als Paar machen und die Zusammenveranlagung nutzen."
 
 #: app/forms/steps/lotse/personal_data_steps.py:63
 msgid "form.lotse.familienstand_confirm_zusammenveranlagung.data_label"
@@ -2816,11 +2816,11 @@ msgstr ""
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:29
+#: app/templates/basis/base.html:32
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:35
+#: app/templates/basis/base.html:38
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -4251,16 +4251,15 @@ msgstr ""
 
 #: app/templates/content/howitworks.html:50
 msgid "info-stl.card-partner.heading"
-msgstr ""
-"Kann ich die Steuererklärung für mich und meinen Partner bzw. meine "
-"Partnerin machen?"
+msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
 
 #: app/templates/content/howitworks.html:52
 msgid "info-stl.card-partner.p1-content"
 msgstr ""
 "Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft "
-"leben, können Sie Ihre Steuererklärung für sich und Ihren Partner oder "
-"Ihre Partnerin machen."
+"leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Wenn "
+"Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss sich "
+"trotzdem nur eine Person registrieren."
 
 #: app/templates/content/howitworks.html:57
 msgid "info-stl.elster.heading"
@@ -4871,7 +4870,7 @@ msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:35
+#: app/templates/eligibility/display_failure.html:37
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
@@ -4885,7 +4884,7 @@ msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:29
+#: app/templates/eligibility/display_success.html:30
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie."
 
