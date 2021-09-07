@@ -3,30 +3,32 @@
 {% import "macros.html" as macros %}
 
 {% block additional_stylesheets %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/eligibility.css') }}">
 {% endblock %}
 
 {% block step_content %}
-    <div class="section-intro">
-        <div class="headline row p-0">
-            <img src="{{ url_for('static', filename='icons/failure_icon.svg') }}"  alt="{{ _('success_icon') }}"/>
-            <h1 class="col-lg-10">{{ render_info.step_title }}</h1>
+    <div class="section-intro simple-card">
+        <div class="row p-0">
+            <div class="col-2 failure-success-icon">
+                <img src="{{ url_for('static', filename='icons/failure_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+            </div>
+            <div class="col-10">
+                <h1 class="headline">{{ render_info.step_title }}</h1>
+                <p class="result-text">{{ error_text }} {{ render_info.step_intro }}</p>
+            </div>
         </div>
-        <span class="result-text">
-            <p>{{ error_text }} {{ render_info.step_intro }}</p>
-        </span>
     </div>
 
-    <div class="spacing-b-07 row m-0">
+    <div class="spacing-b-09">
         <h2>{{ _('form.eligibility.use-elster') }}</h2>
-        <span class="result-text">
-            <p>{{ _('form.eligibility.use-elster-text') }}</p>
+        <div class="result-text">
+            <p class="use-elster-intro">{{ _('form.eligibility.use-elster-text') }}</p>
             <ol>
                 <li>{{ _('form.eligibility.use-elster.list-item-1') }}</li>
                 <li>{{ _('form.eligibility.use-elster.list-item-2') }}</li>
             </ol>
-        </span>
+        </div>
     </div>
 
 
@@ -36,7 +38,7 @@
             url="https://www.elster.de/eportal/start",
             icon="↗",
             target="_blank"
-        )}}
+        ) }}
     </div>
     </div>
 {% endblock %}
