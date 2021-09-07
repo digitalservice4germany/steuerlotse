@@ -2,11 +2,11 @@
 
 <nav class="mobile-nav navbar navbar-expand-lg justify-content-start">
     <a href="{{ url_for('index') }}" class="logo-mobile-wrapper">
-        <img src="{{ url_for('static', filename='images/logo_steuerlotse.svg') }}" alt="{{ _('overview') }}" aria-label="{{ _('overview') }}" class="logo"/>
+        <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}" alt="{{ _('overview') }}" aria-label="{{ _('overview') }}" class="logo"/>
     </a>
     <button class="mobile-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <img src="{{ url_for('static', filename='images/menu.svg') }}" class="mr-2" alt="{{ _('menu_icon') }}"/>
+        <img src="{{ static_url_for('static', filename='images/menu.svg') }}" class="mr-2" alt="{{ _('menu_icon') }}"/>
         <span>{{ _('nav.mobile-toggle-button.text') }}</span>
     </button>
 

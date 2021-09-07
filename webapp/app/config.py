@@ -10,6 +10,7 @@ class BaseConfig(object):
     WTF_CSRF_ENABLED = True
     ALLOW_RESEND_FOR_TEST_USER = False
     PROMETHEUS_EXPORTER_ENABLED = False
+    SET_SECURITY_HTTP_HEADERS = True
 
     LANGUAGES = ['de']
     BABEL_DEFAULT_LOCALE = 'de'
@@ -20,6 +21,7 @@ class BaseConfig(object):
     PERMANENT_SESSION_LIFETIME = 10800
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PLAUSIBLE_DOMAIN = None
+    REACT_BUNDLE_NAME = 'runtime-main.js'
 
 
 class ProductionConfig(BaseConfig):
@@ -62,6 +64,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     DEBUG_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
+    SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
 
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
@@ -75,6 +78,7 @@ class DevelopmentConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
+    REACT_BUNDLE_NAME = 'bundle.js'
 
 
 class TestingConfig(BaseConfig):

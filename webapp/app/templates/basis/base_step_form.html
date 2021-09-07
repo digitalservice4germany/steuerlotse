@@ -21,7 +21,7 @@
 
 {% block optional_js %}
     {# TODO Restructure and clean up the optional javascript (Use single script tag and restructure masking/validation) #}
-    <script src="{{ url_for('static', filename='js/customValidation.js') }}" type=text/javascript></script>
+    <script src="{{ static_url_for('static', filename='js/customValidation.js') }}" type=text/javascript></script>
     <script type="text/javascript">
         $("[required]").each(function () {
             if ($(this)[0].hasAttribute("input_req_err_msg")) {
@@ -29,13 +29,13 @@
             }
         });
     </script>
-    <script src="{{ url_for('static', filename='js/autonumeric.js') }}" type=text/javascript></script>
+    <script src="{{ static_url_for('static', filename='js/autonumeric.js') }}" type=text/javascript></script>
     <script>
         new AutoNumeric.multiple('.euro_field', {decimalCharacter: ",", digitGroupSeparator: ".", minimumValue: 0});
         // in order for AutoNumeric to work, autocomplete has to be turned off for the respective components
         $('.euro_field').attr('autocomplete', 'off');
     </script>
-    <script src="{{ url_for('static', filename='js/jquery.mask.min.js') }}" type=text/javascript></script>
+    <script src="{{ static_url_for('static', filename='js/jquery.mask.min.js') }}" type=text/javascript></script>
 
     <script>
         $('input[type="date"]').attr('max', '9999-12-31');

@@ -250,19 +250,19 @@
 
 .details-card .card-header .details-icon {
     width: 100%;
-    background:  url("/static/icons/details_arrow_down.svg") no-repeat center;
+    background:  url("/icons/details_arrow_down.svg") no-repeat center;
 }
 
 .details-card .card-header .collapsed:hover .details-icon{
-    background:  url("/static/icons/details_arrow_right_hover.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right_hover.svg") no-repeat center;
 }
 
 .details-card .card-header .collapsed button:focus .details-icon{
-    background:  url("/static/icons/details_arrow_right_focus.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right_focus.svg") no-repeat center;
 }
 
 .details-card .card-header .collapsed .details-icon{
-    background:  url("/static/icons/details_arrow_right.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right.svg") no-repeat center;
 }
 
 .details-card .card-body {
@@ -340,7 +340,7 @@ a.back-link:focus a.back-link:active{
 
 .back-link-icon {
     --size: var(--back-link-size);
-    content: url("/static/icons/arrow_back.svg");
+    content: url("/icons/arrow_back.svg");
     margin: 3px 3px 3px 0px;
 
     width: var(--size);
@@ -387,7 +387,7 @@ a.back-link:focus a.back-link:active{
     font-weight: var(--font-bold);
     color: var(--text-color);
 
-    background: var(--icon-default-color) url("/static/icons/download_icon.svg") no-repeat center/var(--size);
+    background: var(--icon-default-color) url("/icons/download_icon.svg") no-repeat center/var(--size);
 
     border-radius: 50%;
 

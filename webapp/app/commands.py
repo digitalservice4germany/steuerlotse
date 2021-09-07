@@ -95,7 +95,8 @@ def _delete_inactive_users():
     from app.data_access.db_model.user import User
 
     users_to_delete_query = db.session.query(User) \
-        .filter(User.last_modified < dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=60))
+        .filter(User.last_modified < dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=60)) \
+        .filter(User.unlock_code_hashed.isnot(None))
     users_to_delete = users_to_delete_query.all()
 
     _revoke_permission_and_delete_users(users_to_delete, 'Removed user inactive for long time.')
