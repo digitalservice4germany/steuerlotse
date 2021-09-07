@@ -1,12 +1,4 @@
-{% extends 'basis/base_step_display.html' %}
+{% extends 'basis/display_failure_icon.html' %}
 
-{% block display_content %}
-    <div class="alert alert-danger" role="alert">
-        <h1 class="alert-heading">{{ _('form.lotse.filing.failure.alert.title') }}</h1>
-        {% for error in elster_data['validation_problems'] %}
-            <ul>
-                <li>{{ error }}</li>
-            </ul>
-        {% endfor %}
-    </div>
-{% endblock %}
+{% set title = _('form.lotse.filing.failure.alert.title') %}
+{% set error_details = elster_data['validation_problems'] %}
