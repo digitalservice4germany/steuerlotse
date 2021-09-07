@@ -58,7 +58,6 @@ class FamilienstandModel(BaseModel):
 class MandatoryFormData(BaseModel):
     declaration_edaten: bool
     declaration_incomes: bool
-    bundesland: str
 
     steuernummer_exists: bool
     bundesland: str

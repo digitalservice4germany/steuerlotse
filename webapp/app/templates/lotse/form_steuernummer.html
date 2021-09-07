@@ -30,8 +30,8 @@
     {{ super() }}
     <script src="{{ url_for('static', filename='js/field_utils.js') }}" type=text/javascript></script>
     <script>
-        let taxOffices = JSON.parse('{{ render_info.additional_info['tax_offices']|tojson }}');
-        let TAX_NUMBER_FORM_STATES = {
+        const taxOffices = JSON.parse('{{ render_info.additional_info['tax_offices']|tojson }}');
+        const TAX_NUMBER_FORM_STATES = {
             'NothingSelected': 'NothingSelected',
             'StateSelectionTaxNumberExists': 'StateSelectionTaxNumberExists',
             'StateSelectionNoTaxNumberExists': 'StateSelectionNoTaxNumberExists',
@@ -55,11 +55,11 @@
         });
 
         function updateTaxOfficeList() {
-            let stateDropdown = document.getElementById("bundesland");
-            let bufaNrDropdown = document.getElementById("bufa_nr");
-            let selectedStateAbbreviation = stateDropdown.options[stateDropdown.selectedIndex].value.toLowerCase();
-            let selectedState = taxOffices.find(taxOffice => taxOffice.state_abbreviation === selectedStateAbbreviation)
-            let oldBufaNrValue = bufaNrDropdown.value
+            const stateDropdown = document.getElementById("bundesland");
+            const bufaNrDropdown = document.getElementById("bufa_nr");
+            const selectedStateAbbreviation = stateDropdown.options[stateDropdown.selectedIndex].value.toLowerCase();
+            const selectedState = taxOffices.find(taxOffice => taxOffice.state_abbreviation === selectedStateAbbreviation)
+            const oldBufaNrValue = bufaNrDropdown.value
             deleteSelectOptions(bufaNrDropdown, defaultOptionText="{{ _('form.select_input.default_selection') }}");
 
             if(selectedState){
@@ -76,8 +76,8 @@
         }
 
         function changeTaxNumberExists(){
-            let taxNumberExistsYesField = document.querySelector('input[type=radio][name=steuernummer_exists][value="yes"]');
-            let taxNumberExistsNoField = document.querySelector('input[type=radio][name=steuernummer_exists][value="no"]');
+            const taxNumberExistsYesField = document.querySelector('input[type=radio][name=steuernummer_exists][value="yes"]');
+            const taxNumberExistsNoField = document.querySelector('input[type=radio][name=steuernummer_exists][value="no"]');
             if (taxNumberExistsYesField.checked && !taxNumberExistsYesField.wasCheckedBefore){
                 console.log("dudu")
                 taxNumberFormState = TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists;
@@ -91,7 +91,7 @@
         }
 
         function changeBundesland(){
-            let bundeslandField = document.getElementById('bundesland');
+            const bundeslandField = document.getElementById('bundesland');
             if (bundeslandField.value && taxNumberFormState === TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists){
                 taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxNumberInput;
             }else if(bundeslandField.value
@@ -114,10 +114,10 @@
         }
 
         function handleState(){
-            let stateDropdown = document.getElementById("bundesland");
-            let bufaNrDropdown = document.getElementById("bufa_nr");
-            let taxNumberInput = document.getElementById("steuernummer");
-            let requestNewTaxNumberCheckbox = document.getElementById("request_new_tax_number");
+            const stateDropdown = document.getElementById("bundesland");
+            const bufaNrDropdown = document.getElementById("bufa_nr");
+            const taxNumberInput = document.getElementById("steuernummer");
+            const requestNewTaxNumberCheckbox = document.getElementById("request_new_tax_number");
             switch(taxNumberFormState){
                 case TAX_NUMBER_FORM_STATES.NothingSelected:
                     deleteInput(stateDropdown);

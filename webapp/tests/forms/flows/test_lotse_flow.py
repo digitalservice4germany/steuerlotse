@@ -1679,7 +1679,7 @@ class TestLotseValidateInput(unittest.TestCase):
                             form_data)
 
     def test_if_contains_not_all_mandatory_fields_but_all_confirmations_then_raise_invalidation_error(self):
-        expected_missing_fields = ['bundesland', 'steuernummer_exists', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
+        expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
                                    'person_a_gehbeh', 'steuerminderung', 'iban', 'is_person_a_account_holder', ]
