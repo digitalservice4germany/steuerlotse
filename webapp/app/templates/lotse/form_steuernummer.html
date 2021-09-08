@@ -65,8 +65,8 @@
                 selectedTaxOffices && selectedTaxOffices.sort(function (a, b) {
                     return (String(a.name)).localeCompare(b.name);
                 });
-                for (var i = 0; i < selectedTaxOffices.length; i++) {
-                  var tax_office = new Option(selectedTaxOffices[i].name.replace("Finanzamt ", ""), selectedTaxOffices[i].bufa_nr);
+                for (let i = 0; i < selectedTaxOffices.length; i++) {
+                  let tax_office = new Option(selectedTaxOffices[i].name.replace("Finanzamt ", ""), selectedTaxOffices[i].bufa_nr);
                   bufaNrDropdown.options.add(tax_office);
                 }
                 bufaNrDropdown.value = oldBufaNrValue
