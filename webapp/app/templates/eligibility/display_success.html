@@ -25,7 +25,7 @@
         <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
     </div>
 
-    {% if 'dependent_notes' in render_info.additional_info %}
+    {% if 'dependent_notes' in render_info.additional_info and render_info.additional_info['dependent_notes'] %}
         <div class="spacing-b-08">
             <h2 class="dependent-notes-heading">{{ _('form.eligibility.success-attention.heading') }}</h2>
             <ul class="form-list">
