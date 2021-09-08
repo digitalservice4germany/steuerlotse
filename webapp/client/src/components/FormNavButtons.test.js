@@ -45,7 +45,7 @@ describe("a FormNavButtons with an explanatoryButtonText", () => {
     );
   });
 
-  it("should render a button to go to the overview", () => {
+  it("should render the explanatory button text", () => {
     expect(screen.getByText(/some text/)).toBeInTheDocument();
     expect(screen.getByText(/some text/).innerHTML).toEqual(
       "some text with <em>HTML tags</em>"
