@@ -3,9 +3,11 @@
 {% block form_content %}
   {{ super() }}
 
+  {# TODO: uncomment this once LoginPage components are ready.
   <div
     data-is-component="yes"
     data-component-name="LoginPage"
     data-props-json="{{ {} | tojson | forceescape }}"
   ></div>
+  #}
 {% endblock %}
