@@ -15,13 +15,14 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
     ElsterInvalidBufaNumberError
 from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, IntegerField
-from app.forms.flows.multistep_flow import MultiStepFlow, FlowNavItem
-from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepAck, StepFiling
-from app.forms.steps.lotse.confirmation_steps import StepSummary
-from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data_steps import StepSteuernummer, StepPersonA, StepPersonB, StepIban, \
+from app.forms.flows.multistep_flow import MultiStepFlow
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse.personal_data import StepSteuernummer
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
-from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \
@@ -41,8 +42,11 @@ class LotseMultiStepFlow(MultiStepFlow):
             'declaration_edaten': True,
             'declaration_incomes': True,
 
-            'steuernummer': '19811310010',
+            'steuernummer_exists': 'yes',
             'bundesland': 'BY',
+            'steuernummer': '19811310010',
+            # 'bufa_nr': '9201',
+            # 'request_new_tax_number': 'yes',
 
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
@@ -156,35 +160,6 @@ class LotseMultiStepFlow(MultiStepFlow):
         if redirection_destination:
             flash(skip_reason, 'warn')
             return self.url_for_step(redirection_destination)
-
-    def _get_flow_nav(self, active_step):
-        sections = [
-            (StepDeclarationIncomes, _('form.lotse.nav.confirmations')),
-            (StepSteuernummer, _('form.lotse.nav.personal_data')),
-            (StepSteuerminderungYesNo, _('form.lotse.nav.steuerminderungen')),
-            (StepSummary, _('form.lotse.nav.summary'))
-        ]
-
-        # Determine the active index based on name matching
-        active_index = -1
-        current_index = active_index
-        for step in self.steps.values():
-            if [section for section in sections if section[0] == step]:
-                current_index += 1
-            if step.name == active_step.name:
-                active_index = current_index
-                break
-
-        # Create nav items list and set the `active` flag according to `active_index`
-        items = []
-        for index, section in enumerate(sections):
-            items.append(FlowNavItem(
-                number=index + 1,
-                text=section[1],
-                active=(index == active_index)
-            ))
-
-        return items
 
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
@@ -381,7 +356,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                     break
         elif field.field_class == YesNoField:
             value_representation = "Ja" if value == "yes" else "Nein"
-        elif field.field_class == ConfirmationField or field.field_class == BooleanField:
+        elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"
         elif field.field_class == SteuerlotseDateField:
             value_representation = value.strftime("%d.%m.%Y")
@@ -394,7 +369,7 @@ class LotseMultiStepFlow(MultiStepFlow):
         elif issubclass(field.field_class, IntegerField):
             value_representation = value
         elif field.field_class == ConfirmationField:
-            value_representation = "Ja" if value else "Nein"
+            value_representation = "Ja" if value else None
         else:
             raise ValueError
 

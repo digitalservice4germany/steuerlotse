@@ -1,0 +1,181 @@
+{% extends 'basis/form_standard.html' %}
+{% import "macros.html" as macros %}
+
+
+{% block form_content %}
+    <div class="form-row-center">
+        {{ macros.render_field(form.steuernummer_exists, first_field=True if not render_info.form.errors) }}
+    </div>
+    <div class="form-row-center">
+        {{ macros.render_field(form.bundesland) }}
+    </div>
+
+    <div class="form-row-center">
+        {{ macros.render_field(form.bufa_nr) }}
+    </div>
+
+    <div class="form-row-center">
+        {{ macros.render_field(form.steuernummer) }}
+    </div>
+
+    <div class="additional-input-content" for="request_new_tax_number">
+        <h2 class="form-sub-heading-smaller">{{ _('form.lotse.request_new_tax_number.title') }}</h2>
+        {{ _('form.lotse.request_new_tax_number.intro') }}
+        {{ macros.render_field(form.request_new_tax_number) }}
+    </div>
+
+{% endblock %}
+
+{% block optional_js %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/field_utils.js') }}" type=text/javascript></script>
+    <script>
+        const taxOffices = JSON.parse('{{ render_info.additional_info['tax_offices']|tojson }}');
+        const TAX_NUMBER_FORM_STATES = {
+            'NothingSelected': 'NothingSelected',
+            'StateSelectionTaxNumberExists': 'StateSelectionTaxNumberExists',
+            'StateSelectionNoTaxNumberExists': 'StateSelectionNoTaxNumberExists',
+            'TaxOfficeSelection': 'TaxOfficeSelection',
+            'TaxNumberInput': 'TaxNumberInput',
+            'RequestNewTaxNumber': 'RequestNewTaxNumber'
+        }
+        let taxNumberFormState = TAX_NUMBER_FORM_STATES.NothingSelected;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Register event handlers
+            $(`input[type=radio][name=steuernummer_exists]`).change(() => {changeTaxNumberExists(); runThroughAllStates(); handleState();});
+            document.getElementById('bundesland').addEventListener("change",() => {changeBundesland(); runThroughAllStates(); handleState();});
+            document.getElementById('bufa_nr').addEventListener("change",() => {changeTaxOffice(); runThroughAllStates(); handleState();});
+            // Check if input data should change state
+            runThroughAllStates();
+            assignAssociatedContent();
+            handleState();
+        });
+
+        function updateTaxOfficeList() {
+            const stateDropdown = document.getElementById("bundesland");
+            const bufaNrDropdown = document.getElementById("bufa_nr");
+            const selectedStateAbbreviation = stateDropdown.options[stateDropdown.selectedIndex].value.toLowerCase();
+            const selectedState = taxOffices.find(taxOffice => taxOffice.state_abbreviation === selectedStateAbbreviation)
+            const oldBufaNrValue = bufaNrDropdown.value
+            deleteSelectOptions(bufaNrDropdown, defaultOptionText="{{ _('form.select_input.default_selection') }}");
+
+            if(selectedState){
+                selectedTaxOffices = selectedState.tax_offices;
+                selectedTaxOffices && selectedTaxOffices.sort(function (a, b) {
+                    return (String(a.name)).localeCompare(b.name);
+                });
+                for (let i = 0; i < selectedTaxOffices.length; i++) {
+                  let tax_office = new Option(selectedTaxOffices[i].name.replace("Finanzamt ", ""), selectedTaxOffices[i].bufa_nr);
+                  bufaNrDropdown.options.add(tax_office);
+                }
+                bufaNrDropdown.value = oldBufaNrValue
+            }
+        }
+
+        function changeTaxNumberExists(){
+            const taxNumberExistsYesField = document.querySelector('input[type=radio][name=steuernummer_exists][value="yes"]');
+            const taxNumberExistsNoField = document.querySelector('input[type=radio][name=steuernummer_exists][value="no"]');
+            if (taxNumberExistsYesField.checked && !taxNumberExistsYesField.wasCheckedBefore){
+                console.log("dudu")
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists;
+                taxNumberExistsYesField.wasCheckedBefore = true;
+                taxNumberExistsNoField.wasCheckedBefore = false;
+            }else if(taxNumberExistsNoField.checked && !taxNumberExistsNoField.wasCheckedBefore){
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists;
+                taxNumberExistsYesField.wasCheckedBefore = false;
+                taxNumberExistsNoField.wasCheckedBefore = true;
+            }
+        }
+
+        function changeBundesland(){
+            const bundeslandField = document.getElementById('bundesland');
+            if (bundeslandField.value && taxNumberFormState === TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists){
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxNumberInput;
+            }else if(bundeslandField.value
+                     && (taxNumberFormState === TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists
+                            || taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxOfficeSelection
+                            || taxNumberFormState === TAX_NUMBER_FORM_STATES.RequestNewTaxNumber)){
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
+                updateTaxOfficeList();
+            }else if(!bundeslandField.value && taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxNumberInput){
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists;
+            }
+        }
+
+        function changeTaxOffice(){
+            if(document.getElementById('bufa_nr').value && taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxOfficeSelection){
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.RequestNewTaxNumber;
+            }else if(!document.getElementById('bufa_nr').value && taxNumberFormState === TAX_NUMBER_FORM_STATES.RequestNewTaxNumber){
+                taxNumberFormState = TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
+            }
+        }
+
+        function handleState(){
+            const stateDropdown = document.getElementById("bundesland");
+            const bufaNrDropdown = document.getElementById("bufa_nr");
+            const taxNumberInput = document.getElementById("steuernummer");
+            const requestNewTaxNumberCheckbox = document.getElementById("request_new_tax_number");
+            switch(taxNumberFormState){
+                case TAX_NUMBER_FORM_STATES.NothingSelected:
+                    deleteInput(stateDropdown);
+                    hideRequiredInput(stateDropdown);
+                    deleteInput(bufaNrDropdown);
+                    hideRequiredInput(bufaNrDropdown);
+                    deleteInput(taxNumberInput);
+                    hideRequiredInput(taxNumberInput);
+                    deleteInput(requestNewTaxNumberCheckbox);
+                    hideRequiredInput(requestNewTaxNumberCheckbox);
+                    break;
+                case TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists:
+                    showRequiredInput(stateDropdown);
+                    deleteInput(bufaNrDropdown);
+                    hideRequiredInput(bufaNrDropdown);
+                    deleteInput(taxNumberInput);
+                    hideRequiredInput(taxNumberInput);
+                    deleteInput(requestNewTaxNumberCheckbox);
+                    hideRequiredInput(requestNewTaxNumberCheckbox);
+                    break;
+                case TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists:
+                    showRequiredInput(stateDropdown);
+                    deleteInput(bufaNrDropdown);
+                    hideRequiredInput(bufaNrDropdown);
+                    deleteInput(taxNumberInput);
+                    hideRequiredInput(taxNumberInput);
+                    deleteInput(requestNewTaxNumberCheckbox);
+                    hideRequiredInput(requestNewTaxNumberCheckbox);
+                    break;
+                case TAX_NUMBER_FORM_STATES.TaxOfficeSelection:
+                    showRequiredInput(stateDropdown);
+                    deleteInput(bufaNrDropdown);
+                    showRequiredInput(bufaNrDropdown);
+                    deleteInput(taxNumberInput);
+                    hideRequiredInput(taxNumberInput);
+                    deleteInput(requestNewTaxNumberCheckbox);
+                    hideRequiredInput(requestNewTaxNumberCheckbox);
+                    break;
+                case TAX_NUMBER_FORM_STATES.TaxNumberInput:
+                    showRequiredInput(stateDropdown);
+                    deleteInput(bufaNrDropdown);
+                    hideRequiredInput(bufaNrDropdown);
+                    showRequiredInput(taxNumberInput);
+                    deleteInput(requestNewTaxNumberCheckbox);
+                    hideRequiredInput(requestNewTaxNumberCheckbox);
+                    break;
+                case TAX_NUMBER_FORM_STATES.RequestNewTaxNumber:
+                    showRequiredInput(stateDropdown);
+                    showRequiredInput(bufaNrDropdown);
+                    deleteInput(taxNumberInput);
+                    hideRequiredInput(taxNumberInput);
+                    showRequiredInput(requestNewTaxNumberCheckbox);
+                    break;
+            }
+        }
+
+        function runThroughAllStates(){
+            changeTaxNumberExists();
+            changeBundesland();
+            changeTaxOffice();
+        }
+    </script>
+{% endblock %}

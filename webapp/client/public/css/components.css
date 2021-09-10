@@ -310,6 +310,35 @@
     position: absolute;
 }
 
+/* PANEL */
+.panel {
+    background-color: var(--bg-white);
+    padding: var(--spacing-07);
+    margin-top: var(--spacing-06);
+}
+
+.panel .row {
+    flex-wrap: nowrap;
+}
+
+@media (max-width: 575px) {
+    .panel {
+        padding: var(--spacing-06) var(--spacing-03);
+    }
+
+    .panel .failure-success-icon {
+        text-align: center;
+    }
+
+    .panel h1 {
+        text-align: center;
+    }
+
+    .panel .row {
+        flex-wrap: wrap;
+    }
+}
+
 
 
 /* LINKS */

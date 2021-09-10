@@ -68,7 +68,7 @@ class DevelopmentConfig(BaseConfig):
 
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
-    ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://127.0.0.1:8000/01'
+    ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL') or "memory://"
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///dev.db"
 

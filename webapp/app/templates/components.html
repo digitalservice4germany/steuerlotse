@@ -122,7 +122,7 @@
     {% endif %}
     {%- if help %}{{ help_dialog(label.field_id, label.text, help) }}{% endif %}
     {% if field.render_kw and "example_input" in field.render_kw %}
-        <div class="example-input">
+        <div class="example-input" for="{{ label.field_id }}">
             {{ field.render_kw["example_input"] }}
         </div>
     {% endif %}
@@ -131,7 +131,7 @@
 
 {% macro field_errors(field) -%}
     {% for error in field.errors %}
-        <div class="invalid-feedback d-block" role="alert">
+        <div class="invalid-feedback d-block" for="{{ field.name }}" role="alert">
             <img class="invalid-feedback" src="{{ static_url_for('static', filename='icons/warning.svg') }}"
                  aria-label="{{ _('errors.warning-image.aria-label') }}"> {{ error }}
         </div>

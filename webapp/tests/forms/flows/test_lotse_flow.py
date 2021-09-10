@@ -25,11 +25,12 @@ from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalVal
 from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS, show_person_b
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.steps.lotse.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
-from app.forms.steps.lotse.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data_steps import StepFamilienstand, StepSteuernummer, StepPersonA, StepPersonB, \
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
+from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse.personal_data import StepSteuernummer
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
-from app.forms.steps.lotse.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
@@ -216,9 +217,6 @@ class TestLotseHandle(unittest.TestCase):
         self.flow = LotseMultiStepFlow(endpoint=self.endpoint_correct)
         self.flow.steps = testing_steps
         self.flow.first_step = next(iter(testing_steps.values()))
-
-        # We need to set a different get_flow_nav_function that fits the used mocked steps
-        self.flow._get_flow_nav = lambda step: []
 
         # Set sessions up
         self.existing_session = "sessionAvailable"
@@ -465,92 +463,6 @@ class TestLotseLoadStep(unittest.TestCase):
         self.assertRaises(ValueError, self.flow._load_step, "Incorrect Step Name")
 
 
-class TestLotseGetNav(unittest.TestCase):
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, test_request_context):
-        self.req = test_request_context
-
-    def setUp(self):
-        self.endpoint_correct = "lotse"
-        self.flow = LotseMultiStepFlow(endpoint=self.endpoint_correct)
-        self.steps_in_list = [
-            StepDeclarationIncomes,
-            StepSteuernummer,
-            StepSteuerminderungYesNo,
-            StepSummary
-        ]
-        self.sub_step_of_SectionEinwilligung = StepDeclarationEdaten
-        self.sub_step_of_SectionMeineDaten = StepSteuernummer
-        self.sub_step_of_SectionSteuerminderung = StepReligion
-        self.sub_step_of_SectionConfirmation = StepFiling
-
-    def test_if_step_in_nav_list_then_set_active_flag_correctly(self):
-        first_step_active = self.flow._get_flow_nav(self.steps_in_list[0])
-        second_step_active = self.flow._get_flow_nav(self.steps_in_list[1])
-        third_step_active = self.flow._get_flow_nav(self.steps_in_list[2])
-        fourth_step_active = self.flow._get_flow_nav(self.steps_in_list[3])
-
-        self.assertTrue(first_step_active[0].active)
-        self.assertFalse(first_step_active[1].active)
-        self.assertFalse(first_step_active[2].active)
-        self.assertFalse(first_step_active[3].active)
-
-        self.assertFalse(second_step_active[0].active)
-        self.assertTrue(second_step_active[1].active)
-        self.assertFalse(second_step_active[2].active)
-        self.assertFalse(second_step_active[3].active)
-
-        self.assertFalse(third_step_active[0].active)
-        self.assertFalse(third_step_active[1].active)
-        self.assertTrue(third_step_active[2].active)
-        self.assertFalse(third_step_active[3].active)
-
-        self.assertFalse(fourth_step_active[0].active)
-        self.assertFalse(fourth_step_active[1].active)
-        self.assertFalse(fourth_step_active[2].active)
-        self.assertTrue(fourth_step_active[3].active)
-
-    def test_if_step_substep_of_nav_list_then_set_active_flag_correctly(self):
-        first_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionEinwilligung)
-        second_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionMeineDaten)
-        third_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionSteuerminderung)
-        fourth_step_active = self.flow._get_flow_nav(self.sub_step_of_SectionConfirmation)
-
-        self.assertTrue(first_step_active[0].active)
-        self.assertFalse(first_step_active[1].active)
-        self.assertFalse(first_step_active[2].active)
-        self.assertFalse(first_step_active[3].active)
-
-        self.assertFalse(second_step_active[0].active)
-        self.assertTrue(second_step_active[1].active)
-        self.assertFalse(second_step_active[2].active)
-        self.assertFalse(second_step_active[3].active)
-
-        self.assertFalse(third_step_active[0].active)
-        self.assertFalse(third_step_active[1].active)
-        self.assertTrue(third_step_active[2].active)
-        self.assertFalse(third_step_active[3].active)
-
-        self.assertFalse(fourth_step_active[0].active)
-        self.assertFalse(fourth_step_active[1].active)
-        self.assertFalse(fourth_step_active[2].active)
-        self.assertTrue(fourth_step_active[3].active)
-
-    def test_if_step_not_in_nav_list_then_set_all_steps_inactive(self):
-        all_inactive = self.flow._get_flow_nav(MockStartStep)
-
-        self.assertFalse(all_inactive[0].active)
-        self.assertFalse(all_inactive[1].active)
-        self.assertFalse(all_inactive[2].active)
-        self.assertFalse(all_inactive[3].active)
-
-    def test_if_step_in_nav_list_then_set_correct_numbering_in_nav_items(self):
-        nav_items = self.flow._get_flow_nav(self.steps_in_list[0])
-
-        for index, nav in enumerate(nav_items):
-            self.assertEqual(index + 1, nav.number)
-
-
 class TestLotseGetSessionData(unittest.TestCase):
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, test_request_context):
@@ -600,9 +512,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         self.flow.steps = testing_steps
         self.flow.first_step = next(iter(testing_steps.values()))
         self.stored_data = self.flow.default_data()
-
-        # We need to set a different get_flow_nav_function that fits the used mocked steps
-        self.flow._get_flow_nav = lambda step: []
 
         # Set sessions up
         self.existing_session = "sessionAvailable"
@@ -1572,6 +1481,7 @@ class TestLotseValidateInput(unittest.TestCase):
 
     def setUp(self) -> None:
         self.valid_data_single = {
+            'steuernummer_exists': True,
             'steuernummer': '19811310010',
             'bundesland': 'BY',
 
@@ -1596,6 +1506,7 @@ class TestLotseValidateInput(unittest.TestCase):
 
             'steuerminderung': 'yes', }
         self.valid_data_married = {
+            'steuernummer_exists': True,
             'steuernummer': '19811310010',
             'bundesland': 'BY',
 
@@ -1707,6 +1618,7 @@ class TestLotseValidateInput(unittest.TestCase):
         self._create_logged_in_user(existing_idnr)
         form_data = {**self.valid_data_single,
                         **{'person_a_idnr': existing_idnr,
+                        'steuernummer_exists': True,
                         'steuernummer': '19811310010',
                         'bundesland': 'BY',
 
@@ -1767,7 +1679,7 @@ class TestLotseValidateInput(unittest.TestCase):
                             form_data)
 
     def test_if_contains_not_all_mandatory_fields_but_all_confirmations_then_raise_invalidation_error(self):
-        expected_missing_fields = ['steuernummer', 'bundesland', 'familienstand', 'person_a_dob',
+        expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
                                    'person_a_gehbeh', 'steuerminderung', 'iban', 'is_person_a_account_holder', ]
