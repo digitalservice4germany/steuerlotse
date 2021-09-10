@@ -128,7 +128,7 @@ class TestSendEst(unittest.TestCase):
 
     def test_if_fields_missing_raise_error(self):
         data = copy.deepcopy(self.valid_form_data)
-        data.pop("steuernummer")
+        data.pop("familienstand")
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \

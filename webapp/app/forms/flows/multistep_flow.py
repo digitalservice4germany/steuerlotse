@@ -142,11 +142,6 @@ class MultiStepFlow:
             next_step=step_types[idx + 1] if idx < len(step_types) - 1 else ''
         )
 
-    def _get_flow_nav(self, active_step):
-        """Implementer can override this function to show a navigation on top of the
-        form. The returned data type is a list of `FlowNavItem`."""
-        return None
-
     def _generate_steps(self, step_name):
         step = self._load_step(step_name)
         prev_step = step.prev_step()

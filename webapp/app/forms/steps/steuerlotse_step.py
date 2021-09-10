@@ -94,7 +94,7 @@ class SteuerlotseStep(object):
 class FormSteuerlotseStep(SteuerlotseStep):
     template = 'basis/form_full_width.html'
 
-    def __init__(self, form, endpoint, header_title, stored_data, form_multiple=None, overview_step=None, default_data=None,
+    def __init__(self, form, endpoint, header_title, stored_data=None, form_multiple=None, overview_step=None, default_data=None,
                  prev_step=None, next_step=None, session_data_identifier='form_data'):
         super(FormSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
                                                   next_step, session_data_identifier=session_data_identifier)

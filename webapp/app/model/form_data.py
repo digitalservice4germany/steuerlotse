@@ -58,8 +58,12 @@ class FamilienstandModel(BaseModel):
 class MandatoryFormData(BaseModel):
     declaration_edaten: bool
     declaration_incomes: bool
-    steuernummer: str
+
+    steuernummer_exists: bool
     bundesland: str
+    bufa_nr: Optional[str]
+    steuernummer: Optional[str]
+    request_new_tax_number: Optional[str]
 
     familienstandStruct: FamilienstandModel
 
@@ -107,6 +111,18 @@ class MandatoryFormData(BaseModel):
     @validator('declaration_edaten', 'declaration_incomes')
     def declarations_must_be_set_true(cls, v):
         return _value_must_be_true(v)
+
+    @validator('bufa_nr', 'request_new_tax_number', always=True)
+    def must_be_set_if_no_tax_number(cls, v, values):
+        if not values.get('steuernummer_exists') and not v:
+            raise MissingError()
+        return v
+
+    @validator('steuernummer', always=True)
+    def must_be_set_if_tax_number(cls, v, values):
+        if values.get('steuernummer_exists') and not v:
+            raise MissingError()
+        return v
 
     @validator('person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
                'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh',

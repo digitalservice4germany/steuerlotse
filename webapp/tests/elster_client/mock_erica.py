@@ -9,12 +9,16 @@ from tests.utils import gen_random_key
 _JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
 _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _EST_KEYS = ['est_data', 'meta_data']
-_REQUIRED_FORM_KEYS_WITH_STEUERNUMMER = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob", "person_a_last_name",
-                       "person_a_first_name", "person_a_religion", "person_a_street", "person_a_street_number",
-                       "person_a_plz", "person_a_town", "person_a_blind", "steuerminderung", "is_person_a_account_holder"]
-_REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER = ["new_admission", "bufa_nr", "bundesland", "familienstand", "person_a_idnr", "person_a_dob", "person_a_last_name",
-                       "person_a_first_name", "person_a_religion", "person_a_street", "person_a_street_number",
-                       "person_a_plz", "person_a_town", "person_a_blind", "steuerminderung", "is_person_a_account_holder"]
+_REQUIRED_FORM_KEYS_WITH_STEUERNUMMER = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob",
+                                         "person_a_last_name", "person_a_first_name", "person_a_religion",
+                                         "person_a_street", "person_a_street_number", "person_a_plz", "person_a_town",
+                                         "person_a_blind", "steuerminderung",
+                                         "is_person_a_account_holder"]
+_REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER = ["submission_without_tax_nr", "bufa_nr", "bundesland", "familienstand",
+                                            "person_a_idnr", "person_a_dob", "person_a_last_name",
+                                            "person_a_first_name", "person_a_religion", "person_a_street",
+                                            "person_a_street_number", "person_a_plz", "person_a_town", "person_a_blind",
+                                            "steuerminderung", "is_person_a_account_holder"]
 _METADATA_KEYS = ["year", "is_digitally_signed"]
 
 
@@ -48,9 +52,11 @@ class MockErica:
         try:
             if 'json' in kwargs:
                 sent_data = json.dumps(kwargs['json'], indent=4)
-            else:
+            elif 'data' in kwargs:
                 sent_data = kwargs['data']
-            include_elster_responses = kwargs['params']['include_elster_responses']
+            else:
+                sent_data = None
+            include_elster_responses = kwargs['params']['include_elster_responses'] if 'params' in kwargs else False
 
             if args[0] == _PYERIC_API_BASE_URL + '/est_validations':
                 response = MockErica.validate_est(sent_data, include_elster_responses)
@@ -83,8 +89,8 @@ class MockErica:
         input_data = json.loads(input_body)
 
         if (not all(key in input_data for key in _EST_KEYS)) or \
-                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and \
-                    not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER ))or \
+                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and
+                 not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER)) or \
                 (not all(key in input_data['meta_data'] for key in _METADATA_KEYS)):
             raise UnexpectedInputDataError()
 
@@ -119,8 +125,8 @@ class MockErica:
         input_data = json.loads(input_body)
 
         if (not all(key in input_data for key in _EST_KEYS)) or \
-                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and \
-                    not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER ))or \
+                (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and
+                 not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER)) or \
                 (not all(key in input_data['meta_data'] for key in _METADATA_KEYS)):
             raise UnexpectedInputDataError()
 
@@ -208,8 +214,7 @@ class MockErica:
             return err_response
 
         # Successful case
-        if (input_data['idnr'], input_data['elster_request_id'],
-           input_data['unlock_code']) in MockErica.available_idnrs:
+        if (input_data['idnr'], input_data['elster_request_id'], input_data['unlock_code']) in MockErica.available_idnrs:
             elster_request_id_for_unlock = gen_random_key()
             if show_response:
                 return get_json_response('unlock_code_activation_with_resp', idnr=input_data['idnr'],
