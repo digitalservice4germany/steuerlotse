@@ -94,12 +94,11 @@ class SteuerlotseStep(object):
 class FormSteuerlotseStep(SteuerlotseStep):
     template = 'basis/form_full_width.html'
 
-    def __init__(self, form, endpoint, header_title, stored_data=None, form_multiple=None, overview_step=None, default_data=None,
+    def __init__(self, form, endpoint, header_title, stored_data=None, overview_step=None, default_data=None,
                  prev_step=None, next_step=None, session_data_identifier='form_data'):
         super(FormSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
                                                   next_step, session_data_identifier=session_data_identifier)
         self.form = form
-        self.form_multiple = form_multiple
 
     def _pre_handle(self):
         super()._pre_handle()
@@ -128,9 +127,6 @@ class FormSteuerlotseStep(SteuerlotseStep):
         form_data = request.form
         if len(form_data) == 0:
             form_data = None
-
-        if self.form_multiple and self.number_of_users(prefilled_data) > 1:
-            return self.form_multiple(form_data, **prefilled_data)
 
         return self.form(form_data, **prefilled_data)
 

@@ -26,7 +26,6 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     def __init__(self, endpoint, **kwargs):
         super().__init__(
             form=self.InputForm,
-            form_multiple=None,
             endpoint=endpoint,
             header_title=self.header_title,
             **kwargs,
