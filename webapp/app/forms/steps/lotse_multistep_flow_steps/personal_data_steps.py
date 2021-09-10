@@ -448,7 +448,7 @@ class StepIban(FormStep):
         )
 
     def create_form(self, request, prefilled_data):
-        from app.forms.flows.lotse_flow import show_person_b
+        from app.forms.steps.lotse.personal_data import show_person_b
         if not show_person_b(prefilled_data):
             self.form = self.FormSingle
 
