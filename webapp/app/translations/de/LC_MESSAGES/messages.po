@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-10 13:56+0200\n"
+"POT-Creation-Date: 2021-09-10 14:30+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1006,7 +1006,7 @@ msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/unlock_code_activation_steps.py:49
 msgid "form.unlock-code-activation.failure-title"
-msgstr "Anmeldung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben"
+msgstr "Anmeldung fehlgeschlagen"
 
 #: app/forms/steps/unlock_code_request_steps.py:16
 msgid "unlock-code-request.idnr"
@@ -4866,11 +4866,11 @@ msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:30
+#: app/templates/eligibility/display_success.html:31
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_success.html:40
+#: app/templates/eligibility/display_success.html:41
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
@@ -5127,6 +5127,34 @@ msgstr ""
 "Mit der Abgabe der Steuererklärung wird eine neue Steuernummer beim "
 "zuständigen Finanzamt beantragt. Die neue Steuernummer wird Ihnen dann "
 "mit dem Steuerbescheid mitgeteilt."
+
+#: app/templates/unlock_code/activation_failure.html:15
+msgid "form.unlock-code-activation.failure.reasons-title"
+msgstr "Mögliche Ursachen:"
+
+#: app/templates/unlock_code/activation_failure.html:17
+msgid "form.unlock-code-activation.failure.reasons-1"
+msgstr ""
+"Ihr Freischaltcode ist nicht korrekt. Eine Ursache kann die Verwechslung "
+"von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 "
+"schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer "
+"8 verwechselt werden. Prüfen Sie Ihre Angabe."
+
+#: app/templates/unlock_code/activation_failure.html:18
+msgid "form.unlock-code-activation.failure.reasons-2"
+msgstr ""
+"Haben Sie sich vor dem 03.07.2021 registriert? In diesem Fall können Sie "
+"sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. "
+"Registrieren Sie sich bitte erneut. Sie erhalten dann einen Brief mit "
+"einem neuen Freischaltcode."
+
+#: app/templates/unlock_code/activation_failure.html:19
+msgid "form.unlock-code-activation.failure.reasons-3"
+msgstr ""
+"Ihre Anmeldung ist bereits mehr als 5 mal fehlgeschlagen. Dann ist Ihr "
+"Freischaltcode nicht mehr gültig. Bitte stornieren Sie Ihren "
+"Freischaltcode und registrieren sich erneut. Sie erhalten dann einen "
+"Brief mit einem neuen Freischaltcode."
 
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
