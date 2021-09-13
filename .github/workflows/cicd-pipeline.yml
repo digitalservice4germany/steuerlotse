@@ -140,13 +140,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Update tax office list
-      env:
-        ERICA_ENV: testing
-      run: |
-        cd erica_app
-        pipenv run python scripts/create_tax_office_lists.py create
-
     - name: Build docker images
       env:
         DOCKER_TAG: ${{ github.run_number }}
