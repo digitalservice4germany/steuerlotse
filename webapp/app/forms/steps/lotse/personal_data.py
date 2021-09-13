@@ -103,7 +103,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                                               validators=[DecimalOnly(),
                                                           IntegerLength(min=10, max=11)],
                                               render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
-                                                         'example_input': _l('form.lotse.steuernummer.example_input')})
+                                                         'data-example-input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
             input_required=False,
             label=_l('form.lotse.steuernummer.request_new_tax_number'),

@@ -215,11 +215,11 @@ class SteuerlotseDateField(DateField):
 
         if kwargs.get('render_kw'):
             _add_classes_to_kwargs(kwargs['render_kw'], ['date_input', 'form-control'])
-            kwargs['render_kw']['example_input'] = kwargs['render_kw'].get('example_input',
+            kwargs['render_kw']['data-example-input'] = kwargs['render_kw'].get('data-example-input',
                                                                            _('fields.date_field.example_input.text'))
         else:
             kwargs['render_kw'] = {'class': "date_input form-control",
-                                   'example_input': _('fields.date_field.example_input.text')}
+                                   'data-example-input': _('fields.date_field.example_input.text')}
         super(SteuerlotseDateField, self).__init__(**kwargs)
         self.widget = SteuerlotseDateWidget()
 
@@ -320,8 +320,8 @@ class EuroField(Field):
         if 'render_kw' not in kwargs:
             kwargs['render_kw'] = {}
 
-        if 'example_input' not in kwargs['render_kw']:
-            kwargs['render_kw']['example_input'] = _('fields.euro_field.example_input.text')
+        if 'data-example-input' not in kwargs['render_kw']:
+            kwargs['render_kw']['data-example-input'] = _('fields.euro_field.example_input.text')
 
     def _value(self):
         if self.data in (None, ''):

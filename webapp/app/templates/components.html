@@ -121,9 +121,9 @@
         </label>
     {% endif %}
     {%- if help %}{{ help_dialog(label.field_id, label.text, help) }}{% endif %}
-    {% if field.render_kw and "example_input" in field.render_kw %}
+    {% if field.render_kw and "data-example-input" in field.render_kw %}
         <div class="example-input" for="{{ label.field_id }}">
-            {{ field.render_kw["example_input"] }}
+            {{ field.render_kw["data-example-input"] }}
         </div>
     {% endif %}
     {%- if detail and not position_details_after %}{{ details(detail.title, [detail.text], details_id=field.id) }}{% endif %}
