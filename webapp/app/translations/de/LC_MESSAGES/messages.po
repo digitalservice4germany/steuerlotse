@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-10 13:56+0200\n"
+"POT-Creation-Date: 2021-09-13 11:04+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1201,7 +1201,7 @@ msgstr "Steuernummer vorhanden"
 
 #: app/forms/steps/lotse/personal_data.py:68
 msgid "form.lotse.steuernummer_exists.detail.title"
-msgstr "Wo finde Ich diese Nummer?"
+msgstr "Wo finde ich diese Nummer?"
 
 #: app/forms/steps/lotse/personal_data.py:69
 msgid "form.lotse.steuernummer_exists.detail.text"
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/personal_data.py:72
 msgid "form.lotse.field_bundesland"
-msgstr "Wählen Sie Ihr Bundesland aus"
+msgstr "Wählen Sie Ihr Bundesland"
 
 #: app/forms/steps/lotse/personal_data.py:74
 #: app/templates/lotse/form_steuernummer.html:61
@@ -1317,7 +1317,7 @@ msgid "form.lotse.steuernummer.request_new_tax_number"
 msgstr ""
 "Hiermit bestätige ich / bestätigen wir, dass wir noch keine Steuernummer "
 "bei meinem / unserem Finanzamt haben und eine neue Steuernummer "
-"beantragen möchten. "
+"beantragen möchten."
 
 #: app/forms/steps/lotse/personal_data.py:110
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
@@ -2757,19 +2757,19 @@ msgstr ""
 msgid "form.lotse.summary-button-edit"
 msgstr "Ändern"
 
-#: app/templates/components.html:111 app/templates/components.html:119
+#: app/templates/components.html:112 app/templates/components.html:120
 msgid "form.optional"
 msgstr "optional"
 
-#: app/templates/components.html:136
+#: app/templates/components.html:137
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:245
+#: app/templates/components.html:246
 msgid "button.help"
 msgstr "Weitere Informationen"
 
-#: app/templates/components.html:254
+#: app/templates/components.html:255
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
@@ -4863,7 +4863,7 @@ msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_failure.html:37
+#: app/templates/eligibility/display_failure_icon.html:28
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
@@ -4877,11 +4877,11 @@ msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:30
+#: app/templates/eligibility/display_success.html:32
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_success.html:41
+#: app/templates/eligibility/display_success.html:42
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
@@ -5144,10 +5144,7 @@ msgstr "Angaben zum Merkzeichen"
 
 #: app/templates/lotse/form_steuernummer.html:22
 msgid "form.lotse.request_new_tax_number.title"
-msgstr ""
-"Hiermit bestätige ich / bestätigen wir, dass wir noch keine Steuernummer "
-"bei meinem / unserem Finanzamt haben und eine neue Steuernummer "
-"beantragen möchten. "
+msgstr "Neue Steuernummer beantragen"
 
 #: app/templates/lotse/form_steuernummer.html:23
 msgid "form.lotse.request_new_tax_number.intro"
