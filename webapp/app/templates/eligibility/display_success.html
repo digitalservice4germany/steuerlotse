@@ -21,14 +21,14 @@
         </div>
     </div>
 
-    <div class="spacing-b-08">
+    <div class="spacing-b-09">
         <h2>{{ _('form.eligibility.success-next-step') }}</h2>
         <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
     </div>
 
     {% set dependent_notes =  render_info.additional_info['dependent_notes'] %}
     {% if dependent_notes %}
-        <div class="spacing-b-08">
+        <div class="spacing-b-09">
             <h2 class="dependent-notes-heading">{{ _('form.eligibility.success-attention.heading') }}</h2>
             <ul class="form-list">
                 {% for dependent_note in dependent_notes %}
