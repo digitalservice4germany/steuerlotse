@@ -3,7 +3,7 @@ from pydantic import ValidationError
 from wtforms import validators
 from wtforms.validators import InputRequired
 
-from flask_babel import lazy_gettext as _l, _
+from flask_babel import lazy_gettext as _l, _, ngettext
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
@@ -149,12 +149,13 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         self.InputForm.bufa_nr.kwargs['choices'] = choices
 
     def _set_multiple_texts(self):
-        if show_person_b(self.stored_data):
-            self.form.steuernummer_exists.kwargs['label'] = _('form.lotse.steuernummer_exists.multiple')
-            self.form.request_new_tax_number.kwargs['label'] = _('form.lotse.steuernummer.request_new_tax_number.multiple')
-        else:
-            self.form.steuernummer_exists.kwargs['label'] = _('form.lotse.steuernummer_exists')
-            self.form.request_new_tax_number.kwargs['label'] = _('form.lotse.steuernummer.request_new_tax_number')
+        num_of_users = 2 if show_person_b(self.stored_data) else 1
+        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
+                                                                     'form.lotse.steuernummer_exists',
+                                                                     num=num_of_users)
+        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
+                                                                     'form.lotse.steuernummer.request_new_tax_number',
+                                                                     num=num_of_users)
 
 
 def show_person_b(personal_data):

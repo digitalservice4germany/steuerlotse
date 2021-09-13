@@ -1,5 +1,5 @@
 from flask import request
-from flask_babel import _
+from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
 from pydantic import ValidationError, BaseModel
 from wtforms import RadioField
@@ -305,14 +305,13 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.alimony_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.alimony.multiple.yes')),
-                                                               ('no', _l('form.eligibility.alimony.multiple.no')),
-                                                               ]
-        else:
-            self.form.alimony_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.alimony.yes')),
-                                                               ('no', _l('form.eligibility.alimony.no')),
-                                                               ]
+        self.form.alimony_eligibility.kwargs['choices'] = [('yes',
+                                                            ngettext('form.eligibility.alimony.yes',
+                                                                     'form.eligibility.alimony.yes',
+                                                                     num=self.number_of_users(self.stored_data))),
+                                                           ('no', ngettext('form.eligibility.alimony.no',
+                                                                           'form.eligibility.alimony.no',
+                                                                           num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -406,8 +405,8 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
             render_kw={'hide_label': True,
                        'detail': {'title': _l('form.eligibility.alimony.detail.title'),
                                   'text': _l('form.eligibility.alimony.detail.text')}},
-            choices=[('yes', _l('form.eligibility.alimony.yes')),
-                     ('no', _l('form.eligibility.alimony.no')),
+            choices=[('yes', _l('form.eligibility.alimony.single.yes')),
+                     ('no', _l('form.eligibility.alimony.single.no')),
                      ],
             validators=[InputRequired()])
 
@@ -463,14 +462,13 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.pension_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.pension.multiple.yes')),
-                                                               ('no', _l('form.eligibility.pension.multiple.no')),
-                                                               ]
-        else:
-            self.form.pension_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.pension.yes')),
-                                                               ('no', _l('form.eligibility.pension.no')),
-                                                               ]
+        self.form.pension_eligibility.kwargs['choices'] = [('yes',
+                                                            ngettext('form.eligibility.pension.yes',
+                                                                     'form.eligibility.pension.yes',
+                                                                     num=self.number_of_users(self.stored_data))),
+                                                           ('no', ngettext('form.eligibility.pension.no',
+                                                                           'form.eligibility.pension.no',
+                                                                           num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -494,14 +492,13 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.investment_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.investment_income.multiple.yes')),
-                                                               ('no', _l('form.eligibility.investment_income.multiple.no')),
-                                                               ]
-        else:
-            self.form.investment_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.investment_income.yes')),
-                                                               ('no', _l('form.eligibility.investment_income.no')),
-                                                               ]
+        self.form.investment_income_eligibility.kwargs['choices'] = [('yes',
+                                                          ngettext('form.eligibility.investment_income.yes',
+                                                                   'form.eligibility.investment_income.yes',
+                                                                   num=self.number_of_users(self.stored_data))),
+                                                         ('no', ngettext('form.eligibility.investment_income.no',
+                                                                         'form.eligibility.investment_income.no',
+                                                                         num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -525,14 +522,15 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.minimal_investment_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.minimal_investment_income.multiple.yes')),
-                                                               ('no', _l('form.eligibility.minimal_investment_income.multiple.no')),
-                                                               ]
-        else:
-            self.form.minimal_investment_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.minimal_investment_income.yes')),
-                                                               ('no', _l('form.eligibility.minimal_investment_income.no')),
-                                                               ]
+        self.form.minimal_investment_income_eligibility.kwargs['choices'] = [('yes',
+                                                                  ngettext(
+                                                                      'form.eligibility.minimal_investment_income.yes',
+                                                                      'form.eligibility.minimal_investment_income.yes',
+                                                                      num=self.number_of_users(self.stored_data))),
+                                                                 ('no', ngettext(
+                                                                     'form.eligibility.minimal_investment_income.no',
+                                                                     'form.eligibility.minimal_investment_income.no',
+                                                                     num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -588,14 +586,15 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.cheaper_check_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.cheaper_check_eligibility.multiple.yes')),
-                                                               ('no', _l('form.eligibility.cheaper_check_eligibility.multiple.no')),
-                                                               ]
-        else:
-            self.form.cheaper_check_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.cheaper_check_eligibility.yes')),
-                                                               ('no', _l('form.eligibility.cheaper_check_eligibility.no')),
-                                                               ]
+        self.form.cheaper_check_eligibility.kwargs['choices'] = [('yes',
+                                                                  ngettext(
+                                                                      'form.eligibility.cheaper_check_eligibility.yes',
+                                                                      'form.eligibility.cheaper_check_eligibility.yes',
+                                                                      num=self.number_of_users(self.stored_data))),
+                                                                 ('no', ngettext(
+                                                                     'form.eligibility.cheaper_check_eligibility.no',
+                                                                     'form.eligibility.cheaper_check_eligibility.no',
+                                                                     num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -619,14 +618,15 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.employment_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.employment_income.multiple.yes')),
-                                                               ('no', _l('form.eligibility.employment_income.multiple.no')),
-                                                               ]
-        else:
-            self.form.employment_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.employment_income.yes')),
-                                                               ('no', _l('form.eligibility.employment_income.no')),
-                                                               ]
+        self.form.employment_income_eligibility.kwargs['choices'] = [('yes',
+                                                                      ngettext(
+                                                                          'form.eligibility.employment_income.yes',
+                                                                          'form.eligibility.employment_income.yes',
+                                                                          num=self.number_of_users(self.stored_data))),
+                                                                     ('no', ngettext(
+                                                                         'form.eligibility.employment_income.no',
+                                                                         'form.eligibility.employment_income.no',
+                                                                         num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -676,20 +676,21 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
             render_kw={'hide_label': True,
                        'detail': {'title': _l('form.eligibility.income-other.detail.title'),
                                   'text': _l('form.eligibility.income-other.detail.text')}},
-            choices=[('yes', _l('form.eligibility.income-other.yes')),
-                     ('no', _l('form.eligibility.income-other.no')),
+            choices=[('yes', _l('form.eligibility.income_other.yes')),
+                     ('no', _l('form.eligibility.income_other.no')),
                      ],
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.other_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.income-other.multiple.yes')),
-                                                               ('no', _l('form.eligibility.income-other.multiple.no')),
-                                                               ]
-        else:
-            self.form.other_income_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.income-other.yes')),
-                                                               ('no', _l('form.eligibility.income-other.no')),
-                                                               ]
+        self.form.other_income_eligibility.kwargs['choices'] = [('yes',
+                                                                 ngettext(
+                                                                     'form.eligibility.income_other.yes',
+                                                                     'form.eligibility.income_other.yes',
+                                                                     num=self.number_of_users(self.stored_data))),
+                                                                ('no', ngettext(
+                                                                    'form.eligibility.income_other.no',
+                                                                    'form.eligibility.income_other.no',
+                                                                    num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
@@ -713,20 +714,21 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             render_kw={'hide_label': True,
                        'detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
                                   'text': _l('form.eligibility.foreign-country.detail.text')}},
-            choices=[('yes', _l('form.eligibility.foreign-country.yes')),
-                     ('no', _l('form.eligibility.foreign-country.no')),
+            choices=[('yes', _l('form.eligibility.foreign_country.yes')),
+                     ('no', _l('form.eligibility.foreign_country.no')),
                      ],
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        if self.number_of_users(self.stored_data) > 1:
-            self.form.foreign_country_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.foreign-country.multiple.yes')),
-                                                               ('no', _l('form.eligibility.foreign-country.multiple.no')),
-                                                               ]
-        else:
-            self.form.foreign_country_eligibility.kwargs['choices'] = [('yes', _l('form.eligibility.foreign-country.yes')),
-                                                               ('no', _l('form.eligibility.foreign-country.no')),
-                                                               ]
+        self.form.foreign_country_eligibility.kwargs['choices'] = [('yes',
+                                                                    ngettext(
+                                                                        'form.eligibility.foreign_country.yes',
+                                                                        'form.eligibility.foreign_country.yes',
+                                                                        num=self.number_of_users(self.stored_data))),
+                                                                   ('no', ngettext(
+                                                                       'form.eligibility.foreign_country.no',
+                                                                       'form.eligibility.foreign_country.no',
+                                                                       num=self.number_of_users(self.stored_data)))]
         super()._pre_handle()
 
 
