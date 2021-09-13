@@ -528,30 +528,23 @@ input[type="radio"] + label::before {
     height: 30px;
     min-width: 30px;
     margin-right: 12px;
-    border-radius: 50%;
-    border: 2px solid var(--text-color);
-    background: white;
+    background: url("/icons/radio_button_default.svg") no-repeat center;
 }
 
 input[type="radio"]:checked + label::before {
-    background: radial-gradient(var(--link-active-color) 40%, var(--bg-white) 50%, transparent 0%, transparent);
-    border-color: var(--link-active-color);
+    background: url("/icons/radio_button_checked.svg") no-repeat center;
 }
 
-input[type="radio"]:checked + label:hover::before{
-    background: radial-gradient(var(--hover-border-color) 40%, var(--bg-white) 50%, transparent 0%, transparent);
-    border-color: var(--hover-border-color);
+input[type="radio"]:checked + label:hover::before {
+    background: url("/icons/radio_button_checked_hover.svg") no-repeat center;
 }
 
-input[type="radio"]:not(:checked):focus + label::before{
-    background: var(--focus-color);
-    border-color: black;
-    box-shadow: 0 0 0 2px var(--focus-color);
+input[type="radio"]:not(:checked):focus + label::before {
+    background: url("/icons/radio_button_focus.svg") no-repeat center;
 }
 
-input[type="radio"]:checked:focus + label::before{
-    border-color: black;
-    box-shadow: 0 0 0 2px var(--focus-color);
+input[type="radio"]:checked:focus + label::before {
+    background: url("/icons/radio_button_checked_focus.svg") no-repeat center;
 }
 
 .radio-button-buttons {
