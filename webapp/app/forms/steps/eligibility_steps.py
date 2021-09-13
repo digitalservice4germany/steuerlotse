@@ -62,7 +62,7 @@ class EligibilityStepMixin:
 
 class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     name = 'result'
-    template = 'eligibility/display_failure.html'
+    template = 'eligibility/display_failure_icon.html'
     eligibility_error = None
     input_step_name = ''
     title = _l('form.eligibility.failure.title')

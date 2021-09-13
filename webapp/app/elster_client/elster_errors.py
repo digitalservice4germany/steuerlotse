@@ -96,7 +96,14 @@ class ElsterInvalidBufaNumberError(ElsterProcessNotSuccessful):
     """
 
     def __init__(self):
-        self.message = _l('form.lotse.input_invalid.InvalidTaxNumber')
+        self.message = _l('form.lotse.input_invalid.InvalidBufaNumber')
+
+
+class ElsterInvalidTaxNumberError(ElsterGlobalValidationError):
+    """Exception raised in case Erica found the tax number to be invalid"""
+
+    def __init__(self, message=None, eric_response=None):
+        super().__init__(message, eric_response, validation_problems=[_l('form.lotse.input_invalid.InvalidTaxNumber')])
 
 
 class ElsterResponseUnexpectedStructure(ElsterProcessNotSuccessful):

@@ -3,7 +3,7 @@ import unittest
 from erica.pyeric.eric_errors import EricGlobalError, EricProcessNotSuccessful, EricGlobalValidationError, \
     EricGlobalInitialisationError, EricTransferError, EricCryptError, EricIOError, EricPrintError, \
     EricNullReturnedError, EricAlreadyRequestedError, EricAntragNotFoundError, check_result, EricUnknownError, \
-    check_xml, EricInvalidXmlReturnedError, EricAlreadyRevokedError, check_handle
+    check_xml, EricInvalidXmlReturnedError, EricAlreadyRevokedError, check_handle, EricWrongTaxNumberError
 
 _VALIDATION_ERROR_CODE = 610001002
 _INITIALISATION_ERROR_CODES = [610001081, 610001082, 610001083]
@@ -130,6 +130,17 @@ class TestGenerateErrorResponse(unittest.TestCase):
 
         self.assertEqual(expected_response, actual_response)
 
+    def test_if_validation_error_with_correct_res_code_and_eric_response_invalid_tax_number_then_set_correct_error_code_and_msg_in_response(self):
+        server_err_msg = "This is another message to youhuh"
+        expected_response = {"code": 13,
+                             "message": EricProcessNotSuccessful.get_eric_error_code_message(7)}
+        error = EricWrongTaxNumberError()
+        error.server_err_msg = server_err_msg
+
+        actual_response = error.generate_error_response()
+
+        self.assertEqual(expected_response, actual_response)
+
 
 class TestCheckResCode(unittest.TestCase):
 
@@ -207,6 +218,11 @@ class TestCheckResCode(unittest.TestCase):
                           'TH_ERR_MSG': None,
                           'NDH_ERR_XML': '<?xml version="1.0" encoding="UTF-8"?><EricGetErrormessagesFromXMLAnswer xmlns="http://www.elster.de/EricXML/1.0/EricGetErrormessagesFromXMLAnswer">\t<Fehler>\t\t<Code>371015213</Code>\t\t<Meldung>Der Antrag auf Erteilung einer Berechtigung zum Datenabruf für diesen Dateninhaber bzw. der genehmigte Antrag auf Datenabruf (Berechtigung) ist bereits zurückgezogen worden.</Meldung>\t</Fehler>   <Fehler>\t\t<Code>371015212</Code>\t\t<Meldung>Der Antrag auf Erteilung einer Berechtigung zum Datenabruf für diesen Dateninhaber bzw. der genehmigte Antrag auf Datenabruf (Berechtigung) ist bereits zurückgezogen worden.</Meldung>\t</Fehler></EricGetErrormessagesFromXMLAnswer>'}
         self.assertRaises(EricAlreadyRevokedError, check_result, 610101292, eric_response, server_response, server_err_msg)
+
+    def test_if_res_code_and_response_invalid_tax_number_then_raise_invalid_tax_number_error(self):
+        eric_response = "SOME DUMMY TEXT: ungültige Steuernummer. MORE DUMMY TEXT".encode()
+        server_response = b""
+        self.assertRaises(EricWrongTaxNumberError, check_result, 610001002, eric_response, server_response)
 
 
 class TestCheckHandle(unittest.TestCase):
