@@ -195,8 +195,8 @@
         <div class="card">
             <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0">
                 <div class="collapsed" data-toggle="collapse"
-                            data-target="#details-body-{{ details_id }}"
-                            role="button" aria-expanded="false" aria-controls="details-body-{{ details_id }}">
+                     id="heading-{{ details_id }}" data-target="#details-body-{{ details_id }}"
+                     role="button" aria-expanded="false" aria-controls="details-body-{{ details_id }}">
                     <div class="container">
                         <div class="row">
                             <button class="btn details-icon col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
@@ -208,7 +208,7 @@
                     </div>
                 </div>
             </div>
-            <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
+            <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ details_id }}"
                 data-parent="#details-{{ details_id }}">
                 <div class="card-body container pt-0">
                     <div class="row">
