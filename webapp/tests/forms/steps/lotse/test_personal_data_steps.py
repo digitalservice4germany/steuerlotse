@@ -1,8 +1,13 @@
+import datetime
 import pytest
+from flask.sessions import SecureCookieSession
+from flask_babel import ngettext
 from werkzeug.datastructures import MultiDict
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteuerlotseStep
+from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
+from tests.utils import create_session_form_data
 
 
 class SummaryStep(object):
@@ -91,3 +96,46 @@ class TestStepSteuernummer:
                           'request_new_tax_number': 'y', })
         form = step_with_bufa_choices.InputForm(formdata=data)
         assert form.validate() is True
+
+    def test_if_multiple_users_then_show_multiple_text(self, app):
+        session_data = {
+            'familienstand': 'married',
+            'familienstand_date': datetime.date(2000, 1, 31),
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+        }
+        expected_number_of_users = 2
+        expected_steuernummer_exists_label = ngettext('form.lotse.steuernummer_exists',
+                                                      'form.lotse.steuernummer_exists',
+                                                      num=expected_number_of_users)
+        expected_request_new_tax_number_label = ngettext('form.lotse.steuernummer.request_new_tax_number',
+                                                         'form.lotse.steuernummer.request_new_tax_number',
+                                                         num=expected_number_of_users)
+        with app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(
+                StepSteuernummer.name)
+            step._pre_handle()
+
+        assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']
+        assert expected_request_new_tax_number_label == step.form.request_new_tax_number.kwargs['label']
+
+    def test_if_single_user_then_show_single_text(self, app):
+        session_data = {
+            'familienstand': 'single',
+        }
+        expected_number_of_users = 1
+        expected_steuernummer_exists_label = ngettext('form.lotse.steuernummer_exists',
+                                                      'form.lotse.steuernummer_exists',
+                                                      num=expected_number_of_users)
+        expected_request_new_tax_number_label = ngettext('form.lotse.steuernummer.request_new_tax_number',
+                                                         'form.lotse.steuernummer.request_new_tax_number',
+                                                         num=expected_number_of_users)
+        with app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(
+                StepSteuernummer.name)
+            step._pre_handle()
+
+        assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']
+        assert expected_request_new_tax_number_label == step.form.request_new_tax_number.kwargs['label']
