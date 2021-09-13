@@ -65,7 +65,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
-                       'detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
+                       'data-detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
                                   'text': _l('form.lotse.steuernummer_exists.detail.text')}},
             validators=[InputRequired()],)
         bundesland = SteuerlotseSelectField(

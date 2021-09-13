@@ -39,7 +39,7 @@
 {%- endmacro %}
 
 {% macro render_detail(field) %}
-    {%- set detail = field.render_kw['detail'] -%}
+    {%- set detail = field.render_kw['data-detail'] -%}
     {%- if detail %}
         {{ details(detail.title, [detail.text], details_id=field.id) }}
     {% endif %}
@@ -102,7 +102,7 @@
 {% macro field_label(field, class="", position_details_after=False, optional=False) %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
-    {%- set detail = field.render_kw['detail'] -%}
+    {%- set detail = field.render_kw['data-detail'] -%}
 
     {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
