@@ -135,6 +135,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
     def _pre_handle(self):
         tax_offices = request_tax_offices()
+
+        # Set bufa choices here because WTForms will otherwise not accept choices because they are invalid
         self._set_bufa_choices(tax_offices)
         self._set_multiple_texts()
         super()._pre_handle()
