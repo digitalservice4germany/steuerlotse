@@ -64,6 +64,7 @@
 {% macro radio_field(field, position_details_after=False, first_field=False) -%}
     <fieldset class="grouped-input-fields">
         {{ field_label(field, class="text-input-field-label", position_details_after=position_details_after) }}
+        <div class="radio-button-buttons">
         {% for subfield in field %}
             <div>
                 {% if field.errors and loop.index0==0 %}
@@ -74,6 +75,7 @@
                 {{ field_label(subfield, class="col-sm-10 col-form-label", position_details_after=position_details_after) }}
             </div>
         {% endfor %}
+        </div>
         {%- if position_details_after %}
             {{ render_detail(field) }}
         {% endif %}

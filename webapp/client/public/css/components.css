@@ -510,6 +510,14 @@ a.back-link:focus a.back-link:active{
 /* RADIO BUTTONS */
 input[type="radio"] {
     opacity: 0;
+    position: absolute;
+}
+
+input[type="radio"] + label {
+    display: flex;
+    padding-left: 0;
+    padding-top: 0;
+    font-size: var(--text-medium);
 }
 
 input[type="radio"] + label::before {
@@ -518,6 +526,7 @@ input[type="radio"] + label::before {
     vertical-align: bottom;
     width: 30px;
     height: 30px;
+    min-width: 30px;
     margin-right: 12px;
     border-radius: 50%;
     border: 2px solid var(--text-color);
@@ -525,12 +534,12 @@ input[type="radio"] + label::before {
 }
 
 input[type="radio"]:checked + label::before {
-    background: radial-gradient(var(--link-active-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
+    background: radial-gradient(var(--link-active-color) 40%, var(--bg-white) 50%, transparent 0%, transparent);
     border-color: var(--link-active-color);
 }
 
 input[type="radio"]:checked + label:hover::before{
-    background: radial-gradient(var(--hover-border-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
+    background: radial-gradient(var(--hover-border-color) 40%, var(--bg-white) 50%, transparent 0%, transparent);
     border-color: var(--hover-border-color);
 }
 
@@ -543,6 +552,10 @@ input[type="radio"]:not(:checked):focus + label::before{
 input[type="radio"]:checked:focus + label::before{
     border-color: black;
     box-shadow: 0 0 0 2px var(--focus-color);
+}
+
+.radio-button-buttons {
+    padding-top: var(--spacing-02);
 }
 
 .field-label {
