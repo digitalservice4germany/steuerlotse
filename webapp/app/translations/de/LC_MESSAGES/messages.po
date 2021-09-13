@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-13 11:24+0200\n"
+"POT-Creation-Date: 2021-09-13 11:04+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1200,7 +1200,7 @@ msgstr "Steuernummer vorhanden"
 
 #: app/forms/steps/lotse/personal_data.py:68
 msgid "form.lotse.steuernummer_exists.detail.title"
-msgstr "Wo finde Ich diese Nummer?"
+msgstr "Wo finde ich diese Nummer?"
 
 #: app/forms/steps/lotse/personal_data.py:69
 msgid "form.lotse.steuernummer_exists.detail.text"
@@ -1212,7 +1212,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/personal_data.py:72
 msgid "form.lotse.field_bundesland"
-msgstr "Wählen Sie Ihr Bundesland aus"
+msgstr "Wählen Sie Ihr Bundesland"
 
 #: app/forms/steps/lotse/personal_data.py:74
 #: app/templates/lotse/form_steuernummer.html:61
@@ -1316,7 +1316,7 @@ msgid "form.lotse.steuernummer.request_new_tax_number"
 msgstr ""
 "Hiermit bestätige ich / bestätigen wir, dass wir noch keine Steuernummer "
 "bei meinem / unserem Finanzamt haben und eine neue Steuernummer "
-"beantragen möchten. "
+"beantragen möchten."
 
 #: app/forms/steps/lotse/personal_data.py:110
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
@@ -5143,10 +5143,7 @@ msgstr "Angaben zum Merkzeichen"
 
 #: app/templates/lotse/form_steuernummer.html:22
 msgid "form.lotse.request_new_tax_number.title"
-msgstr ""
-"Hiermit bestätige ich / bestätigen wir, dass wir noch keine Steuernummer "
-"bei meinem / unserem Finanzamt haben und eine neue Steuernummer "
-"beantragen möchten. "
+msgstr "Neue Steuernummer beantragen"
 
 #: app/templates/lotse/form_steuernummer.html:23
 msgid "form.lotse.request_new_tax_number.intro"
