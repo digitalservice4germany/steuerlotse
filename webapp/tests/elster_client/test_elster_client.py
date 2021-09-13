@@ -16,7 +16,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterResponseUnexpectedStructure, \
     ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, GeneralEricaError, EricaIsMissingFieldError, \
-    ElsterRequestAlreadyRevoked, ElsterInvalidBufaNumberError
+    ElsterRequestAlreadyRevoked, ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
 from app.elster_client.elster_client import send_unlock_code_request_with_elster, \
     check_pyeric_response_for_errors
 from tests.elster_client.json_responses.sample_responses import get_json_response
@@ -148,6 +148,17 @@ class TestSendEst(unittest.TestCase):
                                   include_elster_responses=False)
         finally:
             MockErica.invalid_bufa_number_error_occurred = False
+
+    def test_if_invalid_tax_number_then_return_error(self):
+        MockErica.invalid_tax_number_error_occurred = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                    patch('app.elster_client.elster_client._log_address_data'), \
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                self.assertRaises(ElsterInvalidTaxNumberError, send_est_with_elster, self.valid_form_data, 'IP',
+                                  include_elster_responses=False)
+        finally:
+            MockErica.invalid_tax_number_error_occurred = False
 
 
 class TestValidateEst(unittest.TestCase):
@@ -819,6 +830,10 @@ class TestCheckPyericResponseForErrors(unittest.TestCase):
     def test_error_code_12_raises_correct_exception(self):
         self.valid_response.json()['detail']['code'] = 12
         self.assertRaises(ElsterInvalidBufaNumberError, check_pyeric_response_for_errors, self.valid_response)
+
+    def test_error_code_13_raises_correct_exception(self):
+        self.valid_response.json()['detail']['code'] = 13
+        self.assertRaises(ElsterInvalidTaxNumberError, check_pyeric_response_for_errors, self.valid_response)
 
     def test_unknown_error_code_raises_correct_exception(self):
         self.valid_response.json()['detail']['code'] = 123456543

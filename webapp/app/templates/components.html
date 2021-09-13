@@ -103,11 +103,12 @@
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['detail'] -%}
+    {%- set example_input = field.render_kw['example_input'] -%}
 
     {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
             <span>
-                <legend class="field-label {{ class }}">{{ label.text }}
+                <legend class="{% if example_input %}field-label-example {% else %}field-label {% endif %} {{ class }}">{{ label.text }}
                     {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
                     {% if help %}{{ help_button(label.field_id) }}{% endif %}
                 </legend>
@@ -115,15 +116,15 @@
         {% endif %}
     {% else %}
         <label for="{{ label.field_id }}"
-               class="field-label {{ class }}">{{ label.text }}
+               class="{% if example_input %}field-label-example {% else %}field-label {% endif %} {{ class }}">{{ label.text }}
             {% if optional %}<span class="optional-hint">{{ _('form.optional') }}</span>{% endif %}
             {% if help %}{{ help_button(label.field_id) }}{% endif %}
         </label>
     {% endif %}
     {%- if help %}{{ help_dialog(label.field_id, label.text, help) }}{% endif %}
-    {% if field.render_kw and "example_input" in field.render_kw %}
+    {% if example_input %}
         <div class="example-input" for="{{ label.field_id }}">
-            {{ field.render_kw["example_input"] }}
+            {{ example_input }}
         </div>
     {% endif %}
     {%- if detail and not position_details_after %}{{ details(detail.title, [detail.text], details_id=field.id) }}{% endif %}

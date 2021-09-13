@@ -4,6 +4,7 @@
 
 {% block additional_stylesheets %}
     {{ super() }}
+    <link rel="stylesheet" href="{{ static_url_for('static', filename='css/display_failure_success.css') }}">
     <link rel="stylesheet" href="{{ static_url_for('static', filename='css/eligibility.css') }}">
 {% endblock %}
 
@@ -39,6 +40,5 @@
 
     <div class="spacing-b-11 row m-0">
         {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
-    </div>
     </div>
 {% endblock %}

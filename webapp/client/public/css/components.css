@@ -545,8 +545,12 @@ input[type="radio"]:checked:focus + label::before{
     box-shadow: 0 0 0 2px var(--focus-color);
 }
 
-.field-label{
+.field-label {
     margin-bottom: var(--spacing-01);
+}
+
+.field-label-example {
+    margin-bottom: 0;
 }
 
 .sub-field-label {
