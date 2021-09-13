@@ -156,7 +156,7 @@
                 {% set card_id = 'card-' + id -%}
                 <div class="card mt-2">
                     <div class="card-header d-sm-flex justify-content-between align-items-center row collapsed w-100"
-                         id="heading-{{ card_id }}" data-toggle="collapse"
+                         id="heading-{{ card_id }}" role="button" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
                          aria-controls="{{ card_id }}">
                          <button class="col text-left" type="button">
@@ -196,7 +196,7 @@
             <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0">
                 <div class="collapsed" data-toggle="collapse"
                             data-target="#details-body-{{ details_id }}"
-                            aria-expanded="false" aria-controls="details-body-{{ details_id }}">
+                            role="button" aria-expanded="false" aria-controls="details-body-{{ details_id }}">
                     <div class="container">
                         <div class="row">
                             <button class="btn details-icon col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
