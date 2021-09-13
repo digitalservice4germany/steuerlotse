@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-10 13:56+0200\n"
+"POT-Creation-Date: 2021-09-13 09:15+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2754,6 +2754,14 @@ msgstr "optional"
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
+#: app/templates/components.html:166
+msgid "plus.alt.text"
+msgstr "Plus-Zeichen"
+
+#: app/templates/components.html:169
+msgid "minus.alt.text"
+msgstr "Minus-Zeichen"
+
 #: app/templates/components.html:245
 msgid "button.help"
 msgstr "Weitere Informationen"
@@ -4866,11 +4874,11 @@ msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:30
+#: app/templates/eligibility/display_success.html:31
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_success.html:40
+#: app/templates/eligibility/display_success.html:41
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 

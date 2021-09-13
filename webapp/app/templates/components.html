@@ -163,10 +163,10 @@
                             <span class="mb-0">{{ card['heading'] }}</span>
                          </button>
                          <button class="col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true">
-                             <img src="{{ static_url_for('static', filename='icons/plus.svg') }}"/>
+                             <img src="{{ static_url_for('static', filename='icons/plus.svg') }}" alt="{{ _('plus.alt.text') }}"/>
                          </button>
                          <button class="col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true">
-                            <img src="{{ static_url_for('static', filename='icons/minus.svg') }}"/>
+                            <img src="{{ static_url_for('static', filename='icons/minus.svg') }}" alt="{{ _('minus.alt.text') }}"/>
                          </button>
                     </div>
                     <div id="{{ card_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
