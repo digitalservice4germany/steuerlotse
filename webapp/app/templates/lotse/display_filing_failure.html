@@ -1,12 +1,18 @@
-{% extends 'basis/base_step_display.html' %}
+{% extends 'basis/display_failure_icon.html' %}
 
-{% block display_content %}
-    <div class="alert alert-danger" role="alert">
-        <h1 class="alert-heading">{{ _('form.lotse.filing.failure.alert.title') }}</h1>
-        {% for error in elster_data['validation_problems'] %}
-            <ul>
-                <li>{{ error }}</li>
-            </ul>
-        {% endfor %}
+{% set title = _('form.lotse.filing.failure.alert.title') %}
+{% set error_details = elster_data['validation_problems'] %}
+
+{% block next_steps %}
+    <div class="spacing-b-04">
+        <h2>{{ _('form.filing.failure.next-step.heading') }}</h2>
+        <p class="result-text">{{ _('form.filing.failure.next-step.text') }}</p>
+    </div>
+
+    <div class="spacing-b-11 row m-0">
+        {{ components.primaryButton(
+            text=_('form.filing.failure.text-us'),
+            url="mailto:kontakt@steuerlotse-rente.de"
+        ) }}
     </div>
 {% endblock %}

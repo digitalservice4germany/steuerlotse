@@ -31,7 +31,7 @@
         </span>
         {{ macros.render_field(form.person_b_same_address, 10, class='w-100') }}
 
-        <div id="form_address_fields" class="grouped-input-fields hidden">
+        <div id="form_address_fields" class="grouped-input-fields">
             <div class="form-row-center">
                 {{ macros.render_field(form.person_b_street) }}
                 {{ macros.render_field(form.person_b_street_number, 2) }}
@@ -79,18 +79,32 @@
 
 {% block optional_js %}
     {{ super() }}
+    <script src="{{ url_for('static', filename='js/field_utils.js') }}" type=text/javascript></script>
     <script>
         function show_hide_address_field() {
-            if ($("input[name$='person_b_same_address']:checked").val() === 'no') {
-                $("#form_address_fields").show();
-                $("#form_address_fields input[required_if_shown]").attr("required", true);
+            if (document.querySelector("input[name$='person_b_same_address'][value='no']").checked) {
+                showRequiredInput(document.getElementById('person_b_street'));
+                showRequiredInput(document.getElementById('person_b_street_number'));
+                showRequiredInput(document.getElementById('person_b_street_number_ext'));
+                showRequiredInput(document.getElementById('person_b_address_ext'));
+                showRequiredInput(document.getElementById('person_b_plz'));
+                showRequiredInput(document.getElementById('person_b_town'));
             } else {
-                $("#form_address_fields").hide();
-                $("#form_address_fields input:required").removeAttr("required");
+                hideRequiredInput(document.getElementById('person_b_street'));
+                hideRequiredInput(document.getElementById('person_b_street_number'));
+                hideRequiredInput(document.getElementById('person_b_street_number_ext'));
+                hideRequiredInput(document.getElementById('person_b_address_ext'));
+                hideRequiredInput(document.getElementById('person_b_plz'));
+                hideRequiredInput(document.getElementById('person_b_town'));
             }
         }
 
-        $(document).ready(show_hide_address_field);
-        $("input[name$='person_b_same_address']").change(show_hide_address_field);
+        document.addEventListener('DOMContentLoaded', () => {
+            assignAssociatedContent();
+            show_hide_address_field();
+            document.querySelectorAll("input[name$='person_b_same_address']").forEach((field)=>{
+                field.addEventListener("click",show_hide_address_field);
+            });
+        });
     </script>
 {% endblock %}

@@ -8,13 +8,12 @@
   * You MUST retain this license header!
 */
 function inputMissingErrorMessageHelper(input_field, error_msg) {
-    function inputMissing(){
-        if (input_field.validity.valueMissing){
-            input_field.setCustomValidity(error_msg);
-        }
-        else{
-            input_field.setCustomValidity("");
-        }
+  function inputMissing(){
+    if (input_field.validity.valueMissing) {
+      input_field.setCustomValidity(error_msg);
+    } else{
+      input_field.setCustomValidity("");
     }
-    input_field.addEventListener("invalid", inputMissing);
+  }
+  input_field.addEventListener("invalid", inputMissing);
 }

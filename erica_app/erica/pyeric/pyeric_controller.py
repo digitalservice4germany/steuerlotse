@@ -107,7 +107,7 @@ class DecryptBelegePyericController:
 class GetTaxOfficesPyericController:
     """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
-    _STATE_ABBREVATIONS = {
+    _STATE_ABBREVIATIONS = {
                         "Baden-Württemberg": 'bw',
                         "Bayern": 'by',
                         "Berlin": 'be',
@@ -131,13 +131,13 @@ class GetTaxOfficesPyericController:
         state_tax_offices = []
 
         for state_name, state_ids in states.items():
-            state_abbrevation = self._STATE_ABBREVATIONS[state_name]
+            state_abbreviation = self._STATE_ABBREVIATIONS[state_name]
             tax_offices = []
             for state_id in state_ids:
                 tax_offices += self._request_tax_offices(state_id)
 
             state_tax_offices.append({
-                'state_abbrevation': state_abbrevation,
+                'state_abbreviation': state_abbreviation,
                 'name': state_name,
                 'tax_offices': tax_offices
                                       })

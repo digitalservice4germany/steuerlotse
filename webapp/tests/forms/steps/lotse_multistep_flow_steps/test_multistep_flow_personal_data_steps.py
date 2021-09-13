@@ -5,7 +5,7 @@ from flask import request
 from werkzeug.datastructures import MultiDict
 
 from app.data_access.user_controller import create_user, activate_user
-from app.forms.steps.lotse.personal_data_steps import StepPersonA, StepFamilienstand, StepPersonB, StepIban
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepFamilienstand, StepPersonB, StepIban
 
 
 class TestPersonAStep(unittest.TestCase):

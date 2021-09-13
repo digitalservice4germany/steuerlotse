@@ -1,5 +1,5 @@
 from app.forms import SteuerlotseBaseForm
-from app.forms.steps.lotse.personal_data_steps import StepFamilienstand
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import EntriesField, EuroField, SteuerlotseIntegerField
 

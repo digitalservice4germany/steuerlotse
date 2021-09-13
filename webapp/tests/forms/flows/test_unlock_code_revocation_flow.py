@@ -73,9 +73,6 @@ class TestUnlockCodeRevocationHandle(unittest.TestCase):
         self.flow.first_step = next(iter(testing_steps.values()))
         self.stored_data = self.flow.default_data()
 
-        # We need to set a different get_flow_nav_function that fits the used mocked steps
-        self.flow._get_flow_nav = lambda step: []
-
         # Set sessions up
         self.session_data = {'idnr': '04452397687', 'dob': '1985-01-01'}
 
@@ -140,9 +137,6 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
         self.flow = UnlockCodeRevocationMultiStepFlow(endpoint=self.endpoint_correct)
         self.flow.steps = testing_steps
         self.flow.first_step = next(iter(testing_steps.values()))
-
-        # We need to set a different get_flow_nav_function that fits the used mocked steps
-        self.flow._get_flow_nav = lambda step: []
 
         # Set sessions up
         self.existing_session = "sessionAvailable"

@@ -253,11 +253,11 @@ class TestGetTaxOfficesRequestController(unittest.TestCase):
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_process_result_contains_all_states(self):
-        state_abbrevations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
+        state_abbreviations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
                                'th']
         result = GetTaxOfficesPyericController().get_eric_response()
 
-        self.assertEqual(state_abbrevations, [state['state_abbrevation'] for state in result['tax_offices']])
+        self.assertEqual(state_abbreviations, [state['state_abbreviation'] for state in result['tax_offices']])
 
     @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
     def test_process_result_contains_all_tax_offices(self):
