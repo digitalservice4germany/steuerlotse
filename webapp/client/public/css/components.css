@@ -207,6 +207,13 @@
 .details-card .card-header {
     border: 0;
     background: inherit;
+    align-items: start;
+    flex-wrap: nowrap;
+}
+
+.details-header {
+    flex-wrap: nowrap;
+    margin: 0;
 }
 
 .details-card .card-header span {
@@ -217,7 +224,7 @@
 
 @media (max-width: 1024px) {
     .details-card .card-header span {
-        font-size: var(--text-sm);
+        font-size: var(--text-base);
     }
 }
 
@@ -249,20 +256,24 @@
 }
 
 .details-card .card-header .details-icon {
-    width: 100%;
-    background:  url("/icons/details_arrow_down.svg") no-repeat center;
+    width: 14px;
+    min-width: 14px;
+    height: var(--lineheight-default);
+    padding: 0;
+    margin-top: .375rem;
+    background:  url("/icons/details_arrow_down.svg") no-repeat left;
 }
 
 .details-card .card-header .collapsed:hover .details-icon{
-    background:  url("/icons/details_arrow_right_hover.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right_hover.svg") no-repeat left;
 }
 
 .details-card .card-header .collapsed button:focus .details-icon{
-    background:  url("/icons/details_arrow_right_focus.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right_focus.svg") no-repeat left;
 }
 
 .details-card .card-header .collapsed .details-icon{
-    background:  url("/icons/details_arrow_right.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right.svg") no-repeat left;
 }
 
 .details-card .card-body {
@@ -294,8 +305,10 @@
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
+    min-width: 1px;
     background-color: inherit;
     padding: 0;
+    margin: 0;
     overflow: hidden;
     position: absolute;
 }
@@ -304,8 +317,10 @@
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
+    min-width: 1px;
     background-color: inherit;
     padding: 0;
+    margin: 0;
     overflow: hidden;
     position: absolute;
 }

@@ -155,7 +155,7 @@
             {% for id, card in accordion.entries.items() -%}
                 {% set card_id = 'card-' + id -%}
                 <div class="card mt-2">
-                    <div class="card-header d-sm-flex justify-content-between align-items-center row collapsed w-100"
+                    <div class="card-header d-sm-flex justify-content-between row collapsed w-100"
                          id="heading-{{ card_id }}" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
                          aria-controls="collapseOne">
@@ -194,17 +194,15 @@
     <div id="details-{{ details_id }}" class="details-card ml-0 pl-0">
         <div class="card">
             <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0">
-                <div class="collapsed" data-toggle="collapse"
+                <div class="collapsed w-100" data-toggle="collapse"
                             data-target="#details-body-{{ details_id }}"
                             aria-expanded="false" aria-controls="collapseOne">
-                    <div class="container">
-                        <div class="row">
-                            <button class="btn details-icon col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
-                            <button class="btn details-icon col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
-                            <button class="btn col" type="button">
+                    <div class="details-header row">
+                            <button class="btn details-icon control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn details-icon control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
+                            <button class="btn" type="button">
                                 <span class="mb-0">{{title}}</span>
                             </button>
-                        </div>
                     </div>
                 </div>
             </div>
