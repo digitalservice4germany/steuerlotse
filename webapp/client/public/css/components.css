@@ -547,7 +547,7 @@ input[type="radio"]:checked:focus + label::before {
     background: url("/icons/radio_button_checked_focus.svg") no-repeat center;
 }
 
-.radio-button-buttons {
+.radio-button-list {
     padding-top: var(--spacing-02);
 }
 
