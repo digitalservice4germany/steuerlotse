@@ -2,6 +2,8 @@ import unittest
 from datetime import date
 from unittest.mock import patch, MagicMock
 
+import pytest
+
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.request_processing.erica_input import UnlockCodeRequestData, UnlockCodeActivationData, \
     UnlockCodeRevocationData, GetAddressData
@@ -153,8 +155,8 @@ class TestEstRequestProcess(unittest.TestCase):
             generate_vorsatz_without_tax_number.assert_called()
             self.assertEqual(empfaenger, generate_xml_fun.call_args.args[-1])  #empfaenger should be the last args
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_then_return_not_none_response(self):
         est_request = EstRequestController(create_est(correct_form_data=True))
 
@@ -162,8 +164,8 @@ class TestEstRequestProcess(unittest.TestCase):
 
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_submission_without_tax_nr_then_return_not_none_response(self):
         est_request = EstRequestController(create_est(correct_form_data=True, with_tax_number=False))
 
@@ -171,8 +173,8 @@ class TestEstRequestProcess(unittest.TestCase):
 
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_and_include_elster_responses_then_return_response_only_with_correct_keys(self):
         expected_keys = ['transfer_ticket', 'pdf', 'eric_response', 'server_response']
 
@@ -182,8 +184,8 @@ class TestEstRequestProcess(unittest.TestCase):
 
         self.assertEqual(set(expected_keys), set(response.keys()))
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_and_not_include_elster_responses_then_return_response_with_correct_keys(self):
         expected_keys = ['transfer_ticket', 'pdf']
 
