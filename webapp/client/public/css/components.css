@@ -281,18 +281,22 @@
 }
 
 .details-card .details-content{
-    padding: 1em 1em 0 1em;
+    padding: 1em 1em 0 0;
 }
 
 .card-body-less-padding {
     padding: 1em 1em var(--spacing-01) var(--spacing-01);
 }
 
+.details-card .card-body {
+    padding: 0 0 var(--spacing-04) 0;
+}
+
 
 .details-card .card-body .block-quote-line{
     width: 2px;
     height: 100%;
-    margin: 0 auto;
+    margin: 0 auto 0 5px;
     background-color: var(--border-color);
 }
 
