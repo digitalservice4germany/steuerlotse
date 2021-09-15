@@ -1,0 +1,27 @@
+{% extends 'basis/base_step.html' %}
+{% import "components.html" as components %}
+{% import "macros.html" as macros %}
+
+{% block additional_stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/display_failure_success.css') }}">
+{% endblock %}
+
+{% block step_content %}
+    <div class="section-intro panel simple-card">
+        <div class="row p-0">
+            <div class="col-12 col-sm-2 failure-success-icon">
+                <img src="{{ static_url_for('static', filename='icons/failure_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+            </div>
+            <div class="col-12 col-sm-10">
+                <h1 class="headline">{{ title }}</h1>
+                {% for error_detail in error_details %}
+                    <p class="result-text">{{ error_detail }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% block next_steps %}
+    {% endblock %}
+{% endblock %}

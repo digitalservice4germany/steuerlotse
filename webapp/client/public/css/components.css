@@ -207,6 +207,13 @@
 .details-card .card-header {
     border: 0;
     background: inherit;
+    align-items: start;
+    flex-wrap: nowrap;
+}
+
+.details-header {
+    flex-wrap: nowrap;
+    margin: 0;
 }
 
 .details-card .card-header span {
@@ -217,7 +224,7 @@
 
 @media (max-width: 1024px) {
     .details-card .card-header span {
-        font-size: var(--text-sm);
+        font-size: var(--text-base);
     }
 }
 
@@ -249,20 +256,24 @@
 }
 
 .details-card .card-header .details-icon {
-    width: 100%;
-    background:  url("/icons/details_arrow_down.svg") no-repeat center;
+    width: 14px;
+    min-width: 14px;
+    height: var(--lineheight-default);
+    padding: 0;
+    margin-top: .375rem;
+    background:  url("/icons/details_arrow_down.svg") no-repeat left;
 }
 
 .details-card .card-header .collapsed:hover .details-icon{
-    background:  url("/icons/details_arrow_right_hover.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right_hover.svg") no-repeat left;
 }
 
 .details-card .card-header .collapsed button:focus .details-icon{
-    background:  url("/icons/details_arrow_right_focus.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right_focus.svg") no-repeat left;
 }
 
 .details-card .card-header .collapsed .details-icon{
-    background:  url("/icons/details_arrow_right.svg") no-repeat center;
+    background:  url("/icons/details_arrow_right.svg") no-repeat left;
 }
 
 .details-card .card-body {
@@ -270,18 +281,22 @@
 }
 
 .details-card .details-content{
-    padding: 1em 1em 0 1em;
+    padding: 1em 1em 0 0;
 }
 
 .card-body-less-padding {
     padding: 1em 1em var(--spacing-01) var(--spacing-01);
 }
 
+.details-card .card-body {
+    padding: 0 0 var(--spacing-04) 0;
+}
+
 
 .details-card .card-body .block-quote-line{
     width: 2px;
     height: 100%;
-    margin: 0 auto;
+    margin: 0 auto 0 5px;
     background-color: var(--border-color);
 }
 
@@ -294,8 +309,10 @@
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
+    min-width: 1px;
     background-color: inherit;
     padding: 0;
+    margin: 0;
     overflow: hidden;
     position: absolute;
 }
@@ -304,8 +321,10 @@
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
+    min-width: 1px;
     background-color: inherit;
     padding: 0;
+    margin: 0;
     overflow: hidden;
     position: absolute;
 }
@@ -510,6 +529,14 @@ a.back-link:focus a.back-link:active{
 /* RADIO BUTTONS */
 input[type="radio"] {
     opacity: 0;
+    position: absolute;
+}
+
+input[type="radio"] + label {
+    display: flex;
+    padding-left: 0;
+    padding-top: 0;
+    font-size: var(--text-medium);
 }
 
 input[type="radio"] + label::before {
@@ -518,35 +545,37 @@ input[type="radio"] + label::before {
     vertical-align: bottom;
     width: 30px;
     height: 30px;
+    min-width: 30px;
     margin-right: 12px;
-    border-radius: 50%;
-    border: 2px solid var(--text-color);
-    background: white;
+    background: url("/icons/radio_button_default.svg") no-repeat center;
 }
 
 input[type="radio"]:checked + label::before {
-    background: radial-gradient(var(--link-active-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
-    border-color: var(--link-active-color);
+    background: url("/icons/radio_button_checked.svg") no-repeat center;
 }
 
-input[type="radio"]:checked + label:hover::before{
-    background: radial-gradient(var(--hover-border-color) 40%, var(--bg-white) 40%, transparent 0%, transparent);
-    border-color: var(--hover-border-color);
+input[type="radio"]:checked + label:hover::before {
+    background: url("/icons/radio_button_checked_hover.svg") no-repeat center;
 }
 
-input[type="radio"]:not(:checked):focus + label::before{
-    background: var(--focus-color);
-    border-color: black;
-    box-shadow: 0 0 0 2px var(--focus-color);
+input[type="radio"]:not(:checked):focus + label::before {
+    background: url("/icons/radio_button_focus.svg") no-repeat center;
 }
 
-input[type="radio"]:checked:focus + label::before{
-    border-color: black;
-    box-shadow: 0 0 0 2px var(--focus-color);
+input[type="radio"]:checked:focus + label::before {
+    background: url("/icons/radio_button_checked_focus.svg") no-repeat center;
 }
 
-.field-label{
+.radio-button-list {
+    padding-top: var(--spacing-02);
+}
+
+.field-label {
     margin-bottom: var(--spacing-01);
+}
+
+.field-label-example {
+    margin-bottom: 0;
 }
 
 .sub-field-label {

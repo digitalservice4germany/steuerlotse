@@ -14,8 +14,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
-    ElsterInvalidBufaNumberError
-
+    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
 
 logger = logging.getLogger(__name__)
 
@@ -264,6 +263,8 @@ def check_pyeric_response_for_errors(pyeric_response):
                                               server_response=server_response)
         elif error_code == 12:
             raise ElsterInvalidBufaNumberError()
+        elif error_code == 13:
+            raise ElsterInvalidTaxNumberError(message=error_message, eric_response=eric_response)
         else:
             raise ElsterUnknownError(message=error_message)
     elif pyeric_response.status_code == 422 and \

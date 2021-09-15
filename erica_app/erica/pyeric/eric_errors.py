@@ -12,6 +12,7 @@ _ERIC_CUSTOM_ERROR_CODES = {
     3: "ALREADY_OPEN_UNLOCK_CODE_REQUEST",
     5: "ELSTER_REQUEST_ID_UNKNOWN",
     6: "INVALID_BUFA_NUMBER",
+    7: "INVALID_TAX_NUMBER",
 }
 
 _ERIC_GLOBAL_VALIDATION_ERRORS = {
@@ -430,6 +431,19 @@ class InvalidBufaNumberError(EricProcessNotSuccessful):
         return 'The BuFa number is invalid'
 
 
+class EricWrongTaxNumberError(EricGlobalValidationError):
+    """Exception raised in case the entered tax number is invalid"""
+    ERROR_CODE = 13
+
+    # Overwrite initaliser to set custom res_code
+    def __init__(self, res_code=7, eric_response=None):
+        # This error always has the res_code 7
+        super().__init__(res_code, eric_response)
+
+    def __str__(self):
+        return 'The tax number is invalid'
+
+
 class EricInvalidXmlReturnedError(EricProcessNotSuccessful):
     """Exception raised in case an invalid xml is returned by the ERiC binaries.
     """
@@ -449,7 +463,7 @@ def check_result(rescode, eric_response=None, server_response=None, server_err_m
     if rescode is None:
         raise EricNullReturnedError()
     elif rescode in _ERIC_GLOBAL_VALIDATION_ERRORS:
-        raise EricGlobalValidationError(rescode, eric_response)
+        raise _create_validation_error(rescode, eric_response)
     elif rescode in _ERIC_GLOBAL_INITIALISATION_ERRORS:
         raise EricGlobalInitialisationError(rescode)
     elif rescode in _ERIC_GLOBAL_ERRORS:
@@ -466,6 +480,13 @@ def check_result(rescode, eric_response=None, server_response=None, server_err_m
         return
     else:
         raise EricUnknownError
+
+
+def _create_validation_error(rescode, eric_response):
+    if eric_response and 'ungültige Steuernummer' in eric_response.decode():
+        raise EricWrongTaxNumberError(eric_response=eric_response)
+    else:
+        raise EricGlobalValidationError(rescode, eric_response)
 
 
 def _create_transfer_error(rescode, eric_response, server_response, server_err_msg=None):
