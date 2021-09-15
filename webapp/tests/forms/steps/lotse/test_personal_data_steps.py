@@ -6,8 +6,6 @@ from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteue
 
 
 class TestSummaryStep:
-    def test_if_then(self):
-        assert(True)
     pass
 
 
