@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldUnlockCode from "../components/FormFieldUnlockCode";
 import FormHeader from "../components/FormHeader";
@@ -8,6 +9,8 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 
 export default function LoginPage({ backLink, stepHeader, form, fields }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <StepHeaderButtons {...backLink} />
@@ -22,16 +25,11 @@ export default function LoginPage({ backLink, stepHeader, form, fields }) {
             fieldId="idnr"
             values={fields.idnr.value}
             label={{
-              // TODO: intl
-              // text: 'unlock-code-activation.idnr',
-              text: "Steuer-Identifikationsnummer",
+              text: t("unlockCodeActivation.idnr.labelText"),
             }}
             details={{
-              // TODO: intl
-              // title: 'unlock-code-request.idnr.help-title',
-              title: "Wo finde ich diese Nummer?",
-              // text: 'unlock-code-request.idnr.help-text'
-              text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
+              title: t("unlockCodeActivation.idnr.help.title"),
+              text: t("unlockCodeActivation.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />
@@ -43,16 +41,11 @@ export default function LoginPage({ backLink, stepHeader, form, fields }) {
             fieldId="unlock_code" // field.id
             values={fields.unlockCode.value}
             label={{
-              // TODO: intl
-              // text: "unlock-code-activation.unlock-code",
-              text: "Freischaltcode",
+              text: t("unlockCodeActivation.unlockCode.labelText"),
             }}
             details={{
-              // TODO: intl
-              // title: "unlock-code-request.unlock-code.help-title",
-              title: "Wo finde ich diese Nummer?",
-              // text: "unlock-code-request.unlock-code.help-text",
-              text: "Wenn Sie sich beim Steuerlotsen erfolgreich registriert haben, bekommen Sie von Ihrer Finanzverwaltung einen Brief mit Ihrem persönlichen Freischaltcode zugeschickt. Den Freischaltcode finden Sie auf der letzten Seite des Briefes.",
+              title: t("unlockCodeActivation.unlockCode.help.title"),
+              text: t("unlockCodeActivation.unlockCode.help.text"),
             }}
             errors={fields.unlockCode.errors}
           />

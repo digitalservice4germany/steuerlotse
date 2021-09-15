@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const Row = styled.div`
@@ -95,10 +96,10 @@ export default function FormNavButtons({
   showOverviewButton,
   nextButtonLabel,
 }) {
-  // TODO intl
-  const overviewLabel = "form.back_to_overview";
-  // TODO intl
-  const nextLabel = nextButtonLabel || "form.next";
+  const { t } = useTranslation();
+
+  const overviewLabel = t("form.backToOverview");
+  const nextLabel = nextButtonLabel || t("form.next");
 
   return (
     <Row className="form-row">

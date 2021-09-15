@@ -12,5 +12,4 @@ const Template = (args) => <StepHeaderButtons {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   url: "#something",
-  text: "Zurück",
 };

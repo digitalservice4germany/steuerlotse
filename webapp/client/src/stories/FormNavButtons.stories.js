@@ -10,9 +10,7 @@ export default {
 const Template = (args) => <FormNavButtons {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {
-  nextButtonLabel: "Weiter",
-};
+Default.args = {};
 
 export const WithOverviewLink = Template.bind({});
 WithOverviewLink.args = {

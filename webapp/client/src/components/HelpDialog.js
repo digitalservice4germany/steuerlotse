@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 function HelpDialog({ dialogFieldId, title, helpText }) {
+  const { t } = useTranslation();
+
   return (
     <div
       className="modal fade"
@@ -18,7 +21,7 @@ function HelpDialog({ dialogFieldId, title, helpText }) {
               type="button"
               className="close"
               data-dismiss="modal"
-              aria-label="button.close.aria-label" // TODO: intl
+              aria-label={t("button.close.ariaLabel")}
             >
               <span aria-hidden="true">&times;</span>
             </button>

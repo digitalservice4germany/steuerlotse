@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const Help = styled.a`
   width: 22px !important;
@@ -31,14 +32,15 @@ const Help = styled.a`
 `;
 
 function HelpButton({ dialogFieldId }) {
+  const { t } = useTranslation();
+
   return (
-    // TODO: intl
     <Help
       href=""
       className="btn ml-1"
       data-toggle="modal"
       data-target={`#help_dialog_${dialogFieldId}`}
-      aria-label="button.help"
+      aria-label={t("button.help.ariaLabel")}
     >
       ?
     </Help>

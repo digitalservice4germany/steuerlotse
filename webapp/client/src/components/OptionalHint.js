@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const Hint = styled.span`
@@ -7,10 +8,9 @@ const Hint = styled.span`
 `;
 
 function OptionalHint() {
-  return (
-    // TODO: intl
-    <Hint>form.optional</Hint>
-  );
+  const { t } = useTranslation();
+
+  return <Hint>{t("form.optional")}</Hint>;
 }
 
 OptionalHint.propTypes = {};

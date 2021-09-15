@@ -15,5 +15,4 @@ export const Default = Template.bind({});
 Default.args = {
   action: "#form-submit",
   csrfToken: "abc123imacsrftoken",
-  nextButtonLabel: "Weiter",
 };

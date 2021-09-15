@@ -1,3 +1,4 @@
+import "./../src/lib/i18n";
 import "bootstrap/dist/css/bootstrap.css";
 import "./../src/storybook-assets/variables.css";
 import "./../src/storybook-assets/base.css";
