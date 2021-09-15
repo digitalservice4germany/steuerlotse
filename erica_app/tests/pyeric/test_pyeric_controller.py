@@ -208,27 +208,6 @@ class TestDecryptBelegePyericControllerRunEric(unittest.TestCase):
         self.assertEqual(self.encrypted_belege, returned_belege)
 
 
-class TestCheckBufaNumberPyericController:
-
-    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
-    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_tax_number_is_valid_then_return_true(self):
-        tax_number_with_valid_bufa_number = "9198000000000"
-
-        result = CheckBufaNumberPyericController.get_eric_response(tax_number_with_valid_bufa_number)
-
-        assert result is True
-
-    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
-    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_tax_number_is_invalid_then_return_false(self):
-        tax_number_with_invalid_bufa_number = "9999000000000"  # is invalid because of incorrect check sum (last digit should be 0)
-
-        result = CheckBufaNumberPyericController.get_eric_response(tax_number_with_invalid_bufa_number)
-
-        assert result is False
-
-
 class TestCheckTaxNumberPyericController:
 
     @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
