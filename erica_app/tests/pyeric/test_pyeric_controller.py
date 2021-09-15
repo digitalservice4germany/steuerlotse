@@ -13,7 +13,7 @@ from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericPro
     UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, \
     AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
-    BelegRequestPyericProcessController, GetTaxOfficesPyericController
+    BelegRequestPyericProcessController, GetTaxOfficesPyericController, CheckTaxNumberPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
@@ -205,6 +205,27 @@ class TestDecryptBelegePyericControllerRunEric(unittest.TestCase):
         self.mocked_decrypt_data.reset_mock()
         returned_belege = DecryptBelegePyericController().run_eric(self.mocked_eric_wrapper, self.encrypted_belege)
         self.assertEqual(self.encrypted_belege, returned_belege)
+
+
+class TestCheckTaxNumberPyericController:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_valid_then_return_true(self):
+        valid_tax_number = "9198011310010"
+
+        result = CheckTaxNumberPyericController.get_eric_response(valid_tax_number)
+
+        assert result is True
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_invalid_then_return_false(self):
+        invalid_tax_number = "9198011310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = CheckTaxNumberPyericController.get_eric_response(invalid_tax_number)
+
+        assert result is False
 
 
 class TestGetTaxOfficesRequestController(unittest.TestCase):
