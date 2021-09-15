@@ -5,7 +5,7 @@ from app.elster_client.elster_client import request_tax_offices
 from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteuerlotseStep
 
 
-class TestSummaryStep:
+class SummaryStep:
     pass
 
 
