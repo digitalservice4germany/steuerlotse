@@ -879,11 +879,63 @@ class TestGetBelegIds(unittest.TestCase):
         self.eric_api_with_mocked_process_method.shutdown()
 
 
-class TestCheckTaxNumber:
+class TestCheckBufaNumber:
 
     @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_number_is_valid_then_return_true(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number_with_valid_bufa_number = "9198000000000"
+
+        result = eric_wrapper.check_bufa_number(tax_number_with_valid_bufa_number)
+
+        assert result is True
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_number_is_invalid_then_return_false(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number_with_invalid_bufa_number = "9999000000000"  # is invalid because bufa number 9999 is invalid
+
+        result = eric_wrapper.check_bufa_number(tax_number_with_invalid_bufa_number)
+
+        assert result is False
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_eric_pruefe_bufanummer_returns_unkown_bufa_number_error_then_raise_error(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number = "9198000000000"
+
+        # Raise ERIC_GLOBAL_BUFANR_UNBEKANNT error
+        eric_wrapper.eric.EricMtPruefeBuFaNummer = MagicMock(__name__="EricMtPruefeBuFaNummer", return_value=610001038)
+
+        result = eric_wrapper.check_bufa_number(tax_number)
+
+        assert result is False
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_eric_pruefe_bufanummer_returns_error_then_raise_error(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number = "9198000000000"
+
+        # Raise ERIC_GLOBAL_UNKNOWN error
+        eric_wrapper.eric.EricMtPruefeBuFaNummer = MagicMock(__name__="EricMtPruefeBuFaNummer", return_value=610001001)
+
+        with pytest.raises(EricGlobalError):
+            eric_wrapper.check_bufa_number(tax_number)
+
+
+class TestCheckTaxNumber:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_valid_then_return_true(self):
         eric_wrapper = EricWrapper()
         eric_wrapper.initialise()
         valid_tax_number = "9198011310010"
@@ -894,7 +946,7 @@ class TestCheckTaxNumber:
 
     @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
-    def test_if_number_is_invalid_then_return_false(self):
+    def test_if_tax_number_is_invalid_then_return_false(self):
         eric_wrapper = EricWrapper()
         eric_wrapper.initialise()
         invalid_tax_number = "9198011310011"  # is invalid because of incorrect check sum (last digit should be 0)
@@ -927,7 +979,7 @@ class TestCheckTaxNumber:
         # Raise ERIC_GLOBAL_UNKNOWN error
         eric_wrapper.eric.EricMtPruefeSteuernummer = MagicMock(__name__="EricMtPruefeSteuernummer", return_value=610001001)
 
-        with pytest.raises(EricGlobalError) as e:
+        with pytest.raises(EricGlobalError):
             eric_wrapper.check_tax_number(tax_number)
 
 

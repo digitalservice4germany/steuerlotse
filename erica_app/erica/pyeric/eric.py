@@ -7,7 +7,8 @@ from dataclasses import dataclass
 from typing import ByteString
 
 from erica.config import get_settings, Settings
-from erica.pyeric.eric_errors import check_result, check_handle, check_xml, EricWrongTaxNumberError
+from erica.pyeric.eric_errors import check_result, check_handle, check_xml, EricWrongTaxNumberError, \
+    InvalidBufaNumberError
 
 logger = logging.getLogger('eric')
 
@@ -296,6 +297,18 @@ class EricWrapper(object):
                                 transfer_handle=transfer_handle, cert_params=pointer(cert_params))
         finally:
             self.close_cert_handle(cert_handle)
+
+    def check_bufa_number(self, tax_number):
+        fun_check_bufa_number = self.eric.EricMtPruefeBuFaNummer
+        fun_check_bufa_number.argtypes = [c_void_p, c_char_p]
+        fun_check_bufa_number.restype = c_int
+
+        try:
+            res = fun_check_bufa_number(self.eric_instance, tax_number.encode())
+            check_result(res)
+            return True
+        except InvalidBufaNumberError:
+            return False
 
     def check_tax_number(self, tax_number):
         fun_check_tax_number = self.eric.EricMtPruefeSteuernummer
