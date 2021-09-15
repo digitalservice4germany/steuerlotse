@@ -49,5 +49,5 @@ class UnlockCodeActivationFailureStep(DisplayStep):
             title=_('form.unlock-code-activation.failure-title'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('basis/display_failure.html', render_info=render_info,
+        return render_template('unlock_code/activation_failure.html', render_info=render_info,
                                header_title=_('form.unlock-code-activation.header-title'))

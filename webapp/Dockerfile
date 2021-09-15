@@ -58,6 +58,6 @@ FROM base AS webapp
 COPY --from=node_builder /app/app/static /app/app/static
 # Need to set these env variables for flask-static-digest to be able to run. The fact that we're using 'development'
 # makes no difference to how it runs, it's just the easiest.
-RUN FLASK_ENV=development pipenv run flask digest compile
+RUN FLASK_ENV=development FLASK_APP=autoapp:app pipenv run flask digest compile
 
 CMD [ "gunicorn", "--config", "gunicorn_config.py", "autoapp:app" ]

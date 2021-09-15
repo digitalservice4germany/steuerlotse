@@ -1,0 +1,26 @@
+{% extends 'basis/base_step_display.html' %}
+
+{% block additional_stylesheets %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ static_url_for('static', filename='css/unlock_code_activation.css') }}">
+{% endblock %}
+
+{% block display_content %}
+    <div class="section-intro">
+        <div class="p-0">
+            <div class="alert alert-danger" role="alert">
+                {% if title is defined %}
+                    <h1 class="alert-heading">{{ title}}</h1>
+                {% else %}
+                    <h1 class="alert-heading">{{ render_info.step_title }}</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <h2 class="unlock-code-failure-reasons-headline">{{ _('form.unlock-code-activation.failure.reasons-title') }}</h2>
+    <ol>
+        <li>{{ _('form.unlock-code-activation.failure.reasons-1') }}</li>
+        <li>{{ _('form.unlock-code-activation.failure.reasons-2') }}</li>
+        <li>{{ _('form.unlock-code-activation.failure.reasons-3') }}</li>
+    </ol>
+{% endblock %}

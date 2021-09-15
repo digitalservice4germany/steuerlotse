@@ -1,6 +1,6 @@
 import unittest
 
-from app.forms.steps.lotse.steuerminderungen_steps import StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt
 
 
 class TestHaushaltsnaheStep(unittest.TestCase):

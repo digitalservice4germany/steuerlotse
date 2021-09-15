@@ -18,7 +18,6 @@
                             }
                             const length = parseInt(sub_field.dataset.fieldLength);
                             const paste_content = masked_str.substr(start_idx, length);
-                            console.log(masked_str, length, paste_content);
                             sub_field.value = paste_content || '';
                             start_idx += length;
                         });

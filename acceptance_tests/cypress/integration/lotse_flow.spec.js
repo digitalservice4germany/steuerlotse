@@ -160,11 +160,11 @@ context('Acceptance tests', () => {
             cy.visit('/lotse/step/familienstand?link_overview=True')
 
             // Single
-            cy.get('#familienstand-0').check()
+            cy.get('label[for=familienstand-0]').click()
             cy.get('#familienstand_date').should('not.be.visible')
 
             // Married
-            cy.get('#familienstand-1').check()
+            cy.get('label[for=familienstand-1]').click()
             cy.get('#familienstand_date_1').clear().type(older_date_day)
             cy.get('#familienstand_date_2').clear().type(older_date_month)
             cy.get('#familienstand_date_3').clear().type(older_date_year)
@@ -184,7 +184,7 @@ context('Acceptance tests', () => {
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('be.visible')
 
             // Married -> different -> married
-            cy.get('#familienstand-1').check()
+            cy.get('label[for=familienstand-1]').click()
             cy.get('#familienstand_date_1').clear().type(older_date_day)
             cy.get('#familienstand_date_2').clear().type(older_date_month)
             cy.get('#familienstand_date_3').clear().type(older_date_year)
@@ -192,15 +192,15 @@ context('Acceptance tests', () => {
             cy.get('div[id=familienstand_confirm_zusammenveranlagung_field]').should('be.visible')
             cy.get('label[for=familienstand_confirm_zusammenveranlagung]').first().click()
             cy.get('#familienstand_confirm_zusammenveranlagung').should('be.checked')
-            cy.get('#familienstand-0').check()
-            cy.get('#familienstand-1').check()
+            cy.get('label[for=familienstand-0]').click()
+            cy.get('label[for=familienstand-1]').click()
             cy.get('div[id=familienstand_confirm_zusammenveranlagung_field]').should('not.be.visible')
             cy.get('label[for=familienstand_married_lived_separated-no]').click()
             cy.get('div[id=familienstand_confirm_zusammenveranlagung_field]').should('be.visible')
             cy.get('#familienstand_confirm_zusammenveranlagung').should('not.be.checked')
 
             // Widowed
-            cy.get('#familienstand-2').check()
+            cy.get('label[for=familienstand-2]').click()
             cy.get('#familienstand_date_1').clear().type(older_date_day)
             cy.get('#familienstand_date_2').clear().type(older_date_month)
             cy.get('#familienstand_date_3').clear().type(older_date_year)
@@ -225,11 +225,45 @@ context('Acceptance tests', () => {
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('be.visible')
 
             // Divorced
-            cy.get('#familienstand-3').check()
+            cy.get('label[for=familienstand-3]').click()
             cy.get('#familienstand_date_1').clear().type(older_date_day)
             cy.get('#familienstand_date_2').clear().type(older_date_month)
             cy.get('#familienstand_date_3').clear().type(older_date_year)
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('not.be.visible')
+        })
+
+        it('Enter different tax number data ', () => {
+            cy.visit('/lotse/step/steuernummer?link_overview=True')
+
+            // Tax number exists
+            cy.get('label[for=steuernummer_exists-yes]').click()
+            cy.get('#steuernummer').should('not.be.visible')
+            cy.get('select[id=bufa_nr]').should('not.be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+
+            // Select state
+            cy.get('select[id=bundesland]').select('BY')
+            cy.get('#steuernummer').should('be.visible')
+            cy.get('select[id=bufa_nr]').should('not.be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+
+            // Tax number does not exist
+            cy.get('label[for=steuernummer_exists-no]').click()
+            cy.get('select[id=bundesland]').should('be.visible').and('have.value', 'BY')
+            cy.get('select[id=bufa_nr]').should('be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+            cy.get('#steuernummer').should('not.be.visible')
+
+            // Select state
+            cy.get('select[id=bundesland]').select('BY')
+            cy.get('select[id=bufa_nr]').should('be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+            cy.get('#steuernummer').should('not.be.visible')
+
+            //Select bufa_nr
+            cy.get('select[id=bufa_nr]').select('9203')
+            cy.get('label[for=request_new_tax_number]').should('be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.be.checked')
         })
 
         context('Submitting tax returns', () => {
@@ -244,8 +278,9 @@ context('Acceptance tests', () => {
 
             it('for one person without deductions', () => {
                 // Step 2
-                cy.get('#familienstand-0').check()
+                cy.get('label[for=familienstand-0]').click()
                 cy.get(submitBtnSelector).click()
+                cy.get('label[for=steuernummer_exists-yes]').click()
                 cy.get('select[id=bundesland]').select('BY')
                 cy.get('#steuernummer').type(taxReturnData.taxNr)
                 cy.get(submitBtnSelector).click()
@@ -269,7 +304,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
-                cy.get('#steuerminderung-1').click()
+                cy.get('label[for=steuerminderung-1]').click()
                 cy.get(submitBtnSelector).click()
 
                 // Step 4
@@ -283,19 +318,77 @@ context('Acceptance tests', () => {
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
                 // Get PDF - can't click on it as it opens a new window, so we request it directly
                 cy.request('/download_pdf/print.pdf').its('body').should('not.be.empty')
+
+                cy.get(submitBtnSelector).click()
+                cy.get('body').contains('Herzlichen Glückwunsch!')
+            });
+
+            it('for one person without tax number without deductions', () => {
+                // Step 2
+                cy.get('label[for=familienstand-0]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=steuernummer_exists-no]').click()
+                cy.get('select[id=bundesland]').select('BY')
+                cy.get('select[id=bufa_nr]').select('9203')
+                cy.get('label[for=request_new_tax_number]').first().click()
+                
+                cy.get(submitBtnSelector).click()
+                cy.get('#person_a_idnr_1').type(taxReturnData.personA.idnr1)
+                cy.get('#person_a_idnr_2').type(taxReturnData.personA.idnr2)
+                cy.get('#person_a_idnr_3').type(taxReturnData.personA.idnr3)
+                cy.get('#person_a_idnr_4').type(taxReturnData.personA.idnr4)
+                cy.get('#person_a_dob_1').clear().type(taxReturnData.personA.dobDay)
+                cy.get('#person_a_dob_2').clear().type(taxReturnData.personA.dobMonth)
+                cy.get('#person_a_dob_3').type(taxReturnData.personA.dobYear)
+                cy.get('#person_a_first_name').type(taxReturnData.personA.firstName)
+                cy.get('#person_a_last_name').type(taxReturnData.personA.lastName)
+                cy.get('#person_a_street').type(taxReturnData.personA.street)
+                cy.get('#person_a_street_number').type(taxReturnData.personA.streetNumber)
+                cy.get('#person_a_plz').type(taxReturnData.personA.postalCode)
+                cy.get('#person_a_town').type(taxReturnData.personA.town)
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=is_person_a_account_holder]').first().click()
+                cy.get('#iban').type(taxReturnData.iban)
+                cy.get(submitBtnSelector).click()
+
+                // Step 3
+                cy.get('label[for=steuerminderung-1]').click()
+                cy.get(submitBtnSelector).click()
+
+                // Step 4
+                cy.get('label[for=confirm_complete_correct]').first().click()
+                cy.get(submitBtnSelector).click()
+                cy.get('label[for=confirm_data_privacy]').first().click()
+                cy.get('label[for=confirm_terms_of_service]').first().click()
+                cy.get(submitBtnSelector).click()
+
+                // Verify success.
+                cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
+                // Get PDF - can't click on it as it opens a new window, so we request it directly
+                cy.downloadFile(Cypress.config('baseUrl') + '/download_pdf/print.pdf',
+                    'cypress/fixtures/Download', 'print.pdf')
+                cy.task('getPdfContent', 'cypress/fixtures/Download/print.pdf').then(content => {
+                    //Test if pdf contains 'Ordnungsbegriff'
+                    cy.expect(content.text).contains('Ordnungsbegriff')
+                  })
+
+
                 cy.get(submitBtnSelector).click()
                 cy.get('body').contains('Herzlichen Glückwunsch!')
             });
 
             it('for a married couple with deductions', () => {
                 // Step 2
-                cy.get('#familienstand-1').check()
+                cy.get('label[for=familienstand-1]').click()
                 cy.get('#familienstand_date_1').type(taxReturnData.marriedDateDay)
                 cy.get('#familienstand_date_2').type(taxReturnData.marriedDateMonth)
                 cy.get('#familienstand_date_3').type(taxReturnData.marriedDateYear)
                 cy.get('label[for=familienstand_married_lived_separated-no]').click()
                 cy.get('label[for=familienstand_confirm_zusammenveranlagung]').first().click()
                 cy.get(submitBtnSelector).click()
+                cy.get('label[for=steuernummer_exists-yes]').click()
                 cy.get('select[id=bundesland]').select('BY')
                 cy.get('#steuernummer').type(taxReturnData.taxNr)
                 cy.get(submitBtnSelector).click()
@@ -327,7 +420,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_b_dob_3').type(taxReturnData.personB.dobYear)
                 cy.get('#person_b_first_name').type(taxReturnData.personB.firstName)
                 cy.get('#person_b_last_name').type(taxReturnData.personB.lastName)
-                cy.get('#person_b_same_address-1').click()
+                cy.get('label[for=person_b_same_address-1]').click()
                 cy.get('#person_b_street').type(taxReturnData.personB.street)
                 cy.get('#person_b_street_number').type(taxReturnData.personB.streetNumber)
                 cy.get('#person_b_plz').type(taxReturnData.personB.postalCode)
@@ -340,7 +433,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
-                cy.get('#steuerminderung-0').click()
+                cy.get('label[for=steuerminderung-0]').click()
                 cy.get(submitBtnSelector).click()
                 cy.get('#stmind_vorsorge_summe').type(taxReturnData.stmind.vorsorge.summe)
                 cy.get(submitBtnSelector).click()
@@ -410,6 +503,9 @@ context('Acceptance tests', () => {
                 cy.visit('/unlock_code_activation/step/data_input')
                 cy.get('#idnr_1').should('have.value', '')
                 cy.get('#unlock_code_1').should('have.value', '')
+
+                // Clean up
+                cy.task('removeDownloadFolder', 'cypress/fixtures')
             });
         });
         // These tests could be split. However, to avoid hitting rate limits, keep it simple, and reduce the run time it is one test.
@@ -423,7 +519,7 @@ context('Acceptance tests', () => {
 
             // Set relationship single -> Redirect person_b
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-0').check()
+            cy.get('label[for=familienstand-0]').click()
             cy.get(submitBtnSelector).click()
             cy.visit('/lotse/step/person_b?link_overview=True')
             cy.location().should((loc) => {
@@ -432,7 +528,7 @@ context('Acceptance tests', () => {
 
             // Set relationship widowed older -> Redirect person_b
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-2').check()
+            cy.get('label[for=familienstand-2]').click()
             cy.get('#familienstand_date_1').clear().type(older_date_day)
             cy.get('#familienstand_date_2').clear().type(older_date_month)
             cy.get('#familienstand_date_3').clear().type(older_date_year)
@@ -444,7 +540,7 @@ context('Acceptance tests', () => {
 
             // Set relationship widowed recent + zusammenveranlagung yes -> No redirect person_b
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-2').check()
+            cy.get('label[for=familienstand-2]').click()
             cy.get('#familienstand_date_1').clear().type(recent_date_day)
             cy.get('#familienstand_date_2').clear().type(recent_date_month)
             cy.get('#familienstand_date_3').clear().type(recent_date_year)
@@ -458,7 +554,7 @@ context('Acceptance tests', () => {
 
             // Set relationship divorced -> Redirect person_b
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-3').check()
+            cy.get('label[for=familienstand-3]').click()
             cy.get('#familienstand_date_1').clear().type(recent_date_day)
             cy.get('#familienstand_date_2').clear().type(recent_date_month)
             cy.get('#familienstand_date_3').clear().type(recent_date_year)
@@ -468,7 +564,7 @@ context('Acceptance tests', () => {
                 expect(loc.pathname.toString()).to.contain('/lotse/step/familienstand');
             });
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-3').check()
+            cy.get('label[for=familienstand-3]').click()
             cy.get('#familienstand_date_1').clear().type(older_date_day)
             cy.get('#familienstand_date_2').clear().type(older_date_month)
             cy.get('#familienstand_date_3').clear().type(older_date_year)
@@ -480,7 +576,7 @@ context('Acceptance tests', () => {
 
             // Set relationship married + separated + zusammenveranlagung-> No redirect person_b
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-1').check()
+            cy.get('label[for=familienstand-1]').click()
             cy.get('#familienstand_date_1').clear().type(taxReturnData.marriedDateDay)
             cy.get('#familienstand_date_2').clear().type(taxReturnData.marriedDateMonth)
             cy.get('#familienstand_date_3').clear().type(taxReturnData.marriedDateYear)
@@ -497,7 +593,7 @@ context('Acceptance tests', () => {
 
             // Set relationship married + separated + no zusammenveranlagung-> Redirect person_b
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-1').check()
+            cy.get('label[for=familienstand-1]').click()
             cy.get('#familienstand_date_1').clear().type(taxReturnData.marriedDateDay)
             cy.get('#familienstand_date_2').clear().type(taxReturnData.marriedDateMonth)
             cy.get('#familienstand_date_3').clear().type(taxReturnData.marriedDateYear)
@@ -521,7 +617,7 @@ context('Acceptance tests', () => {
 
             // Set steuerminderung no
             cy.visit('/lotse/step/steuerminderung_yesno')
-            cy.get('#steuerminderung-1').click()
+            cy.get('label[for=steuerminderung-1]').click()
             cy.get(submitBtnSelector).click()
 
             // Redirect vorsorge
@@ -563,7 +659,7 @@ context('Acceptance tests', () => {
 
             // Set steuerminderung yes
             cy.visit('/lotse/step/steuerminderung_yesno')
-            cy.get('#steuerminderung-0').click()
+            cy.get('label[for=steuerminderung-0]').click()
             cy.get(submitBtnSelector).click()
 
             // No redirect vorsorge
@@ -581,7 +677,7 @@ context('Acceptance tests', () => {
 
             // Set familienstand divorced
             cy.visit('/lotse/step/familienstand')
-            cy.get('#familienstand-3').check()
+            cy.get('label[for=familienstand-3]').click()
             cy.get('#familienstand_date_1').clear().type(taxReturnData.marriedDateDay)
             cy.get('#familienstand_date_2').clear().type(taxReturnData.marriedDateMonth)
             cy.get('#familienstand_date_3').clear().type(taxReturnData.marriedDateYear)

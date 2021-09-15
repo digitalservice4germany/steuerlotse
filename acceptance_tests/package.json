@@ -7,6 +7,8 @@
     "cy:run": "cypress run"
   },
   "dependencies": {
-    "cypress": "^7.0.1"
+    "cypress": "^7.0.1",
+    "cypress-downloadfile": "^1.2.1",
+    "pdf-parse": "^1.1.1"
   }
 }

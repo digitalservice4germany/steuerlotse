@@ -35,56 +35,114 @@
 
 {% block optional_js %}
     {{ super() }}
+    <script src="{{ url_for('static', filename='js/field_utils.js') }}" type=text/javascript></script>
     <script>
         const FIRST_DAY_OF_TAX_PERIOD = new Date(2020, 0, 1)
 
-        function convertStringToDate(day, month, year) {
-            return new Date(year, month - 1, day);
+        document.addEventListener('DOMContentLoaded', () => {
+            assignAssociatedContent();
+            show_hide_all_fields();
+
+            document.querySelectorAll('input[type="radio"][name="familienstand"]').forEach(field => field.addEventListener('change', remove_familienstand_date_input));
+            document.querySelectorAll('input[type="radio"]').forEach(field => field.addEventListener('change', show_hide_all_fields));
+
+            $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_married_lived_separated_since_field);
+            $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
+            $(`#familienstand_widowed_lived_separated`).change(show_hide_familienstand_widowed_lived_separated_since_field);
+            $(`#familienstand_widowed_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
+
+            document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_married_lived_separated_field);
+            document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_widowed_lived_separated_field);
+            document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_married_lived_separated_since_field);
+            document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_widowed_lived_separated_since_field);
+            document.getElementById('familienstand_date').addEventListener('input', show_hide_familienstand_confirm_zusammenveranlagung_field);
+
+            document.getElementById('familienstand_married_lived_separated_since').addEventListener('input', show_hide_familienstand_zusammenveranlagung_field);
+            document.getElementById('familienstand_widowed_lived_separated_since').addEventListener('input', show_hide_familienstand_zusammenveranlagung_field);
+
+            document.getElementById('familienstand_zusammenveranlagung').addEventListener("change", show_hide_zusammenveranlagung_clause);
+        });
+
+        function show_hide_all_fields() {
+            show_hide_familienstand_date_field();
+            show_hide_familienstand_married_lived_separated_field();
+            show_hide_familienstand_married_lived_separated_since_field();
+            show_hide_familienstand_widowed_lived_separated_field();
+            show_hide_familienstand_widowed_lived_separated_since_field();
+            show_hide_familienstand_zusammenveranlagung_field();
+            show_hide_familienstand_confirm_zusammenveranlagung_field();
+            show_hide_zusammenveranlagung_clause();
         }
 
-        function has_relationship_changed_last_year(selector, including_first_day=true) {
-            const inputted_date = convertStringToDate(document.querySelector(selector + '_1').value,
-                document.querySelector(selector + '_2').value,
-                document.querySelector(selector + '_3').value)
-            if (including_first_day) {
-                return inputted_date >= FIRST_DAY_OF_TAX_PERIOD
+        function show_hide_familienstand_date_field() {
+            show_hide_date_field(
+                document.querySelector('input[value="married"]').checked ||
+                document.querySelector('input[value="widowed"]').checked ||
+                document.querySelector('input[value="divorced"]').checked,
+                'familienstand_date');
+        }
+
+        function show_hide_familienstand_married_lived_separated_field() {
+            show_hide_yes_no_field(
+                document.querySelector('input[value="married"]').checked,
+                'familienstand_married_lived_separated');
+        }
+
+        function show_hide_familienstand_married_lived_separated_since_field() {
+            show_hide_date_field(
+                document.querySelector('input[value="married"]').checked
+                && document.querySelector('#familienstand_married_lived_separated-yes').checked,
+                'familienstand_married_lived_separated_since');
+        }
+
+        function show_hide_familienstand_widowed_lived_separated_field() {
+            show_hide_yes_no_field(document.querySelector('input[value="widowed"]').checked
+                && has_relationship_changed_last_year('#familienstand_date'),
+                'familienstand_widowed_lived_separated');
+        }
+
+        function show_hide_familienstand_widowed_lived_separated_since_field() {
+            show_hide_date_field(document.querySelector('input[value="widowed"]').checked
+                && document.querySelector('#familienstand_widowed_lived_separated-yes').checked,
+                'familienstand_widowed_lived_separated_since');
+        }
+
+        function show_hide_familienstand_confirm_zusammenveranlagung_field() {
+            show_hide_checkbox_field(
+                (document.querySelector('input[value="married"]').checked
+                    && document.querySelector('#familienstand_married_lived_separated-no').checked) ||
+                (document.querySelector('input[value="widowed"]').checked
+                    && has_relationship_changed_last_year('#familienstand_date')
+                    && document.querySelector('#familienstand_widowed_lived_separated-no').checked),
+                'familienstand_confirm_zusammenveranlagung');
+        }
+
+        function show_hide_familienstand_zusammenveranlagung_field() {
+            show_hide_yes_no_field(
+                (document.querySelector('input[value="married"]').checked
+                    && document.querySelector('#familienstand_married_lived_separated-yes').checked
+                    && has_relationship_changed_last_year('#familienstand_married_lived_separated_since', false)) ||
+                (document.querySelector('input[value="widowed"]').checked
+                    && has_relationship_changed_last_year('#familienstand_date')
+                    && document.querySelector('#familienstand_widowed_lived_separated-yes').checked
+                    && has_relationship_changed_last_year('#familienstand_widowed_lived_separated_since', false)),
+                'familienstand_zusammenveranlagung');
+        }
+
+        function show_hide_zusammenveranlagung_clause() {
+            if ((document.querySelector('input[value="married"]').checked
+                    && document.querySelector('#familienstand_married_lived_separated-yes').checked
+                    && has_relationship_changed_last_year('#familienstand_married_lived_separated_since')
+                    && document.querySelector('#familienstand_zusammenveranlagung-yes').checked) ||
+                (document.querySelector('input[value="widowed"]').checked
+                    && has_relationship_changed_last_year('#familienstand_date')
+                    && document.querySelector('#familienstand_widowed_lived_separated-yes').checked
+                    && has_relationship_changed_last_year('#familienstand_widowed_lived_separated_since')
+                    && document.querySelector('#familienstand_zusammenveranlagung-yes').checked)) {
+
+                showHiddenInput(document.getElementById('familienstand_zusammenveranlagung_clause'));
             } else {
-                return inputted_date > FIRST_DAY_OF_TAX_PERIOD
-            }
-        }
-
-
-        function delete_date_field_value(input_name){
-            $('#' + input_name + ' :input').val('');
-        }
-
-        function show_hide_date_field(show_condition, input_name) {
-            if (show_condition) {
-                $('#' + input_name + '_field').show();
-            } else {
-                $('#' + input_name + '_field').hide();
-                delete_date_field_value(input_name);
-            }
-        }
-
-        function show_hide_yes_no_field(show_condition, input_name) {
-            if (show_condition) {
-                $('#' + input_name + '_field').show();
-            } else {
-                $('#' + input_name + '_field').hide();
-                $('#' + input_name + '-yes').prop('checked', false);
-                $('#' + input_name + '-no').prop('checked', false);
-                $('label[for="' + input_name + '-yes"]').removeClass('active');
-                $('label[for="' + input_name + '-no"]').removeClass('active');
-            }
-        }
-
-        function show_hide_checkbox_field(show_condition, input_name) {
-            if (show_condition) {
-                $('#' + input_name + '_field').show();
-            } else {
-                $('#' + input_name + '_field').hide();
-                $('#' + input_name).prop('checked', false);
+                hideInput(document.getElementById('familienstand_zusammenveranlagung_clause'));
             }
         }
 
@@ -92,106 +150,62 @@
             delete_date_field_value('familienstand_date');
         }
 
-        function show_hide_familienstand_date_field() {
-            show_hide_date_field($('input[value="married"]').is(':checked') ||
-                $('input[value="widowed"]').is(':checked') ||
-                $('input[value="divorced"]').is(':checked'),
-                'familienstand_date')
+        function convertStringToDate(day, month, year) {
+            return new Date(year, month - 1, day);
         }
 
-        function show_hide_familienstand_married_lived_separated_field() {
-            show_hide_yes_no_field(($('input[value="married"]').is(':checked')),
-                'familienstand_married_lived_separated')
+        function showHiddenInput(input){
+            input.classList.remove("hidden");
+            showInput(input);
         }
 
-        function show_hide_familienstand_married_lived_separated_since_field() {
-            show_hide_date_field($('input[value="married"]').is(':checked')
-                && $('#familienstand_married_lived_separated-yes').is(':checked'),
-                'familienstand_married_lived_separated_since')
-        }
-
-        function show_hide_familienstand_widowed_lived_separated_field() {
-            show_hide_yes_no_field($('input[value="widowed"]').is(':checked')
-                && has_relationship_changed_last_year('#familienstand_date'),
-                'familienstand_widowed_lived_separated')
-        }
-
-        function show_hide_familienstand_widowed_lived_separated_since_field() {
-            show_hide_date_field($('input[value="widowed"]').is(':checked')
-                && $('#familienstand_widowed_lived_separated-yes').is(':checked'),
-                'familienstand_widowed_lived_separated_since')
-        }
-
-        function show_hide_familienstand_confirm_zusammenveranlagung_field() {
-            show_hide_checkbox_field(
-                ($('input[value="married"]').is(':checked')
-                    && $('#familienstand_married_lived_separated-no').is(':checked')) ||
-                ($('input[value="widowed"]').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_date')
-                    && $('#familienstand_widowed_lived_separated-no').is(':checked')),
-                'familienstand_confirm_zusammenveranlagung')
-        }
-
-        function show_hide_familienstand_zusammenveranlagung_field() {
-            show_hide_yes_no_field(
-                ($('input[value="married"]').is(':checked')
-                    && $('#familienstand_married_lived_separated-yes').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_married_lived_separated_since', false)) ||
-                ($('input[value="widowed"]').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_date')
-                    && $('#familienstand_widowed_lived_separated-yes').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_widowed_lived_separated_since', false)),
-                'familienstand_zusammenveranlagung')
-        }
-
-        function show_hide_zusammenveranlagung_clause() {
-            if (($('input[value="married"]').is(':checked')
-                    && $('#familienstand_married_lived_separated-yes').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_married_lived_separated_since')
-                    && $('#familienstand_zusammenveranlagung-yes').is(':checked')) ||
-                ($('input[value="widowed"]').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_date')
-                    && $('#familienstand_widowed_lived_separated-yes').is(':checked')
-                    && has_relationship_changed_last_year('#familienstand_widowed_lived_separated_since')
-                    && $('#familienstand_zusammenveranlagung-yes').is(':checked'))) {
-
-                $('#familienstand_zusammenveranlagung_clause').show();
+        function has_relationship_changed_last_year(selector, including_first_day=true) {
+            const inputted_date = convertStringToDate(document.querySelector(selector + '_1').value,
+                document.querySelector(selector + '_2').value,
+                document.querySelector(selector + '_3').value);
+            if (including_first_day) {
+                return inputted_date >= FIRST_DAY_OF_TAX_PERIOD;
             } else {
-                $('#familienstand_zusammenveranlagung_clause').hide();
+                return inputted_date > FIRST_DAY_OF_TAX_PERIOD;
             }
         }
 
-        function show_hide_all_fields() {
-            show_hide_familienstand_date_field()
-            show_hide_familienstand_married_lived_separated_field()
-            show_hide_familienstand_married_lived_separated_since_field()
-            show_hide_familienstand_widowed_lived_separated_field()
-            show_hide_familienstand_widowed_lived_separated_since_field()
-            show_hide_familienstand_zusammenveranlagung_field()
-            show_hide_familienstand_confirm_zusammenveranlagung_field()
-            show_hide_zusammenveranlagung_clause()
+
+        function delete_date_field_value(input_name){
+            document.getElementById(input_name).querySelectorAll('input').forEach((field) =>{
+                deleteInput(field);
+            });
         }
 
-        $(document).ready(function () {
-            show_hide_all_fields()
+        function show_hide_date_field(show_condition, input_name) {
+            if (show_condition) {
+                showHiddenInput(document.getElementById(input_name + '_field'));
+            } else {
+                hideInput(document.getElementById(input_name + '_field'));
+                delete_date_field_value(input_name);
+            }
+        }
 
-            $(`input[type="radio"][name="familienstand"]`).change(remove_familienstand_date_input);
-            $(`input[type="radio"]`).change(show_hide_all_fields);
-            $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_married_lived_separated_since_field);
-            $(`#familienstand_married_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
-            $(`#familienstand_widowed_lived_separated`).change(show_hide_familienstand_widowed_lived_separated_since_field);
-            $(`#familienstand_widowed_lived_separated`).change(show_hide_familienstand_confirm_zusammenveranlagung_field);
+        function show_hide_yes_no_field(show_condition, input_name) {
+            if (show_condition) {
+                showHiddenInput(document.getElementById(input_name + '_field'));
+            } else {
+                hideInput(document.getElementById(input_name + '_field'));
+                document.getElementById(input_name + '-yes').checked = false;
+                document.getElementById(input_name + '-no').checked = false;
+                document.querySelector('label[for="' + input_name + '-yes"]').classList.remove('active');
+                document.querySelector('label[for="' + input_name + '-no"]').classList.remove('active');
+            }
+        }
 
-            $(`#familienstand_date`).on('input', show_hide_familienstand_married_lived_separated_field);
-            $(`#familienstand_date`).on('input', show_hide_familienstand_widowed_lived_separated_field);
-            $(`#familienstand_date`).on('input', show_hide_familienstand_married_lived_separated_since_field);
-            $(`#familienstand_date`).on('input', show_hide_familienstand_widowed_lived_separated_since_field);
-            $(`#familienstand_date`).on('input', show_hide_familienstand_confirm_zusammenveranlagung_field);
+        function show_hide_checkbox_field(show_condition, input_name) {
+            if (show_condition) {
+                showHiddenInput(document.getElementById(input_name + '_field'));
+            } else {
+                hideInput(document.getElementById(input_name + '_field'));
+                deleteInput(document.getElementById(input_name));
+            }
+        }
 
-            $(`#familienstand_married_lived_separated_since`).on('input', show_hide_familienstand_zusammenveranlagung_field);
-            $(`#familienstand_widowed_lived_separated_since`).on('input', show_hide_familienstand_zusammenveranlagung_field);
-
-            $(`#familienstand_zusammenveranlagung`).change(show_hide_zusammenveranlagung_clause);
-        });
     </script>
 {% endblock %}
