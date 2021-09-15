@@ -8,7 +8,7 @@ from fastapi.exceptions import HTTPException
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.pyeric_controller import GetTaxOfficesPyericController
 from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code, \
-    get_tax_offices
+    get_tax_offices, is_valid_tax_number
 from tests.utils import create_unlock_request, create_unlock_activation, create_est, create_unlock_revocation, \
     missing_cert, missing_pyeric_lib
 
@@ -230,6 +230,29 @@ class TestRevokeUnlockCode(unittest.TestCase):
 
         self.assertNotIn('eric_response', response)
         self.assertNotIn('server_response', response)
+
+
+class TestIsTaxNumberValid:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_valid_then_return_json_with_is_valid_true(self):
+        state_abbreviation = "by"
+        valid_tax_number = "19811310010"
+
+        result = is_valid_tax_number(state_abbreviation, valid_tax_number)
+
+        assert result == {'is_valid': True}
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_invalid_then_return_json_with_is_valid_false(self):
+        state_abbreviation = "by"
+        invalid_tax_number = "19811310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = is_valid_tax_number(state_abbreviation, invalid_tax_number)
+
+        assert result == {'is_valid': False}
 
 
 class TestGetTaxOffices(unittest.TestCase):

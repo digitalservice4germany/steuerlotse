@@ -9,7 +9,7 @@ from erica.request_processing.erica_input import EstData, UnlockCodeRequestData,
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.request_processing.requests_controller import UnlockCodeRequestController, \
     UnlockCodeActivationRequestController, EstValidationRequestController, EstRequestController, \
-    UnlockCodeRevocationRequestController
+    UnlockCodeRevocationRequestController, CheckTaxNumberRequestController
 
 ERICA_VERSION_URL = '/01'
 
@@ -90,6 +90,7 @@ def activate_unlock_code(unlock_code_activation: UnlockCodeActivationData, inclu
         logging.getLogger().info("Could not activate unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
 
+
 @app.post(ERICA_VERSION_URL + '/unlock_code_revocations', status_code=status.HTTP_200_OK)
 def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include_elster_responses: bool = False):
     """
@@ -107,6 +108,21 @@ def revoke_unlock_code(unlock_code_revocation: UnlockCodeRevocationData, include
     except EricProcessNotSuccessful as e:
         logging.getLogger().info("Could not revoke unlock code", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_elster_responses))
+
+
+@app.get(ERICA_VERSION_URL + '/tax_number_validity/{state_abbreviation}/{tax_number}', status_code=status.HTTP_200_OK)
+def is_valid_tax_number(state_abbreviation: str, tax_number: str):
+    """
+    Validates a tax number and returns the result
+
+    :param state_abbreviation: Abbreviation of the state of the tax office
+    :param tax_number: Tax number in the standard schema
+    """
+    try:
+        return CheckTaxNumberRequestController.process(state_abbreviation, tax_number)
+    except EricProcessNotSuccessful as e:
+        logging.getLogger().info("Could not revoke unlock code", exc_info=True)
+        raise HTTPException(status_code=422, detail=e.generate_error_response(include_responses=False))
 
 
 @app.get(ERICA_VERSION_URL + '/tax_offices/', status_code=status.HTTP_200_OK)
