@@ -8,7 +8,7 @@ from erica.config import get_settings
 from tests.utils import gen_random_key, missing_cert, missing_pyeric_lib
 from erica.pyeric.eric import EricWrapper, EricDruckParameterT, EricVerschluesselungsParameterT, EricResponse, \
     get_eric_wrapper
-from erica.pyeric.eric_errors import EricProcessNotSuccessful, EricNullReturnedError
+from erica.pyeric.eric_errors import EricProcessNotSuccessful, EricNullReturnedError, EricGlobalError
 
 TEST_CERTIFICATE_PATH = 'erica/instances/blueprint/cert.pfx'
 
@@ -877,6 +877,58 @@ class TestGetBelegIds(unittest.TestCase):
 
     def tearDown(self):
         self.eric_api_with_mocked_process_method.shutdown()
+
+
+class TestCheckTaxNumber:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_number_is_valid_then_return_true(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        valid_tax_number = "9198011310010"
+
+        result = eric_wrapper.check_tax_number(valid_tax_number)
+
+        assert result is True
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_number_is_invalid_then_return_false(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        invalid_tax_number = "9198011310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = eric_wrapper.check_tax_number(invalid_tax_number)
+
+        assert result is False
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_eric_pruefe_steuernummer_returns_unkown_tax_number_error_then_raise_error(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number = "9198011310010"
+
+        # Raise ERIC_GLOBAL_STEUERNUMMER_UNGUELTIG error
+        eric_wrapper.eric.EricMtPruefeSteuernummer = MagicMock(__name__="EricMtPruefeSteuernummer", return_value=610001034)
+
+        result = eric_wrapper.check_tax_number(tax_number)
+
+        assert result is False
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_eric_pruefe_steuernummer_returns_error_then_raise_error(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number = "9198011310010"
+
+        # Raise ERIC_GLOBAL_UNKNOWN error
+        eric_wrapper.eric.EricMtPruefeSteuernummer = MagicMock(__name__="EricMtPruefeSteuernummer", return_value=610001001)
+
+        with pytest.raises(EricGlobalError) as e:
+            eric_wrapper.check_tax_number(tax_number)
 
 
 class TestDecryptData(unittest.TestCase):

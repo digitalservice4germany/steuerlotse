@@ -5,7 +5,9 @@ from app.elster_client.elster_client import request_tax_offices
 from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteuerlotseStep
 
 
-class SummaryStep(object):
+class TestSummaryStep:
+    def test_if_then(self):
+        assert(True)
     pass
 
 
