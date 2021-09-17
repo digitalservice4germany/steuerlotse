@@ -22,7 +22,7 @@
         <div class="form-row-center first-grouped-field">
             {{ macros.render_field(form.stmind_haushaltsnahe_entries, first_field=True if not render_info.form.errors) }}
         </div>
-        <div class="form-row-center normal-grouped-field">
+        <div class="form-row-center">
             {{ macros.render_field(form.stmind_haushaltsnahe_summe) }}
         </div>
     </fieldset>
@@ -37,11 +37,11 @@
             {{ macros.render_field(form.stmind_handwerker_entries) }}
         </div>
 
-        <div class="form-row-center normal-grouped-field">
+        <div class="form-row-center">
             {{ macros.render_field(form.stmind_handwerker_summe) }}
         </div>
 
-        <div class="form-row-center normal-grouped-field">
+        <div class="form-row-center">
             {{ macros.render_field(form.stmind_handwerker_lohn_etc_summe) }}
         </div>
     </fieldset>
