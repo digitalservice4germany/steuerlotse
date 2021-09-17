@@ -200,7 +200,7 @@
                 <div class="collapsed w-100" data-toggle="collapse"
                      id="heading-{{ details_id }}" data-target="#details-body-{{ details_id }}"
                      role="button" aria-expanded="false" aria-controls="details-body-{{ details_id }}">
-                    <div class="details-header row">
+                    <div class="row details-row">
                             <button class="btn details-icon control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
                             <button class="btn details-icon control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
                             <button class="btn" type="button">
@@ -212,11 +212,9 @@
             <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ details_id }}"
                 data-parent="#details-{{ details_id }}">
                 <div class="card-body container pt-0">
-                    <div class="row m-0">
-                        <div class="col-1 px-0">
+                    <div class="details-row row">
                             <div class="block-quote-line"></div>
-                        </div>
-                        <div class="col details-content">
+                        <div class="details-content">
                             {% if paragraphs is string %}
                                 <p> {{ paragraphs }}</p>
                             {% else %}

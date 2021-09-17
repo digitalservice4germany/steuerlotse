@@ -211,7 +211,7 @@
     flex-wrap: nowrap;
 }
 
-.details-header {
+.details-row {
     flex-wrap: nowrap;
     margin: 0;
 }
@@ -293,10 +293,10 @@
 }
 
 
-.details-card .card-body .block-quote-line{
+.details-card .card-body .block-quote-line {
     width: 2px;
-    height: 100%;
-    margin: 0 auto 0 5px;
+    min-width: 2px;
+    margin: 0 var(--spacing-03) 0 5px;
     background-color: var(--border-color);
 }
 
