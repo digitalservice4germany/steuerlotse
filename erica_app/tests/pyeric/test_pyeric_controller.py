@@ -209,7 +209,6 @@ class TestDecryptBelegePyericControllerRunEric(unittest.TestCase):
 
 class TestCheckTaxNumberPyericController:
 
-    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_tax_number_is_valid_then_return_true(self):
         valid_tax_number = "9198011310010"
@@ -218,7 +217,6 @@ class TestCheckTaxNumberPyericController:
 
         assert result is True
 
-    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_tax_number_is_invalid_then_return_false(self):
         invalid_tax_number = "9198011310011"  # is invalid because of incorrect check sum (last digit should be 0)
