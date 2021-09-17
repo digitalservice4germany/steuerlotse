@@ -13,8 +13,7 @@ from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericPro
     UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, \
     AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
-    BelegRequestPyericProcessController, GetTaxOfficesPyericController, CheckTaxNumberPyericController, \
-    CheckBufaNumberPyericController
+    BelegRequestPyericProcessController, GetTaxOfficesPyericController, CheckTaxNumberPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
