@@ -1,11 +1,11 @@
 import unittest
 
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt
 
 
 class TestHaushaltsnaheStep(unittest.TestCase):
     def setUp(self):
-        step = StepHaushaltsnahe()
+        step = StepHaushaltsnaheHandwerker()
         self.form = step.Form()
 
     def test_if_no_fields_given_then_fields_are_optional(self):
@@ -55,15 +55,6 @@ class TestHaushaltsnaheStep(unittest.TestCase):
         self.form.stmind_haushaltsnahe_summe.raw_data = "3"
         self.form.stmind_haushaltsnahe_entries.data = ['Item']
         self.form.stmind_haushaltsnahe_entries.raw_data = ['Item']
-        self.assertTrue(self.form.validate())
-
-
-class TestHandwerkerStep(unittest.TestCase):
-    def setUp(self):
-        step = StepHandwerker()
-        self.form = step.Form()
-
-    def test_if_no_fields_given_then_fields_are_optional(self):
         self.assertTrue(self.form.validate())
 
     def test_if_no_entries_given_then_summe_and_lohn_etc_are_optional(self):

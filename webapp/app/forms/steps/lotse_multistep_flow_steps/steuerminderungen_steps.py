@@ -157,9 +157,9 @@ class StepAussergBela(FormStep):
         )
 
 
-class StepHaushaltsnahe(FormStep):
-    name = 'haushaltsnahe'
-    label = _l('form.lotse.step_haushaltsnahe.label')
+class StepHaushaltsnaheHandwerker(FormStep):
+    name = 'haushaltsnahe_handwerker'
+    label = _l('form.lotse.step_haushaltsnahe_handwerker.label')
     section_link = SectionLink('section_steuerminderung',
                                StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
     SKIP_COND = [
@@ -178,47 +178,6 @@ class StepHaushaltsnahe(FormStep):
             render_kw={'help': _l('form.lotse.field_haushaltsnahe_summe-help'),
                        'data_label': _l('form.lotse.field_haushaltsnahe_summe.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
-
-        def validate_stmind_haushaltsnahe_summe(self, field):
-            if SteuerlotseBaseForm._list_has_entries(self.stmind_haushaltsnahe_entries):
-                validators.InputRequired(_l('form.lotse.validation-haushaltsnahe-summe'))(self, field)
-            else:
-                validators.Optional()(self, field)
-
-        def validate_stmind_haushaltsnahe_entries(self, field):
-            if self.stmind_haushaltsnahe_summe.data:
-                validators.InputRequired(_l('form.lotse.validation-haushaltsnahe-entries'))(self, field)
-            else:
-                validators.Optional()(self, field)
-
-    def __init__(self, **kwargs):
-        super(StepHaushaltsnahe, self).__init__(
-            title=_('form.lotse.haushaltsnahe-title'),
-            intro=_('form.lotse.haushaltsnahe-intro'),
-            form=self.Form,
-            template='lotse/form_aufwendungen_with_list.html',
-            **kwargs,
-        )
-
-    def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
-            _('form.lotse.haushaltsnahe-list-item-1'),
-            _('form.lotse.haushaltsnahe-list-item-2'),
-            _('form.lotse.haushaltsnahe-list-item-3'),
-            _('form.lotse.haushaltsnahe-list-item-4'),
-            _('form.lotse.haushaltsnahe-list-item-5'),
-        ], header_title=_('form.lotse.steuerminderungen.header-title'))
-
-
-class StepHandwerker(FormStep):
-    name = 'handwerker'
-    label = _l('form.lotse.step_handwerker.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-                 ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))]
-
-    class Form(SteuerlotseBaseForm):
         stmind_handwerker_entries = EntriesField(
             label=_l('form.lotse.field_handwerker_entries'), default=[''],
             validators=[validators.Length(max=999)],
@@ -233,6 +192,18 @@ class StepHandwerker(FormStep):
             label=_l('form.lotse.field_handwerker_lohn_etc_summe'),
             render_kw={'data_label': _l('form.lotse.field_handwerker_lohn_etc_summe.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
+
+        def validate_stmind_haushaltsnahe_summe(self, field):
+            if SteuerlotseBaseForm._list_has_entries(self.stmind_haushaltsnahe_entries):
+                validators.InputRequired(_l('form.lotse.validation-haushaltsnahe-summe'))(self, field)
+            else:
+                validators.Optional()(self, field)
+
+        def validate_stmind_haushaltsnahe_entries(self, field):
+            if self.stmind_haushaltsnahe_summe.data:
+                validators.InputRequired(_l('form.lotse.validation-haushaltsnahe-entries'))(self, field)
+            else:
+                validators.Optional()(self, field)
 
         def validate_stmind_handwerker_summe(self, field):
             if SteuerlotseBaseForm._list_has_entries(self.stmind_handwerker_entries) or self.stmind_handwerker_lohn_etc_summe.data:
@@ -253,23 +224,25 @@ class StepHandwerker(FormStep):
                 validators.Optional()(self, field)
 
     def __init__(self, **kwargs):
-        super(StepHandwerker, self).__init__(
-            title=_('form.lotse.handwerker-title'),
-            intro=_('form.lotse.handwerker-intro'),
+        super(StepHaushaltsnaheHandwerker, self).__init__(
+            title=_('form.lotse.haushaltsnahe-handwerker-title'),
+            intro=_('form.lotse.handwerker-haushaltsnahe-intro'),
             form=self.Form,
-            template='lotse/form_aufwendungen_with_list.html',
+            template='lotse/form_haushaltsnahe_handwerker.html',
             **kwargs,
         )
 
     def render(self, data, render_info):
         render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
-            _('form.lotse.handwerker-list-item-1'),
-            _('form.lotse.handwerker-list-item-2'),
-            _('form.lotse.handwerker-list-item-3'),
-            _('form.lotse.handwerker-list-item-4'),
-            _('form.lotse.handwerker-list-item-5'),
-        ], header_title=_('form.lotse.steuerminderungen.header-title'))
+        return render_template(self.template, form=render_info.form, render_info=render_info,
+                               list_items=[
+                                   _('form.lotse.haushaltsnahe-list-item-1'),
+                                   _('form.lotse.haushaltsnahe-list-item-2'),
+                                   _('form.lotse.haushaltsnahe-list-item-3'),
+                                   _('form.lotse.haushaltsnahe-list-item-4'),
+                                   _('form.lotse.haushaltsnahe-list-item-5'),
+                               ],
+                               header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
 class StepGemeinsamerHaushalt(FormStep):
@@ -281,7 +254,7 @@ class StepGemeinsamerHaushalt(FormStep):
         ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
         ([('familienstand', 'married')], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
         ([('familienstand', None)], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
-        ([('stmind_handwerker_summe', None), ('stmind_haushaltsnahe_summe', None)], StepHaushaltsnahe.name,
+        ([('stmind_handwerker_summe', None), ('stmind_haushaltsnahe_summe', None)], StepHaushaltsnaheHandwerker.name,
          _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe'))
     ]
 

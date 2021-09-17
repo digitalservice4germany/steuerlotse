@@ -1,0 +1,51 @@
+{% extends 'basis/form_standard.html' %}
+{% import "macros.html" as macros %}
+
+{% block step_intro %}
+    {{ macros.form_header(render_info) }}
+
+    <ul class="mb-4">
+        {% for item in list_items -%}
+            <li class="mt-2">{{ item }}</li>
+        {% endfor -%}
+    </ul>
+    <p class="mt-2 {% if not post_list_text %} d-none {% endif %}">{{post_list_text}}</p>
+{% endblock %}
+
+{% block form_content %}
+    <fieldset class="grouped-input-fields">
+        <span>
+            <legend class="mb-0">
+                <h2 class="form-sub-heading">{{ _('form.lotse.step_haushaltsnahe.label') }}</h2>
+            </legend>
+        </span>
+        <div class="form-row-center">
+            {{ macros.render_field(form.stmind_haushaltsnahe_entries, first_field=True if not render_info.form.errors) }}
+        </div>
+
+        <div class="form-row-center">
+            {{ macros.render_field(form.stmind_haushaltsnahe_summe) }}
+        </div>
+    </fieldset>
+
+    <fieldset class="grouped-input-fields">
+        <span>
+            <legend class="mb-0">
+                <h2 class="form-sub-heading">{{ _('form.lotse.step_handwerker.label') }}</h2>
+            </legend>
+        </span>
+        <div class="form-row-center">
+            {{ macros.render_field(form.stmind_handwerker_entries) }}
+        </div>
+
+        <div class="form-row-center">
+            {{ macros.render_field(form.stmind_handwerker_summe) }}
+        </div>
+
+        <div class="form-row-center">
+            {{ macros.render_field(form.stmind_handwerker_lohn_etc_summe) }}
+        </div>
+    </fieldset>
+
+{% endblock %}
+

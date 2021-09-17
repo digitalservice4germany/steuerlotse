@@ -31,13 +31,13 @@ from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
-    StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
+    StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
-    MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockHandwerkerStep, MockIbanStep, \
-    MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStep, \
+    MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockIbanStep, \
+    MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStepHandwerker, \
     MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
@@ -173,8 +173,7 @@ class TestLotseInit(unittest.TestCase):
             StepSteuerminderungYesNo,
             StepVorsorge,
             StepAussergBela,
-            StepHaushaltsnahe,
-            StepHandwerker,
+            StepHaushaltsnaheHandwerker,
             StepGemeinsamerHaushalt,
             StepReligion,
             StepSpenden,
@@ -501,11 +500,11 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
     def setUp(self):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
-                            MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
-                            MockStrMindYNStep,
-                            MockHaushaltsnaheStep, MockHandwerkerStep, MockGemeinsamerHaushaltStep, MockReligionStep,
-                            MockSummaryStep, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
-                            MockFinalStep]
+                         MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
+                         MockStrMindYNStep,
+                         MockHaushaltsnaheStepHandwerker, MockGemeinsamerHaushaltStep, MockReligionStep,
+                         MockSummaryStep, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
+                         MockFinalStep]
         testing_steps = {s.name: s for s in testing_steps}
         self.endpoint_correct = "lotse"
         self.flow = LotseMultiStepFlow(endpoint=self.endpoint_correct)
@@ -646,9 +645,12 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                 '?link_overview=' + str(self.flow.has_link_overview)
 
         self.data_haushaltsnahe_yes = {'stmind_haushaltsnahe_summe': Decimal(1.0),
-                                        'stmind_haushaltsnahe_entries': 'Dach'}
+                                       'stmind_haushaltsnahe_entries': 'Dach',
+                                       'stmind_handwerker_summe': Decimal(1.0),
+                                       'stmind_handwerker_entries': 'Badezimmer',
+                                       'stmind_handwerker_lohn_etc_summe': Decimal(0.0)}
         self.data_haushaltsnahe_no = {}
-        prev_step, self.haushaltsnahe_step, next_step = self.flow._generate_steps(MockHaushaltsnaheStep.name)
+        prev_step, self.haushaltsnahe_step, next_step = self.flow._generate_steps(MockHaushaltsnaheStepHandwerker.name)
         self.render_info_haushaltsnahe_step = RenderInfo(step_title=self.haushaltsnahe_step.title,
                                                             step_intro=self.haushaltsnahe_step.intro, form=None,
                                                             prev_url=self.flow.url_for_step(prev_step.name),
@@ -656,22 +658,10 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                             submit_url=self.flow.url_for_step(
                                                                 self.haushaltsnahe_step.name),
                                                             overview_url="Overview URL")
-
-        self.data_handwerker_yes = {'stmind_handwerker_summe': Decimal(1.0),
-                                    'stmind_handwerker_entries': 'Badezimmer',
-                                    'stmind_handwerker_lohn_etc_summe': Decimal(0.0)}
-        self.data_handwerker_no = {}
-        prev_step, self.handwerker_step, next_step = self.flow._generate_steps(MockHandwerkerStep.name)
-        self.render_info_handwerker_step = RenderInfo(step_title=self.handwerker_step.title,
-                                                        step_intro=self.handwerker_step.intro, form=None,
-                                                        prev_url=self.flow.url_for_step(prev_step.name),
-                                                        next_url=self.flow.url_for_step(next_step.name),
-                                                        submit_url=self.flow.url_for_step(self.handwerker_step.name),
-                                                        overview_url="Overview URL")
-        self.handwerker_url = '/' + self.endpoint_correct + '/step/' + StepHandwerker.name + \
+        self.haushaltsnahe_url = '/' + self.endpoint_correct + '/step/' + StepHaushaltsnaheHandwerker.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
-        self.handwerker_yes_url = self.render_info_handwerker_step.next_url
-        self.handwerker_no_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
+        self.haushaltsnahe_yes_url = self.render_info_haushaltsnahe_step.next_url
+        self.haushaltsnahe_no_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
                                     '?link_overview=' + str(self.flow.has_link_overview)
 
         self.gem_haushalt_url = '/' + self.endpoint_correct + '/step/' + StepGemeinsamerHaushalt.name + \
@@ -1175,77 +1165,40 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             self.assertNotIn('stmind_gem_haushalt_entries', returned_data)
             self.assertNotIn('stmind_gem_haushalt_count', returned_data)
 
-    def test_if_handwerker_step_then_delete_stmind_gem_haushalt_correctly(self):
-        with self.app.test_request_context(method='POST', data=self.data_handwerker_yes):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step,
-                {'familienstand': 'single', 'stmind_gem_haushalt_entries': ['Helene Fischer'],
-                 'stmind_gem_haushalt_count': 1})
-            self.assertIn('stmind_gem_haushalt_entries', returned_data)
-            self.assertIn('stmind_gem_haushalt_count', returned_data)
-
-        with self.app.test_request_context(method='POST', data=self.data_handwerker_no):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step,
-                {'familienstand': 'single', 'stmind_gem_haushalt_entries': ['Helene Fischer'],
-                 'stmind_gem_haushalt_count': 1})
-            self.assertNotIn('stmind_gem_haushalt_entries', returned_data)
-            self.assertNotIn('stmind_gem_haushalt_count', returned_data)
-
     def test_if_handwerker_filled_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST', data=self.data_handwerker_yes):
+        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
             render_info, _ = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step, {'familienstand': 'single'})
-            self.assertEqual(self.handwerker_yes_url, render_info.next_url)
+                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {'familienstand': 'single'})
+            self.assertEqual(self.haushaltsnahe_yes_url, render_info.next_url)
 
-        with self.app.test_request_context(method='POST', data=self.data_handwerker_yes):
+        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
             render_info, _ = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step, {'familienstand': 'married',
+                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {'familienstand': 'married',
                                                                          'familienstand_married_lived_separated': 'no',
                                                                          'familienstand_confirm_zusammenveranlagung': True})
-            self.assertEqual(self.handwerker_no_url, render_info.next_url)
-
-    def test_if_haushaltsnahe_filled_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.handwerker_yes_url, render_info.next_url)
-
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step,
-                {**self.data_married, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.handwerker_no_url, render_info.next_url)
-
-    def test_if_handwerker_and_haushaltsnahe_not_filled_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.handwerker_step, self.render_info_handwerker_step,
-                {**{'familienstand': 'single'}, **self.data_handwerker_no})
-            self.assertEqual(self.handwerker_no_url, render_info.next_url)
+            self.assertEqual(self.haushaltsnahe_no_url, render_info.next_url)
 
     def test_if_religion_step_then_set_prev_url_correct(self):
         with self.app.test_request_context(method='POST'):
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_handwerker_yes})
+                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_yes})
             self.assertEqual(self.gem_haushalt_url, render_info.prev_url)
 
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_handwerker_no})
-            self.assertEqual(self.handwerker_url, render_info.prev_url)
+                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_no})
+            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
 
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_handwerker_yes})
-            self.assertEqual(self.handwerker_url, render_info.prev_url)
+                {**self.data_married, **self.data_haushaltsnahe_yes})
+            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
 
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_handwerker_no})
-            self.assertEqual(self.handwerker_url, render_info.prev_url)
+                {**self.data_married, **self.data_haushaltsnahe_no})
+            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
 
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):
@@ -1376,7 +1329,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
 
     def test_if_steps_set_and_input_data_given_then_return_correct_sections_with_input_data(self):
         flow = LotseMultiStepFlow(endpoint='lotse')
-        flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnahe, StepAck]}
+        flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
         debug_data = flow.default_data()[1]
         expected_data = {
             'mandatory_data': Section(
@@ -1394,16 +1347,22 @@ class TestLotseGetOverviewData(unittest.TestCase):
                 }
             ),
             'section_steuerminderung': Section(
-                StepHaushaltsnahe.section_link.label,
-                flow.url_for_step(StepHaushaltsnahe.section_link.beginning_step, _has_link_overview=True),
+                StepHaushaltsnaheHandwerker.section_link.label,
+                flow.url_for_step(StepHaushaltsnaheHandwerker.section_link.beginning_step, _has_link_overview=True),
                 {
-                    StepHaushaltsnahe.name: Section(
-                        StepHaushaltsnahe.label,
-                        flow.url_for_step(StepHaushaltsnahe.name, _has_link_overview=True),
+                    StepHaushaltsnaheHandwerker.name: Section(
+                        StepHaushaltsnaheHandwerker.label,
+                        flow.url_for_step(StepHaushaltsnaheHandwerker.name, _has_link_overview=True),
                         {str(debug_data['stmind_haushaltsnahe_entries']): debug_data[
                             'stmind_haushaltsnahe_entries'],
                             str(debug_data['stmind_haushaltsnahe_summe']): debug_data[
-                                'stmind_haushaltsnahe_summe']}
+                                'stmind_haushaltsnahe_summe'],
+                            str(debug_data['stmind_handwerker_entries']): debug_data[
+                                'stmind_handwerker_entries'],
+                            str(debug_data['stmind_handwerker_summe']): debug_data[
+                                'stmind_handwerker_summe'],
+                            str(debug_data['stmind_handwerker_lohn_etc_summe']): debug_data[
+                                'stmind_handwerker_lohn_etc_summe']}
                     )
                 }
             )
@@ -1416,7 +1375,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
 
     def test_if_missing_steps_are_missing_then_set_mandatory_missing_value(self):
         flow = LotseMultiStepFlow(endpoint='lotse')
-        flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnahe, StepAck]}
+        flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
         debug_data = copy.deepcopy(flow.default_data()[1])
         missing_fields = ['iban', 'is_person_a_account_holder']
         for missing_field in missing_fields:
@@ -1438,17 +1397,23 @@ class TestLotseGetOverviewData(unittest.TestCase):
                 }
             ),
             'section_steuerminderung': Section(
-                StepHaushaltsnahe.section_link.label,
-                flow.url_for_step(StepHaushaltsnahe.section_link.beginning_step, _has_link_overview=True),
+                StepHaushaltsnaheHandwerker.section_link.label,
+                flow.url_for_step(StepHaushaltsnaheHandwerker.section_link.beginning_step, _has_link_overview=True),
                 {
-                    StepHaushaltsnahe.name:
+                    StepHaushaltsnaheHandwerker.name:
                         Section(
-                            StepHaushaltsnahe.label,
-                            flow.url_for_step(StepHaushaltsnahe.name, _has_link_overview=True),
+                            StepHaushaltsnaheHandwerker.label,
+                            flow.url_for_step(StepHaushaltsnaheHandwerker.name, _has_link_overview=True),
                             {str(debug_data['stmind_haushaltsnahe_entries']): debug_data[
                                 'stmind_haushaltsnahe_entries'],
                                 str(debug_data['stmind_haushaltsnahe_summe']): debug_data[
-                                    'stmind_haushaltsnahe_summe']}
+                                    'stmind_haushaltsnahe_summe'],
+                                str(debug_data['stmind_handwerker_entries']): debug_data[
+                                    'stmind_handwerker_entries'],
+                                str(debug_data['stmind_handwerker_summe']): debug_data[
+                                    'stmind_handwerker_summe'],
+                                str(debug_data['stmind_handwerker_lohn_etc_summe']): debug_data[
+                                    'stmind_handwerker_lohn_etc_summe']}
                         )
                 }
             )

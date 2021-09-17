@@ -9,8 +9,8 @@ from app.forms.steps.logout_steps import LogoutInputStep
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepSummary, StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepPersonB, StepFamilienstand
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepHandwerker, \
-    StepReligion, StepGemeinsamerHaushalt, StepHaushaltsnahe
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, \
+    StepReligion, StepGemeinsamerHaushalt, StepHaushaltsnaheHandwerker
 from app.forms.steps.step import Step, FormStep
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
@@ -198,17 +198,9 @@ class MockStrMindYNStep(StepSteuerminderungYesNo):
         return make_response(json.dumps([data], default=str), 200)
 
 
-class MockHaushaltsnaheStep(StepHaushaltsnahe):
+class MockHaushaltsnaheStepHandwerker(StepHaushaltsnaheHandwerker):
     def __init__(self, **kwargs):
-        super(MockHaushaltsnaheStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockHandwerkerStep(StepHandwerker):
-    def __init__(self, **kwargs):
-        super(MockHandwerkerStep, self).__init__(**kwargs)
+        super(MockHaushaltsnaheStepHandwerker, self).__init__(**kwargs)
 
     def render(self, data, render_info):
         return make_response(json.dumps([data], default=str), 200)

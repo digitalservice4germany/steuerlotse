@@ -458,7 +458,6 @@ context('Acceptance tests', () => {
                 cy.get('#stmind_haushaltsnahe_entries-div').children().eq(0).type(taxReturnData.stmind.haushaltsnahe.entries[0])
                 cy.get('#stmind_haushaltsnahe_entries-div').children().eq(1).type(taxReturnData.stmind.handwerker.entries[1])
                 cy.get('#stmind_haushaltsnahe_summe').type(taxReturnData.stmind.haushaltsnahe.summe)
-                cy.get(submitBtnSelector).click()
 
                 cy.get('#stmind_handwerker_entries-div').children().should('have.length', 1)
                 cy.get('button[id=stmind_handwerker_entries-add]').click()
@@ -633,7 +632,7 @@ context('Acceptance tests', () => {
             });
 
             // Redirect haushaltsnahe
-            cy.visit('/lotse/step/haushaltsnahe?link_overview=True')
+            cy.visit('/lotse/step/haushaltsnahe_handwerker?link_overview=True')
             cy.location().should((loc) => {
                 expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
             });
@@ -686,7 +685,7 @@ context('Acceptance tests', () => {
             // Redirect gem_haushalt
             cy.visit('/lotse/step/gem_haushalt?link_overview=True')
             cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/haushaltsnahe');
+                expect(loc.pathname.toString()).to.contain('/lotse/step/haushaltsnahe_handwerker');
             });
 
 

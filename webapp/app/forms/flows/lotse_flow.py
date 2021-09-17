@@ -23,7 +23,7 @@ from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
-    StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
+    StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
@@ -136,8 +136,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepSteuerminderungYesNo,
                 StepVorsorge,
                 StepAussergBela,
-                StepHaushaltsnahe,
-                StepHandwerker,
+                StepHaushaltsnaheHandwerker,
                 StepGemeinsamerHaushalt,
                 StepReligion,
                 StepSpenden,
@@ -273,7 +272,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             if not stored_data.get('steuerminderung') or stored_data['steuerminderung'] == 'no':
                 render_info.next_url = self.url_for_step(StepSummary.name)
                 self._delete_dependent_data(['stmind'], stored_data)
-        elif isinstance(step, StepHandwerker):
+        elif isinstance(step, StepHaushaltsnaheHandwerker):
             if show_person_b(stored_data) or \
                     not stored_data.get('stmind_handwerker_summe') and \
                     not stored_data.get('stmind_haushaltsnahe_summe'):
@@ -281,15 +280,11 @@ class LotseMultiStepFlow(MultiStepFlow):
             if request.method == 'POST' and render_info.form.validate():
                 if not stored_data.get('stmind_handwerker_summe') and not stored_data.get('stmind_haushaltsnahe_summe'):
                     stored_data = self._delete_dependent_data(['stmind_gem_haushalt'], stored_data)
-        elif isinstance(step, StepHaushaltsnahe):
-            if request.method == 'POST' and render_info.form.validate():
-                if not stored_data.get('stmind_handwerker_summe') and not stored_data.get('stmind_haushaltsnahe_summe'):
-                    stored_data = self._delete_dependent_data(['stmind_gem_haushalt'], stored_data)
         elif isinstance(step, StepReligion):
             if show_person_b(stored_data) or \
                     not stored_data.get('stmind_handwerker_summe') and \
                     not stored_data.get('stmind_haushaltsnahe_summe'):
-                render_info.prev_url = self.url_for_step(StepHandwerker.name)
+                render_info.prev_url = self.url_for_step(StepHaushaltsnaheHandwerker.name)
 
         # redirect in any case if overview button pressed
         if 'overview_button' in request.form:

@@ -37,7 +37,7 @@ We set a corresponding class determining the width depending on max_characters. 
 
         $('form').on('submit', function (event) {
             var list = [];
-            $('.dynamic-entry', this).each(function () {
+            $app.find('.dynamic-entry', this).each(function () {
                 list.push($(this).val());
             });
             var valueString = list.join("{{kwargs['split_chars']}}")
