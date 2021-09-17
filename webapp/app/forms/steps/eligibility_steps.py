@@ -52,7 +52,8 @@ class EligibilityStepMixin:
     def is_previous_step(cls, possible_next_step_name, stored_data):
         return False
 
-    def number_of_users(self, input_data):
+    @classmethod
+    def number_of_users(cls, input_data):
         if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data) \
                 or data_fits_data_model(SeparatedJointTaxesEligibilityData, input_data):
             return 2

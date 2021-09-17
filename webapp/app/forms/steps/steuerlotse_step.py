@@ -74,7 +74,8 @@ class SteuerlotseStep(object):
         if self.render_info.redirect_url:
             return redirect(self.render_info.redirect_url)
 
-    def number_of_users(self, input_data=None):
+    @classmethod
+    def number_of_users(cls, input_data=None):
         return 1
 
     def render(self, **kwargs):
