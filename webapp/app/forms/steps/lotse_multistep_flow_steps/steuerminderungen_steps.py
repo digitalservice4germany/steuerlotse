@@ -235,14 +235,14 @@ class StepHaushaltsnaheHandwerker(FormStep):
     def render(self, data, render_info):
         render_info.form.first_field = next(iter(render_info.form))
         return render_template(self.template, form=render_info.form, render_info=render_info,
-                               list_items=[
-                                   _('form.lotse.haushaltsnahe-list-item-1'),
-                                   _('form.lotse.haushaltsnahe-list-item-2'),
-                                   _('form.lotse.haushaltsnahe-list-item-3'),
-                                   _('form.lotse.haushaltsnahe-list-item-4'),
-                                   _('form.lotse.haushaltsnahe-list-item-5'),
-                               ],
-                               header_title=_('form.lotse.steuerminderungen.header-title'))
+                               header_title=_('form.lotse.steuerminderungen.header-title'),
+                               input_details_title=_('form.lotse.steuerminderungen.details-title'),
+                               input_details_text=_('form.lotse.steuerminderungen.details-text'),
+                               details_list_items=[
+                                   _('form.lotse.steuerminderungen.details-list-item-1'),
+                                   _('form.lotse.steuerminderungen.details-list-item-2'),
+                                   _('form.lotse.steuerminderungen.details-list-item-3')
+                               ],)
 
 
 class StepGemeinsamerHaushalt(FormStep):
