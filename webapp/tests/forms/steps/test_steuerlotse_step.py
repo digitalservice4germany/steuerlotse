@@ -9,11 +9,12 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
+from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, \
     RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
-    MockRenderStep, MockYesNoStep
+    MockRenderStep, MockYesNoStep, MockFormWithInputStep
 from tests.utils import create_session_form_data
 
 
@@ -469,32 +470,15 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
     def attach_fixtures(self, test_request_context):
         self.req = test_request_context
 
-    def test_if_is_none_and_is_multiple_user_then_return_single_form(self):
+    def test_return_an_instance_of_the_class_input_form(self):
         self.req.form = MagicMock()
-        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={})
-        form_single = MagicMock()
-        form_single_constructor = MagicMock(return_value=form_single)
-        form_step.form = form_single_constructor
-        form_step.form_multiple = None
-
-        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
-            created_form = form_step.create_form(self.req, {})
-
-        form_single_constructor.assert_called_once()
-        self.assertEqual(form_single, created_form)
-
-    def test_if_not_multiple_user_then_return_single_form(self):
-        self.req.form = MagicMock()
-        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={})
-        form_single = MagicMock()
-        form_single_constructor = MagicMock(return_value=form_single)
-        form_step.form = form_single_constructor
+        form_step = MockFormWithInputStep(endpoint='lotse', header_title=None, stored_data={})
 
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             created_form = form_step.create_form(self.req, {})
 
-        form_single_constructor.assert_called_once()
-        self.assertEqual(form_single, created_form)
+        assert type(created_form) == form_step.InputForm
+        assert dir(created_form) == dir(form_step.InputForm()) # check that it has the correct input fields
 
 
 class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):
