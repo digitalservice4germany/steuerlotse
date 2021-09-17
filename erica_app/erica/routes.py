@@ -121,7 +121,7 @@ def is_valid_tax_number(state_abbreviation: str, tax_number: str):
     try:
         return CheckTaxNumberRequestController.process(state_abbreviation, tax_number)
     except EricProcessNotSuccessful as e:
-        logging.getLogger().info("Could not revoke unlock code", exc_info=True)
+        logging.getLogger().info("Could no validate tax number", exc_info=True)
         raise HTTPException(status_code=422, detail=e.generate_error_response(include_responses=False))
 
 
