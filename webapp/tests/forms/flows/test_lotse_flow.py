@@ -23,11 +23,11 @@ from app.data_access.user_controller import find_user
 from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalValidationError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
 from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
-from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS, show_person_b
+from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer
+from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \

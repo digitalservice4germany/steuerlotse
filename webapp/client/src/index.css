@@ -1,1 +1,526 @@
 /* Global styles can go here. */
+
+/** BEGIN copied section from base.css **/
+
+/* GENERAL */
+
+@font-face {
+  font-family: "BundesSansWeb";
+  src: url("./assets/fonts/BundesSansWeb-Regular.ttf");
+}
+@font-face {
+  font-family: "BundesSansWeb";
+  src: url("./assets/fonts/BundesSansWeb-Bold.ttf");
+  font-weight: bold;
+}
+@font-face {
+  font-family: "BundesSansWeb";
+  src: url("./assets/fonts/BundesSansWeb-Italic.ttf");
+  font-style: italic;
+}
+@font-face {
+  font-family: "BundesSansWeb";
+  src: url("./assets/fonts/BundesSansWeb-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+html {
+  font-size: 16px;
+}
+
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: "BundesSansWeb", sans-serif;
+}
+
+body {
+  background: var(--body-color);
+  font-size: var(--text-medium);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* LINKS */
+a {
+  text-decoration: underline;
+  text-underline-offset: var(--spacing-01);
+  text-decoration-color: var(--link-underline-color);
+  color: var(--link-color);
+
+  background-clip: border-box;
+}
+
+a:hover {
+  text-decoration-color: var(--link-hover-color);
+  color: var(--link-hover-color);
+}
+
+a:active {
+  text-decoration-color: var(--link-active-color);
+  color: var(--link-active-color);
+}
+
+a:visited {
+  text-decoration-color: var(--link-visited-color);
+  color: var(--link-visited-color);
+}
+
+/* INPUTS */
+
+.input-width-2 {
+  width: var(--input-width-2);
+}
+
+.input-width-3 {
+  width: var(--input-width-3);
+}
+
+.input-width-4 {
+  width: var(--input-width-4);
+}
+
+.input-width-5 {
+  width: var(--input-width-5);
+}
+
+.input-width-6 {
+  width: var(--input-width-6);
+}
+
+.input-width-10 {
+  width: var(--input-width-10);
+}
+
+.input-width-25 {
+  max-width: var(--input-width-25);
+}
+
+input.form-control {
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  min-height: 55px;
+}
+
+input.form-control:hover {
+  border: 2px solid var(--hover-border-color);
+}
+
+input.form-control:focus {
+  border: 2px solid var(--border-color);
+  box-shadow: 0 0 0 2px var(--focus-color);
+}
+
+input.form-control:active {
+  border: 2px solid var(--border-color);
+  box-shadow: 0 0 0 2px var(--active-outline-color);
+}
+
+input.form-control.field-error-found {
+  border: 2px solid var(--error-color);
+}
+
+.steuerlotse-select {
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  background: #fff url("./assets/icons/select_icon.svg") no-repeat right 0.75rem
+    center;
+  min-height: 55px;
+}
+
+.input-group input,
+.input-group input:hover,
+.input-group input:focus,
+.input-group input:active {
+  border: 2px solid var(--border-color);
+  box-shadow: none;
+}
+
+.input-group.euro-field:focus-within {
+  box-shadow: 0 0 0 2px var(--focus-color);
+}
+
+.input-group.euro-field:active {
+  box-shadow: 0 0 0 2px var(--active-outline-color);
+}
+
+.euro-field-appendix {
+  margin-left: -2px;
+  padding: 0 1.25rem 0 1.25rem;
+
+  font-weight: var(--font-bold);
+  color: var(--text-color);
+
+  background-color: var(--bg-highlight-color);
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+}
+
+/* ERRORS */
+.invalid-feedback {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--error-color);
+}
+img.invalid-feedback {
+  display: inline;
+  vertical-align: middle;
+  height: 2em;
+  width: 2em;
+  margin-right: 9px;
+}
+
+.example-input {
+  color: var(--secondary-text-color);
+  margin-bottom: var(--spacing-02);
+}
+
+.error-found-line {
+  margin-left: var(--spacing-02);
+  padding-left: var(--spacing-04) !important;
+  border-left: 2px solid var(--error-color);
+}
+
+/* LISTS */
+ol {
+  counter-reset: steuerlotse-ol;
+  list-style: none;
+}
+ol li {
+  margin-bottom: var(--spacing-02);
+  counter-increment: steuerlotse-ol;
+  position: relative;
+}
+ol li::before {
+  --size: 1.5em;
+  content: counter(steuerlotse-ol);
+  position: absolute;
+
+  left: calc(-1 * var(--size) - 12px);
+  line-height: var(--size);
+  width: var(--size);
+  height: var(--size);
+  top: 0;
+
+  text-align: center;
+  font-weight: var(--font-bold);
+  color: var(--text-color);
+
+  background: var(--icon-default-color);
+
+  border-radius: 50%;
+}
+
+/* Main Content */
+
+.main {
+  margin-left: var(--sidebar-width);
+  margin-right: 0;
+  min-height: 100vh;
+
+  background: var(--body-color);
+}
+
+@media (max-width: 1024px) {
+  .main {
+    margin-left: 0;
+  }
+}
+
+.main-content {
+  padding-left: var(--spacing-03);
+  padding-right: var(--spacing-03);
+  flex: 1;
+  margin: 0 auto;
+  width: 100%;
+  max-width: var(--main-max-width);
+}
+
+.list-unstyled li a {
+  color: var(--text-color);
+}
+
+.form-list {
+  list-style-image: url("./assets/images/list_marker.svg");
+}
+
+.form-list li::before {
+  vertical-align: text-top;
+  height: 1px;
+}
+
+.form-list li {
+  margin-top: var(--spacing-02);
+}
+
+.bold {
+  font-weight: var(--font-bold);
+}
+/** END copied sections from base.css **/
+
+/** BEGIN copied unorganised CSS from base.css */
+.list-unstyled li a {
+  color: var(--text-color);
+}
+
+.btn-outline-secondary {
+  border-radius: 0;
+}
+
+.btn-help {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: 11px !important;
+  padding: 0;
+  font-size: 0.9em;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-input-field-label {
+  margin-top: var(--spacing-06);
+  font-size: var(--text-medium);
+  font-weight: var(--font-bold);
+}
+
+.optional-hint {
+  font-size: var(--text-medium);
+  font-weight: var(--font-normal);
+}
+
+/* .nav-button-row {
+  margin-top: var(--spacing-09);
+} */
+
+.form-row-center {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin-top: var(--spacing-03);
+  /* This moved the border further outside to allow for the children to fill that space with margin,
+  allowing the children to have space between them. See the bootstrap row/column technique. */
+  margin-left: calc(-1 * var(--spacing-02));
+  margin-right: calc(-1 * var(--spacing-02));
+}
+
+.separated-field {
+  flex-wrap: nowrap;
+  margin-top: 0;
+}
+
+.entries-field {
+  flex-wrap: nowrap;
+}
+
+.form-row-center > * {
+  margin: 0 var(--spacing-02);
+}
+
+.grouped-input-fields {
+  width: 100%;
+}
+
+.grouped-input-fields > .form-row-center {
+  margin-top: 0;
+}
+
+.grouped-input-fields .text-input-field-label {
+  margin-top: var(--spacing-06);
+}
+
+@media (max-width: 360px) {
+  .grouped-input-fields .text-input-field-label {
+    margin-top: var(--spacing-04);
+  }
+}
+
+/* .section-intro p {
+  font-size: var(--text-medium);
+} */
+
+h1,
+h2,
+h3 {
+  font-weight: var(--font-bold) !important;
+}
+
+h1 {
+  font-size: var(--text-4xl);
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: var(--text-3xl);
+  }
+}
+
+h3 {
+  font-size: var(--text-3xl);
+}
+
+h4 {
+  padding-bottom: var(--spacing-02);
+  padding-top: var(--spacing-02);
+}
+
+.form-sub-heading {
+  font-size: var(--text-2xl);
+  margin-top: var(--spacing-08);
+  margin-bottom: 0;
+}
+
+.form-sub-heading-smaller {
+  font-size: var(--text-medium);
+  margin-top: var(--spacing-09);
+  margin-bottom: var(--spacing-03);
+}
+
+ul.margin-only-between li {
+  margin-top: var(--spacing-04);
+}
+
+ul.margin-only-between li:first-child {
+  margin-top: var(--spacing-02);
+}
+
+ul.reasons-success li {
+  margin-top: var(--spacing-01);
+}
+
+ul.reasons-success li.and {
+  list-style: none;
+}
+
+.card-half-transparent {
+  background-color: #ffffffd6;
+}
+
+.card {
+  border: none;
+  border-radius: inherit;
+}
+
+.card-body {
+  border: 1px solid var(--border-color);
+}
+
+.unstyled-card-header {
+  background-color: var(--body-color);
+  border: none;
+  padding: 0 0 var(--spacing-02);
+}
+
+.simple-card {
+  background-color: var(--bg-white);
+  padding: var(--spacing-07);
+  margin-top: var(--spacing-06);
+}
+
+.simple-card .field-label {
+  font-size: var(--text-medium);
+  font-weight: var(--font-normal);
+}
+
+img.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+
+.alert {
+  border-radius: 0;
+  border: 0;
+  padding: var(--spacing-05);
+}
+
+.alert-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.alert-warning {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.form-row {
+  margin-left: 0;
+}
+
+.steps-number {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  background-color: #bfd4ed;
+}
+
+.step-active small {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.step-active .steps-number {
+  background-color: #007bff;
+  color: var(--inverse-text-color);
+  font-weight: bold;
+}
+
+/* .explanatory-button-text {
+  margin-bottom: 0;
+  margin-left: var(--spacing-02);
+}
+
+.explanatory-button-text a {
+  color: var(--text-color);
+  font-weight: var(--font-bold);
+} */
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+#skip-to-content-div {
+  background-color: var(--bg-highlight-color);
+  display: flex;
+  width: 100%;
+}
+
+#skip-to-content-link {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+#skip-to-content-link:focus {
+  position: static;
+  height: auto;
+  width: auto;
+  margin-top: var(--spacing-02);
+  margin-bottom: var(--spacing-01);
+  border: none;
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-color);
+}
+
+@media (max-width: 1024px) {
+  #skip-to-content-link:focus {
+    margin-top: var(--spacing-04);
+    margin-bottom: var(--spacing-03);
+  }
+}
+
+.hidden {
+  display: none;
+}
+/** END copied unorganised CSS from base.css **/

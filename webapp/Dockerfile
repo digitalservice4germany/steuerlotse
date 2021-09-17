@@ -7,7 +7,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 COPY ./client/package.json ./client/yarn.lock ./client/
-RUN cd ./client && yarn install --production
+RUN cd ./client && yarn install --frozen-lockfile
 
 COPY ./client ./client
 RUN cd ./client && yarn build

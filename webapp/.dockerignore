@@ -1,2 +1,5 @@
 Dockerfile
 tests/
+client/node_modules
+client/coverage
+client/build

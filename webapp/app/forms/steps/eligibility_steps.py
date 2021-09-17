@@ -1,5 +1,5 @@
 from flask import request
-from flask_babel import _
+from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
 from pydantic import ValidationError, BaseModel
 from wtforms import RadioField
@@ -91,12 +91,9 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     class InputForm(SteuerlotseBaseForm):
         pass
 
-    InputMultipleForm = None
-
     def __init__(self, endpoint, **kwargs):
         super().__init__(
             form=self.InputForm,
-            form_multiple=self.InputMultipleForm,
             endpoint=endpoint,
             header_title=_('form.eligibility.header-title'),
             **kwargs,
@@ -139,8 +136,9 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
 
     def delete_not_dependent_data(self):
         """ Delete the data that is not (recursively) part of the first model in the list of next step data models. """
-        self.stored_data = dict(filter(lambda elem: elem[0] in self.next_step_data_models[0][0].get_all_potential_keys(),
-                           self.stored_data.items()))
+        self.stored_data = dict(
+            filter(lambda elem: elem[0] in self.next_step_data_models[0][0].get_all_potential_keys(),
+                   self.stored_data.items()))
 
     @classmethod
     def is_previous_step(cls, possible_next_step_name, stored_data):
@@ -306,16 +304,15 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        alimony_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.alimony.detail.title'),
-                                  'text': _l('form.eligibility.alimony.detail.text')}},
-            choices=[('yes', _l('form.eligibility.alimony.multiple.yes')),
-                     ('no', _l('form.eligibility.alimony.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.alimony_eligibility.kwargs['choices'] = [('yes',
+                                                            ngettext('form.eligibility.alimony.yes',
+                                                                     'form.eligibility.alimony.yes',
+                                                                     num=self.number_of_users(self.stored_data))),
+                                                           ('no', ngettext('form.eligibility.alimony.no',
+                                                                           'form.eligibility.alimony.no',
+                                                                           num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -408,8 +405,8 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
             render_kw={'hide_label': True,
                        'data-detail': {'title': _l('form.eligibility.alimony.detail.title'),
                                   'text': _l('form.eligibility.alimony.detail.text')}},
-            choices=[('yes', _l('form.eligibility.alimony.yes')),
-                     ('no', _l('form.eligibility.alimony.no')),
+            choices=[('yes', _l('form.eligibility.alimony.single.yes')),
+                     ('no', _l('form.eligibility.alimony.single.no')),
                      ],
             validators=[InputRequired()])
 
@@ -464,14 +461,15 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        pension_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True},
-            choices=[('yes', _l('form.eligibility.pension.multiple.yes')),
-                     ('no', _l('form.eligibility.pension.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.pension_eligibility.kwargs['choices'] = [('yes',
+                                                            ngettext('form.eligibility.pension.yes',
+                                                                     'form.eligibility.pension.yes',
+                                                                     num=self.number_of_users(self.stored_data))),
+                                                           ('no', ngettext('form.eligibility.pension.no',
+                                                                           'form.eligibility.pension.no',
+                                                                           num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -493,16 +491,15 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        investment_income_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.investment_income.detail.title'),
-                                  'text': _l('form.eligibility.investment_income.detail.text')}},
-            choices=[('yes', _l('form.eligibility.investment_income.multiple.yes')),
-                     ('no', _l('form.eligibility.investment_income.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.investment_income_eligibility.kwargs['choices'] = [('yes',
+                                                          ngettext('form.eligibility.investment_income.yes',
+                                                                   'form.eligibility.investment_income.yes',
+                                                                   num=self.number_of_users(self.stored_data))),
+                                                         ('no', ngettext('form.eligibility.investment_income.no',
+                                                                         'form.eligibility.investment_income.no',
+                                                                         num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -524,16 +521,17 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        minimal_investment_income_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.minimal_investment_income.detail.title'),
-                                  'text': _l('form.eligibility.minimal_investment_income.detail.text')}},
-            choices=[('yes', _l('form.eligibility.minimal_investment_income.multiple.yes')),
-                     ('no', _l('form.eligibility.minimal_investment_income.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.minimal_investment_income_eligibility.kwargs['choices'] = [('yes',
+                                                                  ngettext(
+                                                                      'form.eligibility.minimal_investment_income.yes',
+                                                                      'form.eligibility.minimal_investment_income.yes',
+                                                                      num=self.number_of_users(self.stored_data))),
+                                                                 ('no', ngettext(
+                                                                     'form.eligibility.minimal_investment_income.no',
+                                                                     'form.eligibility.minimal_investment_income.no',
+                                                                     num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -587,16 +585,17 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        cheaper_check_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.cheaper_check.detail.title'),
-                                  'text': _l('form.eligibility.cheaper_check.detail.text')}},
-            choices=[('yes', _l('form.eligibility.cheaper_check_eligibility.multiple.yes')),
-                     ('no', _l('form.eligibility.cheaper_check_eligibility.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.cheaper_check_eligibility.kwargs['choices'] = [('yes',
+                                                                  ngettext(
+                                                                      'form.eligibility.cheaper_check_eligibility.yes',
+                                                                      'form.eligibility.cheaper_check_eligibility.yes',
+                                                                      num=self.number_of_users(self.stored_data))),
+                                                                 ('no', ngettext(
+                                                                     'form.eligibility.cheaper_check_eligibility.no',
+                                                                     'form.eligibility.cheaper_check_eligibility.no',
+                                                                     num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -618,16 +617,17 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        employment_income_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.employment_income.detail.title'),
-                                  'text': _l('form.eligibility.employment_income.detail.text')}},
-            choices=[('yes', _l('form.eligibility.employment_income.multiple.yes')),
-                     ('no', _l('form.eligibility.employment_income.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.employment_income_eligibility.kwargs['choices'] = [('yes',
+                                                                      ngettext(
+                                                                          'form.eligibility.employment_income.yes',
+                                                                          'form.eligibility.employment_income.yes',
+                                                                          num=self.number_of_users(self.stored_data))),
+                                                                     ('no', ngettext(
+                                                                         'form.eligibility.employment_income.no',
+                                                                         'form.eligibility.employment_income.no',
+                                                                         num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -676,21 +676,22 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
             render_kw={'hide_label': True,
                        'data-detail': {'title': _l('form.eligibility.income-other.detail.title'),
                                   'text': _l('form.eligibility.income-other.detail.text')}},
-            choices=[('yes', _l('form.eligibility.income-other.yes')),
-                     ('no', _l('form.eligibility.income-other.no')),
+            choices=[('yes', _l('form.eligibility.income_other.yes')),
+                     ('no', _l('form.eligibility.income_other.no')),
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        other_income_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.income-other.detail.title'),
-                                  'text': _l('form.eligibility.income-other.detail.text')}},
-            choices=[('yes', _l('form.eligibility.income-other.multiple.yes')),
-                     ('no', _l('form.eligibility.income-other.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.other_income_eligibility.kwargs['choices'] = [('yes',
+                                                                 ngettext(
+                                                                     'form.eligibility.income_other.yes',
+                                                                     'form.eligibility.income_other.yes',
+                                                                     num=self.number_of_users(self.stored_data))),
+                                                                ('no', ngettext(
+                                                                    'form.eligibility.income_other.no',
+                                                                    'form.eligibility.income_other.no',
+                                                                    num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
@@ -713,21 +714,22 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             render_kw={'hide_label': True,
                        'data-detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
                                   'text': _l('form.eligibility.foreign-country.detail.text')}},
-            choices=[('yes', _l('form.eligibility.foreign-country.yes')),
-                     ('no', _l('form.eligibility.foreign-country.no')),
+            choices=[('yes', _l('form.eligibility.foreign_country.yes')),
+                     ('no', _l('form.eligibility.foreign_country.no')),
                      ],
             validators=[InputRequired()])
 
-    class InputMultipleForm(SteuerlotseBaseForm):
-        foreign_country_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
-                                  'text': _l('form.eligibility.foreign-country.detail.text')}},
-            choices=[('yes', _l('form.eligibility.foreign-country.multiple.yes')),
-                     ('no', _l('form.eligibility.foreign-country.multiple.no')),
-                     ],
-            validators=[InputRequired()])
+    def _pre_handle(self):
+        self.form.foreign_country_eligibility.kwargs['choices'] = [('yes',
+                                                                    ngettext(
+                                                                        'form.eligibility.foreign_country.yes',
+                                                                        'form.eligibility.foreign_country.yes',
+                                                                        num=self.number_of_users(self.stored_data))),
+                                                                   ('no', ngettext(
+                                                                       'form.eligibility.foreign_country.no',
+                                                                       'form.eligibility.foreign_country.no',
+                                                                       num=self.number_of_users(self.stored_data)))]
+        super()._pre_handle()
 
 
 class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):

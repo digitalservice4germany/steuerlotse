@@ -1,8 +1,9 @@
 from flask import request
+from pydantic import ValidationError
 from wtforms import validators
 from wtforms.validators import InputRequired
 
-from flask_babel import lazy_gettext as _l, _
+from flask_babel import lazy_gettext as _l, _, ngettext
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
@@ -12,20 +13,19 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.forms.steps.step import SectionLink
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
 from app.forms.validators import DecimalOnly, IntegerLength
+from app.model.form_data import FamilienstandModel
 
 
 class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
     header_title = None
     InputForm = None
-    InputMultipleForm = None
     prev_step_name = None
     next_step_name = None
 
     def __init__(self, endpoint, **kwargs):
         super().__init__(
             form=self.InputForm,
-            form_multiple=self.InputMultipleForm,
             endpoint=endpoint,
             header_title=self.header_title,
             **kwargs,
@@ -133,17 +133,34 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             else:
                 validators.Optional()(form, field)
 
+    def _pre_handle(self):
+        tax_offices = request_tax_offices()
+
+        # Set bufa choices here because WTForms will otherwise not accept choices because they are invalid
+        self._set_bufa_choices(tax_offices)
+        self._set_multiple_texts()
+        super()._pre_handle()
+        self.render_info.additional_info['tax_offices'] = tax_offices
+
     def _set_bufa_choices(self, tax_offices):
         choices = []
         for county in tax_offices:
             choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in county.get('tax_offices')]
         self.InputForm.bufa_nr.kwargs['choices'] = choices
 
-    def _pre_handle(self):
-        tax_offices = request_tax_offices()
+    def _set_multiple_texts(self):
+        num_of_users = 2 if show_person_b(self.stored_data) else 1
+        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
+                                                                     'form.lotse.steuernummer_exists',
+                                                                     num=num_of_users)
+        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
+                                                                     'form.lotse.steuernummer.request_new_tax_number',
+                                                                     num=num_of_users)
 
-        # Set bufa choices here because WTForms will otherwise not accept choices because they are invalid
-        self._set_bufa_choices(tax_offices)
 
-        super()._pre_handle()
-        self.render_info.additional_info['tax_offices'] = tax_offices
+def show_person_b(personal_data):
+    try:
+        familienstand_model = FamilienstandModel.parse_obj(personal_data)
+        return familienstand_model.show_person_b()
+    except ValidationError:
+        return False

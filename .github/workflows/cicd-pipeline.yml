@@ -101,6 +101,13 @@ jobs:
         cd erica_app
         pipenv run python scripts/load_eric_binaries.py download-eric-cert-and-binaries
 
+    - name: Update tax office list
+      env:
+        ERICA_ENV: testing
+      run: |
+        cd erica_app
+        pipenv run python scripts/create_tax_office_lists.py create
+
     - name: Lint
       run: |
         cd erica_app

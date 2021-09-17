@@ -50,12 +50,13 @@
   --tracking-extra-wide: 0.07em;
 
   /* Line Height */
-  --lineheight-none: 1em;
-  --lineheight-xs: 1.1em;
-  --lineheight-s: 1.2em;
-  --lineheight-m: 1.3em;
-  --lineheight-default: 1.45em;
-  --lineheight-l: 1.6em;
+
+  --lineheight-none: 1;
+  --lineheight-xs: 1.1;
+  --lineheight-s: 1.2;
+  --lineheight-m: 1.3;
+  --lineheight-default: 1.45;
+  --lineheight-l: 1.6;
 
   /* Spacing */
 

@@ -468,20 +468,7 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
     def attach_fixtures(self, test_request_context):
         self.req = test_request_context
 
-    def test_if_multiple_form_and_is_multiple_user_then_return_multiple_form(self):
-        self.req.form = MagicMock()
-        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
-        form_multiple = MagicMock()
-        form_multiple_constructor = MagicMock(return_value=form_multiple)
-        form_step.form_multiple = form_multiple_constructor
-
-        with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
-            created_form = form_step.create_form(self.req, {})
-
-        form_multiple_constructor.assert_called_once()
-        self.assertEqual(form_multiple, created_form)
-
-    def test_if_multiple_form_is_none_and_is_multiple_user_then_return_single_form(self):
+    def test_if_is_none_and_is_multiple_user_then_return_single_form(self):
         self.req.form = MagicMock()
         form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
         form_single = MagicMock()
@@ -495,7 +482,7 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
         form_single_constructor.assert_called_once()
         self.assertEqual(form_single, created_form)
 
-    def test_if_multiple_form_and_not_multiple_user_then_return_single_form(self):
+    def test_if_not_multiple_user_then_return_single_form(self):
         self.req.form = MagicMock()
         form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
         form_single = MagicMock()

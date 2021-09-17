@@ -19,13 +19,13 @@ from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer
+from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnahe, StepHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Section
-from app.model.form_data import MandatoryFormData, FamilienstandModel, MandatoryConfirmations, \
+from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
     IdNrMismatchInputValidationError
 
@@ -436,14 +436,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                 raise MandatoryFieldMissingValidationError(missing_fields)
             else:
                 raise
-
-
-def show_person_b(personal_data):
-    try:
-        familienstand_model = FamilienstandModel.parse_obj(personal_data)
-        return familienstand_model.show_person_b()
-    except ValidationError:
-        return False
 
 
 def is_test_user(user):
