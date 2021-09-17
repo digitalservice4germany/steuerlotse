@@ -125,7 +125,8 @@ class FormSteuerlotseStep(SteuerlotseStep):
             return redirect(self.render_info.next_url)
         return self.render()
 
-    def create_form(self, request, prefilled_data):
+    @classmethod
+    def create_form(cls, request, prefilled_data):
         # If `form_data` is present it will always override `data` during
         # value binding. For `BooleanFields` an empty/missing value in the `form_data`
         # will lead to an unchecked box.
@@ -133,7 +134,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         if len(form_data) == 0:
             form_data = None
 
-        return self.form(form_data, **prefilled_data)
+        return cls.InputForm(form_data, **prefilled_data)
 
     def render(self, **kwargs):
         """
