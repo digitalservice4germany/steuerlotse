@@ -39,7 +39,7 @@
 {%- endmacro %}
 
 {% macro render_detail(field) %}
-    {%- set detail = field.render_kw['detail'] -%}
+    {%- set detail = field.render_kw['data-detail'] -%}
     {%- if detail %}
         {{ details(detail.title, [detail.text], details_id=field.id) }}
     {% endif %}
@@ -104,8 +104,8 @@
 {% macro field_label(field, class="", position_details_after=False, optional=False) %}
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
-    {%- set detail = field.render_kw['detail'] -%}
-    {%- set example_input = field.render_kw['example_input'] -%}
+    {%- set detail = field.render_kw['data-detail'] -%}
+    {%- set example_input = field.render_kw['data-example_input'] -%}
 
     {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
@@ -159,17 +159,17 @@
                 {% set card_id = 'card-' + id -%}
                 <div class="card mt-2">
                     <div class="card-header d-sm-flex justify-content-between row collapsed w-100"
-                         id="heading-{{ card_id }}" data-toggle="collapse"
+                         id="heading-{{ card_id }}" role="button" data-toggle="collapse"
                          data-target="#{{ card_id }}" aria-expanded="false"
-                         aria-controls="collapseOne">
+                         aria-controls="{{ card_id }}">
                          <button class="col text-left" type="button">
                             <span class="mb-0">{{ card['heading'] }}</span>
                          </button>
                          <button class="col-1 control-show-more" type="button" tabindex="-1" aria-hidden="true">
-                             <img src="{{ static_url_for('static', filename='icons/plus.svg') }}"/>
+                             <img src="{{ static_url_for('static', filename='icons/plus.svg') }}" alt="{{ _('plus.alt.text') }}"/>
                          </button>
                          <button class="col-1 control-show-less" type="button" tabindex="-1" aria-hidden="true">
-                            <img src="{{ static_url_for('static', filename='icons/minus.svg') }}"/>
+                            <img src="{{ static_url_for('static', filename='icons/minus.svg') }}" alt="{{ _('minus.alt.text') }}"/>
                          </button>
                     </div>
                     <div id="{{ card_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
@@ -198,8 +198,8 @@
         <div class="card">
             <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0">
                 <div class="collapsed w-100" data-toggle="collapse"
-                            data-target="#details-body-{{ details_id }}"
-                            aria-expanded="false" aria-controls="collapseOne">
+                     id="heading-{{ details_id }}" data-target="#details-body-{{ details_id }}"
+                     role="button" aria-expanded="false" aria-controls="details-body-{{ details_id }}">
                     <div class="details-header row">
                             <button class="btn details-icon control-show-more" type="button" tabindex="-1" aria-hidden="true"></button>
                             <button class="btn details-icon control-show-less" type="button" tabindex="-1" aria-hidden="true"></button>
@@ -209,7 +209,7 @@
                     </div>
                 </div>
             </div>
-            <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ card_id }}"
+            <div id="details-body-{{ details_id }}" class="collapse" aria-labelledby="heading-{{ details_id }}"
                 data-parent="#details-{{ details_id }}">
                 <div class="card-body container pt-0">
                     <div class="row m-0">
@@ -268,7 +268,7 @@
             <div class="teaser-card-body">
                 <h{{ heading_level }} class="pb-3 h3">{{ title }}</h{{ heading_level }}>
                 <p>{{ description }}</p>
-                <img src="{{ img_url }}" width="50px" alt="icon info" />
+                <img src="{{ img_url }}" width="50" alt="icon info" />
             </div>
         </a>
     </div>

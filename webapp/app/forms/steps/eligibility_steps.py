@@ -207,7 +207,7 @@ class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormS
         separated_since_last_year_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.separated_since_last_year.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.separated_since_last_year.detail.title'),
                                   'text': _l('form.eligibility.separated_since_last_year.detail.text')}},
             choices=[('yes', _l('form.eligibility.separated_since_last_year.yes')),
                      ('no', _l('form.eligibility.separated_since_last_year.no')),
@@ -245,7 +245,7 @@ class SeparatedJointTaxesEligibilityInputFormSteuerlotseStep(DecisionEligibility
         separated_joint_taxes_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.separated_joint_taxes.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.separated_joint_taxes.detail.title'),
                                   'text': _l('form.eligibility.separated_joint_taxes.detail.text')}},
             choices=[('yes', _l('form.eligibility.separated_joint_taxes.yes')),
                      ('no', _l('form.eligibility.separated_joint_taxes.no')),
@@ -271,7 +271,7 @@ class MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligi
         joint_taxes_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.joint_taxes.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.joint_taxes.detail.title'),
                                   'text': _l('form.eligibility.joint_taxes.detail.text')}},
             choices=[('yes', _l('form.eligibility.joint_taxes.yes')),
                      ('no', _l('form.eligibility.joint_taxes.no')),
@@ -297,7 +297,7 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
         alimony_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.alimony.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.alimony.detail.title'),
                                   'text': _l('form.eligibility.alimony.detail.text')}},
             choices=[('yes', _l('form.eligibility.alimony.yes')),
                      ('no', _l('form.eligibility.alimony.no')),
@@ -327,7 +327,7 @@ class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
         user_a_has_elster_account_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.user_a_has_elster_account.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.user_a_has_elster_account.detail.title'),
                                   'text': _l('form.eligibility.user_a_has_elster_account.detail.text')}},
             choices=[('yes', _l('form.eligibility.user_a_has_elster_account.yes')),
                      ('no', _l('form.eligibility.user_a_has_elster_account.no')),
@@ -377,7 +377,7 @@ class DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
         joint_taxes_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.joint_taxes.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.joint_taxes.detail.title'),
                                   'text': _l('form.eligibility.joint_taxes.detail.text')}},
             choices=[('yes', _l('form.eligibility.joint_taxes.yes')),
                      ('no', _l('form.eligibility.joint_taxes.no')),
@@ -403,7 +403,7 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
         alimony_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.alimony.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.alimony.detail.title'),
                                   'text': _l('form.eligibility.alimony.detail.text')}},
             choices=[('yes', _l('form.eligibility.alimony.single.yes')),
                      ('no', _l('form.eligibility.alimony.single.no')),
@@ -429,7 +429,7 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
         user_a_has_elster_account_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.user_a_has_elster_account.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.user_a_has_elster_account.detail.title'),
                                   'text': _l('form.eligibility.user_a_has_elster_account.detail.text')}},
             choices=[('yes', _l('form.eligibility.user_a_has_elster_account.yes')),
                      ('no', _l('form.eligibility.user_a_has_elster_account.no')),
@@ -484,7 +484,7 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
         investment_income_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.investment_income.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.investment_income.detail.title'),
                                   'text': _l('form.eligibility.investment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.investment_income.yes')),
                      ('no', _l('form.eligibility.investment_income.no')),
@@ -514,7 +514,7 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
         minimal_investment_income_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.minimal_investment_income.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.minimal_investment_income.detail.title'),
                                   'text': _l('form.eligibility.minimal_investment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.minimal_investment_income.yes')),
                      ('no', _l('form.eligibility.minimal_investment_income.no')),
@@ -552,7 +552,7 @@ class TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionE
         taxed_investment_income_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.taxed_investment.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.taxed_investment.detail.title'),
                                   'text': _l('form.eligibility.taxed_investment.detail.text')}},
             choices=[('yes', _l('form.eligibility.taxed_investment.yes')),
                      ('no', _l('form.eligibility.taxed_investment.no')),
@@ -578,7 +578,7 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
         cheaper_check_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.cheaper_check.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.cheaper_check.detail.title'),
                                   'text': _l('form.eligibility.cheaper_check.detail.text')}},
             choices=[('yes', _l('form.eligibility.cheaper_check_eligibility.yes')),
                      ('no', _l('form.eligibility.cheaper_check_eligibility.no')),
@@ -610,7 +610,7 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
         employment_income_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.employment_income.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.employment_income.detail.title'),
                                   'text': _l('form.eligibility.employment_income.detail.text')}},
             choices=[('yes', _l('form.eligibility.employment_income.yes')),
                      ('no', _l('form.eligibility.employment_income.no')),
@@ -648,7 +648,7 @@ class MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisi
         marginal_employment_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.marginal_employment.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.marginal_employment.detail.title'),
                                   'text': _l('form.eligibility.marginal_employment.detail.text')}},
             choices=[('yes', _l('form.eligibility.marginal_employment.yes')),
                      ('no', _l('form.eligibility.marginal_employment.no')),
@@ -674,7 +674,7 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
         other_income_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.income-other.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.income-other.detail.title'),
                                   'text': _l('form.eligibility.income-other.detail.text')}},
             choices=[('yes', _l('form.eligibility.income_other.yes')),
                      ('no', _l('form.eligibility.income_other.no')),
@@ -712,7 +712,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
         foreign_country_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
+                       'data-detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
                                   'text': _l('form.eligibility.foreign-country.detail.text')}},
             choices=[('yes', _l('form.eligibility.foreign_country.yes')),
                      ('no', _l('form.eligibility.foreign_country.no')),

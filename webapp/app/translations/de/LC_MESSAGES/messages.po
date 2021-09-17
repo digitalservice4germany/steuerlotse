@@ -125,7 +125,6 @@ msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
 #: app/elster_client/elster_errors.py:99
-#, fuzzy
 msgid "form.lotse.input_invalid.InvalidBufaNumber"
 msgstr "Bitte überprüfen Sie Ihre angegebene Steuernummer."
 
@@ -2700,7 +2699,15 @@ msgstr "optional"
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:246
+#: app/templates/components.html:166
+msgid "plus.alt.text"
+msgstr "Plus-Zeichen"
+
+#: app/templates/components.html:169
+msgid "minus.alt.text"
+msgstr "Minus-Zeichen"
+
+#: app/templates/components.html:245
 msgid "button.help"
 msgstr "Weitere Informationen"
 

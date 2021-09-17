@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
-import "./../src/variables.css";
-import "./../src/index.css";
+import "./../src/storybook-assets/variables.css";
+import "./../src/storybook-assets/base.css";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -14,7 +14,7 @@ class UnlockCodeRequestInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(label=_l('unlock-code-request.idnr'), validators=[InputRequired(), ValidIdNr()],
-                         render_kw={'detail': {'title': _l('unlock-code-request.idnr.help-title'),
+                         render_kw={'data-detail': {'title': _l('unlock-code-request.idnr.help-title'),
                                                'text': _l('unlock-code-request.idnr.help-text')}})
         dob = SteuerlotseDateField(label=_l('unlock-code-request.dob'), validators=[InputRequired()])
         registration_confirm_data_privacy = ConfirmationField(

@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 // TODO: Some components expect bootstrap css to be present. This is currently
 // loaded in the jinja template that includes these React components.
-import "./variables.css";
-import "./index.css";
 import LoginPage from "./pages/LoginPage";
 
 const componentNameMap = {

@@ -40,7 +40,7 @@ class StepFamilienstand(FormStep):
             validators=())
         familienstand_married_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_married_lived_separated'),
-            render_kw={'example_input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
+            render_kw={'data-example-input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_married_lived_separated.data_label')})
         familienstand_married_lived_separated_since = SteuerlotseDateField(
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
@@ -48,7 +48,7 @@ class StepFamilienstand(FormStep):
             validators=())
         familienstand_widowed_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
-            render_kw={'example_input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
+            render_kw={'data-example-input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_widowed_lived_separated.data_label')})
         familienstand_widowed_lived_separated_since = SteuerlotseDateField(
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
@@ -236,7 +236,7 @@ class StepPersonA(FormStep):
                 validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'example_input': _l('form.lotse.field_person_beh_grad.example_input'),
+                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
                        'max_characters': 3})
         person_a_blind = BooleanField(
             label=_l('form.lotse.field_person_blind'),
@@ -374,7 +374,7 @@ class StepPersonB(FormStep):
             validators=[validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'example_input': _l('form.lotse.field_person_beh_grad.example_input'),
+                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
                        'max_characters': 3})
         person_b_blind = BooleanField(
             label=_l('form.lotse.field_person_blind'),
@@ -420,7 +420,7 @@ class StepIban(FormStep):
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
-                       'example_input': _l('form.loste.field_iban.example_input'),
+                       'data-example-input': _l('form.loste.field_iban.example_input'),
                        'max_characters': 25},
             validators=[InputRequired(), ValidIban()],
             filters=[lambda value: value.replace(' ', '') if value else value])
@@ -432,7 +432,7 @@ class StepIban(FormStep):
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
-                       'example_input': _l('form.loste.field_iban.example_input'),
+                       'data-example-input': _l('form.loste.field_iban.example_input'),
                        'max_characters': 25},
             validators=[InputRequired(), ValidIban()],
             filters=[lambda value: value.replace(' ', '') if value else value])
