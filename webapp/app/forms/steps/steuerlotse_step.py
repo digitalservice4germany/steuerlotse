@@ -5,6 +5,7 @@ from flask import request, session, url_for, render_template
 from flask_babel import ngettext
 from werkzeug.utils import redirect
 
+from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.session_data import serialize_session_data, override_session_data
 
@@ -24,7 +25,7 @@ class SteuerlotseStep(object):
                  session_data_identifier='form_data'):
         self.endpoint = endpoint
         self.header_title = header_title
-        self.stored_data = stored_data
+        self.stored_data = stored_data if stored_data is not None else {}
         self.overview_step = overview_step
         self._prev_step = prev_step
         self._next_step = next_step
@@ -94,11 +95,14 @@ class SteuerlotseStep(object):
 class FormSteuerlotseStep(SteuerlotseStep):
     template = 'basis/form_full_width.html'
 
-    def __init__(self, form, endpoint, header_title, stored_data=None, overview_step=None, default_data=None,
-                 prev_step=None, next_step=None, session_data_identifier='form_data'):
-        super(FormSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
-                                                  next_step, session_data_identifier=session_data_identifier)
-        self.form = form
+    class InputForm(SteuerlotseBaseForm):
+        pass
+
+    def __init__(self, endpoint, header_title, stored_data=None, overview_step=None, default_data=None, prev_step=None,
+                 next_step=None, session_data_identifier='form_data'):
+        super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
+                         session_data_identifier=session_data_identifier)
+        self.form = self.InputForm
 
     def _pre_handle(self):
         super()._pre_handle()

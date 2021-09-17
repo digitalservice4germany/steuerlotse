@@ -19,17 +19,11 @@ from app.model.form_data import FamilienstandModel
 class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
     header_title = None
-    InputForm = None
     prev_step_name = None
     next_step_name = None
 
     def __init__(self, endpoint, **kwargs):
-        super().__init__(
-            form=self.InputForm,
-            endpoint=endpoint,
-            header_title=self.header_title,
-            **kwargs,
-        )
+        super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -61,13 +55,12 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         super().__init__(endpoint=endpoint, **kwargs)
 
     class InputForm(SteuerlotseBaseForm):
-
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
                        'detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
                                   'text': _l('form.lotse.steuernummer_exists.detail.text')}},
-            validators=[InputRequired()],)
+            validators=[InputRequired()], )
         bundesland = SteuerlotseSelectField(
             label=_l('form.lotse.field_bundesland'),
             choices=[
@@ -146,16 +139,16 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         choices = []
         for county in tax_offices:
             choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in county.get('tax_offices')]
-        self.InputForm.bufa_nr.kwargs['choices'] = choices
+        self.form.bufa_nr.kwargs['choices'] = choices
 
     def _set_multiple_texts(self):
         num_of_users = 2 if show_person_b(self.stored_data) else 1
-        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
-                                                                     'form.lotse.steuernummer_exists',
-                                                                     num=num_of_users)
-        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
-                                                                     'form.lotse.steuernummer.request_new_tax_number',
-                                                                     num=num_of_users)
+        self.form.steuernummer_exists.label = ngettext('form.lotse.steuernummer_exists',
+                                                       'form.lotse.steuernummer_exists',
+                                                       num=num_of_users)
+        self.form.request_new_tax_number.label = ngettext('form.lotse.steuernummer.request_new_tax_number',
+                                                          'form.lotse.steuernummer.request_new_tax_number',
+                                                          num=num_of_users)
 
 
 def show_person_b(personal_data):

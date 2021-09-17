@@ -452,6 +452,7 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
             mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data={}, next_step=MockRenderStep)
             mock_yesno_step.handle()
             data_after_first_handle = mock_yesno_step.stored_data
+        self.assertEqual({'yes_no_field': 'yes'}, data_after_first_handle)
 
         with self.app.test_request_context(method='POST') as req:
             req.request.form = ImmutableMultiDict({})
@@ -470,7 +471,7 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
 
     def test_if_is_none_and_is_multiple_user_then_return_single_form(self):
         self.req.form = MagicMock()
-        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
+        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={})
         form_single = MagicMock()
         form_single_constructor = MagicMock(return_value=form_single)
         form_step.form = form_single_constructor
@@ -484,7 +485,7 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
 
     def test_if_not_multiple_user_then_return_single_form(self):
         self.req.form = MagicMock()
-        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={}, form=MagicMock())
+        form_step = FormSteuerlotseStep(endpoint='lotse', header_title=None, stored_data={})
         form_single = MagicMock()
         form_single_constructor = MagicMock(return_value=form_single)
         form_step.form = form_single_constructor

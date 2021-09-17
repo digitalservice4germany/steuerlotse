@@ -117,8 +117,8 @@ class TestStepSteuernummer:
                 StepSteuernummer.name)
             step._pre_handle()
 
-        assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']
-        assert expected_request_new_tax_number_label == step.form.request_new_tax_number.kwargs['label']
+        assert expected_steuernummer_exists_label == step.form.steuernummer_exists.label
+        assert expected_request_new_tax_number_label == step.form.request_new_tax_number.label
 
     def test_if_single_user_then_show_single_text(self, app):
         session_data = {
@@ -137,5 +137,5 @@ class TestStepSteuernummer:
                 StepSteuernummer.name)
             step._pre_handle()
 
-        assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']
-        assert expected_request_new_tax_number_label == step.form.request_new_tax_number.kwargs['label']
+        assert expected_steuernummer_exists_label == step.form.steuernummer_exists.label
+        assert expected_request_new_tax_number_label == step.form.request_new_tax_number.label
