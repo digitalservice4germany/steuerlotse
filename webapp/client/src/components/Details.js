@@ -59,7 +59,7 @@ function Details({ children, title, detailsId }) {
                     // There is no natural key and the list is completely static, so using the index is fine.
                     // eslint-disable-next-line
                     <p key={index}>{paragraph}</p>
-                  ) // TODO: are we passing HTML here from i18n strings? may need unsafe interpolation
+                  )
                 )}
                 {children.listItems && (
                   <ul>
@@ -70,7 +70,7 @@ function Details({ children, title, detailsId }) {
                         <li key={index} className="mb-2">
                           {listItem}
                         </li>
-                      ) // TODO: are we passing HTML here from i18n strings? may need unsafe interpolation
+                      )
                     )}
                   </ul>
                 )}
