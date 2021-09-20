@@ -1,5 +1,6 @@
 from typing import Optional
 
+from flask import request
 from werkzeug.exceptions import abort
 
 from app.config import Config
@@ -46,6 +47,9 @@ class StepChooser:
         if self._get_possible_redirect(step_name):
             return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
         stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
+
+        if request.method == 'POST':
+            stored_data = self.steps[step_name].update_data(stored_data)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](

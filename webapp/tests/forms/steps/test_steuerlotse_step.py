@@ -447,23 +447,6 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
 
                 update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
 
-    def test_yes_no_field_content_overriden_if_empty(self):
-        with self.app.test_request_context(method='POST') as req:
-            req.request.form = ImmutableMultiDict({'yes_no_field': 'yes'})
-            mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data={}, next_step=MockRenderStep)
-            mock_yesno_step.handle()
-            data_after_first_handle = mock_yesno_step.stored_data
-        self.assertEqual({'yes_no_field': 'yes'}, data_after_first_handle)
-
-        with self.app.test_request_context(method='POST') as req:
-            req.request.form = ImmutableMultiDict({})
-            mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data=data_after_first_handle,
-                                            next_step=MockRenderStep)
-            mock_yesno_step.handle()
-            data_after_second_handle = mock_yesno_step.stored_data
-
-        self.assertEqual({'yes_no_field': None}, data_after_second_handle)
-
 
 class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
     @pytest.fixture(autouse=True)

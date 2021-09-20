@@ -106,12 +106,16 @@ class FormSteuerlotseStep(SteuerlotseStep):
         # TODO rename this to form_class once MultiStepFlow is obsolete
         self.form = self.InputForm
 
+    @classmethod
+    def update_data(cls, stored_data):
+        form = cls.create_form(request, prefilled_data=stored_data)
+        if request.method == 'POST' and form.validate():
+            stored_data.update(form.data)
+        return stored_data
+
     def _pre_handle(self):
         super()._pre_handle()
-        form = self.create_form(request, prefilled_data=self.stored_data)
-        if request.method == 'POST' and form.validate():
-            self.stored_data.update(form.data)
-        self.render_info.form = form
+        self.render_info.form = self.create_form(request, prefilled_data=self.stored_data)
 
     def _post_handle(self):
         override_session_data(self.stored_data, self.session_data_identifier)
