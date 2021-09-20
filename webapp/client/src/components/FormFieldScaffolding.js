@@ -1,5 +1,8 @@
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import jQuery from "jquery";
+import "jquery-mask-plugin";
 import FieldError from "./FieldError";
 
 // TODO: implement concrete fields with this:
@@ -19,6 +22,17 @@ export default function FormFieldScaffolding({
   hideLabel,
   hideErrors,
 }) {
+  const element = useRef();
+
+  // TODO: replace jquery-mask with non-jquery equivalent
+  useEffect(() => {
+    jQuery(
+      element.current.querySelectorAll("input[data-alphanumeric-field=true]")
+    ).mask("W", {
+      translation: { W: { pattern: /[a-zA-Z0-9]/, recursive: true } },
+    });
+  }, []);
+
   const divClassNames = classNames(`col-md-${cols}`, "px-0", fieldDivClasses, {
     "error-found-line": errors.length,
   });
@@ -30,7 +44,7 @@ export default function FormFieldScaffolding({
   });
 
   return (
-    <div className={divClassNames}>
+    <div ref={element} className={divClassNames}>
       {!hideLabel && labelComponent}
       <div className={classNames({ "d-block": displayBlock })}>
         {render(fieldClassNames)}

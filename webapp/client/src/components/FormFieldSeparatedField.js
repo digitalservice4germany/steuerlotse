@@ -1,7 +1,9 @@
-import React from "react";
+import React, { createRef, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import styled from "styled-components";
+import jQuery from "jquery";
+import "jquery-mask-plugin";
 import Details from "./Details";
 import FieldError from "./FieldError";
 import FormRowCentered from "./FormRowCentered";
@@ -27,7 +29,45 @@ function FormFieldSeparatedField({
   extraFieldProps,
   transformUppercase,
 }) {
-  // TODO: add behaviour from multiple_input_field
+  // Memoize so we don't create refs over and over.
+  const subFieldRefs = useMemo(() => inputFieldLengths.map(createRef), [inputFieldLengths]);
+
+  // TODO: replace jquery-mask with non-jquery equivalent
+  useEffect(() => {
+    subFieldRefs.map((ref) => jQuery.applyDataMask(ref.current));
+  }, [subFieldRefs]);
+
+  const handlePaste = (e) => {
+    const data = e.clipboardData.items[0];
+
+    if (data.kind !== "string" || data.type !== "text/plain") {
+      return;
+    }
+
+    data.getAsString((str) => {
+      // All inputs have the same mask.
+      const firstSubField = subFieldRefs[0].current;
+
+      // Mask the whole string, so we can meaningfully index it.
+      let maskedStr = str;
+      try {
+        // TODO: replace jquery-mask with non-jquery equivalent
+        maskedStr = jQuery(firstSubField).masked(str);
+      } catch (TypeError) {
+        maskedStr = str;
+      }
+
+      // Distribute pasted content onto fields.
+      let startIdx = 0;
+      subFieldRefs.forEach((subFieldRef) => {
+        const subField = subFieldRef.current;
+        const length = parseInt(subField.dataset.fieldLength, 10);
+        const pasteFragment = maskedStr.substr(startIdx, length);
+        subField.value = pasteFragment || "";
+        startIdx += length;
+      });
+    });
+  };
 
   return (
     <fieldset id={fieldId}>
@@ -40,9 +80,11 @@ function FormFieldSeparatedField({
           const subFieldId = `${fieldId}_${index + 1}`;
           const inputElement = (
             <input
+              ref={subFieldRefs[index]}
               type="text"
               id={subFieldId}
               name={fieldName}
+              onPaste={handlePaste}
               defaultValue={values.length > index ? values[index] : ""}
               maxLength={length}
               data-field-length={length}
