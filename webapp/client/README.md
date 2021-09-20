@@ -1,46 +1,74 @@
-# Getting Started with Create React App
+# Steuerlotse UI components
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This directory contains a React app with components for use in the Steuerlotse webapp.
 
-In the project directory, you can run:
+We have two types of components:
 
-### `npm start`
+- `src/pages/`: page components that represent e.g. the login page or an individual form step in the application and are included from jinja templates.
+- `src/components/`: a library of shared UI components that make up the individual pages. Think of this as the Steuerlotse component library.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Other directories:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- `.storybook/`: configures the environment in which components get rendered in Storybook.
+- `public/`: static assets that get served as-is.
+- `src/assets/`: any static assets that are used by the components and get processed by webpack.
+- `src/lib`: any non-component JS.
+- `src/storybook-assets`: special assets folder just used by Storybook - it cannot include the files in `public/`.
 
-### `npm test`
+## Using components from Flask (jinja) templates
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+When this React app is loaded on a page, it scans for elements that have these attributes set:
 
-### `npm run build`
+```html
+<div
+  data-is-component="yes"
+  data-component-name="MyComponent"
+  data-props-json="{{ {} | tojson | forceescape }}"
+></div>
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+For each such element, it mounts the corresponding React component and populates it with the provided props.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Developing
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `yarn storybook`
 
-### `npm run eject`
+Runs storybook. Builds and reloads components as you edit them. Shows lint errors in the console.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This is the recommended way to develop pages and components: Storybook allows you to look at your components in isolation and show their various states by writing ["Stories"](https://storybook.js.org/docs/react/get-started/whats-a-story) for the component (e.g. different button styles or form fields with vs. without errors).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### `yarn test`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Launches the test runner in the interactive watch mode. See [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `yarn start`
 
-## Learn More
+Runs the app in the development mode on [http://localhost:3000](http://localhost:3000). Reloads components as you edit them. Shows lint errors in the console.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This serves up JS/CSS/etc from the React app and proxies everything else to `localhost:5000`, where it expects the Flask app to be running. See `src/setupProxy.js` for details on what is being proxied.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `yarn lint`
+
+Runs eslint and shows information about coding errors.
+
+### `yarn build`
+
+Builds the app for production to the `build` folder. You generally don't need to do this - it happens automatically in the deploy pipeline.
+
+## Tools and technologies used
+
+- [React](https://reactjs.org/)
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) (CRA).
+- CRA configuration is extended using [react-app-rewired](https://github.com/timarney/react-app-rewired).
+- [yarn](https://yarnpkg.com/) for package management.
+- [Styled-Components](https://styled-components.com/) for keeping styles close to the components they style.
+- [i18next](https://www.i18next.com/) and [react-i18next](https://react.i18next.com/) for managing text strings.
+- [eslint](https://eslint.org/) for finding errors early using static analysis.
+- [prettier](https://prettier.io/) to enforce a coding style with a pre-commit hook, so that a) our code has a consistent look and b) we don't ever have to argue about what that should be.
+- Testing
+  - [Testing Library](https://testing-library.com/docs) for component tests, see:
+    - [Testing Library Queries](https://testing-library.com/docs/queries/about) and [Events](https://testing-library.com/docs/dom-testing-library/api-events).
+    - [Jest](https://jestjs.io/) [global functions](https://jestjs.io/docs/api) and [matchers](https://jestjs.io/docs/expect) as well as [additional DOM matchers](https://github.com/testing-library/jest-dom).
+- [Storybook](https://storybook.js.org/) for developing and demonstrating UI components in isolation.
