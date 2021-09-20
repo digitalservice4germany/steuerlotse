@@ -105,7 +105,7 @@
     {%- set label = field.label -%}
     {%- set help = field.render_kw['help'] -%}
     {%- set detail = field.render_kw['data-detail'] -%}
-    {%- set example_input = field.render_kw['data-example_input'] -%}
+    {%- set example_input = field.render_kw['data-example-input'] -%}
 
     {% if field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
         {% if label.text %} {# Only show legend if there is a legend text to show #}
