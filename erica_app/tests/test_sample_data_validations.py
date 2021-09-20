@@ -2,20 +2,22 @@ import datetime
 from decimal import Decimal
 import unittest
 
+import pytest
+
 from erica.routes import validate_est
 from tests.utils import create_est, create_est_single, missing_cert, missing_pyeric_lib
 
 
 class TestSampleDataValidation(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_01_not_married(self):
         response = validate_est(est=create_est_single(True))
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_02_married_rel_ev(self):
         married_data = create_est(True)
 
@@ -28,8 +30,8 @@ class TestSampleDataValidation(unittest.TestCase):
         response = validate_est(married_data)
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_03_divorced_rel_rk(self):
         single_data = create_est_single(True)
         single_data.est_data.__dict__.update({
@@ -41,8 +43,8 @@ class TestSampleDataValidation(unittest.TestCase):
         response = validate_est(single_data)
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_04_widowed(self):
         single_data = create_est_single(True)
         single_data.est_data.__dict__.update({
@@ -53,8 +55,8 @@ class TestSampleDataValidation(unittest.TestCase):
         response = validate_est(single_data)
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_06_with_person_b_same_address(self):
         married_data = create_est(True)
         married_data.est_data.__dict__.update({
@@ -64,8 +66,8 @@ class TestSampleDataValidation(unittest.TestCase):
         response = validate_est(married_data)
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_07_steuerminderungen(self):
         single_data = create_est_single(True)
         single_data.est_data.__dict__.update({

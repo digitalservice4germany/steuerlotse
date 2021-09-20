@@ -125,7 +125,6 @@ msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
 #: app/elster_client/elster_errors.py:99
-#, fuzzy
 msgid "form.lotse.input_invalid.InvalidBufaNumber"
 msgstr "Bitte überprüfen Sie Ihre angegebene Steuernummer."
 
@@ -2747,7 +2746,15 @@ msgstr "optional"
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:246
+#: app/templates/components.html:166
+msgid "plus.alt.text"
+msgstr "Plus-Zeichen"
+
+#: app/templates/components.html:169
+msgid "minus.alt.text"
+msgstr "Minus-Zeichen"
+
+#: app/templates/components.html:245
 msgid "button.help"
 msgstr "Weitere Informationen"
 
@@ -5158,7 +5165,7 @@ msgstr ""
 #: app/templates/unlock_code/activation_failure.html:19
 msgid "form.unlock-code-activation.failure.reasons-3"
 msgstr ""
-"Ihre Anmeldung ist bereits mehr als 5 mal fehlgeschlagen. Dann ist Ihr "
+"Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen. Dann ist Ihr "
 "Freischaltcode nicht mehr gültig. Bitte stornieren Sie Ihren "
 "Freischaltcode und registrieren sich erneut. Sie erhalten dann einen "
 "Brief mit einem neuen Freischaltcode."

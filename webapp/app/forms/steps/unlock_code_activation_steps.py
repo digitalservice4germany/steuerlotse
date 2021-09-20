@@ -14,12 +14,12 @@ class UnlockCodeActivationInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(_l('unlock-code-activation.idnr'), [InputRequired(), ValidIdNr()],
-                         render_kw={'detail': {'title': _l('unlock-code-request.idnr.help-title'),
+                         render_kw={'data-detail': {'title': _l('unlock-code-request.idnr.help-title'),
                                                'text': _l('unlock-code-request.idnr.help-text')}}
 
                          )
         unlock_code = UnlockCodeField(_l('unlock-code-activation.unlock-code'), [InputRequired(), ValidUnlockCode()],
-                                      render_kw={'detail': {'title': _l('unlock-code-request.unlock-code.help-title'),
+                                      render_kw={'data-detail': {'title': _l('unlock-code-request.unlock-code.help-title'),
                                                             'text': _l('unlock-code-request.unlock-code.help-text')}}
                                       )
 

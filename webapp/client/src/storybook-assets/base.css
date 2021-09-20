@@ -1,26 +1,24 @@
-/* Global styles can go here. */
-
-/** BEGIN copied section from base.css **/
+/* Global styles - special version for storybook which resolves urls correctly. */
+/* TODO: this should become fairly empty once all components use styled-components */
 
 /* GENERAL */
-
 @font-face {
   font-family: "BundesSansWeb";
-  src: url("./assets/fonts/BundesSansWeb-Regular.ttf");
+  src: url("./BundesSansWeb-Regular.ttf");
 }
 @font-face {
   font-family: "BundesSansWeb";
-  src: url("./assets/fonts/BundesSansWeb-Bold.ttf");
+  src: url("./BundesSansWeb-Bold.ttf");
   font-weight: bold;
 }
 @font-face {
   font-family: "BundesSansWeb";
-  src: url("./assets/fonts/BundesSansWeb-Italic.ttf");
+  src: url("./BundesSansWeb-Italic.ttf");
   font-style: italic;
 }
 @font-face {
   font-family: "BundesSansWeb";
-  src: url("./assets/fonts/BundesSansWeb-BoldItalic.ttf");
+  src: url("./BundesSansWeb-BoldItalic.ttf");
   font-weight: bold;
   font-style: italic;
 }
@@ -69,7 +67,6 @@ a:visited {
 }
 
 /* INPUTS */
-
 .input-width-2 {
   width: var(--input-width-2);
 }
@@ -125,8 +122,7 @@ input.form-control.field-error-found {
 .steuerlotse-select {
   border: 2px solid var(--border-color);
   border-radius: 0;
-  background: #fff url("./assets/icons/select_icon.svg") no-repeat right 0.75rem
-    center;
+  background: #fff url("./select_icon.svg") no-repeat right 0.75rem center;
   min-height: 55px;
 }
 
@@ -214,7 +210,6 @@ ol li::before {
 }
 
 /* Main Content */
-
 .main {
   margin-left: var(--sidebar-width);
   margin-right: 0;
@@ -243,7 +238,7 @@ ol li::before {
 }
 
 .form-list {
-  list-style-image: url("./assets/images/list_marker.svg");
+  list-style-image: url("./list_marker.svg");
 }
 
 .form-list li::before {
@@ -258,9 +253,8 @@ ol li::before {
 .bold {
   font-weight: var(--font-bold);
 }
-/** END copied sections from base.css **/
 
-/** BEGIN copied unorganised CSS from base.css */
+/* From here on: somewhat unorganised styles that used to live in the original base.css. */
 .list-unstyled li a {
   color: var(--text-color);
 }
@@ -291,10 +285,6 @@ ol li::before {
   font-size: var(--text-medium);
   font-weight: var(--font-normal);
 }
-
-/* .nav-button-row {
-  margin-top: var(--spacing-09);
-} */
 
 .form-row-center {
   display: flex;
@@ -337,10 +327,6 @@ ol li::before {
     margin-top: var(--spacing-04);
   }
 }
-
-/* .section-intro p {
-  font-size: var(--text-medium);
-} */
 
 h1,
 h2,
@@ -472,16 +458,6 @@ img.icon {
   font-weight: bold;
 }
 
-/* .explanatory-button-text {
-  margin-bottom: 0;
-  margin-left: var(--spacing-02);
-}
-
-.explanatory-button-text a {
-  color: var(--text-color);
-  font-weight: var(--font-bold);
-} */
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -523,4 +499,3 @@ img.icon {
 .hidden {
   display: none;
 }
-/** END copied unorganised CSS from base.css **/

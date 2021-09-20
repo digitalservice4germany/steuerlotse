@@ -87,6 +87,17 @@ class BelegRequestPyericProcessController(PyericProcessController):
                                               abruf_code=_ABRUF_CODE, transfer_handle=pointer(c_int(0)))
 
 
+class CheckTaxNumberPyericController:
+    """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
+
+    @staticmethod
+    def get_eric_response(tax_number):
+        with get_eric_wrapper() as eric_wrapper:
+            response = eric_wrapper.check_tax_number(tax_number)
+
+        return response
+
+
 class DecryptBelegePyericController:
     """This does not inherit from PyericProcesscontroller as the needed Eric method does not take an XML as input."""
 
