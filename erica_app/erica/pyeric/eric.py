@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from typing import ByteString
 
 from erica.config import get_settings, Settings
-from erica.pyeric.eric_errors import check_result, check_handle, check_xml
+from erica.pyeric.eric_errors import check_result, check_handle, check_xml, EricWrongTaxNumberError
 
 logger = logging.getLogger('eric')
 
@@ -296,6 +296,18 @@ class EricWrapper(object):
                                 transfer_handle=transfer_handle, cert_params=pointer(cert_params))
         finally:
             self.close_cert_handle(cert_handle)
+
+    def check_tax_number(self, tax_number):
+        fun_check_tax_number = self.eric.EricMtPruefeSteuernummer
+        fun_check_tax_number.argtypes = [c_void_p, c_char_p]
+        fun_check_tax_number.restype = c_int
+
+        try:
+            res = fun_check_tax_number(self.eric_instance, tax_number.encode())
+            check_result(res)
+            return True
+        except EricWrongTaxNumberError:
+            return False
 
     def decrypt_data(self, data):
         fun_decrypt_data = self.eric.EricMtDekodiereDaten

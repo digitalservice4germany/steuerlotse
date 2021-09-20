@@ -10,7 +10,7 @@ from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.utils import create_session_form_data
 
 
-class SummaryStep(object):
+class SummaryStep:
     pass
 
 

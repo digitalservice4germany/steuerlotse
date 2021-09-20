@@ -3,6 +3,7 @@ import unittest
 from unittest.mock import patch, MagicMock, call
 from xml.etree.ElementTree import XML, ParseError, Element, SubElement, tostring
 
+import pytest
 from freezegun import freeze_time
 
 from erica.config import get_settings
@@ -222,8 +223,8 @@ class TestGenerateTransferHeader(unittest.TestCase):
             datenLieferant='Softwaretester ERiC',
         )
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_correct_input_then_transfer_header_is_added_and_reference_unchanged(self):
         input_xml_before_use = copy.deepcopy(self.correct_input_xml)
 
@@ -239,14 +240,14 @@ class TestGenerateTransferHeader(unittest.TestCase):
         from xml.etree.ElementTree import tostring
         self.assertEqual(tostring(input_xml_before_use), tostring(self.correct_input_xml))
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_input_then_raise_not_successful_error(self):
         with get_eric_wrapper() as eric_wrapper:
             self.assertRaises(EricProcessNotSuccessful, _generate_transfer_header, self.incorrect_input_xml,
                               self.th_fields, eric_wrapper)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_calls_run_pyeric(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
                    MagicMock(return_value=self.xml_with_th_binary)) as fun_create_th, \
@@ -259,7 +260,7 @@ class TestGenerateTransferHeader(unittest.TestCase):
                                              verfahren=self.th_fields.verfahren,
                                              datenLieferant=self.th_fields.datenLieferant)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_transfer_header_returns_xml_with_transfer_header(self):
         with patch('erica.pyeric.eric.EricWrapper.create_th',
                    MagicMock(return_value=self.xml_with_th_binary)), \
@@ -699,7 +700,7 @@ class TestElsterXml(unittest.TestCase):
 
         self.assertIn('<E0100201>Maier</E0100201>', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_add_nutzdaten(self):
         xml_top = Element('main')
         _add_est_xml_nutzdaten(xml_top, self.dummy_fields, self._dummy_vorsatz_single(), '2020')
@@ -708,7 +709,7 @@ class TestElsterXml(unittest.TestCase):
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
         self.assertIn('<E0100201>Maier</E0100201>', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_add_nutzdaten_header(self):
         xml_top = Element('main')
         _add_xml_nutzdaten_header(xml_top, 'nutzdatenTicket123', '9198')
@@ -810,7 +811,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
                                      empfaenger='9198', nutzdaten_ticket='nutzdatenTicket123',
                                      use_testmerker=use_testmerker)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_submission_without_tax_nr_then_set_vorsatz_correctly(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields, submission_without_tax_nr=True)
 
@@ -818,7 +819,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn("<OrdNrArt>O</OrdNrArt>", xml_string)
         self.assertNotIn("<OrdNrArt>S</OrdNrArt>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_not_submission_without_tax_nr_then_set_vorsatz_correctly(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields, submission_without_tax_nr=False)
 
@@ -826,7 +827,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn("<OrdNrArt>S</OrdNrArt>", xml_string)
         self.assertNotIn("<OrdNrArt>O</OrdNrArt>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields)
 
@@ -838,7 +839,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
         self.assertIn('<E0100201>Maier</E0100201>', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_only_person_a_filled_out_beh_then_generate_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields_beh)
 
@@ -856,7 +857,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
             '<Beh><Person>PersonA</Person><Geh_Steh_Blind_Hilfl><E0109706>1</E0109706></Geh_Steh_Blind_Hilfl></Beh>',
             "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_two_persons_filled_out_beh_then_generate_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields_beh_both)
 
@@ -874,7 +875,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
             '<Beh><Person>PersonA</Person><Geh_Steh_Blind_Hilfl><E0109706>1</E0109706></Geh_Steh_Blind_Hilfl></Beh>',
             "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_ausserg_bela_filled_out_then_generate_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields_ausserg_bela)
 
@@ -891,13 +892,13 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn('<Sonst><Sum><E0161804>110</E0161804><E0161805>111</E0161805></Sum></Sonst>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_person_b_account_holder_then_generate_full_xml(self):
         input_data = {**self.dummy_fields, **{'E0102402': 'X'}}
         xml_string = self._call_generate_full_est_xml(input_data)
         self.assertIn('<BV><E0102402>X</E0102402></BV>', "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_sonderausgaben_filled_out_then_generate_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields_sonderausgaben)
 
@@ -913,7 +914,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
             '</Weit_Sons_VorAW>',
             "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_haushaltsnah_filled_out_then_generate_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields_haushaltsnah)
 
@@ -927,19 +928,19 @@ class TestGenerateFullEstXML(unittest.TestCase):
             '<Alleinst><E0107606>6</E0107606><Pers_gem_HH><E0104706>7a</E0104706></Pers_gem_HH><Pers_gem_HH><E0104706>7b</E0104706></Pers_gem_HH></Alleinst>',
             "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = self._call_generate_full_est_xml(self.dummy_fields)
         self.assertIn("<Testmerker>700000004</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = self._call_generate_full_est_xml(self.dummy_fields)
             self.assertNotIn("<Testmerker>700000004</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = self._call_generate_full_est_xml(self.dummy_fields, use_testmerker=True)
@@ -955,7 +956,7 @@ class TestVastRequest(unittest.TestCase):
             'dob': '1985-01-01'
         }
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_generate_full_vast_antrag_xml(self):
         xml_string = generate_full_vast_request_xml(self.valid_user_data)
 
@@ -1001,19 +1002,19 @@ class TestVastRequest(unittest.TestCase):
         returned_date = _compute_valid_until_date()
         self.assertEqual('2021-01-01', returned_date)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = generate_full_vast_request_xml(self.valid_user_data)
         self.assertIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_request_xml(self.valid_user_data)
             self.assertNotIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_request_xml(self.valid_user_data, use_testmerker=True)
@@ -1045,32 +1046,32 @@ class TestVastActivation(unittest.TestCase):
         self.assertIn('<AntragsID>1234567890</AntragsID><Freischaltcode>1985-G456-T23L</Freischaltcode>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_activation_xml_generates_transfer_header(self):
         xml_string = generate_full_vast_activation_xml(self.valid_user_data)
 
         self.assertIn('<TransferHeader version="' + self.expected_header_version + '">', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_activation_xml_generates_correct_datenart(self):
         xml_string = generate_full_vast_activation_xml(self.valid_user_data)
 
         self.assertIn('<Verfahren>ElsterBRM</Verfahren><DatenArt>SpezRechtFreischaltung</DatenArt>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = generate_full_vast_activation_xml(self.valid_user_data)
         self.assertIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_activation_xml(self.valid_user_data)
             self.assertNotIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_activation_xml(self.valid_user_data, use_testmerker=True)
@@ -1101,32 +1102,32 @@ class TestVastRevocation(unittest.TestCase):
         self.assertIn('<AntragsID>' + self.antrag_id + '</AntragsID>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_revocation_xml_generates_transfer_header(self):
         xml_string = generate_full_vast_revocation_xml(self.valid_user_data)
 
         self.assertIn('<TransferHeader version="' + self.expected_header_version + '">', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_revocation_xml_generates_correct_datenart(self):
         xml_string = generate_full_vast_revocation_xml(self.valid_user_data)
 
         self.assertIn('<Verfahren>ElsterBRM</Verfahren><DatenArt>SpezRechtStorno</DatenArt>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = generate_full_vast_revocation_xml(self.valid_user_data)
         self.assertIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_revocation_xml(self.valid_user_data)
             self.assertNotIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_revocation_xml(self.valid_user_data, use_testmerker=True)
@@ -1164,32 +1165,32 @@ class TestVastBelegIdsRequest(unittest.TestCase):
 
         self.assertIn('veranlagungsjahr="3000"', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_ids_request_xml_generates_transfer_header(self):
         xml_string = generate_full_vast_beleg_ids_request_xml(self.valid_user_data)
 
         self.assertIn('<TransferHeader version="' + self.expected_header_version + '">', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_ids_request_xml_generates_correct_datenart(self):
         xml_string = generate_full_vast_beleg_ids_request_xml(self.valid_user_data)
 
         self.assertIn('<Verfahren>ElsterDatenabholung</Verfahren><DatenArt>ElsterVaStDaten</DatenArt>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = generate_full_vast_beleg_ids_request_xml(self.valid_user_data)
         self.assertIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_beleg_ids_request_xml(self.valid_user_data)
             self.assertNotIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_beleg_ids_request_xml(self.valid_user_data, use_testmerker=True)
@@ -1215,33 +1216,33 @@ class TestAbrufcodeRequestXmlGeneration(unittest.TestCase):
         self.assertNotEqual(None, xml_top.findall('Nutzdaten/AbrufcodeAntrag/EMail')[0].text)
         self.assertNotEqual('', xml_top.findall('Nutzdaten/AbrufcodeAntrag/EMail')[0].text)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_abrufcode_request_xml_generates_transfer_header(self):
         xml_string = generate_full_abrufcode_request_xml()
 
         self.assertIn('<TransferHeader version="' + self.expected_version + '">', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_abrufcode_request_xml_generates_correct_datenart(self):
         xml_string = generate_full_abrufcode_request_xml()
 
         self.assertIn('<Verfahren>ElsterSignatur</Verfahren><DatenArt>AbrufcodeAntrag</DatenArt>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = generate_full_abrufcode_request_xml()
 
         self.assertIn("<Testmerker>080000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_abrufcode_request_xml()
             self.assertNotIn("<Testmerker>080000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_abrufcode_request_xml(use_testmerker=True)
@@ -1287,39 +1288,39 @@ class TestVastBelegRequest(unittest.TestCase):
         self.assertEqual(1, len(xml_top.findall('Nutzdaten/Datenabholung/Abholung')))
         self.assertEqual('2020', xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_request_xml_generates_transfer_header(self):
         xml_string = generate_full_vast_beleg_request_xml(self.valid_user_data, self.beleg_ids)
 
         self.assertIn('<TransferHeader version="' + self.expected_header_version + '">', xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_request_xml_generates_correct_datenart(self):
         xml_string = generate_full_vast_beleg_request_xml(self.valid_user_data, self.beleg_ids)
 
         self.assertIn('<Verfahren>ElsterDatenabholung</Verfahren><DatenArt>ElsterVaStDaten</DatenArt>',
                       "".join(xml_string.split()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_request_xml_generates_one_nutzdatenblock_for_each_beleg(self):
         xml_string = generate_full_vast_beleg_request_xml(self.valid_user_data, self.beleg_ids)
 
         xml_tree = remove_declaration_and_namespace(xml_string)
         self.assertEqual(len(self.beleg_ids), len(xml_tree.findall('.//Abholung')))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_true_then_testmerker_set(self):
         # use_testmerker is per default true in testing env
         xml_string = generate_full_vast_beleg_request_xml(self.valid_user_data, self.beleg_ids)
         self.assertIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_then_testmerker_not_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_beleg_request_xml(self.valid_user_data, self.beleg_ids)
             self.assertNotIn("<Testmerker>370000001</Testmerker>", xml_string)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_use_testmerker_env_false_but_use_testmerker_true_then_testmerker_set(self):
         with use_testmerker_env_set_false():
             xml_string = generate_full_vast_beleg_request_xml(self.valid_user_data, self.beleg_ids, use_testmerker=True)

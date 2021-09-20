@@ -1,8 +1,10 @@
 import base64
 
+from erica.config import get_settings
 from erica.elster_xml.elster_xml_generator import get_belege_xml, generate_vorsatz_without_tax_number, \
     generate_vorsatz_with_tax_number
 from erica.elster_xml.xml_parsing.elster_specifics_xml_parsing import get_antrag_id_from_xml, get_transfer_ticket_from_xml, get_address_from_xml, get_relevant_beleg_ids
+from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.elster_xml import est_mapping, elster_xml_generator
 
@@ -12,7 +14,7 @@ from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValida
     UnlockCodeActivationPyericProcessController, UnlockCodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, \
     DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
-    BelegRequestPyericProcessController
+    BelegRequestPyericProcessController, CheckTaxNumberPyericController
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
@@ -175,6 +177,33 @@ class UnlockCodeRevocationRequestController(TransferTicketRequestController):
     def generate_json(self, pyeric_response: PyericResponse):
         response = super().generate_json(pyeric_response)
         response["elster_request_id"] = get_antrag_id_from_xml(pyeric_response.server_response)
+        return response
+
+
+class CheckTaxNumberRequestController:
+    """This handles any request that wants to check if a tax number is valid"""
+
+    @staticmethod
+    def process(state_abbreviation: str, tax_number: str):
+        try:
+            full_tax_number = CheckTaxNumberRequestController._generate_tax_number(state_abbreviation.upper(), tax_number)
+        except InvalidBufaNumberError:
+            return CheckTaxNumberRequestController.generate_json(False)
+        result = CheckTaxNumberPyericController.get_eric_response(full_tax_number)
+        return CheckTaxNumberRequestController.generate_json(result)
+
+    @staticmethod
+    def _generate_tax_number(state_abbreviation, tax_number):
+        return est_mapping.generate_electronic_steuernummer(
+            tax_number,
+            state_abbreviation,
+            use_testmerker=get_settings().use_testmerker)
+
+    @staticmethod
+    def generate_json(valid):
+        response = {}
+        response['is_valid'] = valid
+
         return response
 
 

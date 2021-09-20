@@ -2,18 +2,19 @@ import json
 import unittest
 from unittest.mock import patch, MagicMock
 
+import pytest
 from fastapi.exceptions import HTTPException
 
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.pyeric_controller import GetTaxOfficesPyericController
 from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code, \
-    get_tax_offices
+    get_tax_offices, is_valid_tax_number
 from tests.utils import create_unlock_request, create_unlock_activation, create_est, create_unlock_revocation, \
     missing_cert, missing_pyeric_lib
 
 
-@unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-@unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+@pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+@pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
 class TestValidateEst(unittest.TestCase):
 
     def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
@@ -38,8 +39,8 @@ class TestValidateEst(unittest.TestCase):
         self.assertEqual({}, response)
 
 
-@unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-@unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+@pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+@pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
 class TestSendEst(unittest.TestCase):
 
     def test_if_request_correct_and_submission_without_tax_nr_then_no_error_and_correct_response(self):
@@ -82,8 +83,8 @@ class TestSendEst(unittest.TestCase):
         self.assertNotIn('server_response', response)
 
 
-@unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-@unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+@pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+@pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
 class TestRequestUnlockCode(unittest.TestCase):
 
     def setUp(self):
@@ -143,8 +144,8 @@ class TestActivateUnlockCode(unittest.TestCase):
         with open('tests/samples/sample_vast_activation_response.xml', 'rb') as server_response:
             self.successful_response = server_response.read()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_request_correct_and_elster_request_id_incorrect_then_raise_httpexception_with_elster_transfer_error(self):
         correct_activation_no_include = create_unlock_activation(correct=True)
 
@@ -153,8 +154,8 @@ class TestActivateUnlockCode(unittest.TestCase):
         except HTTPException as e:
             self.assertEqual(4, e.detail['code'])
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_activation_include = create_unlock_activation(correct=True)
 
@@ -171,8 +172,8 @@ class TestActivateUnlockCode(unittest.TestCase):
         self.assertIn('eric_response', response)
         self.assertIn('server_response', response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_request_correct_and_no_include_then_no_error_and_correct_response(self):
         correct_activation_no_include = create_unlock_activation(correct=True)
 
@@ -196,8 +197,8 @@ class TestRevokeUnlockCode(unittest.TestCase):
         with open('tests/samples/sample_vast_revocation_response.xml', 'rb') as server_response:
             self.successful_response = server_response.read()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_request_correct_and_include_then_no_error_and_correct_response(self):
         correct_revocation_include = create_unlock_revocation(correct=True)
 
@@ -213,8 +214,8 @@ class TestRevokeUnlockCode(unittest.TestCase):
         self.assertIn('eric_response', response)
         self.assertIn('server_response', response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_request_correct_and_no_include_then_no_error_and_correct_response(self):
         correct_revocation_no_include = create_unlock_revocation(correct=True)
 
@@ -231,9 +232,32 @@ class TestRevokeUnlockCode(unittest.TestCase):
         self.assertNotIn('server_response', response)
 
 
+class TestIsTaxNumberValid:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_valid_then_return_json_with_is_valid_true(self):
+        state_abbreviation = "by"
+        valid_tax_number = "19811310010"
+
+        result = is_valid_tax_number(state_abbreviation, valid_tax_number)
+
+        assert result == {'is_valid': True}
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_invalid_then_return_json_with_is_valid_false(self):
+        state_abbreviation = "by"
+        invalid_tax_number = "19811310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = is_valid_tax_number(state_abbreviation, invalid_tax_number)
+
+        assert result == {'is_valid': False}
+
+
 class TestGetTaxOffices(unittest.TestCase):
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_get_tax_offices_returns_same_as_request_controller_process(self):
         response = get_tax_offices()
         with open(response.path, "r") as response_file:

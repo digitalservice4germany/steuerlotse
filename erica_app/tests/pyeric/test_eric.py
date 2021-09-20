@@ -2,17 +2,19 @@ import unittest
 from ctypes import c_int
 from unittest.mock import patch, MagicMock, mock_open
 
+import pytest
+
 from erica.config import get_settings
 from tests.utils import gen_random_key, missing_cert, missing_pyeric_lib
 from erica.pyeric.eric import EricWrapper, EricDruckParameterT, EricVerschluesselungsParameterT, EricResponse, \
     get_eric_wrapper
-from erica.pyeric.eric_errors import EricProcessNotSuccessful, EricNullReturnedError
+from erica.pyeric.eric_errors import EricProcessNotSuccessful, EricNullReturnedError, EricGlobalError
 
 TEST_CERTIFICATE_PATH = 'erica/instances/blueprint/cert.pfx'
 
 
-@unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-@unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+@pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+@pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
 class TestGetEricWrapper(unittest.TestCase):
     def test_calls_initialise(self):
         with patch('erica.pyeric.eric.EricWrapper.initialise') as init_fun, \
@@ -35,13 +37,13 @@ class TestGetEricWrapper(unittest.TestCase):
 
 class TestEricBasicSanity(unittest.TestCase):
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_wrapper_creation_and_initialise(self):
         wrapper = EricWrapper()
         wrapper.initialise()
         wrapper.shutdown()
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_wrapper_create_buffer(self):
         wrapper = EricWrapper()
         wrapper.initialise()
@@ -52,8 +54,8 @@ class TestEricBasicSanity(unittest.TestCase):
 
 class TestEricInitialise(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -66,8 +68,8 @@ class TestEricInitialise(unittest.TestCase):
         self.plugin_path = '/FearIsThePathToTheDarkSide/pyeric'
         self.log_path = '/INeverLose/IEitherWinOrLearn/NelsonMandela'
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_log_path_set_then_set_logpath_and_pluginpath_as_arguments(self):
         with patch('erica.pyeric.eric.c_char_p') as char_pointer, \
                 patch('erica.pyeric.eric.os.path.dirname', MagicMock(return_value=self.plugin_path)):
@@ -77,8 +79,8 @@ class TestEricInitialise(unittest.TestCase):
         self.mock_fun_init_successful.assert_called_with((self.plugin_path + "/../lib/plugins2").encode(),
                                                          self.log_path.encode())
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_initialised_called_then_eric_initialisiere_called_once(self):
         self.mock_fun_init_successful.reset_mock()
 
@@ -86,8 +88,8 @@ class TestEricInitialise(unittest.TestCase):
 
         self.mock_fun_init_successful.assert_called_once()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_api_without_mock_functions_initialised_then_raise_no_error(self):
         eric_api = EricWrapper()
 
@@ -101,8 +103,8 @@ class TestEricInitialise(unittest.TestCase):
 
 class TestEricShutdown(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -112,8 +114,8 @@ class TestEricShutdown(unittest.TestCase):
         self.mock_eric.EricMtInstanzFreigeben = self.mock_fun_shutdown_successful
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_shutdown_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_shutdown_successful.reset_mock()
 
@@ -122,22 +124,22 @@ class TestEricShutdown(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("Shutdown raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_shutdown_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtInstanzFreigeben = self.mock_fun_shutdown_res_gt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.shutdown)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_shutdown_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtInstanzFreigeben = self.mock_fun_shutdown_res_lt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.shutdown)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_shutdown_called_then_eric_beende_called_once(self):
         self.mock_fun_shutdown_successful.reset_mock()
 
@@ -145,8 +147,8 @@ class TestEricShutdown(unittest.TestCase):
 
         self.mock_fun_shutdown_successful.assert_called_once()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_one_eric_api_initialised_then_raise_no_error(self):
         eric_api = EricWrapper()
         eric_api.initialise()
@@ -159,16 +161,16 @@ class TestEricShutdown(unittest.TestCase):
 
 class TestValidate(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.eric_api_with_mocked_binaries.initialise()
         self.mock_fun_process = MagicMock()
         self.eric_api_with_mocked_binaries.process = self.mock_fun_process
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_validate_called_then_call_process_with_validiere_flag_set(self):
         xml = "<xml></xml>"
         data_version = "ESt1A"
@@ -176,16 +178,16 @@ class TestValidate(unittest.TestCase):
 
         self.mock_fun_process.assert_called_once_with(xml, data_version, EricWrapper.ERIC_VALIDIERE)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def tearDown(self):
         self.eric_api_with_mocked_binaries.shutdown()
 
 
 class TestValidateAndSend(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -205,8 +207,8 @@ class TestValidateAndSend(unittest.TestCase):
         self.eric_api_with_mocked_binaries.alloc_eric_verschluesselungs_parameter_t = self.mock_function
         self.eric_api_with_mocked_binaries.close_cert_handle = MagicMock()  # close_cert_handle needs no side_effects
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_process_method_called_once_with_print_flag_and_correct_print_path(self):
         self.mock_fun_process_successful.reset_mock()
         self.eric_api_with_mocked_binaries.process = self.mock_fun_process_successful
@@ -224,8 +226,8 @@ class TestValidateAndSend(unittest.TestCase):
                                                                  cert_params=self.cert_path.encode(),
                                                                  print_params=self.print_path)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_correct_pdf_set_in_return_value(self):
         self.mock_fun_process_successful.reset_mock()
         self.eric_api_with_mocked_binaries.process = self.mock_fun_process_successful
@@ -241,14 +243,14 @@ class TestValidateAndSend(unittest.TestCase):
 
 
 class TestAllocEricDruckParameterT(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api = EricWrapper()
         self.eric_api.initialise()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_print_path_set_then_return_eric_druck_parameter_with_print_path_set(self):
         printing_path = "Not/All/Those/Who/Wander/Are/Lost"
         with patch('erica.pyeric.eric.c_char_p') as char_pointer:
@@ -258,30 +260,30 @@ class TestAllocEricDruckParameterT(unittest.TestCase):
             self.assertIsInstance(returned_druck_parameter, EricDruckParameterT)
             self.assertEqual(printing_path.encode(), returned_druck_parameter.pdfName)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_print_path_not_set_then_return_eric_druck_parameter_with_print_path_none(self):
         returned_druck_parameter = self.eric_api.alloc_eric_druck_parameter_t(None)
 
         self.assertIsInstance(returned_druck_parameter, EricDruckParameterT)
         self.assertIsNone(returned_druck_parameter.pdfName)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def tearDown(self):
         self.eric_api.shutdown()
 
 
 class TestAllocEricVerschluesselungsParameterT(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api = EricWrapper()
         self.eric_api.initialise()
         self.certificate_handle = self.eric_api.get_cert_handle()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_arguments_set_then_return_eric_verschluesselungs_param_with_zertifikat_and_pin_set(self):
         returned_verschluesselung_parameter = self.eric_api.alloc_eric_verschluesselungs_parameter_t(
             self.certificate_handle)
@@ -290,15 +292,15 @@ class TestAllocEricVerschluesselungsParameterT(unittest.TestCase):
         self.assertEqual(EricWrapper.cert_pin.encode(), returned_verschluesselung_parameter.pin)
         self.assertEqual(self.certificate_handle.value, returned_verschluesselung_parameter.zertifikatHandle)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def tearDown(self):
         self.eric_api.shutdown()
 
 
 class TestGetCertHandle(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -309,8 +311,8 @@ class TestGetCertHandle(unittest.TestCase):
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
         self.eric_api_with_mocked_binaries.eric_instance = c_int()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_get_handle_certificate_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_handle_certificate_successful.reset_mock()
 
@@ -319,22 +321,22 @@ class TestGetCertHandle(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("Initialise raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_get_handle_certificate_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtGetHandleToCertificate = self.mock_fun_handle_certificate_res_gt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.get_cert_handle)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_get_handle_certificate_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtGetHandleToCertificate = self.mock_fun_handle_certificate_res_lt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.get_cert_handle)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_get_cert_handle_called_then_get_handle_certificate_called_once_with_correct_arguments(self):
         self.mock_fun_handle_certificate_successful.reset_mock()
 
@@ -353,8 +355,8 @@ class TestGetCertHandle(unittest.TestCase):
                 None,
                 TEST_CERTIFICATE_PATH.encode())
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_get_cert_handle_called_then_get_handle_certificate_called_once(self):
         self.mock_fun_handle_certificate_successful.reset_mock()
 
@@ -365,8 +367,8 @@ class TestGetCertHandle(unittest.TestCase):
 
 class TestCloseCertHandle(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -381,8 +383,8 @@ class TestCloseCertHandle(unittest.TestCase):
         self.certificate_handle = eric.get_cert_handle()
         eric.shutdown()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_close_certificate_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_close_certificate_successful.reset_mock()
 
@@ -391,24 +393,24 @@ class TestCloseCertHandle(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("Initialise raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_close_certificate_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtCloseHandleToCertificate = self.mock_fun_close_certificate_res_gt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.close_cert_handle,
                           self.certificate_handle)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_close_certificate_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtCloseHandleToCertificate = self.mock_fun_close_certificate_res_lt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.close_cert_handle,
                           self.certificate_handle)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_close_certificate_called_then_eric_close_certificate_called_once(self):
         self.mock_fun_close_certificate_successful.reset_mock()
 
@@ -419,8 +421,8 @@ class TestCloseCertHandle(unittest.TestCase):
 
 class TestProcess(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.xml = '<xml></xml>'
         self.data_type_version = 'ESt'
@@ -448,8 +450,8 @@ class TestProcess(unittest.TestCase):
         self.eric_api_with_mocked_binaries.close_buffer = self.mock_function
         self.eric_api_with_mocked_binaries.close_cert_handle = MagicMock()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_bearbeite_vorgang_ends_with_return_code_zero_then_return_eric_response(self):
         self.mock_fun_process_successful.reset_mock()
         expected_response = EricResponse(0, self.buffer.encode(), self.buffer.encode())
@@ -463,8 +465,8 @@ class TestProcess(unittest.TestCase):
 
         self.assertEqual(expected_response, actual_response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_bearbeite_vorgang_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtBearbeiteVorgang = self.mock_fun_process_res_gt_zero
 
@@ -478,8 +480,8 @@ class TestProcess(unittest.TestCase):
                               cert_params=self.cert_params,
                               print_params=self.print_params)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_bearbeite_vorgang_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtBearbeiteVorgang = self.mock_fun_process_res_lt_zero
 
@@ -493,8 +495,8 @@ class TestProcess(unittest.TestCase):
                               cert_params=self.cert_params,
                               print_params=self.print_params)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_print_params_set_then_then_eric_bearbeite_vorgang_called_once_with_sende_and_drucke_flag(self):
         self.mock_fun_process_successful.reset_mock()
         self.mock_eric.EricBearbeiteVorgang = self.mock_fun_process_successful
@@ -518,8 +520,8 @@ class TestProcess(unittest.TestCase):
                                                                  self.buffer.encode(),
                                                                  self.buffer.encode())
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_flag_0_then_eric_bearbeite_vorgang_called_once_without_flags_set(self):
         self.mock_fun_process_successful.reset_mock()
         self.mock_eric.EricBearbeiteVorgang = self.mock_fun_process_successful
@@ -547,8 +549,8 @@ class TestProcess(unittest.TestCase):
 
 class TestCreateBuffer(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -562,8 +564,8 @@ class TestCreateBuffer(unittest.TestCase):
         self.certificate_handle = eric.get_cert_handle()
         eric.shutdown()
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_rueckgabepuffer_erzeugen_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_create_buffer_successful.reset_mock()
 
@@ -572,15 +574,15 @@ class TestCreateBuffer(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("Initialise raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_rueckgabepuffer_returns_null_pointer_then_raise_exception(self):
         self.mock_eric.EricMtRueckgabepufferErzeugen = self.mock_fun_create_buffer_null_pointer
 
         self.assertRaises(EricNullReturnedError, self.eric_api_with_mocked_binaries.create_buffer)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_close_certificate_called_then_eric_rueckgabepuffer_erzeugen_called_once(self):
         self.mock_fun_create_buffer_successful.reset_mock()
 
@@ -591,8 +593,8 @@ class TestCreateBuffer(unittest.TestCase):
 
 class TestReadBuffer(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -604,15 +606,15 @@ class TestReadBuffer(unittest.TestCase):
 
         self.buffer_content = "You shall not pass!"
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_called_with_buffer_return_result_of_eric_rueckgabepuffer_inhalt_of_buffer(self):
         result = self.eric_api_with_mocked_binaries.read_buffer(self.buffer_content)
 
         self.assertEqual(self.buffer_content, result)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_read_buffer_called_then_eric_rueckgabepuffer_inhalt_called_once_with_buffer(self):
         self.mock_fun_read_buffer.reset_mock()
 
@@ -624,8 +626,8 @@ class TestReadBuffer(unittest.TestCase):
 
 class TestCloseBuffer(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -637,8 +639,8 @@ class TestCloseBuffer(unittest.TestCase):
 
         self.buffer = "You shall not pass"
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_rueckgabepuffer_freigeben_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_close_buffer_successful.reset_mock()
 
@@ -647,22 +649,22 @@ class TestCloseBuffer(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("EricRueckgabePuffer raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_rueckgabepuffer_freigeben_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtRueckgabepufferFreigeben = self.mock_fun_close_buffer_res_gt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.close_buffer, self.buffer)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_rueckgabepuffer_freigeben_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtRueckgabepufferFreigeben = self.mock_fun_close_buffer_res_lt_zero
 
         self.assertRaises(EricProcessNotSuccessful, self.eric_api_with_mocked_binaries.close_buffer, self.buffer)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_close_buffer_called_then_eric_rueckgabepuffer_freigeben_called_once_with_buffer(self):
         self.mock_fun_close_buffer_successful.reset_mock()
 
@@ -674,8 +676,8 @@ class TestCloseBuffer(unittest.TestCase):
 
 class TestCreateTH(unittest.TestCase):
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -699,8 +701,8 @@ class TestCreateTH(unittest.TestCase):
         self.datenLieferant = 'Softwaretester'
         self.versionClient = '1'
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_create_th_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_fun_create_th_successful.reset_mock()
 
@@ -716,8 +718,8 @@ class TestCreateTH(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("CreateTH raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_create_th_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtCreateTH = self.mock_fun_create_th_res_gt_zero
 
@@ -732,8 +734,8 @@ class TestCreateTH(unittest.TestCase):
                           self.datenLieferant,
                           self.versionClient)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_create_th_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtCreateTH = self.mock_fun_create_th_res_lt_zero
 
@@ -748,8 +750,8 @@ class TestCreateTH(unittest.TestCase):
                           self.datenLieferant,
                           self.versionClient)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_create_th_called_then_result_is_content_of_a_generated_buffer(self):
         self.mock_fun_create_th_successful.reset_mock()
 
@@ -777,8 +779,8 @@ class TestCreateTH(unittest.TestCase):
 
         self.assertEqual(buffer, result)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_create_th_called_then_eric_create_th_called_once_with_correct_arguments(self):
         self.mock_fun_create_th_successful.reset_mock()
 
@@ -824,7 +826,7 @@ class TestSendToElsterWithMockedFunctions(unittest.TestCase):
         self.eric_api_with_mocked_process_method.get_cert_handle = MagicMock(return_value=1)
         self.eric_api_with_mocked_process_method.close_cert_handle = MagicMock(return_value=None)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_valid_send_to_elster_calls_process_method_once_with_correct_pointers(self):
         c_int_pointer = c_int()
 
@@ -859,7 +861,7 @@ class TestGetBelegIds(unittest.TestCase):
             self.eric_api_with_mocked_process_method.get_cert_handle = MagicMock(return_value=1)
             self.eric_api_with_mocked_process_method.close_cert_handle = MagicMock(return_value=None)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_get_beleg_ids_calls_process_method(self):
         c_int_pointer = c_int()
 
@@ -877,9 +879,61 @@ class TestGetBelegIds(unittest.TestCase):
         self.eric_api_with_mocked_process_method.shutdown()
 
 
+class TestCheckTaxNumber:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_number_is_valid_then_return_true(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        valid_tax_number = "9198011310010"
+
+        result = eric_wrapper.check_tax_number(valid_tax_number)
+
+        assert result is True
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_number_is_invalid_then_return_false(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        invalid_tax_number = "9198011310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = eric_wrapper.check_tax_number(invalid_tax_number)
+
+        assert result is False
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_eric_pruefe_steuernummer_returns_unkown_tax_number_error_then_raise_error(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number = "9198011310010"
+
+        # Raise ERIC_GLOBAL_STEUERNUMMER_UNGUELTIG error
+        eric_wrapper.eric.EricMtPruefeSteuernummer = MagicMock(__name__="EricMtPruefeSteuernummer", return_value=610001034)
+
+        result = eric_wrapper.check_tax_number(tax_number)
+
+        assert result is False
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_eric_pruefe_steuernummer_returns_error_then_raise_error(self):
+        eric_wrapper = EricWrapper()
+        eric_wrapper.initialise()
+        tax_number = "9198011310010"
+
+        # Raise ERIC_GLOBAL_UNKNOWN error
+        eric_wrapper.eric.EricMtPruefeSteuernummer = MagicMock(__name__="EricMtPruefeSteuernummer", return_value=610001001)
+
+        with pytest.raises(EricGlobalError) as e:
+            eric_wrapper.check_tax_number(tax_number)
+
+
 class TestDecryptData(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -936,8 +990,8 @@ class TestDecryptData(unittest.TestCase):
 
 
 class TestGetTaxOffices(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -992,8 +1046,8 @@ class TestGetTaxOffices(unittest.TestCase):
 
 
 class TestGetstateIdList(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -1046,8 +1100,8 @@ class TestGetstateIdList(unittest.TestCase):
 
 
 class TestGetErrorMessageFromXml(unittest.TestCase):
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def setUp(self):
         self.eric_api_with_mocked_binaries = EricWrapper()
         self.mock_eric = MagicMock()
@@ -1063,8 +1117,8 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
         self.eric_api_with_mocked_binaries.eric = self.mock_eric
         self.eric_api_with_mocked_binaries.eric_instance = self.eric_instance
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_get_error_msg_from_xml_ends_with_return_code_zero_then_raise_no_exception(self):
         self.mock_eric.EricMtGetErrormessagesFromXMLAnswer = self.mock_fun_get_error_message_successful
         self.mock_fun_get_error_message_successful.reset_mock()
@@ -1074,8 +1128,8 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
         except EricProcessNotSuccessful:
             self.fail("CreateTH raised EricProcessNotSuccessful unexpectedly!")
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_get_error_msg_from_xml_ends_with_return_code_greater_zero_then_raise_exception(self):
         self.mock_eric.EricMtGetErrormessagesFromXMLAnswer = self.mock_fun_get_error_message_res_gt_zero
 
@@ -1083,8 +1137,8 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
                           self.eric_api_with_mocked_binaries.get_error_message_from_xml_response,
                           self.server_xml)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_eric_get_error_msg_from_xml_ends_with_return_code_smaller_zero_then_raise_exception(self):
         self.mock_eric.EricMtGetErrormessagesFromXMLAnswer = self.mock_fun_get_error_message_res_lt_zero
 
@@ -1092,8 +1146,8 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
                           self.eric_api_with_mocked_binaries.get_error_message_from_xml_response,
                           self.server_xml)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_get_error_message_from_xml_response_called_then_get_error_message_called_once_with_correct_arguments(
             self):
         self.mock_eric.EricMtGetErrormessagesFromXMLAnswer = self.mock_fun_get_error_message_successful
@@ -1109,8 +1163,8 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
                                                                            self.mock_buff_constant
                                                                            )
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_correct_information_is_extracted(self):
         expected_th_returncode = '42'
         expected_th_error_msg = 'This is the world we live in'
@@ -1130,8 +1184,8 @@ class TestGetErrorMessageFromXml(unittest.TestCase):
             self.assertIn(expected_err_msg, nd_returncode_error_msg)
 
 
-@unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-@unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+@pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+@pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
 class TestGetCertProperties(unittest.TestCase):
     def setUp(self):
         self.eric_wrapper_with_mock_eric_binaries = EricWrapper()

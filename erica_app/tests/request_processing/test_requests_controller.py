@@ -2,13 +2,16 @@ import unittest
 from datetime import date
 from unittest.mock import patch, MagicMock
 
+import pytest
+
+from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.pyeric.pyeric_response import PyericResponse
 from erica.request_processing.erica_input import UnlockCodeRequestData, UnlockCodeActivationData, \
     UnlockCodeRevocationData, GetAddressData
 from erica.request_processing.requests_controller import UnlockCodeRequestController, \
     UnlockCodeActivationRequestController, EstRequestController, EstValidationRequestController, \
     UnlockCodeRevocationRequestController, SPECIAL_TESTMERKER_IDNR, GetAddressRequestController, \
-    GetBelegeRequestController
+    GetBelegeRequestController, CheckTaxNumberRequestController
 from tests.utils import create_est, missing_cert, missing_pyeric_lib, replace_text_in_xml, \
     replace_subtree_in_xml
 
@@ -153,8 +156,8 @@ class TestEstRequestProcess(unittest.TestCase):
             generate_vorsatz_without_tax_number.assert_called()
             self.assertEqual(empfaenger, generate_xml_fun.call_args.args[-1])  #empfaenger should be the last args
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_then_return_not_none_response(self):
         est_request = EstRequestController(create_est(correct_form_data=True))
 
@@ -162,8 +165,8 @@ class TestEstRequestProcess(unittest.TestCase):
 
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_submission_without_tax_nr_then_return_not_none_response(self):
         est_request = EstRequestController(create_est(correct_form_data=True, with_tax_number=False))
 
@@ -171,8 +174,8 @@ class TestEstRequestProcess(unittest.TestCase):
 
         self.assertIsNotNone(response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_and_include_elster_responses_then_return_response_only_with_correct_keys(self):
         expected_keys = ['transfer_ticket', 'pdf', 'eric_response', 'server_response']
 
@@ -182,8 +185,8 @@ class TestEstRequestProcess(unittest.TestCase):
 
         self.assertEqual(set(expected_keys), set(response.keys()))
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_full_form_and_not_include_elster_responses_then_return_response_with_correct_keys(self):
         expected_keys = ['transfer_ticket', 'pdf']
 
@@ -669,6 +672,40 @@ class TestUnlockCodeRevocationGenerateJson(unittest.TestCase):
         actual_response = unlock_code_revocation.generate_json(pyeric_response)
 
         self.assertEqual(expected_transfer_ticket, actual_response['transfer_ticket'])
+
+
+class TestCheckTaxNumberRequestControllerProcess:
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_valid_then_return_json_with_is_valid_true(self):
+        state_abbreviation = "by"
+        valid_tax_number = "19811310010"
+
+        result = CheckTaxNumberRequestController.process(state_abbreviation, valid_tax_number)
+
+        assert result == {'is_valid': True}
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_invalid_then_return_json_with_is_valid_false(self):
+        state_abbreviation = "by"
+        invalid_tax_number = "19811310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = CheckTaxNumberRequestController.process(state_abbreviation, invalid_tax_number)
+
+        assert result == {'is_valid': False}
+
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_generate_electronic_steuernummer_raises_invalid_bufa_nr_then_return_json_with_is_valid_false(self):
+        state_abbreviation = "by"
+        valid_tax_number = "19811310010"
+
+        with patch('erica.elster_xml.est_mapping.generate_electronic_steuernummer', MagicMock(side_effect=InvalidBufaNumberError)):
+            result = CheckTaxNumberRequestController.process(state_abbreviation, valid_tax_number)
+
+        assert result == {'is_valid': False}
 
 
 class TestGetBelegeRequestController(unittest.TestCase):

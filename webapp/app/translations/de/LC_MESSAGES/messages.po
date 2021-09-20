@@ -5126,7 +5126,7 @@ msgstr ""
 #: app/templates/unlock_code/activation_failure.html:24
 msgid "form.unlock-code-activation.failure.reasons-3"
 msgstr ""
-"Ihre Anmeldung ist bereits mehr als 5 mal fehlgeschlagen. Dann ist Ihr "
+"Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen. Dann ist Ihr "
 "Freischaltcode nicht mehr gültig. Bitte stornieren Sie Ihren "
 "Freischaltcode und registrieren sich erneut. Sie erhalten dann einen "
 "Brief mit einem neuen Freischaltcode."

@@ -2,6 +2,8 @@ import unittest
 from functools import reduce
 from unittest.mock import MagicMock, patch, call
 
+import pytest
+
 from erica.config import get_settings
 from erica.elster_xml.bufa_numbers import VALID_BUFA_NUMBERS
 from erica.pyeric.eric import EricResponse
@@ -11,7 +13,7 @@ from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericPro
     UnlockCodeRequestPyericProcessController, UnlockCodeActivationPyericProcessController, \
     AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
-    BelegRequestPyericProcessController, GetTaxOfficesPyericController
+    BelegRequestPyericProcessController, GetTaxOfficesPyericController, CheckTaxNumberPyericController
 from tests.utils import missing_cert, missing_pyeric_lib
 
 
@@ -61,8 +63,8 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
             self.problematic_input_xml = f.read()
         self.incorrect_input_xml = "<xml>"
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_elster_successful_then_return_correct_responses(self):
         expected_eric_response = b'ERIC was here'
         expected_server_response = b'How can I help you?'
@@ -75,8 +77,8 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
         self.assertEqual(expected_eric_response.decode(), result.eric_response)
         self.assertEqual(expected_server_response.decode(), result.server_response)
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_xml_then_responses_filled_accordingly(self):
         pyeric_controller = EstPyericProcessController(self.problematic_input_xml, 2020)
         try:
@@ -87,8 +89,8 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
             self.assertIn("<FachlicheFehlerId>feldUnbekannt</FachlicheFehlerId>", e.eric_response.decode())
             self.assertIn("<FachlicheFehlerId>101100052</FachlicheFehlerId>", e.eric_response.decode())
 
-    @unittest.skipIf(missing_cert(), "skipped because of missing cert.pfx; see pyeric/README.md")
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_xml_then_raise_error(self):
         pyeric_controller = EstPyericProcessController(self.incorrect_input_xml, 2020)
         self.assertRaises(EricIOError, pyeric_controller.get_eric_response)
@@ -205,53 +207,72 @@ class TestDecryptBelegePyericControllerRunEric(unittest.TestCase):
         self.assertEqual(self.encrypted_belege, returned_belege)
 
 
+class TestCheckTaxNumberPyericController:
+
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_valid_then_return_true(self):
+        valid_tax_number = "9198011310010"
+
+        result = CheckTaxNumberPyericController.get_eric_response(valid_tax_number)
+
+        assert result is True
+
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
+    def test_if_tax_number_is_invalid_then_return_false(self):
+        invalid_tax_number = "9198011310011"  # is invalid because of incorrect check sum (last digit should be 0)
+
+        result = CheckTaxNumberPyericController.get_eric_response(invalid_tax_number)
+
+        assert result is False
+
+
 class TestGetTaxOfficesRequestController(unittest.TestCase):
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_request_state_id_list_has_correct_length(self):
         result = GetTaxOfficesPyericController()._request_state_id_list()
 
         self.assertEqual(16, len(result))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_request_state_id_list_contains_bayern(self):
         result = GetTaxOfficesPyericController()._request_state_id_list()
 
         self.assertEqual(['91', '92'], result['Bayern'])
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_request_state_id_list_has_correct_format(self):
         result = GetTaxOfficesPyericController()._request_state_id_list()
 
         self.assertIsInstance(list(result.values())[0], list)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_request_tax_offices_has_correct_length(self):
         result = GetTaxOfficesPyericController()._request_tax_offices('28')
 
         self.assertEqual(79, len(result))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_request_tax_offices_contains_schwb_hall(self):
         result = GetTaxOfficesPyericController()._request_tax_offices('28')
 
         self.assertIn({'bufa_nr': '2884', 'name': 'Finanzamt Schwäbisch Hall'}, result)
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_request_tax_offices_has_correct_format(self):
         result = GetTaxOfficesPyericController()._request_tax_offices('28')
 
         self.assertIsInstance(result, list)
         self.assertEqual(['name', 'bufa_nr'], list(result[0].keys()))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_process_result_has_correct_format(self):
         result = GetTaxOfficesPyericController().get_eric_response()
 
         self.assertEqual(["tax_offices"], list(result.keys()))
         self.assertEqual(1, len(result))
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_process_result_contains_all_states(self):
         state_abbreviations = ['bw', 'by', 'be', 'bb', 'hb', 'hh', 'he', 'mv', 'nd', 'nw', 'rp', 'sl', 'sn', 'st', 'sh',
                                'th']
@@ -259,7 +280,7 @@ class TestGetTaxOfficesRequestController(unittest.TestCase):
 
         self.assertEqual(state_abbreviations, [state['state_abbreviation'] for state in result['tax_offices']])
 
-    @unittest.skipIf(missing_pyeric_lib(), "skipped because of missing eric lib; see pyeric/README.md")
+    @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_process_result_contains_all_tax_offices(self):
         valid_bufa_numbers = VALID_BUFA_NUMBERS
         result = GetTaxOfficesPyericController().get_eric_response()
