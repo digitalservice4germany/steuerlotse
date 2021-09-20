@@ -103,6 +103,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
                  next_step=None, session_data_identifier='form_data'):
         super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                          session_data_identifier=session_data_identifier)
+        # TODO rename this to form_class once MultiStepFlow is obsolete
         self.form = self.InputForm
 
     def _pre_handle(self):
