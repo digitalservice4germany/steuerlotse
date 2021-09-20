@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-20 12:32+0200\n"
+"POT-Creation-Date: 2021-09-17 17:13+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -3757,7 +3757,7 @@ msgstr "Datenschutzerklärung"
 
 #: app/templates/content/data_privacy.html:6
 msgid "data_privacy.last_updated"
-msgstr "Zuletzt aktualisiert: 31.05.2021"
+msgstr "Zuletzt aktualisiert: 13.09.2021"
 
 #: app/templates/content/data_privacy.html:7
 msgid "data_privacy.intro"
