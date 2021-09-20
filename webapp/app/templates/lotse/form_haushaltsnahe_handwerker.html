@@ -14,11 +14,9 @@
 
 {% block form_content %}
     <fieldset class="grouped-input-fields">
-        <span>
-            <legend class="mb-0">
-                <h2 class="form-sub-heading">{{ _('form.lotse.step_haushaltsnahe.label') }}</h2>
-            </legend>
-        </span>
+        <legend class="mb-0">
+            <h2 class="form-sub-heading">{{ _('form.lotse.step_haushaltsnahe.label') }}</h2>
+        </legend>
         <div class="form-row-center first-grouped-field">
             {{ macros.render_field(form.stmind_haushaltsnahe_entries, first_field=True if not render_info.form.errors) }}
         </div>
@@ -28,11 +26,9 @@
     </fieldset>
 
     <fieldset class="grouped-input-fields">
-        <span>
-            <legend class="mb-0">
-                <h2 class="form-sub-heading">{{ _('form.lotse.step_handwerker.label') }}</h2>
-            </legend>
-        </span>
+        <legend class="mb-0">
+            <h2 class="form-sub-heading-bigger">{{ _('form.lotse.step_handwerker.label') }}</h2>
+        </legend>
         <div class="form-row-center first-grouped-field">
             {{ macros.render_field(form.stmind_handwerker_entries) }}
         </div>
