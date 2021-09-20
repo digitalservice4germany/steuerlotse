@@ -13,12 +13,12 @@ const HeaderNavigation = styled.div`
   }
 `;
 
-export default function StepHeaderButtons({ backLinkUrl, backLinkText }) {
+export default function StepHeaderButtons({ url, text }) {
   return (
     <HeaderNavigation>
-      {backLinkUrl && (
+      {url && (
         <div className="mt-3">
-          <BackLink text={backLinkText} url={backLinkUrl} />
+          <BackLink text={text} url={url} />
         </div>
       )}
     </HeaderNavigation>
@@ -26,6 +26,14 @@ export default function StepHeaderButtons({ backLinkUrl, backLinkText }) {
 }
 
 StepHeaderButtons.propTypes = {
-  backLinkUrl: PropTypes.string,
-  backLinkText: PropTypes.string,
+  // render_info.prev_url
+  url: PropTypes.string,
+  // render_info.back_link_text if render_info.back_link_text else _('form.back')
+  text: PropTypes.string,
+};
+
+StepHeaderButtons.defaultProps = {
+  url: undefined,
+  // TODO: intl
+  text: "form.back",
 };

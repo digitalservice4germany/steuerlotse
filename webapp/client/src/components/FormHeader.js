@@ -5,7 +5,7 @@ const Intro = styled.p`
   font-size: var(--text-medium);
 `;
 
-export default function FormHeader({ title, intro, hideIntro = false }) {
+export default function FormHeader({ title, intro, hideIntro }) {
   return (
     <div>
       <h1 className="my-4">{title}</h1>
@@ -15,7 +15,12 @@ export default function FormHeader({ title, intro, hideIntro = false }) {
 }
 
 FormHeader.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   intro: PropTypes.string,
   hideIntro: PropTypes.bool,
+};
+
+FormHeader.defaultProps = {
+  intro: undefined,
+  hideIntro: false,
 };

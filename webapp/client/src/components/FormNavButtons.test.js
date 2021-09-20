@@ -29,7 +29,7 @@ describe("a FormNavButtons with a nextButtonLabel", () => {
 
 describe("a FormNavButtons with an overview button", () => {
   beforeEach(() => {
-    render(<FormNavButtons overviewButton={true} />);
+    render(<FormNavButtons showOverviewButton />);
   });
 
   it("should render a button to go to the overview", () => {

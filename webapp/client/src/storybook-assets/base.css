@@ -263,7 +263,7 @@ ol li::before {
   border-radius: 0;
 }
 
-.btn-help {
+/* .btn-help {
   width: 22px !important;
   height: 22px !important;
   border-radius: 11px !important;
@@ -273,7 +273,7 @@ ol li::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .text-input-field-label {
   margin-top: var(--spacing-06);
@@ -281,42 +281,46 @@ ol li::before {
   font-weight: var(--font-bold);
 }
 
-.optional-hint {
+/* .optional-hint {
   font-size: var(--text-medium);
   font-weight: var(--font-normal);
-}
+} */
 
-.form-row-center {
+/* .nav-button-row {
+  margin-top: var(--spacing-09);
+} */
+
+/* .form-row-center {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  margin-top: var(--spacing-03);
-  /* This moved the border further outside to allow for the children to fill that space with margin,
+  margin-top: var(--spacing-03); */
+/* This moved the border further outside to allow for the children to fill that space with margin,
   allowing the children to have space between them. See the bootstrap row/column technique. */
-  margin-left: calc(-1 * var(--spacing-02));
+/* margin-left: calc(-1 * var(--spacing-02));
   margin-right: calc(-1 * var(--spacing-02));
-}
+} */
 
-.separated-field {
+/* .separated-field {
   flex-wrap: nowrap;
   margin-top: 0;
-}
+} */
 
 .entries-field {
   flex-wrap: nowrap;
 }
-
+/*
 .form-row-center > * {
   margin: 0 var(--spacing-02);
-}
+} */
 
 .grouped-input-fields {
   width: 100%;
 }
 
-.grouped-input-fields > .form-row-center {
+/* .grouped-input-fields > .form-row-center {
   margin-top: 0;
-}
+} */
 
 .grouped-input-fields .text-input-field-label {
   margin-top: var(--spacing-06);
@@ -505,3 +509,131 @@ img.icon {
 .hidden {
   display: none;
 }
+/** END copied unorganised CSS from base.css **/
+
+/* TODO: GET RID OF ME */
+.field-label {
+  margin-bottom: var(--spacing-01);
+}
+
+.details-card {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.details-card .card {
+  border: 0;
+  border-radius: 0;
+  background: inherit;
+}
+
+.details-card .card-header {
+  border: 0;
+  background: inherit;
+}
+
+.details-card .card-header span {
+  color: var(--text-color);
+  font-size: var(--text-medium);
+  font-weight: var(--font-bold);
+}
+
+@media (max-width: 1024px) {
+  .details-card .card-header span {
+    font-size: var(--text-sm);
+  }
+}
+
+.details-card .card-header button {
+  text-align: left;
+  color: var(--text-color);
+  background: inherit;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+}
+
+.details-card .card-header .collapsed span {
+  color: var(--link-color);
+}
+
+.details-card .card-header .collapsed span:hover {
+  color: var(--link-hover-color);
+}
+
+.details-card .card-header button:focus span {
+  color: var(--focus-text-color);
+
+  background: var(--focus-color);
+
+  outline: none;
+  box-shadow: none;
+  border: 0;
+}
+
+.details-card .card-header .details-icon {
+  width: 100%;
+  background: url("./assets/icons/details_arrow_down.svg") no-repeat center;
+}
+
+.details-card .card-header .collapsed:hover .details-icon {
+  background: url("./assets/icons/details_arrow_right_hover.svg") no-repeat
+    center;
+}
+
+.details-card .card-header .collapsed button:focus .details-icon {
+  background: url("./assets/icons/details_arrow_right_focus.svg") no-repeat
+    center;
+}
+
+.details-card .card-header .collapsed .details-icon {
+  background: url("./assets/icons/details_arrow_right.svg") no-repeat center;
+}
+
+.details-card .card-body {
+  border: 0;
+}
+
+.details-card .details-content {
+  padding: 1em 1em 0 1em;
+}
+
+.card-body-less-padding {
+  padding: 1em 1em var(--spacing-01) var(--spacing-01);
+}
+
+.details-card .card-body .block-quote-line {
+  width: 2px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: var(--border-color);
+}
+
+.details-card .card-header button:hover,
+.accordion .card-header button:active {
+  color: var(--link-hover-color);
+  outline: none;
+}
+
+.details-card .card-header:not(.collapsed) .control-show-more {
+  /* We need to still show it to keep focus on the element */
+  height: 1px;
+  width: 1px;
+  background-color: inherit;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+.details-card .card-header.collapsed .control-show-less {
+  /* We need to still show it to keep focus on the element */
+  height: 1px;
+  width: 1px;
+  background-color: inherit;
+  padding: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+/* end GET RID OF ME */

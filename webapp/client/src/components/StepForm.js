@@ -2,10 +2,11 @@ import PropTypes from "prop-types";
 import FormNavButtons from "./FormNavButtons";
 
 export default function StepForm({
-  submitUrl,
+  children,
+  action,
   csrfToken,
   explanatoryButtonText,
-  overviewButton,
+  showOverviewButton,
   nextButtonLabel,
 }) {
   return (
@@ -13,12 +14,13 @@ export default function StepForm({
       noValidate
       className="container px-0 form-container"
       method="POST"
-      action={submitUrl}
+      action={action}
     >
       <input type="hidden" name="csrf_token" value={csrfToken} />
+      {children}
       <FormNavButtons
         explanatoryButtonText={explanatoryButtonText}
-        overviewButton={overviewButton}
+        showOverviewButton={showOverviewButton}
         nextButtonLabel={nextButtonLabel}
       />
     </form>
@@ -26,9 +28,14 @@ export default function StepForm({
 }
 
 StepForm.propTypes = {
-  submitUrl: PropTypes.string,
-  overviewButton: PropTypes.bool,
-  csrfToken: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  action: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
+  showOverviewButton: PropTypes.bool,
   explanatoryButtonText: PropTypes.string,
   nextButtonLabel: PropTypes.string,
+};
+
+StepForm.defaultProps = {
+  ...FormNavButtons.defaultProps,
 };

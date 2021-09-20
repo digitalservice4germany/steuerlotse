@@ -4,13 +4,13 @@ import ReactDOM from "react-dom";
 // loaded in the jinja template that includes these React components.
 import LoginPage from "./pages/LoginPage";
 
-const componentNameMap = {
-  LoginPage: LoginPage,
+const allowedComponents = {
+  LoginPage,
 };
 
 function mountComponent(element) {
   const name = element.dataset.componentName;
-  const Component = componentNameMap[name];
+  const Component = allowedComponents[name];
   if (Component !== undefined) {
     const props = element.dataset.propsJson
       ? JSON.parse(element.dataset.propsJson)
@@ -22,6 +22,8 @@ function mountComponent(element) {
       element
     );
   } else {
+    // TODO: Consider integrating an error reporting service.
+    // eslint-disable-next-line
     console.log(`No such component "${name}"`);
   }
 }
