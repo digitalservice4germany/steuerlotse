@@ -56,16 +56,16 @@ class StepChooser:
             endpoint=self.endpoint,
             stored_data=stored_data,
             overview_step=self.overview_step,
-            prev_step=self.determine_prev_step(step_name),
-            next_step=self.determine_next_step(step_name),
+            prev_step=self.determine_prev_step(step_name, stored_data),
+            next_step=self.determine_next_step(step_name, stored_data),
             session_data_identifier=self.session_data_identifier
         )
 
-    def determine_prev_step(self, current_step_name):
+    def determine_prev_step(self, current_step_name, stored_data):
         idx = self.step_order.index(current_step_name)
         return self.steps[self.step_order[idx - 1]] if idx > 0 else None
 
-    def determine_next_step(self, current_step_name):
+    def determine_next_step(self, current_step_name, stored_data):
         idx = self.step_order.index(current_step_name)
         return self.steps[self.step_order[idx + 1]] if idx < len(self.step_order) - 1 else None
 

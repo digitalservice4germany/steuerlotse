@@ -83,7 +83,7 @@ class EligibilityStepChooser(StepChooser):
             endpoint=endpoint,
         )
 
-    def determine_prev_step(self, current_step_name):
+    def determine_prev_step(self, current_step_name, stored_data):
         """
             Loops through each step in the list up, starting from the current step.
             Asks each step if it is the previous step and returns the correct previous step.
@@ -92,7 +92,6 @@ class EligibilityStepChooser(StepChooser):
         current_step_idx = self.step_order.index(current_step_name)
         if current_step_idx == 0:  # Start step has no previous step
             return None
-        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
         for possible_previous_step_idx in range(current_step_idx - 1, 0, -1):
             possible_previous_step = self.steps[self.step_order[possible_previous_step_idx]]
             if possible_previous_step.is_previous_step(current_step_name, stored_data):
