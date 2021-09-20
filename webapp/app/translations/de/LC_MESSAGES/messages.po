@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-17 11:14+0200\n"
+"POT-Creation-Date: 2021-09-20 12:32+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2362,7 +2362,7 @@ msgstr ""
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:175
 msgid "form.lotse.field_haushaltsnahe_entries.data_label"
-msgstr "Haushaltsnahe Aufwendung"
+msgstr "Haushaltsnahe Aufwendungen"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:177
 msgid "form.lotse.field_haushaltsnahe_summe"
@@ -2374,7 +2374,7 @@ msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:179
 msgid "form.lotse.field_haushaltsnahe_summe.data_label"
-msgstr "Summe der Rechnungsbeträge"
+msgstr "Haushaltsnahe Summe der Rechnungsbeträge"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:182
 msgid "form.lotse.field_handwerker_entries"
@@ -2391,7 +2391,7 @@ msgstr ""
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:185
 msgid "form.lotse.field_handwerker_entries.data_label"
-msgstr "Haushaltsnahe Aufwendung"
+msgstr "Handwerker Aufwendungen"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:187
 msgid "form.lotse.field_handwerker_summe"
@@ -2403,7 +2403,7 @@ msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:189
 msgid "form.lotse.field_handwerker_summe.data_label"
-msgstr "Summe der Rechnungsbeträge"
+msgstr "Handwerker Summe der Rechnungsbeträge"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:192
 msgid "form.lotse.field_handwerker_lohn_etc_summe"
@@ -2699,15 +2699,15 @@ msgstr "optional"
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:166
+#: app/templates/components.html:169
 msgid "plus.alt.text"
 msgstr "Plus-Zeichen"
 
-#: app/templates/components.html:169
+#: app/templates/components.html:172
 msgid "minus.alt.text"
 msgstr "Minus-Zeichen"
 
-#: app/templates/components.html:245
+#: app/templates/components.html:246
 msgid "button.help"
 msgstr "Weitere Informationen"
 
@@ -5047,11 +5047,11 @@ msgstr ""
 "Die Durchführung der Zusammenveranlagung steht unter dem Vorbehalt der "
 "Prüfung durch Ihr zuständiges Finanzamt."
 
-#: app/templates/lotse/form_haushaltsnahe_handwerker.html:14
+#: app/templates/lotse/form_haushaltsnahe_handwerker.html:18
 msgid "form.lotse.step_haushaltsnahe.label"
 msgstr "Haushaltsnahe Dienstleistungen"
 
-#: app/templates/lotse/form_haushaltsnahe_handwerker.html:29
+#: app/templates/lotse/form_haushaltsnahe_handwerker.html:30
 msgid "form.lotse.step_handwerker.label"
 msgstr "Handwerkerleistungen"
 
@@ -5217,3 +5217,4 @@ msgstr ""
 #: app/templates/unlock_code/registration_success.html:21
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
+
