@@ -280,8 +280,20 @@
     border: 0;
 }
 
-.details-card .details-content{
-    padding: 1em 1em 0 0;
+.details-card .details-content {
+    padding: var(--spacing-02) 1em var(--spacing-02) 0;
+}
+
+.details-card .details-content p:last-child {
+    margin-bottom: 0;
+}
+
+.details-card .details-content ul:last-child {
+    margin-bottom: 0;
+}
+
+.details-card .details-content ul li:last-child {
+    margin-bottom: 0 !important;
 }
 
 .card-body-less-padding {
