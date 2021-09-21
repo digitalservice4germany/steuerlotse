@@ -119,9 +119,10 @@ class FormSteuerlotseStep(SteuerlotseStep):
     
     @classmethod
     def update_data(cls, stored_data):
-        form = cls.create_form(request, prefilled_data=stored_data)
-        if request.method == 'POST' and form.validate():
-            stored_data.update(form.data)
+        if request.method == 'POST':
+            form = cls.create_form(request, prefilled_data=stored_data)
+            if form.validate():
+                stored_data.update(form.data)
         return stored_data
 
     def _pre_handle(self):

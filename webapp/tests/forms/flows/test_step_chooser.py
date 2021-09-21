@@ -102,27 +102,6 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
 
         update_mock.assert_not_called()
 
-    def test_data_is_updated_on_post_request(self):
-        original_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(original_data)
-        returned_step = self.step_chooser.get_correct_step(MockFormWithInputStep.name)
-
-        assert returned_step.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
-
-    def test_yes_no_field_content_overriden_if_empty(self):
-        original_data = {'yes_no_field': 'yes'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(original_data)
-        returned_step = self.step_chooser.get_correct_step(MockYesNoStep.name)
-
-        assert returned_step.stored_data == {'yes_no_field': 'yes'}
-
-        self.req.request.form = ImmutableMultiDict({})
-        returned_step = self.step_chooser.get_correct_step(MockYesNoStep.name)
-
-        assert returned_step.stored_data == {'yes_no_field': None}
-
 
 class TestInteractionBetweenSteps(unittest.TestCase):
     @pytest.fixture(autouse=True)
