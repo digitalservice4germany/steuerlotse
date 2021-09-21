@@ -256,8 +256,8 @@
 }
 
 .details-card .card-header .details-icon {
-    width: 14px;
-    min-width: 14px;
+    width: 12px;
+    min-width: 12px;
     height: var(--lineheight-default);
     padding: 0;
     margin-top: .375rem;
@@ -296,7 +296,7 @@
 .details-card .card-body .block-quote-line {
     width: 2px;
     min-width: 2px;
-    margin: 0 var(--spacing-03) 0 5px;
+    margin: 0 var(--spacing-03) 0 4px;
     background-color: var(--border-color);
 }
 
@@ -327,6 +327,10 @@
     margin: 0;
     overflow: hidden;
     position: absolute;
+}
+
+.details-header-text-button {
+    padding: var(--spacing-01);
 }
 
 /* PANEL */
