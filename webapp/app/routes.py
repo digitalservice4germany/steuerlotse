@@ -115,7 +115,9 @@ def register_request_handlers(app):
 
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):
-        return EligibilityStepChooser(endpoint='eligibility').get_correct_step(step_name=step).handle()
+        return EligibilityStepChooser(endpoint='eligibility') \
+            .get_correct_step(step_name=step, update_data=request.method == 'POST') \
+            .handle()
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
     @login_required
@@ -127,7 +129,9 @@ def register_request_handlers(app):
                     StepGemeinsamerHaushalt.name, StepReligion.name, StepSpenden.name,
                     StepSummary.name, StepConfirmation.name, StepFiling.name, StepAck.name]:
             return flow.handle(step_name=step)
-        return LotseStepChooser(endpoint='lotse').get_correct_step(step_name=step).handle()
+        return LotseStepChooser(endpoint='lotse') \
+            .get_correct_step(step_name=step, update_data=request.method == 'POST') \
+            .handle()
 
     @app.route('/unlock_code_request/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_request/step/<step>', methods=['GET', 'POST'])
