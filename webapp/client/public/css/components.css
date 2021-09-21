@@ -260,7 +260,7 @@
     min-width: 12px;
     height: var(--lineheight-default);
     padding: 0;
-    margin-top: .375rem;
+    margin-top: 0;
     background:  url("/icons/details_arrow_down.svg") no-repeat left;
 }
 
@@ -342,7 +342,12 @@
 }
 
 .details-header-text-button {
-    padding: var(--spacing-01);
+    padding: 0 var(--spacing-01);
+}
+
+.details-header-text-button span {
+    display: inline-block;
+    height: var(--lineheight-default);
 }
 
 /* PANEL */
