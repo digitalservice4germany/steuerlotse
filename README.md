@@ -67,9 +67,11 @@ Bitte stelle sicher, dass deine Änderungen getestet wurden, bevor du einen Pull
 ## For Developers 👩‍💻 👨‍💻
 
 ### Overview
-The two main components are the webapp and the erica component. The webapp handles user input, renders html and connects
-to the PostgreSQL database while Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the 
-ELSTER APIs. Part of Erica is Pyeric, a Python wrapper for ERiC.
+The two main components are the webapp and erica.
+
+The webapp handles user input, renders html and connects to the PostgreSQL database.
+
+Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the ELSTER APIs. Part of Erica is Pyeric, a Python wrapper for ERiC.
 
 ### Run directly
 

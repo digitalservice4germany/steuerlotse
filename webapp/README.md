@@ -17,7 +17,7 @@ cd client/ && yarn install && cd ..
 # Ensure required environment variables are set
 cp .env.example .env
 
-# Initialize a local database
+# Initialize local database
 pipenv run flask db upgrade
 pipenv run flask populate-database
 
@@ -57,14 +57,15 @@ cd webapp/
 ```
 
 ### Using the Erica Mock service
-For a lot of functionality in the app, you will also need to run erica.
+A large amount of functionality in the app also requires a local erica service to be running.
 
-_NOTE:_ If you do not want to run erica at the same time, you can set `USE_MOCK_API = True` in the `DevelopmentConfig` in the webapp's `config.py`.
+If you _do not want to run erica_ at the same time, you can set `USE_MOCK_API = True` in the `DevelopmentConfig` in the webapp's `config.py`.
 
 ## Testing 📃
 
 You can run tests as follows:
 ```bash
+cd webapp/
 pipenv run pytest
 ```
 
@@ -73,6 +74,7 @@ pipenv run pytest
 For database migration and upgrades, we use Flask-Migrate. Make sure that you are in the pipenv shell and then do:
 
 ````bash
+cd webapp/
 # After model has been changed
 flask db migrate  # Creates a new migration script in migrate/versions
 flask db upgrade  # Updates the database using the migration script

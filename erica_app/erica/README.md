@@ -33,9 +33,9 @@ lib
 
 _NOTE_: If you use a Mac, get the corresponding `*.dylib` files
 
-### Certificate
+### Obtain Certificate
 
-You also need to acquire a test certificate from ELSTER and place it under `erica/instances/blueprint/cert.pfx`.
+You also need to obtain a test certificate from ELSTER and place it under `erica/instances/blueprint/cert.pfx`.
 
 ## Developing 👩‍💻 👨‍💻
 
@@ -49,6 +49,7 @@ python -m erica
 
 You can run tests as follows:
 ```bash
+cd erica_app/
 pipenv run pytest
 ```
 
