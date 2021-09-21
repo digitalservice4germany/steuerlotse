@@ -1,4 +1,4 @@
-import React, { createRef, useMemo, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import styled from "styled-components";
@@ -29,13 +29,16 @@ function FormFieldSeparatedField({
   extraFieldProps,
   transformUppercase,
 }) {
-  // Memoize so we don't create refs over and over.
-  const subFieldRefs = useMemo(() => inputFieldLengths.map(createRef), [inputFieldLengths]);
+  const container = useRef();
 
   // TODO: replace jquery-mask with non-jquery equivalent
   useEffect(() => {
-    subFieldRefs.map((ref) => jQuery.applyDataMask(ref.current));
-  }, [subFieldRefs]);
+    Array.from(container.current.querySelectorAll("input")).forEach(
+      (inputElement) => {
+        jQuery.applyDataMask(inputElement);
+      }
+    );
+  }, [container]);
 
   const handlePaste = (e) => {
     const data = e.clipboardData.items[0];
@@ -44,9 +47,10 @@ function FormFieldSeparatedField({
       return;
     }
 
+    const subFields = container.current.querySelectorAll("input");
     data.getAsString((str) => {
       // All inputs have the same mask.
-      const firstSubField = subFieldRefs[0].current;
+      const firstSubField = subFields[0];
 
       // Mask the whole string, so we can meaningfully index it.
       let maskedStr = str;
@@ -59,10 +63,11 @@ function FormFieldSeparatedField({
 
       // Distribute pasted content onto fields.
       let startIdx = 0;
-      subFieldRefs.forEach((subFieldRef) => {
-        const subField = subFieldRef.current;
+      subFields.forEach((subField) => {
         const length = parseInt(subField.dataset.fieldLength, 10);
         const pasteFragment = maskedStr.substr(startIdx, length);
+        // This is ok for an uncontrolled input element.
+        // eslint-disable-next-line
         subField.value = pasteFragment || "";
         startIdx += length;
       });
@@ -75,12 +80,11 @@ function FormFieldSeparatedField({
       {
         // TODO styled-components
       }
-      <SeparatedField className="separated-field">
+      <SeparatedField ref={container} className="separated-field">
         {inputFieldLengths.map((length, index) => {
           const subFieldId = `${fieldId}_${index + 1}`;
           const inputElement = (
             <input
-              ref={subFieldRefs[index]}
               type="text"
               id={subFieldId}
               name={fieldName}
