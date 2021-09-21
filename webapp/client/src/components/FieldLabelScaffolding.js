@@ -18,7 +18,10 @@ export default function FieldLabelScaffolding({
     return null;
   }
 
-  const labelClassNames = classNames("field-label", "text-input-field-label");
+  const labelClassNames = classNames("text-input-field-label", {
+    "field-label": !label.exampleInput,
+    "field-label-example": label.exampleInput,
+  });
   return (
     <>
       {/* This content goes _inside_ the label / legend. */}
