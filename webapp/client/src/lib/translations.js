@@ -34,6 +34,18 @@ const translations = {
       },
     },
   },
+  dateField: {
+    day: "Tag",
+    month: "Monat",
+    year: "Jahr",
+  },
+  fields: {
+    dateField: {
+      exampleInput: {
+        text: 'z.B. 29.2.1951'
+      }
+    }
+  }
 };
 
 export default translations;
