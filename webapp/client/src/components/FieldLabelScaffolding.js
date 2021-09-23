@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import ExampleFieldInput from "./ExampleFieldInput";
-import HelpButton from "./HelpButton";
-import HelpDialog from "./HelpDialog";
+import HelpModal from "./HelpModal";
 import Details from "./Details";
 import OptionalHint from "./OptionalHint";
 
@@ -29,18 +28,11 @@ export default function FieldLabelScaffolding({
         <>
           {label.text}
           {label.optional && <OptionalHint />}
-          {label.help && <HelpButton dialogFieldId={fieldId} />}
+          {label.help && <HelpModal title={label.text} body={label.help} />}
         </>,
         labelClassNames
       )}
       {/* This content becomes a _sibling_ of the label / legend. */}
-      {label.help && (
-        <HelpDialog
-          dialogFieldId={fieldId}
-          title={label.text}
-          helpText={label.help}
-        />
-      )}
       {label.exampleInput && (
         <ExampleFieldInput {...{ exampleInput: label.exampleInput, fieldId }} />
       )}
