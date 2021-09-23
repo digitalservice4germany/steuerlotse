@@ -10,8 +10,10 @@ import FormRowCentered from "./FormRowCentered";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
 
 const SeparatedField = styled(FormRowCentered)`
-  flex-wrap: nowrap;
-  margin-top: 0;
+  &.separated-field {
+    flex-wrap: nowrap;
+    margin-top: 0;
+  }
 `;
 
 function FormFieldSeparatedField({
@@ -77,9 +79,6 @@ function FormFieldSeparatedField({
   return (
     <fieldset id={fieldId}>
       {labelComponent}
-      {
-        // TODO styled-components
-      }
       <SeparatedField ref={container} className="separated-field">
         {inputFieldLengths.map((length, index) => {
           const subFieldId = `${fieldId}_${index + 1}`;

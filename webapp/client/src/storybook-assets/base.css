@@ -155,7 +155,7 @@ input.form-control.field-error-found {
 }
 
 /* ERRORS */
-.invalid-feedback {
+/* .invalid-feedback {
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
   color: var(--error-color);
@@ -177,7 +177,7 @@ img.invalid-feedback {
   margin-left: var(--spacing-02);
   padding-left: var(--spacing-04) !important;
   border-left: 2px solid var(--error-color);
-}
+} */
 
 /* LISTS */
 ol {
@@ -510,147 +510,3 @@ img.icon {
   display: none;
 }
 /** END copied unorganised CSS from base.css **/
-
-/* TODO: GET RID OF ME */
-.field-label {
-  margin-bottom: var(--spacing-01);
-}
-
-.details-card {
-  display: block;
-  width: 100%;
-  overflow: auto;
-}
-
-.details-card .card {
-  border: 0;
-  border-radius: 0;
-  background: inherit;
-}
-
-.details-card .card-header {
-  border: 0;
-  background: inherit;
-  align-items: start;
-  flex-wrap: nowrap;
-}
-
-.details-row {
-  flex-wrap: nowrap;
-  margin: 0;
-}
-
-.details-card .card-header span {
-  color: var(--text-color);
-  font-size: var(--text-medium);
-  font-weight: var(--font-bold);
-}
-
-@media (max-width: 1024px) {
-  .details-card .card-header span {
-    font-size: var(--text-base);
-  }
-}
-
-.details-card .card-header button {
-  text-align: left;
-  color: var(--text-color);
-  background: inherit;
-  border: 0;
-  outline: none;
-  box-shadow: none;
-}
-
-.details-card .card-header .collapsed span {
-  color: var(--link-color);
-}
-
-.details-card .card-header .collapsed span:hover {
-  color: var(--link-hover-color);
-}
-
-.details-card .card-header button:focus span {
-  color: var(--focus-text-color);
-
-  background: var(--focus-color);
-
-  outline: none;
-  box-shadow: none;
-  border: 0;
-}
-
-.details-card .card-header .details-icon {
-  width: 14px;
-  min-width: 14px;
-  height: var(--lineheight-default);
-  padding: 0;
-  margin-top: 0.375rem;
-  background: url("./assets/icons/details_arrow_down.svg") no-repeat left;
-}
-
-.details-card .card-header .collapsed:hover .details-icon {
-  background: url("./assets/icons/details_arrow_right_hover.svg") no-repeat left;
-}
-
-.details-card .card-header .collapsed button:focus .details-icon {
-  background: url("./assets/icons/details_arrow_right_focus.svg") no-repeat left;
-}
-
-.details-card .card-header .collapsed .details-icon {
-  background: url("./assets/icons/details_arrow_right.svg") no-repeat left;
-}
-
-.details-card .card-body {
-  border: 0;
-}
-
-.details-card .details-content {
-  padding: 1em 1em 0 0;
-}
-
-.card-body-less-padding {
-  padding: 1em 1em var(--spacing-01) var(--spacing-01);
-}
-
-.details-card .card-body {
-  padding: 0 0 var(--spacing-04) 0;
-}
-
-.details-card .card-body .block-quote-line {
-  width: 2px;
-  min-width: 2px;
-  margin: 0 var(--spacing-03) 0 5px;
-  background-color: var(--border-color);
-}
-
-.details-card .card-header button:hover,
-.accordion .card-header button:active {
-  color: var(--link-hover-color);
-  outline: none;
-}
-
-.details-card .card-header:not(.collapsed) .control-show-more {
-  /* We need to still show it to keep focus on the element */
-  height: 1px;
-  width: 1px;
-  min-width: 1px;
-  background-color: inherit;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  position: absolute;
-}
-
-.details-card .card-header.collapsed .control-show-less {
-  /* We need to still show it to keep focus on the element */
-  height: 1px;
-  width: 1px;
-  min-width: 1px;
-  background-color: inherit;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  position: absolute;
-}
-
-/* end GET RID OF ME */

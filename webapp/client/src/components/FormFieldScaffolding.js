@@ -1,9 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import styled from "styled-components";
 import jQuery from "jquery";
 import "jquery-mask-plugin";
 import FieldError from "./FieldError";
+
+const FormField = styled.div`
+  &.error-found-line {
+    margin-left: var(--spacing-02);
+    padding-left: var(--spacing-04) !important;
+    border-left: 2px solid var(--error-color);
+  }
+`;
 
 // TODO: implement concrete fields with this:
 // - ConfirmationField: cols="12" hideLabel=True
@@ -44,7 +53,7 @@ export default function FormFieldScaffolding({
   });
 
   return (
-    <div ref={element} className={divClassNames}>
+    <FormField ref={element} className={divClassNames}>
       {!hideLabel && labelComponent}
       <div className={classNames({ "d-block": displayBlock })}>
         {render(fieldClassNames)}
@@ -76,7 +85,7 @@ export default function FormFieldScaffolding({
             </FieldError>
           ))}
       </div>
-    </div>
+    </FormField>
   );
 }
 

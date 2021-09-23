@@ -1,6 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
+
+const Legend = styled.legend`
+  &.field-label {
+    margin-bottom: var(--spacing-01);
+  }
+`;
 
 // TODO: Use for Radio, SteuerlotseDate fields
 export default function FieldLabelForSeparatedFields(props) {
@@ -9,7 +16,7 @@ export default function FieldLabelForSeparatedFields(props) {
       {...props}
       render={(innerContent, className) => (
         <span>
-          <legend className={className}>{innerContent}</legend>
+          <Legend className={className}>{innerContent}</Legend>
         </span>
       )}
     />

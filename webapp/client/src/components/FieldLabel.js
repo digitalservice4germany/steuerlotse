@@ -1,15 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
+
+const Label = styled.label`
+  &.field-label {
+    margin-bottom: var(--spacing-01);
+  }
+`;
 
 export default function FieldLabel(props) {
   return (
     <FieldLabelScaffolding
       {...props}
       render={(innerContent, className) => (
-        <label htmlFor={props.fieldId} className={className}>
+        <Label htmlFor={props.fieldId} className={className}>
           {innerContent}
-        </label>
+        </Label>
       )}
     />
   );
