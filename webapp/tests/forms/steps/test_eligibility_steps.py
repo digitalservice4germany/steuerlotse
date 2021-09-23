@@ -33,7 +33,8 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     EligibilityStepMixin, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
     EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
     data_fits_data_model_from_list, data_fits_data_model, \
-    ElsterRegistrationMethodEligibilityDecisionStep, ElsterRegistrationMethodEligibilityFailureStep
+    ElsterRegistrationMethodEligibilityDecisionStep, ElsterRegistrationMethodEligibilityFailureStep, \
+    ElsterAbrufcodeEligibilityDecisionStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
@@ -1475,8 +1476,7 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility')\
                 .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
-            # TODO change!
-            expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+            expected_url = step.url_for_step(ElsterAbrufcodeEligibilityDecisionStep.name)
 
             step.handle()
         assert step.render_info.next_url == expected_url

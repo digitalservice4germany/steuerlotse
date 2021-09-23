@@ -325,14 +325,15 @@ class PensionEligibilityData(RecursiveDataModel):
     single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
     user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
     user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
-    elster_registration_ethod_is_none: Optional[ElsterRegistrationMethodNoneEligibilityData]
+    elster_registration_method_is_none: Optional[ElsterRegistrationMethodNoneEligibilityData]
+    elster_no_abrufcode: Optional[ElsterNoAbrufcodeEligibilityData]
     pension_eligibility: str
 
     @validator('pension_eligibility')
     def has_to_get_pension(cls, v):
         return declarations_must_be_set_yes(v)
 
-    @validator('elster_registration_ethod_is_none', always=True, check_fields=False)
+    @validator('elster_no_abrufcode', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 

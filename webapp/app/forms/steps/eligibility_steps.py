@@ -433,8 +433,7 @@ class ElsterRegistrationMethodEligibilityFailureStep(EligibilityFailureDisplaySt
 class ElsterRegistrationMethodEligibilityDecisionStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "elster_registration_method"
     next_step_data_models = [
-        # TODO change target step
-        (ElsterRegistrationMethodSoftwareEligibilityData, "pension"),
+        (ElsterRegistrationMethodSoftwareEligibilityData, "elster_abrufcode"),
         (ElsterRegistrationMethodNoneEligibilityData, "pension"),
     ]
     failure_step_name = ElsterRegistrationMethodEligibilityFailureStep.name

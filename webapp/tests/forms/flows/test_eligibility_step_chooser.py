@@ -27,7 +27,8 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
     ElsterRegistrationMethodEligibilityFailureStep, \
-    ElsterRegistrationMethodEligibilityDecisionStep
+    ElsterRegistrationMethodEligibilityDecisionStep, ElsterAbrufcodeEligibilityDecisionStep, \
+    ElsterAbrufcodeEligibilityFailureStep
 
 
 class TestEligibilityChooserInit(unittest.TestCase):
@@ -50,6 +51,7 @@ class TestEligibilityChooserInit(unittest.TestCase):
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
                 SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
                 ElsterRegistrationMethodEligibilityDecisionStep,
+                ElsterAbrufcodeEligibilityDecisionStep,
                 PensionDecisionEligibilityInputFormSteuerlotseStep,
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
@@ -65,6 +67,7 @@ class TestEligibilityChooserInit(unittest.TestCase):
                 DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
                 ElsterRegistrationMethodEligibilityFailureStep,
+                ElsterAbrufcodeEligibilityFailureStep,
                 PensionEligibilityFailureDisplaySteuerlotseStep,
                 TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
                 CheaperCheckEligibilityFailureDisplaySteuerlotseStep,
