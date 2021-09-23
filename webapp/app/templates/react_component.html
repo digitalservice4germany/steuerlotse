@@ -1,0 +1,15 @@
+{% extends 'basis/base.html' %}
+
+{% block main_content %}
+  <div class="main-content">
+    <div class="mt-4">
+      <div class="col-lg-9 col-md-10 col-xs-12 p-0">
+        <div
+          data-is-component="yes"
+          data-component-name="{{ component }}"
+          data-props-json="{{ props | tojson | forceescape }}"
+        ></div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
