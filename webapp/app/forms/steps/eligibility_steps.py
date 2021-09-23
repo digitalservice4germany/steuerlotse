@@ -334,18 +334,12 @@ class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
             validators=[InputRequired()])
 
 
-class UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
-    name = 'user_b_has_elster_account_failure'
-    eligibility_error = _l('form.eligibility.elster_account_failure-error')
-    input_step_name = 'user_b_has_elster_account'
-
-
 class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "user_b_has_elster_account"
     next_step_data_models = [
         (UserBNoElsterAccountEligibilityData, 'pension'),
+        (UserBElsterAccountEligibilityData, 'elster_registration_method')
     ]
-    failure_step_name = UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_b_has_elster_account-title')
 
     class InputForm(SteuerlotseBaseForm):
@@ -410,18 +404,12 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
             validators=[InputRequired()])
 
 
-class SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
-    name = 'single_elster_account_failure'
-    eligibility_error = _l('form.eligibility.elster_account_failure-error')
-    input_step_name = 'single_elster_account'
-
-
 class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "single_elster_account"
     next_step_data_models = [
         (SingleUserNoElsterAccountEligibilityData, 'pension'),
+        (SingleUserElsterAccountEligibilityData, 'elster_registration_method')
     ]
-    failure_step_name = SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_a_has_elster_account-title')
 
     class InputForm(SteuerlotseBaseForm):

@@ -20,12 +20,14 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
     TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
     CheaperCheckDecisionEligibilityInputFormSteuerlotseStep, MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
-    MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep, UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep, \
+    MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep, \
     DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep, SingleAlimonyEligibilityFailureDisplaySteuerlotseStep, \
-    SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep, PensionEligibilityFailureDisplaySteuerlotseStep, \
+    PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
-    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
+    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
+    ElsterRegistrationMethodEligibilityDecisionStep, \
+    ElsterRegistrationMethodEligibilityFailureStep
 from app.forms.flows.step_chooser import StepChooser
 
 
@@ -57,6 +59,7 @@ class EligibilityStepChooser(StepChooser):
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
                 SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+                ElsterRegistrationMethodEligibilityDecisionStep,
                 PensionDecisionEligibilityInputFormSteuerlotseStep,
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
@@ -69,10 +72,9 @@ class EligibilityStepChooser(StepChooser):
                 EligibilitySuccessDisplaySteuerlotseStep,
                 MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep,
                 DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep,
+                ElsterRegistrationMethodEligibilityFailureStep,
                 PensionEligibilityFailureDisplaySteuerlotseStep,
                 TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
                 CheaperCheckEligibilityFailureDisplaySteuerlotseStep,
