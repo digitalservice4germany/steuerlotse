@@ -18,7 +18,10 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     SingleEligibilityData, DivorcedEligibilityData, NotSeparatedEligibilityData, \
     UserAElsterAccountEligibilityData, EmploymentIncomeEligibilityData, NoInvestmentIncomeEligibilityData, \
     MoreThanMinimalInvestmentIncome, SeparatedLivedTogetherEligibilityData, SeparatedNotLivedTogetherEligibilityData, \
-    SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData
+    SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
+    ElsterRegistrationMethodNoneEligibilityData, \
+    ElsterRegistrationMethodSoftwareEligibilityData, SingleUserElsterAccountEligibilityData, \
+    UserBElsterAccountEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
 
 
@@ -429,6 +432,35 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
                                   'text': _l('form.eligibility.user_a_has_elster_account.detail.text')}},
             choices=[('yes', _l('form.eligibility.user_a_has_elster_account.yes')),
                      ('no', _l('form.eligibility.user_a_has_elster_account.no')),
+                     ],
+            validators=[InputRequired()])
+
+
+class ElsterRegistrationMethodEligibilityFailureStep(EligibilityFailureDisplaySteuerlotseStep):
+    name = 'elster_registration_method_failure'
+    eligibility_error = _l('form.eligibility.elster_registration_method_failure-error')
+    input_step_name = 'elster_registration_method'
+
+
+class ElsterRegistrationMethodEligibilityDecisionStep(DecisionEligibilityInputFormSteuerlotseStep):
+    name = "elster_registration_method"
+    next_step_data_models = [
+        # TODO change target step
+        (ElsterRegistrationMethodSoftwareEligibilityData, "pension"),
+        (ElsterRegistrationMethodNoneEligibilityData, "pension"),
+    ]
+    failure_step_name = ElsterRegistrationMethodEligibilityFailureStep.name
+    title = _l('form.eligibility.elster_registration_method-title')
+
+    class InputForm(SteuerlotseBaseForm):
+        elster_registration_method_eligibility = RadioField(
+            label="",
+            render_kw={'hide_label': True},
+            choices=[('software', _l('form.eligibility.elster_registration_method.software')),
+                     ('id_card', _l('form.eligibility.elster_registration_method.id_card')),
+                     ('stick', _l('form.eligibility.elster_registration_method.stick')),
+                     ('card', _l('form.eligibility.elster_registration_method.card')),
+                     ('none', _l('form.eligibility.elster_registration_method.none')),
                      ],
             validators=[InputRequired()])
 
