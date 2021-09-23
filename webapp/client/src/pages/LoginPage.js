@@ -8,12 +8,12 @@ import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 
-export default function LoginPage({ backLink, stepHeader, form, fields }) {
+export default function LoginPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
 
   return (
     <>
-      <StepHeaderButtons {...backLink} />
+      <StepHeaderButtons />
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
         <FormRowCentered>
@@ -63,7 +63,6 @@ const fieldPropType = PropTypes.exact({
 });
 
 LoginPage.propTypes = {
-  backLink: PropTypes.exact(StepHeaderButtons.propTypes),
   stepHeader: PropTypes.exact({
     // TODO: define these here, not in Python
     // render_info.step_title
@@ -87,8 +86,4 @@ LoginPage.propTypes = {
     idnr: fieldPropType,
     unlockCode: fieldPropType,
   }).isRequired,
-};
-
-LoginPage.defaultProps = {
-  backLink: undefined,
 };
