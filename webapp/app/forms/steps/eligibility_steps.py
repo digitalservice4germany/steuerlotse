@@ -454,7 +454,7 @@ class ElsterRegistrationMethodEligibilityDecisionStep(DecisionEligibilityInputFo
 
 class ElsterAbrufcodeEligibilityFailureStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'elster_abrufcode_failure'
-    eligibility_error = _l('form.eligibility.elster_registration_method_failure-error')
+    eligibility_error = _l('form.eligibility.elster_abrufcode_failure-error')
     input_step_name = 'elster_abrufcode'
 
 
@@ -464,7 +464,7 @@ class ElsterAbrufcodeEligibilityDecisionStep(DecisionEligibilityInputFormSteuerl
         (ElsterNoAbrufcodeEligibilityData, 'pension'),
     ]
     failure_step_name = ElsterAbrufcodeEligibilityFailureStep.name
-    title = _l('form.eligibility.user_a_has_elster_account-title')
+    title = _l('form.eligibility.elster_abrufcode-title')
 
     class InputForm(SteuerlotseBaseForm):
         elster_abrufcode_eligibility = RadioField(
