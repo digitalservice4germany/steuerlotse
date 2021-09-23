@@ -463,6 +463,7 @@ class ElsterAbrufcodeEligibilityDecisionStep(DecisionEligibilityInputFormSteuerl
     next_step_data_models = [
         (ElsterNoAbrufcodeEligibilityData, 'pension'),
     ]
+    failure_step_name = ElsterAbrufcodeEligibilityFailureStep.name
     title = _l('form.eligibility.user_a_has_elster_account-title')
 
     class InputForm(SteuerlotseBaseForm):
