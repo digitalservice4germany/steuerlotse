@@ -802,3 +802,8 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
         self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.next_url = None
+
+        if data_fits_data_model(ElsterRegistrationMethodNoneEligibilityData, self.stored_data):
+            self.render_info.additional_info['answer_is_maybe'] = True
+            self.render_info.step_title = _l('form.eligibility.success.maybe.title')
+            self.render_info.step_intro = _l('form.eligibility.success.maybe.intro')

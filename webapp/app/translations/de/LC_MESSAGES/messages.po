@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-23 13:15+0200\n"
+"POT-Creation-Date: 2021-09-23 14:18+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -982,6 +982,26 @@ msgstr ""
 "einverstanden sind, dann können Sie in der Einkommensteuererklärung eine "
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
+
+#: app/forms/steps/eligibility_steps.py:808
+msgid "form.eligibility.success.maybe.title"
+msgstr ""
+"Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
+"Steuerlotsen machen."
+
+#: app/forms/steps/eligibility_steps.py:809
+msgid "form.eligibility.success.maybe.intro"
+msgstr ""
+"Es kann allerdings sein, dass Sie <strong>keinen Brief mit Ihrem "
+"persönlichen Freischaltcode erhalten</strong>, weil Ihnen aufgrund Ihres "
+"Kontos bei Mein ELSTER kein Brief zugeschickt wird. Haben Sie bei "
+"erfolgreicher Registrierung nach 2 Wochen keinen Brief erhalten, können "
+"Sie den Steuerlotsen nicht nutzen.</p><p> Wenn Sie alle Fragen korrekt "
+"beantwortet haben, erfüllen Sie aber die formalen Voraussetzungen für die"
+" Nutzung des Steuerlotsen. Sie erhalten in diesem Fall Ihre Rente "
+"beziehungsweise Ihre Pension von Trägern, die Ihre Daten automatisch an "
+"die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
+"Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen. "
 
 #: app/forms/steps/logout_steps.py:16
 msgid "form.logout.input-title"
@@ -2805,7 +2825,7 @@ msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
 #: app/templates/basis/display_failure_icon.html:14
-#: app/templates/eligibility/display_success.html:15
+#: app/templates/eligibility/display_success.html:18
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
@@ -4867,21 +4887,25 @@ msgstr ""
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
-#: app/templates/eligibility/display_success.html:25
+#: app/templates/eligibility/display_success.html:16
+msgid "maybe_icon"
+msgstr "Fragezeichen Icon auf gelbem Kreis"
+
+#: app/templates/eligibility/display_success.html:29
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_success.html:26
+#: app/templates/eligibility/display_success.html:30
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:32
+#: app/templates/eligibility/display_success.html:36
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_success.html:42
+#: app/templates/eligibility/display_success.html:46
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 

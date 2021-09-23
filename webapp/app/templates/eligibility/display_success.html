@@ -12,7 +12,11 @@
     <div class="section-intro panel simple-card">
         <div class="row p-0">
             <div class="col-12 col-sm-2 failure-success-icon">
-                <img src="{{ static_url_for('static', filename='icons/success_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+                {% if render_info.additional_info['answer_is_maybe'] %}
+                    <img src="{{ static_url_for('static', filename='icons/maybe_icon.svg') }}" alt="{{ _('maybe_icon') }}"/>
+                {% else %}
+                    <img src="{{ static_url_for('static', filename='icons/success_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+                {% endif %}
             </div>
             <div class="col-12 col-sm-10">
                 <h1 class="headline">{{ render_info.step_title }}</h1>

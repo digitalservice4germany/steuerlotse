@@ -3365,3 +3365,21 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+
+    def test_if_elster_registration_method_is_none_then_set_correct_info(self):
+        expected_title = 'form.eligibility.success.maybe.title'
+        expected_intro = 'form.eligibility.success.maybe.intro'
+        session_data = {'marital_status_eligibility': 'married',
+                        'separated_since_last_year_eligibility': 'no',
+                        'user_a_has_elster_account_eligibility': 'yes',
+                        'user_b_has_elster_account_eligibility': 'yes',
+                        'elster_registration_method_eligibility': 'none',
+                        'joint_taxes_eligibility': 'yes',
+                        'alimony_eligibility': 'no', }
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
+            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step.handle()
+
+        assert step.render_info.step_title == expected_title
+        assert step.render_info.step_intro == expected_intro
+        assert step.render_info.additional_info['answer_is_maybe'] == True
