@@ -119,6 +119,7 @@ function Details({ children, title, detailsId }) {
   const toggle = () => setOpen(!open);
 
   const detailsBodyId = `details-body-${detailsId}`;
+  const headingId = `heading-${detailsId}`;
 
   return (
     <DetailsCard className="details-card ml-0 pl-0">
@@ -131,7 +132,7 @@ function Details({ children, title, detailsId }) {
             aria-expanded={open}
             aria-controls={detailsBodyId}
           >
-            <div className="row details-row">
+            <div id={headingId} className="row details-row">
               <i className="details-icon" />
               <span className="mb-0">{title}</span>
             </div>
@@ -140,7 +141,7 @@ function Details({ children, title, detailsId }) {
         <Collapse in={open}>
           <div
             id={detailsBodyId}
-            aria-labelledby="heading-idnr"
+            aria-labelledby={headingId}
             className="card-body pt-0"
           >
             <div className="row details-row">
