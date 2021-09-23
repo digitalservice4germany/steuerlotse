@@ -34,6 +34,11 @@ const translations = {
       },
     },
   },
+  unlockCodeRequest: {
+    dob: {
+      labelText: "Geburtsdatum",
+    },
+  },
   dateField: {
     day: "Tag",
     month: "Monat",
