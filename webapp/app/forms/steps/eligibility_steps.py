@@ -21,7 +21,7 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
     ElsterRegistrationMethodNoneEligibilityData, \
     ElsterRegistrationMethodSoftwareEligibilityData, SingleUserElsterAccountEligibilityData, \
-    UserBElsterAccountEligibilityData
+    UserBElsterAccountEligibilityData, ElsterNoAbrufcodeEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
 
 
@@ -449,6 +449,31 @@ class ElsterRegistrationMethodEligibilityDecisionStep(DecisionEligibilityInputFo
                      ('stick', _l('form.eligibility.elster_registration_method.stick')),
                      ('card', _l('form.eligibility.elster_registration_method.card')),
                      ('none', _l('form.eligibility.elster_registration_method.none')),
+                     ],
+            validators=[InputRequired()])
+
+
+class ElsterAbrufcodeEligibilityFailureStep(EligibilityFailureDisplaySteuerlotseStep):
+    name = 'elster_abrufcode_failure'
+    eligibility_error = _l('form.eligibility.elster_registration_method_failure-error')
+    input_step_name = 'elster_abrufcode'
+
+
+class ElsterAbrufcodeEligibilityDecisionStep(DecisionEligibilityInputFormSteuerlotseStep):
+    name = "elster_abrufcode"
+    next_step_data_models = [
+        (ElsterNoAbrufcodeEligibilityData, 'pension'),
+    ]
+    title = _l('form.eligibility.user_a_has_elster_account-title')
+
+    class InputForm(SteuerlotseBaseForm):
+        elster_abrufcode_eligibility = RadioField(
+            label="",
+            render_kw={'hide_label': True,
+                       'data-detail': {'title': _l('form.eligibility.elster_abrufcode_eligibility.detail.title'),
+                                  'text': _l('form.eligibility.elster_abrufcode_eligibility.detail.text')}},
+            choices=[('yes', _l('form.eligibility.elster_abrufcode_eligibility.yes')),
+                     ('no', _l('form.eligibility.elster_abrufcode_eligibility.no')),
                      ],
             validators=[InputRequired()])
 

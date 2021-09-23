@@ -308,6 +308,19 @@ class ElsterRegistrationMethodNoneEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
+class ElsterNoAbrufcodeEligibilityData(RecursiveDataModel):
+    elster_registration_method_is_software: Optional[ElsterRegistrationMethodSoftwareEligibilityData]
+    elster_abrufcode_eligibility: str
+
+    @validator('elster_abrufcode_eligibility')
+    def must_be_none(cls, v):
+        return declarations_must_be_set_no(v)
+
+    @validator('elster_registration_method_is_software', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
+
+
 class PensionEligibilityData(RecursiveDataModel):
     single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
     user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
