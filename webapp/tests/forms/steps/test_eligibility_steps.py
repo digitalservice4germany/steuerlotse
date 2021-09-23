@@ -1461,6 +1461,19 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
                              deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
+class TestElsterRegistragionMethodEligibilityFailureStep(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
+
+    def test_handle_sets_correct_prev_url(self):
+        step = ElsterRegistrationMethodEligibilityFailureStep(endpoint='eligibility')
+        expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
+        step.handle()
+
+        self.assertEqual(expected_url, step.render_info.prev_url)
+
+
 class TestElsterRegistrationMethodEligibilityDecisionStep:
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, app, test_request_context):
@@ -1580,6 +1593,19 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == only_necessary_data
+
+
+class TestElsterAbrufCodeEligibilityFailureStep(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
+
+    def test_handle_sets_correct_prev_url(self):
+        step = ElsterAbrufcodeEligibilityFailureStep(endpoint='eligibility')
+        expected_url = step.url_for_step(ElsterAbrufcodeEligibilityDecisionStep.name)
+        step.handle()
+
+        self.assertEqual(expected_url, step.render_info.prev_url)
 
 
 class TestElsterAbrufcodeEligibilityDecisionStep:
