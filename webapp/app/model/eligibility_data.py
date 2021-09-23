@@ -237,7 +237,7 @@ class AlimonyEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
-class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
+class SingleUserNoElsterAccountEligibilityData(RecursiveDataModel):
     no_alimony: Optional[AlimonyEligibilityData]
     user_a_has_elster_account_eligibility: str
 
@@ -251,7 +251,7 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
 
 
 class PensionEligibilityData(RecursiveDataModel):
-    single_user_has_no_elster_account: Optional[SingleUserElsterAccountEligibilityData]
+    single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
     user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
     user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
     pension_eligibility: str

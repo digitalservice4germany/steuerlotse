@@ -6,7 +6,7 @@ from pydantic import ValidationError
 from app.model.eligibility_data import SeparatedEligibilityData, \
     NotSeparatedEligibilityData, AlimonyMarriedEligibilityData, UserANoElsterAccountEligibilityData, \
     UserBNoElsterAccountEligibilityData, DivorcedJointTaxesEligibilityData, AlimonyEligibilityData, \
-    SingleUserElsterAccountEligibilityData, PensionEligibilityData, InvestmentIncomeEligibilityData, \
+    SingleUserNoElsterAccountEligibilityData, PensionEligibilityData, InvestmentIncomeEligibilityData, \
     CheaperCheckEligibilityData, \
     NoTaxedInvestmentIncome, NoInvestmentIncomeEligibilityData, \
     NoEmploymentIncomeEligibilityData, EmploymentIncomeEligibilityData, MarginalEmploymentEligibilityData, \
@@ -526,29 +526,29 @@ class TestSingleUserElsterAccountEligibilityData(unittest.TestCase):
     def test_if_alimony_valid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
         non_valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
         with patch('app.model.eligibility_data.AlimonyEligibilityData.parse_obj'):
-            self.assertRaises(ValidationError, SingleUserElsterAccountEligibilityData.parse_obj, non_valid_data)
+            self.assertRaises(ValidationError, SingleUserNoElsterAccountEligibilityData.parse_obj, non_valid_data)
 
     def test_if_alimony_invalid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
         valid_data = {'user_a_has_elster_account_eligibility': 'no'}
         with patch('app.model.eligibility_data.AlimonyEligibilityData.parse_obj',
                    MagicMock(side_effect=ValidationError([], AlimonyEligibilityData))):
-            self.assertRaises(ValidationError, SingleUserElsterAccountEligibilityData.parse_obj, valid_data)
+            self.assertRaises(ValidationError, SingleUserNoElsterAccountEligibilityData.parse_obj, valid_data)
 
     def test_if_alimony_valid_and_user_a_has_elster_account_account_no_then_raise_no_validation_error(self):
         valid_data = {'user_a_has_elster_account_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__',
                        MagicMock(return_value=None)):
-                SingleUserElsterAccountEligibilityData.parse_obj(valid_data)
+                SingleUserNoElsterAccountEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
-            self.fail("SingleUserElsterAccountEligibilityData.parse_obj should not raise validation error")
+            self.fail("SingleUserNoElsterAccountEligibilityData.parse_obj should not raise validation error")
 
 
 class TestPensionEligibilityData(unittest.TestCase):
 
     def test_if_single_elster_valid_and_pension_no_then_raise_validation_error(self):
         non_valid_data = {'pension_eligibility': 'no'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj'), \
+        with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.parse_obj',
@@ -557,8 +557,8 @@ class TestPensionEligibilityData(unittest.TestCase):
 
     def test_if_user_a_elster_valid_and_pension_no_then_raise_validation_error(self):
         non_valid_data = {'pension_eligibility': 'no'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
+        with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj'), \
                 patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserBNoElsterAccountEligibilityData))):
@@ -566,8 +566,8 @@ class TestPensionEligibilityData(unittest.TestCase):
 
     def test_if_user_b_elster_valid_and_pension_no_then_raise_validation_error(self):
         non_valid_data = {'pension_eligibility': 'no'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
+        with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.parse_obj'):
@@ -575,8 +575,8 @@ class TestPensionEligibilityData(unittest.TestCase):
 
     def test_if_single_elster_and_user_a_elster_and_user_b_elster_invalid_and_pension_yes_then_raise_validation_error(self):
         valid_data = {'pension_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
-                   MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
+        with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.parse_obj',
+                   MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
                       MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                 patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.parse_obj',
@@ -586,7 +586,7 @@ class TestPensionEligibilityData(unittest.TestCase):
     def test_if_single_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
         valid_data = {'pension_eligibility': 'yes'}
         try:
-            with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__',
+            with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.__init__',
                        MagicMock(return_value=None)), \
                     patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
                           MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
@@ -599,8 +599,8 @@ class TestPensionEligibilityData(unittest.TestCase):
     def test_if_user_a_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
         valid_data = {'pension_eligibility': 'yes'}
         try:
-            with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__',
-                       MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
+            with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.__init__',
+                       MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
                     patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.__init__',
                        MagicMock(return_value=None)), \
                 patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.parse_obj',
@@ -612,8 +612,8 @@ class TestPensionEligibilityData(unittest.TestCase):
     def test_if_user_b_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
         valid_data = {'pension_eligibility': 'yes'}
         try:
-            with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.parse_obj',
-                       MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
+            with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.parse_obj',
+                       MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
                     patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.parse_obj',
                           MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
                     patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.__init__',

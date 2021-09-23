@@ -11,7 +11,7 @@ from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerl
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
     ForeignCountryEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
     NoTaxedInvestmentIncome, MinimalInvestmentIncome, InvestmentIncomeEligibilityData, \
-    PensionEligibilityData, SingleUserElsterAccountEligibilityData, AlimonyEligibilityData, \
+    PensionEligibilityData, SingleUserNoElsterAccountEligibilityData, AlimonyEligibilityData, \
     DivorcedJointTaxesEligibilityData, UserBNoElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
     UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData, MarriedEligibilityData, WidowedEligibilityData, \
@@ -416,7 +416,7 @@ class SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep(EligibilityFai
 class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "single_elster_account"
     next_step_data_models = [
-        (SingleUserElsterAccountEligibilityData, 'pension'),
+        (SingleUserNoElsterAccountEligibilityData, 'pension'),
     ]
     failure_step_name = SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.user_a_has_elster_account-title')
