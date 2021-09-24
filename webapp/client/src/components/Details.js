@@ -35,7 +35,7 @@ const DetailsCard = styled.div`
 
   &.details-card .card-header span {
     display: inline-block;
-    padding: 0 var(--spacing-01);
+    margin: 0 var(--spacing-01);
     height: var(--lineheight-default);
     font-size: var(--text-medium);
     font-weight: var(--font-bold);
@@ -48,6 +48,7 @@ const DetailsCard = styled.div`
   }
 
   &.details-card .card-header button {
+    padding: 0;
     text-align: left;
     color: var(--text-color);
     background: inherit;
@@ -74,7 +75,6 @@ const DetailsCard = styled.div`
     min-width: 12px;
     height: var(--lineheight-default);
     padding: 0;
-    margin-right: var(--spacing-02);
   }
 
   &.details-card [aria-expanded="false"]:hover .details-icon {
@@ -101,7 +101,7 @@ const DetailsCard = styled.div`
   &.details-card .card-body .block-quote-line {
     width: 2px;
     min-width: 2px;
-    margin: 0 var(--spacing-03) 0 4px;
+    margin: 0 var(--spacing-03) 0 5px;
     background-color: var(--border-color);
   }
 
