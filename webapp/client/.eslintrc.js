@@ -7,7 +7,8 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "react-app",
-    "plugin:react/recommended",
+    "airbnb",
+    "plugin:jsx-a11y/recommended",
     "plugin:jest/recommended",
     "prettier",
   ],
@@ -18,9 +19,14 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "jest"],
+  plugins: ["react", "jsx-a11y", "jest"],
   rules: {
     "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "warn",
+    "jsx-a11y/no-autofocus": "warn",
+    "react/forbid-prop-types": "warn",
   },
   settings: {
     react: {

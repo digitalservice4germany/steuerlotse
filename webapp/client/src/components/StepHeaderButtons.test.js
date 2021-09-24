@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import StepHeaderButtons from "./StepHeaderButtons";
 
 it("should render a back link", () => {
-  render(<StepHeaderButtons backLinkUrl="/back" backLinkText="return" />);
+  render(<StepHeaderButtons url="/back" text="return" />);
   expect(screen.getByText("return")).toBeInTheDocument();
 });
 

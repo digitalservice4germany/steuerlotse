@@ -1,3 +1,4 @@
+import datetime
 import json
 import unittest
 from unittest.mock import patch, MagicMock, call
@@ -447,23 +448,6 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
 
                 update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
 
-    def test_yes_no_field_content_overriden_if_empty(self):
-        with self.app.test_request_context(method='POST') as req:
-            req.request.form = ImmutableMultiDict({'yes_no_field': 'yes'})
-            mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data={}, next_step=MockRenderStep)
-            mock_yesno_step.handle()
-            data_after_first_handle = mock_yesno_step.stored_data
-        self.assertEqual({'yes_no_field': 'yes'}, data_after_first_handle)
-
-        with self.app.test_request_context(method='POST') as req:
-            req.request.form = ImmutableMultiDict({})
-            mock_yesno_step = MockYesNoStep(endpoint="lotse", stored_data=data_after_first_handle,
-                                            next_step=MockRenderStep)
-            mock_yesno_step.handle()
-            data_after_second_handle = mock_yesno_step.stored_data
-
-        self.assertEqual({'yes_no_field': None}, data_after_second_handle)
-
 
 class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
     @pytest.fixture(autouse=True)
@@ -479,6 +463,83 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
 
         assert type(created_form) == form_step.InputForm
         assert dir(created_form) == dir(form_step.InputForm()) # check that it has the correct input fields
+
+
+class TestFormSteuerlotseStepUpdateData:
+    @pytest.fixture(autouse=True)
+    def attach_fixtures(self, test_request_context):
+        self.req = test_request_context
+
+    def test_if_post_and_form_valid_then_updates_empty_data_correctly(self):
+        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        updated_data = MockFormWithInputStep.update_data({})
+
+        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
+
+    def test_if_post_and_form_valid_then_updates_existing_data_correctly(self):
+        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        updated_data = MockFormWithInputStep.update_data({'date': datetime.date(1980, 1, 1)})
+
+        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
+
+    def test_if_post_and_form_valid_then_leaves_other_data_unchanged(self):
+        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        updated_data = MockFormWithInputStep.update_data({'other': 'This is none of your concern.'})
+
+        assert updated_data == {'other': 'This is none of your concern.', 'date': datetime.date(1980, 12, 12),
+                                'decimal': 42.00, 'pet': 'lizard'}
+
+    def test_if_post_and_form_valid_but_incomplete_and_key_in_stored_data_then_keep_old_data(self):
+        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42'}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        updated_data = MockFormWithInputStep.update_data({'pet': 'lizard'})
+
+        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
+
+    def test_if_post_and_form_valid_and_yes_no_field_empty_then_yes_no_field_content_overridden(self):
+        req_form_data = {}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        updated_data = MockYesNoStep.update_data({'yes_no_field': 'yes'})
+
+        assert updated_data == {'yes_no_field': None}
+
+    def test_if_post_and_form_valid_but_incomplete_and_key_not_in_stored_data_then_add_empty_default(self):
+        req_form_data = {'date': ['12', '12', '1980']}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        updated_data = MockFormWithInputStep.update_data({})
+
+        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': ''}
+
+    def test_if_post_and_form_invalid_then_do_not_update_data(self):
+        req_form_data = {'data': 'invalid'}
+        self.req.request.method = 'POST'
+        self.req.request.form = ImmutableMultiDict(req_form_data)
+
+        with patch('tests.forms.mock_steuerlotse_steps.MockFormWithInputStep.create_form',
+                   MagicMock(return_value=MagicMock(name='InputForm', validate=MagicMock(return_value=False)))):
+            updated_data = MockFormWithInputStep.update_data({'data': 'original'})
+
+        assert updated_data == {'data': 'original'}
+
+    def test_if_get_then_do_not_update_data(self):
+        self.req.request.method = 'GET'
+        updated_data = MockFormWithInputStep.update_data({'data': 'original'})
+        assert updated_data == {'data': 'original'}
 
 
 class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):

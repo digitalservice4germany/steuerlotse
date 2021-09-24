@@ -8,12 +8,12 @@ describe("a FormNavButtons without props", () => {
   });
 
   it("should render a button with the default button text", () => {
-    expect(screen.getByText("form.next")).toBeInTheDocument();
-    expect(screen.getByText("form.next").tagName).toEqual("BUTTON");
+    expect(screen.getByText("Weiter")).toBeInTheDocument();
+    expect(screen.getByText("Weiter").tagName).toEqual("BUTTON");
   });
 
   it("should not render an overview link", () => {
-    expect(screen.queryByText("form.back_to_overview")).not.toBeInTheDocument();
+    expect(screen.queryByText("Zurück zur Übersicht")).not.toBeInTheDocument();
   });
 });
 
@@ -29,12 +29,12 @@ describe("a FormNavButtons with a nextButtonLabel", () => {
 
 describe("a FormNavButtons with an overview button", () => {
   beforeEach(() => {
-    render(<FormNavButtons overviewButton={true} />);
+    render(<FormNavButtons showOverviewButton />);
   });
 
   it("should render a button to go to the overview", () => {
-    expect(screen.getByText("form.back_to_overview")).toBeInTheDocument();
-    expect(screen.getByText("form.back_to_overview").tagName).toEqual("BUTTON");
+    expect(screen.getByText("Zurück zur Übersicht")).toBeInTheDocument();
+    expect(screen.getByText("Zurück zur Übersicht").tagName).toEqual("BUTTON");
   });
 });
 

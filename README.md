@@ -67,84 +67,21 @@ Bitte stelle sicher, dass deine Änderungen getestet wurden, bevor du einen Pull
 ## For Developers 👩‍💻 👨‍💻
 
 ### Overview
-The two main components are the webapp and the erica component. The webapp handles user input, renders html and connects
-to the PostgreSQL database while Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the 
-ELSTER APIs. Part of Erica is Pyeric, a Python wrapper for ERiC.
+The two main components are the webapp and erica.
 
-### Quickstart 💻
+The webapp handles user input, renders html and connects to the PostgreSQL database.
 
-For developing, we suggest running the Flask app locally. Assuming that you are on a UNIX-like OS, the following 
-commands should get you up and running:
+Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the ELSTER APIs. Part of Erica is Pyeric, a Python wrapper for ERiC.
 
-```bash
-# Only first-time setup
-git clone git@github.com:digitalservice4germany/steuerlotse.git
-cd steuerlotse/webapp
-pipenv install
-cp .env.example .env
-cd ..
-cd steuerlotse/erica_app
-pipenv install
+### Run directly
 
-# At the beginning of every development session
-cd steuerlotse/webapp
-pipenv shell
+For developing, we suggest running both webapp and erica locally. See here for instructions:
+- [webapp/README.md](webapp/README.md)
+- [erica_app/README.md](erica_app/README.md)
 
-# After every translation change (new strings, updated .po file)
-# and also during first-time setup
-./scripts/babel_run.sh
-
-# After major code changes (rest should re-load automatically)
-flask run
-
-# End the development session
-exit
-```
-
-Then the website is up and running on http://127.0.0.1:5000.
-
-If you want to run Erica, install the ERiC library and get a suitable certificate (see below and `pyeric/README.md`). 
-Then follow these steps:
-```bash
-cd steuerlotse/erica_app
-pipenv shell
-export ERICA_ENV=development
-python -m erica 
-```
-_NOTE:_ If you do not use the MockErica, you will have to run the webapp and Erica at the same time.
-For using MockErica, set `USE_MOCK_API = True` in the `DevelopmentConfig` in the webapp's `config.py`.
-
-### Testing 📃
-
-You can run tests as follows:
-```bash
-# run webapp tests
-cd steuerlotse/webapp
-pipenv run pytest
-
-# run erica tests
-cd steuerlotse/erica_app
-pipenv run pytest
-```
-
-If you are missing the ERiC library or a suitable certificate (see below and `pyeric/README.md`) then the respective 
-tests will be skipped.
-
-<!-- I would propose to keep the information about quick starting the process in here and maybe adapt it a little like 
-so:
-    - Quick Start
-        - Install everything
-        - Run Web App / Run Erica
-    - Using Docker
-    - Run it locally
-        - Normal (git clone Befehl anpassen
-        - Tests -> can run independently
-
-    - <Known issues>
-!-->
 ### Run with docker-compose
 
-You can start the application with `docker-compose up`.
+Alternatively, you can start the application with `docker-compose up`.
 
 Run database migrations and create test data:
 ```
@@ -153,30 +90,6 @@ docker-compose exec web pipenv run flask populate-database
 ```
 
 Visit the application by pointing your browser at http://localhost.
-
-### Using flask migrate for the database
-For database migration and upgrades, you can use Flask-Migrate. Make sure that you are in the pipenv shell
-````bash
-flask db init  # Only once to create the migrations folder
-
-# After model has been changed
-flask db migrate  # Creates a new migration script in migrate/versions
-flask db upgrade  # Updates the database using the migration script
-````
-⚠️ Flask-Migrate uses Alembic. Alembic does not detect all changes to the model (especially renaming tables or columns).
-Therefore re-check the migration script. You can find a list of Alembic's limitations 
-[here](http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect).
-
-### PyEric 🐍
-
-`PyEric` is our wrapper around the ELSTER Rich Client `ERiC`.
-Unfortunately, we cannot include the `ERiC` library in this repository.
-
-If you are interested in testing the integration locally, the `ERiC` library is available for registered developers
-on the [ELSTER dev portal](https://www.elster.de/elsterweb/infoseite/entwickler).
-You will also need to request test certificates in order to send authenticated data to the ELSTER services.
-
-The required setup is described in `pyeric/README.md`.
 
 ### Enviroments
 We support four different environments with different configurations:

@@ -1,4 +1,6 @@
+import datetime
 import unittest
+from unittest.mock import patch
 
 import pytest
 from flask import Flask
@@ -10,7 +12,7 @@ from app.forms.session_data import serialize_session_data, deserialize_session_d
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
-    MockRenderStep, MockFormStep
+    MockRenderStep, MockFormStep, MockYesNoStep
 from tests.utils import create_session_form_data
 
 
@@ -38,10 +40,10 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.req = test_request_context
 
     def setUp(self) -> None:
-        testing_steps = [MockStartStep, MockRenderStep, MockFormStep, MockFinalStep]
+        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockYesNoStep, MockFinalStep]
         self.endpoint_correct = "lotse"
         self.step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps,
-                                        endpoint=self.endpoint_correct, overview_step=MockFormStep)
+                                        endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
 
     def test_if_correct_step_name_then_return_step_correctly_initialised(self):
         chosen_step = self.step_chooser.get_correct_step(MockRenderStep.name)
@@ -51,7 +53,7 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.assertEqual(self.endpoint_correct, chosen_step.endpoint)
         self.assertEqual(self.step_chooser.overview_step, chosen_step.overview_step)
         self.assertEqual(MockStartStep, chosen_step._prev_step)
-        self.assertEqual(MockFormStep, chosen_step._next_step)
+        self.assertEqual(MockFormWithInputStep, chosen_step._next_step)
 
     def test_if_incorrect_step_name_then_raise_404_exception(self):
         self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name")
@@ -85,6 +87,18 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name)
         self.assertIsNone(chosen_step_at_begin._prev_step)
         self.assertIsNone(chosen_step_at_end._next_step)
+
+    def test_update_data_is_called_if_update_data_set(self):
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
+            self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=True)
+
+        update_mock.assert_called_once()
+
+    def test_update_data_is_not_called_if_update_data_not_set(self):
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
+            self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=False)
+
+        update_mock.assert_not_called()
 
 
 class TestInteractionBetweenSteps(unittest.TestCase):
@@ -134,6 +148,6 @@ class TestInteractionBetweenSteps(unittest.TestCase):
             if session is not None:
                 req.session = session
 
-            step_chooser.get_correct_step(step_name).handle()
+            step_chooser.get_correct_step(step_name, method == 'POST').handle()
 
             return req.session

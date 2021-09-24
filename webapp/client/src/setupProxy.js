@@ -2,7 +2,7 @@
 
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-module.exports = function (app) {
+function setupProxy(app) {
   app.use(
     createProxyMiddleware(
       [
@@ -20,4 +20,6 @@ module.exports = function (app) {
       }
     )
   );
-};
+}
+
+module.exports = setupProxy;

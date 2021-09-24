@@ -22,7 +22,7 @@ it("should not render the intro if hideIntro is truthy", () => {
     <FormHeader
       title="MyTitle"
       intro="All good things come to those who wait"
-      hideIntro={true}
+      hideIntro
     />
   );
   expect(screen.queryByText(/all good things/i)).toBeNull();

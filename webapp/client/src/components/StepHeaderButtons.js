@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import BackLink from "./BackLink";
 
@@ -13,12 +14,16 @@ const HeaderNavigation = styled.div`
   }
 `;
 
-export default function StepHeaderButtons({ backLinkUrl, backLinkText }) {
+export default function StepHeaderButtons({ url, text }) {
+  const { t } = useTranslation();
+
+  const linkText = text || t("form.back");
+
   return (
     <HeaderNavigation>
-      {backLinkUrl && (
+      {url && (
         <div className="mt-3">
-          <BackLink text={backLinkText} url={backLinkUrl} />
+          <BackLink text={linkText} url={url} />
         </div>
       )}
     </HeaderNavigation>
@@ -26,6 +31,13 @@ export default function StepHeaderButtons({ backLinkUrl, backLinkText }) {
 }
 
 StepHeaderButtons.propTypes = {
-  backLinkUrl: PropTypes.string,
-  backLinkText: PropTypes.string,
+  // render_info.prev_url
+  url: PropTypes.string,
+  // render_info.back_link_text if render_info.back_link_text else _('form.back')
+  text: PropTypes.string,
+};
+
+StepHeaderButtons.defaultProps = {
+  url: undefined,
+  text: undefined,
 };

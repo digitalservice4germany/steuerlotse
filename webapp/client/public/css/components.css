@@ -256,23 +256,22 @@
 }
 
 .details-card .card-header .details-icon {
-    width: 14px;
-    min-width: 14px;
+    width: 12px;
+    min-width: 12px;
     height: var(--lineheight-default);
     padding: 0;
-    margin-top: .375rem;
     background:  url("/icons/details_arrow_down.svg") no-repeat left;
 }
 
-.details-card .card-header .collapsed:hover .details-icon{
+.details-card .card-header .collapsed:hover .control-show-more {
     background:  url("/icons/details_arrow_right_hover.svg") no-repeat left;
 }
 
-.details-card .card-header .collapsed button:focus .details-icon{
+.details-card .card-header .collapsed button:focus .control-show-more {
     background:  url("/icons/details_arrow_right_focus.svg") no-repeat left;
 }
 
-.details-card .card-header .collapsed .details-icon{
+.details-card .card-header .collapsed .control-show-more {
     background:  url("/icons/details_arrow_right.svg") no-repeat left;
 }
 
@@ -280,8 +279,12 @@
     border: 0;
 }
 
-.details-card .details-content{
-    padding: 1em 1em 0 0;
+.details-card .details-content {
+    padding: var(--spacing-02) 1em var(--spacing-02) 0;
+}
+
+.details-card .details-content :last-child {
+    margin-bottom: 0 !important;
 }
 
 .card-body-less-padding {
@@ -296,7 +299,7 @@
 .details-card .card-body .block-quote-line {
     width: 2px;
     min-width: 2px;
-    margin: 0 var(--spacing-03) 0 5px;
+    margin: 0 var(--spacing-03) 0 4px;
     background-color: var(--border-color);
 }
 
@@ -305,28 +308,37 @@
     outline: none;
 }
 
-.details-card .card-header:not(.collapsed) .control-show-more {
+.details-card .card-header>div:not(.collapsed) .control-show-more {
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
     min-width: 1px;
-    background-color: inherit;
+    background: inherit;
     padding: 0;
     margin: 0;
     overflow: hidden;
     position: absolute;
 }
 
-.details-card .card-header.collapsed .control-show-less {
+.details-card .card-header>div.collapsed .control-show-less {
     /* We need to still show it to keep focus on the element */
     height: 1px;
     width: 1px;
     min-width: 1px;
-    background-color: inherit;
+    background: inherit;
     padding: 0;
     margin: 0;
     overflow: hidden;
     position: absolute;
+}
+
+.details-header-text-button {
+    padding: 0 var(--spacing-01);
+}
+
+.details-header-text-button span {
+    display: inline-block;
+    height: var(--lineheight-default);
 }
 
 /* PANEL */

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-23 14:18+0200\n"
+"POT-Creation-Date: 2021-09-24 11:15+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -46,81 +46,81 @@ msgstr "Abmelden"
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:139
+#: app/routes.py:145
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:140
+#: app/routes.py:146
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:166
+#: app/routes.py:172
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:167
+#: app/routes.py:173
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:178 app/routes.py:270
+#: app/routes.py:184 app/routes.py:276
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:196 app/templates/basis/base.html:33
+#: app/routes.py:202 app/templates/basis/base.html:32
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:201
+#: app/routes.py:207
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:206
+#: app/routes.py:212
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:211
+#: app/routes.py:217
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:216
+#: app/routes.py:222
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:221
+#: app/routes.py:227
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:226
+#: app/routes.py:232
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:236
+#: app/routes.py:242
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:241
+#: app/routes.py:247
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:262
+#: app/routes.py:268
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:266 app/routes.py:274
+#: app/routes.py:272 app/routes.py:280
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:278
+#: app/routes.py:284
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:283
+#: app/routes.py:289
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -1385,8 +1385,8 @@ msgstr "Neue Steuernummer beantragen"
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:14
 msgid "form.lotse.field_confirm_complete_correct"
 msgstr ""
-"Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
-"Finanzamt haben und eine neue Steuernummer beantragen möchten."
+"Hiermit bestätige ich, dass die Angaben überprüft wurden und dass sie "
+"vollständig und richtig sind."
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:18
 msgid "form.lotse.summary-title"
@@ -1558,16 +1558,16 @@ msgstr ""
 msgid "form.lotse.session-note.list-item-2"
 msgstr ""
 "Aus diesem Grund werden Ihre Angaben derzeit nicht zwischengespeichert. "
-"Sie müssen Ihre Steuererklärung daher <b>in einer Sitzung "
-"abschließen.</b>"
+"Sie müssen Ihre Steuererklärung daher <strong>in einer Sitzung "
+"abschließen.</strong>"
 
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:72
 msgid "form.lotse.session-note.list-item-3"
 msgstr ""
 "Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer "
-"Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <b>länger "
-"als 3 Stunden</b> nichts mehr auf dieser Webseite machen, werden Sie aus "
-"Sicherheitsgründen automatisch abgemeldet."
+"Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings "
+"<strong>länger als 3 Stunden</strong> nichts mehr auf dieser Webseite "
+"machen, werden Sie aus Sicherheitsgründen automatisch abgemeldet."
 
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:73
 msgid "form.lotse.session-note.list-item-4"
@@ -2452,7 +2452,7 @@ msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:179
 msgid "form.lotse.field_haushaltsnahe_summe.data_label"
-msgstr "Haushaltsnahe Summe der Rechnungsbeträge"
+msgstr "Summe der Rechnungsbeträge (Haushalt)"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:182
 msgid "form.lotse.field_handwerker_entries"
@@ -2481,7 +2481,7 @@ msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:189
 msgid "form.lotse.field_handwerker_summe.data_label"
-msgstr "Handwerker Summe der Rechnungsbeträge"
+msgstr "Summe der Rechnungsbeträge (Handwerker)"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:192
 msgid "form.lotse.field_handwerker_lohn_etc_summe"
@@ -2524,7 +2524,7 @@ msgstr ""
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:228
 msgid "form.lotse.haushaltsnahe-handwerker-title"
-msgstr "Handwerker, Tätigkeiten und Dienstleistungen im Haushalt"
+msgstr "Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:229
 msgid "form.lotse.handwerker-haushaltsnahe-intro"
@@ -2550,23 +2550,23 @@ msgstr ""
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:242
 msgid "form.lotse.steuerminderungen.details-list-item-1"
 msgstr ""
-"Es muss eine Rechnung vorliegen, die zum Beispiel per Überweisung oder "
-"EC-Kartenzahlung beglichen worden ist. Barzahlungen können nicht geltend "
-"gemacht werden."
+"Es <strong>muss eine Rechnung</strong> vorliegen, die zum Beispiel per "
+"Überweisung oder EC-Kartenzahlung beglichen worden ist. "
+"<strong>Barzahlungen können nicht</strong> geltend gemacht werden."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:243
 msgid "form.lotse.steuerminderungen.details-list-item-2"
 msgstr ""
-"Abgesetzt werden können Kosten, die Sie im Besteuerungsjahr bezahlt "
-"haben. Relevant ist der Zeitpunkt der Bezahlung, nicht der "
-"Rechnungsstellung."
+"Abgesetzt werden können Kosten, die Sie <strong>im Besteuerungsjahr "
+"bezahlt</strong> haben. Relevant ist der Zeitpunkt der Bezahlung, nicht "
+"der Rechnungsstellung."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:244
 msgid "form.lotse.steuerminderungen.details-list-item-3"
 msgstr ""
-"Wenn Sie sich als Arbeitgeber betätigen und Haushaltshilfen als "
-"Arbeitnehmer einstellen, können Sie dies im Steuerlotsen nicht steuerlich"
-" absetzen."
+"Wenn Sie sich als <strong>Arbeitgeber betätigen und "
+"Haushaltshilfen</strong> als Arbeitnehmer einstellen, können Sie dies im "
+"Steuerlotsen <strong>nicht steuerlich absetzen</strong>."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:250
 msgid "form.lotse.step_gem_haushalt.label"
@@ -2816,11 +2816,11 @@ msgstr ""
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:32
+#: app/templates/basis/base.html:31
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:38
+#: app/templates/basis/base.html:37
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -5232,8 +5232,8 @@ msgstr "Was bedeutet das?"
 #: app/templates/unlock_code/registration_data_input.html:18
 msgid "unlock-code-request.e-data.help-text"
 msgstr ""
-"Daten zu beispielsweise <b>Renten, Pensionen oder Kranken- und "
-"Pflegeversicherungen</b> erhält die Steuerverwaltung vom jeweiligen "
+"Daten zu beispielsweise <strong>Renten, Pensionen oder Kranken- und "
+"Pflegeversicherungen</strong> erhält die Steuerverwaltung vom jeweiligen "
 "Träger elektronisch. Diese Daten werden vom Finanzamt automatisch "
 "übernommen und müssen von Ihnen nicht in diese Steuererklärung "
 "eingetragen werden. </br> Welche Beträge über Sie übermittelt wurden, "
@@ -5249,8 +5249,8 @@ msgstr "So geht es weiter"
 #: app/templates/unlock_code/registration_success.html:6
 msgid "register.success.next-steps.step-1"
 msgstr ""
-"Sie bekommen von Ihrem Finanzamt den <b>Brief mit Ihrem persönlichen "
-"Freischaltcode</b> zugeschickt."
+"Sie bekommen von Ihrem Finanzamt den <strong>Brief mit Ihrem persönlichen"
+" Freischaltcode</strong> zugeschickt."
 
 #: app/templates/unlock_code/registration_success.html:7
 msgid "register.success.next-steps.step-2"

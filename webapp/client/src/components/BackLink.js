@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import backArrow from "./../assets/icons/arrow_back.svg";
+import backArrow from "../assets/icons/arrow_back.svg";
 
 const Anchor = styled.a`
   font-weight: var(--font-bold);
@@ -50,6 +50,6 @@ export default function BackLink({ text, url }) {
 }
 
 BackLink.propTypes = {
-  text: PropTypes.string,
-  url: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };

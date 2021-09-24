@@ -239,9 +239,9 @@ class StepHaushaltsnaheHandwerker(FormStep):
                                input_details_title=_('form.lotse.steuerminderungen.details-title'),
                                input_details_text=_('form.lotse.steuerminderungen.details-text'),
                                details_list_items=[
-                                   _('form.lotse.steuerminderungen.details-list-item-1'),
-                                   _('form.lotse.steuerminderungen.details-list-item-2'),
-                                   _('form.lotse.steuerminderungen.details-list-item-3')
+                                   _l('form.lotse.steuerminderungen.details-list-item-1'),
+                                   _l('form.lotse.steuerminderungen.details-list-item-2'),
+                                   _l('form.lotse.steuerminderungen.details-list-item-3')
                                ],)
 
 

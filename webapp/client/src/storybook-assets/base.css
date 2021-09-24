@@ -155,7 +155,7 @@ input.form-control.field-error-found {
 }
 
 /* ERRORS */
-.invalid-feedback {
+/* .invalid-feedback {
   font-size: var(--text-sm);
   font-weight: var(--font-bold);
   color: var(--error-color);
@@ -177,7 +177,7 @@ img.invalid-feedback {
   margin-left: var(--spacing-02);
   padding-left: var(--spacing-04) !important;
   border-left: 2px solid var(--error-color);
-}
+} */
 
 /* LISTS */
 ol {
@@ -263,7 +263,7 @@ ol li::before {
   border-radius: 0;
 }
 
-.btn-help {
+/* .btn-help {
   width: 22px !important;
   height: 22px !important;
   border-radius: 11px !important;
@@ -273,7 +273,7 @@ ol li::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .text-input-field-label {
   margin-top: var(--spacing-06);
@@ -281,42 +281,46 @@ ol li::before {
   font-weight: var(--font-bold);
 }
 
-.optional-hint {
+/* .optional-hint {
   font-size: var(--text-medium);
   font-weight: var(--font-normal);
-}
+} */
 
-.form-row-center {
+/* .nav-button-row {
+  margin-top: var(--spacing-09);
+} */
+
+/* .form-row-center {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  margin-top: var(--spacing-03);
-  /* This moved the border further outside to allow for the children to fill that space with margin,
+  margin-top: var(--spacing-03); */
+/* This moved the border further outside to allow for the children to fill that space with margin,
   allowing the children to have space between them. See the bootstrap row/column technique. */
-  margin-left: calc(-1 * var(--spacing-02));
+/* margin-left: calc(-1 * var(--spacing-02));
   margin-right: calc(-1 * var(--spacing-02));
-}
+} */
 
-.separated-field {
+/* .separated-field {
   flex-wrap: nowrap;
   margin-top: 0;
-}
+} */
 
 .entries-field {
   flex-wrap: nowrap;
 }
-
+/*
 .form-row-center > * {
   margin: 0 var(--spacing-02);
-}
+} */
 
 .grouped-input-fields {
   width: 100%;
 }
 
-.grouped-input-fields > .form-row-center {
+/* .grouped-input-fields > .form-row-center {
   margin-top: 0;
-}
+} */
 
 .grouped-input-fields .text-input-field-label {
   margin-top: var(--spacing-06);
@@ -505,3 +509,4 @@ img.icon {
 .hidden {
   display: none;
 }
+/** END copied unorganised CSS from base.css **/

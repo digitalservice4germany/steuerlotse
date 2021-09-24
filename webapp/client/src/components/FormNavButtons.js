@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const Row = styled.div`
@@ -92,35 +93,35 @@ const ExplanatoryText = styled.small`
 
 export default function FormNavButtons({
   explanatoryButtonText,
-  overviewButton,
+  showOverviewButton,
   nextButtonLabel,
 }) {
-  // TODO intl
-  const backToOverviewText = "form.back_to_overview";
-  // TODO intl
-  nextButtonLabel = nextButtonLabel || "form.next";
+  const { t } = useTranslation();
+
+  const overviewLabel = t("form.backToOverview");
+  const nextLabel = nextButtonLabel || t("form.next");
 
   return (
     <Row className="form-row">
-      {overviewButton && (
+      {showOverviewButton && (
         <OutlineButton
           type="submit"
           className="btn mr-2"
           name="overview_button"
         >
-          {backToOverviewText}
+          {overviewLabel}
         </OutlineButton>
       )}
 
       <Button type="submit" className="btn btn-primary" name="next_button">
-        {nextButtonLabel}
+        {nextLabel}
       </Button>
 
       {explanatoryButtonText && (
         // The one (!) place this is being used contains HTML tags, so we need to render as unsafe HTML.
         <ExplanatoryText
           dangerouslySetInnerHTML={{ __html: explanatoryButtonText }}
-        ></ExplanatoryText>
+        />
       )}
     </Row>
   );
@@ -128,6 +129,12 @@ export default function FormNavButtons({
 
 FormNavButtons.propTypes = {
   nextButtonLabel: PropTypes.string,
-  overviewButton: PropTypes.bool,
+  showOverviewButton: PropTypes.bool,
   explanatoryButtonText: PropTypes.string,
+};
+
+FormNavButtons.defaultProps = {
+  nextButtonLabel: undefined,
+  showOverviewButton: false,
+  explanatoryButtonText: undefined,
 };

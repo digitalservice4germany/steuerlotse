@@ -3,7 +3,11 @@ import { render } from "@testing-library/react";
 import StepForm from "./StepForm";
 
 it("should include the csrf token", () => {
-  const { container } = render(<StepForm csrfToken="123abc" />);
+  const { container } = render(
+    <StepForm csrfToken="123abc" action="#">
+      empty form
+    </StepForm>
+  );
   const hiddenInput = container.querySelector(
     'input[type="hidden"][name="csrf_token"]'
   );

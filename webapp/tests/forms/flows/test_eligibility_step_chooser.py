@@ -109,7 +109,7 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
         ])
 
         with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
-            self.step_chooser.determine_prev_step(given_step_name)
+            self.step_chooser.determine_prev_step(given_step_name, {})
 
         self.step_chooser.steps['step-0'].is_previous_step.assert_not_called()
         self.step_chooser.steps['step-1'].is_previous_step.assert_called()
@@ -127,7 +127,7 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
         ])
 
         with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
-            prev_step = self.step_chooser.determine_prev_step(given_step_name)
+            prev_step = self.step_chooser.determine_prev_step(given_step_name, {})
 
         self.assertEqual('step-2', prev_step.name)
 
@@ -140,7 +140,7 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
         ])
 
         with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
-            prev_step = self.step_chooser.determine_prev_step(given_step_name)
+            prev_step = self.step_chooser.determine_prev_step(given_step_name, {})
 
         self.assertIsNone(prev_step)
 
@@ -153,6 +153,6 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
         ])
 
         with patch('app.forms.flows.eligibility_step_chooser.get_session_data'):
-            prev_step = self.step_chooser.determine_prev_step(given_step_name)
+            prev_step = self.step_chooser.determine_prev_step(given_step_name, {})
 
         self.assertEqual('step-0', prev_step.name)
