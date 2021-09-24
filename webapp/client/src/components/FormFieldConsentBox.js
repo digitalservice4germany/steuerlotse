@@ -80,8 +80,8 @@ function FormFieldConsentBox({
 FormFieldConsentBox.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
-  labelText: PropTypes.string.isRequired,
-  value: PropTypes.arrayOf(PropTypes.string).isRequired,
+  labelText: PropTypes.oneOf(["element", "string"]).isRequired,
+  value: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,

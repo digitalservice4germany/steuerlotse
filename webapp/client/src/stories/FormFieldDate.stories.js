@@ -23,7 +23,7 @@ Default.args = {
   fieldId: "date",
   fieldName: "date",
   label: {
-    text: "Date",
+    text: "Datum",
   },
   errors: [],
   values: [],
