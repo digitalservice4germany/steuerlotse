@@ -260,7 +260,6 @@
     min-width: 12px;
     height: var(--lineheight-default);
     padding: 0;
-    margin-top: 0;
     background:  url("/icons/details_arrow_down.svg") no-repeat left;
 }
 
@@ -284,15 +283,7 @@
     padding: var(--spacing-02) 1em var(--spacing-02) 0;
 }
 
-.details-card .details-content p:last-child {
-    margin-bottom: 0;
-}
-
-.details-card .details-content ul:last-child {
-    margin-bottom: 0;
-}
-
-.details-card .details-content ul li:last-child {
+.details-card .details-content :last-child {
     margin-bottom: 0 !important;
 }
 
