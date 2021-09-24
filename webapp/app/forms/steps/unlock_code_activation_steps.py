@@ -34,8 +34,7 @@ class UnlockCodeActivationInputStep(FormStep):
     def render(self, data, render_info):
         render_info.form.first_field = next(iter(render_info.form))
         return render_template(
-            'react_component.html',
-            component='LoginPage',
+            'unlock_code/login.html',
             form=render_info.form,
             render_info=render_info,
             header_title=self.header_title
