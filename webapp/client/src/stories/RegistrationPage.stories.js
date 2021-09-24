@@ -29,21 +29,16 @@ Default.args = {
       value: ["01", "01", "1985"],
       errors: [],
     },
-    // TODO: understand how checked/non-checked is handled in WTForms
     registrationConfirmDataPrivacy: {
-      value: "y",
       errors: [],
     },
     registrationConfirmTermsOfService: {
-      value: "y",
       errors: [],
     },
     registrationConfirmIncomes: {
-      value: "y",
       errors: [],
     },
     registrationConfirmEData: {
-      value: "y",
       errors: [],
     },
   },
