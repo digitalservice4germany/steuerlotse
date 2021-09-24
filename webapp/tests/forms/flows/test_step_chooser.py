@@ -46,7 +46,7 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
                                         endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
 
     def test_if_correct_step_name_then_return_step_correctly_initialised(self):
-        chosen_step = self.step_chooser.get_correct_step(MockRenderStep.name, False)
+        chosen_step = self.step_chooser.get_correct_step(MockRenderStep.name)
 
         self.assertIsInstance(chosen_step, MockRenderStep)
         self.assertEqual(MockRenderStep.name, chosen_step.name)
@@ -56,10 +56,10 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.assertEqual(MockFormWithInputStep, chosen_step._next_step)
 
     def test_if_incorrect_step_name_then_raise_404_exception(self):
-        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False)
+        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name")
 
     def test_if_start_step_then_return_redirect_to_first_step(self):
-        chosen_step = self.step_chooser.get_correct_step("start", False)
+        chosen_step = self.step_chooser.get_correct_step("start")
 
         self.assertIsInstance(chosen_step, RedirectSteuerlotseStep)
         self.assertEqual(chosen_step.redirection_step_name, self.step_chooser.first_step.name)
@@ -69,22 +69,22 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
                                             steps=[MockStartStep, MockMiddleStep, MockFinalStep],
                                             endpoint=self.endpoint_correct)
 
-        chosen_step = simple_step_chooser.get_correct_step(MockStartStep.name, False)
+        chosen_step = simple_step_chooser.get_correct_step(MockStartStep.name)
         self.assertIsInstance(chosen_step, MockStartStep)
         self.assertEqual(MockMiddleStep, chosen_step._next_step)
 
-        chosen_step = simple_step_chooser.get_correct_step(MockMiddleStep.name, False)
+        chosen_step = simple_step_chooser.get_correct_step(MockMiddleStep.name)
         self.assertEqual(MockStartStep, chosen_step._prev_step)
         self.assertIsInstance(chosen_step, MockMiddleStep)
         self.assertEqual(MockFinalStep, chosen_step._next_step)
 
-        chosen_step = simple_step_chooser.get_correct_step(MockFinalStep.name, False)
+        chosen_step = simple_step_chooser.get_correct_step(MockFinalStep.name)
         self.assertEqual(MockMiddleStep, chosen_step._prev_step)
         self.assertIsInstance(chosen_step, MockFinalStep)
 
     def test_if_step_at_ends_then_return_empty_string(self):
-        chosen_step_at_begin = self.step_chooser.get_correct_step(MockStartStep.name, False)
-        chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name, False)
+        chosen_step_at_begin = self.step_chooser.get_correct_step(MockStartStep.name)
+        chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name)
         self.assertIsNone(chosen_step_at_begin._prev_step)
         self.assertIsNone(chosen_step_at_end._next_step)
 

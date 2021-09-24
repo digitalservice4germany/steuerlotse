@@ -40,7 +40,7 @@ class StepChooser:
         else:
             return None
 
-    def get_correct_step(self, step_name: str, update_data: bool) -> SteuerlotseStep:
+    def get_correct_step(self, step_name: str, update_data: bool = False) -> SteuerlotseStep:
         if self._get_possible_redirect(step_name):
             return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
         stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
