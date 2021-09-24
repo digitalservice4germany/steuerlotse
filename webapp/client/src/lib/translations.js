@@ -42,7 +42,7 @@ const translations = {
       title: "Datenschutzerklärung und Nutzungsbedingungen",
     },
     fieldRegistrationConfirmDataPrivacy: {
-      labelText: "Ich habe die <privacyPolicyLink>Datenschutzerklärung</privacyPolicyLink> inklusive der <taxGdprLink>Allgemeinen Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung</taxGdprLink> zur Kenntnis genommen und akzeptiere diese.",
+      labelText: "Ich habe die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> inklusive der <taxGdprLink>Allgemeinen Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung</taxGdprLink> zur Kenntnis genommen und akzeptiere diese.",
     },
     fieldRegistrationConfirmTermsOfService: {
       labelText: "Ich habe die <termsOfServiceLink>Nutzungsbedingungen</termsOfServiceLink> gelesen und stimme ihnen zu.",

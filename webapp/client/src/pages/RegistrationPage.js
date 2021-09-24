@@ -19,7 +19,7 @@ const SubHeading = styled.h2`
 }
 `;
 
-export default function RegistrationPage({ backLink, stepHeader, form, fields }) {
+export default function RegistrationPage({ backLink, stepHeader, form, fields, eligibilityLink, termsOfServiceLink, dataPrivacyLink }) {
   const { t } = useTranslation();
 
   return (
@@ -69,7 +69,7 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields })
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                privacyPolicyLink: <a href="/TODO"/>,
+                dataPrivacyLink: <a href={dataPrivacyLink} />,
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
                 taxGdprLink: <a href="https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2020-07-01-Korrektur-Allgemeine-Informationen-Datenschutz-Grundverordnung-Steuerverwaltung-anlage-1.pdf?__blob=publicationFile&v=3" rel="noreferrer" target="_blank" />,
               }}
@@ -89,7 +89,7 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields })
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                termsOfServiceLink: <a href="/TODO"/>,
+                termsOfServiceLink: <a href={termsOfServiceLink}/>,
               }}
             />
           }
@@ -107,7 +107,7 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields })
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                eligibilityLink: <a href="/TODO"/>,
+                eligibilityLink: <a href={eligibilityLink}/>,
               }}
             />
           }
@@ -172,6 +172,9 @@ RegistrationPage.propTypes = {
     registrationConfirmIncomes: fieldPropType,
     registrationConfirmEData: fieldPropType,
   }).isRequired,
+  eligibilityLink: PropTypes.string.isRequired,
+  termsOfServiceLink: PropTypes.string.isRequired,
+  dataPrivacyLink: PropTypes.string.isRequired,
 };
 
 RegistrationPage.defaultProps = {

@@ -42,6 +42,9 @@ Default.args = {
       errors: [],
     },
   },
+  eligibilityLink: "/eligibility/start",
+  termsOfServiceLink: "/agb",
+  dataPrivacyLink: "/datenschutz",
 };
 
 export const WithErrors = Template.bind({});
