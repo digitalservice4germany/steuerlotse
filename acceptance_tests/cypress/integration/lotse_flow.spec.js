@@ -148,14 +148,6 @@ context('Acceptance tests', () => {
             login()
         })
 
-        it('Check that registration and revocation are disabled', () => {
-            cy.get('span').contains(/^Registrieren$/)
-                .should('have.class', 'nav-link')
-                .should('have.class', 'inactive')
-            cy.get('span').contains(/^Freischaltcode Stornierung$/)
-                .should('have.class', 'inactive')
-        })
-
         it('Enter different familienstands', () => {
             cy.visit('/lotse/step/familienstand?link_overview=True')
 
