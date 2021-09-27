@@ -25,25 +25,27 @@ class StepChooser:
     def _is_step_name_valid(self, step_name):
         return step_name == "start" or step_name in self.steps
 
-    def _get_possible_redirect(self, step_name):
+    def _get_possible_redirect(self, step_name, stored_data):
         """
         Check whether the step name is an actual step or a redirect to the first step has to take place.
         """
         if not self._is_step_name_valid(step_name):
             abort(404)
-        if step_name == 'start':
+        elif step_name == 'start':
             dbg = self.default_data()
             if dbg:
                 return dbg[0].name
             else:
                 return self.first_step.name
+        elif step_to_redirect_to := self.steps[step_name].get_redirection_step(stored_data):
+            return step_to_redirect_to
         else:
             return None
 
     def get_correct_step(self, step_name: str, update_data: bool = False) -> SteuerlotseStep:
-        if self._get_possible_redirect(step_name):
-            return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
         stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
+        if step_name_to_redirect_to := self._get_possible_redirect(step_name, stored_data):
+            return RedirectSteuerlotseStep(step_name_to_redirect_to, endpoint=self.endpoint)
 
         if update_data:
             stored_data = self.steps[step_name].update_data(stored_data)

@@ -12,7 +12,7 @@ from app.forms.session_data import serialize_session_data, deserialize_session_d
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
-    MockRenderStep, MockFormStep, MockYesNoStep
+    MockRenderStep, MockFormStep, MockYesNoStep, MockStepWithRedirection
 from tests.utils import create_session_form_data
 
 
@@ -32,6 +32,33 @@ class TestStepChooserInit(unittest.TestCase):
         self.assertEqual(self.testing_steps, list(step_chooser.steps.values()))
         self.assertEqual(self.endpoint_correct, step_chooser.endpoint)
         self.assertEqual(None, step_chooser.overview_step)
+
+
+class TestGetPossibleRedirect:
+    @pytest.fixture
+    def step_chooser(self):
+        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockStepWithRedirection, MockFinalStep]
+        self.endpoint_correct = "lotse"
+        yield StepChooser(title="Testing StepChooser", steps=testing_steps,
+                          endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
+
+    def test_if_step_not_in_step_list_return_404(self, step_chooser):
+        with pytest.raises(NotFound):
+            step_chooser._get_possible_redirect('INVALID_STEP_NAME', {})
+
+    def test_if_step_name_is_start_then_return_first_in_list(self, step_chooser):
+        step_to_redirect_to = step_chooser._get_possible_redirect('start', {})
+        assert step_to_redirect_to == MockStartStep.name
+
+    def test_if_step_has_redirection_set_and_not_met_then_return_step_to_redirect_to(self, step_chooser):
+        step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithRedirection.name,
+                                                                  {'precondition_met': False})
+        assert step_to_redirect_to == MockStartStep.name
+
+    def test_if_step_has_redirection_set_but_met_then_return_none(self, step_chooser):
+        step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithRedirection.name,
+                                                                  {'precondition_met': True})
+        assert step_to_redirect_to is None
 
 
 class TestStepChooserGetCorrectStep(unittest.TestCase):
