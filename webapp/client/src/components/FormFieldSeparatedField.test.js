@@ -40,7 +40,7 @@ describe("FormFieldSeparatedField", () => {
     props.subFieldSeparator = "SPLITTO";
 
     render(<FormFieldSeparatedField {...props} />);
-    
+
     expect(screen.getByText("SPLITTO")).toBeInTheDocument();
   });
 
@@ -48,7 +48,7 @@ describe("FormFieldSeparatedField", () => {
     props.inputFieldLabels = ["label1", "label2"];
 
     render(<FormFieldSeparatedField {...props} />);
-    
+
     expect(screen.getByText("label1")).toBeInTheDocument();
     expect(screen.getByText("label2")).toBeInTheDocument();
   });

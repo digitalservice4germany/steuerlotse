@@ -12,14 +12,22 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 
 const SubHeading = styled.h2`
-&.form-sub-heading-smaller {
-  font-size: var(--text-medium);
-  margin-top: var(--spacing-09);
-  margin-bottom: var(--spacing-03);
-}
+  &.form-sub-heading-smaller {
+    font-size: var(--text-medium);
+    margin-top: var(--spacing-09);
+    margin-bottom: var(--spacing-03);
+  }
 `;
 
-export default function RegistrationPage({ backLink, stepHeader, form, fields, eligibilityLink, termsOfServiceLink, dataPrivacyLink }) {
+export default function RegistrationPage({
+  backLink,
+  stepHeader,
+  form,
+  fields,
+  eligibilityLink,
+  termsOfServiceLink,
+  dataPrivacyLink,
+}) {
   const { t } = useTranslation();
 
   return (
@@ -27,7 +35,7 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields, e
       <StepHeaderButtons {...backLink} />
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
-      <FormRowCentered>
+        <FormRowCentered>
           <FormFieldDate
             autofocus
             required
@@ -55,15 +63,17 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields, e
             }}
             errors={fields.idnr.errors}
           />
-        </FormRowCentered> 
-        <SubHeading className="form-sub-heading-smaller">{ t("unlockCodeRequest.dataPrivacyAndAgb.title") }</SubHeading>
+        </FormRowCentered>
+        <SubHeading className="form-sub-heading-smaller">
+          {t("unlockCodeRequest.dataPrivacyAndAgb.title")}
+        </SubHeading>
         <FormFieldConsentBox
           required
           fieldName="registration_confirm_data_privacy"
           fieldId="registration_confirm_data_privacy"
           value={fields.registrationConfirmDataPrivacy.value}
           labelText={
-            <Trans 
+            <Trans
               t={t}
               i18nKey="unlockCodeRequest.fieldRegistrationConfirmDataPrivacy.labelText"
               components={{
@@ -71,7 +81,13 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields, e
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
                 dataPrivacyLink: <a href={dataPrivacyLink} />,
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                taxGdprLink: <a href="https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2020-07-01-Korrektur-Allgemeine-Informationen-Datenschutz-Grundverordnung-Steuerverwaltung-anlage-1.pdf?__blob=publicationFile&v=3" rel="noreferrer" target="_blank" />,
+                taxGdprLink: (
+                  <a
+                    href="https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2020-07-01-Korrektur-Allgemeine-Informationen-Datenschutz-Grundverordnung-Steuerverwaltung-anlage-1.pdf?__blob=publicationFile&v=3"
+                    rel="noreferrer"
+                    target="_blank"
+                  />
+                ),
               }}
             />
           }
@@ -83,13 +99,13 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields, e
           fieldId="registration_confirm_terms_of_service"
           value={fields.registrationConfirmTermsOfService.value}
           labelText={
-            <Trans 
+            <Trans
               t={t}
               i18nKey="unlockCodeRequest.fieldRegistrationConfirmTermsOfService.labelText"
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                termsOfServiceLink: <a href={termsOfServiceLink}/>,
+                termsOfServiceLink: <a href={termsOfServiceLink} />,
               }}
             />
           }
@@ -101,28 +117,33 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields, e
           fieldId="registration_confirm_incomes"
           value={fields.registrationConfirmIncomes.value}
           labelText={
-            <Trans 
+            <Trans
               t={t}
               i18nKey="unlockCodeRequest.fieldRegistrationConfirmIncomes.labelText"
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                eligibilityLink: <a href={eligibilityLink}/>,
+                eligibilityLink: <a href={eligibilityLink} />,
               }}
             />
           }
           errors={fields.registrationConfirmIncomes.errors}
         />
-        <SubHeading className="form-sub-heading-smaller">{ t("unlockCodeRequest.dataPrivacyAndAgb.title") }</SubHeading>
-        <Details title={t("unlockCodeRequest.eData.helpTitle")} detailsId='registration_confirm_e_data'>
+        <SubHeading className="form-sub-heading-smaller">
+          {t("unlockCodeRequest.dataPrivacyAndAgb.title")}
+        </SubHeading>
+        <Details
+          title={t("unlockCodeRequest.eData.helpTitle")}
+          detailsId="registration_confirm_e_data"
+        >
           {{
             paragraphs: [
-              <Trans 
-              t={t}
-              i18nKey="unlockCodeRequest.eData.helpText"
-              components={{bold: <strong />}}
-            />
-            ]
+              <Trans
+                t={t}
+                i18nKey="unlockCodeRequest.eData.helpText"
+                components={{ bold: <strong /> }}
+              />,
+            ],
           }}
         </Details>
         <FormFieldConsentBox
@@ -130,7 +151,9 @@ export default function RegistrationPage({ backLink, stepHeader, form, fields, e
           fieldName="registration_confirm_e_data"
           fieldId="registration_confirm_e_data"
           value={fields.registrationConfirmEData.value}
-          labelText={t("unlockCodeRequest.fieldRegistrationConfirmEData.labelText")}
+          labelText={t(
+            "unlockCodeRequest.fieldRegistrationConfirmEData.labelText"
+          )}
           errors={fields.registrationConfirmEData.errors}
         />
       </StepForm>

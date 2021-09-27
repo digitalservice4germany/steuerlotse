@@ -115,7 +115,10 @@ function FormFieldSeparatedField({
             <React.Fragment key={index}>
               {inputFieldLabels.length > index ? (
                 <div>
-                  <SeparatedFieldLabel htmlFor={subFieldId} className="sub-field-label">
+                  <SeparatedFieldLabel
+                    htmlFor={subFieldId}
+                    className="sub-field-label"
+                  >
                     {inputFieldLabels[index]}
                   </SeparatedFieldLabel>
                   {inputElement}

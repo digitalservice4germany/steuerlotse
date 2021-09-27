@@ -24,9 +24,9 @@ function FormFieldDate({
 
   const labelWithDefaultExample = {
     // Use default example input if none is given
-    exampleInput: t('fields.dateField.exampleInput.text'),
+    exampleInput: t("fields.dateField.exampleInput.text"),
     ...label,
-  }
+  };
 
   const labelComponent = (
     <FieldLabelForSeparatedFields
@@ -64,7 +64,11 @@ function FormFieldDate({
           }}
           autofocus={autofocus || Boolean(errors.length)}
           inputFieldLengths={[2, 2, 4]}
-          inputFieldLabels={[t('dateField.day'), t('dateField.month'), t('dateField.year')]}
+          inputFieldLabels={[
+            t("dateField.day"),
+            t("dateField.month"),
+            t("dateField.year"),
+          ]}
         />
       )}
     />

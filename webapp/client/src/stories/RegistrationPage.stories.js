@@ -67,6 +67,6 @@ WithErrors.args = {
     registrationConfirmTermsOfService: {
       value: false,
       errors: [],
-    }
+    },
   },
 };
