@@ -34,6 +34,9 @@ def test_client_e2e(c):
     import sarge
 
     try:
+        # Set up DB
+        c.run("flask db upgrade")
+        c.run("flask populate-database")
         # Run flask server
         flask_pipeline = sarge.run("flask run", env={'FLASK_ENV': 'acceptance'}, async_=True)
         wait_until_up('http://localhost:5000')
