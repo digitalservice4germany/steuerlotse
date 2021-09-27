@@ -18,10 +18,10 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install pipenv
+    - name: Install build requirements
       run: |
         python -m pip install --upgrade pip
-        pip install pipenv
+        pip install pipenv invoke
       shell: bash
 
     - name: Cache dependencies
@@ -29,13 +29,13 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-deps-webapp-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('webapp/Pipfile.lock') }}
+        key: ${{ runner.os }}-deps-webapp-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('webapp/Pipfile.lock', 'webapp/client/yarn.lock') }}
 
     - name: Install dependencies
       if: steps.cache-deps-webapp.outputs.cache-hit != 'true'
       run: |
         cd webapp
-        pipenv install --dev
+        invoke install-build-dependencies
       shell: bash
 
     - name: Lint
@@ -67,7 +67,7 @@ jobs:
       with:
         python-version: 3.9
 
-    - name: Install pipenv
+    - name: Install build requirements
       run: |
         python -m pip install --upgrade pip
         pip install pipenv
@@ -84,7 +84,7 @@ jobs:
       if: steps.cache-deps-erica.outputs.cache-hit != 'true'
       run: |
         cd erica_app
-        pipenv install --dev
+        invoke install-build-dependencies
       shell: bash
 
     - name: Get Eric binaries

@@ -12,3 +12,8 @@ def lint(c):
     c.run("flake8 . --count --select=E9,E112,E113,E117,E711,E713,E714,F63,F7,F82 --show-source --statistics")
     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
     c.run("flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics")
+
+
+@task
+def install_build_dependencies(c):
+    c.run("pipenv install --dev")
