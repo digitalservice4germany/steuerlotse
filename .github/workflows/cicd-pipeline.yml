@@ -24,11 +24,18 @@ jobs:
         pip install pipenv invoke
       shell: bash
 
+    # Cf https://github.com/actions/cache/blob/main/examples.md#node---yarn
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
     - name: Cache dependencies
       id: cache-deps-webapp
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
-        path: ~/.local/share/virtualenvs
+        path: |
+          ~/.local/share/virtualenvs
+          ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-deps-webapp-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('webapp/Pipfile.lock', 'webapp/client/yarn.lock') }}
 
     - name: Install dependencies
