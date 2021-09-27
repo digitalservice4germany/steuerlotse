@@ -27,15 +27,15 @@ describe("Registration", () => {
   it("submitting a complete and correct form", () => {
     cy.fixture("user").then("user", (user) => {
       // Fill DOB
-      cy.get("input[id=dob_1]").type(user.dob.day);
-      cy.get("input[id=dob_2]").type(user.dob.month);
-      cy.get("input[id=dob_3]").type(user.dob.year);
+      cy.get("input[id=dob_1]").type("3");
+      cy.get("input[id=dob_2]").type("11");
+      cy.get("input[id=dob_3]").type("1978");
 
       // Fill tax ID
-      cy.get("input[id=idnr_1]").type(user.idnr[0]);
-      cy.get("input[id=idnr_2]").type(user.idnr[1]);
-      cy.get("input[id=idnr_3]").type(user.idnr[2]);
-      cy.get("input[id=idnr_4]").type(user.idnr[3]);
+      cy.get("input[id=idnr_1]").type("04");
+      cy.get("input[id=idnr_2]").type("531");
+      cy.get("input[id=idnr_3]").type("672");
+      cy.get("input[id=idnr_4]").type("808");
 
       // Check boxes
       cy.get("label[for=registration_confirm_data_privacy].checkmark").click();
