@@ -42,6 +42,7 @@ def test_client_e2e(c):
     # Set up DB
     c.run("flask db upgrade", env=env)
     c.run("flask populate-database", env=env)
+    c.run("./scripts/babel_run.sh", env=env)
 
     try:
         # Run flask server
