@@ -1,7 +1,6 @@
 import React from "react";
 
 import FormFieldUnlockCode from "../components/FormFieldUnlockCode";
-import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import * as StepFormStories from "./StepForm.stories";
 
@@ -12,9 +11,7 @@ export default {
 
 const Template = (args) => (
   <StepForm {...StepFormStories.Default.args}>
-    <FormRowCentered>
-      <FormFieldUnlockCode {...args} />
-    </FormRowCentered>
+    <FormFieldUnlockCode {...args} />
   </StepForm>
 );
 

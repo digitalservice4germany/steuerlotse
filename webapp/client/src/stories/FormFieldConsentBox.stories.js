@@ -19,7 +19,8 @@ export const Default = Template.bind({});
 Default.args = {
   fieldId: "consentBox",
   fieldName: "consentBox",
-  labelText: "This is a Consent Box. Please check if you consent.",
+  labelText:
+    "Ich mag Consent Boxen. Wenn du sie auch magst, klicke doch mal hier drauf.",
   errors: [],
   values: [],
 };
