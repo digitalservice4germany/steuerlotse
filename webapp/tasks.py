@@ -1,20 +1,18 @@
-import psutil
 import subprocess
 import time
 
 from invoke import task
-from requests.exceptions import ConnectionError
-import requests
-import sarge
 
 
 def wait_until_up(url, max_tries=100, delay=0.1):
+    import requests
+
     try_num = 0
     while try_num < max_tries:
         try:
             requests.get(url)
             return
-        except ConnectionError:
+        except requests.exceptions.ConnectionError:
             time.sleep(delay)
             try_num += 1
 
@@ -32,6 +30,9 @@ def test_client_unit(c):
 
 @task
 def test_client_e2e(c):
+    import psutil
+    import sarge
+
     try:
         # Run flask server
         flask_pipeline = sarge.run("flask run", env={'FLASK_ENV': 'acceptance'}, async_=True)
