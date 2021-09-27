@@ -31,6 +31,9 @@ python-dotenv = "*"
 pytest = "*"
 freezegun = "*"
 flake8 = "*"
+invoke = "*"
+sarge = "*"
+psutil = "*"
 
 [requires]
 python_version = "3.9"

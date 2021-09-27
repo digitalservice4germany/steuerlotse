@@ -41,17 +41,13 @@ jobs:
     - name: Lint
       run: |
         cd webapp
-        # stop the build if there are Python syntax errors or undefined names
-        pipenv run flake8 . --count --select=E9,E112,E113,E117,E711,E713,E714,F63,F7,F82 \
-                            --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pipenv run invoke lint
       shell: bash
 
     - name: Test
       run: |
         cd webapp
-        pipenv run pytest | tee ../webapp-test-report.log
+        pipenv run invoke test | tee ../webapp-test-report.log
       shell: bash
 
     - name: Archive test logs
@@ -111,17 +107,13 @@ jobs:
     - name: Lint
       run: |
         cd erica_app
-        # stop the build if there are Python syntax errors or undefined names
-        pipenv run flake8 . --count --select=E9,E112,E113,E117,E711,E713,E714,F63,F7,F82 \
-                            --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pipenv run invoke lint
       shell: bash
 
     - name: Test
       run: |
         cd erica_app
-        pipenv run pytest | tee ../erica-test-report.log
+        pipenv run invoke test | tee ../erica-test-report.log
       shell: bash
 
     - name: Archive test logs

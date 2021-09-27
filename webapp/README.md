@@ -66,7 +66,7 @@ If you _do not want to run erica_ at the same time, you can set `USE_MOCK_API = 
 You can run tests as follows:
 ```bash
 cd webapp/
-pipenv run pytest
+pipenv run invoke test
 ```
 
 ## Making changes to the database schema ⛓
