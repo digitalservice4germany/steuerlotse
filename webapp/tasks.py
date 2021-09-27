@@ -39,10 +39,11 @@ def test_client_e2e(c):
         'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
     }
 
+    # Set up DB
+    c.run("flask db upgrade", env=env)
+    c.run("flask populate-database", env=env)
+
     try:
-        # Set up DB
-        c.run("flask db upgrade", env=env)
-        c.run("flask populate-database", env=env)
         # Run flask server
         flask_pipeline = sarge.run("flask run", env=env, async_=True)
         wait_until_up('http://localhost:5000')
@@ -52,7 +53,7 @@ def test_client_e2e(c):
 
         # Run e2e tests
         with c.cd("client/"):
-            c.run("yarn test:e2e", env)
+            c.run("yarn test:e2e", env=env)
 
     finally:
         # Shut down started processes

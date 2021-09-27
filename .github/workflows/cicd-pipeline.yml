@@ -42,19 +42,19 @@ jobs:
       if: steps.cache-deps-webapp.outputs.cache-hit != 'true'
       run: |
         cd webapp
-        invoke install-build-dependencies
+        invoke --echo install-build-dependencies
       shell: bash
 
     - name: Lint
       run: |
         cd webapp
-        pipenv run invoke lint
+        pipenv run invoke --echo lint
       shell: bash
 
     - name: Test
       run: |
         cd webapp
-        pipenv run invoke test | tee ../webapp-test-report.log
+        pipenv run invoke --echo test | tee ../webapp-test-report.log
       shell: bash
 
     - name: Archive test logs
@@ -91,7 +91,7 @@ jobs:
       if: steps.cache-deps-erica.outputs.cache-hit != 'true'
       run: |
         cd erica_app
-        invoke install-build-dependencies
+        invoke --echo install-build-dependencies
       shell: bash
 
     - name: Get Eric binaries
@@ -114,13 +114,13 @@ jobs:
     - name: Lint
       run: |
         cd erica_app
-        pipenv run invoke lint
+        pipenv run invoke --echo lint
       shell: bash
 
     - name: Test
       run: |
         cd erica_app
-        pipenv run invoke test | tee ../erica-test-report.log
+        pipenv run invoke --echo test | tee ../erica-test-report.log
       shell: bash
 
     - name: Archive test logs
