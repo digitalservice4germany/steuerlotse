@@ -62,11 +62,19 @@ class StepChooser:
 
     def determine_prev_step(self, current_step_name, stored_data):
         idx = self.step_order.index(current_step_name)
-        return self.steps[self.step_order[idx - 1]] if idx > 0 else None
+        for possible_prev_step_idx in range(idx - 1, -1, -1):
+            possible_prev_step = self.steps[self.step_order[possible_prev_step_idx]]
+            if possible_prev_step.check_precondition(stored_data):
+                return possible_prev_step
+        return None
 
     def determine_next_step(self, current_step_name, stored_data):
         idx = self.step_order.index(current_step_name)
-        return self.steps[self.step_order[idx + 1]] if idx < len(self.step_order) - 1 else None
+        for possible_next_step_idx in range(idx + 1, len(self.steps)):
+            possible_next_step = self.steps[self.step_order[possible_next_step_idx]]
+            if possible_next_step.check_precondition(stored_data):
+                return possible_next_step
+        return None
 
     def default_data(self):
         if Config.DEBUG_DATA:
