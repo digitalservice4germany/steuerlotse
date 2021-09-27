@@ -81,6 +81,14 @@ class DevelopmentConfig(BaseConfig):
     REACT_BUNDLE_NAME = 'bundle.js'
 
 
+class AcceptanceConfig(DevelopmentConfig):
+    DEBUG = False
+    DEBUG_DATA = False
+    USE_MOCK_API = True
+
+    ERICA_BASE_URL = 'ERICA'
+    RATELIMIT_ENABLED = False
+
 class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
@@ -102,6 +110,7 @@ class TestingConfig(BaseConfig):
 try:
     Config = {
         'development': DevelopmentConfig,
+        'acceptance': AcceptanceConfig,
         'testing': TestingConfig,
         'staging': StagingConfig,
         'production': ProductionConfig

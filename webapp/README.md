@@ -15,7 +15,7 @@ pipenv install
 cd client/ && yarn install && yarn prepare && cd ..
 
 # Ensure required environment variables are set
-cp .env.example .env
+cp .flaskenv.example .flaskenv
 
 # Initialize local database
 pipenv run flask db upgrade
