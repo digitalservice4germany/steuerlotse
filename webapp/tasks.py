@@ -33,20 +33,26 @@ def test_client_e2e(c):
     import psutil
     import sarge
 
+    env = {
+        'FLASK_ENV': 'acceptance',
+        'CI': 'true',
+        'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
+    }
+
     try:
         # Set up DB
-        c.run("flask db upgrade")
-        c.run("flask populate-database")
+        c.run("flask db upgrade", env=env)
+        c.run("flask populate-database", env=env)
         # Run flask server
-        flask_pipeline = sarge.run("flask run", env={'FLASK_ENV': 'acceptance'}, async_=True)
+        flask_pipeline = sarge.run("flask run", env=env, async_=True)
         wait_until_up('http://localhost:5000')
         # Run React dev-server
-        react_pipeline = sarge.run("yarn start", cwd="client/", env={'CI': 'true', 'BROWSER': 'none'}, async_=True, stdout=subprocess.DEVNULL)
+        react_pipeline = sarge.run("yarn start", cwd="client/", env=env, async_=True, stdout=subprocess.DEVNULL)
         wait_until_up('http://localhost:3000')
 
         # Run e2e tests
         with c.cd("client/"):
-            c.run("yarn test:e2e")
+            c.run("yarn test:e2e", env)
 
     finally:
         # Shut down started processes
