@@ -37,7 +37,7 @@ Cypress.Commands.add("login", () => {
       const $html = Cypress.$(body);
       const csrf = $html.find("input[name=csrf_token]").val();
 
-      cy.fixture("loginUser").then((user) => {
+      cy.fixture("user").then((user) => {
         // Make request to set session cookie.
         cy.request({
           method: "POST",

@@ -2,7 +2,7 @@ describe("Login", () => {
   context("logging In", () => {
     beforeEach(() => {
       cy.visit("/unlock_code_activation/step/data_input");
-      cy.fixture("loginUser").as("user");
+      cy.fixture("user").as("user");
     });
 
     it("should redirect on success", function () {
