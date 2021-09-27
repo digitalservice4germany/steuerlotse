@@ -135,14 +135,6 @@ context('Acceptance tests', () => {
         cy.visit('/')
     });
 
-    it('Check that registration and revocation are clickable', () => {
-        cy.get('a').contains(/^Registrieren$/)
-            .should('have.class', 'nav-link')
-            .should('not.have.class', 'inactive')
-        cy.get('a').contains(/^Freischaltcode Stornierung$/)
-            .should('not.have.class', 'inactive')
-    })
-
     context('When I am logged in', () => {
         beforeEach(() => {
             login()
@@ -324,7 +316,7 @@ context('Acceptance tests', () => {
                 cy.get('select[id=bundesland]').select('BY')
                 cy.get('select[id=bufa_nr]').select('9203')
                 cy.get('label[for=request_new_tax_number]').first().click()
-                
+
                 cy.get(submitBtnSelector).click()
                 cy.get('#person_a_idnr_1').type(taxReturnData.personA.idnr1)
                 cy.get('#person_a_idnr_2').type(taxReturnData.personA.idnr2)

@@ -1,33 +1,11 @@
 describe("Login", () => {
-  context("Logging In", () => {
+  context("logging In", () => {
     beforeEach(() => {
       cy.visit("/unlock_code_activation/step/data_input");
       cy.fixture("loginUser").as("user");
     });
 
-    it("displays errors on login", () => {
-      // incorrect username on purpose
-      cy.get("input[id=idnr_1]").type("12");
-      cy.get("input[id=idnr_2]").type("345");
-      cy.get("input[id=idnr_3]").type("678");
-      cy.get("input[id=idnr_4]").type("901");
-      cy.get("input[id=unlock_code_1]").type("asdf");
-      cy.get("input[id=unlock_code_2]").type("1234");
-      cy.get("input[id=unlock_code_3]").type("zxcv{enter}");
-
-      // we should have visible errors now
-      cy.get(".invalid-feedback")
-        .should("be.visible")
-        .and(
-          "contain",
-          "Geben Sie bitte eine gültige Steuer-Identifikationsnummer an."
-        );
-
-      // and still be on the same URL
-      cy.url().should("include", "/unlock_code_activation/step/data_input");
-    });
-
-    it("redirects on success", function () {
+    it("should redirect on success", function () {
       cy.get("input[id=idnr_1]").type(this.user.idnr[0]);
       cy.get("input[id=idnr_2]").type(this.user.idnr[1]);
       cy.get("input[id=idnr_3]").type(this.user.idnr[2]);
@@ -44,11 +22,32 @@ describe("Login", () => {
       // and our cookie should be set
       cy.getCookie("session").should("exist");
     });
+
+    it("should show an error for invalid tax IDs", () => {
+      // incorrect username on purpose
+      cy.get("input[id=idnr_1]").type("12");
+      cy.get("input[id=idnr_2]").type("345");
+      cy.get("input[id=idnr_3]").type("678");
+      cy.get("input[id=idnr_4]").type("901");
+      cy.get("input[id=unlock_code_1]").type("asdf");
+      cy.get("input[id=unlock_code_2]").type("1234");
+      cy.get("input[id=unlock_code_3]").type("zxcv{enter}");
+
+      // we should have visible errors now
+      cy.get(".invalid-feedback").should(
+        "contain",
+        "Geben Sie bitte eine gültige Steuer-Identifikationsnummer an."
+      );
+
+      // and still be on the same URL
+      cy.url().should("include", "/unlock_code_activation/step/data_input");
+    });
   });
 
   context("when logged in", () => {
     beforeEach(() => {
       cy.login();
+      cy.visit("/lotse/step/start");
     });
 
     it("registration should be disabled", () => {
