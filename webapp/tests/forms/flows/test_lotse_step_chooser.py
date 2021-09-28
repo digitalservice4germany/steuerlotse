@@ -8,11 +8,11 @@ from tests.forms.mock_steuerlotse_steps import MockMiddleStep
 
 # TODO remove this once all steps are converted to steuerlotse steps
 class TestDeterminePrevStep:
-    def test_if_prev_step_set_in_step_return_this_set_step(self):
+    def test_if_prev_step_set_in_step_then_return_the_set_step(self):
         returned_prev_step = LotseStepChooser(endpoint="lotse").determine_prev_step(StepSteuernummer.name, {})
         assert returned_prev_step == StepFamilienstand
 
-    def test_if_prev_step_not_set_in_step_call_super_method(self):
+    def test_if_prev_step_not_set_in_step_then_call_super_method(self):
         step_chooser = LotseStepChooser(endpoint="lotse")
         step_chooser.steps['step_without_set_prev_step'] = MockMiddleStep
         with patch('app.forms.flows.step_chooser.StepChooser.determine_prev_step') as super_method:
@@ -22,11 +22,11 @@ class TestDeterminePrevStep:
 
 # TODO remove this once all steps are converted to steuerlotse steps
 class TestDetermineNextStep:
-    def test_if_next_step_set_in_step_return_this_set_step(self):
+    def test_if_next_step_set_in_step_then_return_the_set_step(self):
         returned_prev_step = LotseStepChooser(endpoint="lotse").determine_next_step(StepSteuernummer.name, {})
         assert returned_prev_step == StepPersonA
 
-    def test_if_next_step_not_set_in_step_call_super_method(self):
+    def test_if_next_step_not_set_in_step_then_call_super_method(self):
         step_chooser = LotseStepChooser(endpoint="lotse")
         step_chooser.steps['step_without_set_next_step'] = MockMiddleStep
         with patch('app.forms.flows.step_chooser.StepChooser.determine_next_step') as super_method:

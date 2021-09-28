@@ -42,7 +42,7 @@ class TestGetPossibleRedirect:
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
                           endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
 
-    def test_if_step_not_in_step_list_return_404(self, step_chooser):
+    def test_if_step_not_in_step_list_then_return_404(self, step_chooser):
         with pytest.raises(NotFound):
             step_chooser._get_possible_redirect('INVALID_STEP_NAME', {})
 
@@ -95,7 +95,7 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.assertIsInstance(chosen_step, RedirectSteuerlotseStep)
         self.assertEqual(chosen_step.redirection_step_name, self.step_chooser.first_step.name)
 
-    def test_if_step_in_list_of_steps_return_correct_steps(self):
+    def test_if_step_in_list_of_steps_then_return_correct_steps(self):
         simple_step_chooser = StepChooser(title="Testing StepChooser",
                                             steps=[MockStartStep, MockMiddleStep, MockFinalStep],
                                             endpoint=self.endpoint_correct)
@@ -145,12 +145,12 @@ class TestDeterminePrevStep:
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
                           endpoint="lotse", overview_step=MockFormWithInputStep)
 
-    def test_if_previous_steps_have_no_precondition_return_direct_predecessor(self, step_chooser_without_preconditions):
+    def test_if_previous_steps_have_no_precondition_then_return_direct_predecessor(self, step_chooser_without_preconditions):
         expected_prev_step = MockMiddleStep
         actual_prev_step = step_chooser_without_preconditions.determine_prev_step(MockFormWithInputStep.name, {})
         assert actual_prev_step == expected_prev_step
 
-    def test_if_previous_steps_have_no_precondition_request_only_direct_predecessor(self, step_chooser_without_preconditions):
+    def test_if_previous_steps_have_no_precondition_then_request_only_direct_predecessor(self, step_chooser_without_preconditions):
         with patch('tests.forms.mock_steuerlotse_steps.MockStartStep.check_precondition') as start_step_check, \
              patch('tests.forms.mock_steuerlotse_steps.MockMiddleStep.check_precondition') as middle_step_check, \
              patch('tests.forms.mock_steuerlotse_steps.MockFormWithInputStep.check_precondition') as input_step_check, \
@@ -161,19 +161,19 @@ class TestDeterminePrevStep:
             input_step_check.assert_not_called()
             final_step_check.assert_not_called()
 
-    def test_if_previous_steps_have_met_precondition_return_direct_predecessor(self, step_chooser_with_preconditions):
+    def test_if_previous_steps_have_met_precondition_then_return_direct_predecessor(self, step_chooser_with_preconditions):
         expected_prev_step = MockStepWithPrecondition
         actual_prev_step = step_chooser_with_preconditions.determine_prev_step(MockFormWithInputStep.name,
                                                                                {'precondition_met': True})
         assert actual_prev_step == expected_prev_step
 
-    def test_if_previous_steps_have_but_dont_meet_precondition_return_step_before(self, step_chooser_with_preconditions):
+    def test_if_previous_steps_have_but_dont_meet_precondition_then_return_step_before(self, step_chooser_with_preconditions):
         expected_prev_step = MockStartStep
         actual_prev_step = step_chooser_with_preconditions.determine_prev_step(MockFormWithInputStep.name,
                                                                                {'precondition_met': False})
         assert actual_prev_step == expected_prev_step
 
-    def test_if_previous_steps_have_but_dont_meet_precondition_request_correct_steps(self, step_chooser_with_preconditions):
+    def test_if_previous_steps_have_but_dont_meet_precondition_then_request_correct_steps(self, step_chooser_with_preconditions):
         with patch('tests.forms.mock_steuerlotse_steps.MockStartStep.check_precondition') as start_step_check, \
                 patch('tests.forms.mock_steuerlotse_steps.MockStepWithPrecondition.check_precondition',
                       MagicMock(return_value=False)) as precondition_step_check, \
@@ -186,7 +186,7 @@ class TestDeterminePrevStep:
             input_step_check.assert_not_called()
             final_step_check.assert_not_called()
 
-    def test_if_no_step_is_valid_prev_step_return_none(self, step_chooser_without_preconditions):
+    def test_if_no_step_is_valid_prev_step_then_return_none(self, step_chooser_without_preconditions):
         returned_prev_step = step_chooser_without_preconditions.determine_prev_step(MockStartStep.name, {})
         assert returned_prev_step is None
 
@@ -204,12 +204,12 @@ class TestDetermineNextStep:
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
                           endpoint="lotse", overview_step=MockFormWithInputStep)
 
-    def test_if_next_steps_have_no_precondition_return_direct_successor(self, step_chooser_without_preconditions):
+    def test_if_next_steps_have_no_precondition_then_return_direct_successor(self, step_chooser_without_preconditions):
         expected_next_step = MockMiddleStep
         actual_next_step = step_chooser_without_preconditions.determine_next_step(MockFormWithInputStep.name, {})
         assert actual_next_step == expected_next_step
 
-    def test_if_next_steps_have_no_precondition_request_only_direct_successor(self, step_chooser_without_preconditions):
+    def test_if_next_steps_have_no_precondition_then_request_only_direct_successor(self, step_chooser_without_preconditions):
         with patch('tests.forms.mock_steuerlotse_steps.MockStartStep.check_precondition') as start_step_check, \
              patch('tests.forms.mock_steuerlotse_steps.MockFormWithInputStep.check_precondition') as input_step_check, \
              patch('tests.forms.mock_steuerlotse_steps.MockMiddleStep.check_precondition') as middle_step_check, \
@@ -220,19 +220,19 @@ class TestDetermineNextStep:
             middle_step_check.assert_called_once()
             final_step_check.assert_not_called()
 
-    def test_if_next_steps_have_met_precondition_return_direct_successor(self, step_chooser_with_preconditions):
+    def test_if_next_steps_have_met_precondition_then_return_direct_successor(self, step_chooser_with_preconditions):
         expected_next_step = MockStepWithPrecondition
         actual_next_step = step_chooser_with_preconditions.determine_next_step(MockFormWithInputStep.name,
                                                                                {'precondition_met': True})
         assert actual_next_step == expected_next_step
 
-    def test_if_next_steps_have_but_dont_meet_precondition_return_step_after(self, step_chooser_with_preconditions):
+    def test_if_next_steps_have_but_dont_meet_precondition_then_return_step_after(self, step_chooser_with_preconditions):
         expected_next_step = MockFinalStep
         actual_next_step = step_chooser_with_preconditions.determine_next_step(MockFormWithInputStep.name,
                                                                                {'precondition_met': False})
         assert actual_next_step == expected_next_step
 
-    def test_if_next_steps_have_but_dont_meet_precondition_request_correct_steps(self, step_chooser_with_preconditions):
+    def test_if_next_steps_have_but_dont_meet_precondition_then_request_correct_steps(self, step_chooser_with_preconditions):
         with patch('tests.forms.mock_steuerlotse_steps.MockStartStep.check_precondition') as start_step_check, \
                 patch(
                     'tests.forms.mock_steuerlotse_steps.MockFormWithInputStep.check_precondition') as input_step_check, \
@@ -245,7 +245,7 @@ class TestDetermineNextStep:
             precondition_step_check.assert_called_once()
             final_step_check.assert_called_once()
 
-    def test_if_no_step_is_valid_next_step_return_none(self, step_chooser_without_preconditions):
+    def test_if_no_step_is_valid_next_step_then_return_none(self, step_chooser_without_preconditions):
         returned_next_step = step_chooser_without_preconditions.determine_next_step(MockFinalStep.name, {})
         assert returned_next_step is None
 
