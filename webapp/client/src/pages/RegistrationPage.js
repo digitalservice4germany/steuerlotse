@@ -20,7 +20,6 @@ const SubHeading = styled.h2`
 `;
 
 export default function RegistrationPage({
-  backLink,
   stepHeader,
   form,
   fields,
@@ -32,7 +31,7 @@ export default function RegistrationPage({
 
   return (
     <>
-      <StepHeaderButtons {...backLink} />
+      <StepHeaderButtons />
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
         <FormRowCentered>
@@ -167,24 +166,16 @@ const fieldPropType = PropTypes.exact({
 });
 
 RegistrationPage.propTypes = {
-  backLink: PropTypes.exact(StepHeaderButtons.propTypes),
   stepHeader: PropTypes.exact({
     // TODO: define these here, not in Python
-    // render_info.step_title
     title: PropTypes.string,
-    // render_info.step_intro
     intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
-    // render_info.submit_url
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
-    // csrf_token()
     csrfToken: PropTypes.string,
-    // !!render_info.overview_url
     showOverviewButton: PropTypes.bool,
-    // explanatory_button_text
     explanatoryButtonText: PropTypes.string, // TODO: define here, not in Python
-    // render_info.additional_info.next_button_label
     nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
   }).isRequired,
   fields: PropTypes.exact({
@@ -198,8 +189,4 @@ RegistrationPage.propTypes = {
   eligibilityLink: PropTypes.string.isRequired,
   termsOfServiceLink: PropTypes.string.isRequired,
   dataPrivacyLink: PropTypes.string.isRequired,
-};
-
-RegistrationPage.defaultProps = {
-  backLink: undefined,
 };
