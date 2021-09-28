@@ -68,6 +68,9 @@ def test_client_e2e(c):
                 child.terminate()
             cmd.terminate()
 
+        # Delete test database
+        c.run("rm ./app/acceptance.db")
+
 
 @task(test_pytest, test_client_unit, test_client_e2e)
 def test(c):
