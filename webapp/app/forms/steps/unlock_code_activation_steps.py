@@ -1,6 +1,8 @@
+import humps
 from flask import render_template
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
+from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
@@ -34,7 +36,27 @@ class UnlockCodeActivationInputStep(FormStep):
     def render(self, data, render_info):
         render_info.form.first_field = next(iter(render_info.form))
         return render_template(
-            'unlock_code/login.html',
+            'react_component.html',
+            component='LoginPage',
+            props=humps.camelize({
+                'step_header': {
+                    'title': render_info.step_title,
+                    'intro': render_info.step_intro,
+                },
+                'form': {
+                    'action': render_info.submit_url,
+                    'csrf_token': generate_csrf(),
+                    'show_overview_button': bool(render_info.overview_url),
+                },
+                'fields': {
+                    field.name: {
+                        'value': field._value(),
+                        'errors': field.errors,
+                    }
+                    for field in render_info.form
+                },
+            }),
+            # TODO: These are still required by base.html to set the page header.
             form=render_info.form,
             render_info=render_info,
             header_title=self.header_title
