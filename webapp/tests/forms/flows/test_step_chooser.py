@@ -60,6 +60,10 @@ class TestGetPossibleRedirect:
                                                                   {'precondition_met': True})
         assert step_to_redirect_to is None
 
+    def test_if_step_in_list_and_has_no_redirection_set_then_return_none(self, step_chooser):
+        step_to_redirect_to = step_chooser._get_possible_redirect(MockRenderStep.name, {})
+        assert step_to_redirect_to is None
+
 
 class TestStepChooserGetCorrectStep(unittest.TestCase):
     @pytest.fixture(autouse=True)

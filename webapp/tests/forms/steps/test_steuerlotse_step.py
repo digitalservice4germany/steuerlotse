@@ -413,8 +413,8 @@ class TestCheckPrecondition:
 
 class TestGetRedirectionStep:
     def test_by_default_return_none(self):
-        precondition_checked = MockRenderStep.get_redirection_step({})
-        assert precondition_checked is None
+        redirection_step = MockRenderStep.get_redirection_step({})
+        assert redirection_step is None
 
 
 class TestSteuerlotseFormStepHandle(unittest.TestCase):
