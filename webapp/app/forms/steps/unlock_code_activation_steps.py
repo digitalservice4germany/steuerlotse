@@ -1,7 +1,6 @@
 import humps
 from flask import render_template
 from flask_babel import _
-from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
@@ -15,11 +14,7 @@ class UnlockCodeActivationInputStep(FormStep):
     name = 'data_input'
 
     class Form(SteuerlotseBaseForm):
-        idnr = IdNrField(_l('unlock-code-activation.idnr'), [InputRequired(), ValidIdNr()],
-                         render_kw={'data-detail': {'title': _l('unlock-code-request.idnr.help-title'),
-                                               'text': _l('unlock-code-request.idnr.help-text')}}
-
-                         )
+        idnr = IdNrField(validators=[InputRequired(), ValidIdNr()])
         unlock_code = UnlockCodeField(validators=[InputRequired(), ValidUnlockCode()])
 
     def __init__(self, **kwargs):
