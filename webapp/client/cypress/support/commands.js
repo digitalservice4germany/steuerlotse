@@ -30,27 +30,24 @@ Cypress.Commands.add("login", () => {
     name: "login",
   });
 
-  cy.request("/unlock_code_activation/step/data_input")
-    .its("body")
-    .then((body) => {
-      // Parse csrf_token from body.
-      const $html = Cypress.$(body);
-      const csrf = $html.find("input[name=csrf_token]").val();
+  cy.visit("/unlock_code_activation/step/data_input");
 
-      cy.fixture("user").then((user) => {
-        // Make request to set session cookie.
-        cy.request({
-          method: "POST",
-          url: "/unlock_code_activation/step/data_input",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: `idnr=${user.idnr[0]}&idnr=${user.idnr[1]}&idnr=${user.idnr[2]}&idnr=${user.idnr[3]}&unlock_code=${user.unlockCode[0]}&unlock_code=${user.unlockCode[1]}&unlock_code=${user.unlockCode[2]}&csrf_token=${csrf}`,
-          followRedirect: false,
-        }).then((resp) => {
-          expect(resp.status).to.eq(302);
-          expect(resp.redirectedToUrl).to.contain("/lotse/step/start");
-        });
+  cy.get("input[name=csrf_token]").then((input) => {
+    const csrf = input.val();
+    cy.fixture("user").then((user) => {
+      // Make request to set session cookie.
+      cy.request({
+        method: "POST",
+        url: "/unlock_code_activation/step/data_input",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `idnr=${user.idnr[0]}&idnr=${user.idnr[1]}&idnr=${user.idnr[2]}&idnr=${user.idnr[3]}&unlock_code=${user.unlockCode[0]}&unlock_code=${user.unlockCode[1]}&unlock_code=${user.unlockCode[2]}&csrf_token=${csrf}`,
+        followRedirect: false,
+      }).then((resp) => {
+        expect(resp.status).to.eq(302);
+        expect(resp.redirectedToUrl).to.contain("/lotse/step/start");
       });
     });
+  });
 });
