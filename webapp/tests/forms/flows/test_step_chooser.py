@@ -173,7 +173,7 @@ class TestDeterminePrevStep:
                                                                                {'precondition_met': False})
         assert actual_prev_step == expected_prev_step
 
-    def test_if_previous_steps_have_but_dont_meet_precondition_then_request_correct_steps(self, step_chooser_with_preconditions):
+    def test_if_previous_steps_have_but_dont_meet_precondition_then_request_direct_predecessors(self, step_chooser_with_preconditions):
         with patch('tests.forms.mock_steuerlotse_steps.MockStartStep.check_precondition') as start_step_check, \
                 patch('tests.forms.mock_steuerlotse_steps.MockStepWithPrecondition.check_precondition',
                       MagicMock(return_value=False)) as precondition_step_check, \
@@ -232,7 +232,7 @@ class TestDetermineNextStep:
                                                                                {'precondition_met': False})
         assert actual_next_step == expected_next_step
 
-    def test_if_next_steps_have_but_dont_meet_precondition_then_request_correct_steps(self, step_chooser_with_preconditions):
+    def test_if_next_steps_have_but_dont_meet_precondition_then_request_direct_successors(self, step_chooser_with_preconditions):
         with patch('tests.forms.mock_steuerlotse_steps.MockStartStep.check_precondition') as start_step_check, \
                 patch(
                     'tests.forms.mock_steuerlotse_steps.MockFormWithInputStep.check_precondition') as input_step_check, \
