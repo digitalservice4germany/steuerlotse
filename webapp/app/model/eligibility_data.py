@@ -282,7 +282,7 @@ class ElsterRegistrationMethodSoftwareEligibilityData(RecursiveDataModel):
     elster_registration_method_eligibility: str
 
     @validator('elster_registration_method_eligibility')
-    def must_be_software(cls, v):
+    def registration_method_must_be_software(cls, v):
         if v != 'software':
             raise ValueError
         return v
@@ -298,7 +298,7 @@ class ElsterRegistrationMethodNoneEligibilityData(RecursiveDataModel):
     elster_registration_method_eligibility: str
 
     @validator('elster_registration_method_eligibility')
-    def must_be_none(cls, v):
+    def registration_method_must_be_none(cls, v):
         if v != 'none':
             raise ValueError
         return v
