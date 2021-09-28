@@ -19,8 +19,20 @@
                 {% endif %}
             </div>
             <div class="col-12 col-sm-10">
-                <h1 class="headline">{{ render_info.step_title }}</h1>
-                <p class="result-text">{{ error_text }} {{ render_info.step_intro }}</p>
+                <h1 class="headline">
+                    {% if render_info.additional_info['answer_is_maybe'] %}
+                        {{ _('form.eligibility.success.maybe.title') }}
+                    {% else %}
+                        {{ render_info.step_title }}
+                    {% endif %}
+                </h1>
+                <p class="result-text">
+                    {% if render_info.additional_info['answer_is_maybe'] %}
+                        {{ _('form.eligibility.success.maybe.intro') }}
+                    {% else %}
+                        {{ error_text }} {{ render_info.step_intro }}
+                    {% endif %}
+                </p>
             </div>
         </div>
     </div>

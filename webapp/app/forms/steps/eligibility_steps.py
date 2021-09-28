@@ -791,6 +791,7 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     def _main_handle(self):
         super()._main_handle()
 
+        # Add notes depending on certain previous answers
         dependent_notes = []
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
@@ -799,11 +800,10 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
                 [CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.capital_investment'))
-
         self.render_info.additional_info['dependent_notes'] = dependent_notes
+
         self.render_info.next_url = None
 
+        # Set "maybe" result if answer was "I dont know"
         if data_fits_data_model(ElsterRegistrationMethodNoneEligibilityData, self.stored_data):
             self.render_info.additional_info['answer_is_maybe'] = True
-            self.render_info.step_title = _l('form.eligibility.success.maybe.title')
-            self.render_info.step_intro = _l('form.eligibility.success.maybe.intro')
