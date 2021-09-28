@@ -88,6 +88,7 @@ class AcceptanceConfig(DevelopmentConfig):
 
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
+    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///acceptance.db"
 
 class TestingConfig(BaseConfig):
     DEBUG = True
