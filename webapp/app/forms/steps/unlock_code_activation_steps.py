@@ -6,7 +6,7 @@ from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import SteuerlotseStringField, UnlockCodeField, IdNrField
+from app.forms.fields import UnlockCodeField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr, ValidUnlockCode
 
@@ -20,10 +20,7 @@ class UnlockCodeActivationInputStep(FormStep):
                                                'text': _l('unlock-code-request.idnr.help-text')}}
 
                          )
-        unlock_code = UnlockCodeField(_l('unlock-code-activation.unlock-code'), [InputRequired(), ValidUnlockCode()],
-                                      render_kw={'data-detail': {'title': _l('unlock-code-request.unlock-code.help-title'),
-                                                            'text': _l('unlock-code-request.unlock-code.help-text')}}
-                                      )
+        unlock_code = UnlockCodeField(validators=[InputRequired(), ValidUnlockCode()])
 
     def __init__(self, **kwargs):
         super(UnlockCodeActivationInputStep, self).__init__(

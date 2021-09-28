@@ -162,27 +162,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
                                       input_field_lengths=self.input_field_lengths))
 
 
-class UnlockCodeWidget(AlphaNumericInputMixin, MultipleInputFieldWidget):
-    """A divided input field with three text input fields, limited to four chars."""
-    sub_field_separator = '-'
-    input_field_lengths = [4, 4, 4]
-
-    def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(kwargs)
-
-        return super().__call__(*args, **kwargs)
-
-
 class UnlockCodeField(StringField):
-    def __init__(self, label='', validators=None, **kwargs):
-        super(UnlockCodeField, self).__init__(label, validators, **kwargs)
-        self.widget = UnlockCodeWidget()
-
-    def __call__(self, *args, **kwargs):
-        kwargs['class'] = kwargs.get('class', '') + ' unlock-input'
-
-        return super().__call__(**kwargs)
-
     def process_formdata(self, valuelist):
         if valuelist:
             self.data = '-'.join(valuelist).upper()
@@ -190,7 +170,7 @@ class UnlockCodeField(StringField):
             self.data = ''
 
     def _value(self):
-        return self.data.split('-') if self.data else ''
+        return self.data.split('-') if self.data else ['', '', '']
 
     def pre_validate(self, form):
         ValidElsterCharacterSet().__call__(form, self)
