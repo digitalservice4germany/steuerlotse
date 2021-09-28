@@ -10,7 +10,8 @@ from markupsafe import escape
 from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
-    send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data
+    send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data, \
+    validate_tax_number
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -518,6 +519,40 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
     def tearDown(self):
         if self.new_idnr in MockErica.available_idnrs:
             MockErica.available_idnrs.remove(self.new_idnr)
+
+
+class TestValidateTaxNumber:
+
+    def test_if_tax_number_is_valid_then_return_true(self):
+        state_abbreviation = 'BY'
+        tax_number = '19811310010'
+        result = validate_tax_number(state_abbreviation, tax_number)
+
+        assert result is True
+
+    def test_if_tax_number_is_invalid_then_return_false(self):
+        state_abbreviation = 'BY'
+        tax_number = '00000111111'
+        MockErica.tax_number_is_invalid = True
+        try:
+            result = validate_tax_number(state_abbreviation, tax_number)
+
+        finally:
+            MockErica.tax_number_is_invalid = False
+
+        assert result is False
+
+    def test_if_erica_throws_error_then_raise_error(self):
+        state_abbreviation = 'BY'
+        tax_number = '19811310010'
+        MockErica.eric_process_not_successful_error_occurred = True
+        try:
+            with pytest.raises(ElsterUnknownError):
+                validate_tax_number(state_abbreviation, tax_number)
+        finally:
+            MockErica.eric_process_not_successful_error_occurred = False
+
+
 
 
 class TestGenerateEStRequestData(unittest.TestCase):

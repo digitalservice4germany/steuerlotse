@@ -141,6 +141,16 @@ def send_unlock_code_revocation_with_elster(form_data, ip_address, include_elste
     return response_data
 
 
+def validate_tax_number(state_abbreviation, tax_number):
+    pyeric_response = request_from_erica(_PYERIC_API_BASE_URL + f'/tax_number_validity/{state_abbreviation}/{tax_number}')
+
+    check_pyeric_response_for_errors(pyeric_response)
+
+    response_data = pyeric_response.json()
+
+    return response_data['is_valid']
+
+
 @lru_cache
 def request_tax_offices():
     pyeric_response = request_from_erica(_PYERIC_API_BASE_URL + '/tax_offices')
