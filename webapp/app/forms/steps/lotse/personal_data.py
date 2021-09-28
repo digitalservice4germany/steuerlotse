@@ -39,6 +39,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.steuernummer-intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
     template = 'lotse/form_steuernummer.html'
+    # TODO remove this once all steps are converted to steuerlotse steps
     prev_step_name = StepFamilienstand.name
     next_step_name = StepPersonA.name
 
