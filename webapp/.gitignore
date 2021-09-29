@@ -9,3 +9,4 @@ app/static/cache_manifest.json
 cronjob_output
 dev.db
 acceptance.db
+.flaskenv
