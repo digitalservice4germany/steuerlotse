@@ -15,6 +15,7 @@ def wait_until_up(url, max_tries=100, delay=0.1):
         except requests.exceptions.ConnectionError:
             time.sleep(delay)
             try_num += 1
+    raise RuntimeError(f"Maximum retries for connecting to {url} exceeded.")
 
 
 @task
