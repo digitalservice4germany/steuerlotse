@@ -29,9 +29,11 @@ describe("Login", () => {
       cy.get("input[id=idnr_2]").type("345");
       cy.get("input[id=idnr_3]").type("678");
       cy.get("input[id=idnr_4]").type("901");
-      cy.get("input[id=unlock_code_1]").type("asdf");
-      cy.get("input[id=unlock_code_2]").type("1234");
-      cy.get("input[id=unlock_code_3]").type("zxcv{enter}");
+      cy.get("input[id=unlock_code_1]").type(this.user.unlockCode[0]);
+      cy.get("input[id=unlock_code_2]").type(this.user.unlockCode[1]);
+      cy.get("input[id=unlock_code_3]").type(
+        this.user.unlockCode[2] + "{enter}"
+      );
 
       // we should have visible errors now
       cy.get(".invalid-feedback").should(
