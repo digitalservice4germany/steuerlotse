@@ -4,6 +4,9 @@ import time
 from invoke import task
 
 
+CLIENT_DIR = "client/"
+
+
 def wait_until_up(url, max_tries=100, delay=0.1):
     import requests
 
@@ -25,7 +28,7 @@ def test_pytest(c):
 
 @task
 def test_client_unit(c):
-    with c.cd("client/"):
+    with c.cd(CLIENT_DIR):
         c.run("yarn test", env={'CI': 'true'})  # CI=true forces all tests to run
 
 
@@ -50,11 +53,11 @@ def test_functional(c):
         flask_pipeline = sarge.run("flask run", env=env, async_=True)
         wait_until_up('http://localhost:5000')
         # Run React dev-server
-        react_pipeline = sarge.run("yarn start", cwd="client/", env=env, async_=True, stdout=subprocess.DEVNULL)
+        react_pipeline = sarge.run("yarn start", cwd=CLIENT_DIR, env=env, async_=True, stdout=subprocess.DEVNULL)
         wait_until_up('http://localhost:3000')
 
         # Run functional tests
-        with c.cd("client/"):
+        with c.cd(CLIENT_DIR):
             c.run("yarn test:functional", env=env)
 
     finally:
@@ -75,6 +78,7 @@ def test_functional(c):
 
 @task(test_pytest, test_client_unit, test_functional)
 def test(c):
+    """This no-op task triggers all test suites as dependencies."""
     pass
 
 
