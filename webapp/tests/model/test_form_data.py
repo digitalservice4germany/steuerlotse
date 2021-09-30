@@ -127,7 +127,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_blind': True,
             'person_a_gehbeh': True,
 
-            'is_person_a_account_holder': 'yes',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes',
@@ -142,6 +141,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_b_religion': 'rk',
             'person_b_blind': False,
             'person_b_gehbeh': False,
+            'account_holder': 'person_a'
         }
 
         self.valid_steuernummer = {
@@ -208,11 +208,11 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_show_person_b_false_then_raise_no_error_if_person_b_fields_missing(self):
         with patch('app.model.form_data.FamilienstandModel.show_person_b', MagicMock(return_value=False)):
-            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.married_familienstand, **self.valid_steuernummer})
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.married_familienstand, **self.valid_steuernummer, **{'is_user_account_holder': 'yes'}})
 
     def test_if_show_person_b_true_then_raise_error_if_person_b_fields_missing(self):
         expected_missing_fields = ['person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
-                                   'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh']
+                                   'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh', 'account_holder']
         with patch('app.model.form_data.FamilienstandModel.show_person_b', MagicMock(return_value=True)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer, **self.married_familienstand})

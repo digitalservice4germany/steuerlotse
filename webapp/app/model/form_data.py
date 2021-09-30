@@ -91,7 +91,8 @@ class MandatoryFormData(BaseModel):
     steuerminderung: str
 
     iban: str
-    is_person_a_account_holder: bool
+    account_holder: Optional[str]
+    is_user_account_holder: Optional[bool]
 
     def __init__(self, **data: Any) -> None:
         enriched_data = copy.deepcopy(data)
@@ -126,6 +127,7 @@ class MandatoryFormData(BaseModel):
 
     @validator('person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
                'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh',
+               'account_holder',
                always=True)
     def person_b_required_if_shown(cls, v, values, **kwargs):
         try:
@@ -136,6 +138,19 @@ class MandatoryFormData(BaseModel):
 
         if familienstand.show_person_b() and not v:
             raise MissingError()
+        return v
+
+    @validator('is_user_account_holder', always=True)
+    def account_holder_must_be_declared(cls, v, values):
+        try:
+            familienstand = FamilienstandModel.parse_obj(values.get('familienstandStruct', {}))
+        except ValidationError:
+            # if familienstand is not filled correctly, we cannot decide yet if person b is shown
+            if not values.get('is_user_account_holder') and not v:
+                raise MissingError
+            return v
+        if not familienstand.show_person_b() and not v:
+            raise MissingError
         return v
 
 

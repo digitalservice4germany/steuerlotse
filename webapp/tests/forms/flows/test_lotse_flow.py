@@ -989,7 +989,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                            'person_b_religion', 'person_b_street', 'person_b_street_number', 'person_b_idnr',
                            'person_b_street_number_ext', 'person_b_address_ext', 'person_b_plz',
                            'person_b_town', 'person_b_beh_grad', 'person_b_blind', 'person_b_gehbeh',
-                           'is_person_a_account_holder']
+                           'account_holder']
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
                                                  'familienstand_date': '1985-01-01'}):
@@ -998,7 +998,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1]))
 
             self.assertIn('person_b_idnr', returned_data)
-            self.assertIn('is_person_a_account_holder', returned_data)
+            self.assertIn('account_holder', returned_data)
 
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'single'}):
@@ -1341,8 +1341,8 @@ class TestLotseGetOverviewData(unittest.TestCase):
                             StepIban.label,
                             flow.url_for_step(StepIban.name, _has_link_overview=True),
                             {str(debug_data['iban']): debug_data['iban'],
-                                str(debug_data['is_person_a_account_holder']): debug_data[
-                                    'is_person_a_account_holder']}
+                                str(debug_data['account_holder']): debug_data[
+                                    'account_holder']}
                         )
                 }
             ),
@@ -1377,7 +1377,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
         debug_data = copy.deepcopy(flow.default_data()[1])
-        missing_fields = ['iban', 'is_person_a_account_holder']
+        missing_fields = ['iban', 'account_holder']
         for missing_field in missing_fields:
             debug_data.pop(missing_field)
         mandatory_data_missing_value = _l('form.lotse.missing_mandatory_field')
@@ -1466,7 +1466,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_blind': True,
             'person_a_gehbeh': True,
 
-            'is_person_a_account_holder': 'yes',
+            'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes', }
@@ -1552,6 +1552,7 @@ class TestLotseValidateInput(unittest.TestCase):
                         'confirm_data_privacy': True,
                         'confirm_complete_correct': True,
                         'confirm_terms_of_service': True,
+                        'account_holder': 'person_b'
                         }}
 
         try:
@@ -1647,7 +1648,7 @@ class TestLotseValidateInput(unittest.TestCase):
         expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'steuerminderung', 'iban', 'is_person_a_account_holder', ]
+                                   'person_a_gehbeh', 'steuerminderung', 'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,

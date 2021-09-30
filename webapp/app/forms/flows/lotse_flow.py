@@ -77,7 +77,8 @@ class LotseMultiStepFlow(MultiStepFlow):
             'person_b_blind': False,
             'person_b_gehbeh': False,
 
-            'is_person_a_account_holder': 'yes',
+            #'is_user_account_holder': 'yes', use for single user
+            'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes',
@@ -250,7 +251,9 @@ class LotseMultiStepFlow(MultiStepFlow):
         elif isinstance(step, StepFamilienstand):
             if request.method == 'POST' and render_info.form.validate():
                 if not show_person_b(stored_data):
-                    stored_data = self._delete_dependent_data(['person_b', 'is_person_a_account_holder'], stored_data)
+                    stored_data = self._delete_dependent_data(['person_b', 'account_holder'], stored_data)
+                else:
+                    stored_data = self._delete_dependent_data(['is_user_account_holder'], stored_data)
                 if stored_data['familienstand'] == 'single':
                     stored_data = self._delete_dependent_data(['familienstand_date'], stored_data)
                 if stored_data['familienstand'] == 'married':

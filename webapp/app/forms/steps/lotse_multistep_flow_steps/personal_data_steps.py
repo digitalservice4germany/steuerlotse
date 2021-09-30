@@ -411,11 +411,11 @@ class StepIban(FormStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
-        is_person_a_account_holder = RadioField(
+        account_holder = RadioField(
             label=_l('form.lotse.field_is_person_a_account_holder'),
             render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder.data_label')},
-            choices=[('yes', _l('form.lotse.field_is_person_a_account_holder-person-a')),
-                     ('no', _l('form.lotse.field_is_person_a_account_holder-person-b')),
+            choices=[('person_a', _l('form.lotse.field_is_person_a_account_holder-person-a')),
+                     ('person_b', _l('form.lotse.field_is_person_a_account_holder-person-b')),
                      ])
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
@@ -426,7 +426,7 @@ class StepIban(FormStep):
             filters=[lambda value: value.replace(' ', '') if value else value])
 
     class FormSingle(SteuerlotseBaseForm):
-        is_person_a_account_holder = ConfirmationField(
+        is_user_account_holder = ConfirmationField(
             label=_l('form.lotse.field_is_person_a_account_holder_single'),
             render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder_single.data_label')})
         iban = SteuerlotseIbanField(
