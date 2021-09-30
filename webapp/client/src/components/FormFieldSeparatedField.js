@@ -16,6 +16,14 @@ const SeparatedField = styled(FormRowCentered)`
   }
 `;
 
+const SeparatedFieldLabel = styled.label`
+  &.sub-field-label {
+    margin-bottom: 0 !important;
+    font-size: var(--text-sm);
+    font-weight: var(--font-bold);
+  }
+`;
+
 function FormFieldSeparatedField({
   fieldName,
   fieldId,
@@ -107,9 +115,12 @@ function FormFieldSeparatedField({
             <React.Fragment key={index}>
               {inputFieldLabels.length > index ? (
                 <div>
-                  <label htmlFor={subFieldId} className="sub-field-label">
+                  <SeparatedFieldLabel
+                    htmlFor={subFieldId}
+                    className="sub-field-label"
+                  >
                     {inputFieldLabels[index]}
-                  </label>
+                  </SeparatedFieldLabel>
                   {inputElement}
                 </div>
               ) : (

@@ -369,12 +369,6 @@ h4 {
   margin-bottom: 0;
 }
 
-.form-sub-heading-smaller {
-  font-size: var(--text-medium);
-  margin-top: var(--spacing-09);
-  margin-bottom: var(--spacing-03);
-}
-
 ul.margin-only-between li {
   margin-top: var(--spacing-04);
 }

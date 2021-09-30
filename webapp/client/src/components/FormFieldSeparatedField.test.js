@@ -14,7 +14,6 @@ describe("FormFieldSeparatedField", () => {
       inputFieldLengths: [3, 4],
       errors: [],
       labelComponent: <></>,
-      subFieldSeparator: "SPLITTO",
     };
   });
 
@@ -38,8 +37,20 @@ describe("FormFieldSeparatedField", () => {
   });
 
   it("should show field separators", () => {
+    props.subFieldSeparator = "SPLITTO";
+
     render(<FormFieldSeparatedField {...props} />);
+
     expect(screen.getByText("SPLITTO")).toBeInTheDocument();
+  });
+
+  it("should show sub field labels if provided", () => {
+    props.inputFieldLabels = ["label1", "label2"];
+
+    render(<FormFieldSeparatedField {...props} />);
+
+    expect(screen.getByText("label1")).toBeInTheDocument();
+    expect(screen.getByText("label2")).toBeInTheDocument();
   });
 
   describe("when pasting content", () => {

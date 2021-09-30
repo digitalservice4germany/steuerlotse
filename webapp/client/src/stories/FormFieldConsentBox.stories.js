@@ -1,27 +1,26 @@
 import React from "react";
 
-import FormFieldIdNr from "../components/FormFieldIdNr";
+import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Form Fields/IdNr",
-  component: FormFieldIdNr,
+  title: "Form Fields/ConsentBox",
+  component: FormFieldConsentBox,
 };
 
 const Template = (args) => (
   <StepForm {...StepFormDefault.args}>
-    <FormFieldIdNr {...args} />
+    <FormFieldConsentBox {...args} />
   </StepForm>
 );
 
 export const Default = Template.bind({});
 Default.args = {
-  fieldId: "idnr",
-  fieldName: "idnr",
-  label: {
-    text: "Steuer-Identifikationsnummer",
-  },
+  fieldId: "consentBox",
+  fieldName: "consentBox",
+  labelText:
+    "Ich mag Consent Boxen. Wenn du sie auch magst, klicke doch mal hier drauf.",
   errors: [],
   values: [],
 };

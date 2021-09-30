@@ -1,26 +1,26 @@
 import React from "react";
 
-import FormFieldIdNr from "../components/FormFieldIdNr";
+import FormFieldDate from "../components/FormFieldDate";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Form Fields/IdNr",
-  component: FormFieldIdNr,
+  title: "Form Fields/Date",
+  component: FormFieldDate,
 };
 
 const Template = (args) => (
   <StepForm {...StepFormDefault.args}>
-    <FormFieldIdNr {...args} />
+    <FormFieldDate {...args} />
   </StepForm>
 );
 
 export const Default = Template.bind({});
 Default.args = {
-  fieldId: "idnr",
-  fieldName: "idnr",
+  fieldId: "date",
+  fieldName: "date",
   label: {
-    text: "Steuer-Identifikationsnummer",
+    text: "Datum",
   },
   errors: [],
   values: [],
