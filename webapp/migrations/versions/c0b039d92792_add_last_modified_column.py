@@ -18,10 +18,10 @@ depends_on = None
 
 
 def upgrade():
-    if 'sqlite' in current_app.config['SQLALCHEMY_DATABASE_URI']:
-        op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP(), nullable=False))
-    else:
+    if current_app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
         op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP()))
+    else:
+        op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP(), nullable=False))
 
 
 def downgrade():
