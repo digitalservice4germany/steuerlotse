@@ -984,7 +984,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
                 create_audit_log_fun.assert_not_called()
 
-    def test_if_familienstand_step_then_delete_person_b_data_correctly(self):
+    def test_if_familienstand_step_and_familienstand_changes_to_single_then_delete_person_b_data_correctly(self):
         person_b_fields = ['person_b_same_address', 'person_b_dob', 'person_b_last_name', 'person_b_first_name',
                            'person_b_religion', 'person_b_street', 'person_b_street_number', 'person_b_idnr',
                            'person_b_street_number_ext', 'person_b_address_ext', 'person_b_plz',
@@ -992,7 +992,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                            'account_holder']
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
-                                                 'familienstand_date': '1985-01-01'}):
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'no',
+                                                 'familienstand_confirm_zusammenveranlagung': True}):
             _, returned_data = self.flow._handle_specifics_for_step(
                 self.familienstand_step, self.render_info_familienstand_step,
                 copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1]))
@@ -1007,6 +1009,29 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1]))
             for person_b_field in person_b_fields:
                 self.assertNotIn(person_b_field, returned_data)
+
+    def test_if_familienstand_step_and_familienstand_changes_to_married_then_delete_is_user_account_holder(self):
+        field_to_delete = 'is_user_account_holder'
+        data = copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1])
+        data['is_user_account_holder']= 'yes'
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'single'}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+
+            self.assertIn(field_to_delete, returned_data)
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'married',
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'no',
+                                                 'familienstand_confirm_zusammenveranlagung': True}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+            self.assertNotIn(field_to_delete, returned_data)
 
     def test_if_familienstand_step_then_delete_familienstand_date_correctly(self):
         with self.app.test_request_context(method='POST',
