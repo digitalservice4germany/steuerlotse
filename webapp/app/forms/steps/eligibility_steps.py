@@ -9,7 +9,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.session_data import override_session_data
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
-    ForeignCountryEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
+    ForeignCountrySuccessEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
     NoTaxedInvestmentIncome, MinimalInvestmentIncome, InvestmentIncomeEligibilityData, \
     PensionEligibilityData, SingleUserNoElsterAccountEligibilityData, AlimonyEligibilityData, \
     DivorcedJointTaxesEligibilityData, UserBNoElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
@@ -21,7 +21,7 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
     ElsterRegistrationMethodNoneEligibilityData, \
     ElsterRegistrationMethodSoftwareEligibilityData, SingleUserElsterAccountEligibilityData, \
-    UserBElsterAccountEligibilityData, ElsterNoAbrufcodeEligibilityData
+    UserBElsterAccountEligibilityData, ElsterNoAbrufcodeEligibilityData, ForeignCountryMaybeEligibility
 from app.model.recursive_data import PreviousFieldsMissingError
 
 
@@ -747,7 +747,8 @@ class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailur
 class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "foreign_country"
     next_step_data_models = [
-        (ForeignCountryEligibility, 'success'),
+        (ForeignCountrySuccessEligibility, 'success'),
+        (ForeignCountryMaybeEligibility, 'maybe'),
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
@@ -757,7 +758,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             label="",
             render_kw={'hide_label': True,
                        'data-detail': {'title': _l('form.eligibility.foreign-country.detail.title'),
-                                  'text': _l('form.eligibility.foreign-country.detail.text')}},
+                                       'text': _l('form.eligibility.foreign-country.detail.text')}},
             choices=[('yes', _l('form.eligibility.foreign_country.yes')),
                      ('no', _l('form.eligibility.foreign_country.no')),
                      ],
@@ -804,6 +805,15 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
         self.render_info.next_url = None
 
-        # Set "maybe" result if answer was "I dont know"
-        if data_fits_data_model(ElsterRegistrationMethodNoneEligibilityData, self.stored_data):
-            self.render_info.additional_info['answer_is_maybe'] = True
+
+class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
+    name = 'maybe'
+    title = _l('form.eligibility.success.maybe.title')
+    intro = _l('form.eligibility.success.maybe.intro')
+    template = 'eligibility/display_maybe.html'
+
+    def __init__(self, endpoint, stored_data=None, **kwargs):
+        super(EligibilityMaybeDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
+                                                                     stored_data=stored_data,
+                                                                     header_title=_('form.eligibility.header-title'),
+                                                                     **kwargs)

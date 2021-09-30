@@ -34,7 +34,8 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
     data_fits_data_model_from_list, data_fits_data_model, \
     ElsterRegistrationMethodEligibilityDecisionStep, ElsterRegistrationMethodEligibilityFailureStep, \
-    ElsterAbrufcodeEligibilityDecisionStep, ElsterAbrufcodeEligibilityFailureStep
+    ElsterAbrufcodeEligibilityDecisionStep, ElsterAbrufcodeEligibilityFailureStep, \
+    EligibilityMaybeDisplaySteuerlotseStep
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
@@ -3097,69 +3098,99 @@ class TestForeignCountriesEligibilityFailureDisplaySteuerlotseStep(unittest.Test
         self.assertEqual(expected_url, step.render_info.prev_url)
 
 
-class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, app):
-        self.app = app
+class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
+    @pytest.fixture
+    def correct_session_data_without_registration_method(self):
+        correct_session_data_without_registration_method = {
+            'marital_status_eligibility': 'divorced', 'joint_taxes_eligibility': 'no', 'alimony_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'no', 'pension_eligibility': 'yes',
+            'investment_income_eligibility': 'yes', 'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes', 'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no'}
+        yield correct_session_data_without_registration_method
 
-    def setUp(self):
-        self.correct_session_data = {'marital_status_eligibility': 'divorced',
-                                     'joint_taxes_eligibility': 'no',
-                                     'alimony_eligibility': 'no',
-                                     'user_a_has_elster_account_eligibility': 'no',
-                                     'pension_eligibility': 'yes',
-                                     'investment_income_eligibility': 'yes',
-                                     'minimal_investment_income_eligibility': 'no',
-                                     'taxed_investment_income_eligibility': 'yes',
-                                     'cheaper_check_eligibility': 'no',
-                                     'employment_income_eligibility': 'yes',
-                                     'marginal_employment_eligibility': 'yes',
-                                     'other_income_eligibility': 'no'}
+    @pytest.fixture
+    def correct_session_data_with_registration_method_not_none(self, correct_session_data_without_registration_method):
+        correct_session_data_with_registration_method_not_none = {
+            **correct_session_data_without_registration_method,
+            **{'elster_registration_method_eligibility': 'software'}}
+        yield correct_session_data_with_registration_method_not_none
 
-    def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
+    @pytest.fixture
+    def correct_session_data_with_registration_method_none(self, correct_session_data_without_registration_method):
+        correct_session_data_with_registration_method_not_none = {
+            **correct_session_data_without_registration_method,
+            **{'elster_registration_method_eligibility': 'none'}}
+        yield correct_session_data_with_registration_method_not_none
+
+    def test_if_post_and_session_data_correct_without_registration_method_and_input_data_correct_then_set_success_step(self, app, correct_session_data_without_registration_method):
+        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
             req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
             expected_url = step.url_for_step(EligibilitySuccessDisplaySteuerlotseStep.name)
             step.handle()
 
-        self.assertEqual(expected_url, step.render_info.next_url)
+        assert step.render_info.next_url == expected_url
 
-    def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'foreign_country_eligibility': 'yes'}) as req:
+    def test_if_post_and_session_data_correct_with_registration_method_not_none_and_input_data_correct_then_set_next_step_to_success_step(self, app, correct_session_data_with_registration_method_not_none):
+        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
             req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_with_registration_method_not_none)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+            expected_url = step.url_for_step(EligibilitySuccessDisplaySteuerlotseStep.name)
+            step.handle()
+
+        assert step.render_info.next_url == expected_url
+    
+    def test_if_post_and_session_data_correct_with_registration_method_none_and_input_data_correct_then_set_next_step_to_maybe_step(self, app, correct_session_data_with_registration_method_none):
+        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_with_registration_method_none)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+            expected_url = step.url_for_step(EligibilityMaybeDisplaySteuerlotseStep.name)
+            step.handle()
+
+        assert step.render_info.next_url == expected_url
+
+    def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_url_to_alternative_step(self, app, correct_session_data_without_registration_method):
+        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'yes'}) as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             expected_url = step.url_for_step(ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
-        self.assertEqual(expected_url, step.render_info.next_url)
+        assert step.render_info.next_url == expected_url
 
-    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
-        with self.app.test_request_context(method='GET') as req:
+    def test_if_session_data_correct_then_set_prev_input_step_correctly(self, app, correct_session_data_without_registration_method):
+        with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             expected_url = step.url_for_step(IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
-        self.assertEqual(expected_url, step.render_info.prev_url)
+        assert step.render_info.prev_url == expected_url
 
-    def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'other_income_eligibility': 'no',
+    def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self, app):
+        with app.test_request_context(method='POST', data={'other_income_eligibility': 'no',
                                                                 'foreign_country_eligibility': 'no'}), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
 
-            self.assertRaises(IncorrectEligibilityData, step.handle)
+            with pytest.raises(IncorrectEligibilityData):
+                step.handle()
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self, app):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'no',
@@ -3176,38 +3207,35 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(unittest.T
                         'other_income_eligibility': 'no',
                         'foreign_country_eligibility': 'no'}
         session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
+        with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
-            self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == session_data
 
-    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
-        with self.app.test_request_context(method='GET') as req:
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self, app, correct_session_data_without_registration_method):
+        with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
-            self.assertEqual(self.correct_session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data_without_registration_method
 
-    def test_if_get_and_full_data_from_session_then_delete_no_data(self):
-        with self.app.test_request_context(method='GET') as req:
+    def test_if_get_and_full_data_from_session_then_delete_no_data(self, app):
+        with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
-            self.assertEqual(FULL_SESSION_DATA,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == FULL_SESSION_DATA
 
-    def test_if_multiple_users_then_show_multiple_text(self):
+    def test_if_multiple_users_then_show_multiple_text(self, app):
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'joint_taxes_eligibility': 'yes',
@@ -3223,15 +3251,15 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         expected_number_of_users = 2
         expected_choices = [('yes', ngettext('form.eligibility.foreign_country.yes', 'form.eligibility.foreign_country.yes', num=expected_number_of_users)),
                             ('no', ngettext('form.eligibility.foreign_country.no', 'form.eligibility.foreign_country.no', num=expected_number_of_users))]
-        with self.app.test_request_context(method='GET') as req:
+        with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.foreign_country_eligibility.kwargs['choices'])
+        assert step.form.foreign_country_eligibility.kwargs['choices'] == expected_choices
 
-    def test_if_single_user_then_show_single_text(self):
+    def test_if_single_user_then_show_single_text(self, app):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'no',
@@ -3247,13 +3275,13 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         expected_number_of_users = 1
         expected_choices = [('yes', ngettext('form.eligibility.foreign_country.yes', 'form.eligibility.foreign_country.yes', num=expected_number_of_users)),
                             ('no', ngettext('form.eligibility.foreign_country.no', 'form.eligibility.foreign_country.no', num=expected_number_of_users))]
-        with self.app.test_request_context(method='GET') as req:
+        with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.foreign_country_eligibility.kwargs['choices'])
+        assert step.form.foreign_country_eligibility.kwargs['choices'] == expected_choices
 
 
 class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
@@ -3354,17 +3382,3 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
-
-    def test_if_elster_registration_method_is_none_then_set_correct_info(self):
-        session_data = {'marital_status_eligibility': 'married',
-                        'separated_since_last_year_eligibility': 'no',
-                        'user_a_has_elster_account_eligibility': 'yes',
-                        'user_b_has_elster_account_eligibility': 'yes',
-                        'elster_registration_method_eligibility': 'none',
-                        'joint_taxes_eligibility': 'yes',
-                        'alimony_eligibility': 'no', }
-        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
-            step.handle()
-
-        assert step.render_info.additional_info['answer_is_maybe'] is True

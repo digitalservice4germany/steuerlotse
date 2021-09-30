@@ -12,11 +12,11 @@
     <div class="section-intro panel simple-card">
         <div class="row p-0">
             <div class="col-12 col-sm-2 failure-success-icon">
-                <img src="{{ static_url_for('static', filename='icons/success_icon.svg') }}" alt="{{ _('success_icon') }}"/>
+                <img src="{{ static_url_for('static', filename='icons/maybe_icon.svg') }}" alt="{{ _('maybe_icon') }}"/>
             </div>
             <div class="col-12 col-sm-10">
                 <h1 class="headline">{{ render_info.step_title }}</h1>
-                <p class="result-text">{{ error_text }} {{ render_info.step_intro }}</p>
+                <p class="result-text">{{ render_info.step_intro }}</p>
             </div>
         </div>
     </div>
