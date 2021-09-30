@@ -39,15 +39,25 @@ Runs storybook. Builds and reloads components as you edit them. Shows lint error
 
 This is the recommended way to develop pages and components: Storybook allows you to look at your components in isolation and show their various states by writing ["Stories"](https://storybook.js.org/docs/react/get-started/whats-a-story) for the component (e.g. different button styles or form fields with vs. without errors).
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode. See [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `yarn start`
 
 Runs the app in the development mode on [http://localhost:3000](http://localhost:3000). Reloads components as you edit them. Shows lint errors in the console.
 
 This serves up JS/CSS/etc from the React app and proxies everything else to `localhost:5000`, where it expects the Flask app to be running. See `src/setupProxy.js` for details on what is being proxied.
+
+### Testing
+
+#### `yarn test`
+
+Launches the unit test runner in the interactive watch mode. See [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+#### `yarn test:functional`
+
+Runs functional tests which exercise both the flask app and the client-side components in a real browser environment.
+
+#### `yarn cypress`
+
+Opens the Cypress test runner UI. [See here for details](https://docs.cypress.io/guides/core-concepts/test-runner).
 
 ### `yarn lint`
 
@@ -79,4 +89,5 @@ Builds the app for production to the `build` folder. You generally don't need to
   - [Testing Library](https://testing-library.com/docs) for component tests, see:
     - [Testing Library Queries](https://testing-library.com/docs/queries/about) and [Events](https://testing-library.com/docs/dom-testing-library/api-events).
     - [Jest](https://jestjs.io/) [global functions](https://jestjs.io/docs/api) and [matchers](https://jestjs.io/docs/expect) as well as [additional DOM matchers](https://github.com/testing-library/jest-dom).
+  - [Cypress](https://docs.cypress.io/) for end-to-end tests.
 - [Storybook](https://storybook.js.org/) for developing and demonstrating UI components in isolation.

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-22 17:35+0200\n"
+"POT-Creation-Date: 2021-09-30 13:56+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -46,81 +46,81 @@ msgstr "Abmelden"
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:139
+#: app/routes.py:145
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:140
+#: app/routes.py:146
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:166
+#: app/routes.py:172
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:167
+#: app/routes.py:173
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:178 app/routes.py:270
+#: app/routes.py:184 app/routes.py:276
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:196 app/templates/basis/base.html:33
+#: app/routes.py:202 app/templates/basis/base.html:32
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:201
+#: app/routes.py:207
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:206
+#: app/routes.py:212
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:211
+#: app/routes.py:217
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:216
+#: app/routes.py:222
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:221
+#: app/routes.py:227
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:226
+#: app/routes.py:232
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:236
+#: app/routes.py:242
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:241
+#: app/routes.py:247
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:262
+#: app/routes.py:268
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:266 app/routes.py:274
+#: app/routes.py:272 app/routes.py:280
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:278
+#: app/routes.py:284
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:283
+#: app/routes.py:289
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -2738,11 +2738,11 @@ msgstr ""
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:32
+#: app/templates/basis/base.html:31
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:38
+#: app/templates/basis/base.html:37
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -5118,8 +5118,8 @@ msgstr ""
 #: app/templates/unlock_code/activation_failure.html:23
 msgid "form.unlock-code-activation.failure.reasons-2"
 msgstr ""
-"Haben Sie sich vor dem 03.07.2021 registriert? In diesem Fall können Sie "
-"sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. "
+"Haben Sie sich vor 90 Tagen registriert? In diesem Fall können Sie sich "
+"mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. "
 "Registrieren Sie sich bitte erneut. Sie erhalten dann einen Brief mit "
 "einem neuen Freischaltcode."
 
