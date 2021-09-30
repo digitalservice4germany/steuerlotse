@@ -30,12 +30,12 @@ def test_client_unit(c):
 
 
 @task
-def test_client_e2e(c):
+def test_functional(c):
     import psutil
     import sarge
 
     env = {
-        'FLASK_ENV': 'acceptance',
+        'FLASK_ENV': 'functional',
         'CI': 'true',
         'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
     }
@@ -53,9 +53,9 @@ def test_client_e2e(c):
         react_pipeline = sarge.run("yarn start", cwd="client/", env=env, async_=True, stdout=subprocess.DEVNULL)
         wait_until_up('http://localhost:3000')
 
-        # Run e2e tests
+        # Run functional tests
         with c.cd("client/"):
-            c.run("yarn test:e2e", env=env)
+            c.run("yarn test:functional", env=env)
 
     finally:
         # Shut down started processes
@@ -70,10 +70,10 @@ def test_client_e2e(c):
             cmd.terminate()
 
         # Delete test database
-        c.run("rm ./app/acceptance.db")
+        c.run("rm ./app/functional-testing.db")
 
 
-@task(test_pytest, test_client_unit, test_client_e2e)
+@task(test_pytest, test_client_unit, test_functional)
 def test(c):
     pass
 

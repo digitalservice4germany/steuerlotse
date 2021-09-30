@@ -81,14 +81,14 @@ class DevelopmentConfig(BaseConfig):
     REACT_BUNDLE_NAME = 'bundle.js'
 
 
-class AcceptanceConfig(DevelopmentConfig):
+class FunctionalTestingConfig(DevelopmentConfig):
     DEBUG = False
     DEBUG_DATA = False
     USE_MOCK_API = True
 
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///acceptance.db"
+    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
 
 class TestingConfig(BaseConfig):
     DEBUG = True
@@ -111,7 +111,7 @@ class TestingConfig(BaseConfig):
 try:
     Config = {
         'development': DevelopmentConfig,
-        'acceptance': AcceptanceConfig,
+        'functional': FunctionalTestingConfig,
         'testing': TestingConfig,
         'staging': StagingConfig,
         'production': ProductionConfig

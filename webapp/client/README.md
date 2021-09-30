@@ -51,9 +51,9 @@ This serves up JS/CSS/etc from the React app and proxies everything else to `loc
 
 Launches the unit test runner in the interactive watch mode. See [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-#### `yarn test:e2e`
+#### `yarn test:functional`
 
-Runs end-to-end tests which exercise both the flask app and the client-side components in a real browser environment.
+Runs functional tests which exercise both the flask app and the client-side components in a real browser environment.
 
 #### `yarn cypress`
 
