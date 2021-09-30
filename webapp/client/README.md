@@ -57,7 +57,7 @@ Runs end-to-end tests which exercise both the flask app and the client-side comp
 
 #### `yarn cypress`
 
-Opens the Cypress UI. See
+Opens the Cypress test runner UI. [See here for details](https://docs.cypress.io/guides/core-concepts/test-runner).
 
 ### `yarn lint`
 
