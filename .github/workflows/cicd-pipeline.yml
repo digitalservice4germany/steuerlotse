@@ -81,14 +81,14 @@ jobs:
     - name: Archive test screenshots
       uses: actions/upload-artifact@v1
       with:
-        name: webapp-e2e-screenshots
+        name: webapp-functional-screenshots
         path: webapp/client/cypress/screenshots
       if: ${{ failure() }}
 
     - name: Archive test videos
       uses: actions/upload-artifact@v1
       with:
-        name: webapp-e2e-videos
+        name: webapp-functional-videos
         path: webapp/client/cypress/videos
       if: ${{ failure() }}ts
 
