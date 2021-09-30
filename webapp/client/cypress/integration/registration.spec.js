@@ -49,7 +49,10 @@ describe("Registration", () => {
       cy.get("button[type=submit]").contains("Registrieren").click();
 
       // Should see success message
-      cy.contains("Ihre Registrierung war erfolgreich");
+      cy.url().should(
+        "include",
+        "/unlock_code_request/step/unlock_code_success"
+      );
     });
   });
 });
