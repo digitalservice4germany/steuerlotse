@@ -23,7 +23,7 @@ describe("Login", () => {
       cy.getCookie("session").should("exist");
     });
 
-    it("should show an error for invalid tax IDs", () => {
+    it("should show an error for invalid tax IDs", function () {
       // incorrect username on purpose
       cy.get("input[id=idnr_1]").type("12");
       cy.get("input[id=idnr_2]").type("345");
