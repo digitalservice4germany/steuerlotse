@@ -18,7 +18,7 @@ depends_on = None
 
 
 def upgrade():
-    if current_app.config['ENV'] in ('staging', 'production'):
+    if 'sqlite' in current_app.config['SQLALCHEMY_DATABASE_URI']:
         op.alter_column('user', 'last_modified', type_=sa.TIMESTAMP(timezone=True))
 
 def downgrade():

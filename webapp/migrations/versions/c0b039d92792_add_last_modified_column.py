@@ -18,7 +18,7 @@ depends_on = None
 
 
 def upgrade():
-    if current_app.config['ENV'] in ('staging', 'production'):
+    if 'sqlite' in current_app.config['SQLALCHEMY_DATABASE_URI']:
         op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP(), nullable=False))
     else:
         op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP()))
