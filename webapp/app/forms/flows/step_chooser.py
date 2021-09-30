@@ -61,6 +61,16 @@ class StepChooser:
         )
 
     def determine_prev_step(self, current_step_name, stored_data):
+        """
+        This method searches the correct previous step for the given @current_step_name on the basis of the
+        @stored_data.
+        It loops through the list of steps starting from the current_step (i) upwards. Each step is then asked if they
+        could be the previous step (via checking their own precondition). If the answer of i-1 is yes, that step is
+        returned. Otherwise, the step i-2 is asked and so on until a fitting step is found.
+
+        :param current_step_name: The name of the step to get the previous step for
+        :param stored_data: The data currently in the session
+        """
         idx = self.step_order.index(current_step_name)
         for possible_prev_step_idx in range(idx - 1, -1, -1):
             possible_prev_step = self.steps[self.step_order[possible_prev_step_idx]]
@@ -69,6 +79,16 @@ class StepChooser:
         return None
 
     def determine_next_step(self, current_step_name, stored_data):
+        """
+        This method searches the correct next step for the given @current_step_name on the basis of the
+        @stored_data.
+        It loops through the list of steps starting from the current_step (i) downwards. Each step is then asked if they
+        could be the next step (via checking their own precondition). If the answer of i+1 is yes, that step is
+        returned. Otherwise, the step i+2 is asked and so on until a fitting step is found.
+
+        :param current_step_name: The name of the step to get the next step for
+        :param stored_data: The data currently in the session
+        """
         idx = self.step_order.index(current_step_name)
         for possible_next_step_idx in range(idx + 1, len(self.steps)):
             possible_next_step = self.steps[self.step_order[possible_next_step_idx]]
