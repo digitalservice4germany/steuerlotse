@@ -79,7 +79,7 @@ def create_form_data(correct=True, with_tax_number=True):
             person_b_gehbeh=False,
 
             iban='DE35133713370000012345',
-            is_person_a_account_holder=True,
+            account_holder='person_a',
 
             steuerminderung=True,
 
@@ -99,7 +99,7 @@ def create_form_data(correct=True, with_tax_number=True):
             submission_without_tax_nr= False if not with_tax_number else None,
             bufa_nr='9198' if not with_tax_number else None,
             iban="DE35133713370000012345",
-            is_person_a_account_holder=True,
+            account_holder='person_a',
             familienstand="single",
             person_a_idnr="09952417688",
             person_a_dob="1999-12-14",
@@ -142,7 +142,7 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_gehbeh=False,
 
             iban='DE35133713370000012345',
-            is_person_a_account_holder=True,
+            account_holder='person_a',
             steuerminderung=False,
 
             confirm_complete_correct=True,
