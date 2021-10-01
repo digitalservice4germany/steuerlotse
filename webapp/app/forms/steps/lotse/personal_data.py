@@ -19,8 +19,6 @@ from app.model.form_data import FamilienstandModel
 class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
     header_title = None
-    prev_step = StepFamilienstand
-    next_step = StepPersonA
 
     def __init__(self, endpoint, **kwargs):
         super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
@@ -40,8 +38,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     template = 'lotse/form_steuernummer.html'
     # TODO remove this once all steps are converted to steuerlotse steps
-    prev_step_name = StepFamilienstand.name
-    next_step_name = StepPersonA.name
+    prev_step = StepFamilienstand
+    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))

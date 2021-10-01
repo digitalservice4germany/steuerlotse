@@ -1,3 +1,4 @@
+from flask import flash
 from werkzeug.exceptions import abort
 
 from app.config import Config
@@ -37,7 +38,10 @@ class StepChooser:
                 return dbg[0].name
             else:
                 return self.first_step.name
-        elif step_to_redirect_to := self.steps[step_name].get_redirection_step(stored_data):
+        step_to_redirect_to, flash_message = self.steps[step_name].get_redirection_step(stored_data)
+        if step_to_redirect_to:
+            if flash_message:
+                flash(flash_message)
             return step_to_redirect_to
         else:
             return None

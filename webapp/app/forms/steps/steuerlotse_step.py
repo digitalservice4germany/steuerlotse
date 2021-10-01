@@ -91,7 +91,7 @@ class SteuerlotseStep(object):
 
     @classmethod
     def get_redirection_step(cls, stored_data):
-        return None
+        return None, None
 
     def render(self, **kwargs):
         raise NotImplementedError

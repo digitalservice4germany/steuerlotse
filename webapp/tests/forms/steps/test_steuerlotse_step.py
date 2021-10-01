@@ -413,8 +413,9 @@ class TestCheckPrecondition:
 
 class TestGetRedirectionStep:
     def test_by_default_return_none(self):
-        redirection_step = MockRenderStep.get_redirection_step({})
+        redirection_step, flash_message = MockRenderStep.get_redirection_step({})
         assert redirection_step is None
+        assert flash_message is None
 
 
 class TestSteuerlotseFormStepHandle(unittest.TestCase):

@@ -122,7 +122,8 @@ class MockStepWithRedirection(SteuerlotseStep):
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return MockStartStep.name
+            return MockStartStep.name, 'The FLASH!'
+        return None, None
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockStepWithRedirection, self).__init__(
