@@ -21,7 +21,7 @@ class SteuerlotseStep(object):
     intro = None
     intro_multiple = None
     template = None
-    precondition = None
+    preconditions = []
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                  session_data_identifier='form_data'):
@@ -82,9 +82,9 @@ class SteuerlotseStep(object):
 
     @classmethod
     def check_precondition(cls, stored_data):
-        if cls.precondition:
+        for precondition in cls.preconditions:
             try:
-                cls.precondition.parse_obj(stored_data)
+                precondition.parse_obj(stored_data)
             except ValidationError:
                 return False
         return True

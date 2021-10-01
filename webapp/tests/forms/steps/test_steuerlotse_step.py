@@ -15,7 +15,7 @@ from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, \
     RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
-    MockRenderStep, MockYesNoStep, MockFormWithInputStep, MockStepWithPrecondition
+    MockRenderStep, MockYesNoStep, MockFormWithInputStep, MockStepWithPrecondition, MockStepWithMultiplePrecondition
 from tests.utils import create_session_form_data
 
 
@@ -402,12 +402,31 @@ class TestCheckPrecondition:
         precondition_checked = MockRenderStep.check_precondition({})
         assert precondition_checked == True
 
-    def test_if_precondition_set_and_met_then_return_true(self):
+    def test_if_single_precondition_set_and_met_then_return_true(self):
         precondition_checked = MockStepWithPrecondition.check_precondition({'precondition_met': True})
         assert precondition_checked == True
 
-    def test_if_precondition_set_but_not_met_then_return_false(self):
+    def test_if_single_precondition_set_but_not_met_then_return_false(self):
         precondition_checked = MockStepWithPrecondition.check_precondition({'precondition_met': False})
+        assert precondition_checked == False
+
+    def test_if_multiple_precondition_set_and_all_met_then_return_true(self):
+        precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': True,
+                                                                                    'second_precondition_met': True})
+        assert precondition_checked == True
+
+    def test_if_multiple_precondition_set_and_parts_met_then_return_false(self):
+        precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': True,
+                                                                                    'second_precondition_met': False})
+        assert precondition_checked == False
+
+        precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': False,
+                                                                                    'second_precondition_met': True})
+        assert precondition_checked == False
+
+    def test_if_multiple_precondition_set_but_none_met_then_return_false(self):
+        precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': False,
+                                                                                    'second_precondition_met': False})
         assert precondition_checked == False
 
 

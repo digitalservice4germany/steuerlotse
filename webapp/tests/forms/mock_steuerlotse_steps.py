@@ -101,9 +101,19 @@ class MockPreconditionModel(BaseModel):
         return v
 
 
+class MockSecondPreconditionModel(BaseModel):
+    second_precondition_met: bool
+
+    @validator('second_precondition_met')
+    def precondition_has_to_be_met(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
 class MockStepWithPrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
-    precondition = MockPreconditionModel
+    preconditions = [MockPreconditionModel]
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockStepWithPrecondition, self).__init__(
@@ -115,9 +125,23 @@ class MockStepWithPrecondition(SteuerlotseStep):
         return make_response(json.dumps([self.render_info.step_title], default=str), 200)
 
 
+class MockStepWithMultiplePrecondition(SteuerlotseStep):
+    name = 'mock_step_with_precondition'
+    preconditions = [MockPreconditionModel, MockSecondPreconditionModel]
+
+    def __init__(self, header_title=None, default_data=None, **kwargs):
+        super(MockStepWithMultiplePrecondition, self).__init__(
+            header_title=header_title,
+            default_data=default_data,
+            **kwargs)
+
+    def render(self):
+        return make_response(json.dumps([self.render_info.step_title], default=str), 200)
+
+
 class MockStepWithRedirection(SteuerlotseStep):
     name = 'mock_step_with_redirection'
-    precondition = MockPreconditionModel
+    preconditions = [MockPreconditionModel]
 
     @classmethod
     def get_redirection_step(cls, stored_data):
