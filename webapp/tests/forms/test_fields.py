@@ -200,7 +200,7 @@ class TestSteuerlotseDateFieldValue(unittest.TestCase):
         """ Simulates a GET request with prefilled data."""
         prefilled_date = dt.date(1979, 9, 19)
         self.form.process(data={'date_field': prefilled_date})
-        self.assertEqual([19, 9, 1979], self.form.date_field._value())
+        self.assertEqual(['19', '9', '1979'], self.form.date_field._value())
 
     def test_if_no_data_given_and_invalid_formdata_then_value_equals_formdata_as_is(self):
         """ Simulates a POST request with invalid formdata and no prefilled data."""
@@ -214,7 +214,7 @@ class TestSteuerlotseDateFieldValue(unittest.TestCase):
         correct_date_input = ['31', '07', '1980']
         self.form.process(formdata=MultiDict({'date_field': correct_date_input}))
         self.form.validate()
-        self.assertEqual([31, 7, 1980], self.form.date_field._value())
+        self.assertEqual(['31', '7', '1980'], self.form.date_field._value())
 
     def test_if_data_given_and_invalid_formdata_then_value_equals_formdata_as_is(self):
         """ Simulates a POST request with invalid formdata and prefilled data."""
@@ -230,7 +230,7 @@ class TestSteuerlotseDateFieldValue(unittest.TestCase):
         self.form.process(formdata=MultiDict({'date_field': correct_date_input}),
                           data={'date_field': dt.date(1979, 9, 19)})
         self.form.validate()
-        self.assertEqual([31, 7, 1980], self.form.date_field._value())
+        self.assertEqual(['31', '7', '1980'], self.form.date_field._value())
 
 
 class UnlockCodeForm(SteuerlotseBaseForm):

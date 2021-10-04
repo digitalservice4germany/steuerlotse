@@ -202,7 +202,7 @@ class SteuerlotseDateField(DateField):
 
     def _value(self):
         if self.data:
-            return [self.data.day, self.data.month, self.data.year]
+            return [str(self.data.day), str(self.data.month), str(self.data.year)]
         else:
             return self.raw_data if self.raw_data else []
 
