@@ -67,7 +67,7 @@ function FormFieldConsentBox({
           <input
             type="checkbox"
             id={fieldId}
-            defaultValue={value}
+            name={fieldName}
             required={required}
             autoFocus={autofocus}
           />
