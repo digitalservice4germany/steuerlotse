@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
+import checkedIcon from "../assets/icons/checked.svg";
 
 const ConsentBox = styled.div`
   &.checkbox {
@@ -27,7 +28,7 @@ const ConsentBox = styled.div`
 
   &.checkbox input:checked + label {
     background-color: var(--link-color);
-    background-image: url("../images/checked.svg");
+    background-image: url(${checkedIcon});
     background-repeat: no-repeat;
     background-size: 22px;
     background-position: center;
