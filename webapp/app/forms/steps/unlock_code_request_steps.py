@@ -1,6 +1,9 @@
+import humps
 from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
+from flask_wtf.csrf import generate_csrf
+from wtforms.fields.core import BooleanField
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
@@ -47,11 +50,47 @@ class UnlockCodeRequestInputStep(FormStep):
             template='unlock_code/registration_data_input.html')
 
     def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info,
-                               explanatory_button_text=_l('form.unlock-code-request.got-fsc',
-                                                          link=url_for('unlock_code_activation', step='start')),
-                               header_title=_('form.unlock-code-request.header-title'))
+        fields = {}
+        for field in render_info.form:
+            field_dict = {
+                'errors': field.errors,
+            }
+            if isinstance(field, BooleanField):
+                field_dict['checked'] = field.data
+                # 'value' is not needed for checkboxes. WTForms is happy with any non-"False" value.
+            else:
+                field_dict['value'] = field._value()
+
+            fields[field.name] = field_dict
+
+        props = humps.camelize({
+            'step_header': {
+                'title': render_info.step_title,
+                'intro': render_info.step_intro,
+            },
+            'form': {
+                'action': render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(render_info.overview_url),
+                'next_button_label': _('form.register'),
+                'explanatory_button_text': _l('form.unlock-code-request.got-fsc', link=url_for('unlock_code_activation', step='start'))
+            },
+            'fields': fields,
+            'eligibility_link': url_for('eligibility', step='start'),
+            'terms_of_service_link': url_for('agb'),
+            'data_privacy_link': url_for('data_privacy'),
+        })
+
+        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
+        # (A fix exists but hasn't been released at time of writing: https://github.com/nficano/humps/issues/61)
+        props['fields']['registrationConfirmEData'] = props['fields'].pop('registrationConfirmE_data')
+
+        return render_template('react_component.html',
+            component='RegistrationPage',
+            props=props,
+            # TODO: These are still required by base.html to set the page title.
+            form=render_info.form,
+            header_title=_('form.unlock-code-request.header-title'))
 
 
 class UnlockCodeRequestSuccessStep(DisplayStep):
