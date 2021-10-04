@@ -48,7 +48,7 @@ const ConsentBox = styled.div`
 function FormFieldConsentBox({
   fieldName,
   fieldId,
-  value,
+  checked,
   required,
   autofocus,
   labelText,
@@ -69,6 +69,9 @@ function FormFieldConsentBox({
             id={fieldId}
             name={fieldName}
             required={required}
+            defaultChecked={checked}
+            // TODO: autofocus is under review.
+            // eslint-disable-next-line
             autoFocus={autofocus}
           />
           {/* TODO: there should be only one label for an input */}
@@ -91,14 +94,14 @@ FormFieldConsentBox.propTypes = {
   fieldId: PropTypes.string.isRequired,
   labelText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
     .isRequired,
-  value: PropTypes.string,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  checked: PropTypes.bool,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
 };
 
 FormFieldConsentBox.defaultProps = {
-  value: "y", // the default of WTForms BooleanField
+  checked: false,
   required: false,
   autofocus: false,
 };

@@ -70,7 +70,7 @@ export default function RegistrationPage({
           required
           fieldName="registration_confirm_data_privacy"
           fieldId="registration_confirm_data_privacy"
-          value={fields.registrationConfirmDataPrivacy.value}
+          checked={fields.registrationConfirmDataPrivacy.checked}
           labelText={
             <Trans
               t={t}
@@ -96,7 +96,7 @@ export default function RegistrationPage({
           required
           fieldName="registration_confirm_terms_of_service"
           fieldId="registration_confirm_terms_of_service"
-          value={fields.registrationConfirmTermsOfService.value}
+          checked={fields.registrationConfirmTermsOfService.checked}
           labelText={
             <Trans
               t={t}
@@ -114,7 +114,7 @@ export default function RegistrationPage({
           required
           fieldName="registration_confirm_incomes"
           fieldId="registration_confirm_incomes"
-          value={fields.registrationConfirmIncomes.value}
+          checked={fields.registrationConfirmIncomes.checked}
           labelText={
             <Trans
               t={t}
@@ -149,7 +149,7 @@ export default function RegistrationPage({
           required
           fieldName="registration_confirm_e_data"
           fieldId="registration_confirm_e_data"
-          value={fields.registrationConfirmEData.value}
+          checked={fields.registrationConfirmEData.checked}
           labelText={t(
             "unlockCodeRequest.fieldRegistrationConfirmEData.labelText"
           )}
@@ -163,6 +163,11 @@ export default function RegistrationPage({
 const fieldPropType = PropTypes.exact({
   value: PropTypes.any,
   errors: PropTypes.arrayOf(PropTypes.string),
+});
+
+const checkboxPropType = PropTypes.exact({
+  errors: PropTypes.arrayOf(PropTypes.string),
+  checked: PropTypes.bool,
 });
 
 RegistrationPage.propTypes = {
@@ -181,10 +186,10 @@ RegistrationPage.propTypes = {
   fields: PropTypes.exact({
     idnr: fieldPropType,
     dob: fieldPropType,
-    registrationConfirmDataPrivacy: fieldPropType,
-    registrationConfirmTermsOfService: fieldPropType,
-    registrationConfirmIncomes: fieldPropType,
-    registrationConfirmEData: fieldPropType,
+    registrationConfirmDataPrivacy: checkboxPropType,
+    registrationConfirmTermsOfService: checkboxPropType,
+    registrationConfirmIncomes: checkboxPropType,
+    registrationConfirmEData: checkboxPropType,
   }).isRequired,
   eligibilityLink: PropTypes.string.isRequired,
   termsOfServiceLink: PropTypes.string.isRequired,
