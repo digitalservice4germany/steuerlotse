@@ -48,9 +48,8 @@ class UnlockCodeActivationInputStep(FormStep):
                     for field in render_info.form
                 },
             }),
-            # TODO: These are still required by base.html to set the page header.
+            # TODO: These are still required by base.html to set the page title.
             form=render_info.form,
-            render_info=render_info,
             header_title=self.header_title
         )
 
