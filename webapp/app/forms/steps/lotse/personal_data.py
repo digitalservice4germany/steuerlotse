@@ -19,16 +19,14 @@ from app.model.form_data import FamilienstandModel
 class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
     header_title = None
-    prev_step_name = None
-    next_step_name = None
+    prev_step = StepFamilienstand
+    next_step = StepPersonA
 
     def __init__(self, endpoint, **kwargs):
         super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
-        self.render_info.prev_url = self.url_for_step(self.prev_step_name)
-        self.render_info.next_url = self.url_for_step(self.next_step_name)
 
         # redirect in any case if overview button pressed
         if 'overview_button' in request.form:
@@ -41,6 +39,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.steuernummer-intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
     template = 'lotse/form_steuernummer.html'
+    # TODO remove this once all steps are converted to steuerlotse steps
     prev_step_name = StepFamilienstand.name
     next_step_name = StepPersonA.name
 
