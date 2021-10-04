@@ -3157,12 +3157,12 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
 
         assert step.render_info.next_url == expected_url
 
-    def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_url_to_alternative_step(self, app, correct_session_data_without_registration_method):
+    def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_url_to_failure_step(self, app, correct_session_data_without_registration_method):
         with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'yes'}) as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
             expected_url = step.url_for_step(ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -3185,7 +3185,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
 
             with pytest.raises(IncorrectEligibilityData):
                 step.handle()
