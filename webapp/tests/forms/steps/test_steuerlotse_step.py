@@ -29,21 +29,21 @@ class TestSteuerlotseStepInit(unittest.TestCase):
         self.req.request.args = {'link_overview': "True"}
 
         step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
-                                default_data=None, prev_step=None, next_step=None)
+                               default_data=None, prev_step=None, next_step=None)
 
         self.assertTrue(step.has_link_overview)
 
         self.req.request.args = {'link_overview': "False"}
 
         step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
-                                default_data=None, prev_step=None, next_step=None)
+                               default_data=None, prev_step=None, next_step=None)
 
         self.assertFalse(step.has_link_overview)
 
     def test_if_request_has_no_params_then_set_correct_defaults(self):
         # Only link_overview and session are set from request
         step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None, overview_step=None,
-                                default_data=None, prev_step=None, next_step=None)
+                               default_data=None, prev_step=None, next_step=None)
 
         self.assertFalse(step.has_link_overview)
 
@@ -68,11 +68,9 @@ class TestSteuerlotseStepUrlForStep(unittest.TestCase):
         self.expected_url_params_if_attribute_set = "?link_overview=" + str(self.set_link_overview)
         self.empty_url_params = ""
 
-        self.steuerlotse_step_with_overlink_view = SteuerlotseStep(endpoint=self.endpoint_correct,
-                                                                    header_title=None, stored_data=None,
-                                                                    overview_step=None,
-                                                                    default_data=None, prev_step=None,
-                                                                    next_step=None)
+        self.steuerlotse_step_with_overlink_view = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None,
+                                                                   stored_data=None, overview_step=None,
+                                                                   default_data=None, prev_step=None, next_step=None)
         self.steuerlotse_step_with_overlink_view.has_link_overview = True
 
     def test_if_step_given_and_attributes_correct_then_return_correct_url(self):
@@ -96,8 +94,7 @@ class TestSteuerlotseStepUrlForStep(unittest.TestCase):
 
     def test_if_attributes_empty_then_correct_url(self):
         steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         created_url = steuerlotse_step.url_for_step(MockStartStep.name)
         expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=False"
         self.assertEqual(expected_url, created_url)
@@ -111,25 +108,22 @@ class TestSteuerlotseStepUrlForStep(unittest.TestCase):
     def test_if_link_overview_param_set_then_used_in_url(self):
         self.req.request.args = {'link_overview': "True"}
         steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         created_url = steuerlotse_step.url_for_step(MockStartStep.name)
         expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=True"
         self.assertEqual(expected_url, created_url)
 
         self.req.request.args = {'link_overview': "False"}
         steuerlotse_step = SteuerlotseStep(endpoint=self.endpoint_correct, header_title=None, stored_data=None,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         created_url = steuerlotse_step.url_for_step(MockStartStep.name)
         expected_url = self.helper_build_test_url(self.endpoint_correct, MockStartStep) + "?link_overview=False"
         self.assertEqual(expected_url, created_url)
 
     def test_if_incorrect_endpoint_then_throw_error(self):
         steuerlotse_incorrect_endpoint = SteuerlotseStep(endpoint="IncorrectEndpoint", header_title=None,
-                                                            stored_data=None,
-                                                            overview_step=None, default_data=None, prev_step=None,
-                                                            next_step=None)
+                                                         stored_data=None, overview_step=None, default_data=None,
+                                                         prev_step=None, next_step=None)
         self.assertRaises(BuildError, steuerlotse_incorrect_endpoint.url_for_step, MockStartStep.name)
 
     def test_if_additional_attr_provided_then_append_to_url(self):
@@ -150,8 +144,7 @@ class TestSteuerlotseStepHandle(unittest.TestCase):
 
     def test_handle_calls_methods_in_correct_order(self):
         steuerlotse_step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         with (
             patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle") as mock_pre_handle,
             patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle") as mock_main_handle,
@@ -169,8 +162,7 @@ class TestSteuerlotseStepHandle(unittest.TestCase):
     def test_handle_returns_result_from_post_handle(self):
         post_handle_stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         steuerlotse_step = SteuerlotseStep(endpoint="WhereItAllStarts", header_title=None, stored_data=None,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         with (
             patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._pre_handle"),
             patch("app.forms.steps.steuerlotse_step.SteuerlotseStep._main_handle"),
@@ -188,8 +180,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
     def test_if_no_prev_next_step_set_then_render_info_is_set_correctly(self):
         correct_endpoint = "lotse"
 
-        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None, overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -207,10 +199,9 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         prev_step = MockStartStep
         next_step = MockFormStep
 
-        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, stored_data=None,
-                                            prev_step=prev_step,
-                                            next_step=next_step, header_title=None, overview_step=None,
-                                            default_data=None)
+        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                           overview_step=None, default_data=None, prev_step=prev_step,
+                                           next_step=next_step)
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -235,9 +226,9 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
 
         self.req.request.args = {'link_overview': "True"}
         overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
-                                            header_title=None, stored_data=None,
-                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                           overview_step=overview_step, default_data=None, prev_step=None,
+                                           next_step=None)
         steuerlotse_step.name = "This is the one"
         expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
                                             form=None, prev_url=None,
@@ -253,9 +244,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
     def test_pre_handle_leaves_stored_data_untouched(self):
         data = {'father': 'Mufasa'}
 
-        steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=data,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+        steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=data, overview_step=None,
+                                           default_data=None, prev_step=None, next_step=None)
         steuerlotse_step.name = "This is the one"
 
         steuerlotse_step._pre_handle()
@@ -270,9 +260,9 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
             self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
-                                               header_title=None, stored_data=None,
-                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                               overview_step=overview_step, default_data=None, prev_step=None,
+                                               next_step=None)
             steuerlotse_step.title_multiple = correct_multiple_title
             steuerlotse_step.name = "This is the one"
 
@@ -289,9 +279,9 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
-                                               header_title=None, stored_data=None,
-                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                               overview_step=overview_step, default_data=None, prev_step=None,
+                                               next_step=None)
             steuerlotse_step.title = correct_single_title
             steuerlotse_step.title_multiple = correct_multiple_title
             steuerlotse_step.name = "This is the one"
@@ -308,9 +298,9 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
             self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
-                                               header_title=None, stored_data=None,
-                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                               overview_step=overview_step, default_data=None, prev_step=None,
+                                               next_step=None)
             steuerlotse_step.intro_multiple = correct_multiple_intro
             steuerlotse_step.name = "This is the one"
 
@@ -327,9 +317,9 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             self.req.request.args = {'link_overview': "True"}
             overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, overview_step=overview_step,
-                                               header_title=None, stored_data=None,
-                                               default_data=None, prev_step=None, next_step=None)
+            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+                                               overview_step=overview_step, default_data=None, prev_step=None,
+                                               next_step=None)
             steuerlotse_step.intro = correct_single_intro
             steuerlotse_step.intro_multiple = correct_multiple_intro
             steuerlotse_step.name = "This is the one"
@@ -347,7 +337,7 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
     def test_if_post_handle_called_then_return_render_result(self):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=None, overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           default_data=None, prev_step=None, next_step=None)
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -360,8 +350,7 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
     def test_if_redirection_url_set_then_return_redirect(self):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=stored_data,
-                                            overview_step=None,
-                                            default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -409,10 +398,14 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
     def test_if_post_then_return_redirect_to_next_step(self):
         next_step = MockFinalStep
         with self.app.test_request_context(
-                path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
-                method='POST') as req:
+                path="/" + self.endpoint_correct + "/step/" + MockFormStep.name) as req:
             req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
             form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data={}, next_step=next_step)
+
+            # Set flags to indicate, that this is a post request with valid data
+            form_step.should_update_data = True
+            form_step.data_is_valid = True
+
             response = form_step.handle()
 
             self.assertEqual(
@@ -474,8 +467,9 @@ class TestFormSteuerlotseStepUpdateData:
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
         self.req.request.method = 'POST'
         self.req.request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(req_form_data)
 
-        updated_data = MockFormWithInputStep.update_data({})
+        updated_data = MockFormWithInputStep.update_data({}, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
 
@@ -483,8 +477,9 @@ class TestFormSteuerlotseStepUpdateData:
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
         self.req.request.method = 'POST'
         self.req.request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(req_form_data)
 
-        updated_data = MockFormWithInputStep.update_data({'date': datetime.date(1980, 1, 1)})
+        updated_data = MockFormWithInputStep.update_data({'date': datetime.date(1980, 1, 1)}, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
 
@@ -492,27 +487,32 @@ class TestFormSteuerlotseStepUpdateData:
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
         self.req.request.method = 'POST'
         self.req.request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(req_form_data)
 
-        updated_data = MockFormWithInputStep.update_data({'other': 'This is none of your concern.'})
+        updated_data = MockFormWithInputStep.update_data({'other': 'This is none of your concern.'}, validated_data)
 
         assert updated_data == {'other': 'This is none of your concern.', 'date': datetime.date(1980, 12, 12),
                                 'decimal': 42.00, 'pet': 'lizard'}
 
     def test_if_post_and_form_valid_but_incomplete_and_key_in_stored_data_then_keep_old_data(self):
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42'}
+        stored_data = {'pet': 'lizard'}
         self.req.request.method = 'POST'
         self.req.request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(stored_data)
 
-        updated_data = MockFormWithInputStep.update_data({'pet': 'lizard'})
+        updated_data = MockFormWithInputStep.update_data(stored_data, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
 
     def test_if_post_and_form_valid_and_yes_no_field_empty_then_yes_no_field_content_overridden(self):
         req_form_data = {}
+        stored_data = {'yes_no_field': 'yes'}
         self.req.request.method = 'POST'
         self.req.request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockYesNoStep.validate_data(stored_data)
 
-        updated_data = MockYesNoStep.update_data({'yes_no_field': 'yes'})
+        updated_data = MockYesNoStep.update_data(stored_data, validated_data)
 
         assert updated_data == {'yes_no_field': None}
 
@@ -520,25 +520,15 @@ class TestFormSteuerlotseStepUpdateData:
         req_form_data = {'date': ['12', '12', '1980']}
         self.req.request.method = 'POST'
         self.req.request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(req_form_data)
 
-        updated_data = MockFormWithInputStep.update_data({})
+        updated_data = MockFormWithInputStep.update_data({}, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': ''}
 
-    def test_if_post_and_form_invalid_then_do_not_update_data(self):
-        req_form_data = {'data': 'invalid'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-
-        with patch('tests.forms.mock_steuerlotse_steps.MockFormWithInputStep.create_form',
-                   MagicMock(return_value=MagicMock(name='InputForm', validate=MagicMock(return_value=False)))):
-            updated_data = MockFormWithInputStep.update_data({'data': 'original'})
-
-        assert updated_data == {'data': 'original'}
-
     def test_if_get_then_do_not_update_data(self):
         self.req.request.method = 'GET'
-        updated_data = MockFormWithInputStep.update_data({'data': 'original'})
+        updated_data = MockFormWithInputStep.update_data({}, {'data': 'original'})
         assert updated_data == {'data': 'original'}
 
 

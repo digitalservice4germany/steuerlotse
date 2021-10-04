@@ -1,12 +1,15 @@
 import datetime
+from unittest.mock import patch
+
 import pytest
 from flask.sessions import SecureCookieSession
-from flask_babel import ngettext
+from flask_babel import ngettext, _
 from werkzeug.datastructures import MultiDict
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteuerlotseStep
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
+from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
 
 
@@ -137,3 +140,44 @@ class TestStepSteuernummer:
 
         assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']
         assert expected_request_new_tax_number_label == step.form.request_new_tax_number.kwargs['label']
+
+
+class TestStepSteuernummerValidate:
+
+    def test_if_erica_returns_invalid_tax_number_then_flash_error(self, app):
+        MockErica.tax_number_is_invalid = True
+        bundesland_abbreviation = 'BY'
+        steuernummer = '19811310010'
+        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        try:
+            with app.test_request_context(method='POST', data=input_data), \
+                    patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
+                StepSteuernummer.validate_data(input_data)
+
+        finally:
+            MockErica.tax_number_is_invalid = False
+
+        mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
+
+    def test_if_valid_number_given_then_flash_no_error(self, app):
+        bundesland_abbreviation = 'BY'
+        steuernummer = '19811310010'
+        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        with app.test_request_context(method='POST', data=input_data), \
+                patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
+            StepSteuernummer.validate_data(input_data)
+
+        mock_flash.assert_not_called()
+
+    def test_if_invalid_number_given_then_flash_error(self, app):
+        bundesland_abbreviation = 'BY'
+        steuernummer = '11111111111'
+        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        with app.test_request_context(method='POST', data=input_data), \
+                patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
+            StepSteuernummer.validate_data(input_data)
+
+            mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')

@@ -13,10 +13,7 @@ class MockStartStep(SteuerlotseStep):
     name = 'mock_start_step'
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockStartStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+        super(MockStartStep, self).__init__(header_title=header_title, default_data=default_data, **kwargs)
 
 
 class MockMiddleStep(SteuerlotseStep):
@@ -25,10 +22,7 @@ class MockMiddleStep(SteuerlotseStep):
     intro = 'The one where the empire strikes back'
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockMiddleStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+        super(MockMiddleStep, self).__init__(header_title=header_title, default_data=default_data, **kwargs)
 
 
 class MockFinalStep(SteuerlotseStep):
@@ -37,10 +31,7 @@ class MockFinalStep(SteuerlotseStep):
     intro = 'The one with the ewoks'
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockFinalStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+        super(MockFinalStep, self).__init__(header_title=header_title, default_data=default_data, **kwargs)
 
 
 class MockRenderStep(SteuerlotseStep):
@@ -49,10 +40,7 @@ class MockRenderStep(SteuerlotseStep):
     intro = 'Nice, this one can also render'
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockRenderStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+        super(MockRenderStep, self).__init__(header_title=header_title, default_data=default_data, **kwargs)
 
     def render(self):
         return make_response(json.dumps(["Data"], default=str), 200)

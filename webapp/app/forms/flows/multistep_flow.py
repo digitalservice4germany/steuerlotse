@@ -27,6 +27,7 @@ class RenderInfo(object):
         self.back_link_text = None
         self.redirect_url = None
         self.additional_info = {}
+        self.errors = []
 
     def __eq__(self, other):
         if isinstance(other, RenderInfo):

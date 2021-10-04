@@ -130,14 +130,11 @@ class TestSendEst(unittest.TestCase):
     def test_if_fields_missing_raise_error(self):
         data = copy.deepcopy(self.valid_form_data)
         data.pop("familienstand")
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    patch('app.elster_client.elster_client._log_address_data'):
-                self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
-                                  include_elster_responses=False)
-        finally:
-            MockErica.value_error_missing_fields_occurred = False
+        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client._log_address_data'):
+            self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
+                              include_elster_responses=False)
 
     def test_if_invalid_bufa_then_return_error(self):
         MockErica.invalid_bufa_number_error_occurred = True
@@ -488,7 +485,7 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterRequestAlreadyRevoked, send_unlock_code_revocation_with_elster,
-                                  {'idnr': self.new_idnr, 'elster_request_id':  self.correct_elster_request_id}, 'IP')
+                                  {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
         finally:
             MockErica.request_code_already_revoked_error_occurred = False
 
@@ -551,8 +548,6 @@ class TestValidateTaxNumber:
                 validate_tax_number(state_abbreviation, tax_number)
         finally:
             MockErica.eric_process_not_successful_error_occurred = False
-
-
 
 
 class TestGenerateEStRequestData(unittest.TestCase):

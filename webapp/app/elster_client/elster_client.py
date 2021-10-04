@@ -2,7 +2,6 @@ import logging
 import json
 from datetime import datetime
 from decimal import Decimal
-from functools import lru_cache
 
 import requests
 from flask_login import current_user, logout_user
@@ -15,6 +14,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
     ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
+from app.utils import lru_cached
 
 logger = logging.getLogger(__name__)
 
@@ -141,6 +141,7 @@ def send_unlock_code_revocation_with_elster(form_data, ip_address, include_elste
     return response_data
 
 
+@lru_cached
 def validate_tax_number(state_abbreviation, tax_number):
     pyeric_response = request_from_erica(_PYERIC_API_BASE_URL + f'/tax_number_validity/{state_abbreviation}/{tax_number}')
 
@@ -151,7 +152,7 @@ def validate_tax_number(state_abbreviation, tax_number):
     return response_data['is_valid']
 
 
-@lru_cache
+@lru_cached
 def request_tax_offices():
     pyeric_response = request_from_erica(_PYERIC_API_BASE_URL + '/tax_offices')
 

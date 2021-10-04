@@ -1,11 +1,11 @@
-from flask import request
+from flask import request, flash, Markup
 from pydantic import ValidationError
 from wtforms import validators
 from wtforms.validators import InputRequired
 
 from flask_babel import lazy_gettext as _l, _, ngettext
 
-from app.elster_client.elster_client import request_tax_offices
+from app.elster_client.elster_client import request_tax_offices, validate_tax_number
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
@@ -125,6 +125,16 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                 validators.InputRequired()(form, field)
             else:
                 validators.Optional()(form, field)
+
+        def validate(self, extra_validators=None):
+            result = super().validate(extra_validators)
+            if self.data.get('steuernummer_exists') == 'yes':
+                valid_tax_number = validate_tax_number(self.data['bundesland'], self.data['steuernummer'])
+                if not valid_tax_number:
+                    flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')
+                    return False
+
+            return result
 
     def _pre_handle(self):
         tax_offices = request_tax_offices()

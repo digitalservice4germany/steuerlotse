@@ -22,7 +22,7 @@ class SteuerlotseStep(object):
     template = None
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                 session_data_identifier='form_data'):
+                 session_data_identifier='form_data', update_data=False, form_data=None, data_is_valid=False):
         self.endpoint = endpoint
         self.header_title = header_title
         self.stored_data = stored_data if stored_data is not None else {}
@@ -31,6 +31,9 @@ class SteuerlotseStep(object):
         self._next_step = next_step
         self.render_info: Optional[RenderInfo] = None
         self.session_data_identifier = session_data_identifier
+        self.should_update_data = update_data
+        self.form_data = form_data
+        self.data_is_valid = data_is_valid
 
         self.default_data = default_data
 
@@ -100,9 +103,11 @@ class FormSteuerlotseStep(SteuerlotseStep):
         pass
 
     def __init__(self, endpoint, header_title, stored_data=None, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier='form_data'):
+                 next_step=None, session_data_identifier='form_data', update_data=False, form_data=None,
+                 data_is_valid=False):
         super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                         session_data_identifier=session_data_identifier)
+                         session_data_identifier=session_data_identifier, update_data=update_data, form_data=form_data,
+                         data_is_valid=data_is_valid)
         # TODO rename this to form_class once MultiStepFlow is obsolete
         self.form = self.InputForm
 
@@ -116,14 +121,19 @@ class FormSteuerlotseStep(SteuerlotseStep):
             form_data = None
 
         return cls.InputForm(form_data, **prefilled_data)
-    
+
     @classmethod
-    def update_data(cls, stored_data):
-        if request.method == 'POST':
-            form = cls.create_form(request, prefilled_data=stored_data)
-            if form.validate():
-                stored_data.update(form.data)
+    def update_data(cls, stored_data, data_to_update):
+        stored_data.update(data_to_update)
         return stored_data
+
+    @classmethod
+    def validate_data(cls, stored_data):
+        form = cls.create_form(request, prefilled_data=stored_data)
+        if form.validate():
+            return form.data
+
+        return None
 
     def _pre_handle(self):
         super()._pre_handle()
@@ -137,7 +147,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
             logger.info(f"Redirect to {redirection.location}")
             return redirection
 
-        if request.method == 'POST' and self.render_info.form.validate():
+        if self.should_update_data and self.data_is_valid:
             logger.info(f"Redirect to next Step {self.render_info.next_url}")
             return redirect(self.render_info.next_url)
         return self.render()
@@ -155,25 +165,29 @@ class FormSteuerlotseStep(SteuerlotseStep):
         )
 
     @staticmethod
-    def _delete_dependent_data(stored_data: dict, pre_fixes:list=None, post_fixes:list=None):
+    def _delete_dependent_data(stored_data: dict, pre_fixes: list = None, post_fixes: list = None):
         """This method filters the stored data. It deletes all the elements where the key includes the
         data_field_identifier. """
         filtered_data = stored_data
         if pre_fixes:
             filtered_data = dict(filter(lambda elem: not any([elem[0].startswith(data_field_prefix)
-                                                              for data_field_prefix in pre_fixes]), filtered_data.items()))
+                                                              for data_field_prefix in pre_fixes]),
+                                        filtered_data.items()))
         if post_fixes:
             filtered_data = dict(filter(lambda elem: not any([elem[0].endswith(data_field_postfix)
-                                                              for data_field_postfix in post_fixes]), filtered_data.items()))
+                                                              for data_field_postfix in post_fixes]),
+                                        filtered_data.items()))
         return filtered_data
 
 
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
     def __init__(self, endpoint, header_title, stored_data, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier=None):
-        super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
-                                                     next_step, session_data_identifier)
+                 next_step=None, session_data_identifier=None, update_data=False, form_data=None, data_is_valid=False):
+        super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data,
+                                                     prev_step, next_step, session_data_identifier,
+                                                     update_data=update_data, form_data=form_data,
+                                                     data_is_valid=data_is_valid)
 
     def render(self, **kwargs):
         """
@@ -188,10 +202,13 @@ class RedirectSteuerlotseStep(SteuerlotseStep):
     to return a SteuerlotseStep that should only redirect to another step.
     """
 
-    def __init__(self, redirection_step_name, endpoint, header_title=None, stored_data=None, overview_step=None, default_data=None,
-                 prev_step=None, next_step=None, session_data_identifier=None):
-        super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step,
-                                                      next_step, session_data_identifier)
+    def __init__(self, redirection_step_name, endpoint, header_title=None, stored_data=None, overview_step=None,
+                 default_data=None,
+                 prev_step=None, next_step=None, session_data_identifier=None, update_data=False, form_data=None,
+                 data_is_valid=False):
+        super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data,
+                                                      prev_step, next_step, session_data_identifier,
+                                                      update_data=update_data, form_data=form_data, data_is_valid=data_is_valid)
         self.redirection_step_name = redirection_step_name
 
     def handle(self):

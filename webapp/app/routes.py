@@ -130,9 +130,11 @@ def register_request_handlers(app):
                     StepGemeinsamerHaushalt.name, StepReligion.name, StepSpenden.name,
                     StepSummary.name, StepConfirmation.name, StepFiling.name, StepAck.name]:
             return flow.handle(step_name=step)
+
         update_data = request.method == 'POST'
+        form_data = request.form
         return LotseStepChooser(endpoint='lotse') \
-            .get_correct_step(step_name=step, update_data=update_data) \
+            .get_correct_step(step_name=step, update_data=update_data, form_data=form_data) \
             .handle()
 
     @app.route('/unlock_code_request/step', methods=['GET', 'POST'])
