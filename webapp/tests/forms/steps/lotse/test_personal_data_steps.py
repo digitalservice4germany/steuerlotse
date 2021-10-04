@@ -23,24 +23,6 @@ def step_with_bufa_choices(app, test_request_context):
     yield step
 
 
-@pytest.mark.usefixtures("app", "test_request_context")
-class TestLotseFormSteuerlotseStep:
-
-    def test_if_prev_and_next_step_name_set_then_set_correct_urls(self):
-        step = LotseFormSteuerlotseStep(endpoint="lotse")
-        step.create_form = lambda *a, **k: None
-        step.render = lambda *a, **k: None
-        step.name = "TESTING_STEP"
-        step.overview_step = SummaryStep
-        step.prev_step_name = "iban"
-        step.next_step_name = "person_a"
-
-        step.handle()
-
-        assert step.render_info.prev_url == step.url_for_step("iban")
-        assert step.render_info.next_url == step.url_for_step("person_a")
-
-
 class TestStepSteuernummer:
 
     def test_if_steuernummer_exists_missing_then_fail_validation(self, step_with_bufa_choices):

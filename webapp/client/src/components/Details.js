@@ -109,7 +109,7 @@ const DetailsCard = styled.div`
     padding: var(--spacing-02) 1em var(--spacing-02) 0;
   }
 
-  &.details-card .details-content :last-child {
+  &.details-card .details-content *:last-child {
     margin-bottom: 0;
   }
 `;

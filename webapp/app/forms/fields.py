@@ -162,27 +162,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
                                       input_field_lengths=self.input_field_lengths))
 
 
-class UnlockCodeWidget(AlphaNumericInputMixin, MultipleInputFieldWidget):
-    """A divided input field with three text input fields, limited to four chars."""
-    sub_field_separator = '-'
-    input_field_lengths = [4, 4, 4]
-
-    def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(kwargs)
-
-        return super().__call__(*args, **kwargs)
-
-
-class UnlockCodeField(StringField):
-    def __init__(self, label='', validators=None, **kwargs):
-        super(UnlockCodeField, self).__init__(label, validators, **kwargs)
-        self.widget = UnlockCodeWidget()
-
-    def __call__(self, *args, **kwargs):
-        kwargs['class'] = kwargs.get('class', '') + ' unlock-input'
-
-        return super().__call__(**kwargs)
-
+class UnlockCodeField(SteuerlotseStringField):
     def process_formdata(self, valuelist):
         if valuelist:
             self.data = '-'.join(valuelist).upper()
@@ -190,10 +170,7 @@ class UnlockCodeField(StringField):
             self.data = ''
 
     def _value(self):
-        return self.data.split('-') if self.data else ''
-
-    def pre_validate(self, form):
-        ValidElsterCharacterSet().__call__(form, self)
+        return self.data.split('-') if self.data else ['', '', '']
 
 
 class SteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
@@ -230,7 +207,7 @@ class SteuerlotseDateField(DateField):
             return self.raw_data if self.raw_data else []
 
 
-class IdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
+class LegacyIdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]
@@ -242,7 +219,7 @@ class IdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFiel
         return super().__call__(*args, **kwargs)
 
 
-class IdNrField(SteuerlotseStringField):
+class LegacyIdNrField(SteuerlotseStringField):
     """
         Field to store the IdNr in four separate input fields.
 
@@ -255,8 +232,8 @@ class IdNrField(SteuerlotseStringField):
         can split it into the expected chunks as seen in _value().
     """
     def __init__(self, label='', validators=None, **kwargs):
-        super(IdNrField, self).__init__(label, validators, **kwargs)
-        self.widget = IdNrWidget()
+        super(LegacyIdNrField, self).__init__(label, validators, **kwargs)
+        self.widget = LegacyIdNrWidget()
 
     def process_formdata(self, valuelist):
         # The formdata (from the request) is written to self.data as is (as a list of inputted strings)
@@ -276,6 +253,51 @@ class IdNrField(SteuerlotseStringField):
         # As we know that it is correct, we can just separate it in chunks here.
         split_data = []
         chunk_sizes = self.widget.input_field_lengths
+        start_idx = 0
+        for chunk_size in chunk_sizes:
+            end_index = start_idx + chunk_size
+            if self.data:
+                split_data.append(self.data[start_idx: end_index])
+            start_idx = end_index
+        return split_data
+
+    def post_validate(self, form, validation_stopped):
+        # Once the validation has gone through, we know that the idnr is correct.
+        # We can therefore store it as a string and just separate it into chunks in self._value().
+        if not validation_stopped and len(self.errors) == 0:
+            self.data = ''.join(self.data)
+
+
+class IdNrField(SteuerlotseStringField):
+    """
+        Field to store the IdNr in four separate input fields.
+
+        We get the formdata as a list of four strings (e.g. ['04', '452', '397', '687'])
+        but want to handle it in the rest of the program as one string (e.g. '04452397687').
+        At the same time, in case of a validation error (e.g. for ['04', '452', '3', '687']) we want to keep the order
+        of inputs to not confuse the user. Thus, we only concatenate the strings to one string on succeeded validation
+        in post_validate().
+        Once the input validates, we can be sure to have the complete, valid string in our data and
+        can split it into the expected chunks as seen in _value().
+    """
+    def process_formdata(self, valuelist):
+        # The formdata (from the request) is written to self.data as is (as a list of inputted strings)
+        if valuelist:
+            self.data = valuelist
+        elif self.data is None:
+            self.data = ['', '', '', '']
+
+    def _value(self):
+        """ Returns the representation of data as needed by the widget. In this case: a list of strings. """
+        # In case the validation was not successful, we already have the data as a list of strings
+        # (as it is not concatenated in post_validate()).
+        if isinstance(self.data, list):
+            return self.data
+
+        # Once the validation has gone through, post_validate() stores the data as string.
+        # As we know that it is correct, we can just separate it in chunks here.
+        split_data = []
+        chunk_sizes = [2, 3, 3, 3]
         start_idx = 0
         for chunk_size in chunk_sizes:
             end_index = start_idx + chunk_size

@@ -15,7 +15,6 @@ const FormField = styled.div`
 `;
 
 // TODO: implement concrete fields with this:
-// - ConfirmationField: cols="12" hideLabel=True
 // - BooleanField, YesNoField: hideLabel=True
 // - RadioField, SteuerlotseDateField: hideLabel=True hideErrors=True
 export default function FormFieldScaffolding({
@@ -58,16 +57,12 @@ export default function FormFieldScaffolding({
       <div className={classNames({ "d-block": displayBlock })}>
         {render(fieldClassNames)}
         {/* TODO: this goes into the concrete fields
-          {% if field.type == 'ConfirmationField' %}
-              {{ components.consent_box(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
-          {% elif field.type == 'BooleanField' %}
+          {% if field.type == 'BooleanField' %}
               {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
           {% elif field.type == 'RadioField' %}
               {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
           {% elif field.type == 'YesNoField' %}
               {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
-          {% elif field.type == 'SteuerlotseDateField' %}
-              {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
           {% else %}
               {% if first_field or field.errors %}
                   {{ field(class=classes, autofocus=True) }}
@@ -92,7 +87,7 @@ export default function FormFieldScaffolding({
 FormFieldScaffolding.propTypes = {
   render: PropTypes.func.isRequired,
   fieldName: PropTypes.string.isRequired,
-  labelComponent: PropTypes.element.isRequired,
+  labelComponent: PropTypes.element,
   errors: PropTypes.arrayOf(PropTypes.string),
   cols: PropTypes.string,
   extraClassNames: PropTypes.string, // field.render_kw['class']
@@ -104,6 +99,7 @@ FormFieldScaffolding.propTypes = {
 };
 
 FormFieldScaffolding.defaultProps = {
+  labelComponent: undefined,
   errors: [],
   cols: "6",
   extraClassNames: "",

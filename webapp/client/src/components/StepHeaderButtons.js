@@ -31,9 +31,7 @@ export default function StepHeaderButtons({ url, text }) {
 }
 
 StepHeaderButtons.propTypes = {
-  // render_info.prev_url
   url: PropTypes.string,
-  // render_info.back_link_text if render_info.back_link_text else _('form.back')
   text: PropTypes.string,
 };
 

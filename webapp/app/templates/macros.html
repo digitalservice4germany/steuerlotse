@@ -55,7 +55,7 @@
         {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% elif field.type in ('BooleanField', 'YesNoField') %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
-    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
+    {% elif field.type == 'RadioField' or field.type == 'LegacyIdNrField' or field.type == 'SteuerlotseDateField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True, first_field=first_field, optional=optional) }}
     {% else %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
@@ -97,7 +97,7 @@
                 {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'YesNoField' %}
                 {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
+            {% elif field.type == 'LegacyIdNrField' or field.type == 'SteuerlotseDateField' %}
                 {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% else %}
                 {% if first_field or field.errors %}

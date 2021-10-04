@@ -15,7 +15,7 @@ from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, \
     RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
-    MockRenderStep, MockYesNoStep, MockFormWithInputStep
+    MockRenderStep, MockYesNoStep, MockFormWithInputStep, MockStepWithPrecondition
 from tests.utils import create_session_form_data
 
 
@@ -395,6 +395,26 @@ class TestRedirectSteuerlotseStep(unittest.TestCase):
             redirect(url_for(endpoint="lotse", step="RedirectToThis",
                                 link_overview=redirection_step.has_link_overview)).location,
             returned_redirect.location)
+
+
+class TestCheckPrecondition:
+    def test_if_no_precondition_set_then_return_true(self, app):
+        precondition_checked = MockRenderStep.check_precondition({})
+        assert precondition_checked == True
+
+    def test_if_precondition_set_and_met_then_return_true(self):
+        precondition_checked = MockStepWithPrecondition.check_precondition({'precondition_met': True})
+        assert precondition_checked == True
+
+    def test_if_precondition_set_but_not_met_then_return_false(self):
+        precondition_checked = MockStepWithPrecondition.check_precondition({'precondition_met': False})
+        assert precondition_checked == False
+
+
+class TestGetRedirectionStep:
+    def test_by_default_return_none(self):
+        redirection_step = MockRenderStep.get_redirection_step({})
+        assert redirection_step is None
 
 
 class TestSteuerlotseFormStepHandle(unittest.TestCase):

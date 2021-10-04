@@ -1,6 +1,7 @@
 import json
 
 from flask import make_response
+from pydantic import BaseModel, validator, ValidationError
 from wtforms import Form, validators
 
 from app.forms import SteuerlotseBaseForm
@@ -88,6 +89,49 @@ class MockYesNoStep(FormSteuerlotseStep):
 
     def __init__(self, stored_data=None, **kwargs):
         super(MockYesNoStep, self).__init__(header_title="Yes or No", stored_data=stored_data, **kwargs)
+
+
+class MockPreconditionModel(BaseModel):
+    precondition_met: bool
+
+    @validator('precondition_met')
+    def precondition_has_to_be_met(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class MockStepWithPrecondition(SteuerlotseStep):
+    name = 'mock_step_with_precondition'
+    precondition = MockPreconditionModel
+
+    def __init__(self, header_title=None, default_data=None, **kwargs):
+        super(MockStepWithPrecondition, self).__init__(
+            header_title=header_title,
+            default_data=default_data,
+            **kwargs)
+
+    def render(self):
+        return make_response(json.dumps([self.render_info.step_title], default=str), 200)
+
+
+class MockStepWithRedirection(SteuerlotseStep):
+    name = 'mock_step_with_redirection'
+    precondition = MockPreconditionModel
+
+    @classmethod
+    def get_redirection_step(cls, stored_data):
+        if not cls.check_precondition(stored_data):
+            return MockStartStep.name
+
+    def __init__(self, header_title=None, default_data=None, **kwargs):
+        super(MockStepWithRedirection, self).__init__(
+            header_title=header_title,
+            default_data=default_data,
+            **kwargs)
+
+    def render(self):
+        return make_response(json.dumps([self.render_info.step_title], default=str), 200)
 
 
 class MockDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):

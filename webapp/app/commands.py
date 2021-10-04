@@ -3,7 +3,7 @@ import logging
 import os
 import click
 
-from flask.cli import AppGroup
+from flask.cli import AppGroup, with_appcontext
 from sqlalchemy.exc import IntegrityError
 
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful, \
@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 @click.command()
+@with_appcontext
 def populate_database():
     try:
         from app.extensions import db
