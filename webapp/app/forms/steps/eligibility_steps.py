@@ -99,9 +99,10 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.back_link_text')
 
-        if request.method == "GET":
+        if not self.should_update_data:
             self.delete_not_dependent_data()
-        if request.method == "POST" and self.render_info.form.validate():
+            return
+        if self.should_update_data and self.data_is_valid:
             found_next_step_url = None
             for data_model, step_name in self.next_step_data_models:
                 if self._validate(data_model):

@@ -1,5 +1,6 @@
 import datetime
 import unittest
+from decimal import Decimal
 from unittest.mock import patch
 
 import pytest
@@ -99,6 +100,58 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
             self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=False)
 
         update_mock.assert_not_called()
+
+
+class TestStepChooserValidateAndUpdateData:
+
+    @pytest.fixture()
+    @pytest.mark.usefixtures('test_request_context')
+    def testing_step_chooser(self):
+        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockYesNoStep, MockFinalStep]
+        step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps,
+                                        endpoint="lotse", overview_step=MockFormWithInputStep)
+
+        yield step_chooser
+
+    def test_if_not_update_then_return_none_flag_and_unchanged_data(self, app, testing_step_chooser):
+        step_name = MockFormWithInputStep.name
+        update_data = False
+        stored_data = {'name': 'Nagini'}
+        form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'], 'decimal': '100.000'})
+
+        with app.test_request_context(method='POST') as req:
+            req.session = SecureCookieSession({testing_step_chooser.session_data_identifier: create_session_form_data(stored_data)})
+            is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, form_data)
+
+        assert is_valid_flag is None
+        assert updated_data == stored_data
+
+    def test_if_update_and_data_invalid_then_return_invalid_flag_and_unchanged_data(self, app, testing_step_chooser):
+        step_name = MockFormWithInputStep.name
+        update_data = True
+        stored_data = {'name': 'Nagini'}
+        form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': 'NOT A VALID DATE', 'decimal': '100.000'})
+
+        with app.test_request_context(method='POST') as req:
+            req.session = SecureCookieSession({testing_step_chooser.session_data_identifier: create_session_form_data(stored_data)})
+            is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, form_data)
+
+        assert is_valid_flag is False
+        assert updated_data == stored_data
+
+    def test_if_update_and_data_valid_then_return_valid_flag_and_changed_data(self, app, testing_step_chooser):
+        step_name = MockFormWithInputStep.name
+        update_data = True
+        stored_data = {'name': 'Nagini'}
+        expected_updated_data = {**stored_data, **{'pet': 'Maledictus', 'date': datetime.date(1998, 5, 2),  'decimal': Decimal(100000)}}
+        form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'],  'decimal': '100.000'})
+
+        with app.test_request_context(method='POST') as req:
+            req.session = SecureCookieSession({testing_step_chooser.session_data_identifier: create_session_form_data(stored_data)})
+            is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, form_data)
+
+        assert is_valid_flag is True
+        assert updated_data == expected_updated_data
 
 
 class TestInteractionBetweenSteps(unittest.TestCase):

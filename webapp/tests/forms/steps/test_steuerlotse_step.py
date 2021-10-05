@@ -415,31 +415,25 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
                 response.location
             )
 
+    @pytest.mark.usefixtures("test_request_context")
     def test_if_not_post_then_return_render(self):
         next_step = MockFinalStep
-        with self.app.test_request_context(
-                path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
-                method='GET') as req:
-            req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
-            form_step = MockFormStep(endpoint=self.endpoint_correct, next_step=next_step)
-            response = form_step.handle()
+        form_step = MockFormStep(endpoint=self.endpoint_correct, next_step=next_step, form_data=ImmutableMultiDict({'form_data': create_session_form_data(self.session_data)}))
+        response = form_step.handle()
 
-            self.assertEqual(200, response.status_code)
-            # Check response data because that's where our Mock returns. Decode because response stores as bytestring
-            self.assertEqual(form_step.title, json.loads(str(response.get_data(), 'utf-8'))[0])
+        self.assertEqual(200, response.status_code)
+        # Check response data because that's where our Mock returns. Decode because response stores as bytestring
+        self.assertEqual(form_step.title, json.loads(str(response.get_data(), 'utf-8'))[0])
 
+    @pytest.mark.usefixtures("test_request_context")
     def test_update_session_data_is_called(self):
         next_step = MockFinalStep
         expected_data = {'brother': 'Luigi'}
-        with self.app.test_request_context():
-            with patch('app.forms.steps.steuerlotse_step.override_session_data') as update_fun, \
-                    self.app.test_request_context(
-                        path="/" + self.endpoint_correct + "/step/" + MockFormStep.name,
-                        method='GET') as req:
-                form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step)
-                form_step.handle()
+        with patch('app.forms.steps.steuerlotse_step.override_session_data') as update_fun:
+            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step)
+            form_step.handle()
 
-                update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
+        update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
 
 
 class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
@@ -452,84 +446,66 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
         form_step = MockFormWithInputStep(endpoint='lotse', header_title=None, stored_data={})
 
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
-            created_form = form_step.create_form(self.req, {})
+            created_form = form_step.create_form(self.req.request.form, {})
 
         assert type(created_form) == form_step.InputForm
         assert dir(created_form) == dir(form_step.InputForm()) # check that it has the correct input fields
 
-
+@pytest.mark.usefixtures("test_request_context")
 class TestFormSteuerlotseStepUpdateData:
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, test_request_context):
-        self.req = test_request_context
 
-    def test_if_post_and_form_valid_then_updates_empty_data_correctly(self):
+    def test_if_form_valid_then_updates_empty_data_correctly(self):
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockFormWithInputStep.validate_data(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
 
         updated_data = MockFormWithInputStep.update_data({}, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
 
-    def test_if_post_and_form_valid_then_updates_existing_data_correctly(self):
+    def test_if_form_valid_then_updates_existing_data_correctly(self):
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockFormWithInputStep.validate_data(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
 
         updated_data = MockFormWithInputStep.update_data({'date': datetime.date(1980, 1, 1)}, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
 
-    def test_if_post_and_form_valid_then_leaves_other_data_unchanged(self):
+    def test_if_form_valid_then_leaves_other_data_unchanged(self):
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockFormWithInputStep.validate_data(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
 
         updated_data = MockFormWithInputStep.update_data({'other': 'This is none of your concern.'}, validated_data)
 
         assert updated_data == {'other': 'This is none of your concern.', 'date': datetime.date(1980, 12, 12),
                                 'decimal': 42.00, 'pet': 'lizard'}
 
-    def test_if_post_and_form_valid_but_incomplete_and_key_in_stored_data_then_keep_old_data(self):
+    def test_if_form_valid_but_incomplete_and_key_in_stored_data_then_keep_old_data(self, app):
         req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42'}
         stored_data = {'pet': 'lizard'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockFormWithInputStep.validate_data(stored_data)
+        app.test_request_context().request.method = 'POST'
+        app.test_request_context().request.form = ImmutableMultiDict(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), stored_data)
 
         updated_data = MockFormWithInputStep.update_data(stored_data, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
 
-    def test_if_post_and_form_valid_and_yes_no_field_empty_then_yes_no_field_content_overridden(self):
+    def test_if_form_valid_and_yes_no_field_empty_then_yes_no_field_content_overridden(self):
         req_form_data = {}
         stored_data = {'yes_no_field': 'yes'}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockYesNoStep.validate_data(stored_data)
+        validated_data = MockYesNoStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
 
         updated_data = MockYesNoStep.update_data(stored_data, validated_data)
 
         assert updated_data == {'yes_no_field': None}
 
-    def test_if_post_and_form_valid_but_incomplete_and_key_not_in_stored_data_then_add_empty_default(self):
+    def test_if_form_valid_but_incomplete_and_key_not_in_stored_data_then_add_empty_default(self):
         req_form_data = {'date': ['12', '12', '1980']}
-        self.req.request.method = 'POST'
-        self.req.request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockFormWithInputStep.validate_data(req_form_data)
+        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
 
         updated_data = MockFormWithInputStep.update_data({}, validated_data)
 
         assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': ''}
-
-    def test_if_get_then_do_not_update_data(self):
-        self.req.request.method = 'GET'
-        updated_data = MockFormWithInputStep.update_data({}, {'data': 'original'})
-        assert updated_data == {'data': 'original'}
 
 
 class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):

@@ -3,6 +3,7 @@ from typing import Optional
 
 from flask import request, session, url_for, render_template
 from flask_babel import ngettext
+from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.utils import redirect
 
 from app.forms import SteuerlotseBaseForm
@@ -32,7 +33,7 @@ class SteuerlotseStep(object):
         self.render_info: Optional[RenderInfo] = None
         self.session_data_identifier = session_data_identifier
         self.should_update_data = update_data
-        self.form_data = form_data
+        self.form_data = form_data if form_data is not None else ImmutableMultiDict({})
         self.data_is_valid = data_is_valid
 
         self.default_data = default_data
@@ -112,11 +113,10 @@ class FormSteuerlotseStep(SteuerlotseStep):
         self.form = self.InputForm
 
     @classmethod
-    def create_form(cls, request, prefilled_data):
+    def create_form(cls, form_data, prefilled_data):
         # If `form_data` is present it will always override `data` during
         # value binding. For `BooleanFields` an empty/missing value in the `form_data`
         # will lead to an unchecked box.
-        form_data = request.form
         if len(form_data) == 0:
             form_data = None
 
@@ -124,12 +124,19 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
     @classmethod
     def update_data(cls, stored_data, data_to_update):
+        """
+            This updates the stored_data with the updated_data.
+
+            :param stored_data: The stored session data
+            :param data_to_update: The data with which the stored data
+            should be updated. Note: the stored data should already be validated.
+        """
         stored_data.update(data_to_update)
         return stored_data
 
     @classmethod
-    def validate_data(cls, stored_data):
-        form = cls.create_form(request, prefilled_data=stored_data)
+    def validate_data(cls, form_data, stored_data):
+        form = cls.create_form(form_data, prefilled_data=stored_data)
         if form.validate():
             return form.data
 
@@ -137,7 +144,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
     def _pre_handle(self):
         super()._pre_handle()
-        self.render_info.form = self.create_form(request, prefilled_data=self.stored_data)
+        self.render_info.form = self.create_form(self.form_data, prefilled_data=self.stored_data)
 
     def _post_handle(self):
         override_session_data(self.stored_data, self.session_data_identifier)

@@ -79,6 +79,13 @@ login_manager.login_message_category = 'warn'
 login_manager.refresh_view = "unlock_code_activation"
 
 
+def extract_information_from_request():
+    update_data = request.method == 'POST'
+    form_data = request.form
+
+    return update_data, form_data
+
+
 def register_request_handlers(app):
     app.before_request(log_flask_request)
 
@@ -131,8 +138,7 @@ def register_request_handlers(app):
                     StepSummary.name, StepConfirmation.name, StepFiling.name, StepAck.name]:
             return flow.handle(step_name=step)
 
-        update_data = request.method == 'POST'
-        form_data = request.form
+        update_data, form_data = extract_information_from_request()
         return LotseStepChooser(endpoint='lotse') \
             .get_correct_step(step_name=step, update_data=update_data, form_data=form_data) \
             .handle()

@@ -41,14 +41,15 @@ class StepChooser:
         else:
             return None
 
-    def get_correct_step(self, step_name: str, update_data: bool = False, form_data: ImmutableMultiDict = None) -> SteuerlotseStep:
+    def get_correct_step(self, step_name: str, update_data: bool = False,
+                         form_data: ImmutableMultiDict = None) -> SteuerlotseStep:
+        if form_data is None:
+            form_data = ImmutableMultiDict({})
+
         if self._get_possible_redirect(step_name):
             return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
-        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
-        validated_data = None
-        if update_data:
-            if validated_data := self.steps[step_name].validate_data(stored_data):
-                stored_data = self.steps[step_name].update_data(stored_data, validated_data)
+
+        data_is_valid, stored_data = self.validate_and_update_data(step_name, update_data, form_data)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
@@ -59,8 +60,23 @@ class StepChooser:
             next_step=self.determine_next_step(step_name, stored_data),
             session_data_identifier=self.session_data_identifier,
             update_data=update_data,
-            data_is_valid=validated_data is not None
+            data_is_valid=data_is_valid is not None,
+            form_data=form_data
         )
+
+    def validate_and_update_data(self, step_name: str, update_data: bool, form_data: ImmutableMultiDict = None):
+        """
+        :param step_name: The name of the step. Should be a valid step name
+        """
+        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
+        data_is_valid = None
+        if update_data:
+            if validated_data := self.steps[step_name].validate_data(form_data, stored_data):
+                stored_data = self.steps[step_name].update_data(stored_data, validated_data)
+
+            data_is_valid = validated_data is not None
+
+        return data_is_valid, stored_data
 
     def determine_prev_step(self, current_step_name, stored_data):
         idx = self.step_order.index(current_step_name)

@@ -1,5 +1,5 @@
 from collections import namedtuple
-from flask import render_template
+from flask import render_template, request
 
 SectionLink = namedtuple(
     typename='SectionLink',
@@ -66,11 +66,12 @@ class FormStep(Step):
         self.form = form
         self.template = template
 
-    def create_form(self, request, prefilled_data):
+    def create_form(self, form_data=None, prefilled_data=None):
         # If `form_data` is present it will always override `data` during
         # value binding. For `BooleanFields` an empty/missing value in the `form_data`
         # will lead to an unchecked box.
-        form_data = request.form
+
+        form_data = request.form  # Override the form_data for old steps
         if len(form_data) == 0:
             form_data = None
 
