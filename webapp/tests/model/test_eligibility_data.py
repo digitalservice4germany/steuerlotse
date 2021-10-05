@@ -1606,7 +1606,7 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
 
         try:
             self.last_step_data_type.parse_obj(valid_data)
-        except ValidationError as e:
+        except ValidationError:
             self.fail("Parsing the data should not have raised a validation error")
 
     def test_if_single_and_has_elster_account_then_raise_validation_error(self):
