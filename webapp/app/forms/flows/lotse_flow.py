@@ -16,14 +16,15 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
 from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
+from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
-    StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
+from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \

@@ -1,6 +1,8 @@
 from flask_babel import _
 
 from app.forms.flows.step_chooser import StepChooser
+from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
+    StepGemeinsamerHaushalt, StepReligion
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 
@@ -22,6 +24,11 @@ class LotseStepChooser(StepChooser):
             title=_('form.lotse.title'),
             steps=[
                 StepSteuernummer,
+                StepVorsorge,
+                StepAussergBela,
+                StepHaushaltsnaheHandwerker,
+                StepGemeinsamerHaushalt,
+                StepReligion,
             ],
             endpoint=endpoint,
             overview_step=StepSummary
@@ -34,7 +41,7 @@ class LotseStepChooser(StepChooser):
         # adjacent to Mutlistepflow Steps.
         if hasattr(self.steps[current_step_name], 'prev_step'):
             return self.steps[current_step_name].prev_step
-        super().determine_prev_step(current_step_name, stored_data)
+        return super().determine_prev_step(current_step_name, stored_data)
 
     # TODO remove this once all steps are converted to steuerlotse steps
     def determine_next_step(self, current_step_name, stored_data):
@@ -43,4 +50,4 @@ class LotseStepChooser(StepChooser):
         # adjacent to Mutlistepflow Steps.
         if hasattr(self.steps[current_step_name], 'next_step'):
             return self.steps[current_step_name].next_step
-        super().determine_next_step(current_step_name, stored_data)
+        return super().determine_next_step(current_step_name, stored_data)
