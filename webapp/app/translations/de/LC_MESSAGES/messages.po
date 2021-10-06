@@ -1962,19 +1962,19 @@ msgid "form.lotse.step_iban.label"
 msgstr "Bankverbindung"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:415
-msgid "form.lotse.field_is_person_a_account_holder"
+msgid "form.lotse.iban.account-holder"
 msgstr "Wer ist Kontoinhaber:in?"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:416
-msgid "form.lotse.field_is_person_a_account_holder.data_label"
+msgid "form.lotse.iban.account-holder.data_label"
 msgstr "Kontoinhaber:in"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:417
-msgid "form.lotse.field_is_person_a_account_holder-person-a"
+msgid "form.lotse.iban.account-holder-person-a"
 msgstr "Person A"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:418
-msgid "form.lotse.field_is_person_a_account_holder-person-b"
+msgid "form.lotse.iban.account-holder-person-b"
 msgstr "Person B"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:421
@@ -1993,11 +1993,11 @@ msgid "form.loste.field_iban.example_input"
 msgstr "inländisches Geldinstitut"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:430
-msgid "form.lotse.field_is_person_a_account_holder_single"
+msgid "form.lotse.field_is_user_account_holder"
 msgstr "Ja, ich bin Kontoinhaber:in."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:431
-msgid "form.lotse.field_is_person_a_account_holder_single.data_label"
+msgid "form.lotse.field_is_user_account_holder.data_label"
 msgstr "Das angegebene Konto gehört Ihnen"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:442

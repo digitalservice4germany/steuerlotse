@@ -412,10 +412,10 @@ class StepIban(FormStep):
 
     class Form(SteuerlotseBaseForm):
         account_holder = RadioField(
-            label=_l('form.lotse.field_is_person_a_account_holder'),
-            render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder.data_label')},
-            choices=[('person_a', _l('form.lotse.field_is_person_a_account_holder-person-a')),
-                     ('person_b', _l('form.lotse.field_is_person_a_account_holder-person-b')),
+            label=_l('form.lotse.iban.account-holder'),
+            render_kw={'data_label': _l('form.lotse.iban.account-holder.data_label')},
+            choices=[('person_a', _l('form.lotse.iban.account-holder-person-a')),
+                     ('person_b', _l('form.lotse.iban.account-holder-person-b')),
                      ])
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
@@ -427,8 +427,8 @@ class StepIban(FormStep):
 
     class FormSingle(SteuerlotseBaseForm):
         is_user_account_holder = ConfirmationField(
-            label=_l('form.lotse.field_is_person_a_account_holder_single'),
-            render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder_single.data_label')})
+            label=_l('form.lotse.field_is_user_account_holder'),
+            render_kw={'data_label': _l('form.lotse.field_is_user_account_holder.data_label')})
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),

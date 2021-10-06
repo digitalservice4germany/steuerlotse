@@ -1408,7 +1408,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
                             flow.url_for_step(StepIban.name, _has_link_overview=True),
                             {_l('form.lotse.field_iban.data_label'): mandatory_data_missing_value,
                                 _l(
-                                    'form.lotse.field_is_person_a_account_holder.data_label'): mandatory_data_missing_value}
+                                    'form.lotse.iban.account-holder.data_label'): mandatory_data_missing_value}
                         )
                 }
             ),
