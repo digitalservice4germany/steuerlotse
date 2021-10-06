@@ -6,6 +6,7 @@ Create Date: 2021-04-06 20:49:22.068992
 
 """
 from alembic import op
+from flask import  current_app
 import sqlalchemy as sa
 
 
@@ -17,7 +18,10 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP(), nullable=False))
+    if current_app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
+        op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP()))
+    else:
+        op.add_column('user', sa.Column('last_modified', sa.TIMESTAMP(), nullable=False))
 
 
 def downgrade():

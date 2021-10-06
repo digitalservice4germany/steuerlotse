@@ -3,7 +3,7 @@ from pydantic import ValidationError
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
-    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
+    SteuerlotseStringField, LegacyIdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
     SteuerlotseNameStringField, SteuerlotseIbanField, SteuerlotseHouseNumberIntegerField
 
 from flask_babel import _, ngettext
@@ -181,7 +181,7 @@ class StepPersonA(FormStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
-        person_a_idnr = IdNrField(
+        person_a_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'),
             validators=[InputRequired(), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
@@ -307,7 +307,7 @@ class StepPersonB(FormStep):
             else:
                 validators.Optional()(self, field)
 
-        person_b_idnr = IdNrField(
+        person_b_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
         person_b_dob = SteuerlotseDateField(

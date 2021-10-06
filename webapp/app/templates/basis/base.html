@@ -17,7 +17,10 @@
     <link rel="stylesheet" href="{{ static_url_for('static', filename='css/variables.css') }}">
     <link rel="stylesheet" href="{{ static_url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ static_url_for('static', filename='css/assorted.css') }}">
-    <link rel="stylesheet" href="{{ static_url_for('static', filename='css/components.css') }}">
+    {# Only load legacy components css if not using React components. #}
+    {% if not component %}
+        <link rel="stylesheet" href="{{ static_url_for('static', filename='css/components.css') }}">
+    {% endif %}
 
     {% block additional_stylesheets %}
     {% endblock %}

@@ -19,13 +19,16 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
     IncomeOtherDecisionEligibilityInputFormSteuerlotseStep, ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep, \
     EligibilitySuccessDisplaySteuerlotseStep, MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
-    MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep, UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep, \
+    MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep, \
     DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep, SingleAlimonyEligibilityFailureDisplaySteuerlotseStep, \
-    SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep, PensionEligibilityFailureDisplaySteuerlotseStep, \
+    PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
     MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, \
-    SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
+    SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
+    ElsterRegistrationMethodEligibilityFailureStep, \
+    ElsterRegistrationMethodEligibilityDecisionStep, ElsterAbrufcodeEligibilityDecisionStep, \
+    ElsterAbrufcodeEligibilityFailureStep, EligibilityMaybeDisplaySteuerlotseStep
 
 
 class TestEligibilityChooserInit(unittest.TestCase):
@@ -35,7 +38,7 @@ class TestEligibilityChooserInit(unittest.TestCase):
 
     def setUp(self):
         self.testing_steps = [
-            EligibilityStartDisplaySteuerlotseStep,
+                EligibilityStartDisplaySteuerlotseStep,
                 MaritalStatusInputFormSteuerlotseStep,
                 SeparatedEligibilityInputFormSteuerlotseStep,
                 SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep,
@@ -47,6 +50,8 @@ class TestEligibilityChooserInit(unittest.TestCase):
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
                 SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+                ElsterRegistrationMethodEligibilityDecisionStep,
+                ElsterAbrufcodeEligibilityDecisionStep,
                 PensionDecisionEligibilityInputFormSteuerlotseStep,
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
@@ -57,12 +62,13 @@ class TestEligibilityChooserInit(unittest.TestCase):
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
                 EligibilitySuccessDisplaySteuerlotseStep,
+                EligibilityMaybeDisplaySteuerlotseStep,
                 MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                UserBElsterAccountEligibilityFailureDisplaySteuerlotseStep,
                 DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                SingleElsterAccountEligibilityFailureDisplaySteuerlotseStep,
+                ElsterRegistrationMethodEligibilityFailureStep,
+                ElsterAbrufcodeEligibilityFailureStep,
                 PensionEligibilityFailureDisplaySteuerlotseStep,
                 TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
                 CheaperCheckEligibilityFailureDisplaySteuerlotseStep,

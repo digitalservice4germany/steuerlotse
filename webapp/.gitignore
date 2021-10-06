@@ -8,3 +8,5 @@ app/static/cache_manifest.json
 .env
 cronjob_output
 dev.db
+functional-testing.db
+.flaskenv

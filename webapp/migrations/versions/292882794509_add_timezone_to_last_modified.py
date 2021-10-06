@@ -6,6 +6,7 @@ Create Date: 2021-05-27 12:07:55.490981
 
 """
 from alembic import op
+from flask import current_app
 import sqlalchemy as sa
 
 
@@ -17,7 +18,8 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('user', 'last_modified', type_=sa.TIMESTAMP(timezone=True))
+    if not current_app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
+        op.alter_column('user', 'last_modified', type_=sa.TIMESTAMP(timezone=True))
 
 def downgrade():
     pass

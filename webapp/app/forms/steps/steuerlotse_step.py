@@ -4,6 +4,7 @@ from typing import Optional
 from flask import request, session, url_for, render_template
 from flask_babel import ngettext
 from werkzeug.datastructures import ImmutableMultiDict
+from pydantic import ValidationError
 from werkzeug.utils import redirect
 
 from app.forms import SteuerlotseBaseForm
@@ -21,6 +22,7 @@ class SteuerlotseStep(object):
     intro = None
     intro_multiple = None
     template = None
+    precondition = None
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                  session_data_identifier='form_data', update_data=False, form_data=None, data_is_valid=False):
@@ -81,6 +83,19 @@ class SteuerlotseStep(object):
     @classmethod
     def number_of_users(cls, input_data=None):
         return 1
+
+    @classmethod
+    def check_precondition(cls, stored_data):
+        if cls.precondition:
+            try:
+                cls.precondition.parse_obj(stored_data)
+            except ValidationError:
+                return False
+        return True
+
+    @classmethod
+    def get_redirection_step(cls, stored_data):
+        return None
 
     def render(self, **kwargs):
         raise NotImplementedError
