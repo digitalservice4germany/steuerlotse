@@ -1,6 +1,7 @@
 import copy
 from datetime import date
-from typing import Optional, Any
+from decimal import Decimal
+from typing import Optional, Any, List
 
 from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
@@ -164,6 +165,68 @@ class MandatoryConfirmations(MandatoryFormData):
             _value_must_be_true(v)
         except ValueError:
             raise MissingError  # We want to treat an incorrect error in the same way as it missing
+
+
+class FormDataDependencies(BaseModel):
+    familienstand: Optional[str]
+
+    steuerminderung: Optional[str]
+
+    stmind_vorsorge_summe: Optional[Decimal]
+
+    stmind_haushaltsnahe_entries: Optional[List[str]]
+    stmind_haushaltsnahe_summe: Optional[Decimal]
+    stmind_handwerker_entries: Optional[List[str]]
+    stmind_handwerker_summe: Optional[Decimal]
+    stmind_handwerker_lohn_etc_summe: Optional[Decimal]
+
+    stmind_gem_haushalt_count: Optional[int]
+    stmind_gem_haushalt_entries: Optional[List[str]]
+
+    stmind_religion_paid_summe: Optional[Decimal]
+    stmind_religion_reimbursed_summe: Optional[Decimal]
+
+    stmind_spenden_inland: Optional[Decimal]
+    stmind_spenden_inland_parteien: Optional[Decimal]
+
+    stmind_krankheitskosten_summe: Optional[Decimal]
+    stmind_krankheitskosten_anspruch: Optional[Decimal]
+    stmind_pflegekosten_summe: Optional[Decimal]
+    stmind_pflegekosten_anspruch: Optional[Decimal]
+    stmind_beh_aufw_summe: Optional[Decimal]
+    stmind_beh_aufw_anspruch: Optional[Decimal]
+    stmind_beh_kfz_summe: Optional[Decimal]
+    stmind_beh_kfz_anspruch: Optional[Decimal]
+    stmind_bestattung_summe: Optional[Decimal]
+    stmind_bestattung_anspruch: Optional[Decimal]
+    stmind_aussergbela_sonst_summe: Optional[Decimal]
+    stmind_aussergbela_sonst_anspruch: Optional[Decimal]
+
+    @validator('stmind_vorsorge_summe', 'stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
+               'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
+               'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries', 'stmind_religion_paid_summe',
+               'stmind_religion_reimbursed_summe', 'stmind_spenden_inland', 'stmind_spenden_inland_parteien',
+               'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
+               'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
+               'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
+               'stmind_bestattung_summe', 'stmind_bestattung_anspruch', 'stmind_aussergbela_sonst_summe',
+               'stmind_aussergbela_sonst_anspruch')
+    def delete_if_steuerminderung_no(cls, v, values):
+        if not values.get('steuerminderung') or values.get('steuerminderung') == 'no':
+            return None
+        return v
+
+    @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
+    def delete_if_haushaltsnahe_not_filled(cls, v, values):
+        if not values.get('stmind_haushaltsnahe_summe') and not values.get('stmind_handwerker_summe'):
+            return None
+        return v
+
+    @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
+    def delete_if_familienstand_not_married(cls, v, values):
+        if values.get('familienstand') and values.get('familienstand') == 'married':
+            return None
+        return v
 
 
 class InputDataInvalidError(ValueError):

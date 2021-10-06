@@ -1,34 +1,17 @@
-from flask import request
 from pydantic import ValidationError
 from wtforms import validators
 from wtforms.validators import InputRequired
 
-from flask_babel import lazy_gettext as _l, _, ngettext
+from flask_babel import lazy_gettext as _l, ngettext
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA
 from app.forms.steps.step import SectionLink
-from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
 from app.forms.validators import DecimalOnly, IntegerLength
 from app.model.form_data import FamilienstandModel
-
-
-class LotseFormSteuerlotseStep(FormSteuerlotseStep):
-    template = 'basis/form_standard.html'
-    header_title = None
-
-    def __init__(self, endpoint, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
-
-    def _main_handle(self):
-        super()._main_handle()
-
-        # redirect in any case if overview button pressed
-        if 'overview_button' in request.form:
-            self.render_info.next_url = self.url_for_step(StepSummary.name)
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):

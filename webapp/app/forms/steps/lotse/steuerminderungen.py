@@ -7,7 +7,7 @@ from wtforms import validators
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField
-from app.forms.steps.lotse.personal_data import LotseFormSteuerlotseStep
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
 from flask_babel import lazy_gettext as _l, _
 
