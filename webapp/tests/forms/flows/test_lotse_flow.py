@@ -1012,16 +1012,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_familienstand_step_and_familienstand_changes_to_married_then_delete_is_user_account_holder(self):
         field_to_delete = 'is_user_account_holder'
-        data = copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1])
-        data['is_user_account_holder']= 'yes'
-
-        with self.app.test_request_context(method='POST',
-                                           data={'familienstand': 'single'}):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.familienstand_step, self.render_info_familienstand_step,
-                copy.deepcopy(data))
-
-            self.assertIn(field_to_delete, returned_data)
+        data = {'familienstand': 'single', 'is_user_account_holder': 'yes'}
 
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
@@ -1527,7 +1518,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_blind': False,
             'person_b_gehbeh': False,
 
-            'is_person_a_account_holder': 'yes',
+            'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes', }

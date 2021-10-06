@@ -18,7 +18,7 @@ _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER = ["submission_without_tax_nr", "bufa_n
                                             "person_a_idnr", "person_a_dob", "person_a_last_name",
                                             "person_a_first_name", "person_a_religion", "person_a_street",
                                             "person_a_street_number", "person_a_plz", "person_a_town", "person_a_blind",
-                                            "steuerminderung", "is_person_a_account_holder"]
+                                            "steuerminderung", "account_holder"]
 _METADATA_KEYS = ["year", "is_digitally_signed"]
 
 
