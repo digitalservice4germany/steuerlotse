@@ -6,6 +6,7 @@ import io
 from flask import current_app, render_template, request, send_file, session, make_response
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
+from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import InternalServerError
 
 from app.config import Config
@@ -83,6 +84,9 @@ def extract_information_from_request():
     update_data = request.method == 'POST'
     form_data = request.form
 
+    if not form_data:
+        form_data = ImmutableMultiDict({})
+
     return update_data, form_data
 
 
@@ -122,9 +126,9 @@ def register_request_handlers(app):
 
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):
-        update_data = request.method == 'POST'
+        update_data, form_data = extract_information_from_request()
         return EligibilityStepChooser(endpoint='eligibility') \
-            .get_correct_step(step_name=step, update_data=update_data) \
+            .get_correct_step(step_name=step, update_data=update_data, form_data=form_data) \
             .handle()
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])

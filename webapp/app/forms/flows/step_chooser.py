@@ -41,10 +41,8 @@ class StepChooser:
         else:
             return None
 
-    def get_correct_step(self, step_name: str, update_data: bool = False,
-                         form_data: ImmutableMultiDict = None) -> SteuerlotseStep:
-        if form_data is None:
-            form_data = ImmutableMultiDict({})
+    def get_correct_step(self, step_name: str, update_data,
+                         form_data: ImmutableMultiDict) -> SteuerlotseStep:
 
         if self._get_possible_redirect(step_name):
             return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)

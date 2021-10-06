@@ -116,7 +116,7 @@ class TestStepSteuernummer:
                                                          num=expected_number_of_users)
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
-            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name)
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']
@@ -135,7 +135,7 @@ class TestStepSteuernummer:
                                                          num=expected_number_of_users)
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
-            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name)
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         assert expected_steuernummer_exists_label == step.form.steuernummer_exists.kwargs['label']

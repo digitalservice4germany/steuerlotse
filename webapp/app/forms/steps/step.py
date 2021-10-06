@@ -71,11 +71,11 @@ class FormStep(Step):
         # value binding. For `BooleanFields` an empty/missing value in the `form_data`
         # will lead to an unchecked box.
 
-        form_data = request.form  # Override the form_data for old steps
-        if len(form_data) == 0:
-            form_data = None
+        extracted_form_data = request.form  # Override the form_data for old steps
+        if len(extracted_form_data) == 0:
+            extracted_form_data = None
 
-        form = self.form(form_data, **prefilled_data)
+        form = self.form(extracted_form_data, **prefilled_data)
         return form
 
     def render(self, data, render_info):
