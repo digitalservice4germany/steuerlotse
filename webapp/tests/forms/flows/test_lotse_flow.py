@@ -1010,6 +1010,35 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             for person_b_field in person_b_fields:
                 self.assertNotIn(person_b_field, returned_data)
 
+    def test_if_familienstand_step_and_familienstand_stays_single_the_same_then_do_not_delete_is_user_account_holder(self):
+        field_not_deleted = 'is_user_account_holder'
+        data = {'familienstand': 'single', 'is_user_account_holder': 'yes'}
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'single'}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+            self.assertIn(field_not_deleted, returned_data)
+
+    def test_if_familienstand_step_and_familienstand_stays_married_the_same_then_do_not_delete_is_user_account_holder(self):
+        field_not_deleted = 'account_holder'
+        data = {'familienstand': 'married',
+                'familienstand_date': ['1', '1', '1985'],
+                'familienstand_married_lived_separated': 'no',
+                'familienstand_confirm_zusammenveranlagung': True,
+                'account_holder': 'person_a'}
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'married',
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'no',
+                                                 'familienstand_confirm_zusammenveranlagung': True}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+            self.assertIn(field_not_deleted, returned_data)
+
     def test_if_familienstand_step_and_familienstand_changes_to_married_then_delete_is_user_account_holder(self):
         field_to_delete = 'is_user_account_holder'
         data = {'familienstand': 'single', 'is_user_account_holder': 'yes'}
