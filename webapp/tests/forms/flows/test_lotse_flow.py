@@ -38,8 +38,7 @@ from app.model.form_data import ConfirmationMissingInputValidationError, Mandato
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockIbanStep, \
-    MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStepHandwerker, \
-    MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
+    MockPersonBStep, MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
 
@@ -503,7 +502,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
                          MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
                          MockStrMindYNStep,
-                         MockHaushaltsnaheStepHandwerker, MockGemeinsamerHaushaltStep, MockReligionStep,
+                         StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
                          MockSummaryStep, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
                          MockFinalStep]
         testing_steps = {s.name: s for s in testing_steps}
@@ -651,30 +650,17 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                        'stmind_handwerker_entries': 'Badezimmer',
                                        'stmind_handwerker_lohn_etc_summe': Decimal(0.0)}
         self.data_haushaltsnahe_no = {}
-        prev_step, self.haushaltsnahe_step, next_step = self.flow._generate_steps(MockHaushaltsnaheStepHandwerker.name)
-        self.render_info_haushaltsnahe_step = RenderInfo(step_title=self.haushaltsnahe_step.title,
-                                                            step_intro=self.haushaltsnahe_step.intro, form=None,
-                                                            prev_url=self.flow.url_for_step(prev_step.name),
-                                                            next_url=self.flow.url_for_step(next_step.name),
-                                                            submit_url=self.flow.url_for_step(
-                                                                self.haushaltsnahe_step.name),
-                                                            overview_url="Overview URL")
+
         self.haushaltsnahe_url = '/' + self.endpoint_correct + '/step/' + StepHaushaltsnaheHandwerker.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
-        self.haushaltsnahe_yes_url = self.render_info_haushaltsnahe_step.next_url
+        self.haushaltsnahe_yes_url = '/' + self.endpoint_correct + '/step/' + StepGemeinsamerHaushalt.name + \
+                                    '?link_overview=' + str(self.flow.has_link_overview)
         self.haushaltsnahe_no_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
                                     '?link_overview=' + str(self.flow.has_link_overview)
 
         self.gem_haushalt_url = '/' + self.endpoint_correct + '/step/' + StepGemeinsamerHaushalt.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
 
-        prev_step, self.religion_step, next_step = self.flow._generate_steps(MockReligionStep.name)
-        self.render_info_religion_step = RenderInfo(step_title=self.religion_step.title,
-                                                    step_intro=self.religion_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
-                                                    next_url=self.flow.url_for_step(next_step.name),
-                                                    submit_url=self.flow.url_for_step(
-                                                        self.religion_step.name), overview_url="Overview URL")
         self.religion_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
                             '?link_overview=' + str(self.flow.has_link_overview)
 
@@ -1149,57 +1135,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, data_before_st_mind_no)
 
             self.assertEqual(expected_updated_data, updated_data)
-
-    def test_if_haushaltsnahe_step_then_delete_stmind_gem_haushalt_correctly(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
-                {'familienstand': 'single', 'gem_haushalt_entries': ['Helene Fischer'], 'gem_haushalt_count': 1})
-            self.assertIn('gem_haushalt_entries', returned_data)
-            self.assertIn('gem_haushalt_count', returned_data)
-
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_no):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
-                {'familienstand': 'single', 'stmind_gem_haushalt_entries': ['Helene Fischer'],
-                 'stmind_gem_haushalt_count': 1})
-            self.assertNotIn('stmind_gem_haushalt_entries', returned_data)
-            self.assertNotIn('stmind_gem_haushalt_count', returned_data)
-
-    def test_if_handwerker_filled_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {'familienstand': 'single'})
-            self.assertEqual(self.haushaltsnahe_yes_url, render_info.next_url)
-
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {'familienstand': 'married',
-                                                                         'familienstand_married_lived_separated': 'no',
-                                                                         'familienstand_confirm_zusammenveranlagung': True})
-            self.assertEqual(self.haushaltsnahe_no_url, render_info.next_url)
-
-    def test_if_religion_step_then_set_prev_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.gem_haushalt_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_no})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_haushaltsnahe_no})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
 
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):

@@ -1,5 +1,12 @@
 import os
 import sys
+from contextlib import contextmanager
+
+from flask.sessions import SecureCookieSession
+from werkzeug.datastructures import ImmutableMultiDict
+
+from tests.utils import create_session_form_data
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 os.environ["FLASK_ENV"] = 'testing'
 
@@ -26,6 +33,20 @@ def client(app):
 def test_request_context(app):
     with app.test_request_context() as req:
         yield req
+
+
+@pytest.fixture
+def make_test_request_context(app):
+    @contextmanager
+    def _make_test_request_context(method='GET', form_data=None, stored_data=None, session_identifier='form_data'):
+        with app.test_request_context() as req:
+            req.request.method = method
+            if stored_data:
+                req.session = SecureCookieSession({session_identifier: create_session_form_data(stored_data)})
+            if form_data:
+                req.request.data = ImmutableMultiDict(form_data)
+            yield req
+    yield _make_test_request_context
 
 
 @pytest.fixture(scope="session")
