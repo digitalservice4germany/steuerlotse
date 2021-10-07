@@ -1,4 +1,3 @@
-import humps
 from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
@@ -62,9 +61,9 @@ class UnlockCodeRequestInputStep(FormStep):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(render_info.overview_url),
                 'next_button_label': _('form.register'),
-                'explanatory_button_text': str(_l('form.unlock-code-request.got-fsc', link=url_for('unlock_code_activation', step='start')))
             },
             fields=form_fields_dict(render_info.form),
+            login_link=url_for('unlock_code_activation', step='start'),
             eligibility_link=url_for('eligibility', step='start'),
             terms_of_service_link=url_for('agb'),
             data_privacy_link=url_for('data_privacy'),

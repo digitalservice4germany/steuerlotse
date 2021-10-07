@@ -19,7 +19,6 @@ class FormProps(ComponentProps):
     csrf_token: str
     show_overview_button: bool
     next_button_label: Optional[str]
-    explanatory_button_text: Optional[str]
 
 
 class InputFieldProps(ComponentProps):
@@ -46,6 +45,7 @@ class LoginProps(StepFormProps):
 
 
 class RegistrationProps(StepFormProps):
+    login_link: str
     eligibility_link: str
     terms_of_service_link: str
     data_privacy_link: str

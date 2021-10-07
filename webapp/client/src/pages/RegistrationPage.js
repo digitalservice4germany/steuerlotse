@@ -23,6 +23,7 @@ export default function RegistrationPage({
   stepHeader,
   form,
   fields,
+  loginLink,
   eligibilityLink,
   termsOfServiceLink,
   dataPrivacyLink,
@@ -33,7 +34,20 @@ export default function RegistrationPage({
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        {...form}
+        explanatoryButtonText={
+          <Trans
+            t={t}
+            i18nKey="unlockCodeRequest.gotFsc"
+            components={{
+              // The anchors get content in the translation file
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              loginLink: <a href={loginLink} />,
+            }}
+          />
+        }
+      >
         <FormRowCentered>
           <FormFieldDate
             autofocus
@@ -180,7 +194,6 @@ RegistrationPage.propTypes = {
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
     csrfToken: PropTypes.string,
     showOverviewButton: PropTypes.bool,
-    explanatoryButtonText: PropTypes.string, // TODO: define here, not in Python
     nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
   }).isRequired,
   fields: PropTypes.exact({
@@ -191,6 +204,7 @@ RegistrationPage.propTypes = {
     registrationConfirmIncomes: checkboxPropType,
     registrationConfirmEData: checkboxPropType,
   }).isRequired,
+  loginLink: PropTypes.string.isRequired,
   eligibilityLink: PropTypes.string.isRequired,
   termsOfServiceLink: PropTypes.string.isRequired,
   dataPrivacyLink: PropTypes.string.isRequired,
