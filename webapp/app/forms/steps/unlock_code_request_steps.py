@@ -6,7 +6,7 @@ from wtforms.fields.core import BooleanField
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import ConfirmationField, SteuerlotseDateField, LegacyIdNrField
+from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr
 from app.model.components import RegistrationProps
@@ -17,38 +17,19 @@ class UnlockCodeRequestInputStep(FormStep):
     name = 'data_input'
 
     class Form(SteuerlotseBaseForm):
-        idnr = LegacyIdNrField(label=_l('unlock-code-request.idnr'), validators=[InputRequired(), ValidIdNr()],
-                               render_kw={'data-detail': {'title': _l('unlock-code-request.idnr.help-title'),
-                                                          'text': _l('unlock-code-request.idnr.help-text')}})
-        dob = SteuerlotseDateField(label=_l('unlock-code-request.dob'), validators=[InputRequired()])
-        registration_confirm_data_privacy = ConfirmationField(
-            label=_l('form.unlock-code-request.field_registration_confirm_data_privacy'))
-        registration_confirm_terms_of_service = ConfirmationField(
-            label=_l('form.unlock-code-request.field_registration_confirm_terms_of_service'))
-        registration_confirm_incomes = ConfirmationField(
-            label=_l('form.unlock-code-request.field_registration_confirm_incomes'))
-        registration_confirm_e_data = ConfirmationField(
-            label=_l('form.unlock-code-request.e-data.field-confirm-e-data'))
-
-        def __init__(self, *args, **kwargs):
-            super(UnlockCodeRequestInputStep.Form, self).__init__(*args, **kwargs)
-            self.registration_confirm_data_privacy.label.text = _l(
-                'form.unlock-code-request.field_registration_confirm_data_privacy',
-                link=url_for('data_privacy'))
-            self.registration_confirm_terms_of_service.label.text = _l(
-                'form.unlock-code-request.field_registration_confirm_terms_of_service',
-                link=url_for('agb'))
-            self.registration_confirm_incomes.label.text = _l(
-                'form.unlock-code-request.field_registration_confirm_incomes',
-                link=url_for('eligibility', step='start'))
+        idnr = IdNrField(validators=[InputRequired(), ValidIdNr()])
+        dob = SteuerlotseDateField(validators=[InputRequired()])
+        registration_confirm_data_privacy = ConfirmationField()
+        registration_confirm_terms_of_service = ConfirmationField()
+        registration_confirm_incomes = ConfirmationField()
+        registration_confirm_e_data = ConfirmationField()
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestInputStep, self).__init__(
             title=_('form.unlock-code-request.input-title'),
             intro=_('form.unlock-code-request.input-intro'),
             form=self.Form,
-            **kwargs,
-            template='unlock_code/registration_data_input.html')
+            **kwargs)
 
     def render(self, data, render_info):
         props_dict = RegistrationProps(
