@@ -13,7 +13,7 @@ from app.data_access.audit_log_controller import create_audit_log_confirmation_e
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
-from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
+from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
@@ -353,7 +353,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             value_representation = "Ja" if value == "yes" else "Nein"
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"
-        elif field.field_class == SteuerlotseDateField:
+        elif field.field_class in (SteuerlotseDateField, LegacySteuerlotseDateField):
             value_representation = value.strftime("%d.%m.%Y")
         elif field.field_class == EntriesField:
             value_representation = ', '.join(value)

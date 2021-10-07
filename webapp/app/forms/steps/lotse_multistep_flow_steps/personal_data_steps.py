@@ -2,7 +2,7 @@ from pydantic import ValidationError
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
-from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
+from app.forms.fields import YesNoField, LegacySteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
     SteuerlotseStringField, LegacyIdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
     SteuerlotseNameStringField, SteuerlotseIbanField, SteuerlotseHouseNumberIntegerField
 
@@ -34,7 +34,7 @@ class StepFamilienstand(FormStep):
             ],
             validators=[InputRequired()]
         )
-        familienstand_date = SteuerlotseDateField(
+        familienstand_date = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_date'),
             render_kw={'data_label': _l('form.lotse.familienstand_date.data_label')},
             validators=())
@@ -42,7 +42,7 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_married_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_married_lived_separated.data_label')})
-        familienstand_married_lived_separated_since = SteuerlotseDateField(
+        familienstand_married_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
             validators=())
@@ -50,7 +50,7 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_widowed_lived_separated.data_label')})
-        familienstand_widowed_lived_separated_since = SteuerlotseDateField(
+        familienstand_widowed_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
             validators=())
@@ -185,7 +185,7 @@ class StepPersonA(FormStep):
             label=_l('form.lotse.field_person_idnr'),
             validators=[InputRequired(), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
-        person_a_dob = SteuerlotseDateField(
+        person_a_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired()])
         person_a_first_name = SteuerlotseNameStringField(
@@ -310,7 +310,7 @@ class StepPersonB(FormStep):
         person_b_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
-        person_b_dob = SteuerlotseDateField(
+        person_b_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')},
             validators=[InputRequired()])

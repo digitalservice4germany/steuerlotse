@@ -173,7 +173,7 @@ class UnlockCodeField(SteuerlotseStringField):
         return self.data.split('-') if self.data else ['', '', '']
 
 
-class SteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
+class LegacySteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
@@ -185,7 +185,7 @@ class SteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, Multip
         return super().__call__(*args, **kwargs)
 
 
-class SteuerlotseDateField(DateField):
+class LegacySteuerlotseDateField(DateField):
 
     def __init__(self, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
@@ -197,8 +197,21 @@ class SteuerlotseDateField(DateField):
         else:
             kwargs['render_kw'] = {'class': "date_input form-control",
                                    'data-example-input': _('fields.date_field.example_input.text')}
+        super(LegacySteuerlotseDateField, self).__init__(**kwargs)
+        self.widget = LegacySteuerlotseDateWidget()
+
+    def _value(self):
+        if self.data:
+            return [str(self.data.day), str(self.data.month), str(self.data.year)]
+        else:
+            return self.raw_data if self.raw_data else []
+
+
+class SteuerlotseDateField(DateField):
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault('format', "%d %m %Y")
         super(SteuerlotseDateField, self).__init__(**kwargs)
-        self.widget = SteuerlotseDateWidget()
 
     def _value(self):
         if self.data:
