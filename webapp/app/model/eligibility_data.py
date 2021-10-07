@@ -313,8 +313,10 @@ class ElsterNoAbrufcodeEligibilityData(RecursiveDataModel):
     elster_abrufcode_eligibility: str
 
     @validator('elster_abrufcode_eligibility')
-    def must_be_none(cls, v):
-        return declarations_must_be_set_no(v)
+    def must_not_be_yes(cls, v):
+        if v == 'yes':
+            raise InvalidEligiblityError
+        return v
 
     @validator('elster_registration_method_is_software', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -482,6 +484,7 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
     has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
     elster_registration_method_eligibility: Optional[str]
+    elster_abrufcode_eligibility: Optional[str]
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
@@ -489,6 +492,13 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
 
     @validator('elster_registration_method_eligibility')
     def elster_registration_method_must_not_be_none(cls, v):
+        # in case of none we do not direct to the success page
+        if v == 'none':
+            raise ValueError
+        return v
+
+    @validator('elster_abrufcode_eligibility')
+    def elster_abrufcode_must_not_be_none(cls, v):
         # in case of none we do not direct to the success page
         if v == 'none':
             raise ValueError
@@ -508,14 +518,17 @@ class ForeignCountryMaybeEligibility(RecursiveDataModel):
     has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
     elster_registration_method_eligibility: Optional[str]
+    elster_abrufcode_eligibility: Optional[str]
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
 
-    @validator('elster_registration_method_eligibility')
-    def elster_registration_method_must_be_none(cls, v):
-        if v != 'none':
+    @validator('elster_abrufcode_eligibility', always=True)
+    def elster_abrufcode_or_registration_method_must_be_none(cls, v, values):
+        if (not v or v != 'none') and \
+                (not values.get('elster_registration_method_eligibility') or
+                 values.get('elster_registration_method_eligibility') != 'none'):
             raise ValueError
         return v
 

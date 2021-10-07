@@ -471,9 +471,10 @@ class ElsterAbrufcodeEligibilityDecisionStep(DecisionEligibilityInputFormSteuerl
             label="",
             render_kw={'hide_label': True,
                        'data-detail': {'title': _l('form.eligibility.elster_abrufcode_eligibility.detail.title'),
-                                  'text': _l('form.eligibility.elster_abrufcode_eligibility.detail.text')}},
+                                       'text': _l('form.eligibility.elster_abrufcode_eligibility.detail.text')}},
             choices=[('yes', _l('form.eligibility.elster_abrufcode_eligibility.yes')),
                      ('no', _l('form.eligibility.elster_abrufcode_eligibility.no')),
+                     ('none', _l('form.eligibility.elster_abrufcode_eligibility.none')),
                      ],
             validators=[InputRequired()])
 

@@ -1614,7 +1614,19 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
 
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_next_input_step(self, app, correct_session_data):
         with app.test_request_context(method='POST',
-                                           data={'elster_abrufcode_eligibility': 'no'}) as req:
+                                      data={'elster_abrufcode_eligibility': 'no'}) as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
+            step = EligibilityStepChooser('eligibility')\
+                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True)
+            expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+
+            step.handle()
+        assert step.render_info.next_url == expected_url
+
+    def test_if_post_and_session_data_correct_and_input_data_none_then_set_next_input_step(self, app, correct_session_data):
+        with app.test_request_context(method='POST',
+                                      data={'elster_abrufcode_eligibility': 'none'}) as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
             step = EligibilityStepChooser('eligibility')\
@@ -1626,7 +1638,7 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_step_failure_step(self, app, correct_session_data):
         with app.test_request_context(method='POST',
-                                           data={'elster_abrufcode_eligibility': 'yes'}) as req:
+                                      data={'elster_abrufcode_eligibility': 'yes'}) as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
             step = EligibilityStepChooser('eligibility')\
