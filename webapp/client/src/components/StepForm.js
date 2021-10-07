@@ -35,7 +35,7 @@ StepForm.propTypes = {
   explanatoryButtonText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
-  ]).isRequired,
+  ]),
   nextButtonLabel: PropTypes.string,
 };
 
