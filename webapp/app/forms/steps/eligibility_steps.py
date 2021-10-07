@@ -442,7 +442,9 @@ class ElsterRegistrationMethodEligibilityDecisionStep(DecisionEligibilityInputFo
     class InputForm(SteuerlotseBaseForm):
         elster_registration_method_eligibility = RadioField(
             label="",
-            render_kw={'hide_label': True},
+            render_kw={'hide_label': True,
+                       'data-detail': {'title': _l('form.eligibility.elster_registration_method_eligibility.detail.title'),
+                                       'text': _l('form.eligibility.elster_registration_method_eligibility.detail.text')}},
             choices=[('software', _l('form.eligibility.elster_registration_method.software')),
                      ('id_card', _l('form.eligibility.elster_registration_method.id_card')),
                      ('stick', _l('form.eligibility.elster_registration_method.stick')),
