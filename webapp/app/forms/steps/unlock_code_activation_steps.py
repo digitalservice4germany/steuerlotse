@@ -1,5 +1,4 @@
 from app.model.components.helpers import form_fields_dict
-import humps
 from flask import render_template
 from flask_babel import _
 from flask_wtf.csrf import generate_csrf
@@ -44,7 +43,7 @@ class UnlockCodeActivationInputStep(FormStep):
         return render_template(
             'react_component.html',
             component='LoginPage',
-            props=humps.camelize(props_model.dict()),
+            props=props_model.camelized_dict(),
             # TODO: These are still required by base.html to set the page title.
             form=render_info.form,
             header_title=self.header_title
