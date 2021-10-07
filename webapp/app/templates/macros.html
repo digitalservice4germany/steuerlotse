@@ -113,7 +113,7 @@
 
 {# ------------------------ #}
 
-{% macro form_nav_buttons(render_info, explanatory_button_text=None) -%}
+{% macro form_nav_buttons(render_info) -%}
     <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
             <button type="submit"
@@ -126,13 +126,10 @@
         {% else %}
             <button type="submit" class="btn btn-primary" name="next_button">{{ _('form.next') }}</button>
         {% endif %}
-        {% if explanatory_button_text %}
-            <small class="explanatory-button-text">{{ explanatory_button_text }}</small>
-        {% endif %}
     </div>
 {%- endmacro %}
 
-{% macro form_display_nav_buttons(render_info, explanatory_button_text=None) -%}
+{% macro form_display_nav_buttons(render_info) -%}
     <div class="form-row mt-4">
         {% if render_info.overview_url %}
             <a class="btn btn-outline-primary mr-2"
@@ -144,9 +141,6 @@
         {% else %}
             <a class="btn btn-primary {% if not render_info.next_url %}invisible{% endif %}" name="next_button"
                href="{{ render_info.next_url }}">{{ _('form.next') }}</a>
-        {% endif %}
-        {% if explanatory_button_text %}
-            <small class="explanatory-button-text">{{ explanatory_button_text }}</small>
         {% endif %}
     </div>
 {%- endmacro %}
