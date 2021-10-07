@@ -27,14 +27,14 @@ from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_I
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
+from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
-    InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData
+    InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockIbanStep, \
     MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStepHandwerker, \
@@ -1478,7 +1478,7 @@ class TestShowPersonBLotseFlow(unittest.TestCase):
 
     def test_if_familienstand_given_familienstand_model_show_person_b_is_called(self):
         data = {'familienstand': 'single'}
-        with patch('app.model.form_data.FamilienstandModel.show_person_b') as model_show_person_b_mock:
+        with patch('app.model.form_data.FamilienstandModel._show_person_b') as model_show_person_b_mock:
             show_person_b(data)
             model_show_person_b_mock.assert_called()
 
