@@ -138,15 +138,15 @@ class FormSteuerlotseStep(SteuerlotseStep):
         return cls.InputForm(form_data, **prefilled_data)
 
     @classmethod
-    def update_data(cls, stored_data, data_to_update):
+    def update_data(cls, stored_data, data_to_update_with):
         """
-            This updates the stored_data with the updated_data.
+            This updates the stored_data with the data_to_update_with.
 
             :param stored_data: The stored session data
-            :param data_to_update: The data with which the stored data
-            should be updated. Note: the stored data should already be validated.
+            :param data_to_update_with: The data with which the stored data
+            should be updated. Note: the data_to_update_with should already be validated.
         """
-        stored_data.update(data_to_update)
+        stored_data.update(data_to_update_with)
         return stored_data
 
     @classmethod

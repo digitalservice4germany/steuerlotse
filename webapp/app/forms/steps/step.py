@@ -67,11 +67,10 @@ class FormStep(Step):
         self.template = template
 
     def create_form(self, form_data=None, prefilled_data=None):
-        # If `form_data` is present it will always override `data` during
-        # value binding. For `BooleanFields` an empty/missing value in the `form_data`
-        # will lead to an unchecked box.
+        # Form_data is only present because the FormStep should work similar to the newer SteuerlotseSteps as they will
+        # be replaced one by one.
 
-        extracted_form_data = request.form  # Override the form_data for old steps
+        extracted_form_data = request.form  # Override the form_data because the multistep flow does not set it
         if len(extracted_form_data) == 0:
             extracted_form_data = None
 

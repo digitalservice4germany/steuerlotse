@@ -128,7 +128,7 @@ def register_request_handlers(app):
     def eligibility(step):
         update_data, form_data = extract_information_from_request()
         return EligibilityStepChooser(endpoint='eligibility') \
-            .get_correct_step(step_name=step, update_data=update_data, form_data=form_data) \
+            .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
@@ -144,7 +144,7 @@ def register_request_handlers(app):
 
         update_data, form_data = extract_information_from_request()
         return LotseStepChooser(endpoint='lotse') \
-            .get_correct_step(step_name=step, update_data=update_data, form_data=form_data) \
+            .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
 
     @app.route('/unlock_code_request/step', methods=['GET', 'POST'])

@@ -1,5 +1,6 @@
 import datetime
 import unittest
+from copy import deepcopy
 from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
@@ -122,13 +123,15 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
 
     def test_update_data_is_called_if_update_data_set(self):
         with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
-            self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=True, form_data=ImmutableMultiDict({}))
+            self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
+                                               form_data=ImmutableMultiDict({}))
 
         update_mock.assert_called_once()
 
     def test_update_data_is_not_called_if_update_data_not_set(self):
         with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
-            self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=False, form_data=ImmutableMultiDict({}))
+            self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=False,
+                                               form_data=ImmutableMultiDict({}))
 
         update_mock.assert_not_called()
 
@@ -268,7 +271,7 @@ class TestStepChooserValidateAndUpdateData:
         stored_data = {'name': 'Nagini'}
         form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'], 'decimal': '100.000'})
 
-        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, stored_data, form_data)
+        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, deepcopy(stored_data), form_data)
 
         assert is_valid_flag is None
         assert updated_data == stored_data
@@ -279,7 +282,7 @@ class TestStepChooserValidateAndUpdateData:
         stored_data = {'name': 'Nagini'}
         form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': 'NOT A VALID DATE', 'decimal': '100.000'})
 
-        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, stored_data, form_data)
+        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, deepcopy(stored_data), form_data)
 
         assert is_valid_flag is False
         assert updated_data == stored_data
@@ -291,7 +294,7 @@ class TestStepChooserValidateAndUpdateData:
         expected_updated_data = {**stored_data, **{'pet': 'Maledictus', 'date': datetime.date(1998, 5, 2),  'decimal': Decimal(100000)}}
         form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'],  'decimal': '100.000'})
 
-        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, stored_data, form_data)
+        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, deepcopy(stored_data), form_data)
 
         assert is_valid_flag is True
         assert updated_data == expected_updated_data

@@ -43,15 +43,14 @@ class StepChooser:
         else:
             return None
 
-    def get_correct_step(self, step_name: str, update_data,
-                         form_data: ImmutableMultiDict) -> SteuerlotseStep:
+    def get_correct_step(self, step_name: str, should_update_data: bool, form_data: ImmutableMultiDict) -> SteuerlotseStep:
 
         stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
 
         if redirected_step_name := self._get_possible_redirect(step_name, stored_data):
             return RedirectSteuerlotseStep(redirected_step_name, endpoint=self.endpoint)
 
-        data_is_valid, stored_data = self.validate_and_update_data(step_name, update_data, stored_data, form_data)
+        data_is_valid, stored_data = self.validate_and_update_data(step_name, should_update_data, stored_data, form_data)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
@@ -61,7 +60,7 @@ class StepChooser:
             prev_step=self.determine_prev_step(step_name, stored_data),
             next_step=self.determine_next_step(step_name, stored_data),
             session_data_identifier=self.session_data_identifier,
-            update_data=update_data,
+            update_data=should_update_data,
             data_is_valid=data_is_valid is not None,
             form_data=form_data
         )
