@@ -268,9 +268,7 @@ class TestStepChooserValidateAndUpdateData:
         stored_data = {'name': 'Nagini'}
         form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'], 'decimal': '100.000'})
 
-        with app.test_request_context(method='POST') as req:
-            req.session = SecureCookieSession({testing_step_chooser.session_data_identifier: create_session_form_data(stored_data)})
-            is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, form_data)
+        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, stored_data, form_data)
 
         assert is_valid_flag is None
         assert updated_data == stored_data
@@ -281,9 +279,7 @@ class TestStepChooserValidateAndUpdateData:
         stored_data = {'name': 'Nagini'}
         form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': 'NOT A VALID DATE', 'decimal': '100.000'})
 
-        with app.test_request_context(method='POST') as req:
-            req.session = SecureCookieSession({testing_step_chooser.session_data_identifier: create_session_form_data(stored_data)})
-            is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, form_data)
+        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, stored_data, form_data)
 
         assert is_valid_flag is False
         assert updated_data == stored_data
@@ -295,9 +291,7 @@ class TestStepChooserValidateAndUpdateData:
         expected_updated_data = {**stored_data, **{'pet': 'Maledictus', 'date': datetime.date(1998, 5, 2),  'decimal': Decimal(100000)}}
         form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'],  'decimal': '100.000'})
 
-        with app.test_request_context(method='POST') as req:
-            req.session = SecureCookieSession({testing_step_chooser.session_data_identifier: create_session_form_data(stored_data)})
-            is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, form_data)
+        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, stored_data, form_data)
 
         assert is_valid_flag is True
         assert updated_data == expected_updated_data

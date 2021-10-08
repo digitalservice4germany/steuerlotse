@@ -46,10 +46,12 @@ class StepChooser:
     def get_correct_step(self, step_name: str, update_data,
                          form_data: ImmutableMultiDict) -> SteuerlotseStep:
 
-        if self._get_possible_redirect(step_name):
-            return RedirectSteuerlotseStep(self._get_possible_redirect(step_name), endpoint=self.endpoint)
+        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
 
-        data_is_valid, stored_data = self.validate_and_update_data(step_name, update_data, form_data)
+        if redirected_step_name := self._get_possible_redirect(step_name, stored_data):
+            return RedirectSteuerlotseStep(redirected_step_name, endpoint=self.endpoint)
+
+        data_is_valid, stored_data = self.validate_and_update_data(step_name, update_data, stored_data, form_data)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
@@ -64,11 +66,10 @@ class StepChooser:
             form_data=form_data
         )
 
-    def validate_and_update_data(self, step_name: str, update_data: bool, form_data: ImmutableMultiDict = None):
+    def validate_and_update_data(self, step_name: str, update_data: bool, stored_data, form_data: ImmutableMultiDict = None):
         """
         :param step_name: The name of the step. Should be a valid step name
         """
-        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
         data_is_valid = None
         if update_data:
             if validated_data := self.steps[step_name].validate_data(form_data, stored_data):
