@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-30 13:56+0200\n"
+"POT-Creation-Date: 2021-10-07 19:56+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:202 app/templates/basis/base.html:32
+#: app/routes.py:202 app/templates/basis/base.html:36
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
@@ -143,39 +143,39 @@ msgstr ""
 "Bitte prüfen Sie Ihre Angaben. Es sind nicht alle notwendigen "
 "Formularfelder ausgefüllt."
 
-#: app/forms/fields.py:202
+#: app/forms/fields.py:179
 msgid "date-field.day"
 msgstr "Tag"
 
-#: app/forms/fields.py:202
+#: app/forms/fields.py:179
 msgid "date-field.month"
 msgstr "Monat"
 
-#: app/forms/fields.py:202
+#: app/forms/fields.py:179
 msgid "date-field.year"
 msgstr "Jahr"
 
-#: app/forms/fields.py:219 app/forms/fields.py:222
+#: app/forms/fields.py:196 app/forms/fields.py:199
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 29.2.1951"
 
-#: app/forms/fields.py:324
+#: app/forms/fields.py:346
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:356
+#: app/forms/fields.py:378
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:375
+#: app/forms/fields.py:397
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:440
+#: app/forms/fields.py:462
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:440
+#: app/forms/fields.py:462
 msgid "switch.no"
 msgstr "Nein"
 
@@ -289,7 +289,8 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:78
 #: app/forms/steps/eligibility_steps.py:99
 #: app/forms/steps/eligibility_steps.py:158
-#: app/forms/steps/eligibility_steps.py:788
+#: app/forms/steps/eligibility_steps.py:789
+#: app/forms/steps/eligibility_steps.py:818
 msgid "form.eligibility.header-title"
 msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 
@@ -911,44 +912,44 @@ msgstr ""
 "Wenn Sie letztes Jahr im Ausland gelebt haben, müssen Sie Angaben im "
 "Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:753
+#: app/forms/steps/eligibility_steps.py:754
 msgid "form.eligibility.foreign-country-title"
 msgstr ""
 "Leben Sie dauerhaft im Ausland und kommen nur gelegentlich, zum Beispiel "
 "zu Besuchszwecken, nach Deutschland?"
 
-#: app/forms/steps/eligibility_steps.py:759
+#: app/forms/steps/eligibility_steps.py:760
 msgid "form.eligibility.foreign-country.detail.title"
 msgstr "Ab welcher Dauer lebt man dauerhaft im Ausland?"
 
-#: app/forms/steps/eligibility_steps.py:760
+#: app/forms/steps/eligibility_steps.py:761
 msgid "form.eligibility.foreign-country.detail.text"
 msgstr ""
 "Sie leben dauerhaft im Ausland, wenn Sie länger als 183 Tage im Jahr in "
 "einem anderen Land gelebt haben. Sollte dies der Fall sein, wählen Sie "
 "»Ja« aus. "
 
-#: app/forms/steps/eligibility_steps.py:761
-#: app/forms/steps/eligibility_steps.py:771
+#: app/forms/steps/eligibility_steps.py:762
+#: app/forms/steps/eligibility_steps.py:772
 msgid "form.eligibility.foreign_country.yes"
 msgid_plural "form.eligibility.foreign_country.yes"
 msgstr[0] "Ja, ich lebe dauerhaft im Ausland."
 msgstr[1] "Ja, wir leben dauerhaft im Ausland."
 
-#: app/forms/steps/eligibility_steps.py:762
-#: app/forms/steps/eligibility_steps.py:775
+#: app/forms/steps/eligibility_steps.py:763
+#: app/forms/steps/eligibility_steps.py:776
 msgid "form.eligibility.foreign_country.no"
 msgid_plural "form.eligibility.foreign_country.no"
 msgstr[0] "Nein, ich lebe dauerhaft in Deutschland."
 msgstr[1] "Nein, wir leben dauerhaft in Deutschland."
 
-#: app/forms/steps/eligibility_steps.py:781
+#: app/forms/steps/eligibility_steps.py:782
 msgid "form.eligibility.result-title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 mit dem Steuerlotsen "
 "machen."
 
-#: app/forms/steps/eligibility_steps.py:782
+#: app/forms/steps/eligibility_steps.py:783
 msgid "form.eligibility.result-intro"
 msgstr ""
 "Wenn Sie alle Fragen korrekt beantwortet haben, können Sie den "
@@ -957,13 +958,13 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:796
+#: app/forms/steps/eligibility_steps.py:798
 msgid "form.eligibility.result-note.user_b_elster_account"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss "
 "sich trotzdem nur eine Person registrieren."
 
-#: app/forms/steps/eligibility_steps.py:797
+#: app/forms/steps/eligibility_steps.py:799
 msgid "form.eligibility.result-note.user_b_elster_account-registration"
 msgstr ""
 "Bitte registrieren Sie sich mit den Angaben der Person, die noch kein "
@@ -972,7 +973,7 @@ msgstr ""
 " erstellt und per Post versendet. Aus technischen Gründen geschieht das "
 "allerdings nur, wenn Sie noch kein Konto bei Mein ELSTER haben."
 
-#: app/forms/steps/eligibility_steps.py:801
+#: app/forms/steps/eligibility_steps.py:803
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -983,13 +984,13 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:808
+#: app/forms/steps/eligibility_steps.py:811
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
 "Steuerlotsen machen."
 
-#: app/forms/steps/eligibility_steps.py:809
+#: app/forms/steps/eligibility_steps.py:812
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
 "Es kann allerdings sein, dass Sie <strong>keinen Brief mit Ihrem "
@@ -1019,61 +1020,39 @@ msgstr ""
 msgid "form.logout.header-title"
 msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:16
-msgid "unlock-code-activation.idnr"
-msgstr "Steuer-Identifikationsnummer"
-
-#: app/forms/steps/unlock_code_activation_steps.py:17
-#: app/forms/steps/unlock_code_request_steps.py:17
-msgid "unlock-code-request.idnr.help-title"
-msgstr "Wo finde ich diese Nummer?"
-
-#: app/forms/steps/unlock_code_activation_steps.py:18
-#: app/forms/steps/unlock_code_request_steps.py:18
-msgid "unlock-code-request.idnr.help-text"
-msgstr ""
-"Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für"
-" Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. "
-"Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid."
-
-#: app/forms/steps/unlock_code_activation_steps.py:21
-msgid "unlock-code-activation.unlock-code"
-msgstr "Freischaltcode"
-
 #: app/forms/steps/unlock_code_activation_steps.py:22
-msgid "unlock-code-request.unlock-code.help-title"
-msgstr "Wo finde ich diese Nummer?"
-
-#: app/forms/steps/unlock_code_activation_steps.py:23
-msgid "unlock-code-request.unlock-code.help-text"
-msgstr ""
-"Wenn Sie sich beim Steuerlotsen erfolgreich registriert haben, bekommen "
-"Sie von Ihrer Finanzverwaltung einen Brief mit Ihrem persönlichen "
-"Freischaltcode zugeschickt. Den Freischaltcode finden Sie auf der letzten"
-" Seite des Briefes."
-
-#: app/forms/steps/unlock_code_activation_steps.py:28
 msgid "form.unlock-code-activation.input-title"
 msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 
-#: app/forms/steps/unlock_code_activation_steps.py:29
+#: app/forms/steps/unlock_code_activation_steps.py:23
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann"
 " können Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/forms/steps/unlock_code_activation_steps.py:32
-#: app/forms/steps/unlock_code_activation_steps.py:53
+#: app/forms/steps/unlock_code_activation_steps.py:26
+#: app/forms/steps/unlock_code_activation_steps.py:67
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:49
+#: app/forms/steps/unlock_code_activation_steps.py:63
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
 #: app/forms/steps/unlock_code_request_steps.py:16
 msgid "unlock-code-request.idnr"
 msgstr "Steuer-Identifikationsnummer"
+
+#: app/forms/steps/unlock_code_request_steps.py:17
+msgid "unlock-code-request.idnr.help-title"
+msgstr "Wo finde ich diese Nummer?"
+
+#: app/forms/steps/unlock_code_request_steps.py:18
+msgid "unlock-code-request.idnr.help-text"
+msgstr ""
+"Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für"
+" Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. "
+"Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid."
 
 #: app/forms/steps/unlock_code_request_steps.py:19
 msgid "unlock-code-request.dob"
@@ -1208,11 +1187,11 @@ msgstr ""
 "Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren "
 "Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun."
 
-#: app/forms/steps/lotse/personal_data.py:40
+#: app/forms/steps/lotse/personal_data.py:38
 msgid "form.lotse.steuernummer-title"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:41
+#: app/forms/steps/lotse/personal_data.py:39
 msgid "form.lotse.steuernummer-intro"
 msgstr ""
 "Die Steuernummer wird Ihnen vom zuständigen Finanzamt zugeteilt – dort, "
@@ -1221,7 +1200,7 @@ msgstr ""
 "beispielsweise ein Umzug, eine Heirat oder die Änderung der "
 "Veranlagungsart sein."
 
-#: app/forms/steps/lotse/personal_data.py:42
+#: app/forms/steps/lotse/personal_data.py:40
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:139
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:262
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:392
@@ -1229,11 +1208,11 @@ msgstr ""
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/personal_data.py:47
+#: app/forms/steps/lotse/personal_data.py:46
 msgid "form.lotse.step_steuernummer.label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:48
+#: app/forms/steps/lotse/personal_data.py:47
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:15
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:43
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:23
@@ -1243,22 +1222,22 @@ msgstr "Steuernummer"
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
-#: app/forms/steps/lotse/personal_data.py:59
-#: app/forms/steps/lotse/personal_data.py:146
+#: app/forms/steps/lotse/personal_data.py:58
+#: app/forms/steps/lotse/personal_data.py:145
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
 msgstr[1] "Haben Sie bereits eine gemeinsame Steuernummer?"
 
-#: app/forms/steps/lotse/personal_data.py:60
+#: app/forms/steps/lotse/personal_data.py:59
 msgid "form.lotse.steuernummer_exists.data_label"
 msgstr "Steuernummer vorhanden"
 
-#: app/forms/steps/lotse/personal_data.py:61
+#: app/forms/steps/lotse/personal_data.py:60
 msgid "form.lotse.steuernummer_exists.detail.title"
 msgstr "Wo finde Ich diese Nummer?"
 
-#: app/forms/steps/lotse/personal_data.py:62
+#: app/forms/steps/lotse/personal_data.py:61
 msgid "form.lotse.steuernummer_exists.detail.text"
 msgstr ""
 "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch "
@@ -1266,109 +1245,109 @@ msgstr ""
 "beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-"
 "Identifikationsnummer zwei verschiedene Nummern sind."
 
-#: app/forms/steps/lotse/personal_data.py:65
+#: app/forms/steps/lotse/personal_data.py:64
 msgid "form.lotse.field_bundesland"
 msgstr "Wählen Sie Ihr Bundesland"
 
-#: app/forms/steps/lotse/personal_data.py:67
+#: app/forms/steps/lotse/personal_data.py:66
 #: app/templates/lotse/form_steuernummer.html:61
 msgid "form.select_input.default_selection"
 msgstr "Bitte auswählen"
 
-#: app/forms/steps/lotse/personal_data.py:68
+#: app/forms/steps/lotse/personal_data.py:67
 msgid "form.lotse.field_bundesland_bw"
 msgstr "Baden-Württemberg"
 
-#: app/forms/steps/lotse/personal_data.py:69
+#: app/forms/steps/lotse/personal_data.py:68
 msgid "form.lotse.field_bundesland_by"
 msgstr "Bayern"
 
-#: app/forms/steps/lotse/personal_data.py:70
+#: app/forms/steps/lotse/personal_data.py:69
 msgid "form.lotse.field_bundesland_be"
 msgstr "Berlin"
 
-#: app/forms/steps/lotse/personal_data.py:71
+#: app/forms/steps/lotse/personal_data.py:70
 msgid "form.lotse.field_bundesland_bb"
 msgstr "Brandenburg"
 
-#: app/forms/steps/lotse/personal_data.py:72
+#: app/forms/steps/lotse/personal_data.py:71
 msgid "form.lotse.field_bundesland_hb"
 msgstr "Bremen"
 
-#: app/forms/steps/lotse/personal_data.py:73
+#: app/forms/steps/lotse/personal_data.py:72
 msgid "form.lotse.field_bundesland_hh"
 msgstr "Hamburg"
 
-#: app/forms/steps/lotse/personal_data.py:74
+#: app/forms/steps/lotse/personal_data.py:73
 msgid "form.lotse.field_bundesland_he"
 msgstr "Hessen"
 
-#: app/forms/steps/lotse/personal_data.py:75
+#: app/forms/steps/lotse/personal_data.py:74
 msgid "form.lotse.field_bundesland_mv"
 msgstr "Mecklenburg-Vorpommern "
 
-#: app/forms/steps/lotse/personal_data.py:76
+#: app/forms/steps/lotse/personal_data.py:75
 msgid "form.lotse.field_bundesland_nd"
 msgstr "Niedersachsen"
 
-#: app/forms/steps/lotse/personal_data.py:77
+#: app/forms/steps/lotse/personal_data.py:76
 msgid "form.lotse.field_bundesland_nw"
 msgstr "Nordrhein-Westfalen"
 
-#: app/forms/steps/lotse/personal_data.py:78
+#: app/forms/steps/lotse/personal_data.py:77
 msgid "form.lotse.field_bundesland_rp"
 msgstr "Rheinland-Pfalz"
 
-#: app/forms/steps/lotse/personal_data.py:79
+#: app/forms/steps/lotse/personal_data.py:78
 msgid "form.lotse.field_bundesland_sl"
 msgstr "Saarland"
 
-#: app/forms/steps/lotse/personal_data.py:80
+#: app/forms/steps/lotse/personal_data.py:79
 msgid "form.lotse.field_bundesland_sn"
 msgstr "Sachsen"
 
-#: app/forms/steps/lotse/personal_data.py:81
+#: app/forms/steps/lotse/personal_data.py:80
 msgid "form.lotse.field_bundesland_st"
 msgstr "Sachsen-Anhalt "
 
-#: app/forms/steps/lotse/personal_data.py:82
+#: app/forms/steps/lotse/personal_data.py:81
 msgid "form.lotse.field_bundesland_sh"
 msgstr "Schleswig-Holstein"
 
-#: app/forms/steps/lotse/personal_data.py:83
+#: app/forms/steps/lotse/personal_data.py:82
 msgid "form.lotse.field_bundesland_th"
 msgstr "Thüringen"
 
-#: app/forms/steps/lotse/personal_data.py:85
+#: app/forms/steps/lotse/personal_data.py:84
 msgid "form.lotse.field_bundesland.data_label"
 msgstr "Auswahl Bundesland"
 
-#: app/forms/steps/lotse/personal_data.py:86
+#: app/forms/steps/lotse/personal_data.py:85
 msgid "form.lotse.field_bundesland_required"
 msgstr "Bundesland auswählen"
 
-#: app/forms/steps/lotse/personal_data.py:89
+#: app/forms/steps/lotse/personal_data.py:88
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/personal_data.py:93
+#: app/forms/steps/lotse/personal_data.py:92
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/personal_data.py:95
+#: app/forms/steps/lotse/personal_data.py:94
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:98
+#: app/forms/steps/lotse/personal_data.py:97
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:99
+#: app/forms/steps/lotse/personal_data.py:98
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/personal_data.py:102
-#: app/forms/steps/lotse/personal_data.py:149
+#: app/forms/steps/lotse/personal_data.py:101
+#: app/forms/steps/lotse/personal_data.py:148
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1378,7 +1357,7 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:103
+#: app/forms/steps/lotse/personal_data.py:102
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
@@ -2816,16 +2795,16 @@ msgstr ""
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:31
+#: app/templates/basis/base.html:35
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:37
+#: app/templates/basis/base.html:42
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
 #: app/templates/basis/display_failure_icon.html:14
-#: app/templates/eligibility/display_success.html:18
+#: app/templates/eligibility/display_success.html:15
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
@@ -4887,25 +4866,29 @@ msgstr ""
 msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
-#: app/templates/eligibility/display_success.html:16
+#: app/templates/eligibility/display_maybe.html:15
 msgid "maybe_icon"
 msgstr "Fragezeichen Icon auf gelbem Kreis"
 
-#: app/templates/eligibility/display_success.html:29
+#: app/templates/eligibility/display_maybe.html:25
+#: app/templates/eligibility/display_success.html:25
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_success.html:30
+#: app/templates/eligibility/display_maybe.html:26
+#: app/templates/eligibility/display_success.html:26
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_success.html:36
+#: app/templates/eligibility/display_maybe.html:32
+#: app/templates/eligibility/display_success.html:32
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_success.html:46
+#: app/templates/eligibility/display_maybe.html:42
+#: app/templates/eligibility/display_success.html:42
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
@@ -4993,6 +4976,26 @@ msgstr ""
 #: app/templates/error/incorrect_eligiblity_data.html:9
 msgid "form.eligibility.back-to-form"
 msgstr "Zurück zu Nutzung prüfen"
+
+#: app/templates/error/js_disabled.html:2
+msgid "js_disabled.headline"
+msgstr "Warum sehe ich den Steuerlotsen nicht?"
+
+#: app/templates/error/js_disabled.html:4
+msgid "js_disabled.info-text"
+msgstr ""
+"Um unser Angebot in vollem Umfang nutzen zu können, müssen Sie "
+"<b>JavaScript in Ihrem Browser aktivieren</b>. Wenn Sie JavaScript "
+"aktiviert haben, laden Sie diese Seite oder eine andere Seite des "
+"Steuerlotsen neu."
+
+#: app/templates/error/js_disabled.html:7
+msgid "js_disabled.info-link"
+msgstr ""
+"Wie Sie Javascrip aktivieren können, erfahren Sie zum Beispiel "
+"hier:<br><a class=\"font-weight-bold\" "
+"href=\"http://www.enablejavascript.io\" "
+"target=\"_blank\">enablejavascript.io</a>"
 
 #: app/templates/error/pdf_not_found.html:8
 msgid "pdf_not_found.title"
@@ -5299,4 +5302,3 @@ msgstr ""
 #: app/templates/unlock_code/registration_success.html:21
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
-
