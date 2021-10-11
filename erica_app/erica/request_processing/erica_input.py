@@ -1,5 +1,6 @@
 from datetime import date
 from decimal import Decimal
+from enum import Enum
 from typing import Optional, List
 
 from pydantic import BaseModel, validator
@@ -8,13 +9,18 @@ from erica.elster_xml.est_validation import is_valid_bufa
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 
 
+class AccountHoler(str, Enum):
+    person_a = 'person_a'
+    person_b = 'person_b'
+
+
 class FormDataEst(BaseModel):
     steuernummer: Optional[str]
     submission_without_tax_nr: Optional[bool]
     bufa_nr: Optional[str]
     bundesland: str
     iban: Optional[str]
-    account_holder: str
+    account_holder: AccountHoler
 
     familienstand: str  # potentially enum
     familienstand_date: Optional[date]
@@ -82,12 +88,6 @@ class FormDataEst(BaseModel):
 
     stmind_gem_haushalt_count: Optional[int]
     stmind_gem_haushalt_entries: Optional[List[str]]
-
-    @validator('account_holder')
-    def account_holder_is_person_a_or_b(cls, v):
-        if v not in ['person_a', 'person_b']:
-            raise ValueError('Account holder should be person a or person b')
-        return v
 
     @validator('submission_without_tax_nr', always=True)
     def if_no_tax_number_must_be_submission_without_tax_nr(cls, v, values):

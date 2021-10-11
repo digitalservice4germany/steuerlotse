@@ -20,7 +20,7 @@ def step_with_bufa_choices(app, test_request_context):
     tax_offices = request_tax_offices()
     step._set_bufa_choices(tax_offices)
 
-    yield step
+    return step
 
 
 @pytest.mark.usefixtures("app", "test_request_context")

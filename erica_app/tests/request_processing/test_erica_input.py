@@ -12,7 +12,7 @@ from erica.request_processing.erica_input import FormDataEst, MetaDataEst
 
 @pytest.fixture
 def standard_est_data():
-    yield {
+    return {
             'steuernummer': '19811310010',
             'bundesland': 'BY',
             'familienstand': 'married',
