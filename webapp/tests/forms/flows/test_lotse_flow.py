@@ -1026,6 +1026,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             self.assertNotIn('familienstand_date', returned_data)
 
     def test_if_familienstand_step_then_delete_gem_haushalt_correctly(self):
+        # married
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
                                                  'familienstand_date': ['1', '1', '1985'],
@@ -1037,6 +1038,19 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             self.assertNotIn('stmind_gem_haushalt_entries', returned_data)
             self.assertNotIn('stmind_gem_haushalt_count', returned_data)
 
+        # separated
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'married',
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'yes',
+                                                 'familienstand_married_lived_separated_since': ['1', '1', '1990']}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                {'stmind_gem_haushalt_entries': ['Helene Fischer'], 'stmind_gem_haushalt_count': 1})
+            self.assertIn('stmind_gem_haushalt_entries', returned_data)
+            self.assertIn('stmind_gem_haushalt_count', returned_data)
+
+        # single
         with self.app.test_request_context(method='POST', data={'familienstand': 'single'}):
             _, returned_data = self.flow._handle_specifics_for_step(
                 self.familienstand_step, self.render_info_familienstand_step,
