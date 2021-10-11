@@ -305,7 +305,7 @@ class StepGemeinsamerHaushalt(FormStep):
             return result
 
         if show_person_b(input_data):
-            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')
+            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
 
         return None, None
 
