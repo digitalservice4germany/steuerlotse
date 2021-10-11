@@ -71,11 +71,11 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     title = _l('form.eligibility.failure.title')
     intro = _l('form.eligibility.failure.intro')
 
-    def __init__(self, endpoint, stored_data=None, **kwargs):
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
         super(EligibilityFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
-                                                                       **kwargs)
+                                                                       *args, **kwargs)
 
     def _main_handle(self):
         self.render_info.prev_url = self.url_for_step(self.input_step_name)
@@ -94,8 +94,8 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     class InputForm(SteuerlotseBaseForm):
         pass
 
-    def __init__(self, endpoint, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), **kwargs)
+    def __init__(self, endpoint, *args, **kwargs):
+        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -153,10 +153,11 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     intro = _l('form.eligibility.start-intro')
     template = 'basis/display_standard.html'
 
-    def __init__(self, stored_data=None, **kwargs):
+    def __init__(self, stored_data=None, *args, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(
             header_title=_('form.eligibility.header-title'),
             stored_data=stored_data,
+            *args,
             **kwargs)
 
     def _main_handle(self):
@@ -783,10 +784,11 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     intro = _l('form.eligibility.result-intro')
     template = 'eligibility/display_success.html'
 
-    def __init__(self, endpoint, stored_data=None, **kwargs):
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
         super(EligibilitySuccessDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
+                                                                       *args,
                                                                        **kwargs)
 
     def _main_handle(self):
@@ -812,8 +814,8 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
     intro = _l('form.eligibility.success.maybe.intro')
     template = 'eligibility/display_maybe.html'
 
-    def __init__(self, endpoint, stored_data=None, **kwargs):
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
         super(EligibilityMaybeDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                      stored_data=stored_data,
                                                                      header_title=_('form.eligibility.header-title'),
-                                                                     **kwargs)
+                                                                     *args, **kwargs)

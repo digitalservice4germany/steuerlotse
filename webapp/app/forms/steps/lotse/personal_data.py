@@ -23,8 +23,8 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     prev_step = StepFamilienstand
     next_step = StepPersonA
 
-    def __init__(self, endpoint, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
+    def __init__(self, endpoint, *args, **kwargs):
+        super().__init__(endpoint=endpoint, header_title=self.header_title, *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -51,8 +51,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
+    def __init__(self, endpoint="lotse", *args, **kwargs):
+        super().__init__(endpoint=endpoint, *args, **kwargs)
 
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
