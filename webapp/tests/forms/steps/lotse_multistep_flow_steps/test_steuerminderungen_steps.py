@@ -205,22 +205,42 @@ class TestGemeinsamerHaushaltStep(unittest.TestCase):
         assert redirection_info[0] is None
         assert redirection_info[1] is None
 
-    def test_skip_if_widowed_zusammenveranlagung(self):
-        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
-                          'familienstand': 'widowed',
-                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
-                          'familienstand_widowed_lived_separated': 'no',
-                          'familienstand_confirm_zusammenveranlagung': True}
-        redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
-        assert redirection_info[0] is StepFamilienstand.name
-
-    def test_do_not_skip_if_widowed(self):
+    def test_do_not_skip_if_widowed_longer(self):
         separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(1990, 1, 2)}
         redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
         assert redirection_info[0] is None
         assert redirection_info[1] is None
+
+    def test_skip_if_widowed_recently_zusammenveranlagung(self):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_widowed_lived_separated': 'no',
+                          'familienstand_confirm_zusammenveranlagung': True}
+        redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
+        assert redirection_info[0] == StepFamilienstand.name
+
+    def test_do_not_skip_if_widowed_recently_separated_einzelveranlagung(self):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_widowed_lived_separated': 'yes',
+                          'familienstand_widowed_lived_separated_since': datetime.date(1980, 1, 1),
+                          'familienstand_zusammenveranlagung': 'no'}
+        redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
+        assert redirection_info[0] is None
+
+    def test_skip_if_widowed_recently_separated_zusammenveranlagung(self):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 10),
+                          'familienstand_widowed_lived_separated': 'yes',
+                          'familienstand_widowed_lived_separated_since': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_zusammenveranlagung': 'yes'}
+        redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
+        assert redirection_info[0] == StepFamilienstand.name
 
     def test_do_not_skip_if_divorced(self):
         separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
