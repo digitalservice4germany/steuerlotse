@@ -36,8 +36,8 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
 
 class ValidTaxNumber:
     def __call__(self, form, field):
-        if form.data.get('steuernummer_exists') == 'yes':
-            valid_tax_number = validate_tax_number(form.data['bundesland'], form.data['steuernummer'])
+        if form.steuernummer_exists.data == 'yes':
+            valid_tax_number = validate_tax_number(form.bundesland.data, form.steuernummer.data)
             if not valid_tax_number:
                 raise WTFormsValidationError(_('validate.invalid-tax-number'))
 
