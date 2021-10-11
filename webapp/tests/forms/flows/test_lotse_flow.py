@@ -1171,6 +1171,15 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {'familienstand': 'single'})
             self.assertEqual(self.haushaltsnahe_yes_url, render_info.next_url)
 
+        # separated
+        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
+            render_info, _ = self.flow._handle_specifics_for_step(
+                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
+                {'familienstand': 'married', 'familienstand_married_lived_separated': 'yes',
+                 'familienstand_married_lived_separated_since': datetime.date(1990, 1, 1)})
+            self.assertEqual(self.haushaltsnahe_yes_url, render_info.next_url)
+
+        # married
         with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {'familienstand': 'married',

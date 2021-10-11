@@ -252,8 +252,8 @@ class StepGemeinsamerHaushalt(FormStep):
     SKIP_COND = [
         ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
         ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('familienstand', 'married')], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
         ([('familienstand', None)], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
+        ([('familienstand', 'married'), ('familienstand_married_lived_separated', 'no')], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
         ([('stmind_handwerker_summe', None), ('stmind_haushaltsnahe_summe', None)], StepHaushaltsnaheHandwerker.name,
          _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe'))
     ]
