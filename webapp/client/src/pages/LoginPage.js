@@ -70,7 +70,6 @@ LoginPage.propTypes = {
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
     csrfToken: PropTypes.string,
     showOverviewButton: PropTypes.bool,
-    explanatoryButtonText: PropTypes.string, // TODO: define here, not in Python
     nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
   }).isRequired,
   fields: PropTypes.exact({

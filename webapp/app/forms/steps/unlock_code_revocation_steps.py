@@ -4,7 +4,7 @@ from flask_babel import lazy_gettext as _l
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import SteuerlotseDateField, SteuerlotseStringField, LegacyIdNrField
+from app.forms.fields import LegacySteuerlotseDateField, SteuerlotseStringField, LegacyIdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr
 
@@ -14,7 +14,7 @@ class UnlockCodeRevocationInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = LegacyIdNrField(_l('unlock-code-revocation.idnr'), [InputRequired(), ValidIdNr()])
-        dob = SteuerlotseDateField(label=_l('unlock-code-revocation.dob'), validators=[InputRequired()])
+        dob = LegacySteuerlotseDateField(label=_l('unlock-code-revocation.dob'), validators=[InputRequired()])
 
     def __init__(self, **kwargs):
         super(UnlockCodeRevocationInputStep, self).__init__(

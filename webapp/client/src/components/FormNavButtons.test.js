@@ -40,15 +40,10 @@ describe("a FormNavButtons with an overview button", () => {
 
 describe("a FormNavButtons with an explanatoryButtonText", () => {
   beforeEach(() => {
-    render(
-      <FormNavButtons explanatoryButtonText="some text with <em>HTML tags</em>" />
-    );
+    render(<FormNavButtons explanatoryButtonText="some text" />);
   });
 
   it("should render the explanatory button text", () => {
     expect(screen.getByText(/some text/)).toBeInTheDocument();
-    expect(screen.getByText(/some text/).innerHTML).toEqual(
-      "some text with <em>HTML tags</em>"
-    );
   });
 });

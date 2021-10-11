@@ -32,7 +32,10 @@ StepForm.propTypes = {
   action: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
   showOverviewButton: PropTypes.bool,
-  explanatoryButtonText: PropTypes.string,
+  explanatoryButtonText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   nextButtonLabel: PropTypes.string,
 };
 
