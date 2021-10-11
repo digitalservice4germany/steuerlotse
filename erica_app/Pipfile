@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-click = "==8.0.1"
+click = "==8.0.3"
 fastapi = "~=0.70.0"
 freezegun = "*"
 pydantic = "~=1.8.2"
