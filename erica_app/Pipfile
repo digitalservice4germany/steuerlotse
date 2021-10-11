@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-click = "==8.0.1"
-fastapi = "~=0.68.2"
+click = "==8.0.3"
+fastapi = "~=0.70.0"
 freezegun = "*"
 pydantic = "~=1.8.2"
 pytest = "==6.2.5"
