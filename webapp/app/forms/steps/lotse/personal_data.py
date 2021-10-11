@@ -1,7 +1,8 @@
 from flask import request, flash, Markup
-from pydantic import ValidationError
 from wtforms import validators
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
+from pydantic import ValidationError
+
 
 from flask_babel import lazy_gettext as _l, _, ngettext
 
@@ -31,6 +32,14 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
         # redirect in any case if overview button pressed
         if 'overview_button' in request.form:
             self.render_info.next_url = self.url_for_step(StepSummary.name)
+
+
+class ValidTaxNumber:
+    def __call__(self, form, field):
+        if form.data.get('steuernummer_exists') == 'yes':
+            valid_tax_number = validate_tax_number(form.data['bundesland'], form.data['steuernummer'])
+            if not valid_tax_number:
+                raise WTFormsValidationError(_('validate.invalid-tax-number'))
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
@@ -127,11 +136,11 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
         def validate(self, extra_validators=None):
             result = super().validate(extra_validators)
-            if self.data.get('steuernummer_exists') == 'yes':
-                valid_tax_number = validate_tax_number(self.data['bundesland'], self.data['steuernummer'])
-                if not valid_tax_number:
-                    flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')
-                    return False
+            try:
+                ValidTaxNumber()(self, self.steuernummer)
+            except WTFormsValidationError:
+                flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')
+                return False
 
             return result
 
