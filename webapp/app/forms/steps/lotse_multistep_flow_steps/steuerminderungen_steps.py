@@ -1,4 +1,5 @@
 from app.forms import SteuerlotseBaseForm
+from app.forms.steps.lotse.personal_data import show_person_b
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import EntriesField, EuroField, SteuerlotseIntegerField
@@ -252,8 +253,6 @@ class StepGemeinsamerHaushalt(FormStep):
     SKIP_COND = [
         ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
         ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('familienstand', None)], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
-        ([('familienstand', 'married'), ('familienstand_married_lived_separated', 'no')], StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')),
         ([('stmind_handwerker_summe', None), ('stmind_haushaltsnahe_summe', None)], StepHaushaltsnaheHandwerker.name,
          _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe'))
     ]
@@ -298,6 +297,17 @@ class StepGemeinsamerHaushalt(FormStep):
             _('form.lotse.gem_haushalt-list-item-1'),
             _('form.lotse.gem_haushalt-list-item-2')
         ], header_title=_('form.lotse.steuerminderungen.header-title'))
+
+    @classmethod
+    def get_redirection_info_if_skipped(cls, input_data):
+        result = super().get_redirection_info_if_skipped(input_data)
+        if result != (None, None):
+            return result
+
+        if show_person_b(input_data):
+            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')
+
+        return None, None
 
 
 class StepReligion(FormStep):

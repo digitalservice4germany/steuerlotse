@@ -273,11 +273,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 render_info.next_url = self.url_for_step(StepSummary.name)
                 self._delete_dependent_data(['stmind'], stored_data)
         elif isinstance(step, StepHaushaltsnaheHandwerker):
-            if not stored_data.get('familienstand') or \
-                    (stored_data.get('familienstand') == 'married' and
-                     stored_data.get('familienstand_married_lived_separated') == 'no') or \
-                    (not stored_data.get('stmind_handwerker_summe') and
-                     not stored_data.get('stmind_haushaltsnahe_summe')):
+            if show_person_b(stored_data) or \
+                    not stored_data.get('stmind_handwerker_summe') and \
+                    not stored_data.get('stmind_haushaltsnahe_summe'):
                 render_info.next_url = self.url_for_step(StepReligion.name)
             if request.method == 'POST' and render_info.form.validate():
                 if not stored_data.get('stmind_handwerker_summe') and not stored_data.get('stmind_haushaltsnahe_summe'):

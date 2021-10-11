@@ -205,17 +205,19 @@ class TestGemeinsamerHaushaltStep(unittest.TestCase):
         assert redirection_info[0] is None
         assert redirection_info[1] is None
 
-    def test_do_not_skip_if_widowed_separated(self):
+    def test_skip_if_widowed_zusammenveranlagung(self):
         separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
-                          'familienstand': 'widowed', 'familienstand_widowed_lived_separated': 'no',
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_widowed_lived_separated': 'no',
                           'familienstand_confirm_zusammenveranlagung': True}
         redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
-        assert redirection_info[0] is None
-        assert redirection_info[1] is None
+        assert redirection_info[0] is StepFamilienstand.name
 
     def test_do_not_skip_if_widowed(self):
         separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
-                          'familienstand': 'widowed'}
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(1990, 1, 2)}
         redirection_info = StepGemeinsamerHaushalt.get_redirection_info_if_skipped(separated_data)
         assert redirection_info[0] is None
         assert redirection_info[1] is None
