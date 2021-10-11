@@ -223,9 +223,9 @@ def check_and_generate_entries(est_data, year=2019):
     enriched_est_data = est_data
     enriched_est_data['is_einkommensteuererklaerung'] = 'X'
     enriched_est_data['is_digitally_signed'] = 'X'
-    if est_data.get('is_person_a_account_holder') is True:
+    if est_data.get('account_holder') == 'person_a':
         enriched_est_data['is_person_a_account_holder'] = 'X'
-    elif est_data.get('is_person_a_account_holder') is False:
+    elif est_data.get('account_holder') == 'person_b':
         enriched_est_data['is_person_b_account_holder'] = 'X'
 
     # Lebenssituation

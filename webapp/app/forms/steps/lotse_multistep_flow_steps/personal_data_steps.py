@@ -12,7 +12,7 @@ from wtforms import RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
 
 from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
-from app.model.form_data import FamilienstandModel
+from app.model.form_data import FamilienstandModel, show_person_b
 from app.utils import get_first_day_of_tax_period
 
 
@@ -282,7 +282,7 @@ def get_number_of_users(input_data):
         familienstand_model = FamilienstandModel.parse_obj(input_data)
     except ValidationError:
         return 1
-    if familienstand_model.show_person_b():
+    if familienstand_model._show_person_b():
         return 2
     else:
         return 1
@@ -397,7 +397,7 @@ class StepPersonB(FormStep):
     def get_redirection_info_if_skipped(cls, input_data):
         try:
             familienstand_model = FamilienstandModel.parse_obj(input_data)
-            if familienstand_model.show_person_b():
+            if familienstand_model._show_person_b():
                 return None, None
             else:
                 return StepFamilienstand.name, _l('form.lotse.skip_reason.familienstand_single')
@@ -411,11 +411,11 @@ class StepIban(FormStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
-        is_person_a_account_holder = RadioField(
-            label=_l('form.lotse.field_is_person_a_account_holder'),
-            render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder.data_label')},
-            choices=[('yes', _l('form.lotse.field_is_person_a_account_holder-person-a')),
-                     ('no', _l('form.lotse.field_is_person_a_account_holder-person-b')),
+        account_holder = RadioField(
+            label=_l('form.lotse.iban.account-holder'),
+            render_kw={'data_label': _l('form.lotse.iban.account-holder.data_label')},
+            choices=[('person_a', _l('form.lotse.iban.account-holder-person-a')),
+                     ('person_b', _l('form.lotse.iban.account-holder-person-b')),
                      ])
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
@@ -426,9 +426,9 @@ class StepIban(FormStep):
             filters=[lambda value: value.replace(' ', '') if value else value])
 
     class FormSingle(SteuerlotseBaseForm):
-        is_person_a_account_holder = ConfirmationField(
-            label=_l('form.lotse.field_is_person_a_account_holder_single'),
-            render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder_single.data_label')})
+        is_user_account_holder = ConfirmationField(
+            label=_l('form.lotse.field_is_user_account_holder'),
+            render_kw={'data_label': _l('form.lotse.field_is_user_account_holder.data_label')})
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
@@ -448,7 +448,6 @@ class StepIban(FormStep):
         )
 
     def create_form(self, request, prefilled_data):
-        from app.forms.steps.lotse.personal_data import show_person_b
         if not show_person_b(prefilled_data):
             self.form = self.FormSingle
 
