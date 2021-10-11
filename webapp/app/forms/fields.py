@@ -197,7 +197,7 @@ class LegacySteuerlotseDateField(DateField):
         else:
             kwargs['render_kw'] = {'class': "date_input form-control",
                                    'data-example-input': _('fields.date_field.example_input.text')}
-        super(LegacySteuerlotseDateField, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.widget = LegacySteuerlotseDateWidget()
 
     def _value(self):
@@ -211,7 +211,7 @@ class SteuerlotseDateField(DateField):
 
     def __init__(self, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
-        super(SteuerlotseDateField, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def _value(self):
         if self.data:
@@ -245,7 +245,7 @@ class LegacyIdNrField(SteuerlotseStringField):
         can split it into the expected chunks as seen in _value().
     """
     def __init__(self, label='', validators=None, **kwargs):
-        super(LegacyIdNrField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
         self.widget = LegacyIdNrWidget()
 
     def process_formdata(self, valuelist):
@@ -332,7 +332,7 @@ class EuroFieldWidget(TextInput):
     def __call__(self, field, **kwargs):
         _add_classes_to_kwargs(kwargs, ['euro_field form-control'])
         kwargs['onwheel'] = 'this.blur()'
-        markup_input = super(EuroFieldWidget, self).__call__(field, **kwargs)
+        markup_input = super().__call__(field, **kwargs)
 
         markup = Markup(
             Markup('<div class="input-group euro-field">') +
@@ -349,7 +349,7 @@ class EuroField(Field):
     widget = EuroFieldWidget()
 
     def __init__(self, label, locale='de_DE', **kwargs):
-        super(EuroField, self).__init__(label, **kwargs)
+        super().__init__(label, **kwargs)
         self.locale = locale
         self.default_value = ''
         if 'render_kw' not in kwargs:
@@ -381,7 +381,7 @@ class SteuerlotseSelectField(SelectField):
                 kwargs['render_kw']['class'] = "custom-select steuerlotse-select"
         else:
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
-        super(SteuerlotseSelectField, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
 
 class ConfirmationField(BooleanField):
@@ -389,7 +389,7 @@ class ConfirmationField(BooleanField):
 
     def __init__(self, label=None, false_values=None, input_required=True, **kwargs):
         kwargs.setdefault('validators', [InputRequired(message=_l('confirmation_field_must_be_set'))] if input_required else [])
-        super(BooleanField, self).__init__(
+        super().__init__(
             label,
             **kwargs
         )
@@ -473,7 +473,7 @@ class YesNoWidget(object):
 class YesNoField(RadioField):
     def __init__(self, label='', validators=None, **kwargs):
         kwargs['choices'] = [('yes', _('switch.yes')), ('no', _('switch.no'))]
-        super(YesNoField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
         self.widget = YesNoWidget()
 
     def process(self, formdata, data=unset_value):
@@ -495,6 +495,6 @@ class YesNoField(RadioField):
         # result: {}
         if request and request.method == 'POST' and data != unset_value and \
                 (not formdata or self.name not in formdata):
-            super(YesNoField, self).process(formdata)
+            super().process(formdata)
         else:
-            super(YesNoField, self).process(formdata, data)
+            super().process(formdata, data)
