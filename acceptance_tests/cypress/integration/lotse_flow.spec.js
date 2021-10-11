@@ -651,12 +651,6 @@ context('Acceptance tests', () => {
                 expect(loc.pathname.toString()).to.contain('/lotse/step/vorsorge');
             });
 
-            // Redirect gem_haushalt
-            cy.visit('/lotse/step/gem_haushalt?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/familienstand');
-            });
-
 
             // Set familienstand divorced
             cy.visit('/lotse/step/familienstand')

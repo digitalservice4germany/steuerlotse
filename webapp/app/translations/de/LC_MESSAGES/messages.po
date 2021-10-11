@@ -2555,7 +2555,7 @@ msgstr "Gemeinsamer Haushalt"
 msgid "form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe"
 msgstr ""
 "Bitte überspringen Sie diese Angaben. Die Angabe zum gemeinsamen Haushalt"
-" ist nur relevant, wenn Sie Angaben zu haushaltsnaheh Tätigkeiten und "
+" ist nur relevant, wenn Sie Angaben zu haushaltsnahen Tätigkeiten und "
 "Dienstleistungen und/oder Handwerkerleistungen machen."
 
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:262
