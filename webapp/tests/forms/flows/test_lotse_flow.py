@@ -27,14 +27,14 @@ from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_I
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
+from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
     StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
-    InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData
+    InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockIbanStep, \
     MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStepHandwerker, \
@@ -984,21 +984,23 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
                 create_audit_log_fun.assert_not_called()
 
-    def test_if_familienstand_step_then_delete_person_b_data_correctly(self):
+    def test_if_familienstand_step_and_familienstand_changes_to_single_then_delete_person_b_data_correctly(self):
         person_b_fields = ['person_b_same_address', 'person_b_dob', 'person_b_last_name', 'person_b_first_name',
                            'person_b_religion', 'person_b_street', 'person_b_street_number', 'person_b_idnr',
                            'person_b_street_number_ext', 'person_b_address_ext', 'person_b_plz',
                            'person_b_town', 'person_b_beh_grad', 'person_b_blind', 'person_b_gehbeh',
-                           'is_person_a_account_holder']
+                           'account_holder']
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
-                                                 'familienstand_date': '1985-01-01'}):
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'no',
+                                                 'familienstand_confirm_zusammenveranlagung': True}):
             _, returned_data = self.flow._handle_specifics_for_step(
                 self.familienstand_step, self.render_info_familienstand_step,
                 copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1]))
 
             self.assertIn('person_b_idnr', returned_data)
-            self.assertIn('is_person_a_account_holder', returned_data)
+            self.assertIn('account_holder', returned_data)
 
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'single'}):
@@ -1007,6 +1009,49 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 copy.deepcopy(LotseMultiStepFlow._DEBUG_DATA[1]))
             for person_b_field in person_b_fields:
                 self.assertNotIn(person_b_field, returned_data)
+
+    def test_if_familienstand_step_and_familienstand_stays_single_the_same_then_do_not_delete_is_user_account_holder(self):
+        field_not_deleted = 'is_user_account_holder'
+        data = {'familienstand': 'single', 'is_user_account_holder': 'yes'}
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'single'}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+            self.assertIn(field_not_deleted, returned_data)
+
+    def test_if_familienstand_step_and_familienstand_stays_married_the_same_then_do_not_delete_is_user_account_holder(self):
+        field_not_deleted = 'account_holder'
+        data = {'familienstand': 'married',
+                'familienstand_date': ['1', '1', '1985'],
+                'familienstand_married_lived_separated': 'no',
+                'familienstand_confirm_zusammenveranlagung': True,
+                'account_holder': 'person_a'}
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'married',
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'no',
+                                                 'familienstand_confirm_zusammenveranlagung': True}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+            self.assertIn(field_not_deleted, returned_data)
+
+    def test_if_familienstand_step_and_familienstand_changes_to_married_then_delete_is_user_account_holder(self):
+        field_to_delete = 'is_user_account_holder'
+        data = {'familienstand': 'single', 'is_user_account_holder': 'yes'}
+
+        with self.app.test_request_context(method='POST',
+                                           data={'familienstand': 'married',
+                                                 'familienstand_date': ['1', '1', '1985'],
+                                                 'familienstand_married_lived_separated': 'no',
+                                                 'familienstand_confirm_zusammenveranlagung': True}):
+            _, returned_data = self.flow._handle_specifics_for_step(
+                self.familienstand_step, self.render_info_familienstand_step,
+                copy.deepcopy(data))
+            self.assertNotIn(field_to_delete, returned_data)
 
     def test_if_familienstand_step_then_delete_familienstand_date_correctly(self):
         with self.app.test_request_context(method='POST',
@@ -1341,8 +1386,8 @@ class TestLotseGetOverviewData(unittest.TestCase):
                             StepIban.label,
                             flow.url_for_step(StepIban.name, _has_link_overview=True),
                             {str(debug_data['iban']): debug_data['iban'],
-                                str(debug_data['is_person_a_account_holder']): debug_data[
-                                    'is_person_a_account_holder']}
+                                str(debug_data['account_holder']): debug_data[
+                                    'account_holder']}
                         )
                 }
             ),
@@ -1377,7 +1422,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
         debug_data = copy.deepcopy(flow.default_data()[1])
-        missing_fields = ['iban', 'is_person_a_account_holder']
+        missing_fields = ['iban', 'account_holder']
         for missing_field in missing_fields:
             debug_data.pop(missing_field)
         mandatory_data_missing_value = _l('form.lotse.missing_mandatory_field')
@@ -1392,7 +1437,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
                             flow.url_for_step(StepIban.name, _has_link_overview=True),
                             {_l('form.lotse.field_iban.data_label'): mandatory_data_missing_value,
                                 _l(
-                                    'form.lotse.field_is_person_a_account_holder.data_label'): mandatory_data_missing_value}
+                                    'form.lotse.iban.account-holder.data_label'): mandatory_data_missing_value}
                         )
                 }
             ),
@@ -1433,7 +1478,7 @@ class TestShowPersonBLotseFlow(unittest.TestCase):
 
     def test_if_familienstand_given_familienstand_model_show_person_b_is_called(self):
         data = {'familienstand': 'single'}
-        with patch('app.model.form_data.FamilienstandModel.show_person_b') as model_show_person_b_mock:
+        with patch('app.model.form_data.FamilienstandModel._show_person_b') as model_show_person_b_mock:
             show_person_b(data)
             model_show_person_b_mock.assert_called()
 
@@ -1466,7 +1511,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_blind': True,
             'person_a_gehbeh': True,
 
-            'is_person_a_account_holder': 'yes',
+            'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes', }
@@ -1502,7 +1547,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_blind': False,
             'person_b_gehbeh': False,
 
-            'is_person_a_account_holder': 'yes',
+            'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes', }
@@ -1552,6 +1597,7 @@ class TestLotseValidateInput(unittest.TestCase):
                         'confirm_data_privacy': True,
                         'confirm_complete_correct': True,
                         'confirm_terms_of_service': True,
+                        'account_holder': 'person_b'
                         }}
 
         try:
@@ -1647,7 +1693,7 @@ class TestLotseValidateInput(unittest.TestCase):
         expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'steuerminderung', 'iban', 'is_person_a_account_holder', ]
+                                   'person_a_gehbeh', 'steuerminderung', 'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,

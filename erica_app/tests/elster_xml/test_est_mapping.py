@@ -374,7 +374,7 @@ class TestEstMapping(unittest.TestCase):
 
     def test_if_person_a_is_kontoinhaber_then_set_correct_field(self):
         form_data = {
-            'is_person_a_account_holder': True,
+            'account_holder': 'person_a',
         }
 
         results = check_and_generate_entries(form_data)
@@ -382,9 +382,9 @@ class TestEstMapping(unittest.TestCase):
         self.assertNotIn('E0102402', results.keys())
         self.assertEqual('X', results['E0101601'])
 
-    def test_if_person_a_is_not_kontoinhaber_then_set_correct_field(self):
+    def test_if_person_b_is_kontoinhaber_then_set_correct_field(self):
         form_data = {
-            'is_person_a_account_holder': False,
+            'account_holder': 'person_b',
         }
 
         results = check_and_generate_entries(form_data)

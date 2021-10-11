@@ -1,9 +1,8 @@
 from flask import request
-from pydantic import ValidationError
 from wtforms import validators
 from wtforms.validators import InputRequired
 
-from flask_babel import lazy_gettext as _l, _, ngettext
+from flask_babel import lazy_gettext as _l, ngettext
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
@@ -13,7 +12,7 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.forms.steps.step import SectionLink
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
 from app.forms.validators import DecimalOnly, IntegerLength
-from app.model.form_data import FamilienstandModel
+from app.model.form_data import show_person_b
 
 
 class LotseFormSteuerlotseStep(FormSteuerlotseStep):
@@ -148,11 +147,3 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
                                                                     'form.lotse.steuernummer.request_new_tax_number',
                                                                     num=num_of_users)
-
-
-def show_person_b(personal_data):
-    try:
-        familienstand_model = FamilienstandModel.parse_obj(personal_data)
-        return familienstand_model.show_person_b()
-    except ValidationError:
-        return False

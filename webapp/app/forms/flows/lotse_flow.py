@@ -19,7 +19,7 @@ from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
+from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
@@ -27,7 +27,7 @@ from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import S
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
-    IdNrMismatchInputValidationError
+    IdNrMismatchInputValidationError, show_person_b
 
 SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
@@ -77,7 +77,8 @@ class LotseMultiStepFlow(MultiStepFlow):
             'person_b_blind': False,
             'person_b_gehbeh': False,
 
-            'is_person_a_account_holder': 'yes',
+            #'is_user_account_holder': 'yes', use for single user
+            'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes',
@@ -250,7 +251,9 @@ class LotseMultiStepFlow(MultiStepFlow):
         elif isinstance(step, StepFamilienstand):
             if request.method == 'POST' and render_info.form.validate():
                 if not show_person_b(stored_data):
-                    stored_data = self._delete_dependent_data(['person_b', 'is_person_a_account_holder'], stored_data)
+                    stored_data = self._delete_dependent_data(['person_b', 'account_holder'], stored_data)
+                else:
+                    stored_data = self._delete_dependent_data(['is_user_account_holder'], stored_data)
                 if stored_data['familienstand'] == 'single':
                     stored_data = self._delete_dependent_data(['familienstand_date'], stored_data)
                 if stored_data['familienstand'] == 'married':

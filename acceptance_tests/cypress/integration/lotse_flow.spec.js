@@ -283,7 +283,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=is_person_a_account_holder]').first().click()
+                cy.get('label[for=is_user_account_holder]').first().click()
                 cy.get('#iban').type(taxReturnData.iban)
                 cy.get(submitBtnSelector).click()
 
@@ -333,7 +333,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=is_person_a_account_holder]').first().click()
+                cy.get('label[for=is_user_account_holder]').first().click()
                 cy.get('#iban').type(taxReturnData.iban)
                 cy.get(submitBtnSelector).click()
 
@@ -412,7 +412,7 @@ context('Acceptance tests', () => {
                 cy.get('select[id=person_b_religion]').select('ev')
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=is_person_a_account_holder-0]').first().click()
+                cy.get('label[for=account_holder-0]').first().click()
                 cy.get('#iban').type(taxReturnData.iban)
                 cy.get(submitBtnSelector).click()
 
