@@ -61,7 +61,7 @@ class StepChooser:
             next_step=self.determine_next_step(step_name, stored_data),
             session_data_identifier=self.session_data_identifier,
             update_data=should_update_data,
-            data_is_valid=data_is_valid is not None,
+            data_is_valid=data_is_valid,
             form_data=form_data
         )
 

@@ -1,7 +1,6 @@
-from flask import request
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
-from pydantic import ValidationError, BaseModel
+from pydantic import ValidationError
 from wtforms import RadioField
 from wtforms.validators import InputRequired
 

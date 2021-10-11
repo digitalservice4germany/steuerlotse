@@ -28,6 +28,13 @@ def step_with_bufa_choices(app, test_request_context):
 
 class TestStepSteuernummer:
 
+    def test_if_steuernummer_exists_and_hessen_and_tax_number_10_digits_then_fail_validation(self, step_with_bufa_choices):
+        data = MultiDict({'steuernummer_exists': 'yes',
+                          'bundesland': 'HE',
+                          'steuernummer': '9811310010', })
+        form = step_with_bufa_choices.InputForm(formdata=data)
+        assert form.validate() is False
+
     def test_if_steuernummer_exists_missing_then_fail_validation(self, step_with_bufa_choices):
         data = MultiDict({'bundesland': 'BY',
                           'steuernummer': '19811310010', })

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-11 11:03+0200\n"
+"POT-Creation-Date: 2021-10-11 11:22+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -224,6 +224,13 @@ msgstr "Der Freischaltcode ist nicht valide."
 #: app/forms/validators.py:109 app/forms/validators.py:117
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
+
+#: app/forms/validators.py:126
+msgid "validate.invalid-hessen-tax-number"
+msgstr ""
+"In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
+"Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
+"Stelle eine 0 ein."
 
 #: app/forms/flows/eligibility_step_chooser.py:49
 msgid "form.eligibility.title"
