@@ -253,11 +253,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 if not show_person_b(stored_data):
                     stored_data = self._delete_dependent_data(['person_b', 'account_holder'], stored_data)
                 else:
-                    stored_data = self._delete_dependent_data(['is_user_account_holder'], stored_data)
+                    stored_data = self._delete_dependent_data(['is_user_account_holder', 'stmind_gem_haushalt'], stored_data)
                 if stored_data['familienstand'] == 'single':
                     stored_data = self._delete_dependent_data(['familienstand_date'], stored_data)
-                if stored_data['familienstand'] == 'married':
-                    stored_data = self._delete_dependent_data(['stmind_gem_haushalt'], stored_data)
         elif isinstance(step, StepPersonA):
             if show_person_b(stored_data):
                 render_info.next_url = self.url_for_step(StepPersonB.name)
