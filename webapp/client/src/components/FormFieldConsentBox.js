@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
+import checkedIcon from "../assets/icons/checked.svg";
 
 const ConsentBox = styled.div`
   &.checkbox {
@@ -27,7 +28,7 @@ const ConsentBox = styled.div`
 
   &.checkbox input:checked + label {
     background-color: var(--link-color);
-    background-image: url("../images/checked.svg");
+    background-image: url(${checkedIcon});
     background-repeat: no-repeat;
     background-size: 22px;
     background-position: center;
@@ -47,7 +48,7 @@ const ConsentBox = styled.div`
 function FormFieldConsentBox({
   fieldName,
   fieldId,
-  value,
+  checked,
   required,
   autofocus,
   labelText,
@@ -66,8 +67,11 @@ function FormFieldConsentBox({
           <input
             type="checkbox"
             id={fieldId}
-            defaultValue={value}
+            name={fieldName}
             required={required}
+            defaultChecked={checked}
+            // TODO: autofocus is under review.
+            // eslint-disable-next-line
             autoFocus={autofocus}
           />
           {/* TODO: there should be only one label for an input */}
@@ -90,14 +94,14 @@ FormFieldConsentBox.propTypes = {
   fieldId: PropTypes.string.isRequired,
   labelText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
     .isRequired,
-  value: PropTypes.string,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  checked: PropTypes.bool,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
 };
 
 FormFieldConsentBox.defaultProps = {
-  value: "y", // the default of WTForms BooleanField
+  checked: false,
   required: false,
   autofocus: false,
 };

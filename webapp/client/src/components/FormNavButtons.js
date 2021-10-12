@@ -118,10 +118,7 @@ export default function FormNavButtons({
       </Button>
 
       {explanatoryButtonText && (
-        // The one (!) place this is being used contains HTML tags, so we need to render as unsafe HTML.
-        <ExplanatoryText
-          dangerouslySetInnerHTML={{ __html: explanatoryButtonText }}
-        />
+        <ExplanatoryText>{explanatoryButtonText}</ExplanatoryText>
       )}
     </Row>
   );
@@ -130,7 +127,10 @@ export default function FormNavButtons({
 FormNavButtons.propTypes = {
   nextButtonLabel: PropTypes.string,
   showOverviewButton: PropTypes.bool,
-  explanatoryButtonText: PropTypes.string,
+  explanatoryButtonText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
 };
 
 FormNavButtons.defaultProps = {

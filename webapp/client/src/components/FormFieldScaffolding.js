@@ -15,8 +15,8 @@ const FormField = styled.div`
 `;
 
 // TODO: implement concrete fields with this:
-// - BooleanField, YesNoField: hideLabel=True
-// - RadioField, SteuerlotseDateField: hideLabel=True hideErrors=True
+// - YesNoField: hideLabel=True
+// - RadioField: hideLabel=True hideErrors=True
 export default function FormFieldScaffolding({
   render,
   fieldName,
