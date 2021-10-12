@@ -492,14 +492,12 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
 
     @validator('elster_registration_method_eligibility')
     def elster_registration_method_must_be_software(cls, v):
-        # in case of unknown we do not direct to the success page
         if v != 'software':
             raise ValueError
         return v
 
     @validator('elster_abrufcode_eligibility')
     def elster_abrufcode_must_be_no(cls, v):
-        # in case of unknown we do not direct to the success page
         if v != 'no':
             raise ValueError
         return v

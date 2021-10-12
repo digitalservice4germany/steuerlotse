@@ -1478,7 +1478,7 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
                                 'joint_taxes_eligibility': 'no',
                                 'alimony_eligibility': 'no',
                                 'user_a_has_elster_account_eligibility': 'yes'}
-        yield correct_session_data
+        return correct_session_data
 
     def test_if_post_and_session_data_correct_and_input_data_software_then_set_next_input_step(self, app, correct_session_data):
         with app.test_request_context(method='POST',
@@ -1610,7 +1610,7 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
                                 'alimony_eligibility': 'no',
                                 'user_a_has_elster_account_eligibility': 'yes',
                                 'elster_registration_method_eligibility': 'software'}
-        yield correct_session_data
+        return correct_session_data
 
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_next_input_step(self, app, correct_session_data):
         with app.test_request_context(method='POST',
@@ -3120,21 +3120,21 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             'taxed_investment_income_eligibility': 'yes', 'cheaper_check_eligibility': 'no',
             'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
             'other_income_eligibility': 'no'}
-        yield correct_session_data_without_registration_method
+        return correct_session_data_without_registration_method
 
     @pytest.fixture
     def correct_session_data_with_registration_method_software(self, correct_session_data_without_registration_method):
         correct_session_data_with_registration_method_software = {
             **correct_session_data_without_registration_method,
             **{'elster_registration_method_eligibility': 'software'}}
-        yield correct_session_data_with_registration_method_software
+        return correct_session_data_with_registration_method_software
 
     @pytest.fixture
     def correct_session_data_with_registration_method_unknown(self, correct_session_data_without_registration_method):
         correct_session_data_with_registration_method_unknown = {
             **correct_session_data_without_registration_method,
             **{'elster_registration_method_eligibility': 'unknown'}}
-        yield correct_session_data_with_registration_method_unknown
+        return correct_session_data_with_registration_method_unknown
 
     def test_if_post_and_session_data_correct_without_registration_method_and_input_data_correct_then_set_success_step(self, app, correct_session_data_without_registration_method):
         with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
