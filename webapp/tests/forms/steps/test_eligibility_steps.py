@@ -3123,18 +3123,18 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
         yield correct_session_data_without_registration_method
 
     @pytest.fixture
-    def correct_session_data_with_registration_method_not_unknown(self, correct_session_data_without_registration_method):
-        correct_session_data_with_registration_method_not_unknown = {
+    def correct_session_data_with_registration_method_software(self, correct_session_data_without_registration_method):
+        correct_session_data_with_registration_method_software = {
             **correct_session_data_without_registration_method,
             **{'elster_registration_method_eligibility': 'software'}}
-        yield correct_session_data_with_registration_method_not_unknown
+        yield correct_session_data_with_registration_method_software
 
     @pytest.fixture
     def correct_session_data_with_registration_method_unknown(self, correct_session_data_without_registration_method):
-        correct_session_data_with_registration_method_not_unknown = {
+        correct_session_data_with_registration_method_unknown = {
             **correct_session_data_without_registration_method,
             **{'elster_registration_method_eligibility': 'unknown'}}
-        yield correct_session_data_with_registration_method_not_unknown
+        yield correct_session_data_with_registration_method_unknown
 
     def test_if_post_and_session_data_correct_without_registration_method_and_input_data_correct_then_set_success_step(self, app, correct_session_data_without_registration_method):
         with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
@@ -3147,10 +3147,10 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
 
         assert step.render_info.next_url == expected_url
 
-    def test_if_post_and_session_data_correct_with_registration_method_not_unknown_and_input_data_correct_then_set_next_step_to_success_step(self, app, correct_session_data_with_registration_method_not_unknown):
+    def test_if_post_and_session_data_correct_with_registration_method_software_and_input_data_correct_then_set_next_step_to_success_step(self, app, correct_session_data_with_registration_method_software):
         with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
             req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_with_registration_method_not_unknown)})
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_with_registration_method_software)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
             expected_url = step.url_for_step(EligibilitySuccessDisplaySteuerlotseStep.name)
