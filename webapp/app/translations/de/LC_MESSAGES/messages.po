@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-11 17:43+0200\n"
+"POT-Creation-Date: 2021-10-13 16:34+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -577,7 +577,7 @@ msgid "form.eligibility.elster_registration_method.card"
 msgstr "Signaturkarte"
 
 #: app/forms/steps/eligibility_steps.py:452
-msgid "form.eligibility.elster_registration_method.none"
+msgid "form.eligibility.elster_registration_method.unknown"
 msgstr "Weiß ich nicht"
 
 #: app/forms/steps/eligibility_steps.py:459
@@ -616,7 +616,7 @@ msgid "form.eligibility.elster_abrufcode_eligibility.no"
 msgstr "Nein"
 
 #: app/forms/steps/eligibility_steps.py:479
-msgid "form.eligibility.elster_abrufcode_eligibility.none"
+msgid "form.eligibility.elster_abrufcode_eligibility.unknown"
 msgstr "Weiß ich nicht"
 
 #: app/forms/steps/eligibility_steps.py:486
