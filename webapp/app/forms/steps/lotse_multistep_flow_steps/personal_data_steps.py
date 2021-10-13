@@ -12,7 +12,7 @@ from wtforms import RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
 
 from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
-from app.model.form_data import FamilienstandModel, show_person_b
+from app.model.form_data import show_person_b
 from app.utils import get_first_day_of_tax_period
 
 
@@ -278,14 +278,9 @@ class StepPersonA(FormStep):
 
 
 def get_number_of_users(input_data):
-    try:
-        familienstand_model = FamilienstandModel.parse_obj(input_data)
-    except ValidationError:
-        return 1
-    if familienstand_model._show_person_b():
+    if show_person_b(input_data):
         return 2
-    else:
-        return 1
+    return 1
 
 
 class StepPersonB(FormStep):
@@ -395,14 +390,9 @@ class StepPersonB(FormStep):
 
     @classmethod
     def get_redirection_info_if_skipped(cls, input_data):
-        try:
-            familienstand_model = FamilienstandModel.parse_obj(input_data)
-            if familienstand_model._show_person_b():
-                return None, None
-            else:
-                return StepFamilienstand.name, _l('form.lotse.skip_reason.familienstand_single')
-        except ValidationError:
-            return StepFamilienstand.name, _l('form.lotse.skip_reason.familienstand_single')
+        if show_person_b(input_data):
+            return None, None
+        return StepFamilienstand.name, _l('form.lotse.skip_reason.familienstand_single')
 
 
 class StepIban(FormStep):

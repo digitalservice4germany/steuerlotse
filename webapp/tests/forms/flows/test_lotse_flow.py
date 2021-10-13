@@ -1467,7 +1467,7 @@ class TestShowPersonBLotseFlow(unittest.TestCase):
 
     def test_if_familienstand_given_familienstand_model_show_person_b_is_called(self):
         data = {'familienstand': 'single'}
-        with patch('app.model.form_data.FamilienstandModel._show_person_b') as model_show_person_b_mock:
+        with patch('app.model.form_data.JointTaxesModel.show_person_b') as model_show_person_b_mock:
             show_person_b(data)
             model_show_person_b_mock.assert_called()
 

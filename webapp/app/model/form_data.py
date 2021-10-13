@@ -5,7 +5,7 @@ from typing import Optional, Any, List
 
 from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
-from pydantic import BaseModel, validator, MissingError, ValidationError
+from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator
 from pydantic.error_wrappers import ErrorWrapper
 
 from app.data_access.user_controller import check_idnr
@@ -28,33 +28,43 @@ class FamilienstandModel(BaseModel):
     familienstand_zusammenveranlagung: Optional[str]
     familienstand_confirm_zusammenveranlagung: Optional[bool]
 
-    def _show_person_b(self):
+
+class JointTaxesModel(FamilienstandModel):
+    @root_validator
+    def check_that_joint_taxes(cls, values):
         married_not_separated = \
-            self.familienstand == 'married' and \
-            self.familienstand_married_lived_separated == 'no'
+            values.get('familienstand') == 'married' and \
+            values.get('familienstand_married_lived_separated') == 'no'
         married_separated_recently_zusammenveranlagung = \
-            self.familienstand == 'married' and \
-            self.familienstand_married_lived_separated == 'yes' and \
-            self.familienstand_married_lived_separated_since > get_first_day_of_tax_period() and \
-            self.familienstand_zusammenveranlagung == 'yes'
+            values.get('familienstand') == 'married' and \
+            values.get('familienstand_married_lived_separated') == 'yes' and \
+            values.get('familienstand_married_lived_separated_since') > get_first_day_of_tax_period() and \
+            values.get('familienstand_zusammenveranlagung') == 'yes'
         widowed_recently_not_separated = \
-            self.familienstand == 'widowed' and \
-            self.familienstand_date >= get_first_day_of_tax_period() and \
-            self.familienstand_widowed_lived_separated == 'no'
+            values.get('familienstand') == 'widowed' and \
+            values.get('familienstand_date') >= get_first_day_of_tax_period() and \
+            values.get('familienstand_widowed_lived_separated') == 'no'
         widowed_separated_recently_zusammenveranlagung = \
-            self.familienstand == 'widowed' and \
-            self.familienstand_date >= get_first_day_of_tax_period() and \
-            self.familienstand_widowed_lived_separated == 'yes' and \
-            self.familienstand_widowed_lived_separated_since > get_first_day_of_tax_period() and \
-            self.familienstand_zusammenveranlagung == 'yes'
+            values.get('familienstand') == 'widowed' and \
+            values.get('familienstand_date') >= get_first_day_of_tax_period() and \
+            values.get('familienstand_widowed_lived_separated') == 'yes' and \
+            values.get('familienstand_widowed_lived_separated_since') > get_first_day_of_tax_period() and \
+            values.get('familienstand_zusammenveranlagung') == 'yes'
 
-        return (
-                married_not_separated or
-                married_separated_recently_zusammenveranlagung or
-                widowed_recently_not_separated or
-                widowed_separated_recently_zusammenveranlagung
-        )
-
+        if married_not_separated or married_separated_recently_zusammenveranlagung or \
+                widowed_recently_not_separated or widowed_separated_recently_zusammenveranlagung:
+            return values
+        else:
+            raise ValidationError
+    
+    @classmethod
+    def show_person_b(cls, values):
+        try:
+            cls.parse_obj(values)
+            return True
+        except ValidationError:
+            return False
+    
 
 class MandatoryFormData(BaseModel):
     declaration_edaten: bool
@@ -265,9 +275,5 @@ class IdNrMismatchInputValidationError(InputDataInvalidError):
     pass
 
 
-def show_person_b(personal_data):
-    try:
-        familienstand_model = FamilienstandModel.parse_obj(personal_data)
-        return familienstand_model._show_person_b()
-    except ValidationError:
-        return False
+def show_person_b(input_data):
+    return JointTaxesModel.show_person_b(input_data)
