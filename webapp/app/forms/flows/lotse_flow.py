@@ -13,7 +13,7 @@ from app.data_access.audit_log_controller import create_audit_log_confirmation_e
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
-from app.forms.fields import SteuerlotseSelectField, YesNoField, SteuerlotseDateField, SteuerlotseStringField, \
+from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
@@ -21,14 +21,14 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, show_person_b
+from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
-    IdNrMismatchInputValidationError
+    IdNrMismatchInputValidationError, show_person_b
 
 SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
@@ -78,7 +78,8 @@ class LotseMultiStepFlow(MultiStepFlow):
             'person_b_blind': False,
             'person_b_gehbeh': False,
 
-            'is_person_a_account_holder': 'yes',
+            #'is_user_account_holder': 'yes', use for single user
+            'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',
 
             'steuerminderung': 'yes',
@@ -251,11 +252,11 @@ class LotseMultiStepFlow(MultiStepFlow):
         elif isinstance(step, StepFamilienstand):
             if request.method == 'POST' and render_info.form.validate():
                 if not show_person_b(stored_data):
-                    stored_data = self._delete_dependent_data(['person_b', 'is_person_a_account_holder'], stored_data)
+                    stored_data = self._delete_dependent_data(['person_b', 'account_holder'], stored_data)
+                else:
+                    stored_data = self._delete_dependent_data(['is_user_account_holder', 'stmind_gem_haushalt'], stored_data)
                 if stored_data['familienstand'] == 'single':
                     stored_data = self._delete_dependent_data(['familienstand_date'], stored_data)
-                if stored_data['familienstand'] == 'married':
-                    stored_data = self._delete_dependent_data(['stmind_gem_haushalt'], stored_data)
         elif isinstance(step, StepPersonA):
             if show_person_b(stored_data):
                 render_info.next_url = self.url_for_step(StepPersonB.name)
@@ -354,7 +355,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             value_representation = "Ja" if value == "yes" else "Nein"
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"
-        elif field.field_class == SteuerlotseDateField:
+        elif field.field_class in (SteuerlotseDateField, LegacySteuerlotseDateField):
             value_representation = value.strftime("%d.%m.%Y")
         elif field.field_class == EntriesField:
             value_representation = ', '.join(value)

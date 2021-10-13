@@ -26,6 +26,7 @@ python-json-logger = "*"
 pydantic = "*"
 flask-static-digest = "*"
 python-dotenv = "*"
+pyhumps = "*"
 
 [dev-packages]
 pytest = "*"

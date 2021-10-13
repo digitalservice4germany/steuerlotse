@@ -162,27 +162,7 @@ class MultipleInputFieldWidget(TextInput, BaselineBugFixMixin):
                                       input_field_lengths=self.input_field_lengths))
 
 
-class UnlockCodeWidget(AlphaNumericInputMixin, MultipleInputFieldWidget):
-    """A divided input field with three text input fields, limited to four chars."""
-    sub_field_separator = '-'
-    input_field_lengths = [4, 4, 4]
-
-    def __call__(self, *args, **kwargs):
-        kwargs = self.set_inputmode(kwargs)
-
-        return super().__call__(*args, **kwargs)
-
-
-class UnlockCodeField(StringField):
-    def __init__(self, label='', validators=None, **kwargs):
-        super(UnlockCodeField, self).__init__(label, validators, **kwargs)
-        self.widget = UnlockCodeWidget()
-
-    def __call__(self, *args, **kwargs):
-        kwargs['class'] = kwargs.get('class', '') + ' unlock-input'
-
-        return super().__call__(**kwargs)
-
+class UnlockCodeField(SteuerlotseStringField):
     def process_formdata(self, valuelist):
         if valuelist:
             self.data = '-'.join(valuelist).upper()
@@ -190,13 +170,10 @@ class UnlockCodeField(StringField):
             self.data = ''
 
     def _value(self):
-        return self.data.split('-') if self.data else ''
-
-    def pre_validate(self, form):
-        ValidElsterCharacterSet().__call__(form, self)
+        return self.data.split('-') if self.data else ['', '', '']
 
 
-class SteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
+class LegacySteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     separator = ''
     input_field_lengths = [2, 2, 4]
     input_field_labels = [_l('date-field.day'), _l('date-field.month'), _l('date-field.year')]
@@ -208,7 +185,7 @@ class SteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, Multip
         return super().__call__(*args, **kwargs)
 
 
-class SteuerlotseDateField(DateField):
+class LegacySteuerlotseDateField(DateField):
 
     def __init__(self, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
@@ -220,17 +197,30 @@ class SteuerlotseDateField(DateField):
         else:
             kwargs['render_kw'] = {'class': "date_input form-control",
                                    'data-example-input': _('fields.date_field.example_input.text')}
-        super(SteuerlotseDateField, self).__init__(**kwargs)
-        self.widget = SteuerlotseDateWidget()
+        super().__init__(**kwargs)
+        self.widget = LegacySteuerlotseDateWidget()
 
     def _value(self):
         if self.data:
-            return [self.data.day, self.data.month, self.data.year]
+            return [str(self.data.day), str(self.data.month), str(self.data.year)]
         else:
             return self.raw_data if self.raw_data else []
 
 
-class IdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
+class SteuerlotseDateField(DateField):
+
+    def __init__(self, **kwargs):
+        kwargs.setdefault('format', "%d %m %Y")
+        super().__init__(**kwargs)
+
+    def _value(self):
+        if self.data:
+            return [str(self.data.day), str(self.data.month), str(self.data.year)]
+        else:
+            return self.raw_data if self.raw_data else []
+
+
+class LegacyIdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
     sub_field_separator = ''
     input_field_lengths = [2, 3, 3, 3]
@@ -242,7 +232,7 @@ class IdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFiel
         return super().__call__(*args, **kwargs)
 
 
-class IdNrField(SteuerlotseStringField):
+class LegacyIdNrField(SteuerlotseStringField):
     """
         Field to store the IdNr in four separate input fields.
 
@@ -255,8 +245,8 @@ class IdNrField(SteuerlotseStringField):
         can split it into the expected chunks as seen in _value().
     """
     def __init__(self, label='', validators=None, **kwargs):
-        super(IdNrField, self).__init__(label, validators, **kwargs)
-        self.widget = IdNrWidget()
+        super().__init__(label, validators, **kwargs)
+        self.widget = LegacyIdNrWidget()
 
     def process_formdata(self, valuelist):
         # The formdata (from the request) is written to self.data as is (as a list of inputted strings)
@@ -291,13 +281,58 @@ class IdNrField(SteuerlotseStringField):
             self.data = ''.join(self.data)
 
 
+class IdNrField(SteuerlotseStringField):
+    """
+        Field to store the IdNr in four separate input fields.
+
+        We get the formdata as a list of four strings (e.g. ['04', '452', '397', '687'])
+        but want to handle it in the rest of the program as one string (e.g. '04452397687').
+        At the same time, in case of a validation error (e.g. for ['04', '452', '3', '687']) we want to keep the order
+        of inputs to not confuse the user. Thus, we only concatenate the strings to one string on succeeded validation
+        in post_validate().
+        Once the input validates, we can be sure to have the complete, valid string in our data and
+        can split it into the expected chunks as seen in _value().
+    """
+    def process_formdata(self, valuelist):
+        # The formdata (from the request) is written to self.data as is (as a list of inputted strings)
+        if valuelist:
+            self.data = valuelist
+        elif self.data is None:
+            self.data = ['', '', '', '']
+
+    def _value(self):
+        """ Returns the representation of data as needed by the widget. In this case: a list of strings. """
+        # In case the validation was not successful, we already have the data as a list of strings
+        # (as it is not concatenated in post_validate()).
+        if isinstance(self.data, list):
+            return self.data
+
+        # Once the validation has gone through, post_validate() stores the data as string.
+        # As we know that it is correct, we can just separate it in chunks here.
+        split_data = []
+        chunk_sizes = [2, 3, 3, 3]
+        start_idx = 0
+        for chunk_size in chunk_sizes:
+            end_index = start_idx + chunk_size
+            if self.data:
+                split_data.append(self.data[start_idx: end_index])
+            start_idx = end_index
+        return split_data
+
+    def post_validate(self, form, validation_stopped):
+        # Once the validation has gone through, we know that the idnr is correct.
+        # We can therefore store it as a string and just separate it into chunks in self._value().
+        if not validation_stopped and len(self.errors) == 0:
+            self.data = ''.join(self.data)
+
+
 class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
     def __call__(self, field, **kwargs):
         _add_classes_to_kwargs(kwargs, ['euro_field form-control'])
         kwargs['onwheel'] = 'this.blur()'
-        markup_input = super(EuroFieldWidget, self).__call__(field, **kwargs)
+        markup_input = super().__call__(field, **kwargs)
 
         markup = Markup(
             Markup('<div class="input-group euro-field">') +
@@ -314,7 +349,7 @@ class EuroField(Field):
     widget = EuroFieldWidget()
 
     def __init__(self, label, locale='de_DE', **kwargs):
-        super(EuroField, self).__init__(label, **kwargs)
+        super().__init__(label, **kwargs)
         self.locale = locale
         self.default_value = ''
         if 'render_kw' not in kwargs:
@@ -346,7 +381,7 @@ class SteuerlotseSelectField(SelectField):
                 kwargs['render_kw']['class'] = "custom-select steuerlotse-select"
         else:
             kwargs['render_kw'] = {'class': "custom-select steuerlotse-select"}
-        super(SteuerlotseSelectField, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
 
 class ConfirmationField(BooleanField):
@@ -354,7 +389,7 @@ class ConfirmationField(BooleanField):
 
     def __init__(self, label=None, false_values=None, input_required=True, **kwargs):
         kwargs.setdefault('validators', [InputRequired(message=_l('confirmation_field_must_be_set'))] if input_required else [])
-        super(BooleanField, self).__init__(
+        super().__init__(
             label,
             **kwargs
         )
@@ -438,7 +473,7 @@ class YesNoWidget(object):
 class YesNoField(RadioField):
     def __init__(self, label='', validators=None, **kwargs):
         kwargs['choices'] = [('yes', _('switch.yes')), ('no', _('switch.no'))]
-        super(YesNoField, self).__init__(label, validators, **kwargs)
+        super().__init__(label, validators, **kwargs)
         self.widget = YesNoWidget()
 
     def process(self, formdata, data=unset_value):
@@ -460,6 +495,6 @@ class YesNoField(RadioField):
         # result: {}
         if request and request.method == 'POST' and data != unset_value and \
                 (not formdata or self.name not in formdata):
-            super(YesNoField, self).process(formdata)
+            super().process(formdata)
         else:
-            super(YesNoField, self).process(formdata, data)
+            super().process(formdata, data)

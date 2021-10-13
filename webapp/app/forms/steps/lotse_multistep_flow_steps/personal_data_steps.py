@@ -2,8 +2,8 @@ from pydantic import ValidationError
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
-from app.forms.fields import YesNoField, SteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
-    SteuerlotseStringField, IdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
+from app.forms.fields import YesNoField, LegacySteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
+    SteuerlotseStringField, LegacyIdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
     SteuerlotseNameStringField, SteuerlotseIbanField, SteuerlotseHouseNumberIntegerField
 
 from flask_babel import _, ngettext
@@ -12,7 +12,7 @@ from wtforms import RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
 
 from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
-from app.model.form_data import FamilienstandModel
+from app.model.form_data import FamilienstandModel, show_person_b
 from app.utils import get_first_day_of_tax_period
 
 
@@ -34,7 +34,7 @@ class StepFamilienstand(FormStep):
             ],
             validators=[InputRequired()]
         )
-        familienstand_date = SteuerlotseDateField(
+        familienstand_date = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_date'),
             render_kw={'data_label': _l('form.lotse.familienstand_date.data_label')},
             validators=())
@@ -42,7 +42,7 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_married_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_married_lived_separated.data_label')})
-        familienstand_married_lived_separated_since = SteuerlotseDateField(
+        familienstand_married_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
             validators=())
@@ -50,7 +50,7 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_widowed_lived_separated.data_label')})
-        familienstand_widowed_lived_separated_since = SteuerlotseDateField(
+        familienstand_widowed_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
             validators=())
@@ -181,11 +181,11 @@ class StepPersonA(FormStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
-        person_a_idnr = IdNrField(
+        person_a_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'),
             validators=[InputRequired(), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
-        person_a_dob = SteuerlotseDateField(
+        person_a_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired()])
         person_a_first_name = SteuerlotseNameStringField(
@@ -282,7 +282,7 @@ def get_number_of_users(input_data):
         familienstand_model = FamilienstandModel.parse_obj(input_data)
     except ValidationError:
         return 1
-    if familienstand_model.show_person_b():
+    if familienstand_model._show_person_b():
         return 2
     else:
         return 1
@@ -307,10 +307,10 @@ class StepPersonB(FormStep):
             else:
                 validators.Optional()(self, field)
 
-        person_b_idnr = IdNrField(
+        person_b_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
-        person_b_dob = SteuerlotseDateField(
+        person_b_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')},
             validators=[InputRequired()])
@@ -397,7 +397,7 @@ class StepPersonB(FormStep):
     def get_redirection_info_if_skipped(cls, input_data):
         try:
             familienstand_model = FamilienstandModel.parse_obj(input_data)
-            if familienstand_model.show_person_b():
+            if familienstand_model._show_person_b():
                 return None, None
             else:
                 return StepFamilienstand.name, _l('form.lotse.skip_reason.familienstand_single')
@@ -411,11 +411,11 @@ class StepIban(FormStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class Form(SteuerlotseBaseForm):
-        is_person_a_account_holder = RadioField(
-            label=_l('form.lotse.field_is_person_a_account_holder'),
-            render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder.data_label')},
-            choices=[('yes', _l('form.lotse.field_is_person_a_account_holder-person-a')),
-                     ('no', _l('form.lotse.field_is_person_a_account_holder-person-b')),
+        account_holder = RadioField(
+            label=_l('form.lotse.iban.account-holder'),
+            render_kw={'data_label': _l('form.lotse.iban.account-holder.data_label')},
+            choices=[('person_a', _l('form.lotse.iban.account-holder-person-a')),
+                     ('person_b', _l('form.lotse.iban.account-holder-person-b')),
                      ])
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
@@ -426,9 +426,9 @@ class StepIban(FormStep):
             filters=[lambda value: value.replace(' ', '') if value else value])
 
     class FormSingle(SteuerlotseBaseForm):
-        is_person_a_account_holder = ConfirmationField(
-            label=_l('form.lotse.field_is_person_a_account_holder_single'),
-            render_kw={'data_label': _l('form.lotse.field_is_person_a_account_holder_single.data_label')})
+        is_user_account_holder = ConfirmationField(
+            label=_l('form.lotse.field_is_user_account_holder'),
+            render_kw={'data_label': _l('form.lotse.field_is_user_account_holder.data_label')})
         iban = SteuerlotseIbanField(
             label=_l('form.lotse.field_iban'),
             render_kw={'data_label': _l('form.lotse.field_iban.data_label'),
@@ -448,7 +448,6 @@ class StepIban(FormStep):
         )
 
     def create_form(self, request, prefilled_data):
-        from app.forms.steps.lotse.personal_data import show_person_b
         if not show_person_b(prefilled_data):
             self.form = self.FormSingle
 

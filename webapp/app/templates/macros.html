@@ -55,7 +55,7 @@
         {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% elif field.type in ('BooleanField', 'YesNoField') %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
-    {% elif field.type == 'RadioField' or field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
+    {% elif field.type == 'RadioField' or field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True, first_field=first_field, optional=optional) }}
     {% else %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=hide_label, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
@@ -97,7 +97,7 @@
                 {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'YesNoField' %}
                 {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'UnlockCodeField' or field.type == 'IdNrField' or field.type == 'SteuerlotseDateField' %}
+            {% elif field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
                 {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% else %}
                 {% if first_field or field.errors %}
@@ -113,7 +113,7 @@
 
 {# ------------------------ #}
 
-{% macro form_nav_buttons(render_info, explanatory_button_text=None) -%}
+{% macro form_nav_buttons(render_info) -%}
     <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
             <button type="submit"
@@ -126,13 +126,10 @@
         {% else %}
             <button type="submit" class="btn btn-primary" name="next_button">{{ _('form.next') }}</button>
         {% endif %}
-        {% if explanatory_button_text %}
-            <small class="explanatory-button-text">{{ explanatory_button_text }}</small>
-        {% endif %}
     </div>
 {%- endmacro %}
 
-{% macro form_display_nav_buttons(render_info, explanatory_button_text=None) -%}
+{% macro form_display_nav_buttons(render_info) -%}
     <div class="form-row mt-4">
         {% if render_info.overview_url %}
             <a class="btn btn-outline-primary mr-2"
@@ -144,9 +141,6 @@
         {% else %}
             <a class="btn btn-primary {% if not render_info.next_url %}invisible{% endif %}" name="next_button"
                href="{{ render_info.next_url }}">{{ _('form.next') }}</a>
-        {% endif %}
-        {% if explanatory_button_text %}
-            <small class="explanatory-button-text">{{ explanatory_button_text }}</small>
         {% endif %}
     </div>
 {%- endmacro %}

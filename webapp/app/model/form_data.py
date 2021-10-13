@@ -28,7 +28,7 @@ class FamilienstandModel(BaseModel):
     familienstand_zusammenveranlagung: Optional[str]
     familienstand_confirm_zusammenveranlagung: Optional[bool]
 
-    def show_person_b(self):
+    def _show_person_b(self):
         married_not_separated = \
             self.familienstand == 'married' and \
             self.familienstand_married_lived_separated == 'no'
@@ -92,7 +92,8 @@ class MandatoryFormData(BaseModel):
     steuerminderung: str
 
     iban: str
-    is_person_a_account_holder: bool
+    account_holder: Optional[str]
+    is_user_account_holder: Optional[bool]
 
     def __init__(self, **data: Any) -> None:
         enriched_data = copy.deepcopy(data)
@@ -127,16 +128,20 @@ class MandatoryFormData(BaseModel):
 
     @validator('person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
                'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh',
+               'account_holder',
                always=True)
     def person_b_required_if_shown(cls, v, values, **kwargs):
-        try:
-            familienstand = FamilienstandModel.parse_obj(values.get('familienstandStruct', {}))
-        except ValidationError:
-            # if familienstand is not filled correctly, we cannot decide yet if person b is shown
-            return v
-
-        if familienstand.show_person_b() and not v:
+        if show_person_b(values.get('familienstandStruct', {})) and not v:
             raise MissingError()
+        return v
+
+    @validator('is_user_account_holder', always=True)
+    def account_holder_must_be_declared(cls, v, values):
+        if not show_person_b(values.get('familienstandStruct', {})):
+            if not values.get('is_user_account_holder') and not v:
+                raise MissingError
+            if not v:
+                raise MissingError
         return v
 
 
@@ -258,3 +263,11 @@ class IdNrMismatchInputValidationError(InputDataInvalidError):
     """Raised in case of a mismatch between the user's confirmed idnr and the entered idnr"""
     message = _l('form.lotse.input_invalid.idnr_mismatch')
     pass
+
+
+def show_person_b(personal_data):
+    try:
+        familienstand_model = FamilienstandModel.parse_obj(personal_data)
+        return familienstand_model._show_person_b()
+    except ValidationError:
+        return False
