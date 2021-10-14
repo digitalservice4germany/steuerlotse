@@ -21,3 +21,7 @@
     <p>{{ _('pdf_not_found.reasons.not_activated.intro') }}</p>
     {{ components.primaryButton( text=_('login.input-code'), url=url_for('unlock_code_activation', step='data_input')) }}
 {% endblock %}
+
+<!-- Override "js_required" block in the base.html - javascript is not required for this page -->
+{% block js_required %}
+{% endblock %}

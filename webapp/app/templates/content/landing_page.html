@@ -48,7 +48,6 @@
 
 {% set accordeons = [accordeon_home] %}
 
-
 {% block main_content %}
     <div class="main-content-home">
         <div class="container-fluid p-0">
@@ -121,4 +120,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+<!-- Override "js_required" block in the base.html - javascript is not required for this page -->
+{% block js_required %}
 {% endblock %}

@@ -45,14 +45,16 @@
         {% include 'basis/mobile_nav.html' %}
         {% include 'basis/sidebar.html' %}
         <main id="main" class="main">
-            <noscript>
-                {% include 'error/js_disabled.html' %}
+            {% block js_required %}
+                <noscript>
+                    {% include 'error/js_disabled.html' %}
 
-                <!-- If javascript is disabled, the main_content container is hidden. -->
-                <style type="text/css">
-                        #main_content { display: none!important; }
-                </style>
-            </noscript>
+                    <!-- If javascript is disabled, the main_content container is hidden. -->
+                    <style type="text/css">
+                            #main_content { display: none!important; }
+                    </style>
+                </noscript>
+            {% endblock %}
             <div id="main_content" class="container-fluid p-0 d-flex flex-column min-vh-100">
                 {% block flashed_messages %}
                     {% for category, message in get_flashed_messages(with_categories=True) %}
