@@ -5,6 +5,8 @@ import FormFieldScaffolding from "./FormFieldScaffolding";
 const Card = styled.label`
   background-color: var(--bg-white);
   padding: var(--spacing-04);
+  margin-bottom: var(--spacing-03);
+  margin-right: 0;
   justify-content: space-between;
   align-items: flex-start;
 
@@ -36,14 +38,22 @@ const Card = styled.label`
 
   & .checkmark {
     display: block;
+    position: absolute;
+    right: var(--spacing-04); // the card's padding
     width: 30px;
     height: 30px;
     min-width: 30px;
     min-height: 30px;
-    margin-left: var(--spacing-02);
+    margin-left: var(--spacing-06);
     cursor: pointer;
     background: white;
     border: 2px solid var(--text-color);
+  }
+  --checkmark-width: calc(30px + var(--spacing-06));
+
+  @media (max-width: 510px) {
+    & .checkmark {
+      margin-left: var(--spacing-02);
   }
 `;
 
@@ -70,8 +80,11 @@ const IconTextWrapper = styled.div`
   flex-wrap: inherit;
   align-items: flex-start;
 
+  margin-right: var(--checkmark-width);
+
   @media (max-width: 510px) {
     flex-wrap: wrap;
+    margin-right: 0;
   }
 `;
 
@@ -95,7 +108,7 @@ function FormFieldCard({
       }}
       hideLabel
       render={() => (
-        <Card htmlFor={fieldId} className="form-row checkbox col-lg-10">
+        <Card htmlFor={fieldId} className="form-row checkbox">
           <IconTextWrapper>
             {icon && <CardIcon src={icon} alt="Icon" />}
             <div>
