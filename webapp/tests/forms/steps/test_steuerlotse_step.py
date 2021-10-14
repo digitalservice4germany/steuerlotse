@@ -1,6 +1,7 @@
 import datetime
 import json
 import unittest
+from decimal import Decimal
 from unittest.mock import patch, MagicMock, call
 
 import pytest
@@ -171,6 +172,29 @@ class TestSteuerlotseStepHandle(unittest.TestCase):
             handle_result = steuerlotse_step.handle()
             self.assertEqual(post_handle_stored_data, handle_result)
 
+class TestSteuerlotseStepPrepareRenderInfo:
+
+    def test_if_single_then_set_title_and_intro_correct(self):
+
+        class MockSteuerlotseStep(SteuerlotseStep):
+            name = "Jonas"
+            title = "Joe"
+            title_multiple = "Kevin, Joe, Nick"
+            intro = "If he is alone, he sings for DNCE"
+            intro_multiple = "Together they are the Jonas Brothers"
+
+        with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users", MagicMock(return_value=1)):
+            render_info = MockSteuerlotseStep.prepare_render_info({})
+
+        pass
+
+
+
+
+    def test_if_multiple_then_set_title_and_intro_correct(self):
+
+        pass
+
 
 class TestSteuerlotseStepPreHandle(unittest.TestCase):
     @pytest.fixture(autouse=True)
@@ -181,7 +205,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_endpoint = "lotse"
 
         steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
-                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None,
+                                           render_info=SteuerlotseStep.prepare_render_info({}))
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -201,7 +226,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
 
         steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
                                            overview_step=None, default_data=None, prev_step=prev_step,
-                                           next_step=next_step)
+                                           next_step=next_step,
+                                           render_info=SteuerlotseStep.prepare_render_info({}))
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -228,7 +254,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
         steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
                                            overview_step=overview_step, default_data=None, prev_step=None,
-                                           next_step=None)
+                                           next_step=None,
+                                           render_info=SteuerlotseStep.prepare_render_info({}))
         steuerlotse_step.name = "This is the one"
         expected_render_info = RenderInfo(step_title=steuerlotse_step.title, step_intro=steuerlotse_step.intro,
                                             form=None, prev_url=None,
@@ -245,7 +272,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         data = {'father': 'Mufasa'}
 
         steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=data, overview_step=None,
-                                           default_data=None, prev_step=None, next_step=None)
+                                           default_data=None, prev_step=None, next_step=None,
+                                           render_info=SteuerlotseStep.prepare_render_info(data))
         steuerlotse_step.name = "This is the one"
 
         steuerlotse_step._pre_handle()
@@ -257,12 +285,17 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         overview_step = MockFinalStep
         correct_multiple_title = "We are more than one"
 
+        class MockSteuerlotseStep(SteuerlotseStep):
+            title_multiple = correct_multiple_title
+
+            pass
+
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
             self.req.request.args = {'link_overview': "True"}
-            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+            steuerlotse_step = MockSteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
                                                overview_step=overview_step, default_data=None, prev_step=None,
-                                               next_step=None)
+                                               next_step=None,
+                                               render_info=MockSteuerlotseStep.prepare_render_info({}))
             steuerlotse_step.title_multiple = correct_multiple_title
             steuerlotse_step.name = "This is the one"
 
@@ -276,12 +309,18 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_single_title = "We are only one"
         correct_multiple_title = "We are more than one"
 
+        class MockSteuerlotseStep(SteuerlotseStep):
+            title = correct_single_title
+            title_multiple = correct_multiple_title
+
+            pass
+
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             self.req.request.args = {'link_overview': "True"}
-            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+            steuerlotse_step = MockSteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
                                                overview_step=overview_step, default_data=None, prev_step=None,
-                                               next_step=None)
+                                               next_step=None,
+                                               render_info=MockSteuerlotseStep.prepare_render_info({}))
             steuerlotse_step.title = correct_single_title
             steuerlotse_step.title_multiple = correct_multiple_title
             steuerlotse_step.name = "This is the one"
@@ -295,12 +334,17 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         overview_step = MockFinalStep
         correct_multiple_intro = "We are more than one"
 
+        class MockSteuerlotseStep(SteuerlotseStep):
+            intro_multiple = correct_multiple_intro
+
+            pass
+
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=2)):
             self.req.request.args = {'link_overview': "True"}
-            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+            steuerlotse_step = MockSteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
                                                overview_step=overview_step, default_data=None, prev_step=None,
-                                               next_step=None)
+                                               next_step=None,
+                                               render_info=MockSteuerlotseStep.prepare_render_info({}))
             steuerlotse_step.intro_multiple = correct_multiple_intro
             steuerlotse_step.name = "This is the one"
 
@@ -314,14 +358,18 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
         correct_single_intro = "We are only one"
         correct_multiple_intro = "We are more than one"
 
+        class MockSteuerlotseStep(SteuerlotseStep):
+            intro = correct_single_intro
+            intro_multiple = correct_multiple_intro
+
+            pass
+
         with patch('app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users', MagicMock(return_value=1)):
             self.req.request.args = {'link_overview': "True"}
-            overview_url = url_for(endpoint=correct_endpoint, step=overview_step.name, link_overview="True")
-            steuerlotse_step = SteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
+            steuerlotse_step = MockSteuerlotseStep(endpoint=correct_endpoint, header_title=None, stored_data=None,
                                                overview_step=overview_step, default_data=None, prev_step=None,
-                                               next_step=None)
-            steuerlotse_step.intro = correct_single_intro
-            steuerlotse_step.intro_multiple = correct_multiple_intro
+                                               next_step=None,
+                                               render_info=MockSteuerlotseStep.prepare_render_info({}))
             steuerlotse_step.name = "This is the one"
 
             steuerlotse_step._pre_handle()
@@ -337,7 +385,8 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
     def test_if_post_handle_called_then_return_render_result(self):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=None, overview_step=None,
-                                           default_data=None, prev_step=None, next_step=None)
+                                           default_data=None, prev_step=None, next_step=None,
+                                           render_info=SteuerlotseStep.prepare_render_info(stored_data))
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -350,7 +399,8 @@ class TestSteuerlotseStepPostHandle(unittest.TestCase):
     def test_if_redirection_url_set_then_return_redirect(self):
         stored_data = {'location': "Spiro's tower", 'attacker': 'Mulch Diggums', 'target': 'C Cube'}
         steuerlotse_step = SteuerlotseStep(endpoint="lotse", header_title=None, stored_data=stored_data,
-                                           overview_step=None, default_data=None, prev_step=None, next_step=None)
+                                           overview_step=None, default_data=None, prev_step=None, next_step=None,
+                                           render_info=SteuerlotseStep.prepare_render_info(stored_data))
         steuerlotse_step.name = "This is the one"
         steuerlotse_step._pre_handle()
 
@@ -417,14 +467,15 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
 
     def test_if_post_then_return_redirect_to_next_step(self):
         next_step = MockFinalStep
+        should_update_data = True # Set flags to indicate, that this is a post request
         with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockFormStep.name) as req:
             req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
-            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data={}, next_step=next_step)
-
-            # Set flags to indicate, that this is a post request with valid data
+            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data={}, next_step=next_step,
+                                     render_info=MockFormStep.prepare_render_info({},
+                                                                                  input_data=ImmutableMultiDict({}),
+                                                                                  should_update_data=should_update_data))
             form_step.should_update_data = True
-            form_step.data_is_valid = True
 
             response = form_step.handle()
 
@@ -438,7 +489,10 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
     @pytest.mark.usefixtures("test_request_context")
     def test_if_not_post_then_return_render(self):
         next_step = MockFinalStep
-        form_step = MockFormStep(endpoint=self.endpoint_correct, next_step=next_step, form_data=ImmutableMultiDict({'form_data': create_session_form_data(self.session_data)}))
+        form_data = ImmutableMultiDict({'form_data': create_session_form_data(self.session_data)})
+        form_step = MockFormStep(endpoint=self.endpoint_correct, next_step=next_step,
+                                 form_data=form_data,
+                                 render_info=MockFormStep.prepare_render_info({}, input_data=form_data))
         response = form_step.handle()
 
         self.assertEqual(200, response.status_code)
@@ -450,7 +504,8 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
         next_step = MockFinalStep
         expected_data = {'brother': 'Luigi'}
         with patch('app.forms.steps.steuerlotse_step.override_session_data') as update_fun:
-            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step)
+            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step,
+                                 render_info=MockFormStep.prepare_render_info(expected_data, input_data=ImmutableMultiDict({})))
             form_step.handle()
 
         update_fun.assert_called_once_with(expected_data, form_step.session_data_identifier)
@@ -471,61 +526,117 @@ class TestFormSteuerlotseStepCreateForm(unittest.TestCase):
         assert type(created_form) == form_step.InputForm
         assert dir(created_form) == dir(form_step.InputForm()) # check that it has the correct input fields
 
-@pytest.mark.usefixtures("test_request_context")
-class TestFormSteuerlotseStepUpdateData:
 
-    def test_if_form_valid_then_updates_empty_data_correctly(self):
-        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
+class TestFormSteuerlotseStepPrepareRenderInfo:
 
-        updated_data = MockFormWithInputStep.update_data({}, validated_data)
+    def test_stored_data_set_and_form_data_empty_then_create_form_with_stored_data(self):
+        input_form_data = ImmutableMultiDict({})
+        stored_data = {'date': datetime.date(1980, 12, 12), 'decimal': Decimal('42'), 'pet': 'lizard'}
 
-        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data)
 
-    def test_if_form_valid_then_updates_existing_data_correctly(self):
-        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
+        assert render_info.form.data == stored_data
 
-        updated_data = MockFormWithInputStep.update_data({'date': datetime.date(1980, 1, 1)}, validated_data)
+    def test_form_data_set_and_stored_data_empty_then_create_form_with_form_validated_data(self):
+        input_form_data = ImmutableMultiDict({'date': ['1', '3', '2019'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
 
-        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data)
 
-    def test_if_form_valid_then_leaves_other_data_unchanged(self):
-        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'}
-        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
+        assert render_info.form.data == {'date': datetime.date(2019, 3, 1), 'decimal': Decimal('42'), 'pet': 'lizard'}
 
-        updated_data = MockFormWithInputStep.update_data({'other': 'This is none of your concern.'}, validated_data)
+    def test_form_data_set_and_stored_data_set_then_create_form_with_combination_from_form_and_stored_data(self):
+        input_form_data = ImmutableMultiDict({'decimal': '42', 'pet': 'lizard'})
+        stored_data = {'date': datetime.date(2019, 3, 1)}
 
-        assert updated_data == {'other': 'This is none of your concern.', 'date': datetime.date(1980, 12, 12),
-                                'decimal': 42.00, 'pet': 'lizard'}
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data)
 
-    def test_if_form_valid_but_incomplete_and_key_in_stored_data_then_keep_old_data(self, app):
-        req_form_data = {'date': ['12', '12', '1980'], 'decimal': '42'}
+        assert render_info.form.data == {'date': datetime.date(2019, 3, 1), 'decimal': Decimal('42'), 'pet': 'lizard'}
+
+    def test_if_should_update_false_and_form_valid_then_do_update(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
+        should_update_data = False
+
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.stored_data == {}
+
+    def test_if_form_invalid_then_set_data_is_valid_false(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
+        should_update_data = False
+
+        with patch("app.forms.steps.steuerlotse_step.FormSteuerlotseStep.create_form", MagicMock(return_value=MagicMock(validate=lambda:False))):
+            render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.data_is_valid == False
+
+    def test_if_form_valid_then_set_data_is_valid_true(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
+        should_update_data = True
+
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.data_is_valid == True
+
+    def test_if_form_invalid_and_should_update_then_do_not_call_update(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
+        should_update_data = True
+
+        with patch("app.forms.steps.steuerlotse_step.FormSteuerlotseStep.create_form", MagicMock(return_value=MagicMock(validate=lambda:False))):
+            render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.stored_data == stored_data
+
+    def test_if_form_valid_and_should_update_then_do_update(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
+        should_update_data = True
+
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': Decimal('42'), 'pet': 'lizard'}
+
+    def test_if_update_then_leave_other_stored_unchanged(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {'First album': "It's about time"}
+        should_update_data = True
+
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.stored_data == {'First album': "It's about time", 'date': datetime.date(1980, 12, 12), 'decimal': Decimal('42'), 'pet': 'lizard'}
+
+    def test_if_update_and_form_incomplete_and_old_stored_data_then_keep_old_data(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42'})
         stored_data = {'pet': 'lizard'}
-        app.test_request_context().request.method = 'POST'
-        app.test_request_context().request.form = ImmutableMultiDict(req_form_data)
-        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), stored_data)
+        should_update_data = True
 
-        updated_data = MockFormWithInputStep.update_data(stored_data, validated_data)
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
 
-        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': 42.00, 'pet': 'lizard'}
+        assert render_info.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': Decimal('42'), 'pet': 'lizard'}
 
-    def test_if_form_valid_and_yes_no_field_empty_then_yes_no_field_content_overridden(self):
-        req_form_data = {}
+    def test_if_update_and_form_incomplete_and_no_stored_data_then_add_default_value(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980']})
+        stored_data = {}
+        should_update_data = True
+
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': ''}
+
+    def test_if_update_and_yes_no_field_empty_then_stored_data_overridden(self, test_request_context):
+        test_request_context.request.method = 'POST' # Has to be set because YesNoField still relies on request
+
+        input_form_data = ImmutableMultiDict({})
         stored_data = {'yes_no_field': 'yes'}
-        validated_data = MockYesNoStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
+        should_update_data = True
 
-        updated_data = MockYesNoStep.update_data(stored_data, validated_data)
+        render_info = MockYesNoStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
 
-        assert updated_data == {'yes_no_field': None}
-
-    def test_if_form_valid_but_incomplete_and_key_not_in_stored_data_then_add_empty_default(self):
-        req_form_data = {'date': ['12', '12', '1980']}
-        validated_data = MockFormWithInputStep.validate_data(ImmutableMultiDict(req_form_data), req_form_data)
-
-        updated_data = MockFormWithInputStep.update_data({}, validated_data)
-
-        assert updated_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': ''}
+        assert render_info.stored_data == {'yes_no_field': None}
 
 
 class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):

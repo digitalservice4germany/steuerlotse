@@ -122,18 +122,18 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.assertIsNone(chosen_step_at_end._next_step)
 
     def test_update_data_is_called_if_update_data_set(self):
-        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info') as preparation_mock:
             self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
                                                form_data=ImmutableMultiDict({}))
 
-        update_mock.assert_called_once()
+        preparation_mock.assert_called_once_with({}, ImmutableMultiDict({}), True)
 
     def test_update_data_is_not_called_if_update_data_not_set(self):
-        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info') as preparation_mock:
             self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=False,
                                                form_data=ImmutableMultiDict({}))
 
-        update_mock.assert_not_called()
+        preparation_mock.assert_called_once_with({}, ImmutableMultiDict({}), False)
 
 
 class TestDeterminePrevStep:
@@ -252,52 +252,6 @@ class TestDetermineNextStep:
     def test_if_no_step_is_valid_next_step_then_return_none(self, step_chooser_without_preconditions):
         returned_next_step = step_chooser_without_preconditions.determine_next_step(MockFinalStep.name, {})
         assert returned_next_step is None
-
-
-class TestStepChooserValidateAndUpdateData:
-
-    @pytest.fixture()
-    @pytest.mark.usefixtures('test_request_context')
-    def testing_step_chooser(self):
-        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockYesNoStep, MockFinalStep]
-        step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps,
-                                        endpoint="lotse", overview_step=MockFormWithInputStep)
-
-        yield step_chooser
-
-    def test_if_not_update_then_return_none_flag_and_unchanged_data(self, app, testing_step_chooser):
-        step_name = MockFormWithInputStep.name
-        update_data = False
-        stored_data = {'name': 'Nagini'}
-        form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'], 'decimal': '100.000'})
-
-        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, deepcopy(stored_data), form_data)
-
-        assert is_valid_flag is None
-        assert updated_data == stored_data
-
-    def test_if_update_and_data_invalid_then_return_invalid_flag_and_unchanged_data(self, app, testing_step_chooser):
-        step_name = MockFormWithInputStep.name
-        update_data = True
-        stored_data = {'name': 'Nagini'}
-        form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': 'NOT A VALID DATE', 'decimal': '100.000'})
-
-        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, deepcopy(stored_data), form_data)
-
-        assert is_valid_flag is False
-        assert updated_data == stored_data
-
-    def test_if_update_and_data_valid_then_return_valid_flag_and_changed_data(self, app, testing_step_chooser):
-        step_name = MockFormWithInputStep.name
-        update_data = True
-        stored_data = {'name': 'Nagini'}
-        expected_updated_data = {**stored_data, **{'pet': 'Maledictus', 'date': datetime.date(1998, 5, 2),  'decimal': Decimal(100000)}}
-        form_data = ImmutableMultiDict({'pet': 'Maledictus', 'date': ['2', '5', '1998'],  'decimal': '100.000'})
-
-        is_valid_flag, updated_data = testing_step_chooser.validate_and_update_data(step_name, update_data, deepcopy(stored_data), form_data)
-
-        assert is_valid_flag is True
-        assert updated_data == expected_updated_data
 
 
 class TestInteractionBetweenSteps(unittest.TestCase):

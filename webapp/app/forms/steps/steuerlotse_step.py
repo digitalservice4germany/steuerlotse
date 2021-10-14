@@ -3,7 +3,6 @@ from typing import Optional
 
 from flask import request, session, url_for, render_template
 from flask_babel import ngettext
-from werkzeug.datastructures import ImmutableMultiDict
 from pydantic import ValidationError
 from werkzeug.utils import redirect
 
@@ -25,18 +24,16 @@ class SteuerlotseStep(object):
     precondition = None
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                 session_data_identifier='form_data', update_data=False, form_data=None, data_is_valid=False, *args, **kwargs):
+                 session_data_identifier='form_data', should_update_data=False, form_data=None, data_is_valid=False, render_info=None, *args, **kwargs):
         self.endpoint = endpoint
         self.header_title = header_title
         self.stored_data = stored_data if stored_data is not None else {}
         self.overview_step = overview_step
         self._prev_step = prev_step
         self._next_step = next_step
-        self.render_info: Optional[RenderInfo] = None
+        self.render_info: Optional[RenderInfo] = render_info
         self.session_data_identifier = session_data_identifier
-        self.should_update_data = update_data
-        self.form_data = form_data if form_data is not None else ImmutableMultiDict({})
-        self.data_is_valid = data_is_valid
+        self.should_update_data = should_update_data
 
         self.default_data = default_data
 
@@ -48,18 +45,26 @@ class SteuerlotseStep(object):
         return self._post_handle()
 
     def _pre_handle(self):
-        self.render_info = RenderInfo(step_title=ngettext(self.title, self.title_multiple,
-                                                          num=self.number_of_users(self.stored_data)
-                                                          ) if self.title_multiple else self.title,
-                                      step_intro=ngettext(self.intro, self.intro_multiple,
-                                                          num=self.number_of_users(self.stored_data)
-                                                          ) if self.intro_multiple else self.intro,
-                                      form=None,
-                                      prev_url=self.url_for_step(self._prev_step.name) if self._prev_step else None,
-                                      next_url=self.url_for_step(self._next_step.name) if self._next_step else None,
-                                      submit_url=self.url_for_step(self.name), overview_url=self.url_for_step(
-                self.overview_step.name) if self.has_link_overview and self.overview_step else None,
-                                      header_title=self.header_title)
+        self.render_info.prev_url = self.url_for_step(self._prev_step.name) if self._prev_step else None
+        self.render_info.next_url = self.url_for_step(self._next_step.name) if self._next_step else None
+        self.render_info.submit_url = self.url_for_step(self.name)
+        self.render_info.overview_url = self.url_for_step(self.overview_step.name) \
+            if self.has_link_overview and self.overview_step else None
+        self.render_info.header_title = self.header_title
+
+    @classmethod
+    def prepare_render_info(cls, stored_data, *args, **kwargs):
+        return RenderInfo(
+            step_title=ngettext(cls.title, cls.title_multiple, num=cls.number_of_users(stored_data))
+            if cls.title_multiple else cls.title,
+            step_intro=ngettext(cls.intro, cls.intro_multiple, num=cls.number_of_users(stored_data))
+            if cls.intro_multiple else cls.intro,
+            form=None,
+            prev_url=None,
+            next_url=None,
+            submit_url=None,
+            header_title=None,
+            overview_url=None)
 
     def _main_handle(self):
         """ Main method to handle specific behavior of a step. Override this method for specific behavior."""
@@ -81,7 +86,7 @@ class SteuerlotseStep(object):
             return redirect(self.render_info.redirect_url)
 
     @classmethod
-    def number_of_users(cls, input_data=None):
+    def number_of_users(cls, *args, **kwargs):
         return 1
 
     @classmethod
@@ -119,13 +124,26 @@ class FormSteuerlotseStep(SteuerlotseStep):
         pass
 
     def __init__(self, endpoint, header_title, stored_data=None, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier='form_data', update_data=False, form_data=None,
-                 data_is_valid=False, *args, **kwargs):
+                 next_step=None, session_data_identifier='form_data', should_update_data=False, form_data=None,
+                 data_is_valid=False, render_info=None, *args, **kwargs):
         super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                         session_data_identifier=session_data_identifier, update_data=update_data, form_data=form_data,
-                         data_is_valid=data_is_valid, *args, **kwargs)
+                         session_data_identifier=session_data_identifier, should_update_data=should_update_data, form_data=form_data,
+                         data_is_valid=data_is_valid, render_info=render_info, *args, **kwargs)
         # TODO rename this to form_class once MultiStepFlow is obsolete
         self.form = self.InputForm
+
+    @classmethod
+    def prepare_render_info(cls, stored_data, input_data=None, should_update_data=False, *args, **kwargs):
+        render_info = super().prepare_render_info(stored_data, input_data, should_update_data, *args, **kwargs)
+        render_info.form = cls.create_form(form_data=input_data, prefilled_data=stored_data)
+
+        if should_update_data and render_info.form.validate():
+                render_info.data_is_valid = True
+                stored_data.update(render_info.form.data)
+
+        render_info.stored_data = stored_data
+
+        return render_info
 
     @classmethod
     def create_form(cls, form_data, prefilled_data):
@@ -137,30 +155,6 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
         return cls.InputForm(form_data, **prefilled_data)
 
-    @classmethod
-    def update_data(cls, stored_data, data_to_update_with):
-        """
-            This updates the stored_data with the data_to_update_with.
-
-            :param stored_data: The stored session data
-            :param data_to_update_with: The data with which the stored data
-            should be updated. Note: the data_to_update_with should already be validated.
-        """
-        stored_data.update(data_to_update_with)
-        return stored_data
-
-    @classmethod
-    def validate_data(cls, form_data, stored_data):
-        form = cls.create_form(form_data, prefilled_data=stored_data)
-        if form.validate():
-            return form.data
-
-        return None
-
-    def _pre_handle(self):
-        super()._pre_handle()
-        self.render_info.form = self.create_form(self.form_data, prefilled_data=self.stored_data)
-
     def _post_handle(self):
         override_session_data(self.stored_data, self.session_data_identifier)
 
@@ -169,7 +163,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
             logger.info(f"Redirect to {redirection.location}")
             return redirection
 
-        if self.should_update_data and self.data_is_valid:
+        if self.should_update_data and self.render_info.data_is_valid:
             logger.info(f"Redirect to next Step {self.render_info.next_url}")
             return redirect(self.render_info.next_url)
         return self.render()
@@ -205,11 +199,11 @@ class FormSteuerlotseStep(SteuerlotseStep):
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
     def __init__(self, endpoint, header_title, stored_data, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier=None, update_data=False, form_data=None, data_is_valid=False, *args, **kwargs):
+                 next_step=None, session_data_identifier=None, should_update_data=False, form_data=None, data_is_valid=False,
+                 render_info=None, *args, **kwargs):
         super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data,
-                                                     prev_step, next_step, session_data_identifier,
-                                                     update_data=update_data, form_data=form_data,
-                                                     data_is_valid=data_is_valid, *args, **kwargs)
+                                                     prev_step, next_step, session_data_identifier, should_update_data,
+                                                     form_data, data_is_valid, render_info=render_info, *args, **kwargs)
 
     def render(self, **kwargs):
         """
@@ -226,12 +220,11 @@ class RedirectSteuerlotseStep(SteuerlotseStep):
 
     def __init__(self, redirection_step_name, endpoint, header_title=None, stored_data=None, overview_step=None,
                  default_data=None,
-                 prev_step=None, next_step=None, session_data_identifier=None, update_data=False, form_data=None,
-                 data_is_valid=False, *args, **kwargs):
+                 prev_step=None, next_step=None, session_data_identifier=None, should_update_data=False, form_data=None,
+                 data_is_valid=False, render_info=None, *args, **kwargs):
         super(RedirectSteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data,
-                                                      prev_step, next_step, session_data_identifier,
-                                                      update_data=update_data, form_data=form_data, data_is_valid=data_is_valid,
-                                                      *args, **kwargs)
+                                                      prev_step, next_step, session_data_identifier, should_update_data,
+                                                      form_data, data_is_valid, render_info=render_info, *args, **kwargs)
         self.redirection_step_name = redirection_step_name
 
     def handle(self):

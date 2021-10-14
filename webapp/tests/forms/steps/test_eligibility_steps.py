@@ -660,7 +660,10 @@ class TestMarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.Tes
 
     def test_handle_sets_correct_prev_url(self):
         with self.app.test_request_context():
-            step = MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+            step = MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
             expected_url = step.url_for_step(MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -768,7 +771,10 @@ class TestMarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCa
         self.test_request_context = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -1138,7 +1144,10 @@ class TestDivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.Te
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -1195,7 +1204,8 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
                 form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'no'}))
 
-            self.assertRaises(IncorrectEligibilityData, step.handle)
+            with pytest.raises(IncorrectEligibilityData):
+                step.handle()
 
     def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1242,7 +1252,10 @@ class TestSingleAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCas
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=SingleAlimonyEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -1497,7 +1510,10 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
 @pytest.mark.usefixtures("test_request_context")
 class TestElsterRegistrationMethodEligibilityFailureStep:
     def test_handle_sets_correct_prev_url(self):
-        step = ElsterRegistrationMethodEligibilityFailureStep(endpoint='eligibility')
+        step = ElsterRegistrationMethodEligibilityFailureStep(
+                endpoint='eligibility',
+                render_info=ElsterRegistrationMethodEligibilityFailureStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
         step.handle()
         assert step.render_info.prev_url == expected_url
@@ -1628,7 +1644,10 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
 @pytest.mark.usefixtures("test_request_context")
 class TestElsterAbrufCodeEligibilityFailureStep:
     def test_handle_sets_correct_prev_url(self):
-        step = ElsterAbrufcodeEligibilityFailureStep(endpoint='eligibility')
+        step = ElsterAbrufcodeEligibilityFailureStep(
+                endpoint='eligibility',
+                render_info=ElsterAbrufcodeEligibilityFailureStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(ElsterAbrufcodeEligibilityDecisionStep.name)
         step.handle()
 
@@ -1732,7 +1751,10 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
 
 class TestPensionEligibilityFailureDisplaySteuerlotseStep:
     def test_handle_sets_correct_prev_url(self, test_request_context):
-        step = PensionEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = PensionEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=PensionEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2274,7 +2296,10 @@ class TestTaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(unittest
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2412,7 +2437,10 @@ class TestCheaperCheckEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = CheaperCheckEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = CheaperCheckEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=CheaperCheckEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2793,7 +2821,10 @@ class TestMarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(unitt
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2944,7 +2975,10 @@ class TestIncomeOtherEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase)
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = IncomeOtherEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = IncomeOtherEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=IncomeOtherEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -3148,7 +3182,10 @@ class TestForeignCountriesEligibilityFailureDisplaySteuerlotseStep(unittest.Test
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -3361,7 +3398,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3377,7 +3419,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3392,7 +3439,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'yes',
                         'taxed_investment_income_eligibility': 'yes', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3413,7 +3465,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3433,14 +3490,22 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'yes',
                         'taxed_investment_income_eligibility': 'yes', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
         expected_information = []
-        step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+        step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])

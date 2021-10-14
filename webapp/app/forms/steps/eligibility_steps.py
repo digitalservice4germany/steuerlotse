@@ -55,7 +55,7 @@ class EligibilityStepMixin:
         return False
 
     @classmethod
-    def number_of_users(cls, input_data):
+    def number_of_users(cls, input_data, *args, **kwargs):
         if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data) \
                 or data_fits_data_model(SeparatedJointTaxesEligibilityData, input_data):
             return 2
@@ -71,10 +71,11 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     title = _l('form.eligibility.failure.title')
     intro = _l('form.eligibility.failure.intro')
 
-    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
+    def __init__(self, endpoint, stored_data=None, render_info=None, *args, **kwargs):
         super(EligibilityFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
+                                                                       render_info=render_info,
                                                                        *args, **kwargs)
 
     def _main_handle(self):
@@ -94,8 +95,8 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     class InputForm(SteuerlotseBaseForm):
         pass
 
-    def __init__(self, endpoint, *args, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), *args, **kwargs)
+    def __init__(self, endpoint, render_info=None, *args, **kwargs):
+        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), render_info=render_info,  *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -104,7 +105,7 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
         if not self.should_update_data:
             self.delete_not_dependent_data()
             return
-        if self.should_update_data and self.data_is_valid:
+        if self.should_update_data and self.render_info.data_is_valid:
             found_next_step_url = None
             for data_model, step_name in self.next_step_data_models:
                 if self._validate(data_model):
@@ -153,10 +154,11 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     intro = _l('form.eligibility.start-intro')
     template = 'basis/display_standard.html'
 
-    def __init__(self, stored_data=None, *args, **kwargs):
+    def __init__(self, stored_data=None, render_info=None, *args, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(
             header_title=_('form.eligibility.header-title'),
             stored_data=stored_data,
+            render_info=render_info,
             *args,
             **kwargs)
 

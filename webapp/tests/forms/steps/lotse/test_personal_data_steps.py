@@ -144,7 +144,7 @@ class TestStepSteuernummerValidate:
 
         try:
             with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-                StepSteuernummer.validate_data(ImmutableMultiDict(input_data), {})
+                StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         finally:
             MockErica.tax_number_is_invalid = False
@@ -158,7 +158,7 @@ class TestStepSteuernummerValidate:
         input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-            StepSteuernummer.validate_data(ImmutableMultiDict(input_data), {})
+            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_not_called()
 
@@ -169,6 +169,6 @@ class TestStepSteuernummerValidate:
         input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-            StepSteuernummer.validate_data(ImmutableMultiDict(input_data), {})
+            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
-            mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
+        mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')

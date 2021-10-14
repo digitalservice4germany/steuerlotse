@@ -1,3 +1,5 @@
+from typing import Dict
+
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import abort
 
@@ -50,7 +52,7 @@ class StepChooser:
         if redirected_step_name := self._get_possible_redirect(step_name, stored_data):
             return RedirectSteuerlotseStep(redirected_step_name, endpoint=self.endpoint)
 
-        data_is_valid, stored_data = self.validate_and_update_data(step_name, should_update_data, stored_data, form_data)
+        render_info = self.steps[step_name].prepare_render_info(stored_data, form_data, should_update_data)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
@@ -60,23 +62,10 @@ class StepChooser:
             prev_step=self.determine_prev_step(step_name, stored_data),
             next_step=self.determine_next_step(step_name, stored_data),
             session_data_identifier=self.session_data_identifier,
-            update_data=should_update_data,
-            data_is_valid=data_is_valid,
-            form_data=form_data
+            should_update_data=should_update_data,
+            form_data=form_data,
+            render_info=render_info
         )
-
-    def validate_and_update_data(self, step_name: str, update_data: bool, stored_data, form_data: ImmutableMultiDict = None):
-        """
-        :param step_name: The name of the step. Should be a valid step name
-        """
-        data_is_valid = None
-        if update_data:
-            if validated_data := self.steps[step_name].validate_data(form_data, stored_data):
-                stored_data = self.steps[step_name].update_data(stored_data, validated_data)
-
-            data_is_valid = validated_data is not None
-
-        return data_is_valid, stored_data
 
     def determine_prev_step(self, current_step_name, stored_data):
         """
