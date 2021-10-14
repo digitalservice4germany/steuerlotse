@@ -1182,58 +1182,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
             self.assertEqual(expected_updated_data, updated_data)
 
-    def test_if_haushaltsnahe_step_then_delete_stmind_gem_haushalt_correctly(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
-                {'familienstand': 'single', 'gem_haushalt_entries': ['Helene Fischer'], 'gem_haushalt_count': 1})
-            self.assertIn('gem_haushalt_entries', returned_data)
-            self.assertIn('gem_haushalt_count', returned_data)
-
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_no):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
-                {'familienstand': 'single', 'stmind_gem_haushalt_entries': ['Helene Fischer'],
-                 'stmind_gem_haushalt_count': 1})
-            self.assertNotIn('stmind_gem_haushalt_entries', returned_data)
-            self.assertNotIn('stmind_gem_haushalt_count', returned_data)
-
-    def test_if_handwerker_filled_and_zusammenveranlagung_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes), \
-            patch('app.forms.flows.lotse_flow.show_person_b', MagicMock(return_value=True)):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {})
-            self.assertEqual(self.haushaltsnahe_no_url, render_info.next_url)
-
-    def test_if_handwerker_filled_and_einzelveranlagung_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes), \
-            patch('app.forms.flows.lotse_flow.show_person_b', MagicMock(return_value=False)):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {})
-            self.assertEqual(self.haushaltsnahe_yes_url, render_info.next_url)
-
-    def test_if_religion_step_then_set_prev_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.gem_haushalt_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_no})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_haushaltsnahe_no})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):
         with (

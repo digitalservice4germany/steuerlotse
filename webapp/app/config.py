@@ -90,6 +90,7 @@ class FunctionalTestingConfig(DevelopmentConfig):
     RATELIMIT_ENABLED = False
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
 
+
 class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True

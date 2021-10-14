@@ -45,6 +45,7 @@ def make_test_request_context(app):
                 req.session = SecureCookieSession({session_identifier: create_session_form_data(stored_data)})
             if form_data:
                 req.request.data = ImmutableMultiDict(form_data)
+                req.request.form = ImmutableMultiDict(form_data)
             yield req
     yield _make_test_request_context
 

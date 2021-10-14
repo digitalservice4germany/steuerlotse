@@ -1,7 +1,10 @@
+import datetime
+from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
 import pytest
 from flask.sessions import SecureCookieSession
+from pydantic import ValidationError
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.personal_data import StepSteuernummer
@@ -116,11 +119,47 @@ class TestStepHaushaltsnaheHandwerker:
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepSteuerminderungYesNo.name
 
+    def test_if_handwerker_given_then_do_not_delete_stmind_gem_haushalt(self, make_test_request_context):
+        stored_data = {'familienstand': 'single',
+                       'steuerminderung': 'yes',
+                       'stmind_gem_haushalt_entries': ['Helene Fischer'],
+                       'stmind_gem_haushalt_count': 1}
+        form_data = {'stmind_handwerker_summe': '100',
+                     'stmind_handwerker_entries': ['Badezimmer'],
+                     'stmind_handwerker_lohn_etc_summe': '50'}
+        with make_test_request_context(stored_data=stored_data, form_data=form_data, method='POST'):
+            step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, update_data=True)
+            assert 'stmind_gem_haushalt_entries' in step.stored_data
+            assert 'stmind_gem_haushalt_count' in step.stored_data
+
+    def test_if_haushaltsnahe_given_then_do_not_delete_stmind_gem_haushalt(self, make_test_request_context):
+        stored_data = {'familienstand': 'single',
+                       'steuerminderung': 'yes',
+                       'stmind_gem_haushalt_entries': ['Helene Fischer'],
+                       'stmind_gem_haushalt_count': 1}
+        form_data = {'stmind_haushaltsnahe_summe': '10',
+                     'stmind_haushaltsnahe_entries': ['Dach']}
+        with make_test_request_context(stored_data=stored_data, form_data=form_data, method='POST'):
+            step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, update_data=True)
+            assert 'stmind_gem_haushalt_entries' in step.stored_data
+            assert 'stmind_gem_haushalt_count' in step.stored_data
+
+    def test_if_no_data_given_then_delete_stmind_gem_haushalt(self, make_test_request_context):
+        stored_data = {'familienstand': 'single',
+                       'steuerminderung': 'yes',
+                       'stmind_gem_haushalt_entries': ['Helene Fischer'],
+                       'stmind_gem_haushalt_count': 1}
+        form_data = {}
+        with make_test_request_context(stored_data=stored_data, form_data=form_data, method='POST'):
+            step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, update_data=True)
+            assert 'stmind_gem_haushalt_entries' not in step.stored_data
+            assert 'stmind_gem_haushalt_count' not in step.stored_data
+
 
 class TestStepGemeinsamerHaushalt:
     valid_data = {'familienstand': 'single', 'steuerminderung': 'yes', 'stmind_haushaltsnahe_summe': 1337}
     steuerminderung_no_data = {'familienstand': 'single', 'steuerminderung': 'no', 'stmind_haushaltsnahe_summe': 1337}
-    wrong_familienstand_data = {'familienstand': 'married', 'steuerminderung': 'yes', 'stmind_haushaltsnahe_summe': 1337}
+    no_familienstand_data = {'steuerminderung': 'yes', 'stmind_haushaltsnahe_summe': 1337}
     no_haushaltsnahe_data = {'familienstand': 'single', 'steuerminderung': 'yes'}
 
     def test_set_prev_step_correctly(self, make_test_request_context):
@@ -139,17 +178,103 @@ class TestStepGemeinsamerHaushalt:
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepSteuerminderungYesNo.name
 
-    def test_if_wrong_familienstand_then_redirect_to_correct_step(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.wrong_familienstand_data):
+    def test_if_no_familienstand_then_redirect_to_correct_step(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.no_familienstand_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepFamilienstand.name
+
+    def test_if_zusammenveranlagung_then_redirect_to_correct_step(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data), \
+                patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=True)):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, RedirectSteuerlotseStep)
+            assert step.redirection_step_name == StepFamilienstand.name
+
+    def test_if_einzelveranlagung_then_do_not_redirect(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data), \
+                patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=False)):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, StepGemeinsamerHaushalt)
 
     def test_if_no_haushaltsnahe_set_then_redirect_to_correct_step(self, make_test_request_context):
         with make_test_request_context(stored_data=self.no_haushaltsnahe_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepHaushaltsnaheHandwerker.name
+
+    def test_do_not_skip_if_single(self, make_test_request_context):
+        single_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14, 'familienstand': 'single'}
+        with make_test_request_context(stored_data=single_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, StepGemeinsamerHaushalt)
+
+    def test_skip_if_married(self, make_test_request_context):
+        married_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                        'familienstand': 'married', 'familienstand_married_lived_separated': 'no',
+                        'familienstand_confirm_zusammenveranlagung': True}
+        with make_test_request_context(stored_data=married_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, RedirectSteuerlotseStep)
+            assert step.redirection_step_name == StepFamilienstand.name
+
+    def test_do_not_skip_if_separated(self, make_test_request_context):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'married', 'familienstand_married_lived_separated': 'yes',
+                          'familienstand_married_lived_separated_since': datetime.date(1990, 1, 1)}
+        with make_test_request_context(stored_data=separated_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, StepGemeinsamerHaushalt)
+
+    def test_do_not_skip_if_widowed_longer_than_veranlagungszeitraum(self, make_test_request_context):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 2, 12, 31)}
+        with make_test_request_context(stored_data=separated_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, StepGemeinsamerHaushalt)
+
+    def test_skip_if_widowed_recently_zusammenveranlagung(self, make_test_request_context):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_widowed_lived_separated': 'no',
+                          'familienstand_confirm_zusammenveranlagung': True}
+        with make_test_request_context(stored_data=separated_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, RedirectSteuerlotseStep)
+            assert step.redirection_step_name == StepFamilienstand.name
+
+    def test_do_not_skip_if_widowed_recently_and_separated_and_einzelveranlagung(self, make_test_request_context):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          # set to first day of the veranlagungszeitraum
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_widowed_lived_separated': 'yes',
+                          'familienstand_widowed_lived_separated_since': datetime.date(datetime.date.today().year - 2, 12, 31),
+                          'familienstand_zusammenveranlagung': 'no'}
+        with make_test_request_context(stored_data=separated_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, StepGemeinsamerHaushalt)
+
+    def test_skip_if_widowed_recently_and_separated_and_zusammenveranlagung(self, make_test_request_context):
+        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                          'familienstand': 'widowed',
+                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 10),
+                          'familienstand_widowed_lived_separated': 'yes',
+                          'familienstand_widowed_lived_separated_since': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_zusammenveranlagung': 'yes'}
+        with make_test_request_context(stored_data=separated_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, RedirectSteuerlotseStep)
+            assert step.redirection_step_name == StepFamilienstand.name
+
+    def test_do_not_skip_if_divorced(self, make_test_request_context):
+        divorced_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+                         'familienstand': 'divorced'}
+        with make_test_request_context(stored_data=divorced_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert isinstance(step, StepGemeinsamerHaushalt)
 
 
 class TestStepReligion:

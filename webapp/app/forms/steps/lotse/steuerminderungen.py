@@ -1,8 +1,10 @@
+import copy
 from decimal import Decimal
-from typing import Optional
+from typing import Optional, Any, Type
 
 from flask import render_template
-from pydantic import BaseModel, validator, ValidationError
+from pydantic import BaseModel, validator, ValidationError, root_validator, MissingError
+from pydantic.error_wrappers import ErrorWrapper
 from wtforms import validators
 
 from app.forms import SteuerlotseBaseForm
@@ -17,6 +19,7 @@ from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import S
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
 from app.model.eligibility_data import declarations_must_be_set_yes
+from app.model.form_data import FamilienstandModel, show_person_b, JointTaxesModel
 
 
 class SteuerminderungYesPrecondition(BaseModel):
@@ -27,14 +30,12 @@ class SteuerminderungYesPrecondition(BaseModel):
         return declarations_must_be_set_yes(v)
 
 
-class NotMarriedPrecondition(BaseModel):
-    familienstand: str
-
-    @validator('familienstand')
-    def must_not_be_married(cls, v):
-        if v == 'married':
+class NotShowPersonBPrecondition(FamilienstandModel):
+    @root_validator(skip_on_failure=True)
+    def person_b_must_not_be_shown(cls, values):
+        if JointTaxesModel.show_person_b(values):
             raise ValidationError
-        return v
+        return values
 
 
 class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
@@ -286,7 +287,7 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.gem-haushalt-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_aufwendungen_with_list.html'
-    preconditions = [SteuerminderungYesPrecondition, NotMarriedPrecondition, HandwerkerHaushaltsnaheSetPrecondition]
+    preconditions = [NotShowPersonBPrecondition, SteuerminderungYesPrecondition, HandwerkerHaushaltsnaheSetPrecondition]
 
     label = _l('form.lotse.step_gem_haushalt.label')
     section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name,
@@ -326,9 +327,9 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
         except ValidationError:
             return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         try:
-            NotMarriedPrecondition.parse_obj(stored_data)
+            NotShowPersonBPrecondition.parse_obj(stored_data)
         except ValidationError:
-            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.married')
+            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
         try:
             HandwerkerHaushaltsnaheSetPrecondition.parse_obj(stored_data)
         except ValidationError:
