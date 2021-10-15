@@ -3,9 +3,10 @@ from decimal import Decimal
 from typing import Optional, Any, Type
 
 from flask import render_template
+from flask_wtf.csrf import generate_csrf
 from pydantic import BaseModel, validator, ValidationError, root_validator, MissingError
 from pydantic.error_wrappers import ErrorWrapper
-from wtforms import validators
+from wtforms import validators, BooleanField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField
@@ -14,10 +15,12 @@ from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from flask_babel import lazy_gettext as _l, _
 
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
+from app.model.components import SelectStmindProps
+from app.model.components.helpers import form_fields_dict
 from app.model.eligibility_data import declarations_must_be_set_yes
 from app.model.form_data import FamilienstandModel, show_person_b, JointTaxesModel
 
@@ -49,6 +52,49 @@ class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
         return v
 
 
+class StepSelectStmind(LotseFormSteuerlotseStep):
+    name = 'select_stmind'
+    title = _l('form.lotse.select_stmind-title')
+    intro = _l('form.lotse.select_stmind-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'react_component.html'
+    # TODO remove this once all steps are converted to steuerlotse steps
+    prev_step = StepIban
+
+    label = _l('form.lotse.step_vorsorge.label')
+    section_link = SectionLink('section_steuerminderung',
+                               StepSteuerminderungYesNo.name,
+                               _l('form.lotse.section_steuerminderung.label'))
+
+    class InputForm(SteuerlotseBaseForm):
+        stmind_select_vorsorge = BooleanField()
+        stmind_select_ausserg_bela = BooleanField()
+        stmind_select_handwerker = BooleanField()
+        stmind_select_spenden = BooleanField()
+        stmind_select_religion = BooleanField()
+
+    def render(self, **kwargs):
+        props_dict = SelectStmindProps(
+            step_header={
+                'title': str(self.render_info.step_title),
+                'intro': str(self.render_info.step_intro),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='StmindSelectionPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=self.form,
+                               header_title=self.header_title)
+
+
 class StepVorsorge(LotseFormSteuerlotseStep):
     name = 'vorsorge'
     title = _l('form.lotse.vorsorge-title')
@@ -56,8 +102,6 @@ class StepVorsorge(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_aufwendungen_with_list.html'
     preconditions = [SteuerminderungYesPrecondition]
-    # TODO remove this once all steps are converted to steuerlotse steps
-    prev_step = StepSteuerminderungYesNo
 
     label = _l('form.lotse.step_vorsorge.label')
     section_link = SectionLink('section_steuerminderung',

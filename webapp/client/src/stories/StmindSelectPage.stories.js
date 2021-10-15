@@ -21,23 +21,23 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    stmind_select_vorsorge: {
+    stmindSelectVorsorge: {
       checked: false,
       errors: [],
     },
-    stmind_select_ausserg_bela: {
+    stmindSelectAussergBela: {
       checked: false,
       errors: [],
     },
-    stmind_select_handwerker: {
+    stmindSelectHandwerker: {
       checked: false,
       errors: [],
     },
-    stmind_select_spenden: {
+    stmindSelectSpenden: {
       checked: false,
       errors: [],
     },
-    stmind_select_religion: {
+    stmindSelectReligion: {
       checked: false,
       errors: [],
     },

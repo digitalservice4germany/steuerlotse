@@ -2,7 +2,7 @@ from flask_babel import _
 
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 
@@ -24,6 +24,7 @@ class LotseStepChooser(StepChooser):
             title=_('form.lotse.title'),
             steps=[
                 StepSteuernummer,
+                StepSelectStmind,
                 StepVorsorge,
                 StepAussergBela,
                 StepHaushaltsnaheHandwerker,

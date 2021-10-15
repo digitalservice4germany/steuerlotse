@@ -23,47 +23,47 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           autofocus
           fieldName="stmind_select_vorsorge"
           fieldId="stmind_select_vorsorge"
-          checked={fields.stmind_select_vorsorge.checked}
+          checked={fields.stmindSelectVorsorge.checked}
           labelTitle={t("stmindSelection.selectVorsorge.label.title")}
           labelText={t("stmindSelection.selectVorsorge.label.text")}
           icon={vorsorgeIcon}
-          errors={fields.stmind_select_vorsorge.errors}
+          errors={fields.stmindSelectVorsorge.errors}
         />
         <FormFieldCard
           fieldName="stmind_select_ausserg_bela"
           fieldId="stmind_select_ausserg_bela"
-          checked={fields.stmind_select_ausserg_bela.checked}
+          checked={fields.stmindSelectAussergBela.checked}
           labelTitle={t("stmindSelection.selectAussergBela.label.title")}
           labelText={t("stmindSelection.selectAussergBela.label.text")}
           icon={aussergBelaIcon}
-          errors={fields.stmind_select_ausserg_bela.errors}
+          errors={fields.stmindSelectAussergBela.errors}
         />
         <FormFieldCard
           fieldName="stmind_select_handwerker"
           fieldId="stmind_select_handwerker"
-          checked={fields.stmind_select_handwerker.checked}
+          checked={fields.stmindSelectHandwerker.checked}
           labelTitle={t("stmindSelection.selectHandwerker.label.title")}
           labelText={t("stmindSelection.selectHandwerker.label.text")}
           icon={handwerkerIcon}
-          errors={fields.stmind_select_handwerker.errors}
+          errors={fields.stmindSelectHandwerker.errors}
         />
         <FormFieldCard
           fieldName="stmind_select_spenden"
           fieldId="stmind_select_spenden"
-          checked={fields.stmind_select_spenden.checked}
+          checked={fields.stmindSelectSpenden.checked}
           labelTitle={t("stmindSelection.selectSpenden.label.title")}
           labelText={t("stmindSelection.selectSpenden.label.text")}
           icon={spendenIcon}
-          errors={fields.stmind_select_spenden.errors}
+          errors={fields.stmindSelectSpenden.errors}
         />
         <FormFieldCard
           fieldName="stmind_select_religion"
           fieldId="stmind_select_religion"
-          checked={fields.stmind_select_religion.checked}
+          checked={fields.stmindSelectReligion.checked}
           labelTitle={t("stmindSelection.selectReligion.label.title")}
           labelText={t("stmindSelection.selectReligion.label.text")}
           icon={religionIcon}
-          errors={fields.stmind_select_religion.errors}
+          errors={fields.stmindSelectReligion.errors}
         />
       </StepForm>
     </>
@@ -96,10 +96,10 @@ StmindSelectionPage.propTypes = {
     nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
   }).isRequired,
   fields: PropTypes.exact({
-    stmind_select_vorsorge: checkboxPropType,
-    stmind_select_ausserg_bela: checkboxPropType,
-    stmind_select_handwerker: checkboxPropType,
-    stmind_select_spenden: checkboxPropType,
-    stmind_select_religion: checkboxPropType,
+    stmindSelectVorsorge: checkboxPropType,
+    stmindSelectAussergBela: checkboxPropType,
+    stmindSelectHandwerker: checkboxPropType,
+    stmindSelectSpenden: checkboxPropType,
+    stmindSelectReligion: checkboxPropType,
   }).isRequired,
 };

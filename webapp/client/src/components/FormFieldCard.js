@@ -126,6 +126,7 @@ function FormFieldCard({
           </IconTextWrapper>
           <input
             type="checkbox"
+            name={fieldName}
             id={fieldId}
             defaultChecked={checked}
             required={required}
