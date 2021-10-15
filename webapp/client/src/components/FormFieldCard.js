@@ -1,12 +1,20 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
+import checkedIcon from "../assets/icons/checked.svg";
 
 const Card = styled.label`
   background-color: var(--bg-white);
+
   padding: var(--spacing-04);
   margin-bottom: var(--spacing-03);
   margin-right: 0;
+
+  border-radius: 4px;
+  border: 1px;
+  border-style: solid;
+  border-color: var(--bg-highlight-color);
+
   justify-content: space-between;
   align-items: flex-start;
 
@@ -30,7 +38,7 @@ const Card = styled.label`
 
   &.checkbox input:checked + .checkmark {
     background-color: var(--link-color);
-    background-image: url("../images/checked.svg");
+    background-image: url(${checkedIcon});
     background-repeat: no-repeat;
     background-size: 22px;
     background-position: center;
