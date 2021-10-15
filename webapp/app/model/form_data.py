@@ -185,7 +185,11 @@ class MandatoryConfirmations(MandatoryFormData):
 class FormDataDependencies(BaseModel):
     familienstand: Optional[str]
 
-    steuerminderung: Optional[str]
+    stmind_select_vorsorge: Optional[bool]
+    stmind_select_ausserg_bela: Optional[bool]
+    stmind_select_handwerker: Optional[bool]
+    stmind_select_spenden: Optional[bool]
+    stmind_select_religion: Optional[bool]
 
     stmind_vorsorge_summe: Optional[Decimal]
 
@@ -217,17 +221,39 @@ class FormDataDependencies(BaseModel):
     stmind_aussergbela_sonst_summe: Optional[Decimal]
     stmind_aussergbela_sonst_anspruch: Optional[Decimal]
 
-    @validator('stmind_vorsorge_summe', 'stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
-               'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
-               'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries', 'stmind_religion_paid_summe',
-               'stmind_religion_reimbursed_summe', 'stmind_spenden_inland', 'stmind_spenden_inland_parteien',
-               'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
+    @validator('stmind_vorsorge_summe')
+    def delete_if_vorsorge_not_shown(cls, v, values):
+        if not values.get('stmind_select_vorsorge'):
+            return None
+        return v
+
+    @validator('stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
                'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
                'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
                'stmind_bestattung_summe', 'stmind_bestattung_anspruch', 'stmind_aussergbela_sonst_summe',
                'stmind_aussergbela_sonst_anspruch')
-    def delete_if_steuerminderung_no(cls, v, values):
-        if not values.get('steuerminderung') or values.get('steuerminderung') == 'no':
+    def delete_if_ausserg_bela_not_shown(cls, v, values):
+        if not values.get('stmind_select_ausserg_bela'):
+            return None
+        return v
+
+    @validator('stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
+               'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
+               'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
+    def delete_if_handwerker_not_shown(cls, v, values):
+        if not values.get('stmind_select_handwerker'):
+            return None
+        return v
+
+    @validator('stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe')
+    def delete_if_religion_not_shown(cls, v, values):
+        if not values.get('stmind_select_religion'):
+            return None
+        return v
+
+    @validator('stmind_spenden_inland', 'stmind_spenden_inland_parteien')
+    def delete_if_spenden_not_shown(cls, v, values):
+        if not values.get('stmind_select_spenden'):
             return None
         return v
 
@@ -237,6 +263,7 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+    # TODO!!
     @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
     def delete_if_familienstand_not_married(cls, v, values):
         if values.get('familienstand') and values.get('familienstand') == 'married':

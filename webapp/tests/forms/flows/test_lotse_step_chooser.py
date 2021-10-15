@@ -1,18 +1,12 @@
 import datetime
-from decimal import Decimal
 from unittest.mock import patch, MagicMock
-
-import pytest
-from flask.sessions import SecureCookieSession
-from pydantic import ValidationError
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse.steuerminderungen import StepAussergBela, StepVorsorge, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockMiddleStep
 
@@ -50,56 +44,123 @@ class TestDetermineNextStep:
             super_method.assert_called_once()
 
 
+class TestStepSelectStmind:
+    def test_prev_step_is_correct(self, make_test_request_context):
+        data = {}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepIban
+
+    def test_if_no_select_field_set_then_next_step_is_correct(self, make_test_request_context):
+        data = {}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepSummary
+            
+    def test_if_select_vorsorge_set_then_next_step_is_correct(self, make_test_request_context):
+        data = {'stmind_select_vorsorge': True}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepVorsorge
+
+    def test_if_select_ausserg_bela_set_then_next_step_is_correct(self, make_test_request_context):
+        data = {'stmind_select_ausserg_bela': True}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepAussergBela
+
+    def test_if_select_handwerker_set_then_next_step_is_correct(self, make_test_request_context):
+        data = {'stmind_select_handwerker': True}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepHaushaltsnaheHandwerker
+
+    def test_if_select_spenden_set_then_next_step_is_correct(self, make_test_request_context):
+        data = {'stmind_select_spenden': True}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepSpenden
+
+    def test_if_select_religion_set_then_next_step_is_correct(self, make_test_request_context):
+        data = {'stmind_select_religion': True}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepReligion
+
+
 class TestStepVorsorge:
-    valid_data = {'steuerminderung': 'yes'}
-    invalid_data = {'steuerminderung': 'no'}
+    valid_data = {'stmind_select_vorsorge': True}
+    valid_data_with_next_step_set = {'stmind_select_vorsorge': True, 'stmind_select_ausserg_bela': True}
+    invalid_data = {'stmind_select_ausserg_bela': True, 'stmind_select_handwerker': True,
+                    'stmind_select_spenden': True, 'stmind_select_religion': True}
 
     def test_set_prev_step_correctly(self, make_test_request_context):
         with make_test_request_context(stored_data=self.valid_data):
             step = LotseStepChooser().get_correct_step(StepVorsorge.name)
-            assert step._prev_step == StepSteuerminderungYesNo
+            assert step._prev_step == StepSelectStmind
 
-    def test_set_next_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+    def test_set_next_step_correctly_if_next_step_shown(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_next_step_set):
             step = LotseStepChooser().get_correct_step(StepVorsorge.name)
             assert step._next_step == StepAussergBela
 
-    def test_redirect_to_correct_step_if_steuerminderung_no(self, make_test_request_context):
+    def test_redirect_to_correct_step_if_should_not_be_shown(self, make_test_request_context):
         with make_test_request_context(stored_data=self.invalid_data):
             step = LotseStepChooser().get_correct_step(StepVorsorge.name)
             assert isinstance(step, RedirectSteuerlotseStep)
-            assert step.redirection_step_name == StepSteuerminderungYesNo.name
+            assert step.redirection_step_name == StepSelectStmind.name
 
 
 class TestStepAussergBela:
-    valid_data = {'steuerminderung': 'yes'}
-    invalid_data = {'steuerminderung': 'no'}
+    valid_data = {'stmind_select_ausserg_bela': True}
+    valid_data_with_vorsorge_shown = {'stmind_select_vorsorge': True, 'stmind_select_ausserg_bela': True}
+    valid_data_with_handwerker_shown = {'stmind_select_ausserg_bela': True, 'stmind_select_handwerker': True}
+    invalid_data = {'stmind_select_vorsorge': True, 'stmind_select_handwerker': True,
+                    'stmind_select_religion': True, 'stmind_select_spenden': True}
 
-    def test_set_prev_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+    def test_if_vorsorge_shown_then_set_prev_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_vorsorge_shown):
             step = LotseStepChooser().get_correct_step(StepAussergBela.name)
             assert step._prev_step == StepVorsorge
 
-    def test_set_next_step_correctly(self, make_test_request_context):
+    def test_if_vorsorge_not_shown_then_set_prev_step_correctly(self, make_test_request_context):
         with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepAussergBela.name)
+            assert step._prev_step == StepSelectStmind
+
+    def test_if_handwerker_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_handwerker_shown):
             step = LotseStepChooser().get_correct_step(StepAussergBela.name)
             assert step._next_step == StepHaushaltsnaheHandwerker
 
-    def test_redirect_to_correct_step_if_steuerminderung_no(self, make_test_request_context):
+    def test_if_handwerker_not_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepAussergBela.name)
+            assert step._next_step == StepSummary
+
+    def test_redirect_to_correct_step_if_should_not_be_shown(self, make_test_request_context):
         with make_test_request_context(stored_data=self.invalid_data):
             step = LotseStepChooser().get_correct_step(StepAussergBela.name)
             assert isinstance(step, RedirectSteuerlotseStep)
-            assert step.redirection_step_name == StepSteuerminderungYesNo.name
+            assert step.redirection_step_name == StepSelectStmind.name
 
 
 class TestStepHaushaltsnaheHandwerker:
-    valid_data = {'steuerminderung': 'yes'}
-    invalid_data = {'steuerminderung': 'no'}
+    valid_data = {'stmind_select_handwerker': True}
+    valid_data_with_ausserg_bela_shown = {'stmind_select_ausserg_bela': True, 'stmind_select_handwerker': True}
+    valid_data_with_religion_shown = {'stmind_select_handwerker': True, 'stmind_select_religion': True}
+    invalid_data = {'stmind_select_vorsorge': True, 'stmind_select_ausserg_bela': True,
+                    'stmind_select_religion': True, 'stmind_select_spenden': True}
 
-    def test_set_prev_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+    def test_if_ausserg_bela_shown_then_set_prev_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_ausserg_bela_shown):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name)
             assert step._prev_step == StepAussergBela
+
+    def test_if_ausserg_bela_not_shown_then_set_prev_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name)
+            assert step._prev_step == StepSelectStmind
 
     def test_if_gem_haushalt_not_skipped_then_set_next_step_correctly(self, make_test_request_context):
         with make_test_request_context(stored_data=self.valid_data), \
@@ -108,20 +169,25 @@ class TestStepHaushaltsnaheHandwerker:
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name)
             assert step._next_step == StepGemeinsamerHaushalt
 
-    def test_if_gem_haushalt_skipped_then_set_next_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+    def test_if_gem_haushalt_skipped_and_religion_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_religion_shown):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name)
             assert step._next_step == StepReligion
 
-    def test_redirect_to_correct_step_if_steuerminderung_no(self, make_test_request_context):
+    def test_if_gem_haushalt_skipped_and_religion_not_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name)
+            assert step._next_step == StepSummary
+
+    def test_redirect_to_correct_step_if_should_not_be_shown(self, make_test_request_context):
         with make_test_request_context(stored_data=self.invalid_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name)
             assert isinstance(step, RedirectSteuerlotseStep)
-            assert step.redirection_step_name == StepSteuerminderungYesNo.name
+            assert step.redirection_step_name == StepSelectStmind.name
 
     def test_if_handwerker_given_then_do_not_delete_stmind_gem_haushalt(self, make_test_request_context):
         stored_data = {'familienstand': 'single',
-                       'steuerminderung': 'yes',
+                       'stmind_select_handwerker': True,
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
                        'stmind_gem_haushalt_count': 1}
         form_data = {'stmind_handwerker_summe': '100',
@@ -134,7 +200,7 @@ class TestStepHaushaltsnaheHandwerker:
 
     def test_if_haushaltsnahe_given_then_do_not_delete_stmind_gem_haushalt(self, make_test_request_context):
         stored_data = {'familienstand': 'single',
-                       'steuerminderung': 'yes',
+                       'stmind_select_handwerker': True,
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
                        'stmind_gem_haushalt_count': 1}
         form_data = {'stmind_haushaltsnahe_summe': '10',
@@ -146,7 +212,7 @@ class TestStepHaushaltsnaheHandwerker:
 
     def test_if_no_data_given_then_delete_stmind_gem_haushalt(self, make_test_request_context):
         stored_data = {'familienstand': 'single',
-                       'steuerminderung': 'yes',
+                       'stmind_select_handwerker': True,
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
                        'stmind_gem_haushalt_count': 1}
         form_data = {}
@@ -157,26 +223,33 @@ class TestStepHaushaltsnaheHandwerker:
 
 
 class TestStepGemeinsamerHaushalt:
-    valid_data = {'familienstand': 'single', 'steuerminderung': 'yes', 'stmind_haushaltsnahe_summe': 1337}
-    steuerminderung_no_data = {'familienstand': 'single', 'steuerminderung': 'no', 'stmind_haushaltsnahe_summe': 1337}
-    no_familienstand_data = {'steuerminderung': 'yes', 'stmind_haushaltsnahe_summe': 1337}
-    no_haushaltsnahe_data = {'familienstand': 'single', 'steuerminderung': 'yes'}
+    valid_data = {'familienstand': 'single', 'stmind_select_handwerker': True, 'stmind_haushaltsnahe_summe': 1337}
+    valid_data_religion_shown = {'familienstand': 'single', 'stmind_select_handwerker': True,
+                                 'stmind_haushaltsnahe_summe': 1337, 'stmind_select_religion': True}
+    handwerker_not_shown_data = {'familienstand': 'single', 'stmind_haushaltsnahe_summe': 1337}
+    no_familienstand_data = {'stmind_select_handwerker': True, 'stmind_haushaltsnahe_summe': 1337}
+    no_haushaltsnahe_data = {'familienstand': 'single', 'stmind_select_handwerker': True}
 
     def test_set_prev_step_correctly(self, make_test_request_context):
         with make_test_request_context(stored_data=self.valid_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
             assert step._prev_step == StepHaushaltsnaheHandwerker
 
-    def test_set_next_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+    def test_if_religion_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_religion_shown):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
             assert step._next_step == StepReligion
 
-    def test_if_steuerminderung_no_then_redirect_to_correct_step(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.steuerminderung_no_data):
+    def test_if_religion_not_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
+            assert step._next_step == StepSummary
+
+    def test_if_handwerker_is_not_shown_then_redirect_to_correct_step(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.handwerker_not_shown_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
             assert isinstance(step, RedirectSteuerlotseStep)
-            assert step.redirection_step_name == StepSteuerminderungYesNo.name
+            assert step.redirection_step_name == StepSelectStmind.name
 
     def test_if_no_familienstand_then_redirect_to_correct_step(self, make_test_request_context):
         with make_test_request_context(stored_data=self.no_familienstand_data):
@@ -204,13 +277,13 @@ class TestStepGemeinsamerHaushalt:
             assert step.redirection_step_name == StepHaushaltsnaheHandwerker.name
 
     def test_do_not_skip_if_single(self, make_test_request_context):
-        single_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14, 'familienstand': 'single'}
+        single_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14, 'familienstand': 'single'}
         with make_test_request_context(stored_data=single_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
             assert isinstance(step, StepGemeinsamerHaushalt)
 
     def test_skip_if_married(self, make_test_request_context):
-        married_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        married_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                         'familienstand': 'married', 'familienstand_married_lived_separated': 'no',
                         'familienstand_confirm_zusammenveranlagung': True}
         with make_test_request_context(stored_data=married_data):
@@ -219,7 +292,7 @@ class TestStepGemeinsamerHaushalt:
             assert step.redirection_step_name == StepFamilienstand.name
 
     def test_do_not_skip_if_separated(self, make_test_request_context):
-        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'married', 'familienstand_married_lived_separated': 'yes',
                           'familienstand_married_lived_separated_since': datetime.date(1990, 1, 1)}
         with make_test_request_context(stored_data=separated_data):
@@ -227,7 +300,7 @@ class TestStepGemeinsamerHaushalt:
             assert isinstance(step, StepGemeinsamerHaushalt)
 
     def test_do_not_skip_if_widowed_longer_than_veranlagungszeitraum(self, make_test_request_context):
-        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(datetime.date.today().year - 2, 12, 31)}
         with make_test_request_context(stored_data=separated_data):
@@ -235,7 +308,7 @@ class TestStepGemeinsamerHaushalt:
             assert isinstance(step, StepGemeinsamerHaushalt)
 
     def test_skip_if_widowed_recently_zusammenveranlagung(self, make_test_request_context):
-        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
                           'familienstand_widowed_lived_separated': 'no',
@@ -246,7 +319,7 @@ class TestStepGemeinsamerHaushalt:
             assert step.redirection_step_name == StepFamilienstand.name
 
     def test_do_not_skip_if_widowed_recently_and_separated_and_einzelveranlagung(self, make_test_request_context):
-        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           # set to first day of the veranlagungszeitraum
                           'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
@@ -258,7 +331,7 @@ class TestStepGemeinsamerHaushalt:
             assert isinstance(step, StepGemeinsamerHaushalt)
 
     def test_skip_if_widowed_recently_and_separated_and_zusammenveranlagung(self, make_test_request_context):
-        separated_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 10),
                           'familienstand_widowed_lived_separated': 'yes',
@@ -270,7 +343,7 @@ class TestStepGemeinsamerHaushalt:
             assert step.redirection_step_name == StepFamilienstand.name
 
     def test_do_not_skip_if_divorced(self, make_test_request_context):
-        divorced_data = {'steuerminderung': 'yes', 'stmind_handwerker_summe': 14,
+        divorced_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                          'familienstand': 'divorced'}
         with make_test_request_context(stored_data=divorced_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name)
@@ -278,49 +351,69 @@ class TestStepGemeinsamerHaushalt:
 
 
 class TestStepReligion:
-    valid_data = {'steuerminderung': 'yes'}
-    invalid_data = {'steuerminderung': 'no'}
+    valid_data = {'stmind_select_religion': True}
+    valid_data_with_handwerker_shown = {'stmind_select_handwerker': True, 'stmind_select_religion': True}
+    valid_data_with_spenden_shown = {'stmind_select_religion': True, 'stmind_select_spenden': True}
+    invalid_data = {'stmind_select_vorsorge': True, 'stmind_select_ausserg_bela': True,
+                    'stmind_select_handwerker': True, 'stmind_select_spenden': True}
 
     def test_if_gem_haushalt_not_skipped_then_set_prev_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data), \
+        with make_test_request_context(stored_data=self.valid_data_with_handwerker_shown), \
                 patch('app.forms.steps.lotse.steuerminderungen.StepGemeinsamerHaushalt.check_precondition',
                       MagicMock(return_value=True)):
             step = LotseStepChooser().get_correct_step(StepReligion.name)
             assert step._prev_step == StepGemeinsamerHaushalt
 
     def test_if_gem_haushalt_skipped_then_set_prev_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+        with make_test_request_context(stored_data=self.valid_data_with_handwerker_shown):
             step = LotseStepChooser().get_correct_step(StepReligion.name)
             assert step._prev_step == StepHaushaltsnaheHandwerker
 
-    def test_set_next_step_correctly(self, make_test_request_context):
+    def test_if_handwerker_skipped_then_set_prev_step_correctly(self, make_test_request_context):
         with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepReligion.name)
+            assert step._prev_step == StepSelectStmind
+
+    def test_if_spenden_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_spenden_shown):
             step = LotseStepChooser().get_correct_step(StepReligion.name)
             assert step._next_step == StepSpenden
 
-    def test_redirect_to_correct_step_if_steuerminderung_no(self, make_test_request_context):
+    def test_if_spenden_not_shown_then_set_next_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepReligion.name)
+            assert step._next_step == StepSummary
+
+    def test_redirect_to_correct_step_if_should_not_be_shown(self, make_test_request_context):
         with make_test_request_context(stored_data=self.invalid_data):
             step = LotseStepChooser().get_correct_step(StepReligion.name)
             assert isinstance(step, RedirectSteuerlotseStep)
-            assert step.redirection_step_name == StepSteuerminderungYesNo.name
+            assert step.redirection_step_name == StepSelectStmind.name
 
 
 class TestStepSpenden:
-    valid_data = {'steuerminderung': 'yes'}
-    invalid_data = {'steuerminderung': 'no'}
+    valid_data = {'stmind_select_spenden': True}
+    valid_data_with_religion_shown = {'stmind_select_religion': True, 'stmind_select_spenden': True}
+    invalid_data = {'stmind_select_vorsorge': True, 'stmind_select_ausserg_bela': True,
+                    'stmind_select_handwerker': True, 'stmind_select_religion': True}
 
-    def test_set_prev_step_correctly(self, make_test_request_context):
-        with make_test_request_context(stored_data=self.valid_data):
+    def test_if_religion_shown_then_set_prev_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_religion_shown):
             step = LotseStepChooser().get_correct_step(StepSpenden.name)
             assert step._prev_step == StepReligion
+
+    def test_if_religion_not_shown_then_set_prev_step_correctly(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepSpenden.name)
+            assert step._prev_step == StepSelectStmind
 
     def test_set_next_step_correctly(self, make_test_request_context):
         with make_test_request_context(stored_data=self.valid_data):
             step = LotseStepChooser().get_correct_step(StepSpenden.name)
             assert step._next_step == StepSummary
 
-    def test_redirect_to_correct_step_if_steuerminderung_no(self, make_test_request_context):
+    def test_redirect_to_correct_step_if_should_not_be_shown(self, make_test_request_context):
         with make_test_request_context(stored_data=self.invalid_data):
             step = LotseStepChooser().get_correct_step(StepSpenden.name)
             assert isinstance(step, RedirectSteuerlotseStep)
-            assert step.redirection_step_name == StepSteuerminderungYesNo.name
+            assert step.redirection_step_name == StepSelectStmind.name

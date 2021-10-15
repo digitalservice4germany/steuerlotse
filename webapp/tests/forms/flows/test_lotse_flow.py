@@ -26,18 +26,17 @@ from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDate
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
-    MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockIbanStep, \
+    MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockIbanStep, \
     MockPersonBStep, MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
@@ -170,7 +169,7 @@ class TestLotseInit(unittest.TestCase):
             StepPersonB,
             StepIban,
 
-            StepSteuerminderungYesNo,
+            StepSelectStmind,
             StepVorsorge,
             StepAussergBela,
             StepHaushaltsnaheHandwerker,
@@ -501,7 +500,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
     def setUp(self):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
                          MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
-                         MockStrMindYNStep,
+                         StepSelectStmind,
                          StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
                          MockSummaryStep, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
                          MockFinalStep]
@@ -632,17 +631,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
         self.data_st_mind_yes = {'steuerminderung': 'yes'}
         self.data_st_mind_no = {'steuerminderung': 'no'}
-        prev_step, self.st_mind_yesno_step, next_step = self.flow._generate_steps(MockStrMindYNStep.name)
-        self.render_info_st_mind_yesno_step = RenderInfo(step_title=self.st_mind_yesno_step.title,
-                                                            step_intro=self.st_mind_yesno_step.intro, form=None,
-                                                            prev_url=self.flow.url_for_step(prev_step.name),
-                                                            next_url=None, submit_url=self.flow.url_for_step(
-                self.st_mind_yesno_step.name), overview_url="Overview URL")
-        self.st_mind_yesno_url = '/' + self.endpoint_correct + '/step/' + StepSteuerminderungYesNo.name + \
-                                    '?link_overview=' + str(self.flow.has_link_overview)
-        self.st_mind_yes_url = self.render_info_st_mind_yesno_step.next_url
-        self.st_mind_no_url = '/' + self.endpoint_correct + '/step/' + StepSummary.name + \
-                                '?link_overview=' + str(self.flow.has_link_overview)
 
         self.data_haushaltsnahe_yes = {'stmind_haushaltsnahe_summe': Decimal(1.0),
                                        'stmind_haushaltsnahe_entries': 'Dach',
@@ -862,9 +850,10 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 self.summary_step, self.render_info_summary_step, self.data_st_mind_yes)
             self.assertEqual(self.religion_url, render_info.prev_url)
 
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, self.data_st_mind_no)
-            self.assertEqual(self.st_mind_yesno_url, render_info.prev_url)
+            # TODO move this to the correct test files
+            #render_info, _ = self.flow._handle_specifics_for_step(
+            #    self.summary_step, self.render_info_summary_step, self.data_st_mind_no)
+            #self.assertEqual(self.st_mind_yesno_url, render_info.prev_url)
 
     def test_if_summary_step_and_data_missing_then_set_next_url_correct(self):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
@@ -1126,61 +1115,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.iban_step, self.render_info_iban_step, self.data_not_married)
             self.assertEqual(self.personA_url, render_info.prev_url)
-
-    def test_if_st_mind_yesno_step_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, self.data_st_mind_yes)
-            self.assertEqual(self.st_mind_yes_url, render_info.next_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, self.data_st_mind_no)
-            self.assertEqual(self.st_mind_no_url, render_info.next_url)
-
-    def test_if_st_mind_yesno_step_and_steuerminderung_not_set_then_set_confirmation_step_as_next_url(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, {})
-            self.assertEqual(self.st_mind_no_url, render_info.next_url)
-
-    def test_if_st_mind_yesno_step_and_steuerminderung_not_set_then_delete_all_st_mind_entries(self):
-        data_before_st_mind_no = {
-            'steuerminderung': 'no',
-            'stmind_vorsorge_summe': 'some_value',
-
-            'stmind_krankheitskosten_summe': 'some_value',
-            'stmind_krankheitskosten_anspruch': 'some_value',
-            'stmind_pflegekosten_summe': 'some_value',
-            'stmind_pflegekosten_anspruch': 'some_value',
-            'stmind_beh_aufw_summe': 'some_value',
-            'stmind_beh_aufw_anspruch': 'some_value',
-            'stmind_beh_kfz_summe': 'some_value',
-            'stmind_beh_kfz_anspruch': 'some_value',
-            'stmind_bestattung_summe': 'some_value',
-            'stmind_bestattung_anspruch': 'some_value',
-            'stmind_aussergbela_sonst_summe': 'some_value',
-            'stmind_aussergbela_sonst_anspruch': 'some_value',
-
-            'stmind_haushaltsnahe_entries': 'some_value',
-            'stmind_haushaltsnahe_summe': 'some_value',
-            'stmind_handwerker_entries': 'some_value',
-            'stmind_handwerker_summe': 'some_value',
-            'stmind_handwerker_lohn_etc_summe': 'some_value',
-
-            'stmind_gem_haushalt': 'some_value',
-            'stmind_religion_paid_summe': 'some_value',
-            'stmind_religion_reimbursed_summe': 'some_value',
-            'stmind_spenden_inland': 'some_value',
-            'stmind_spenden_inland_parteien': 'some_value',
-
-            'person_a_first_name': 'IWillStay'
-        }
-        expected_updated_data = {'steuerminderung': 'no', 'person_a_first_name': 'IWillStay'}
-        with self.app.test_request_context(method='POST'):
-            _, updated_data = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, data_before_st_mind_no)
-
-            self.assertEqual(expected_updated_data, updated_data)
 
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):

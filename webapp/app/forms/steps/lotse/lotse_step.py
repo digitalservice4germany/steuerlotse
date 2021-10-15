@@ -9,7 +9,7 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
     header_title = None
 
-    def __init__(self, endpoint, **kwargs):
+    def __init__(self, endpoint='lotse', **kwargs):
         super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
 
     @classmethod

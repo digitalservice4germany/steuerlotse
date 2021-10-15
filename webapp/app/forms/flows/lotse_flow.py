@@ -17,14 +17,13 @@ from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNo
     ConfirmationField, EntriesField, EuroField, IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
     StepFamilienstand
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
@@ -135,7 +134,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepPersonB,
                 StepIban,
 
-                StepSteuerminderungYesNo,
+                StepSelectStmind,
                 StepVorsorge,
                 StepAussergBela,
                 StepHaushaltsnaheHandwerker,
@@ -230,8 +229,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                     flash(e.get_message(), 'warn')
                 missing_fields = e.missing_fields
                 render_info.next_url = self.url_for_step(StepSummary.name)
+            # TODO make summary a steuerlotse Step too
             if not stored_data.get('steuerminderung') or stored_data['steuerminderung'] == 'no':
-                render_info.prev_url = self.url_for_step(StepSteuerminderungYesNo.name)
+                render_info.prev_url = self.url_for_step(StepSelectStmind.name)
             render_info.additional_info['section_steps'] = self._get_overview_data(stored_data, missing_fields)
             render_info.overview_url = None
 
@@ -270,10 +270,6 @@ class LotseMultiStepFlow(MultiStepFlow):
         elif isinstance(step, StepIban):
             if not show_person_b(stored_data):
                 render_info.prev_url = self.url_for_step(StepPersonA.name)
-        elif isinstance(step, StepSteuerminderungYesNo):
-            if not stored_data.get('steuerminderung') or stored_data['steuerminderung'] == 'no':
-                render_info.next_url = self.url_for_step(StepSummary.name)
-                self._delete_dependent_data(['stmind'], stored_data)
         elif isinstance(step, StepHaushaltsnaheHandwerker):
             if show_person_b(stored_data) or \
                     not stored_data.get('stmind_handwerker_summe') and \

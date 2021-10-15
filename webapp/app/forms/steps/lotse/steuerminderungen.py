@@ -1,11 +1,9 @@
-import copy
 from decimal import Decimal
-from typing import Optional, Any, Type
+from typing import Optional
 
 from flask import render_template
 from flask_wtf.csrf import generate_csrf
-from pydantic import BaseModel, validator, ValidationError, root_validator, MissingError
-from pydantic.error_wrappers import ErrorWrapper
+from pydantic import BaseModel, validator, ValidationError, root_validator
 from wtforms import validators, BooleanField
 
 from app.forms import SteuerlotseBaseForm
@@ -16,7 +14,6 @@ from flask_babel import lazy_gettext as _l, _
 
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
 from app.model.components import SelectStmindProps
@@ -31,6 +28,56 @@ class SteuerminderungYesPrecondition(BaseModel):
     @validator('steuerminderung')
     def has_to_be_set_yes(cls, v):
         return declarations_must_be_set_yes(v)
+
+
+class ShowVorsorgePrecondition(BaseModel):
+    stmind_select_vorsorge: str
+
+    @validator('stmind_select_vorsorge', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowAussergBelaPrecondition(BaseModel):
+    stmind_select_ausserg_bela: str
+
+    @validator('stmind_select_ausserg_bela', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowHandwerkerPrecondition(BaseModel):
+    stmind_select_handwerker: str
+
+    @validator('stmind_select_handwerker', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowSpendenPrecondition(BaseModel):
+    stmind_select_spenden: str
+
+    @validator('stmind_select_spenden', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowReligionPrecondition(BaseModel):
+    stmind_select_religion: str
+
+    @validator('stmind_select_religion', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
 
 
 class NotShowPersonBPrecondition(FamilienstandModel):
@@ -61,17 +108,26 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepIban
 
-    label = _l('form.lotse.step_vorsorge.label')
+    label = _l('form.lotse.step_select_stmind.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name,
+                               name,
                                _l('form.lotse.section_steuerminderung.label'))
 
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
     class InputForm(SteuerlotseBaseForm):
-        stmind_select_vorsorge = BooleanField()
-        stmind_select_ausserg_bela = BooleanField()
-        stmind_select_handwerker = BooleanField()
-        stmind_select_spenden = BooleanField()
-        stmind_select_religion = BooleanField()
+        stmind_select_vorsorge = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_vorsorge.data_label')})
+        stmind_select_ausserg_bela = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_ausserg_bela.data_label')})
+        stmind_select_handwerker = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_handwerker.data_label')})
+        stmind_select_spenden = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_spenden.data_label')})
+        stmind_select_religion = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_religion.data_label')})
 
     def render(self, **kwargs):
         props_dict = SelectStmindProps(
@@ -101,11 +157,11 @@ class StepVorsorge(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.vorsorge-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_aufwendungen_with_list.html'
-    preconditions = [SteuerminderungYesPrecondition]
+    preconditions = [ShowVorsorgePrecondition]
 
     label = _l('form.lotse.step_vorsorge.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name,
+                               StepSelectStmind.name,
                                _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
@@ -118,17 +174,13 @@ class StepVorsorge(LotseFormSteuerlotseStep):
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
+            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         else:
             return None, None
 
     @classmethod
     def get_label(cls, data):
         return cls.label
-
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
 
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
@@ -148,11 +200,11 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.ausserg_bela-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_aufwendungen_with_list.html'
-    preconditions = [SteuerminderungYesPrecondition]
+    preconditions = [ShowAussergBelaPrecondition]
 
     label = _l('form.lotse.step_ausserg_bela.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
+                               StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
         stmind_krankheitskosten_summe = EuroField(
@@ -213,7 +265,7 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
+            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         else:
             return None, None
 
@@ -232,11 +284,11 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.handwerker-haushaltsnahe-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_haushaltsnahe_handwerker.html'
-    preconditions = [SteuerminderungYesPrecondition]
+    preconditions = [ShowHandwerkerPrecondition]
 
     label = _l('form.lotse.step_haushaltsnahe_handwerker.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
+                               StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
         stmind_haushaltsnahe_entries = EntriesField(
@@ -300,7 +352,7 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
+            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         else:
             return None, None
 
@@ -331,10 +383,10 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.gem-haushalt-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_aufwendungen_with_list.html'
-    preconditions = [NotShowPersonBPrecondition, SteuerminderungYesPrecondition, HandwerkerHaushaltsnaheSetPrecondition]
+    preconditions = [NotShowPersonBPrecondition, ShowHandwerkerPrecondition, HandwerkerHaushaltsnaheSetPrecondition]
 
     label = _l('form.lotse.step_gem_haushalt.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name,
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name,
                                _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
@@ -367,9 +419,9 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
     def get_redirection_step(cls, stored_data):
         # TODO refactor preconditions to hold redirection step?!
         try:
-            SteuerminderungYesPrecondition.parse_obj(stored_data)
+            ShowHandwerkerPrecondition.parse_obj(stored_data)
         except ValidationError:
-            return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
+            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         try:
             NotShowPersonBPrecondition.parse_obj(stored_data)
         except ValidationError:
@@ -402,10 +454,10 @@ class StepReligion(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.religion-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'lotse/form_aufwendungen_with_list.html'
-    preconditions = [SteuerminderungYesPrecondition]
+    preconditions = [ShowReligionPrecondition]
 
     label = _l('form.lotse.step_religion.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name,
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name,
                                _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
@@ -423,7 +475,7 @@ class StepReligion(LotseFormSteuerlotseStep):
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
+            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         else:
             return None, None
 
@@ -447,11 +499,11 @@ class StepSpenden(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.spenden-inland-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'basis/form_standard.html'
-    preconditions = [SteuerminderungYesPrecondition]
+    preconditions = [ShowSpendenPrecondition]
     next_step = StepSummary
 
     label = _l('form.lotse.step_spenden.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
         stmind_spenden_inland = EuroField(
@@ -468,7 +520,7 @@ class StepSpenden(LotseFormSteuerlotseStep):
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
+            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
         else:
             return None, None
 
