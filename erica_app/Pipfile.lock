@@ -58,19 +58,19 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:7309552da6ef9e610f8a9712c8abe29a8d3d45b514188cc3efad47bd1774bf77",
-                "sha256:f680dee9c670d42ab4a6da5539ca3691d1ccbbcbf041e7021025029776864156"
+                "sha256:2ea8e74678af768343bfc005590d41e162ce8dda9320542dc93f707588df049c",
+                "sha256:364a0fd497147ff0e15327f653223b05e60a1afce002995e5b1106084355352e"
             ],
             "index": "pypi",
-            "version": "==1.18.58"
+            "version": "==1.18.62"
         },
         "botocore": {
             "hashes": [
-                "sha256:c947215f45653609682dc448195a3bfcf0f7da193fd7b17b739656db5442221a",
-                "sha256:ebcb8f0b0e9b56d275073746ea9bb8b60597517b2bfa4d6ebdc64b9bcf4422e0"
+                "sha256:6b854186caa198043e078956d46072600a0cea64b08a29b56a8bb42c3dbf1d7d",
+                "sha256:c92fee381c6f2771f7ec2bffaff2938b8a1c2a957560815a01ad77c975268fdd"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.21.59"
+            "version": "==1.21.62"
         },
         "click": {
             "hashes": [
@@ -106,11 +106,11 @@
         },
         "idna": {
             "hashes": [
-                "sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a",
-                "sha256:467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"
+                "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff",
+                "sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d"
             ],
             "markers": "python_version >= '3.5'",
-            "version": "==3.2"
+            "version": "==3.3"
         },
         "iniconfig": {
             "hashes": [
@@ -295,7 +295,7 @@
                 "sha256:4987c65554f7a2dbf30c18fd48778ef124af6fab771a377103da0585e2336ece",
                 "sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_full_version < '4.0.0'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4.0'",
             "version": "==1.26.7"
         },
         "uvicorn": {
