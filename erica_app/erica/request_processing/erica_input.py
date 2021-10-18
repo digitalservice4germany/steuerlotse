@@ -60,7 +60,6 @@ class FormDataEst(BaseModel):
     person_b_blind: Optional[bool]
     person_b_gehbeh: Optional[bool]
 
-    steuerminderung: bool
     stmind_haushaltsnahe_entries: Optional[List[str]]
     stmind_haushaltsnahe_summe: Optional[Decimal]
     stmind_handwerker_entries: Optional[List[str]]
