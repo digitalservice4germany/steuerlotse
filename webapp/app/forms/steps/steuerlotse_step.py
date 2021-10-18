@@ -138,8 +138,8 @@ class FormSteuerlotseStep(SteuerlotseStep):
         render_info.form = cls.create_form(form_data=input_data, prefilled_data=stored_data)
 
         if should_update_data and render_info.form.validate():
-                render_info.data_is_valid = True
-                stored_data.update(render_info.form.data)
+            render_info.data_is_valid = True
+            stored_data.update(render_info.form.data)
 
         render_info.stored_data = stored_data
 
