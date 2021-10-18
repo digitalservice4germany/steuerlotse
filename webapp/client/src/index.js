@@ -4,9 +4,11 @@ import ReactDOM from "react-dom";
 // loaded in the jinja template that includes these React components.
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
+import RegistrationPage from "./pages/RegistrationPage";
 
 const allowedComponents = {
   LoginPage,
+  RegistrationPage,
 };
 
 function mountComponent(element) {

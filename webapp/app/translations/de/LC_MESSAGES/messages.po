@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-11 11:22+0200\n"
+"POT-Creation-Date: 2021-10-13 16:34+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -159,23 +159,23 @@ msgstr "Jahr"
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 29.2.1951"
 
-#: app/forms/fields.py:346
+#: app/forms/fields.py:359
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:378
+#: app/forms/fields.py:391
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:397
+#: app/forms/fields.py:410
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:462
+#: app/forms/fields.py:475
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:462
+#: app/forms/fields.py:475
 msgid "switch.no"
 msgstr "Nein"
 
@@ -249,24 +249,24 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:123 app/forms/flows/lotse_step_chooser.py:22
+#: app/forms/flows/lotse_flow.py:124 app/forms/flows/lotse_step_chooser.py:22
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:168
+#: app/forms/flows/lotse_flow.py:169
 msgid "form.finish"
 msgstr "Steuererklärung abgeben"
 
-#: app/forms/flows/lotse_flow.py:179
+#: app/forms/flows/lotse_flow.py:180
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:339
+#: app/forms/flows/lotse_flow.py:340
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:391
+#: app/forms/flows/lotse_flow.py:392
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -275,6 +275,7 @@ msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
 #: app/forms/flows/unlock_code_request_flow.py:51
+#: app/forms/steps/unlock_code_request_steps.py:44
 msgid "form.register"
 msgstr "Registrieren"
 
@@ -295,9 +296,9 @@ msgstr ""
 
 #: app/forms/steps/eligibility_steps.py:78
 #: app/forms/steps/eligibility_steps.py:99
-#: app/forms/steps/eligibility_steps.py:159
-#: app/forms/steps/eligibility_steps.py:790
-#: app/forms/steps/eligibility_steps.py:819
+#: app/forms/steps/eligibility_steps.py:158
+#: app/forms/steps/eligibility_steps.py:792
+#: app/forms/steps/eligibility_steps.py:821
 msgid "form.eligibility.header-title"
 msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 
@@ -552,27 +553,41 @@ msgstr ""
 msgid "form.eligibility.elster_registration_method-title"
 msgstr "Mit welchem Verfahren haben Sie sich bei Mein ELSTER registriert?"
 
+#: app/forms/steps/eligibility_steps.py:446
+msgid "form.eligibility.elster_registration_method_eligibility.detail.title"
+msgstr "Wieso ist diese Information relevant?"
+
 #: app/forms/steps/eligibility_steps.py:447
+msgid "form.eligibility.elster_registration_method_eligibility.detail.text"
+msgstr ""
+"Je nach Registrierungsverfahren wird Ihnen von Elster ein Freischaltcode "
+"per Post zugeschickt oder nicht. Diesen Freischaltcode benötigen Sie für "
+"Ihre Anmeldung beim Steuerlotsen. Wenn Sie ein Registrierungsverfahren "
+"bei Elster gewählt haben, das dazu führt, dass Sie keinen Freischaltcode "
+"per Post erhalten, können Sie den Steuerlotsen daher momentan nicht "
+"nutzen."
+
+#: app/forms/steps/eligibility_steps.py:448
 msgid "form.eligibility.elster_registration_method.software"
 msgstr "Zertifikatsdatei"
 
-#: app/forms/steps/eligibility_steps.py:448
+#: app/forms/steps/eligibility_steps.py:449
 msgid "form.eligibility.elster_registration_method.id_card"
 msgstr "Personalausweis"
 
-#: app/forms/steps/eligibility_steps.py:449
+#: app/forms/steps/eligibility_steps.py:450
 msgid "form.eligibility.elster_registration_method.stick"
 msgstr "Sicherheitsstick"
 
-#: app/forms/steps/eligibility_steps.py:450
+#: app/forms/steps/eligibility_steps.py:451
 msgid "form.eligibility.elster_registration_method.card"
 msgstr "Signaturkarte"
 
-#: app/forms/steps/eligibility_steps.py:451
-msgid "form.eligibility.elster_registration_method.none"
+#: app/forms/steps/eligibility_steps.py:452
+msgid "form.eligibility.elster_registration_method.unknown"
 msgstr "Weiß ich nicht"
 
-#: app/forms/steps/eligibility_steps.py:458
+#: app/forms/steps/eligibility_steps.py:459
 msgid "form.eligibility.elster_abrufcode_failure-error"
 msgstr ""
 "Für die Überprüfung Ihrer Identität braucht unser Service einen "
@@ -580,37 +595,38 @@ msgstr ""
 "Post versendet. Aus technischen Gründen geschieht das allerdings in Ihrem"
 " Fall nicht. Daher können Sie den Steuerlotsen derzeit nicht nutzen."
 
-#: app/forms/steps/eligibility_steps.py:468
+#: app/forms/steps/eligibility_steps.py:469
 msgid "form.eligibility.elster_abrufcode-title"
 msgstr ""
 "Haben Sie einen Abrufcode beantragt, um die der Finanzverwaltung "
 "vorliegenden Daten abrufen zu können?"
 
-#: app/forms/steps/eligibility_steps.py:474
+#: app/forms/steps/eligibility_steps.py:475
 msgid "form.eligibility.elster_abrufcode_eligibility.detail.title"
-msgstr "Ich bin mir nicht sicher, ob ich den Abrufcode beantragt habe."
+msgstr "Was ist ein Abrufcode?"
 
 #: app/forms/steps/eligibility_steps.py:475
 msgid "form.eligibility.elster_abrufcode_eligibility.detail.text"
 msgstr ""
-"Elster bietet die Möglichkeit, die „vorausgefüllte Steuererklärung“ zu "
-"nutzen. Dafür muss man einen sogenannten Abrufcode beantragen. Wenn Sie "
-"das in der Vergangenheit gemacht haben, wird Ihnen kein Brief mit "
-"Freischaltcode zugeschickt. Diesen benötigen Sie jedoch für Ihre "
-"Anmeldung beim Steuerlotsen. Wenn Sie nicht wissen, ob Sie in der "
-"Vergangenheit einen Abrufcode beantragt haben, können Sie ausprobieren, "
-"ob Sie den Brief erhalten oder nicht. Sollten Sie ihn innerhalb von 2 "
-"Wochen nicht erhalten, können Sie den Steuerlotsen leider nicht nutzen."
+"Elster bietet die Möglichkeit einer „vorausgefüllten Steuererklärung“. "
+"Bei dieser werden Daten, die über Sie im Finanzamt vorliegen, automatisch"
+" ausgefüllt. Dafür muss man bei Elster einen sogenannten Abrufcode "
+"beantragen. Wenn Sie einen Abrufcode beantragt haben, um die "
+"„vorausgefüllte Steuererklärung” zu nutzen, wählen Sie bitte „Ja” aus."
 
-#: app/forms/steps/eligibility_steps.py:476
+#: app/forms/steps/eligibility_steps.py:475
 msgid "form.eligibility.elster_abrufcode_eligibility.yes"
 msgstr "Ja"
 
-#: app/forms/steps/eligibility_steps.py:477
+#: app/forms/steps/eligibility_steps.py:476
 msgid "form.eligibility.elster_abrufcode_eligibility.no"
 msgstr "Nein"
 
-#: app/forms/steps/eligibility_steps.py:484
+#: app/forms/steps/eligibility_steps.py:479
+msgid "form.eligibility.elster_abrufcode_eligibility.unknown"
+msgstr "Weiß ich nicht"
+
+#: app/forms/steps/eligibility_steps.py:486
 msgid "form.eligibility.pension_failure-error"
 msgstr ""
 "Sie können Ihre Steuererklärung nur mit dem Steuerlotsen machen, wenn die"
@@ -638,8 +654,8 @@ msgstr ""
 " der sog. „Rürup- Rente\"</li><li>Anbieter der sog. „Riester-"
 "Rente\"</li><li>frühere Arbeitgeber</li></ul>"
 
-#: app/forms/steps/eligibility_steps.py:501
-#: app/forms/steps/eligibility_steps.py:510
+#: app/forms/steps/eligibility_steps.py:503
+#: app/forms/steps/eligibility_steps.py:512
 msgid "form.eligibility.pension.yes"
 msgid_plural "form.eligibility.pension.yes"
 msgstr[0] "Ja, ich beziehe meine Rente ausschließlich aus den genannten Stellen."
@@ -656,15 +672,15 @@ msgstr[1] ""
 "Nein, wir beziehen unsere Rente beziehungsweise Pensionen aus weiteren "
 "Stellen."
 
-#: app/forms/steps/eligibility_steps.py:523
+#: app/forms/steps/eligibility_steps.py:525
 msgid "form.eligibility.investment_income-title"
 msgstr "Haben Sie Kapitalerträge?"
 
-#: app/forms/steps/eligibility_steps.py:529
+#: app/forms/steps/eligibility_steps.py:531
 msgid "form.eligibility.investment_income.detail.title"
 msgstr "Ich weiß nicht, ob ich Kapitalerträge habe."
 
-#: app/forms/steps/eligibility_steps.py:530
+#: app/forms/steps/eligibility_steps.py:532
 msgid "form.eligibility.investment_income.detail.text"
 msgstr ""
 "Kapitalerträge sind die Gewinne aus Geldanlagen. Hierzu gehören z.B. "
@@ -693,11 +709,11 @@ msgstr ""
 "müssen, weil diese den in Anspruch genommenen Sparer-Pauschbetrag nicht "
 "überschreiten?"
 
-#: app/forms/steps/eligibility_steps.py:561
+#: app/forms/steps/eligibility_steps.py:563
 msgid "form.eligibility.minimal_investment_income.detail.title"
 msgstr "Was ist der Sparer-Pauschbetrag?"
 
-#: app/forms/steps/eligibility_steps.py:562
+#: app/forms/steps/eligibility_steps.py:564
 msgid "form.eligibility.minimal_investment_income.detail.text"
 msgstr ""
 "Wenn Sie für Ihre Kapitalerträge bei Ihrer Bank einen "
@@ -717,8 +733,8 @@ msgstr[1] ""
 "Ja, alle unsere Kapitalerträge liegen unter dem Sparerpauschbetrag, den "
 "wir in Anspruch genommen haben."
 
-#: app/forms/steps/eligibility_steps.py:564
-#: app/forms/steps/eligibility_steps.py:578
+#: app/forms/steps/eligibility_steps.py:566
+#: app/forms/steps/eligibility_steps.py:580
 msgid "form.eligibility.minimal_investment_income.no"
 msgid_plural "form.eligibility.minimal_investment_income.no"
 msgstr[0] "Nein, das trifft auf die Kapitalerträge nicht zu."
@@ -776,17 +792,17 @@ msgstr ""
 "Wenn Sie die Günstigerprüfung beantragen möchten, müssen Sie Angaben im "
 "Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:620
+#: app/forms/steps/eligibility_steps.py:622
 msgid "form.eligibility.cheaper_check-title"
 msgstr ""
 "Haben Sie ein geringes Einkommen und möchten daher eine Günstigerprüfung "
 "beantragen?"
 
-#: app/forms/steps/eligibility_steps.py:626
+#: app/forms/steps/eligibility_steps.py:628
 msgid "form.eligibility.cheaper_check.detail.title"
 msgstr "Was ist die Günstigerprüfung?"
 
-#: app/forms/steps/eligibility_steps.py:627
+#: app/forms/steps/eligibility_steps.py:629
 msgid "form.eligibility.cheaper_check.detail.text"
 msgstr ""
 "Die Günstigerprüfung ist ein Verfahren, bei dem das Finanzamt den "
@@ -804,8 +820,8 @@ msgid_plural "form.eligibility.cheaper_check_eligibility.yes"
 msgstr[0] "Ja, ich möchte die Günstigerprüfung beantragen."
 msgstr[1] "Ja, wir möchten die Günstigerprüfung beantragen."
 
-#: app/forms/steps/eligibility_steps.py:629
-#: app/forms/steps/eligibility_steps.py:642
+#: app/forms/steps/eligibility_steps.py:631
+#: app/forms/steps/eligibility_steps.py:644
 msgid "form.eligibility.cheaper_check_eligibility.no"
 msgid_plural "form.eligibility.cheaper_check_eligibility.no"
 msgstr[0] "Nein, ich möchte die Günstigerprüfung nicht beantragen."
@@ -852,11 +868,11 @@ msgstr ""
 "Handelt es sich bei der Erwerbstätigkeit um eine geringfügige "
 "Beschäftigung bis zu 450€, die bereits pauschal besteuert wurde?"
 
-#: app/forms/steps/eligibility_steps.py:696
+#: app/forms/steps/eligibility_steps.py:698
 msgid "form.eligibility.marginal_employment.detail.title"
 msgstr "Was bedeutet das?"
 
-#: app/forms/steps/eligibility_steps.py:697
+#: app/forms/steps/eligibility_steps.py:699
 msgid "form.eligibility.marginal_employment.detail.text"
 msgstr ""
 "Wer nicht mehr als 450 Euro im Monat verdient, gilt als geringfügig "
@@ -882,13 +898,13 @@ msgstr ""
 "Wenn Sie Einkünfte haben, die noch zu versteuern sind, müssen Sie Angaben"
 " im Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:716
+#: app/forms/steps/eligibility_steps.py:718
 msgid "form.eligibility.income-other-title"
 msgstr ""
 "Haben Sie noch weitere Einkünfte als die bisher genannten Einkünfte? Zum "
 "Beispiel aus einer Vermietung?"
 
-#: app/forms/steps/eligibility_steps.py:722
+#: app/forms/steps/eligibility_steps.py:724
 msgid "form.eligibility.income-other.detail.title"
 msgstr "Ich bin mir nicht sicher."
 
@@ -913,50 +929,50 @@ msgid_plural "form.eligibility.income_other.no"
 msgstr[0] "Nein, ich habe keine weiteren Einkünfte."
 msgstr[1] "Nein, wir haben keine weiteren Einkünfte."
 
-#: app/forms/steps/eligibility_steps.py:744
+#: app/forms/steps/eligibility_steps.py:746
 msgid "form.eligibility.foreign_country_failure-error"
 msgstr ""
 "Wenn Sie letztes Jahr im Ausland gelebt haben, müssen Sie Angaben im "
 "Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:755
+#: app/forms/steps/eligibility_steps.py:757
 msgid "form.eligibility.foreign-country-title"
 msgstr ""
 "Leben Sie dauerhaft im Ausland und kommen nur gelegentlich, zum Beispiel "
 "zu Besuchszwecken, nach Deutschland?"
 
-#: app/forms/steps/eligibility_steps.py:761
+#: app/forms/steps/eligibility_steps.py:763
 msgid "form.eligibility.foreign-country.detail.title"
 msgstr "Ab welcher Dauer lebt man dauerhaft im Ausland?"
 
-#: app/forms/steps/eligibility_steps.py:762
+#: app/forms/steps/eligibility_steps.py:764
 msgid "form.eligibility.foreign-country.detail.text"
 msgstr ""
 "Sie leben dauerhaft im Ausland, wenn Sie länger als 183 Tage im Jahr in "
 "einem anderen Land gelebt haben. Sollte dies der Fall sein, wählen Sie "
 "»Ja« aus. "
 
-#: app/forms/steps/eligibility_steps.py:763
-#: app/forms/steps/eligibility_steps.py:773
+#: app/forms/steps/eligibility_steps.py:765
+#: app/forms/steps/eligibility_steps.py:775
 msgid "form.eligibility.foreign_country.yes"
 msgid_plural "form.eligibility.foreign_country.yes"
 msgstr[0] "Ja, ich lebe dauerhaft im Ausland."
 msgstr[1] "Ja, wir leben dauerhaft im Ausland."
 
-#: app/forms/steps/eligibility_steps.py:764
-#: app/forms/steps/eligibility_steps.py:777
+#: app/forms/steps/eligibility_steps.py:766
+#: app/forms/steps/eligibility_steps.py:779
 msgid "form.eligibility.foreign_country.no"
 msgid_plural "form.eligibility.foreign_country.no"
 msgstr[0] "Nein, ich lebe dauerhaft in Deutschland."
 msgstr[1] "Nein, wir leben dauerhaft in Deutschland."
 
-#: app/forms/steps/eligibility_steps.py:783
+#: app/forms/steps/eligibility_steps.py:785
 msgid "form.eligibility.result-title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 mit dem Steuerlotsen "
 "machen."
 
-#: app/forms/steps/eligibility_steps.py:784
+#: app/forms/steps/eligibility_steps.py:786
 msgid "form.eligibility.result-intro"
 msgstr ""
 "Wenn Sie alle Fragen korrekt beantwortet haben, können Sie den "
@@ -965,7 +981,7 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:799
+#: app/forms/steps/eligibility_steps.py:801
 msgid "form.eligibility.result-note.user_b_elster_account"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss "
@@ -991,13 +1007,13 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:812
+#: app/forms/steps/eligibility_steps.py:814
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
 "Steuerlotsen machen."
 
-#: app/forms/steps/eligibility_steps.py:813
+#: app/forms/steps/eligibility_steps.py:815
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
 "Es kann allerdings sein, dass Sie <strong>keinen Brief mit Ihrem "
@@ -1027,84 +1043,30 @@ msgstr ""
 msgid "form.logout.header-title"
 msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:22
+#: app/forms/steps/unlock_code_activation_steps.py:23
 msgid "form.unlock-code-activation.input-title"
 msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 
-#: app/forms/steps/unlock_code_activation_steps.py:23
+#: app/forms/steps/unlock_code_activation_steps.py:24
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann"
 " können Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/forms/steps/unlock_code_activation_steps.py:26
-#: app/forms/steps/unlock_code_activation_steps.py:67
+#: app/forms/steps/unlock_code_activation_steps.py:27
+#: app/forms/steps/unlock_code_activation_steps.py:62
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:63
+#: app/forms/steps/unlock_code_activation_steps.py:58
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
-#: app/forms/steps/unlock_code_request_steps.py:16
-msgid "unlock-code-request.idnr"
-msgstr "Steuer-Identifikationsnummer"
-
-#: app/forms/steps/unlock_code_request_steps.py:17
-msgid "unlock-code-request.idnr.help-title"
-msgstr "Wo finde ich diese Nummer?"
-
-#: app/forms/steps/unlock_code_request_steps.py:18
-msgid "unlock-code-request.idnr.help-text"
-msgstr ""
-"Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für"
-" Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. "
-"Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid."
-
-#: app/forms/steps/unlock_code_request_steps.py:19
-msgid "unlock-code-request.dob"
-msgstr "Geburtsdatum"
-
-#: app/forms/steps/unlock_code_request_steps.py:21
-#: app/forms/steps/unlock_code_request_steps.py:33
-msgid "form.unlock-code-request.field_registration_confirm_data_privacy"
-msgstr ""
-"Ich habe die <a href=%(link)s>Datenschutzerklärung</a> inklusive der <a "
-"href=\"https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2020-07-01"
-"-Korrektur-Allgemeine-Informationen-Datenschutz-Grundverordnung-"
-"Steuerverwaltung-anlage-1.pdf?__blob=publicationFile&v=3\" "
-"target=\"_blank\">Allgemeinen Informationen zur Umsetzung der "
-"datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-"
-"Grundverordnung in der Steuerverwaltung</a> zur Kenntnis genommen und "
-"akzeptiere diese."
-
-#: app/forms/steps/unlock_code_request_steps.py:23
-#: app/forms/steps/unlock_code_request_steps.py:36
-msgid "form.unlock-code-request.field_registration_confirm_terms_of_service"
-msgstr ""
-"Ich habe die <a href=%(link)s>Nutzungsbedingungen</a> gelesen und stimme "
-"ihnen zu."
-
-#: app/forms/steps/unlock_code_request_steps.py:25
-#: app/forms/steps/unlock_code_request_steps.py:39
-msgid "form.unlock-code-request.field_registration_confirm_incomes"
-msgstr ""
-"Ich habe unter <a href=%(link)s>Nutzung prüfen</a> den Fragebogen "
-"ausgewertet und erfülle alle Voraussetzungen für die Nutzung des "
-"Steuerlotsen."
-
-#: app/forms/steps/unlock_code_request_steps.py:27
-msgid "form.unlock-code-request.e-data.field-confirm-e-data"
-msgstr ""
-"Ich bzw. wir sind damit einverstanden, dass die Festsetzung meiner / "
-"unserer Einkommensteuer anhand der elektronisch vorliegenden Daten "
-"erfolgt, die der Finanzbehörde vorliegen."
-
-#: app/forms/steps/unlock_code_request_steps.py:43
+#: app/forms/steps/unlock_code_request_steps.py:29
 msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
-#: app/forms/steps/unlock_code_request_steps.py:44
+#: app/forms/steps/unlock_code_request_steps.py:30
 msgid "form.unlock-code-request.input-intro"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
@@ -1112,23 +1074,17 @@ msgstr ""
 "erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen "
 "möchten, muss sich nur eine Person registrieren."
 
-#: app/forms/steps/unlock_code_request_steps.py:53
-msgid "form.unlock-code-request.got-fsc"
-msgstr ""
-"Sie haben Ihren Freischaltcode bereits erhalten? <br><a "
-"href=%(link)s>Dann können Sie sich anmelden</a>."
-
-#: app/forms/steps/unlock_code_request_steps.py:54
-#: app/forms/steps/unlock_code_request_steps.py:67
-#: app/forms/steps/unlock_code_request_steps.py:80
+#: app/forms/steps/unlock_code_request_steps.py:62
+#: app/forms/steps/unlock_code_request_steps.py:75
+#: app/forms/steps/unlock_code_request_steps.py:88
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_request_steps.py:62
+#: app/forms/steps/unlock_code_request_steps.py:70
 msgid "form.unlock-code-request.success-title"
 msgstr "Ihre Registrierung war erfolgreich!"
 
-#: app/forms/steps/unlock_code_request_steps.py:63
+#: app/forms/steps/unlock_code_request_steps.py:71
 msgid "form.unlock-code-request.success-intro"
 msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
@@ -1137,11 +1093,11 @@ msgstr ""
 "nach Erhalt des Briefes an. Andernfalls müssen Sie sich erneut "
 "registrieren."
 
-#: app/forms/steps/unlock_code_request_steps.py:75
+#: app/forms/steps/unlock_code_request_steps.py:83
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:76
+#: app/forms/steps/unlock_code_request_steps.py:84
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie "
@@ -1194,6 +1150,7 @@ msgstr ""
 "Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren "
 "Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun."
 
+#: app/forms/steps/lotse/personal_data.py:37
 #: app/forms/steps/lotse/personal_data.py:42
 msgid "validate.invalid-tax-number"
 msgstr "Die Steuernummer ist nicht valide."
@@ -1202,6 +1159,7 @@ msgstr "Die Steuernummer ist nicht valide."
 msgid "form.lotse.steuernummer-title"
 msgstr "Steuernummer"
 
+#: app/forms/steps/lotse/personal_data.py:38
 #: app/forms/steps/lotse/personal_data.py:48
 msgid "form.lotse.steuernummer-intro"
 msgstr ""
@@ -1211,7 +1169,7 @@ msgstr ""
 "beispielsweise ein Umzug, eine Heirat oder die Änderung der "
 "Veranlagungsart sein."
 
-#: app/forms/steps/lotse/personal_data.py:49
+#: app/forms/steps/lotse/personal_data.py:39
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:139
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:262
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:392
@@ -1219,11 +1177,11 @@ msgstr ""
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/personal_data.py:55
+#: app/forms/steps/lotse/personal_data.py:45
 msgid "form.lotse.step_steuernummer.label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:56
+#: app/forms/steps/lotse/personal_data.py:46
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:15
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:43
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:23
@@ -1233,22 +1191,22 @@ msgstr "Steuernummer"
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
-#: app/forms/steps/lotse/personal_data.py:67
-#: app/forms/steps/lotse/personal_data.py:164
+#: app/forms/steps/lotse/personal_data.py:57
+#: app/forms/steps/lotse/personal_data.py:144
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
 msgstr[1] "Haben Sie bereits eine gemeinsame Steuernummer?"
 
-#: app/forms/steps/lotse/personal_data.py:68
+#: app/forms/steps/lotse/personal_data.py:58
 msgid "form.lotse.steuernummer_exists.data_label"
 msgstr "Steuernummer vorhanden"
 
-#: app/forms/steps/lotse/personal_data.py:69
+#: app/forms/steps/lotse/personal_data.py:59
 msgid "form.lotse.steuernummer_exists.detail.title"
 msgstr "Wo finde Ich diese Nummer?"
 
-#: app/forms/steps/lotse/personal_data.py:70
+#: app/forms/steps/lotse/personal_data.py:60
 msgid "form.lotse.steuernummer_exists.detail.text"
 msgstr ""
 "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch "
@@ -1285,23 +1243,23 @@ msgstr "Brandenburg"
 msgid "form.lotse.field_bundesland_hb"
 msgstr "Bremen"
 
-#: app/forms/steps/lotse/personal_data.py:81
+#: app/forms/steps/lotse/personal_data.py:71
 msgid "form.lotse.field_bundesland_hh"
 msgstr "Hamburg"
 
-#: app/forms/steps/lotse/personal_data.py:82
+#: app/forms/steps/lotse/personal_data.py:72
 msgid "form.lotse.field_bundesland_he"
 msgstr "Hessen"
 
-#: app/forms/steps/lotse/personal_data.py:83
+#: app/forms/steps/lotse/personal_data.py:73
 msgid "form.lotse.field_bundesland_mv"
 msgstr "Mecklenburg-Vorpommern "
 
-#: app/forms/steps/lotse/personal_data.py:84
+#: app/forms/steps/lotse/personal_data.py:74
 msgid "form.lotse.field_bundesland_nd"
 msgstr "Niedersachsen"
 
-#: app/forms/steps/lotse/personal_data.py:85
+#: app/forms/steps/lotse/personal_data.py:75
 msgid "form.lotse.field_bundesland_nw"
 msgstr "Nordrhein-Westfalen"
 
@@ -1325,27 +1283,27 @@ msgstr "Sachsen-Anhalt "
 msgid "form.lotse.field_bundesland_sh"
 msgstr "Schleswig-Holstein"
 
-#: app/forms/steps/lotse/personal_data.py:91
+#: app/forms/steps/lotse/personal_data.py:81
 msgid "form.lotse.field_bundesland_th"
 msgstr "Thüringen"
 
-#: app/forms/steps/lotse/personal_data.py:93
+#: app/forms/steps/lotse/personal_data.py:83
 msgid "form.lotse.field_bundesland.data_label"
 msgstr "Auswahl Bundesland"
 
-#: app/forms/steps/lotse/personal_data.py:94
+#: app/forms/steps/lotse/personal_data.py:84
 msgid "form.lotse.field_bundesland_required"
 msgstr "Bundesland auswählen"
 
-#: app/forms/steps/lotse/personal_data.py:97
+#: app/forms/steps/lotse/personal_data.py:87
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/personal_data.py:101
+#: app/forms/steps/lotse/personal_data.py:91
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/personal_data.py:103
+#: app/forms/steps/lotse/personal_data.py:93
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
@@ -1368,7 +1326,7 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:111
+#: app/forms/steps/lotse/personal_data.py:101
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
@@ -2039,19 +1997,19 @@ msgid "form.lotse.step_iban.label"
 msgstr "Bankverbindung"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:415
-msgid "form.lotse.field_is_person_a_account_holder"
+msgid "form.lotse.iban.account-holder"
 msgstr "Wer ist Kontoinhaber:in?"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:416
-msgid "form.lotse.field_is_person_a_account_holder.data_label"
+msgid "form.lotse.iban.account-holder.data_label"
 msgstr "Kontoinhaber:in"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:417
-msgid "form.lotse.field_is_person_a_account_holder-person-a"
+msgid "form.lotse.iban.account-holder-person-a"
 msgstr "Person A"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:418
-msgid "form.lotse.field_is_person_a_account_holder-person-b"
+msgid "form.lotse.iban.account-holder-person-b"
 msgstr "Person B"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:421
@@ -2070,11 +2028,11 @@ msgid "form.loste.field_iban.example_input"
 msgstr "inländisches Geldinstitut"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:430
-msgid "form.lotse.field_is_person_a_account_holder_single"
+msgid "form.lotse.field_is_user_account_holder"
 msgstr "Ja, ich bin Kontoinhaber:in."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:431
-msgid "form.lotse.field_is_person_a_account_holder_single.data_label"
+msgid "form.lotse.field_is_user_account_holder.data_label"
 msgstr "Das angegebene Konto gehört Ihnen"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:442
@@ -2090,85 +2048,85 @@ msgstr ""
 "finden Sie zum Beispiel auf dem Kontoauszug Ihres kontoführenden "
 "Kreditinstituts."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:17
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:18
 msgid "form.lotse.step_steuerminderung.label"
 msgstr "Auswahl Steuerminderungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:18
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:49
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:87
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:164
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:251
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:306
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:340
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:19
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:50
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:88
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:165
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:252
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:316
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:350
 msgid "form.lotse.section_steuerminderung.label"
 msgstr "Steuermindernde Aufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:24
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:25
 msgid "form.lotse.field_steuerminderung.data_label"
 msgstr "Auswahl"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:27
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:28
 msgid "form.lotse.field_steuerminderung-yes"
 msgstr ""
 "Ja, ich möchte steuermindernde Ausgaben geltend machen und diese jetzt "
 "angeben."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:28
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:29
 msgid "form.lotse.field_steuerminderung-no"
 msgstr ""
 "Nein, ich möchte keine steuermindernden Aufwendungen geltend machen und "
 "meine Angaben jetzt bestätigen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:35
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:36
 msgid "form.lotse.steuerminderung-title"
 msgstr "Möchten Sie steuermindernde Aufwendungen angeben?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:36
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:37
 msgid "form.lotse.steuerminderung-intro"
 msgstr ""
 "Sie können steuermindernde Aufwendungen aus den Bereichen Vorsorge und "
 "Gesundheit, Haushalt sowie Gemeinschaft und Gesellschaft geltend machen "
 "und so Ihre Steuerzahlungen reduzieren."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:38
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:80
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:154
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:238
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:300
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:334
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:361
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:39
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:81
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:155
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:239
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:299
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:344
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:371
 msgid "form.lotse.steuerminderungen.header-title"
 msgstr ""
 "Steuerformular - Steuermindernde Aufwendungen - Der Steuerlotse für Rente"
 " und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:46
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:47
 msgid "form.lotse.step_vorsorge.label"
 msgstr "Vorsorgeaufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:51
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:52
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:89
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:53
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:90
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:166
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:91
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:167
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:253
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:168
 #: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:254
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:307
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:308
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:341
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:342
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:255
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:317
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:318
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:351
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:352
 msgid "form.lotse.skip_reason.steuerminderung_is_no"
 msgstr ""
 "Bitte wählen Sie zuerst aus, dass Sie steuermindernde Aufwendungen "
 "geltend machen möchten."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:57
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:58
 msgid "form.lotse.field_vorsorge_summe"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:59
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:60
 msgid "form.lotse.field_vorsorge_summe-help"
 msgstr ""
 "Die Summe der Beiträge wirkt sich steuerlich nur aus, wenn der "
@@ -2176,50 +2134,50 @@ msgstr ""
 "zu Basiskranken- und gesetzlichen Pflegeversicherungen ausgeschöpft "
 "wurde."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:60
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:61
 msgid "form.lotse.field_vorsorge_summe.data_label"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:64
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:65
 msgid "form.lotse.vorsorge-title"
 msgstr "Vorsorgeaufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:65
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:66
 msgid "form.lotse.vorsorge-intro"
 msgstr ""
 "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft "
 "vorsorgen, sind Vorsorgeaufwendungen. Sie können Beiträge zu folgenden "
 "Versicherungen geltend machen:"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:74
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:75
 msgid "form.lotse.vorsorge.post-list-text"
 msgstr ""
 "Nicht abzugsfähig sind Beiträge zu Kasko-, Hausrat-, Gebäude- und "
 "Rechtsschutzversicherungen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:76
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:77
 msgid "form.lotse.vorsorge-list-item-1"
 msgstr "Unfallversicherungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:77
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:78
 msgid "form.lotse.vorsorge-list-item-2"
 msgstr "Haftpflichtversicherungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:78
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:79
 msgid "form.lotse.vorsorge-list-item-3"
 msgstr ""
 "Risikolebensversicherungen, die nur für den Todesfall eine Leistung "
 "vorsehen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:85
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:86
 msgid "form.lotse.step_ausserg_bela.label"
 msgstr "Außergewöhnliche Belastungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:95
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:96
 msgid "form.lotse.field_krankheitskosten_summe"
 msgstr "Krankheitskosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:96
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:97
 msgid "form.lotse.field_krankheitskosten-help"
 msgstr ""
 "Zu den Krankheitskosten zählen zum Beispiel Arznei-, Heil- und "
@@ -2237,23 +2195,23 @@ msgstr ""
 "Arzt-, Arznei- und Kurmittelkosten reicht als Nachweis der Notwendigkeit "
 "der Kur nicht aus."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:97
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:98
 msgid "form.lotse.field_krankheitskosten_summe.data_label"
 msgstr "Krankheitskosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:100
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:101
 msgid "form.lotse.field_krankheitskosten_anspruch"
 msgstr "Krankheitskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:101
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:102
 msgid "form.lotse.field_krankheitskosten_anspruch.data_label"
 msgstr "Krankheitskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:104
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:105
 msgid "form.lotse.field_pflegekosten_summe"
 msgstr "Pflegekosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:105
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:106
 msgid "form.lotse.field_pflegekosten-help"
 msgstr ""
 "Zu den Pflegekosten zählen zum Beispiel Kosten zur Beschäftigung einer "
@@ -2264,23 +2222,23 @@ msgstr ""
 "Pflegekosten hier nur eintragen können, wenn Sie den Behinderten-"
 "Pauschbetrag nicht beantragt haben."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:106
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:107
 msgid "form.lotse.field_pflegekosten_summe.data_label"
 msgstr "Pflegekosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:109
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:110
 msgid "form.lotse.field_pflegekosten_anspruch"
 msgstr "Pflegekosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:110
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:111
 msgid "form.lotse.field_pflegekosten_anspruch.data_label"
 msgstr "Pflegekosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:113
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:114
 msgid "form.lotse.field_beh_aufw_summe"
 msgstr "Behinderungsbedingte Aufwendungen Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:114
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:115
 msgid "form.lotse.field_beh_aufw-help"
 msgstr ""
 "Zu den Behinderungsbedingten Aufwendungen zählen zum Beispiel "
@@ -2291,23 +2249,23 @@ msgstr ""
 "Aufwendungen des täglichen Lebens hier nur eintragen können, wenn sie den"
 " Behinderten-Pauschbetrag nicht beantragt haben."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:115
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:116
 msgid "form.lotse.field_beh_aufw_summe.data_label"
 msgstr "Behinderungsbedingte Aufwendungen Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:118
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:119
 msgid "form.lotse.field_beh_aufw_anspruch"
 msgstr "Behinderungsbedingte Aufwendungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:119
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:120
 msgid "form.lotse.field_beh_aufw_anspruch.data_label"
 msgstr "Behinderungsbedingte Aufwendungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:122
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:123
 msgid "form.lotse.field_beh_kfz_summe"
 msgstr "Behinderungsbedingte Kfz-Kosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:123
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:124
 msgid "form.lotse.field_beh_kfz-help"
 msgstr ""
 "Unter behinderungsbedingten Kfz-Kosten versteht man durch die Behinderung"
@@ -2326,23 +2284,23 @@ msgstr ""
 "oder glaubhaft zu machen. Ein höherer Kilometersatz als 30 Cent wird vom "
 "Finanzamt nicht berücksichtigt."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:124
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:125
 msgid "form.lotse.field_beh_kfz_summe.data_label"
 msgstr "Behinderungsbedingte Kfz-Kosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:127
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:128
 msgid "form.lotse.field_beh_kfz_anspruch"
 msgstr "Behinderungsbedingte Kfz-Kosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:128
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:129
 msgid "form.lotse.field_beh_kfz_anspruch.data_label"
 msgstr "Behinderungsbedingte Kfz-Kosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:131
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:132
 msgid "form.lotse.bestattung_summe"
 msgstr "Bestattungskosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:132
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:133
 msgid "form.lotse.bestattung-help"
 msgstr ""
 " Unter den Bestattungskosten können Sie Kosten, die unmittelbar mit der "
@@ -2354,23 +2312,23 @@ msgstr ""
 "Bewirtung der Trauergäste sowie Reisekosten anlässlich der Bestattung "
 "werden nicht anerkannt."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:133
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:134
 msgid "form.lotse.bestattung_summe.data_label"
 msgstr "Bestattungskosten Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:136
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:137
 msgid "form.lotse.bestattung_anspruch"
 msgstr "Bestattungskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:137
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:138
 msgid "form.lotse.bestattung_anspruch.data_label"
 msgstr "Bestattungskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:140
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:141
 msgid "form.lotse.aussergbela_sonst_summe"
 msgstr "Sonstige Außergewöhnliche Belastungen Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:141
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:142
 msgid "form.lotse.aussergbela_sonst-help"
 msgstr ""
 "Zu den sonstigen außergewöhnliche Belastungen zählen zum Beispiel Kosten "
@@ -2379,23 +2337,23 @@ msgstr ""
 " zugängliche und übliche Versicherung möglich war. Dies gilt auch für die"
 " notwendigen und angemessenen Kosten der Schadensbeseitigung."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:142
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:143
 msgid "form.lotse.aussergbela_sonst_summe.data_label"
 msgstr "Sonstige Außergewöhnliche Belastungen Summe"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:145
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:146
 msgid "form.lotse.aussergbela_sonst_anspruch"
 msgstr "Sonstige Außergewöhnliche Belastungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:146
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:147
 msgid "form.lotse.aussergbela_sonst_anspruch.data_label"
 msgstr "Sonstige Außergewöhnliche Belastungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:151
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:152
 msgid "form.lotse.ausserg_bela-title"
 msgstr "Außergewöhnliche Belastungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:152
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:153
 msgid "form.lotse.ausserg_bela-intro"
 msgstr ""
 "Außergewöhnliche Belastungen sind Ausgaben, die aufgrund besonderer "
@@ -2410,15 +2368,15 @@ msgstr ""
 "steuermindernd aus. Die zumutbare Belastung hängt von der Höhe Ihres "
 "Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:162
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:163
 msgid "form.lotse.step_haushaltsnahe_handwerker.label"
 msgstr " Handwerker, Tätigkeiten und Dienstleistungen im Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:172
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:173
 msgid "form.lotse.field_haushaltsnahe_entries"
 msgstr "Aufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:174
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:175
 msgid "form.lotse.field_haushaltsnahe_entries-help"
 msgstr ""
 "<p class='mt-2'>Haushaltsnahe Tätigkeiten und Dienstleistungen sind zum "
@@ -2437,27 +2395,27 @@ msgstr ""
 " Belastungen noch als haushaltsnahe Pflegeleistung geltend machen können,"
 " wenn Sie den Behinderten-Pauschbetrag beantragt haben.</p>"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:175
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:176
 msgid "form.lotse.field_haushaltsnahe_entries.data_label"
 msgstr "Haushaltsnahe Aufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:177
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:178
 msgid "form.lotse.field_haushaltsnahe_summe"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:178
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:179
 msgid "form.lotse.field_haushaltsnahe_summe-help"
 msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:179
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:180
 msgid "form.lotse.field_haushaltsnahe_summe.data_label"
 msgstr "Summe der Rechnungsbeträge (Haushalt)"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:182
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:183
 msgid "form.lotse.field_handwerker_entries"
 msgstr "Aufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:184
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:185
 msgid "form.lotse.field_handwerker_entries-help"
 msgstr ""
 "Handwerkerleistungen sind zum Beispiel: <ul><li>Reparatur, Streichen, "
@@ -2466,66 +2424,66 @@ msgstr ""
 "Einbauküche.</li></ul> Die Arbeitsleistung muss im eigenen Haushalt "
 "erbracht worden sein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:185
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:186
 msgid "form.lotse.field_handwerker_entries.data_label"
 msgstr "Handwerker Aufwendungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:187
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:188
 msgid "form.lotse.field_handwerker_summe"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:188
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:189
 msgid "form.lotse.field_handwerker_summe-help"
 msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:189
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:190
 msgid "form.lotse.field_handwerker_summe.data_label"
 msgstr "Summe der Rechnungsbeträge (Handwerker)"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:192
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:193
 msgid "form.lotse.field_handwerker_lohn_etc_summe"
 msgstr "darin enthaltene Lohnanteile, Maschinen- und Fahrtkosten, inkl. USt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:193
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:194
 msgid "form.lotse.field_handwerker_lohn_etc_summe.data_label"
 msgstr "darin enthaltene Lohnanteile, Maschinen- und Fahrtkosten, inkl. USt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:198
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:199
 msgid "form.lotse.validation-haushaltsnahe-summe"
 msgstr ""
 "Sie haben angegeben, dass es haushaltsnahe Dienstleistungen gab. Bitte "
 "geben Sie hier deren Summe ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:204
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:205
 msgid "form.lotse.validation-haushaltsnahe-entries"
 msgstr ""
 "Sie haben angegeben, dass es haushaltsnahe Dienstleistungen gab. Bitte "
 "geben Sie hier deren Art ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:210
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:211
 msgid "form.lotse.validation-handwerker-summe"
 msgstr ""
 "Sie haben angegeben, dass es Handwerkerleistungen gab. Bitte geben Sie "
 "hier deren Summe ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:216
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:217
 msgid "form.lotse.validation-handwerker-entries"
 msgstr ""
 "Sie haben angegeben, dass es Handwerkerleistungen gab. Bitte geben Sie "
 "hier deren Art ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:222
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:223
 msgid "form.lotse.validation-handwerker-lohn-etc-summe"
 msgstr ""
 "Sie haben angegeben, dass es Handwerkerleistungen gab. Bitte geben Sie "
 "hier die Summe der Lohnanteile, Maschinen- und Fahrtkosten inklusive "
 "Umsatzsteuer ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:228
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:229
 msgid "form.lotse.haushaltsnahe-handwerker-title"
 msgstr "Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:229
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:230
 msgid "form.lotse.handwerker-haushaltsnahe-intro"
 msgstr ""
 "Geben Sie hier an, welche haushaltsnahen Dienstleistungen und Tätigkeiten"
@@ -2533,11 +2491,11 @@ msgstr ""
 "müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt "
 "werden."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:239
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:240
 msgid "form.lotse.steuerminderungen.details-title"
 msgstr "Was muss ich beachten?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:240
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:241
 msgid "form.lotse.steuerminderungen.details-text"
 msgstr ""
 "Falls Sie in einer Mietwohnung wohnen und neben den Leistungen aus der "
@@ -2546,89 +2504,81 @@ msgstr ""
 "haben dabei die Möglichkeit mehrere Antworten auszuwählen. Bitte beachten"
 " Sie:"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:242
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:243
 msgid "form.lotse.steuerminderungen.details-list-item-1"
 msgstr ""
 "Es <strong>muss eine Rechnung</strong> vorliegen, die zum Beispiel per "
 "Überweisung oder EC-Kartenzahlung beglichen worden ist. "
 "<strong>Barzahlungen können nicht</strong> geltend gemacht werden."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:243
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:244
 msgid "form.lotse.steuerminderungen.details-list-item-2"
 msgstr ""
 "Abgesetzt werden können Kosten, die Sie <strong>im Besteuerungsjahr "
 "bezahlt</strong> haben. Relevant ist der Zeitpunkt der Bezahlung, nicht "
 "der Rechnungsstellung."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:244
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:245
 msgid "form.lotse.steuerminderungen.details-list-item-3"
 msgstr ""
 "Wenn Sie sich als <strong>Arbeitgeber betätigen und "
 "Haushaltshilfen</strong> als Arbeitnehmer einstellen, können Sie dies im "
 "Steuerlotsen <strong>nicht steuerlich absetzen</strong>."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:250
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:251
 msgid "form.lotse.step_gem_haushalt.label"
 msgstr "Gemeinsamer Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:255
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:256
-msgid "form.lotse.skip_reason.stmind_gem_haushalt.married"
-msgstr ""
-"Bitte überspringen Sie diese Angaben. Wenn Sie verheiratet sind, müssen "
-"Sie keine Angaben zu einem gemeinsamen Haushalt mit einer alleinstehenden"
-" Person machen."
-
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:258
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:257
 msgid "form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe"
 msgstr ""
 "Bitte überspringen Sie diese Angaben. Die Angabe zum gemeinsamen Haushalt"
-" ist nur relevant, wenn Sie Angaben zu haushaltsnaheh Tätigkeiten und "
+" ist nur relevant, wenn Sie Angaben zu haushaltsnahen Tätigkeiten und "
 "Dienstleistungen und/oder Handwerkerleistungen machen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:263
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:262
 msgid "form.lotse.field_gem_haushalt_count"
 msgstr "Anzahl der weiteren Personen im Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:264
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:263
 msgid "form.lotse.field_gem_haushalt_count.data_label"
 msgstr "Anzahl der weiteren Personen im Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:268
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:267
 msgid "form.lotse.field_gem_haushalt_entries"
 msgstr ""
 "Name, Vorname, Geburtsdatum der weiteren alleinstehenden Personen im "
 "Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:269
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:268
 msgid "form.lotse.field_gem_haushalt_entries-help"
 msgstr ""
 "Alleinstehend sind Personen, die weder verheiratet noch verpartnert nach "
 "dem Lebenspartnerschaftsgesetz sind. "
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:270
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:269
 msgid "form.lotse.field_gem_haushalt_entries.data_label"
 msgstr ""
 "Name, Vorname, Geburtsdatum der weiteren alleinstehenden Personen im "
 "Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:276
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:275
 msgid "form.lotse.validation-gem-haushalt-count"
 msgstr ""
 "Sie haben weitere Personen angegeben. Bitte geben Sie hier die "
 "entsprechende Anzahl der Personen ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:282
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:281
 msgid "form.lotse.validation-gem-haushalt-entries"
 msgstr ""
 "Sie haben angegeben, dass weitere Personen im Haushalt leben. Bitte geben"
 " Sie hier die die Daten der Personen ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:288
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:287
 msgid "form.lotse.gem-haushalt-title"
 msgstr "Gemeinsamer Haushalt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:289
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:288
 msgid "form.lotse.gem-haushalt-intro"
 msgstr ""
 "Haben Sie in 2020 mit weiteren Personen zusammengewohnt? Bei "
@@ -2637,37 +2587,43 @@ msgstr ""
 "Dann geben Sie die weiteren Personen Ihres Haushalts bitte an. Sie müssen"
 " diese Angaben nur machen, wenn Sie"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:298
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:297
 msgid "form.lotse.gem_haushalt-list-item-1"
 msgstr "alleinstehend sind"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:299
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:298
 msgid "form.lotse.gem_haushalt-list-item-2"
 msgstr ""
 "haushaltsnahe Dienstleistungen und/oder Handwerkerleistungen angegeben "
 "haben"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:305
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:308
+msgid "form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend"
+msgstr ""
+"Wenn Sie zusammenveranlagen, müssen Sie keine Angaben zu einem "
+"gemeinsamen Haushalt mit anderen alleinstehenden Personen machen."
+
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:315
 msgid "form.lotse.step_religion.label"
 msgstr "Steuern für Ihre Religionsgemeinschaft"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:312
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:322
 msgid "form.lotse.field_religion_paid_summe"
 msgstr "Gezahlt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:314
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:324
 msgid "form.lotse.field_religion_paid_summe-help"
 msgstr "Tragen Sie dafür die Summe Ihrer 2020 gezahlten Kirchensteuer ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:315
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:325
 msgid "form.lotse.field_religion_paid_summe.data_label"
 msgstr "Gezahlt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:317
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:327
 msgid "form.lotse.field_religion_reimbursed_summe"
 msgstr "Erstattet"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:318
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:328
 msgid "form.lotse.field_religion_reimbursed-help"
 msgstr ""
 "Wenn Sie letztes Jahr eine Steuererklärung gemacht haben und Ihnen zu "
@@ -2675,15 +2631,15 @@ msgstr ""
 "Summe der erstatteten Kirchensteuer finden Sie beispielsweise auf dem "
 "Steuerbescheid des Vorjahres."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:319
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:329
 msgid "form.lotse.field_religion_reimbursed_summe.data_label"
 msgstr "Erstattet"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:324
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:334
 msgid "form.lotse.religion-title"
 msgstr "Steuern für Ihre Religionsgemeinschaft"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:325
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:335
 msgid "form.lotse.religion-intro"
 msgstr ""
 "Wenn Sie Mitglied einer Religionsgemeinschaft sind, die als Körperschaft "
@@ -2695,17 +2651,17 @@ msgstr ""
 "Kirchensteuer (ohne Kirchensteuer auf Abgeltungsteuer) ein, die Sie 2020 "
 "gezahlt haben bzw. die Ihnen 2020 erstattet wurde."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:339
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:349
 msgid "form.lotse.step_spenden.label"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:346
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:356
 msgid "form.lotse.spenden-inland"
 msgstr ""
 "Spenden und Mitgliedsbeiträge zur Förderung steuerbegünstigter Zwecke an "
 "Empfänger im Inland"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:348
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:358
 msgid "form.lotse.spenden-help"
 msgstr ""
 "Alle Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke sind "
@@ -2715,36 +2671,36 @@ msgstr ""
 "Betätigungen, die in erster Linie der Freizeitgestaltung dienen, oder die"
 " Heimatpflege und Heimatkunde fördert."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:349
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:359
 msgid "form.lotse.spenden-inland.data_label"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:351
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:361
 msgid "form.lotse.spenden-inland-parteien"
 msgstr "Spenden und Mitgliedsbeiträge an inländische politische Parteien"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:352
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:362
 msgid "form.lotse.spenden-inland-parteien-help"
 msgstr ""
 "Der Abzug ist nicht möglich, sofern die politische Partei von der "
 "staatlichen Parteienfinan­zierung ausgeschlossen ist."
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:353
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:363
 msgid "form.lotse.spenden-inland-parteien.data_label}"
 msgstr "an inländische politische Parteien"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:358
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:368
 msgid "form.lotse.spenden-inland-title"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:359
+#: app/forms/steps/lotse_multistep_flow_steps/steuerminderungen_steps.py:369
 msgid "form.lotse.spenden-inland-intro"
 msgstr ""
 "Tragen Sie hier die Summe Ihrer Spenden und Mitgliedsbeiträge ein. Alle "
 "Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke sind nur auf "
 "Anforderung des Finanzamts durch eine Bestätigung nachzuweisen. "
 
-#: app/model/form_data.py:185
+#: app/model/form_data.py:190
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2754,11 +2710,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:190
+#: app/model/form_data.py:195
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:196
+#: app/model/form_data.py:201
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
@@ -2796,11 +2752,11 @@ msgstr "Schließen"
 msgid "form.back"
 msgstr "Zurück"
 
-#: app/templates/macros.html:121 app/templates/macros.html:139
+#: app/templates/macros.html:121 app/templates/macros.html:136
 msgid "form.back_to_overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/templates/macros.html:127 app/templates/macros.html:146
+#: app/templates/macros.html:127 app/templates/macros.html:143
 msgid "form.next"
 msgstr "Weiter"
 

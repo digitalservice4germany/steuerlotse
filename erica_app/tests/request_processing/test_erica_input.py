@@ -3,12 +3,14 @@ from datetime import date
 from decimal import Decimal
 from unittest.mock import MagicMock, patch
 
+import pytest
 from pydantic import ValidationError
 
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.request_processing.erica_input import FormDataEst, MetaDataEst
 
 
+@pytest.fixture
 def standard_est_data():
     return {
             'steuernummer': '19811310010',
@@ -38,7 +40,7 @@ def standard_est_data():
             'person_b_gehbeh': False,
 
             'iban': 'DE35133713370000012345',
-            'is_person_a_account_holder': True,
+            'account_holder': 'person_a',
 
             'steuerminderung': True,
 
@@ -53,152 +55,173 @@ def standard_est_data():
             'confirm_send': True}
 
 
-class TestFormDataEstNewAdmission(unittest.TestCase):
+class TestFormDataEstAccountHolder:
 
-    def test_if_steuernummer_given_and_submission_without_tax_nr_set_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data['submission_without_tax_nr'] = True
+    def test_if_account_holder_not_person_a_or_b_then_raise_exception(self, standard_est_data):
+        standard_est_data['account_holder'] = 'Robin Hood'
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_steuernummer_none_and_no_submission_without_tax_nr_set_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data['steuernummer'] = None
-        est_data.pop('submission_without_tax_nr', None)
+    def test_if_account_holder_person_a_then_raise_no_exception(self, standard_est_data):
+        standard_est_data['account_holder'] = 'person_a'
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+        try:
+            FormDataEst.parse_obj(standard_est_data)
+        except ValidationError as e:
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_no_steuernummer_and_no_submission_without_tax_nr_set_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('steuernummer', None)
-        est_data.pop('submission_without_tax_nr', None)
+    def test_if_account_holder_person_b_then_raise_no_exception(self, standard_est_data):
+        standard_est_data['account_holder'] = 'person_b'
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+        try:
+            FormDataEst.parse_obj(standard_est_data)
+        except ValidationError as e:
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_no_steuernummer_and_submission_without_tax_nr_false_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('steuernummer', None)
-        est_data['submission_without_tax_nr'] = False
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+class TestFormDataEstNewAdmission:
 
-    def test_if_submission_without_tax_nr_and_no_bufa_nr_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('steuernummer', None)
-        est_data['submission_without_tax_nr'] = True
-        est_data.pop('bufa_nr', None)
+    def test_if_steuernummer_given_and_submission_without_tax_nr_set_then_raise_exception(self, standard_est_data):
+        standard_est_data['submission_without_tax_nr'] = True
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_submission_without_tax_nr_and_bufa_nr_too_short_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('steuernummer', None)
-        est_data['submission_without_tax_nr'] = True
-        est_data['bufa_nr'] = '91'
+    def test_if_steuernummer_none_and_no_submission_without_tax_nr_set_then_raise_exception(self, standard_est_data):
+        standard_est_data['steuernummer'] = None
+        standard_est_data.pop('submission_without_tax_nr', None)
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, est_data)
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_submission_without_tax_nr_and_bufa_nr_then_raise_no_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('steuernummer', None)
-        est_data['submission_without_tax_nr'] = True
-        est_data['bufa_nr'] = '9198'
+    def test_if_no_steuernummer_and_no_submission_without_tax_nr_set_then_raise_exception(self, standard_est_data):
+        standard_est_data.pop('steuernummer', None)
+        standard_est_data.pop('submission_without_tax_nr', None)
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_no_steuernummer_and_submission_without_tax_nr_false_then_raise_exception(self, standard_est_data):
+        standard_est_data.pop('steuernummer', None)
+        standard_est_data['submission_without_tax_nr'] = False
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_submission_without_tax_nr_and_no_bufa_nr_then_raise_exception(self, standard_est_data):
+        standard_est_data.pop('steuernummer', None)
+        standard_est_data['submission_without_tax_nr'] = True
+        standard_est_data.pop('bufa_nr', None)
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_submission_without_tax_nr_and_bufa_nr_too_short_then_raise_exception(self, standard_est_data):
+        standard_est_data.pop('steuernummer', None)
+        standard_est_data['submission_without_tax_nr'] = True
+        standard_est_data['bufa_nr'] = '91'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_submission_without_tax_nr_and_bufa_nr_then_raise_no_exception(self, standard_est_data):
+        standard_est_data.pop('steuernummer', None)
+        standard_est_data['submission_without_tax_nr'] = True
+        standard_est_data['bufa_nr'] = '9198'
 
 
         try:
-            FormDataEst.parse_obj(est_data)
+            FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_steuernummer_given_and_no_submission_without_tax_nr_then_raise_no_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('submission_without_tax_nr', None)
-        est_data.pop('bufa_nr', None)
+    def test_if_steuernummer_given_and_no_submission_without_tax_nr_then_raise_no_exception(self, standard_est_data):
+        standard_est_data.pop('submission_without_tax_nr', None)
+        standard_est_data.pop('bufa_nr', None)
 
         try:
-            FormDataEst.parse_obj(est_data)
+            FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_not_valid_bufa_then_raise_exception(self):
-        est_data = standard_est_data()
-        est_data.pop('steuernummer', None)
-        est_data['submission_without_tax_nr'] = True
-        est_data['bufa_nr'] = '1981'
+    def test_if_not_valid_bufa_then_raise_exception(self, standard_est_data):
+        standard_est_data.pop('steuernummer', None)
+        standard_est_data['submission_without_tax_nr'] = True
+        standard_est_data['bufa_nr'] = '1981'
 
         with patch('erica.request_processing.erica_input.is_valid_bufa', MagicMock(return_value=False)):
-            self.assertRaises(InvalidBufaNumberError, FormDataEst.parse_obj, est_data)
+            with pytest.raises(InvalidBufaNumberError):
+                FormDataEst.parse_obj(standard_est_data)
 
 
-class TestFormDataEstSteuernummer(unittest.TestCase):
+class TestFormDataEstSteuernummer:
 
-    def setUp(self) -> None:
-        self.est_data = standard_est_data()
+    def test_if_steuernummer_len_9_then_raise_exception(self, standard_est_data):
+        standard_est_data['steuernummer'] = '123456789'
 
-    def test_if_steuernummer_len_9_then_raise_exception(self):
-        self.est_data['steuernummer'] = '123456789'
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, self.est_data)
+    def test_if_steuernummer_len_12_then_raise_exception(self, standard_est_data):
+        standard_est_data['steuernummer'] = '123456789012'
 
-    def test_if_steuernummer_len_12_then_raise_exception(self):
-        self.est_data['steuernummer'] = '123456789012'
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, self.est_data)
-
-    def test_if_steuernummer_len_10_then_raise_no_exception(self):
-        self.est_data['steuernummer'] = '1234567890'
-
-        try:
-            FormDataEst.parse_obj(self.est_data)
-        except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
-
-    def test_if_steuernummer_len_11_then_raise_no_exception(self):
-        self.est_data['steuernummer'] = '12345678901'
+    def test_if_steuernummer_len_10_then_raise_no_exception(self, standard_est_data):
+        standard_est_data['steuernummer'] = '1234567890'
 
         try:
-            FormDataEst.parse_obj(self.est_data)
+            FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-
-class TestFormDataEstFamilienstand(unittest.TestCase):
-
-    def setUp(self) -> None:
-        self.est_data = standard_est_data()
-
-    def test_if_married_lived_separated_and_no_corresponding_date_then_raise_exception(self):
-        self.est_data['familienstand_married_lived_separated'] = True
-        self.est_data.pop('familienstand_married_lived_separated_since', None)
-
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, self.est_data)
-
-    def test_if_married_lived_separated_and_corresponding_date_then_raise_no_exception(self):
-        self.est_data['familienstand_married_lived_separated'] = True
-        self.est_data['familienstand_married_lived_separated_since'] = date(1950, 8, 16)
+    def test_if_steuernummer_len_11_then_raise_no_exception(self, standard_est_data):
+        standard_est_data['steuernummer'] = '12345678901'
 
         try:
-            FormDataEst.parse_obj(self.est_data)
+            FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_widowed_lived_separated_and_no_corresponding_date_then_raise_exception(self):
-        self.est_data['familienstand_widowed_lived_separated'] = True
-        self.est_data.pop('familienstand_widowed_lived_separated_since', None)
 
-        self.assertRaises(ValidationError, FormDataEst.parse_obj, self.est_data)
+class TestFormDataEstFamilienstand:
 
-    def test_if_widowed_lived_separated_and_corresponding_date_then_raise_no_exception(self):
-        self.est_data['familienstand_widowed_lived_separated'] = True
-        self.est_data['familienstand_widowed_lived_separated_since'] = date(1950, 8, 16)
+    def test_if_married_lived_separated_and_no_corresponding_date_then_raise_exception(self, standard_est_data):
+        standard_est_data['familienstand_married_lived_separated'] = True
+        standard_est_data.pop('familienstand_married_lived_separated_since', None)
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_married_lived_separated_and_corresponding_date_then_raise_no_exception(self, standard_est_data):
+        standard_est_data['familienstand_married_lived_separated'] = True
+        standard_est_data['familienstand_married_lived_separated_since'] = date(1950, 8, 16)
 
         try:
-            FormDataEst.parse_obj(self.est_data)
+            FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+
+    def test_if_widowed_lived_separated_and_no_corresponding_date_then_raise_exception(self, standard_est_data):
+        standard_est_data['familienstand_widowed_lived_separated'] = True
+        standard_est_data.pop('familienstand_widowed_lived_separated_since', None)
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_widowed_lived_separated_and_corresponding_date_then_raise_no_exception(self, standard_est_data):
+        standard_est_data['familienstand_widowed_lived_separated'] = True
+        standard_est_data['familienstand_widowed_lived_separated_since'] = date(1950, 8, 16)
+
+        try:
+            FormDataEst.parse_obj(standard_est_data)
+        except ValidationError as e:
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
 
-class TestMetaDataEstDigitallySigned(unittest.TestCase):
+class TestMetaDataEstDigitallySigned:
 
     def test_if_not_digitally_signed_raise_exception(self):
         meta_data = {
@@ -206,7 +229,8 @@ class TestMetaDataEstDigitallySigned(unittest.TestCase):
             'is_digitally_signed': False
         }
 
-        self.assertRaises(ValidationError, MetaDataEst.parse_obj, meta_data)
+        with pytest.raises(ValidationError):
+            MetaDataEst.parse_obj(meta_data)
 
     def test_if_digitally_signed_raise_no_exception(self):
         meta_data = {
@@ -217,5 +241,5 @@ class TestMetaDataEstDigitallySigned(unittest.TestCase):
         try:
             MetaDataEst.parse_obj(meta_data)
         except ValidationError as e:
-            self.fail("parse_obj failed with unexpected ValidationError " + str(e))
+            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 

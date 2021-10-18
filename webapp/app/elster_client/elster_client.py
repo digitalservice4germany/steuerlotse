@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
-              'is_person_a_account_holder', 'person_a_blind', 'person_a_gehbeh',
+              'person_a_blind', 'person_a_gehbeh',
               'person_b_same_address', 'person_b_blind', 'person_b_gehbeh', 'steuerminderung',
               'is_digitally_signed', 'request_new_tax_number', 'steuernummer_exists']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
@@ -190,6 +190,9 @@ def _generate_est_request_data(form_data, year=2020):
     :param year: The year in which the taxes are declared
     """
     adapted_form_data = form_data.copy()
+
+    if adapted_form_data.pop('is_user_account_holder', None):
+        adapted_form_data['account_holder'] = 'person_a'
 
     for key in list(set(_BOOL_KEYS) & set(adapted_form_data.keys())):
         if isinstance(adapted_form_data[key], str):
