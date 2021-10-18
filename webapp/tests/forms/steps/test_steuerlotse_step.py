@@ -175,25 +175,43 @@ class TestSteuerlotseStepHandle(unittest.TestCase):
 class TestSteuerlotseStepPrepareRenderInfo:
 
     def test_if_single_then_set_title_and_intro_correct(self):
+        single_title = "Joe"
+        single_intro = "If he is alone, he sings for DNCE"
 
         class MockSteuerlotseStep(SteuerlotseStep):
             name = "Jonas"
-            title = "Joe"
+            title = single_title
             title_multiple = "Kevin, Joe, Nick"
-            intro = "If he is alone, he sings for DNCE"
+            intro = single_intro
             intro_multiple = "Together they are the Jonas Brothers"
 
         with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users", MagicMock(return_value=1)):
             render_info = MockSteuerlotseStep.prepare_render_info({})
 
-        pass
+
+        assert render_info.step_title == single_title
+        assert render_info.step_intro == single_intro
 
 
 
 
     def test_if_multiple_then_set_title_and_intro_correct(self):
+        multiple_title = "Kevin, Joe, Nick"
+        multiple_intro = "Together they are the Jonas Brothers"
 
-        pass
+        class MockSteuerlotseStep(SteuerlotseStep):
+            name = "Jonas"
+            title = "Joe"
+            title_multiple = multiple_title
+            intro = "If he is alone, he sings for DNCE"
+            intro_multiple = multiple_intro
+
+        with patch("app.forms.steps.steuerlotse_step.SteuerlotseStep.number_of_users", MagicMock(return_value=2)):
+            render_info = MockSteuerlotseStep.prepare_render_info({})
+
+
+        assert render_info.step_title == multiple_title
+        assert render_info.step_intro == multiple_intro
 
 
 class TestSteuerlotseStepPreHandle(unittest.TestCase):
