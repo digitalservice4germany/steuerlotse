@@ -6,7 +6,7 @@ from wtforms import Form, validators
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
 from app.forms.steps.logout_steps import LogoutInputStep
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepSummary, StepConfirmation
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepPersonB, StepFamilienstand
 from app.forms.steps.step import Step, FormStep
@@ -127,14 +127,6 @@ class MockConfirmationStep(StepConfirmation):
 class MockFilingStep(StepFiling):
     def __init__(self, **kwargs):
         super(MockFilingStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockSummaryStep(StepSummary):
-    def __init__(self, **kwargs):
-        super(MockSummaryStep, self).__init__(**kwargs)
 
     def render(self, data, render_info):
         return make_response(json.dumps([data], default=str), 200)

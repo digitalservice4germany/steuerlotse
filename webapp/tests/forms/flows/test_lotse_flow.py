@@ -25,9 +25,10 @@ from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalVal
 from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
+from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
@@ -36,7 +37,7 @@ from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
-    MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockIbanStep, \
+    MockForm, MockFilingStep, MockPersonAStep, MockIbanStep, \
     MockPersonBStep, MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
@@ -502,7 +503,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                          MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
                          StepSelectStmind,
                          StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
-                         MockSummaryStep, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
+                         StepSummary, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
                          MockFinalStep]
         testing_steps = {s.name: s for s in testing_steps}
         self.endpoint_correct = "lotse"
@@ -553,14 +554,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                 'eric_response': 'Could we get the bill, please?',
                                 'server_response': 'What do you want to drink?',
                                 'transfer_ticket': 'Passierschein A38'}
-
-        prev_step, self.summary_step, next_step = self.flow._generate_steps(MockSummaryStep.name)
-        self.render_info_summary_step = RenderInfo(step_title=self.filing_step.title,
-                                                    step_intro=self.filing_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
-                                                    next_url=self.flow.url_for_step(self.filing_step.name),
-                                                    submit_url=self.flow.url_for_step(self.filing_step.name),
-                                                    overview_url=None)
 
         prev_step, self.declaration_incomes_step, next_step = self.flow._generate_steps(
             MockDeclarationIncomesStep.name)
@@ -830,83 +823,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
             self.assertNotIn('pdf', returned_render_info.additional_info['elster_data'])
-
-    def test_if_step_is_summary_step_then_return_render_info_with_sectionsteps(self):
-        expected_summary_session_steps = []
-        with patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data",
-                      MagicMock(return_value=expected_summary_session_steps)), \
-             patch("app.forms.flows.lotse_flow.MandatoryFormData.parse_obj"):
-            data = self.session_data.copy()
-            data['steuerminderung'] = 'yes'  # to prevent adaption of prev_url
-            returned_data, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, copy.deepcopy(self.render_info_summary_step), data)
-
-            self.assertEqual(expected_summary_session_steps, returned_data.additional_info['section_steps'])
-
-    def test_if_summary_step_then_set_prev_url_correct(self):
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, self.data_st_mind_yes)
-            self.assertEqual(self.religion_url, render_info.prev_url)
-
-            # TODO move this to the correct test files
-            #render_info, _ = self.flow._handle_specifics_for_step(
-            #    self.summary_step, self.render_info_summary_step, self.data_st_mind_no)
-            #self.assertEqual(self.st_mind_yesno_url, render_info.prev_url)
-
-    def test_if_summary_step_and_data_missing_then_set_next_url_correct(self):
-        data_with_missing_fields = {'steuernummer': 'C3P0'}
-
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            self.assertEqual(self.flow.url_for_step(StepSummary.name), render_info.next_url)
-
-    def test_if_summary_step_and_data_missing_then_call_get_overview_data_with_missing_fields(self):
-        data_with_missing_fields = {'steuernummer': 'C3P0'}
-        missing_fields = ['spacecraft', 'droids']
-
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data') as get_overview, \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
-                      MagicMock(side_effect=MandatoryFieldMissingValidationError(missing_fields))):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            get_overview.assert_called_once_with(data_with_missing_fields, missing_fields)
-
-    def test_if_summary_step_and_data_missing_then_flash_message_with_missing_fields_once(self):
-        data_with_missing_fields = {'steuernummer': 'C3P0'}
-        missing_fields = ['spacecraft', 'droids']
-        missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
-
-        with patch('app.forms.flows.lotse_flow.flash') as mock_flash, \
-            patch('app.model.form_data.ngettext', MagicMock(side_effect=lambda text_id, _, **kwargs: text_id)), \
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
-                  MagicMock(side_effect=missing_fields_error)):
-            with self.app.test_request_context(method='POST'):
-                render_info, _ = self.flow._handle_specifics_for_step(
-                    self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            with self.app.test_request_context(method='GET'):
-                render_info, _ = self.flow._handle_specifics_for_step(
-                    self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
-
-    def test_if_summary_step_and_data_not_missing_then_set_next_url_correct(self):
-        data_without_missing_fields = self.flow.default_data()[1]
-
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, data_without_missing_fields)
-
-            self.assertEqual(self.flow.url_for_step(self.filing_step.name), render_info.next_url)
 
     def test_if_step_is_declaration_incomes_step_and_valid_form_then_call_create_auditlog_for_all_fields(self):
         valid_session_data = {'idnr': '02293417683'}
@@ -1564,7 +1480,7 @@ class TestLotseValidateInput(unittest.TestCase):
         expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'steuerminderung', 'iban', 'is_user_account_holder', ]
+                                   'person_a_gehbeh', 'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,

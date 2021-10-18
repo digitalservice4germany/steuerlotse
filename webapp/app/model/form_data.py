@@ -5,7 +5,7 @@ from typing import Optional, Any, List
 
 from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
-from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator
+from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator, Extra
 from pydantic.error_wrappers import ErrorWrapper
 
 from app.data_access.user_controller import check_idnr
@@ -99,8 +99,6 @@ class MandatoryFormData(BaseModel):
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
 
-    steuerminderung: str
-
     iban: str
     account_holder: Optional[str]
     is_user_account_holder: Optional[bool]
@@ -183,7 +181,52 @@ class MandatoryConfirmations(MandatoryFormData):
 
 
 class FormDataDependencies(BaseModel):
+    idnr: Optional[str]
+    dob: Optional[str]
+    unlock_code: Optional[str]
+
+    declaration_edaten: Optional[bool]
+    declaration_incomes: Optional[bool]
+
+    steuernummer_exists: Optional[bool]
+    bundesland: Optional[str]
+    bufa_nr: Optional[str]
+    steuernummer: Optional[str]
+    request_new_tax_number: Optional[str]
+
+    iban: Optional[str]
+    account_holder: Optional[str]
+    is_user_account_holder: Optional[bool]
+
+    person_a_idnr: Optional[str]
+    person_a_dob: Optional[date]
+    person_a_last_name: Optional[str]
+    person_a_first_name: Optional[str]
+    person_a_religion: Optional[str]
+    person_a_street: Optional[str]
+    person_a_street_number: Optional[str]
+    person_a_plz: Optional[str]
+    person_a_town: Optional[str]
+    person_a_blind: Optional[bool]
+    person_a_gehbeh: Optional[bool]
+
+    person_b_same_address: Optional[str]
+    person_b_idnr: Optional[str]
+    person_b_dob: Optional[date]
+    person_b_last_name: Optional[str]
+    person_b_first_name: Optional[str]
+    person_b_religion: Optional[str]
+    person_b_blind: Optional[str]
+    person_b_gehbeh: Optional[str]
+
     familienstand: Optional[str]
+    familienstand_date: Optional[date]
+    familienstand_married_lived_separated: Optional[str]
+    familienstand_married_lived_separated_since: Optional[date]
+    familienstand_widowed_lived_separated: Optional[str]
+    familienstand_widowed_lived_separated_since: Optional[date]
+    familienstand_zusammenveranlagung: Optional[str]
+    familienstand_confirm_zusammenveranlagung: Optional[bool]
 
     stmind_select_vorsorge: Optional[bool]
     stmind_select_ausserg_bela: Optional[bool]
@@ -220,6 +263,10 @@ class FormDataDependencies(BaseModel):
     stmind_bestattung_anspruch: Optional[Decimal]
     stmind_aussergbela_sonst_summe: Optional[Decimal]
     stmind_aussergbela_sonst_anspruch: Optional[Decimal]
+
+    confirm_complete_correct: Optional[bool]
+    confirm_data_privacy: Optional[bool]
+    confirm_terms_of_service: Optional[bool]
 
     @validator('stmind_vorsorge_summe')
     def delete_if_vorsorge_not_shown(cls, v, values):

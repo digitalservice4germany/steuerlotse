@@ -1,6 +1,5 @@
 from flask import request
 
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
 from app.model.form_data import FormDataDependencies
 
@@ -24,4 +23,5 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
 
         # redirect in any case if overview button pressed
         if 'overview_button' in request.form:
+            from app.forms.steps.lotse.confirmation import StepSummary
             self.render_info.next_url = self.url_for_step(StepSummary.name)

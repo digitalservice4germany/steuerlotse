@@ -16,10 +16,10 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
 from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
+from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
@@ -81,7 +81,11 @@ class LotseMultiStepFlow(MultiStepFlow):
             'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',
 
-            'steuerminderung': 'yes',
+            'stmind_select_vorsorge': True,
+            'stmind_select_ausserg_bela': True,
+            'stmind_select_handwerker': True,
+            'stmind_select_religion': True,
+            'stmind_select_spenden': True,
 
             'stmind_haushaltsnahe_entries': ["Gartenarbeiten"],
             'stmind_haushaltsnahe_summe': Decimal('500.00'),
@@ -217,28 +221,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                     'pdf': current_user.pdf,
                     'transfer_ticket': current_user.transfer_ticket
                 }
-
-        elif isinstance(step, StepSummary):
-            missing_fields = None
-            try:
-                self._validate_mandatory_fields(stored_data)
-            except MandatoryFieldMissingValidationError as e:
-                logger.info(f"Mandatory est fields missing: {e.missing_fields}", exc_info=True)
-                # prevent flashing the same message two times
-                if request.method == 'GET':
-                    flash(e.get_message(), 'warn')
-                missing_fields = e.missing_fields
-                render_info.next_url = self.url_for_step(StepSummary.name)
-            # TODO make summary a steuerlotse Step too
-            if not stored_data.get('steuerminderung') or stored_data['steuerminderung'] == 'no':
-                render_info.prev_url = self.url_for_step(StepSelectStmind.name)
-            render_info.additional_info['section_steps'] = self._get_overview_data(stored_data, missing_fields)
-            render_info.overview_url = None
-
-            if request.method == 'POST' and render_info.form.validate():
-                create_audit_log_confirmation_entry('Confirmed complete correct data', request.remote_addr,
-                                                    stored_data['idnr'], 'confirm_complete_correct',
-                                                    stored_data['confirm_complete_correct'])
         elif isinstance(step, StepDeclarationIncomes):
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed incomes', request.remote_addr,

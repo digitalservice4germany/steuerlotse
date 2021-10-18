@@ -2,10 +2,11 @@ import datetime
 from unittest.mock import patch, MagicMock
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
+from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse.steuerminderungen import StepAussergBela, StepVorsorge, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockMiddleStep
@@ -49,7 +50,7 @@ class TestStepSelectStmind:
         data = {}
         with make_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
-            assert step._next_step == StepIban
+            assert step._prev_step == StepIban
 
     def test_if_no_select_field_set_then_next_step_is_correct(self, make_test_request_context):
         data = {}
@@ -417,3 +418,23 @@ class TestStepSpenden:
             step = LotseStepChooser().get_correct_step(StepSpenden.name)
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepSelectStmind.name
+
+
+class TestStepSummary:
+    valid_data = {}
+    valid_data_with_spenden_shown = {'stmind_select_spenden': True}
+
+    def test_if_spenden_shown_then_set_prev_url_correct(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data_with_spenden_shown):
+            step = LotseStepChooser().get_correct_step(StepSummary.name)
+            assert step._prev_step == StepSpenden
+
+    def test_if_spenden_not_shown_then_set_prev_url_correct(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepSummary.name)
+            assert step._prev_step == StepSelectStmind
+
+    def test_set_next_url_correct(self, make_test_request_context):
+        with make_test_request_context(stored_data=self.valid_data):
+            step = LotseStepChooser().get_correct_step(StepSummary.name)
+            assert step._next_step == StepConfirmation

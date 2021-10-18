@@ -35,8 +35,8 @@ class TestSendEst(unittest.TestCase):
 
         self.est_response_including_responses = MockResponse(self.est_including_json, 200)
         self.est_response_without_responses = MockResponse(self.est_without_json, 200)
-        self.valid_form_data = {**LotseMultiStepFlow(None).default_data()[1],
-                                **{'idnr': LotseMultiStepFlow(None).default_data()[1]['person_a_idnr']}}
+        self.valid_form_data = {**LotseMultiStepFlow(None)._DEBUG_DATA[1],
+                                **{'idnr': LotseMultiStepFlow(None)._DEBUG_DATA[1]['person_a_idnr']}}
 
         self.invalid_form_data = copy.deepcopy(self.valid_form_data)
         self.invalid_form_data['person_a_idnr'] = MockErica.INVALID_ID

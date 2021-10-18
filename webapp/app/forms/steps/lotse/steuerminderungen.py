@@ -8,11 +8,11 @@ from wtforms import validators, BooleanField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField
+from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
 from flask_babel import lazy_gettext as _l, _
 
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
@@ -500,7 +500,6 @@ class StepSpenden(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'basis/form_standard.html'
     preconditions = [ShowSpendenPrecondition]
-    next_step = StepSummary
 
     label = _l('form.lotse.step_spenden.label')
     section_link = SectionLink('section_steuerminderung', StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
