@@ -9,7 +9,9 @@ describe("Registration", () => {
 
     // Should have errors in the right places.
     cy.get("[role=alert][for=dob]").contains("Dieses Feld wird benötigt");
-    cy.get("[role=alert][for=idnr]").contains("Dieses Feld wird benötigt");
+    cy.get("[role=alert][for=idnr]").contains(
+      "Geben Sie Ihre Steuer-Identifikationsnummer ein"
+    );
     cy.get("[role=alert][for=registration_confirm_data_privacy]").contains(
       "Sie müssen dieses Feld auswählen, um weiter zu machen"
     );
