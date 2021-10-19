@@ -10,6 +10,7 @@ from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
+from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.session_data import serialize_session_data, deserialize_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
@@ -121,19 +122,27 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.assertIsNone(chosen_step_at_begin._prev_step)
         self.assertIsNone(chosen_step_at_end._next_step)
 
-    def test_update_data_is_called_if_update_data_set(self):
+    def test_if_data_given_then_call_prepare_render_info_with_correct_data(self):
+        form_data = ImmutableMultiDict({'Title': 'Happiness begins', 'Year': '2019'})
         with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info') as preparation_mock:
             self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
+                                               form_data=form_data)
+
+        preparation_mock.assert_called_once_with({}, form_data, True)
+
+    def test_if_prepare_render_info_returns_render_info_then_set_it_correctly(self):
+        render_info = RenderInfo(step_title="Lines, Vines and Trying Times",
+                                 step_intro="The fourth album",
+                                 form=None,
+                                 prev_url=None,
+                                 next_url=None,
+                                 submit_url=None,
+                                 overview_url=None)
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info', MagicMock(return_value=render_info)):
+            step = self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
                                                form_data=ImmutableMultiDict({}))
 
-        preparation_mock.assert_called_once_with({}, ImmutableMultiDict({}), True)
-
-    def test_update_data_is_not_called_if_update_data_not_set(self):
-        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info') as preparation_mock:
-            self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=False,
-                                               form_data=ImmutableMultiDict({}))
-
-        preparation_mock.assert_called_once_with({}, ImmutableMultiDict({}), False)
+        assert step.render_info == render_info
 
 
 class TestDeterminePrevStep:

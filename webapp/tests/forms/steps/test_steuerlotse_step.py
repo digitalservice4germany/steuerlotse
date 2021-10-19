@@ -492,8 +492,8 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
             form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data={}, next_step=next_step,
                                      render_info=MockFormStep.prepare_render_info({},
                                                                                   input_data=ImmutableMultiDict({}),
-                                                                                  should_update_data=should_update_data))
-            form_step.should_update_data = True
+                                                                                  should_update_data=should_update_data),
+                                     should_update_data=should_update_data)
 
             response = form_step.handle()
 
@@ -571,15 +571,6 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
 
         assert render_info.form.data == {'date': datetime.date(2019, 3, 1), 'decimal': Decimal('42'), 'pet': 'lizard'}
 
-    def test_if_should_update_false_and_form_valid_then_do_update(self):
-        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
-        stored_data = {}
-        should_update_data = False
-
-        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
-
-        assert render_info.stored_data == {}
-
     def test_if_form_invalid_then_set_data_is_valid_false(self):
         input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
         stored_data = {}
@@ -599,7 +590,7 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
 
         assert render_info.data_is_valid == True
 
-    def test_if_form_invalid_and_should_update_then_do_not_call_update(self):
+    def test_if_form_invalid_and_should_update_then_do_not_update(self):
         input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
         stored_data = {}
         should_update_data = True
@@ -617,6 +608,15 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
         render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
 
         assert render_info.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': Decimal('42'), 'pet': 'lizard'}
+
+    def test_if_should_update_false_and_form_valid_then_do_not_update(self):
+        input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})
+        stored_data = {}
+        should_update_data = False
+
+        render_info = MockFormWithInputStep.prepare_render_info(stored_data=stored_data, input_data=input_form_data, should_update_data=should_update_data)
+
+        assert render_info.stored_data == {}
 
     def test_if_update_then_leave_other_stored_unchanged(self):
         input_form_data = ImmutableMultiDict({'date': ['12', '12', '1980'], 'decimal': '42', 'pet': 'lizard'})

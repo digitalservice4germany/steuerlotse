@@ -68,7 +68,7 @@ class MockFormWithInputStep(MockFormStep):
         decimal = EuroField(label="decimal")
 
         def validate(self, extra_validators=None):
-            # This method is needed to mock the validate function of WTForms
+            # This implementation is needed to act as an anchor for mocking the validate function of WTForms
             return super().validate(extra_validators=extra_validators)
 
 

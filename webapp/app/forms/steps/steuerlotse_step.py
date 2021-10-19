@@ -124,8 +124,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         pass
 
     def __init__(self, endpoint, header_title, stored_data=None, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier='form_data', should_update_data=False, form_data=None,
-                 data_is_valid=False, render_info=None, *args, **kwargs):
+                 next_step=None, session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
         super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                          session_data_identifier, should_update_data, render_info, *args, **kwargs)
         # TODO rename this to form_class once MultiStepFlow is obsolete
