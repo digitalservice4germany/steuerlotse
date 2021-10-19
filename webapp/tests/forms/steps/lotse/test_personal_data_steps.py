@@ -172,3 +172,25 @@ class TestStepSteuernummerValidate:
             StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
+
+    @pytest.mark.usefixtures("test_request_context")
+    def test_if_no_number_given_then_flash_no_error(self, app):
+        bundesland_abbreviation = 'BY'
+        steuernummer = ''
+        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
+            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+
+        mock_flash.assert_not_called()
+
+    @pytest.mark.usefixtures("test_request_context")
+    def test_if_no_bundesland_given_then_flash_no_error(self, app):
+        bundesland_abbreviation = ''
+        steuernummer = '11111111111'
+        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
+            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+
+        mock_flash.assert_not_called()
