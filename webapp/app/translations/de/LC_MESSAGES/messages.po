@@ -4946,7 +4946,7 @@ msgstr ""
 #: app/templates/error/js_disabled.html:7
 msgid "js_disabled.info-link"
 msgstr ""
-"Wie Sie Javascrip aktivieren können, erfahren Sie zum Beispiel "
+"Wie Sie JavaScript aktivieren können, erfahren Sie zum Beispiel "
 "hier:<br><a class=\"font-weight-bold\" "
 "href=\"http://www.enablejavascript.io\" "
 "target=\"_blank\">enablejavascript.io</a>"
