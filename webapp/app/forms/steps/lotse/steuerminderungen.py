@@ -22,7 +22,7 @@ from app.model.form_data import FamilienstandModel, JointTaxesModel
 
 
 class ShowVorsorgePrecondition(BaseModel):
-    stmind_select_vorsorge: str
+    stmind_select_vorsorge: bool
 
     @validator('stmind_select_vorsorge', always=True)
     def has_to_be_set_true(cls, v):
@@ -32,7 +32,7 @@ class ShowVorsorgePrecondition(BaseModel):
 
 
 class ShowAussergBelaPrecondition(BaseModel):
-    stmind_select_ausserg_bela: str
+    stmind_select_ausserg_bela: bool
 
     @validator('stmind_select_ausserg_bela', always=True)
     def has_to_be_set_true(cls, v):
@@ -42,7 +42,7 @@ class ShowAussergBelaPrecondition(BaseModel):
 
 
 class ShowHandwerkerPrecondition(BaseModel):
-    stmind_select_handwerker: str
+    stmind_select_handwerker: bool
 
     @validator('stmind_select_handwerker', always=True)
     def has_to_be_set_true(cls, v):
@@ -52,7 +52,7 @@ class ShowHandwerkerPrecondition(BaseModel):
 
 
 class ShowSpendenPrecondition(BaseModel):
-    stmind_select_spenden: str
+    stmind_select_spenden: bool
 
     @validator('stmind_select_spenden', always=True)
     def has_to_be_set_true(cls, v):
@@ -62,7 +62,7 @@ class ShowSpendenPrecondition(BaseModel):
 
 
 class ShowReligionPrecondition(BaseModel):
-    stmind_select_religion: str
+    stmind_select_religion: bool
 
     @validator('stmind_select_religion', always=True)
     def has_to_be_set_true(cls, v):

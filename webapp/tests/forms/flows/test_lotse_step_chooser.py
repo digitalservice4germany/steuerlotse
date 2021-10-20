@@ -57,6 +57,13 @@ class TestStepSelectStmind:
         with make_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
             assert step._next_step == StepSummary
+    
+    def test_if_select_field_set_to_false_then_next_step_is_correct(self, make_test_request_context):
+        data = {'stmind_select_vorsorge': False, 'stmind_select_ausserg_bela': False, 'stmind_select_handwerker': False,
+                'stmind_select_spenden': False, 'stmind_select_religion': False}
+        with make_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(StepSelectStmind.name)
+            assert step._next_step == StepSummary
             
     def test_if_select_vorsorge_set_then_next_step_is_correct(self, make_test_request_context):
         data = {'stmind_select_vorsorge': True}
