@@ -1,14 +1,15 @@
 import os
 import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+os.environ["FLASK_ENV"] = 'testing'
+
 from contextlib import contextmanager
 
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 
 from tests.utils import create_session_form_data
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-os.environ["FLASK_ENV"] = 'testing'
 
 import pytest
 
@@ -72,6 +73,7 @@ def _truncate_all_tables(db):
         connection.execute(table.delete())
     connection.execute('PRAGMA foreign_keys = ON;')  # SQLite specific
     transaction.commit()
+
 
 @pytest.fixture
 def transactional_session(db):
