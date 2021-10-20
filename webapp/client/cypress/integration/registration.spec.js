@@ -8,7 +8,7 @@ describe("Registration", () => {
     cy.get("button[type=submit]").contains("Registrieren").click();
 
     // Should have errors in the right places.
-    cy.get("[role=alert][for=dob]").contains("Dieses Feld wird benötigt");
+    cy.get("[role=alert][for=dob]").contains("Geben Sie Ihr Geburtsdatum ein");
     cy.get("[role=alert][for=idnr]").contains("Dieses Feld wird benötigt");
     cy.get("[role=alert][for=registration_confirm_data_privacy]").contains(
       "Sie müssen dieses Feld auswählen, um weiter zu machen"
