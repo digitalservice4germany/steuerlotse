@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-20 11:18+0200\n"
+"POT-Creation-Date: 2021-10-20 15:18+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -159,23 +159,23 @@ msgstr "Jahr"
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 29.2.1951"
 
-#: app/forms/fields.py:370
+#: app/forms/fields.py:369
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:402
+#: app/forms/fields.py:401
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:421
+#: app/forms/fields.py:420
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:486
+#: app/forms/fields.py:485
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:486
+#: app/forms/fields.py:485
 msgid "switch.no"
 msgstr "Nein"
 
@@ -225,21 +225,21 @@ msgstr "Der Freischaltcode ist nicht valide."
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
 
-#: app/forms/validators.py:127
+#: app/forms/validators.py:133
 msgid "validation-dob-incomplete"
 msgstr ""
 "Geben Sie Ihr vollständiges Geburtsdatum ein. Ihre Angabe muss folgendem "
 "Muster entsprechen: 29 2 1951"
 
-#: app/forms/validators.py:134
+#: app/forms/validators.py:139
 msgid "validation-dob-in-the-future"
 msgstr "Das Datum darf nicht in der Zukunft liegen."
 
-#: app/forms/validators.py:137
+#: app/forms/validators.py:142
 msgid "validation-dob-to-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/forms/validators.py:141
+#: app/forms/validators.py:146
 msgid "validation-dob-incorrect"
 msgstr "Das ist kein korrektes Datum. Prüfen Sie Ihre Angabe."
 
@@ -1127,11 +1127,8 @@ msgstr "Steueridentifikationsnummer"
 msgid "unlock-code-revocation.dob"
 msgstr "Geburtsdatum"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:316
 #: app/forms/steps/unlock_code_revocation_steps.py:17
-#, fuzzy
-msgid "form.lotse.validation-dob-missing"
+msgid "form.unlock-code-revocation.validation-dob-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
 #: app/forms/steps/unlock_code_revocation_steps.py:21
@@ -1808,6 +1805,11 @@ msgstr "Geburtsdatum"
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:315
 msgid "form.lotse.field_person_dob.data_label"
 msgstr "Geburtsdatum"
+
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:316
+msgid "form.lotse.validation-dob-missing"
+msgstr "Geben Sie Ihr Geburtsdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:192
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:318
