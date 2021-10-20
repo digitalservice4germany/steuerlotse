@@ -143,7 +143,8 @@ def register_request_handlers(app):
         if current_user.is_authenticated:
             return render_template('unlock_code/already_logged_in.html',
                                    title=_('unlock_code_request.logged_in.title'),
-                                   intro=_('unlock_code_request.logged_in.intro'))
+                                   intro=_('unlock_code_request.logged_in.intro'),
+                                   js_needed=False)
 
         flow = UnlockCodeRequestMultiStepFlow(endpoint='unlock_code_request')
         return flow.handle(step_name=step)
@@ -170,7 +171,8 @@ def register_request_handlers(app):
         if current_user.is_authenticated:
             return render_template('unlock_code/already_logged_in.html',
                                    title=_('unlock_code_revocation.logged_in.title'),
-                                   intro=_('unlock_code_revocation.logged_in.intro'))
+                                   intro=_('unlock_code_revocation.logged_in.intro'),
+                                   js_needed=False)
 
         flow = UnlockCodeRevocationMultiStepFlow(endpoint='unlock_code_revocation')
         return flow.handle(step_name=step)
@@ -181,7 +183,9 @@ def register_request_handlers(app):
     @limiter.limit('1000 per day')
     def download_pdf():
         if not current_user.has_completed_tax_return():
-            return render_template('error/pdf_not_found.html', header_title=_('404.header-title')), 404
+            return render_template('error/pdf_not_found.html',
+                                   header_title=_('404.header-title'),
+                                   js_needed=False), 404
 
         pdf_file = base64.b64decode(current_user.pdf)
         return send_file(io.BytesIO(pdf_file), mimetype='application/pdf',
@@ -199,52 +203,67 @@ def register_request_handlers(app):
     @app.route('/')
     @add_caching_headers
     def index():
-        return render_template('content/landing_page.html', header_title=_('page.title'))
+        return render_template('content/landing_page.html',
+                               header_title=_('page.title'),
+                               js_needed=False)
 
     @app.route('/sofunktionierts')
     @add_caching_headers
     def howitworks():
-        return render_template('content/howitworks.html', header_title=_('howitworks.header-title'))
+        return render_template('content/howitworks.html',
+                               header_title=_('howitworks.header-title'),
+                               js_needed=False)
 
     @app.route('/kontakt')
     @add_caching_headers
     def contact():
-        return render_template('content/contact.html', header_title=_('contact.header-title'))
+        return render_template('content/contact.html',
+                               header_title=_('contact.header-title'),
+                               js_needed=False)
 
     @app.route('/impressum')
     @add_caching_headers
     def imprint():
-        return render_template('content/imprint.html', header_title=_('imprint.header-title'))
+        return render_template('content/imprint.html',
+                               header_title=_('imprint.header-title'),
+                               js_needed=False)
 
     @app.route('/barrierefreiheit')
     @add_caching_headers
     def barrierefreiheit():
-        return render_template('content/barrierefreiheit.html', header_title=_('barrierefreiheit.header-title'))
+        return render_template('content/barrierefreiheit.html',
+                               header_title=_('barrierefreiheit.header-title'),
+                               js_needed=False)
 
     @app.route('/datenschutz')
     @add_caching_headers
     def data_privacy():
-        return render_template('content/data_privacy.html', header_title=_('data_privacy.header-title'))
+        return render_template('content/data_privacy.html',
+                               header_title=_('data_privacy.header-title'),
+                               js_needed=False)
 
     @app.route('/agb')
     @add_caching_headers
     def agb():
-        return render_template('content/agb.html', header_title=_('agb.header-title'))
+        return render_template('content/agb.html',
+                               header_title=_('agb.header-title'),
+                               js_needed=False)
 
     @app.route('/interviews')
     @add_caching_headers
     def interviews():
-        return render_template('content/interviews.html')
+        return render_template('content/interviews.html',
+                               js_needed=False)
 
     @app.route('/ueber')
     @add_caching_headers
     def about_steuerlotse():
-        return render_template('content/about_steuerlotse.html', header_title=_('about.header-title'))
+        return render_template('content/about_steuerlotse.html', header_title=_('about.header-title'), js_needed=False)
 
     @app.route('/digitalservice')
     @add_caching_headers
     def about_digitalservice():
-        return render_template('content/about_digitalservice.html', header_title=_('about_digitalservice.header-title'))
+        return render_template('content/about_digitalservice.html', header_title=_('about_digitalservice.header-title'), js_needed=False)
 
     @app.route('/download_preparation', methods=['GET'])
     @limiter.limit('15 per minute')
@@ -265,25 +284,26 @@ def register_error_handlers(app):
     @app.errorhandler(GeneralEricaError)
     def error_erica(error):
         current_app.logger.exception('A general erica error occurred')
-        return render_template('error/erica_error.html', header_title=_('erica-error.header-title')), 500
+        return render_template('error/erica_error.html', header_title=_('erica-error.header-title'), js_needed=False), 500
 
     @app.errorhandler(400)
     def error_400(error):
-        return render_template('error/400.html', header_title=_('400.header-title')), 400
+        return render_template('error/400.html', header_title=_('400.header-title'), js_needed=False), 400
 
     @app.errorhandler(404)
     def error_404(error):
-        return render_template('error/404.html', header_title=_('404.header-title')), 404
+        return render_template('error/404.html', header_title=_('404.header-title'), js_needed=False), 404
 
     @app.errorhandler(IncorrectEligibilityData)
     def handle_incorrect_eligibility_data(error):
-        return render_template('error/incorrect_eligiblity_data.html', header_title=_('400.header-title')), 400
+        return render_template('error/incorrect_eligiblity_data.html', header_title=_('400.header-title'), js_needed=False), 400
 
     @app.errorhandler(429)
     def error_429(error):
-        return render_template('error/429.html', header_title=_('429.header-title')), 429
+        return render_template('error/429.html', header_title=_('429.header-title'), js_needed=False), 429
 
     @app.errorhandler(InternalServerError)
     def error_500(error):
-        current_app.logger.error('An uncaught error occurred', exc_info=error.original_exception)
-        return render_template('error/500.html', header_title=_('500.header-title')), 500
+        current_app.logger.error(
+            'An uncaught error occurred', exc_info=error.original_exception)
+        return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
