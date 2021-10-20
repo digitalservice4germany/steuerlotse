@@ -127,8 +127,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_gehbeh': True,
 
             'iban': 'DE35133713370000012345',
-
-            'steuerminderung': 'yes',
         }
 
         self.valid_data_person_b = {

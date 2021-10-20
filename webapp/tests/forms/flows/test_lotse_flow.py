@@ -630,9 +630,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         self.summary_url = '/' + self.endpoint_correct + '/step/' + StepSummary.name + \
                             '?link_overview=' + str(self.flow.has_link_overview)
 
-        self.data_st_mind_yes = {'steuerminderung': 'yes'}
-        self.data_st_mind_no = {'steuerminderung': 'no'}
-
         self.data_haushaltsnahe_yes = {'stmind_haushaltsnahe_summe': Decimal(1.0),
                                        'stmind_haushaltsnahe_entries': 'Dach',
                                        'stmind_handwerker_summe': Decimal(1.0),
@@ -1307,9 +1304,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_gehbeh': True,
 
             'is_user_account_holder': 'yes',
-            'iban': 'DE35133713370000012345',
-
-            'steuerminderung': 'yes', }
+            'iban': 'DE35133713370000012345',}
         self.valid_data_married = {
             'steuernummer_exists': True,
             'steuernummer': '19811310010',
@@ -1343,9 +1338,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_gehbeh': False,
 
             'account_holder': 'person_a',
-            'iban': 'DE35133713370000012345',
-
-            'steuerminderung': 'yes', }
+            'iban': 'DE35133713370000012345',}
 
     @staticmethod
     def _create_logged_in_user(idnr):

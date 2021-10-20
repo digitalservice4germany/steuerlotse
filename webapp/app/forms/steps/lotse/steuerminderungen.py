@@ -18,16 +18,7 @@ from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
 from app.model.components import SelectStmindProps
 from app.model.components.helpers import form_fields_dict
-from app.model.eligibility_data import declarations_must_be_set_yes
-from app.model.form_data import FamilienstandModel, show_person_b, JointTaxesModel
-
-
-class SteuerminderungYesPrecondition(BaseModel):
-    steuerminderung: str
-
-    @validator('steuerminderung')
-    def has_to_be_set_yes(cls, v):
-        return declarations_must_be_set_yes(v)
+from app.model.form_data import FamilienstandModel, JointTaxesModel
 
 
 class ShowVorsorgePrecondition(BaseModel):
