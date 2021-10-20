@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-15 17:21+0200\n"
+"POT-Creation-Date: 2021-10-18 10:30+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -213,11 +213,14 @@ msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
 #: app/forms/validators.py:90 app/forms/validators.py:93
 #: app/forms/validators.py:96
 msgid "validate.invalid-idnr"
-msgstr "Geben Sie bitte eine gültige Steuer-Identifikationsnummer an."
+msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
 
 #: app/forms/validators.py:80
 msgid "validate.idnr-length"
-msgstr "Eine gültige Steuer-Identifikationsnummer hat genau 11 Ziffern."
+msgstr ""
+"Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
+"insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
+"entsprechen: 00 000 000 000"
 
 #: app/forms/validators.py:104
 msgid "validate.unlock-code-length"
@@ -1041,6 +1044,14 @@ msgstr ""
 #: app/forms/steps/logout_steps.py:20
 msgid "form.logout.header-title"
 msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
+
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:186
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:311
+#: app/forms/steps/unlock_code_activation_steps.py:18
+#: app/forms/steps/unlock_code_request_steps.py:20
+#: app/forms/steps/unlock_code_revocation_steps.py:16
+msgid "validate.missing-idnr"
+msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
 
 #: app/forms/steps/unlock_code_activation_steps.py:23
 msgid "form.unlock-code-activation.input-title"
@@ -4986,7 +4997,7 @@ msgstr ""
 #: app/templates/error/js_disabled.html:7
 msgid "js_disabled.info-link"
 msgstr ""
-"Wie Sie Javascrip aktivieren können, erfahren Sie zum Beispiel "
+"Wie Sie JavaScript aktivieren können, erfahren Sie zum Beispiel "
 "hier:<br><a class=\"font-weight-bold\" "
 "href=\"http://www.enablejavascript.io\" "
 "target=\"_blank\">enablejavascript.io</a>"
