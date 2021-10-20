@@ -32,10 +32,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),

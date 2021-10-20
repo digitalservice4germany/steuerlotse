@@ -264,10 +264,6 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
 
 class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
     name = 'haushaltsnahe_handwerker'
@@ -351,10 +347,6 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
         return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
@@ -427,10 +419,6 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
         return render_template(self.template, form=self.render_info.form, render_info=self.render_info, list_items=[
@@ -474,10 +462,6 @@ class StepReligion(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
         return render_template(self.template, form=self.render_info.form, render_info=self.render_info, list_items=[],
@@ -517,8 +501,3 @@ class StepSpenden(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
-
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-

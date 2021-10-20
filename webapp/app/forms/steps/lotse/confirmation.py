@@ -27,10 +27,6 @@ class StepSummary(LotseFormSteuerlotseStep):
     class InputForm(SteuerlotseBaseForm):
         confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct'))
 
-    # TODO remove once all steps are migrated
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
     def _main_handle(self):
         super()._main_handle()
         from app.forms.flows.lotse_flow import LotseMultiStepFlow
