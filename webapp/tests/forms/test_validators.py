@@ -3,8 +3,8 @@ import unittest
 from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import UnlockCodeField
-from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
+from app.forms.fields import SteuerlotseDateField, UnlockCodeField
+from app.forms.validators import IntegerLength, ValidDayOfBirth, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
     ValidUnlockCodeCharacterSet
 
 
@@ -229,3 +229,4 @@ class TestValidUnlockCodeCharacterSet(unittest.TestCase):
             ValidUnlockCodeCharacterSet().__call__(self.form, self.field)
         except ValidationError:
             self.fail("ValidCharacterSet raised ValidationError unexpectedly!")
+

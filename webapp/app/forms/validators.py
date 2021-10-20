@@ -118,9 +118,15 @@ class ValidUnlockCodeCharacterSet:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))
 
-class ValidDayOfBirth:
+class ValidDayOfBirth:        
     def __call__(self, form, field):
-        day, month, year = field._value()
+        raw_input_date = field._value()
+
+        if isinstance(raw_input_date, str):
+            day, month, year = raw_input_date.split('.')
+        elif isinstance(raw_input_date, list):
+            day, month, year = raw_input_date
+        
         elster_min_date = datetime.date(1900, 1, 1)
 
         if not day or not month or not year: 

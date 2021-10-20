@@ -206,18 +206,14 @@ class LegacySteuerlotseDateField(DateField):
         else:
             return self.raw_data if self.raw_data else []
 
-    def process_formdata(self, valuelist):
-        try:
-            super().process_formdata(valuelist)
-        # Ignore parsing validation error
-        except ValueError:
-            pass
-
 class SteuerlotseDateField(DateField):
 
     def __init__(self, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
+        kwargs.setdefault('validate_date', True)
         super().__init__(**kwargs)
+        
+        self.validate_date = kwargs.get('validate_date')
 
     def _value(self):
         if self.data:
@@ -228,8 +224,10 @@ class SteuerlotseDateField(DateField):
     def process_formdata(self, valuelist):
         try:
             super().process_formdata(valuelist)
-        # Ignore parsing validation error
-        except ValueError:
+        # Prevent standard date validation if validate_date is false.
+        except ValueError as e:
+            if self.validate_date:
+                raise e
             pass
 
 class LegacyIdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):

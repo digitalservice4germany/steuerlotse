@@ -191,6 +191,61 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                     self.input_step, self.render_info_input_step, self.session_data)
                 self.assertRaises(UserNotExistingError, find_user, existing_idnr)
 
+    def test_if_user_exists_and_dob_to_far_in_past_and_unlock_code_revocation_got_through_then_next_url_is_failure_step(self):
+        existing_idnr = '04452397687'
+        correct_dob = ['1', '1', '1890']
+        create_user(existing_idnr, '01.01.1890', '0000')
+        with self.app.test_request_context(method='POST',
+                                           data={'idnr': existing_idnr,
+                                                 'dob': correct_dob}):
+            render_info, _ = self.flow._handle_specifics_for_step(
+                self.input_step, self.render_info_input_step, self.session_data)
+            self.assertEqual(self.failure_url, render_info.next_url)
+            
+    def test_if_user_exists_and_dob_incorrect_and_unlock_code_revocation_got_through_then_next_url_is_failure_step(self):
+        existing_idnr = '04452397687'
+        correct_dob = ['99', '99', '2021']
+        create_user(existing_idnr, '99.99.2021', '0000')
+        with self.app.test_request_context(method='POST',
+                                           data={'idnr': existing_idnr,
+                                                 'dob': correct_dob}):
+            render_info, _ = self.flow._handle_specifics_for_step(
+                self.input_step, self.render_info_input_step, self.session_data)
+            self.assertEqual(self.failure_url, render_info.next_url)
+
+    def test_if_user_exists_and_dob_in_the_future_and_unlock_code_revocation_got_through_then_next_url_is_failure_step(self):
+        existing_idnr = '04452397687'
+        correct_dob = ['1', '1', '2999']
+        create_user(existing_idnr, '01.01.2999', '0000')
+        with self.app.test_request_context(method='POST',
+                                           data={'idnr': existing_idnr,
+                                                 'dob': correct_dob}):
+            render_info, _ = self.flow._handle_specifics_for_step(
+                self.input_step, self.render_info_input_step, self.session_data)
+            self.assertEqual(self.failure_url, render_info.next_url)
+
+    def test_if_user_exists_and_dob_is_missing_and_unlock_code_revocation_got_through_then_next_url_is_failure_step(self):
+        existing_idnr = '04452397687'
+        correct_dob = ['', '', '']
+        create_user(existing_idnr, '01.01.2021', '0000')
+        with self.app.test_request_context(method='POST',
+                                           data={'idnr': existing_idnr,
+                                                 'dob': correct_dob}):
+            render_info, _ = self.flow._handle_specifics_for_step(
+                self.input_step, self.render_info_input_step, self.session_data)
+            self.assertEqual(self.failure_url, render_info.next_url)
+
+    def test_if_user_exists_and_dob_is_incomplete_and_unlock_code_revocation_got_through_then_next_url_is_failure_step(self):
+        existing_idnr = '04452397687'
+        correct_dob = ['01', '', '2021']
+        create_user(existing_idnr, '01.01.2021', '0000')
+        with self.app.test_request_context(method='POST',
+                                           data={'idnr': existing_idnr,
+                                                 'dob': correct_dob}):
+            render_info, _ = self.flow._handle_specifics_for_step(
+                self.input_step, self.render_info_input_step, self.session_data)
+            self.assertEqual(self.failure_url, render_info.next_url)
+
     def test_if_user_exists_but_elster_returns_no_antrag_found_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
         date_of_birth = ['1', '1', '1985']
