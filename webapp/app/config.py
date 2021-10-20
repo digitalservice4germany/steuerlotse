@@ -94,7 +94,7 @@ class FunctionalTestingConfig(DevelopmentConfig):
 class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
-    DEBUG_DATA = True
+    DEBUG_DATA = False
     USE_MOCK_API = True
     WTF_CSRF_ENABLED = False
     ALLOW_RESEND_FOR_TEST_USER = True

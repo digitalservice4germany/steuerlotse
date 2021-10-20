@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import patch
 
 import pytest
-from flask import json
+from flask import json, make_response
 from flask.sessions import SecureCookieSession
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
@@ -112,14 +112,17 @@ class TestUnlockCodeRevocationHandle(unittest.TestCase):
             )
 
     def test_if_form_step_and_not_post_then_return_render(self):
+        expected_data = {'The': '100'}
+        render_return_value = make_response(json.dumps([expected_data], default=str), 200)
         with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name,
-                method='GET'):
+                method='GET'), \
+                patch('tests.forms.mock_steps.MockRenderStep.render', return_value=render_return_value):
             response = self.flow.handle(MockRenderStep.name)
 
             self.assertEqual(200, response.status_code)
-            # Check response data because that's where our Mock returns. Decode because response stores as bytestring
-            self.assertEqual(self.session_data, json.loads(str(response.get_data(), 'utf-8'))[0])
+            # Check response data because that's what our Mock returns. Decode because response stores as bytestring
+            self.assertEqual(expected_data, json.loads(str(response.get_data(), 'utf-8'))[0])
 
 
 class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):

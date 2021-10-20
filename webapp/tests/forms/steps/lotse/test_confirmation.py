@@ -69,7 +69,7 @@ class TestStepSummary:
             mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
 
     def test_if_data_not_missing_then_set_next_url_correct(self, make_test_request_context):
-        data_without_missing_fields = {**LotseMultiStepFlow(endpoint='lotse').default_data()[1],
+        data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': '04452397687'}}
 
         with make_test_request_context(method='POST', stored_data=data_without_missing_fields,

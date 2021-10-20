@@ -4,7 +4,7 @@ import datetime as dt
 from unittest.mock import patch, call
 
 import pytest
-from flask import json
+from flask import json, make_response
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 
@@ -73,9 +73,9 @@ class TestUnlockCodeRequestHandle(unittest.TestCase):
 
         # Set sessions up
         self.existing_session = "sessionAvailable"
-        self.session_data = {'idnr': '04452397687', 'dob': '1985-01-01',  'registration_confirm_incomes': True,
-                                'registration_confirm_data_privacy': True, 'registration_confirm_e_data': True,
-                                'registration_confirm_terms_of_service': True}
+        self.session_data = {'idnr': '04452397687', 'dob': '1985-01-01', 'registration_confirm_incomes': True,
+                             'registration_confirm_data_privacy': True, 'registration_confirm_e_data': True,
+                             'registration_confirm_terms_of_service': True}
 
     def test_if_correct_step_name_then_return_code_correct(self):
         response = self.flow.handle(MockRenderStep.name)
@@ -113,14 +113,17 @@ class TestUnlockCodeRequestHandle(unittest.TestCase):
             )
 
     def test_if_form_step_and_not_post_then_return_render(self):
+        expected_data = {'The': '100'}
+        render_return_value = make_response(json.dumps([expected_data], default=str), 200)
         with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name,
-                method='GET'):
+                method='GET'), \
+                patch('tests.forms.mock_steps.MockRenderStep.render', return_value=render_return_value):
             response = self.flow.handle(MockRenderStep.name)
 
             self.assertEqual(200, response.status_code)
-            # Check response data because that's where our Mock returns. Decode because response stores as bytestring
-            self.assertEqual(self.session_data, json.loads(str(response.get_data(), 'utf-8'))[0])
+            # Check response data because that's what our Mock returns. Decode because response stores as bytestring
+            self.assertEqual(expected_data, json.loads(str(response.get_data(), 'utf-8'))[0])
 
 
 class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):

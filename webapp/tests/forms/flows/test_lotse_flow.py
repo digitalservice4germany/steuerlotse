@@ -231,14 +231,18 @@ class TestLotseHandle(unittest.TestCase):
         self.assertRaises(Exception, self.flow.handle, "Incorrect Step Name")
 
     def test_if_start_step_and_debug_ok_then_return_redirect_to_debug_step(self):
-        response = self.flow.handle("start")
+        try:
+            Config.DEBUG_DATA = True
+            response = self.flow.handle("start")
 
-        self.assertEqual(
-            redirect(
-                "/" + self.endpoint_correct + "/step/" + self.flow.default_data()[0].name
-                + "?link_overview=" + str(self.flow.has_link_overview)).location,
-            response.location
-        )
+            self.assertEqual(
+                redirect(
+                    "/" + self.endpoint_correct + "/step/" + self.flow._DEBUG_DATA[0].name
+                    + "?link_overview=" + str(self.flow.has_link_overview)).location,
+                response.location
+            )
+        finally:
+            Config.DEBUG_DATA = False
 
     def test_if_start_step_and_debug_none_then_return_redirect_to_first_step(self):
         debug = self.flow.default_data
@@ -485,11 +489,15 @@ class TestLotseGetSessionData(unittest.TestCase):
 
         self.assertTrue(set(self.session_data).issubset(set(session_data)))
 
-    def test_if_no_form_data_in_session_then_return_default_data(self):
-        self.req.session = SecureCookieSession({})
-        session_data = self.flow._get_session_data()
+    def test_if_no_form_data_in_session_and_debug_data_true_then_return_default_data(self):
+        Config.DEBUG_DATA = True
+        try:
+            self.req.session = SecureCookieSession({})
+            session_data = self.flow._get_session_data()
 
-        self.assertEqual(self.flow.default_data()[1], session_data)
+            self.assertEqual(self.flow._DEBUG_DATA[1], session_data)
+        finally:
+            Config.DEBUG_DATA = False
 
 
 class TestLotseHandleSpecificsForStep(unittest.TestCase):
@@ -1162,7 +1170,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
     def test_if_steps_set_and_input_data_given_then_return_correct_sections_with_input_data(self):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
-        debug_data = flow.default_data()[1]
+        debug_data = flow._DEBUG_DATA[1]
         expected_data = {
             'mandatory_data': Section(
                 StepIban.section_link.label,
@@ -1208,7 +1216,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
     def test_if_missing_steps_are_missing_then_set_mandatory_missing_value(self):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
-        debug_data = copy.deepcopy(flow.default_data()[1])
+        debug_data = copy.deepcopy(flow._DEBUG_DATA[1])
         missing_fields = ['iban', 'account_holder']
         for missing_field in missing_fields:
             debug_data.pop(missing_field)
