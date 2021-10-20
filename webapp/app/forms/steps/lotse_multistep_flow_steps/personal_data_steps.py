@@ -11,7 +11,7 @@ from flask_babel import lazy_gettext as _l
 from wtforms import RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
 
-from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
+from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly, ValidDayOfBirth
 from app.model.form_data import FamilienstandModel, show_person_b
 from app.utils import get_first_day_of_tax_period
 
@@ -187,7 +187,7 @@ class StepPersonA(FormStep):
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
         person_a_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
-            render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired()])
+            render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')}, validators=[InputRequired(message=_l('form.lotse.validation-dob-missing')), ValidDayOfBirth()])
         person_a_first_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_first_name'),
             render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
@@ -313,7 +313,7 @@ class StepPersonB(FormStep):
         person_b_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
             render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')},
-            validators=[InputRequired()])
+            validators=[InputRequired(message=_l('form.lotse.validation-dob-missing')), ValidDayOfBirth()])
         person_b_first_name = SteuerlotseNameStringField(
             label=_l('form.lotse.field_person_first_name'),
             render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),

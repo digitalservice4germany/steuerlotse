@@ -206,6 +206,12 @@ class LegacySteuerlotseDateField(DateField):
         else:
             return self.raw_data if self.raw_data else []
 
+    def process_formdata(self, valuelist):
+        try:
+            super().process_formdata(valuelist)
+        # Ignore parsing validation error
+        except ValueError:
+            pass
 
 class SteuerlotseDateField(DateField):
 
@@ -219,6 +225,12 @@ class SteuerlotseDateField(DateField):
         else:
             return self.raw_data if self.raw_data else []
 
+    def process_formdata(self, valuelist):
+        try:
+            super().process_formdata(valuelist)
+        # Ignore parsing validation error
+        except ValueError:
+            pass
 
 class LegacyIdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""

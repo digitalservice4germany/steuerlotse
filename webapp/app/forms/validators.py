@@ -1,4 +1,6 @@
 from collections import Counter
+import datetime
+
 
 from schwifty import IBAN
 from flask_babel import _
@@ -115,3 +117,24 @@ class ValidUnlockCodeCharacterSet:
         for char in input_str:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))
+
+class ValidDayOfBirth:
+    def __call__(self, form, field):
+        day, month, year = field._value()
+        elster_min_date = datetime.date(1900, 1, 1)
+
+        if not day or not month or not year: 
+            raise ValidationError(_('validation-dob-incomplete'))
+            
+        try:
+            input_date = datetime.date(int(year), int(month), int(day))
+
+            if input_date > datetime.date.today():
+                raise ValidationError(_('validation-dob-in-the-future'))
+
+            if input_date < elster_min_date:
+                raise ValidationError(_('validation-dob-to-far-in-past'))
+        except ValidationError as e:
+            raise e
+        except ValueError:
+            raise ValidationError(_('validation-dob-incorrect'))

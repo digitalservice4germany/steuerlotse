@@ -4,11 +4,12 @@ from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
 from wtforms.fields.core import BooleanField
 from wtforms.validators import InputRequired
+from wtforms import validators
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr
+from app.forms.validators import ValidIdNr, ValidDayOfBirth
 from app.model.components import RegistrationProps
 from app.model.components.helpers import form_fields_dict
 
@@ -18,7 +19,7 @@ class UnlockCodeRequestInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(validators=[InputRequired(), ValidIdNr()])
-        dob = SteuerlotseDateField(validators=[InputRequired()])
+        dob = SteuerlotseDateField(validators=[InputRequired(message=_l('validation-dob-missing')), ValidDayOfBirth()])
         registration_confirm_data_privacy = ConfirmationField()
         registration_confirm_terms_of_service = ConfirmationField()
         registration_confirm_incomes = ConfirmationField()
