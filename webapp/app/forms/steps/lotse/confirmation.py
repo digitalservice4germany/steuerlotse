@@ -51,7 +51,7 @@ class StepSummary(LotseFormSteuerlotseStep):
                                                                                               missing_fields)
         self.render_info.overview_url = None
 
-        if request.method == 'POST' and self.render_info.form.validate():
+        if not missing_fields and request.method == 'POST' and self.render_info.form.validate():
             create_audit_log_confirmation_entry('Confirmed complete correct data', request.remote_addr,
                                                 self.stored_data['idnr'], 'confirm_complete_correct',
                                                 self.stored_data['confirm_complete_correct'])

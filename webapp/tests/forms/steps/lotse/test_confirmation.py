@@ -1,6 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 import pytest
+from werkzeug.datastructures import MultiDict
 
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
@@ -15,6 +16,16 @@ class TestStepSummary:
     def step(self):
         step = StepSummary(endpoint='lotse')
         return step
+
+    def test_if_complete_correct_not_set_then_fail_validation(self, step):
+        data = MultiDict({})
+        form = step.InputForm(formdata=data)
+        assert form.validate() is False
+
+    def test_if_complete_correct_set_then_succ_validation(self, step):
+        data = MultiDict({'confirm_complete_correct': True})
+        form = step.InputForm(formdata=data)
+        assert form.validate() is True
 
     def test_set_section_steps_in_render_info(self, make_test_request_context, step):
         expected_summary_session_steps = {}
@@ -81,5 +92,48 @@ class TestStepSummary:
 
             assert step.render_info.next_url == LotseMultiStepFlow(endpoint='lotse').url_for_step(StepConfirmation.name)
 
-    # TODO test that audit log
-    # TODO test that not valid if complete_correct not set
+    def test_if_data_not_missing_and_required_fields_set_then_create_audit_log(self, make_test_request_context):
+        idnr = '04452397687'
+        data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
+                                       **{'idnr': idnr}}
+
+        with make_test_request_context(method='POST', stored_data=data_without_missing_fields,
+                                       form_data={'confirm_complete_correct': True}), \
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
+                patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
+            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step.handle()
+
+            audit_log_method.assert_called_once()
+            assert audit_log_method.call_args.args[0] == 'Confirmed complete correct data'
+            # IP Address is wild-card
+            assert audit_log_method.call_args.args[2] == idnr
+            assert audit_log_method.call_args.args[3] == 'confirm_complete_correct'
+            assert audit_log_method.call_args.args[4] is True
+
+    def test_if_data_missing_and_required_fields_set_then_do_not_create_audit_log(self, make_test_request_context):
+        data_with_missing_fields = {}
+
+        with make_test_request_context(method='POST', stored_data=data_with_missing_fields,
+                                       form_data={'confirm_complete_correct': True}), \
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
+                patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
+            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step.handle()
+
+            audit_log_method.assert_not_called()
+
+    def test_if_data_not_missing_but_required_fields_not_set_then_do_not_create_audit_log(self,
+                                                                                          make_test_request_context):
+        idnr = '04452397687'
+        data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
+                                       **{'idnr': idnr}}
+
+        with make_test_request_context(method='POST', stored_data=data_without_missing_fields,
+                                       form_data={}), \
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
+                patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
+            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step.handle()
+
+            audit_log_method.assert_not_called()
