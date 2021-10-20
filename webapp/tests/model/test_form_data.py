@@ -329,10 +329,14 @@ class TestFormDataDependencies:
         for field_to_be_deleted in data_to_be_deleted:
             assert field_to_be_deleted not in returned_data
 
-    def test_if_familienstand_married_then_delete_gem_haushalt(self):
-        input_data = {**self.valid_stmind_data, **{'familienstand': 'married'}}
+    def test_if_zusammenveranlagung_then_delete_gem_haushalt(self):
         data_to_be_deleted = ['stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries']
-        returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
-        for field_to_be_deleted in data_to_be_deleted:
-            assert field_to_be_deleted not in returned_data
+        with patch('app.model.form_data.show_person_b', return_value=True):
+            returned_data = FormDataDependencies.parse_obj(self.valid_stmind_data).dict(exclude_none=True)
+            for field_to_be_deleted in data_to_be_deleted:
+                assert field_to_be_deleted not in returned_data
 
+    def test_if_einzelveranlagung_then_do_not_delete_gem_haushalt(self):
+        with patch('app.model.form_data.show_person_b', return_value=False):
+            returned_data = FormDataDependencies.parse_obj(self.valid_stmind_data).dict(exclude_none=True)
+            assert returned_data == self.valid_stmind_data

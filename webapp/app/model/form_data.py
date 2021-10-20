@@ -311,10 +311,9 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
-    # TODO!!
     @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
-    def delete_if_familienstand_not_married(cls, v, values):
-        if values.get('familienstand') and values.get('familienstand') == 'married':
+    def delete_if_show_person_b(cls, v, values):
+        if show_person_b(values):
             return None
         return v
 
