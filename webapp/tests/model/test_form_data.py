@@ -7,6 +7,7 @@ from unittest.mock import patch, MagicMock
 
 from pydantic import ValidationError, MissingError
 
+from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.model.form_data import FamilienstandModel, MandatoryFormData, FormDataDependencies, JointTaxesModel
 
 
@@ -263,6 +264,11 @@ class TestFormDataDependencies:
     def test_if_valid_data_then_keep_all_stmind_fields(self):
         returned_data = FormDataDependencies.parse_obj(self.valid_stmind_data).dict(exclude_none=True)
         assert returned_data == self.valid_stmind_data
+
+    def test_if_complete_valid_data_then_keep_all_fields(self):
+        complete_valid_data = LotseStepChooser()._DEBUG_DATA
+        returned_data = FormDataDependencies.parse_obj(complete_valid_data).dict(exclude_none=True)
+        assert returned_data == complete_valid_data
 
     def test_if_vorsorge_not_shown_then_delete_all_dependent_fields(self):
         dependent_fields = ['stmind_vorsorge_summe']
