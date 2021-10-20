@@ -24,7 +24,7 @@ _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'person_a_blind', 'person_a_gehbeh',
               'person_b_same_address', 'person_b_blind', 'person_b_gehbeh',
-              'is_digitally_signed', 'request_new_tax_number', 'steuernummer_exists']
+              'is_digitally_signed', 'request_new_tax_number']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -197,7 +197,7 @@ def _generate_est_request_data(form_data, year=2020):
         if isinstance(adapted_form_data[key], str):
             adapted_form_data[key] = datetime.strptime(adapted_form_data[key], '%Y-%m-%d').date()
 
-    if not adapted_form_data.get('steuernummer_exists') and adapted_form_data.get('request_new_tax_number'):
+    if adapted_form_data.get('steuernummer_exists') == 'no' and adapted_form_data.get('request_new_tax_number'):
         adapted_form_data['submission_without_tax_nr'] = True
 
     if not current_user.is_active:

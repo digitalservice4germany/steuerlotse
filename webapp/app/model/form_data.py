@@ -74,7 +74,7 @@ class MandatoryFormData(BaseModel):
     bundesland: str
     bufa_nr: Optional[str]
     steuernummer: Optional[str]
-    request_new_tax_number: Optional[str]
+    request_new_tax_number: Optional[bool]
 
     familienstandStruct: FamilienstandModel
 
@@ -193,7 +193,7 @@ class FormDataDependencies(BaseModel):
     bundesland: Optional[str]
     bufa_nr: Optional[str]
     steuernummer: Optional[str]
-    request_new_tax_number: Optional[str]
+    request_new_tax_number: Optional[bool]
 
     iban: Optional[str]
     account_holder: Optional[str]

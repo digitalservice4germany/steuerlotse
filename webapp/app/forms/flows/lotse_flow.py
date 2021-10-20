@@ -46,7 +46,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             'bundesland': 'BY',
             'steuernummer': '19811310010',
             # 'bufa_nr': '9201',
-            # 'request_new_tax_number': 'yes',
+            # 'request_new_tax_number': True,
 
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
