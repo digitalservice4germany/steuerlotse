@@ -70,7 +70,7 @@ class MandatoryFormData(BaseModel):
     declaration_edaten: bool
     declaration_incomes: bool
 
-    steuernummer_exists: bool
+    steuernummer_exists: str
     bundesland: str
     bufa_nr: Optional[str]
     steuernummer: Optional[str]
@@ -124,13 +124,14 @@ class MandatoryFormData(BaseModel):
 
     @validator('bufa_nr', 'request_new_tax_number', always=True)
     def must_be_set_if_no_tax_number(cls, v, values):
-        if not values.get('steuernummer_exists') and not v:
+        if (not values.get('steuernummer_exists') or values.get('steuernummer_exists') == 'no') \
+                and not v:
             raise MissingError()
         return v
 
     @validator('steuernummer', always=True)
     def must_be_set_if_tax_number(cls, v, values):
-        if values.get('steuernummer_exists') and not v:
+        if values.get('steuernummer_exists') == 'yes' and not v:
             raise MissingError()
         return v
 
@@ -188,7 +189,7 @@ class FormDataDependencies(BaseModel):
     declaration_edaten: Optional[bool]
     declaration_incomes: Optional[bool]
 
-    steuernummer_exists: Optional[bool]
+    steuernummer_exists: Optional[str]
     bundesland: Optional[str]
     bufa_nr: Optional[str]
     steuernummer: Optional[str]

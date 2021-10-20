@@ -142,13 +142,13 @@ class TestMandatoryFormData(unittest.TestCase):
         }
 
         self.valid_steuernummer = {
-            'steuernummer_exists': True,
+            'steuernummer_exists': 'yes',
             'steuernummer': '19811310010',
             'bundesland': 'BY',
         }
 
         self.valid_no_steuernummer = {
-            'steuernummer_exists': False,
+            'steuernummer_exists': 'no',
             'bundesland': 'BY',
             'bufa_nr': '9201',
             'request_new_tax_number': 'yes'
@@ -174,7 +174,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_steuernummer_exists_and_no_steuernummer_given_then_raise_missing_error(self):
         invalid_tax_nr_data = {
-            'steuernummer_exists': True,
+            'steuernummer_exists': 'yes',
             'bundesland': 'BY',
         }
         with self.assertRaises(ValidationError) as validation_error:
@@ -184,7 +184,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_no_steuernummer_and_no_bufa_number_then_raise_missing_error(self):
         invalid_tax_nr_data = {
-            'steuernummer_exists': False,
+            'steuernummer_exists': 'no',
             'bundesland': 'BY',
             'request_new_tax_number': 'yes'
         }
@@ -195,7 +195,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_no_steuernummer_and_no_new_tax_number_request_then_raise_missing_error(self):
         invalid_tax_nr_data = {
-            'steuernummer_exists': False,
+            'steuernummer_exists': 'no',
             'bundesland': 'BY',
             'bufa_nr': '9201',
         }
