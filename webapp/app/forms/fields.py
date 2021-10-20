@@ -187,7 +187,7 @@ class LegacySteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, 
 
 class LegacySteuerlotseDateField(DateField):
 
-    def __init__(self, **kwargs):
+    def __init__(self, validate_date = True, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
 
         if kwargs.get('render_kw'):
@@ -199,6 +199,7 @@ class LegacySteuerlotseDateField(DateField):
                                    'data-example-input': _('fields.date_field.example_input.text')}
         super().__init__(**kwargs)
         self.widget = LegacySteuerlotseDateWidget()
+        self.validate_date = validate_date
 
     def _value(self):
         if self.data:
@@ -206,14 +207,23 @@ class LegacySteuerlotseDateField(DateField):
         else:
             return self.raw_data if self.raw_data else []
 
+    def process_formdata(self, valuelist):
+        try:
+            super().process_formdata(valuelist)
+        # Prevent standard date validation if validate_date is false.
+        except ValueError as e:
+            if self.validate_date:
+                raise e
+            pass
+
 class SteuerlotseDateField(DateField):
 
-    def __init__(self, **kwargs):
+    def __init__(self, validate_date = True, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
-        kwargs.setdefault('validate_date', True)
+
         super().__init__(**kwargs)
-        
-        self.validate_date = kwargs.get('validate_date')
+
+        self.validate_date = validate_date
 
     def _value(self):
         if self.data:
