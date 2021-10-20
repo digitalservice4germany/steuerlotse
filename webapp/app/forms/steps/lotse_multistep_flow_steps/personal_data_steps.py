@@ -183,7 +183,7 @@ class StepPersonA(FormStep):
     class Form(SteuerlotseBaseForm):
         person_a_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'),
-            validators=[InputRequired(), ValidIdNr()],
+            validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
         person_a_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
@@ -308,7 +308,7 @@ class StepPersonB(FormStep):
                 validators.Optional()(self, field)
 
         person_b_idnr = LegacyIdNrField(
-            label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(), ValidIdNr()],
+            label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
         person_b_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
