@@ -60,7 +60,7 @@ class TestStepSummary:
 
             get_overview.assert_called_once_with(data_with_missing_fields, missing_fields)
 
-    def test_if_data_missing_then_flash_message_with_missing_fields_once(self, make_test_request_context, step):
+    def test_if_data_missing_then_flash_message_with_missing_fields_once(self, make_test_request_context):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
         missing_fields = ['spacecraft', 'droids']
         missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
