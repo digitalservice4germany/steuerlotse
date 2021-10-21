@@ -125,6 +125,9 @@ class ValidDayOfBirth:
         if isinstance(raw_input_date, str):
             day, month, year = raw_input_date.split('.')
         elif isinstance(raw_input_date, list):
+            if len(raw_input_date) != 3:
+                raise ValidationError(_('validation-dob-incomplete'))
+
             day, month, year = raw_input_date
         
         elster_min_date = datetime.date(1900, 1, 1)
@@ -134,13 +137,11 @@ class ValidDayOfBirth:
             
         try:
             input_date = datetime.date(int(year), int(month), int(day))
-
-            if input_date > datetime.date.today():
-                raise ValidationError(_('validation-dob-in-the-future'))
-
-            if input_date < elster_min_date:
-                raise ValidationError(_('validation-dob-to-far-in-past'))
-        except ValidationError as e:
-            raise e
         except ValueError:
             raise ValidationError(_('validation-dob-incorrect'))
+
+        if input_date > datetime.date.today():
+            raise ValidationError(_('validation-dob-in-the-future'))
+
+        if input_date < elster_min_date:
+            raise ValidationError(_('validation-dob-to-far-in-past'))
