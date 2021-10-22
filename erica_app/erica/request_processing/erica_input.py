@@ -19,7 +19,7 @@ class FormDataEst(BaseModel):
     submission_without_tax_nr: Optional[bool]
     bufa_nr: Optional[str]
     bundesland: str
-    iban: Optional[str]
+    iban: str
     account_holder: AccountHoler
 
     familienstand: str  # potentially enum
@@ -41,7 +41,7 @@ class FormDataEst(BaseModel):
     person_a_plz: str
     person_a_town: str
     person_a_beh_grad: Optional[int]
-    person_a_blind: bool
+    person_a_blind: Optional[bool]
     person_a_gehbeh: Optional[bool]
 
     person_b_same_address: Optional[bool]

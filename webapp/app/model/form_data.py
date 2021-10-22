@@ -183,7 +183,7 @@ class MandatoryConfirmations(MandatoryFormData):
 
 class FormDataDependencies(BaseModel):
     idnr: Optional[str]
-    dob: Optional[str]
+    dob: Optional[date]
     unlock_code: Optional[str]
 
     declaration_edaten: Optional[bool]
