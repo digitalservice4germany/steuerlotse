@@ -1,8 +1,8 @@
-from flask import request
+from flask import request, flash, Markup
 from wtforms import validators
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
-from flask_babel import lazy_gettext as _l, ngettext
+from flask_babel import lazy_gettext as _l, ngettext, _
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
@@ -11,7 +11,7 @@ from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSu
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA
 from app.forms.steps.step import SectionLink
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
-from app.forms.validators import DecimalOnly, IntegerLength
+from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber
 from app.model.form_data import show_person_b
 
 
@@ -21,8 +21,8 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     prev_step = StepFamilienstand
     next_step = StepPersonA
 
-    def __init__(self, endpoint, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
+    def __init__(self, endpoint, render_info=None, *args, **kwargs):
+        super().__init__(endpoint=endpoint, header_title=self.header_title, render_info=render_info,  *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -49,8 +49,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
+    def __init__(self, endpoint="lotse", render_info=None, *args, **kwargs):
+        super().__init__(endpoint=endpoint, render_info=render_info, *args, **kwargs)
 
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
@@ -91,9 +91,9 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.bufa_nr.data_label')}
         )
         steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
-                                              validators=[DecimalOnly(),
-                                                          IntegerLength(min=10, max=11)],
-                                              render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
+                                                     validators=[DecimalOnly(),
+                                                                 IntegerLength(min=10, max=11), ValidHessenTaxNumber()],
+                                                     render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
                                                          'data-example-input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
             input_required=False,
@@ -123,6 +123,20 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                 validators.InputRequired()(form, field)
             else:
                 validators.Optional()(form, field)
+
+        def validate(self, extra_validators=None):
+            all_fields_are_valid = super().validate(extra_validators)
+
+            if not all_fields_are_valid and (self.steuernummer.errors or self.bundesland.errors):
+                return False  # Only validate tax number if all other validations of tax number are correct
+
+            try:
+                ValidTaxNumber()(self, self.steuernummer)
+            except WTFormsValidationError:
+                flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')
+                return False
+
+            return all_fields_are_valid
 
     def _pre_handle(self):
         tax_offices = request_tax_offices()

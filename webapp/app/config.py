@@ -23,6 +23,8 @@ class BaseConfig(object):
     PLAUSIBLE_DOMAIN = None
     REACT_BUNDLE_NAME = 'runtime-main.js'
 
+    USE_LRU_CACHE = True
+
 
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
@@ -97,6 +99,7 @@ class TestingConfig(BaseConfig):
     USE_MOCK_API = True
     WTF_CSRF_ENABLED = False
     ALLOW_RESEND_FOR_TEST_USER = True
+    USE_LRU_CACHE = False
 
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_STORAGE_URL = "memory://"
