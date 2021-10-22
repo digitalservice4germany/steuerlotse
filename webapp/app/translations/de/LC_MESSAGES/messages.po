@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-19 15:53+0200\n"
+"POT-Creation-Date: 2021-10-22 17:04+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -57,70 +57,70 @@ msgstr ""
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:184
+#: app/routes.py:185
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:185
+#: app/routes.py:186
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:196 app/routes.py:288
+#: app/routes.py:199 app/routes.py:307
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:214 app/templates/basis/base.html:36
+#: app/routes.py:219 app/templates/basis/base.html:37
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:219
+#: app/routes.py:226
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:224
+#: app/routes.py:233
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:229
+#: app/routes.py:240
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:234
+#: app/routes.py:247
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:239
+#: app/routes.py:254
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:244
+#: app/routes.py:261
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:254
+#: app/routes.py:273
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:259
+#: app/routes.py:278
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:280
+#: app/routes.py:299
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:284 app/routes.py:292
+#: app/routes.py:303 app/routes.py:311
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:296
+#: app/routes.py:315
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:301
+#: app/routes.py:321
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -207,11 +207,14 @@ msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
 #: app/forms/validators.py:85 app/forms/validators.py:88
 #: app/forms/validators.py:91
 msgid "validate.invalid-idnr"
-msgstr "Geben Sie bitte eine gültige Steuer-Identifikationsnummer an."
+msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
 
 #: app/forms/validators.py:75
 msgid "validate.idnr-length"
-msgstr "Eine gültige Steuer-Identifikationsnummer hat genau 11 Ziffern."
+msgstr ""
+"Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
+"insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
+"entsprechen: 00 000 000 000"
 
 #: app/forms/validators.py:99
 msgid "validate.unlock-code-length"
@@ -1047,22 +1050,30 @@ msgstr ""
 msgid "form.logout.header-title"
 msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:23
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:186
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:311
+#: app/forms/steps/unlock_code_activation_steps.py:19
+#: app/forms/steps/unlock_code_request_steps.py:20
+#: app/forms/steps/unlock_code_revocation_steps.py:16
+msgid "validate.missing-idnr"
+msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
+
+#: app/forms/steps/unlock_code_activation_steps.py:24
 msgid "form.unlock-code-activation.input-title"
 msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 
-#: app/forms/steps/unlock_code_activation_steps.py:24
+#: app/forms/steps/unlock_code_activation_steps.py:25
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann"
 " können Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/forms/steps/unlock_code_activation_steps.py:27
-#: app/forms/steps/unlock_code_activation_steps.py:62
+#: app/forms/steps/unlock_code_activation_steps.py:28
+#: app/forms/steps/unlock_code_activation_steps.py:63
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:58
+#: app/forms/steps/unlock_code_activation_steps.py:59
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
@@ -1405,15 +1416,15 @@ msgstr ""
 "übermittelt. Bewahren Sie Ihre Nachweise für Nachfragen gut auf."
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:64
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:80
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:81
 msgid "form.lotse.filing.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:69
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:70
 msgid "form.lotse.filing.failure.header-title"
 msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:76
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:77
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
@@ -2769,11 +2780,11 @@ msgstr ""
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:35
+#: app/templates/basis/base.html:36
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:42
+#: app/templates/basis/base.html:43
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -4738,79 +4749,79 @@ msgstr "<a href=\"mailto:kontakt@steuerlotse-rente.de\">Schreiben Sie uns!</a>"
 msgid "info.heading-accordeon-home"
 msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 
-#: app/templates/content/landing_page.html:58
+#: app/templates/content/landing_page.html:57
 msgid "landing.hero-title"
 msgstr ""
 "Mit dem Steuerlotsen können Rentner:innen und Pensionär:innen ihre "
 "Steuererklärung online machen!"
 
-#: app/templates/content/landing_page.html:59
+#: app/templates/content/landing_page.html:58
 msgid "landing.hero-desc"
 msgstr ""
 "Der Steuerlotse bietet Rentner:innen und Pensionär:innen ohne weitere "
 "Einkünfte die Möglichkeit, ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen zu machen."
 
-#: app/templates/content/landing_page.html:61
+#: app/templates/content/landing_page.html:60
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:62
+#: app/templates/content/landing_page.html:61
 msgid "landing.hero-list-item-2"
 msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
 
-#: app/templates/content/landing_page.html:63
+#: app/templates/content/landing_page.html:62
 msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
-#: app/templates/content/landing_page.html:75
+#: app/templates/content/landing_page.html:74
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:85
+#: app/templates/content/landing_page.html:84
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:86
+#: app/templates/content/landing_page.html:85
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:93
+#: app/templates/content/landing_page.html:92
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:94
+#: app/templates/content/landing_page.html:93
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:101
+#: app/templates/content/landing_page.html:100
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:102
+#: app/templates/content/landing_page.html:101
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/templates/content/landing_page.html:118
+#: app/templates/content/landing_page.html:117
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:119
+#: app/templates/content/landing_page.html:118
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:120
+#: app/templates/content/landing_page.html:119
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
@@ -4966,7 +4977,7 @@ msgstr ""
 #: app/templates/error/js_disabled.html:7
 msgid "js_disabled.info-link"
 msgstr ""
-"Wie Sie Javascrip aktivieren können, erfahren Sie zum Beispiel "
+"Wie Sie JavaScript aktivieren können, erfahren Sie zum Beispiel "
 "hier:<br><a class=\"font-weight-bold\" "
 "href=\"http://www.enablejavascript.io\" "
 "target=\"_blank\">enablejavascript.io</a>"
@@ -5178,17 +5189,18 @@ msgstr ""
 msgid "form.unlock-code-activation.failure.reasons-2"
 msgstr ""
 "Haben Sie sich vor 90 Tagen registriert? In diesem Fall können Sie sich "
-"mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. "
-"Registrieren Sie sich bitte erneut. Sie erhalten dann einen Brief mit "
-"einem neuen Freischaltcode."
+"mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <a "
+"href=%(registration_link)s>Registrieren</a> Sie sich bitte erneut. Sie "
+"erhalten dann einen Brief mit einem neuen Freischaltcode."
 
 #: app/templates/unlock_code/activation_failure.html:24
 msgid "form.unlock-code-activation.failure.reasons-3"
 msgstr ""
 "Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen. Dann ist Ihr "
-"Freischaltcode nicht mehr gültig. Bitte stornieren Sie Ihren "
-"Freischaltcode und registrieren sich erneut. Sie erhalten dann einen "
-"Brief mit einem neuen Freischaltcode."
+"Freischaltcode nicht mehr gültig. Bitte <a "
+"href=%(revocation_link)s>stornieren</a> Sie Ihren Freischaltcode und <a "
+"href=%(registration_link)s>registrieren</a> sich erneut. Sie erhalten "
+"dann einen Brief mit einem neuen Freischaltcode."
 
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"

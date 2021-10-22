@@ -38,7 +38,7 @@ describe("Login", () => {
       // we should have visible errors now
       cy.get(".invalid-feedback").should(
         "contain",
-        "Geben Sie bitte eine gültige Steuer-Identifikationsnummer an."
+        "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
       );
 
       // and still be on the same URL
