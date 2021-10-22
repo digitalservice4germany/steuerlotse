@@ -128,7 +128,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             all_fields_are_valid = super().validate(extra_validators)
 
             if not all_fields_are_valid and (self.steuernummer.errors or self.bundesland.errors):
-                return all_fields_are_valid  # Only validate tax number if all other validations of tax number are correct
+                return False  # Only validate tax number if all other validations of tax number are correct
 
             try:
                 ValidTaxNumber()(self, self.steuernummer)
