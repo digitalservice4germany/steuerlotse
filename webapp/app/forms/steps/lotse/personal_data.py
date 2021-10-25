@@ -155,9 +155,10 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
     def _set_multiple_texts(self):
         num_of_users = 2 if show_person_b(self.stored_data) else 1
-        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
-                                                                 'form.lotse.steuernummer_exists',
-                                                                 num=num_of_users)
-        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
-                                                                    'form.lotse.steuernummer.request_new_tax_number',
-                                                                    num=num_of_users)
+        self.render_info.form.steuernummer_exists.label.text = ngettext('form.lotse.steuernummer_exists',
+                                                                             'form.lotse.steuernummer_exists',
+                                                                             num=num_of_users)
+        self.render_info.form.request_new_tax_number.label.text = ngettext(
+            'form.lotse.steuernummer.request_new_tax_number',
+            'form.lotse.steuernummer.request_new_tax_number',
+            num=num_of_users)
