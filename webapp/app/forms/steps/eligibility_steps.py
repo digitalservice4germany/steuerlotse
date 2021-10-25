@@ -307,7 +307,7 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.alimony_eligibility.kwargs['choices'] = [
+        self.render_info.form.alimony_eligibility.choices = [
             ('yes', ngettext('form.eligibility.alimony.yes',
                              'form.eligibility.alimony.yes',
                              num=self.number_of_users(self.stored_data))),
@@ -509,7 +509,7 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.pension_eligibility.kwargs['choices'] = [
+        self.render_info.form.pension_eligibility.choices = [
             ('yes', ngettext('form.eligibility.pension.yes',
                              'form.eligibility.pension.yes',
                              num=self.number_of_users(self.stored_data))),
@@ -539,7 +539,7 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.investment_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.investment_income_eligibility.choices = [
             ('yes', ngettext('form.eligibility.investment_income.yes',
                              'form.eligibility.investment_income.yes',
                              num=self.number_of_users(
@@ -571,7 +571,7 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.minimal_investment_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.minimal_investment_income_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.minimal_investment_income.yes',
                 'form.eligibility.minimal_investment_income.yes',
@@ -636,7 +636,7 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.cheaper_check_eligibility.kwargs['choices'] = [
+        self.render_info.form.cheaper_check_eligibility.choices = [
             ('yes', ngettext(
                  'form.eligibility.cheaper_check_eligibility.yes',
                  'form.eligibility.cheaper_check_eligibility.yes',
@@ -668,7 +668,7 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.employment_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.employment_income_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.employment_income.yes',
                 'form.eligibility.employment_income.yes',
@@ -732,7 +732,7 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.other_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.other_income_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.income_other.yes',
                 'form.eligibility.income_other.yes',
@@ -771,7 +771,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.foreign_country_eligibility.kwargs['choices'] = [
+        self.render_info.form.foreign_country_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.foreign_country.yes',
                 'form.eligibility.foreign_country.yes',
