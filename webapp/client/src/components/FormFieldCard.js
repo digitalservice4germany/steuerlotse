@@ -7,8 +7,9 @@ const Card = styled.label`
   background-color: var(--bg-white);
 
   padding: var(--spacing-04);
-  margin-bottom: var(--spacing-03);
+  margin-top: var(--spacing-02);
   margin-right: 0;
+  margin-bottom: var(--spacing-03);
 
   border-radius: 4px;
   border: 1px;
@@ -18,12 +19,9 @@ const Card = styled.label`
   justify-content: space-between;
   align-items: flex-start;
 
-  &.checkbox {
-    margin-top: var(--spacing-02);
-    flex-wrap: inherit;
-  }
+  flex-wrap: inherit;
 
-  &.checkbox input {
+  input {
     width: 1px;
     height: 1px;
     opacity: 0;
@@ -31,12 +29,12 @@ const Card = styled.label`
     overflow: hidden;
   }
 
-  &.checkbox input:focus + .checkmark {
+  input:focus + .checkmark {
     box-shadow: 0 0 0 3px var(--focus-color);
     background-color: var(--focus-color);
   }
 
-  &.checkbox input:checked + .checkmark {
+  input:checked + .checkmark {
     background-color: var(--link-color);
     background-image: url(${checkedIcon});
     background-repeat: no-repeat;
@@ -44,7 +42,7 @@ const Card = styled.label`
     background-position: center;
   }
 
-  & .checkmark {
+  .checkmark {
     display: block;
     position: absolute;
     right: var(--spacing-04); // the card's padding
@@ -116,7 +114,7 @@ function FormFieldCard({
       }}
       hideLabel
       render={() => (
-        <Card htmlFor={fieldId} className="form-row checkbox">
+        <Card htmlFor={fieldId} className="form-row">
           <IconTextWrapper>
             {icon && <CardIcon src={icon} alt="Icon" />}
             <div>
