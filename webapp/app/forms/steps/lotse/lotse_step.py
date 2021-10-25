@@ -12,11 +12,12 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
         super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
 
     @classmethod
-    def update_data(cls, stored_data):
-        stored_data = super().update_data(stored_data)
+    def prepare_render_info(cls, stored_data, input_data=None, should_update_data=False, *args, **kwargs):
+        render_info = super().prepare_render_info(stored_data, input_data, should_update_data, *args, **kwargs)
 
-        # Delete unnecessary data
-        return FormDataDependencies.parse_obj(stored_data).dict(exclude_none=True)
+        stored_data_without_unnecessary_fields = FormDataDependencies.parse_obj(render_info.stored_data).dict(exclude_none=True)
+        render_info.stored_data = stored_data_without_unnecessary_fields
+        return render_info
 
     def _main_handle(self):
         super()._main_handle()

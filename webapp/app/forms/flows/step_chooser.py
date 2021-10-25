@@ -61,10 +61,10 @@ class StepChooser:
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
             endpoint=self.endpoint,
-            stored_data=stored_data,
+            stored_data=render_info.stored_data,
             overview_step=self.overview_step,
-            prev_step=self.determine_prev_step(step_name, stored_data),
-            next_step=self.determine_next_step(step_name, stored_data),
+            prev_step=self.determine_prev_step(step_name, render_info.stored_data),
+            next_step=self.determine_next_step(step_name, render_info.stored_data),
             session_data_identifier=self.session_data_identifier,
             should_update_data=should_update_data,
             form_data=form_data,

@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 import pytest
-from werkzeug.datastructures import MultiDict
+from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
@@ -14,7 +14,7 @@ from app.model.form_data import MandatoryFieldMissingValidationError
 class TestStepSummary:
     @pytest.fixture
     def step(self):
-        step = StepSummary(endpoint='lotse')
+        step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
         return step
 
     def test_if_complete_correct_not_set_then_fail_validation(self, step):
@@ -55,7 +55,7 @@ class TestStepSummary:
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data') as get_overview, \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
                       MagicMock(side_effect=MandatoryFieldMissingValidationError(missing_fields))):
-            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
             step.handle()
 
             get_overview.assert_called_once_with(data_with_missing_fields, missing_fields)
@@ -70,11 +70,11 @@ class TestStepSummary:
             patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
                   MagicMock(side_effect=missing_fields_error)):
             with make_test_request_context(method='POST', stored_data=data_with_missing_fields):
-                step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+                step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
                 step.handle()
 
             with make_test_request_context(method='GET', stored_data=data_with_missing_fields):
-                step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+                step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
                 step.handle()
 
             mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
@@ -83,11 +83,11 @@ class TestStepSummary:
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': '04452397687'}}
 
-        with make_test_request_context(method='POST', stored_data=data_without_missing_fields,
-                                       form_data={'confirm_complete_correct': True}), \
+        with make_test_request_context(method='POST', stored_data=data_without_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry'):
-            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step = LotseStepChooser().get_correct_step(StepSummary.name, True,
+                                                       form_data=ImmutableMultiDict({'confirm_complete_correct': True}))
             step.handle()
 
             assert step.render_info.next_url == LotseMultiStepFlow(endpoint='lotse').url_for_step(StepConfirmation.name)
@@ -97,11 +97,11 @@ class TestStepSummary:
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': idnr}}
 
-        with make_test_request_context(method='POST', stored_data=data_without_missing_fields,
-                                       form_data={'confirm_complete_correct': True}), \
+        with make_test_request_context(method='POST', stored_data=data_without_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
-            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step = LotseStepChooser().get_correct_step(StepSummary.name, True,
+                                                       ImmutableMultiDict({'confirm_complete_correct': True}))
             step.handle()
 
             audit_log_method.assert_called_once()
@@ -118,7 +118,8 @@ class TestStepSummary:
                                        form_data={'confirm_complete_correct': True}), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
-            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step = LotseStepChooser().get_correct_step(StepSummary.name, True,
+                                                       form_data=ImmutableMultiDict({'confirm_complete_correct': True}))
             step.handle()
 
             audit_log_method.assert_not_called()
@@ -129,11 +130,10 @@ class TestStepSummary:
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': idnr}}
 
-        with make_test_request_context(method='POST', stored_data=data_without_missing_fields,
-                                       form_data={}), \
+        with make_test_request_context(method='POST', stored_data=data_without_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
-            step = LotseStepChooser().get_correct_step(StepSummary.name, update_data=True)
+            step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
             step.handle()
 
             audit_log_method.assert_not_called()
