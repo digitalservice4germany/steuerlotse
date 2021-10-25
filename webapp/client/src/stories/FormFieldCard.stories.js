@@ -27,3 +27,9 @@ Default.args = {
   errors: [],
   values: [],
 };
+
+export const WithErrors = Template.bind({});
+WithErrors.args = {
+  ...Default.args,
+  errors: ["Sicher, dass Sie das nicht ankreuzen wollen?"],
+};
