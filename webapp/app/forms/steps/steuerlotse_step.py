@@ -100,6 +100,12 @@ class SteuerlotseStep(object):
 
     @classmethod
     def get_redirection_step(cls, stored_data):
+        for precondition in cls.preconditions:
+            try:
+                precondition.parse_obj(stored_data)
+            except ValidationError:
+                return precondition._step_to_redirect_to, \
+                       precondition._message_to_flash if hasattr(precondition, '_message_to_flash') else None
         return None, None
 
     def render(self, **kwargs):

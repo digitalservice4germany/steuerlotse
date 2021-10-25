@@ -11,12 +11,12 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
-from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, \
     RedirectSteuerlotseStep, FormSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, \
-    MockRenderStep, MockYesNoStep, MockFormWithInputStep, MockStepWithPrecondition, MockStepWithMultiplePrecondition
+    MockRenderStep, MockYesNoStep, MockFormWithInputStep, MockStepWithPrecondition, MockStepWithMultiplePrecondition, \
+    MockStepWithPreconditionAndMessage, MockSecondPreconditionModelWithMessage
 from tests.utils import create_session_form_data
 
 
@@ -488,9 +488,27 @@ class TestCheckPrecondition:
 
 
 class TestGetRedirectionStep:
-    def test_by_default_return_none(self):
+    def test_if_no_precondition_set_return_none(self):
         redirection_step, flash_message = MockRenderStep.get_redirection_step({})
         assert redirection_step is None
+        assert flash_message is None
+
+    def test_if_precondition_set_and_fulfilled_return_none(self):
+        redirection_step, flash_message = MockStepWithPreconditionAndMessage.get_redirection_step(
+            {'second_precondition_met': True})
+        assert redirection_step is None
+        assert flash_message is None
+
+    def test_if_precondition_set_and_not_fulfilled_then_returns_correct_step(self):
+        redirection_step, _ = MockStepWithPreconditionAndMessage.get_redirection_step({})
+        assert redirection_step == MockSecondPreconditionModelWithMessage._step_to_redirect_to
+
+    def test_if_precondition_set_and_not_fulfilled_and_message_set_then_returns_correct_message(self):
+        _, flash_message = MockStepWithPreconditionAndMessage.get_redirection_step({})
+        assert flash_message == MockSecondPreconditionModelWithMessage._message_to_flash
+
+    def test_if_precondition_set_and_not_fulfilled_and_message_not_set_then_returns_none(self):
+        _, flash_message = MockStepWithPrecondition.get_redirection_step({})
         assert flash_message is None
 
 

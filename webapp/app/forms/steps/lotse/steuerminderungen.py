@@ -8,7 +8,6 @@ from wtforms import validators, BooleanField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField
-from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
 from flask_babel import lazy_gettext as _l, _
@@ -19,75 +18,6 @@ from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
 from app.model.components import SelectStmindProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import FamilienstandModel, JointTaxesModel
-
-
-class ShowVorsorgePrecondition(BaseModel):
-    stmind_select_vorsorge: bool
-
-    @validator('stmind_select_vorsorge', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
-
-
-class ShowAussergBelaPrecondition(BaseModel):
-    stmind_select_ausserg_bela: bool
-
-    @validator('stmind_select_ausserg_bela', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
-
-
-class ShowHandwerkerPrecondition(BaseModel):
-    stmind_select_handwerker: bool
-
-    @validator('stmind_select_handwerker', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
-
-
-class ShowSpendenPrecondition(BaseModel):
-    stmind_select_spenden: bool
-
-    @validator('stmind_select_spenden', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
-
-
-class ShowReligionPrecondition(BaseModel):
-    stmind_select_religion: bool
-
-    @validator('stmind_select_religion', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
-
-
-class NotShowPersonBPrecondition(FamilienstandModel):
-    @root_validator(skip_on_failure=True)
-    def person_b_must_not_be_shown(cls, values):
-        if JointTaxesModel.show_person_b(values):
-            raise ValidationError
-        return values
-
-
-class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
-    stmind_handwerker_summe: Optional[Decimal]
-    stmind_haushaltsnahe_summe: Optional[Decimal]
-
-    @validator('stmind_haushaltsnahe_summe', always=True)
-    def one_must_be_set(cls, v, values):
-        if not v and ('stmind_handwerker_summe' not in values or not values['stmind_handwerker_summe']):
-            raise ValidationError
-        return v
 
 
 class StepSelectStmind(LotseFormSteuerlotseStep):
@@ -142,6 +72,82 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
                                header_title=self.header_title)
 
 
+class ShowVorsorgePrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_vorsorge: bool
+
+    @validator('stmind_select_vorsorge', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowAussergBelaPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_ausserg_bela: bool
+
+    @validator('stmind_select_ausserg_bela', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowHandwerkerPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_handwerker: bool
+
+    @validator('stmind_select_handwerker', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowSpendenPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_spenden: bool
+
+    @validator('stmind_select_spenden', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowReligionPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_religion: bool
+
+    @validator('stmind_select_religion', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class NotShowPersonBPrecondition(FamilienstandModel):
+    _step_to_redirect_to = StepFamilienstand.name
+    _message_toflash = _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
+
+    @root_validator(skip_on_failure=True)
+    def person_b_must_not_be_shown(cls, values):
+        if JointTaxesModel.show_person_b(values):
+            raise ValidationError
+        return values
+
+
 class StepVorsorge(LotseFormSteuerlotseStep):
     name = 'vorsorge'
     title = _l('form.lotse.vorsorge-title')
@@ -161,13 +167,6 @@ class StepVorsorge(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)],
             render_kw={'help': _l('form.lotse.field_vorsorge_summe-help'),
                        'data_label': _l('form.lotse.field_vorsorge_summe.data_label')})
-
-    @classmethod
-    def get_redirection_step(cls, stored_data):
-        if not cls.check_precondition(stored_data):
-            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
-        else:
-            return None, None
 
     @classmethod
     def get_label(cls, data):
@@ -254,13 +253,6 @@ class StepAussergBela(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
     @classmethod
-    def get_redirection_step(cls, stored_data):
-        if not cls.check_precondition(stored_data):
-            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
-        else:
-            return None, None
-
-    @classmethod
     def get_label(cls, data):
         return cls.label
 
@@ -337,13 +329,6 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
 
     @classmethod
-    def get_redirection_step(cls, stored_data):
-        if not cls.check_precondition(stored_data):
-            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
-        else:
-            return None, None
-
-    @classmethod
     def get_label(cls, data):
         return cls.label
 
@@ -358,6 +343,20 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
                                    _l('form.lotse.steuerminderungen.details-list-item-2'),
                                    _l('form.lotse.steuerminderungen.details-list-item-3')
                                ],)
+
+
+class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
+    _step_to_redirect_to = StepHaushaltsnaheHandwerker.name
+    _message_toflash = _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe')
+
+    stmind_handwerker_summe: Optional[Decimal]
+    stmind_haushaltsnahe_summe: Optional[Decimal]
+
+    @validator('stmind_haushaltsnahe_summe', always=True)
+    def one_must_be_set(cls, v, values):
+        if not v and ('stmind_handwerker_summe' not in values or not values['stmind_handwerker_summe']):
+            raise ValidationError
+        return v
 
 
 class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
@@ -452,13 +451,6 @@ class StepReligion(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
     @classmethod
-    def get_redirection_step(cls, stored_data):
-        if not cls.check_precondition(stored_data):
-            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
-        else:
-            return None, None
-
-    @classmethod
     def get_label(cls, data):
         return cls.label
 
@@ -490,13 +482,6 @@ class StepSpenden(LotseFormSteuerlotseStep):
             render_kw={'help': _l('form.lotse.spenden-inland-parteien-help'),
                        'data_label': _l('form.lotse.spenden-inland-parteien.data_label}')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
-
-    @classmethod
-    def get_redirection_step(cls, stored_data):
-        if not cls.check_precondition(stored_data):
-            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
-        else:
-            return None, None
 
     @classmethod
     def get_label(cls, data):

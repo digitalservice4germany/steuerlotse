@@ -83,7 +83,9 @@ class MockYesNoStep(FormSteuerlotseStep):
         super(MockYesNoStep, self).__init__(header_title="Yes or No", stored_data=stored_data, render_info=render_info,  *args, **kwargs)
 
 
-class MockPreconditionModel(BaseModel):
+class MockPreconditionModelWithoutMessage(BaseModel):
+    _step_to_redirect_to = MockStartStep
+
     precondition_met: bool
 
     @validator('precondition_met')
@@ -93,7 +95,10 @@ class MockPreconditionModel(BaseModel):
         return v
 
 
-class MockSecondPreconditionModel(BaseModel):
+class MockSecondPreconditionModelWithMessage(BaseModel):
+    _step_to_redirect_to = MockStartStep.name
+    _message_to_flash = "This is not for you."
+
     second_precondition_met: bool
 
     @validator('second_precondition_met')
@@ -105,7 +110,7 @@ class MockSecondPreconditionModel(BaseModel):
 
 class MockStepWithPrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
-    preconditions = [MockPreconditionModel]
+    preconditions = [MockPreconditionModelWithoutMessage]
 
     def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
         super(MockStepWithPrecondition, self).__init__(
@@ -120,7 +125,7 @@ class MockStepWithPrecondition(SteuerlotseStep):
 
 class MockStepWithMultiplePrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
-    preconditions = [MockPreconditionModel, MockSecondPreconditionModel]
+    preconditions = [MockPreconditionModelWithoutMessage, MockSecondPreconditionModelWithMessage]
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockStepWithMultiplePrecondition, self).__init__(
@@ -132,9 +137,24 @@ class MockStepWithMultiplePrecondition(SteuerlotseStep):
         return make_response(json.dumps([self.render_info.step_title], default=str), 200)
 
 
+class MockStepWithPreconditionAndMessage(SteuerlotseStep):
+    name = 'mock_step_with_precondition_and_message'
+    preconditions = [MockSecondPreconditionModelWithMessage]
+
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
+        super().__init__(
+            header_title=header_title,
+            default_data=default_data,
+            render_info=render_info,
+            *args, **kwargs)
+
+    def render(self):
+        return make_response(json.dumps([self.render_info.step_title], default=str), 200)
+
+
 class MockStepWithRedirection(SteuerlotseStep):
     name = 'mock_step_with_redirection'
-    preconditions = [MockPreconditionModel]
+    preconditions = [MockPreconditionModelWithoutMessage]
 
     @classmethod
     def get_redirection_step(cls, stored_data):
