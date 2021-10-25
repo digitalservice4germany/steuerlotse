@@ -36,8 +36,7 @@ class StepSummary(LotseFormSteuerlotseStep):
         except MandatoryFieldMissingValidationError as e:
             logger.info(f"Mandatory est fields missing: {e.missing_fields}", exc_info=True)
             # prevent flashing the same message two times
-            # TODO add parameter to know if it's GET or POST instead of requiring request here
-            if request.method == 'GET':
+            if not self.should_update_data:
                 flash(e.get_message(), 'warn')
             missing_fields = e.missing_fields
             self.render_info.next_url = self.url_for_step(StepSummary.name)
@@ -47,7 +46,7 @@ class StepSummary(LotseFormSteuerlotseStep):
                                                                                               missing_fields)
         self.render_info.overview_url = None
 
-        if not missing_fields and request.method == 'POST' and self.render_info.form.validate():
+        if not missing_fields and self.should_update_data and self.render_info.data_is_valid:
             create_audit_log_confirmation_entry('Confirmed complete correct data', request.remote_addr,
                                                 self.stored_data['idnr'], 'confirm_complete_correct',
                                                 self.stored_data['confirm_complete_correct'])

@@ -203,7 +203,7 @@ class TestStepHaushaltsnaheHandwerker:
         form_data = ImmutableMultiDict({'stmind_handwerker_summe': '100',
                                         'stmind_handwerker_entries': ['Badezimmer'],
                                         'stmind_handwerker_lohn_etc_summe': '50'})
-        with make_test_request_context(stored_data=stored_data, method='POST'):
+        with make_test_request_context(stored_data=stored_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, should_update_data=True,
                                                        form_data=form_data)
             assert 'stmind_gem_haushalt_entries' in step.stored_data
@@ -216,7 +216,7 @@ class TestStepHaushaltsnaheHandwerker:
                        'stmind_gem_haushalt_count': 1}
         form_data = ImmutableMultiDict({'stmind_haushaltsnahe_summe': '10',
                                         'stmind_haushaltsnahe_entries': ['Dach']})
-        with make_test_request_context(stored_data=stored_data, method='POST'):
+        with make_test_request_context(stored_data=stored_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, should_update_data=True,
                                                        form_data=form_data)
             assert 'stmind_gem_haushalt_entries' in step.stored_data
@@ -228,7 +228,7 @@ class TestStepHaushaltsnaheHandwerker:
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
                        'stmind_gem_haushalt_count': 1}
         form_data = ImmutableMultiDict({})
-        with make_test_request_context(stored_data=stored_data, method='POST'):
+        with make_test_request_context(stored_data=stored_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, should_update_data=True,
                                                        form_data=form_data)
             assert 'stmind_gem_haushalt_entries' not in step.stored_data

@@ -40,7 +40,7 @@ class TestStepSummary:
     def test_if_data_missing_then_set_next_url_correct(self, make_test_request_context, step):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
 
-        with make_test_request_context(method='POST', stored_data=data_with_missing_fields), \
+        with make_test_request_context(stored_data=data_with_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
             step.handle()
 
@@ -50,7 +50,7 @@ class TestStepSummary:
         data_with_missing_fields = {'steuernummer': 'C3P0'}
         missing_fields = ['spacecraft', 'droids']
 
-        with make_test_request_context(method='POST', stored_data=data_with_missing_fields), \
+        with make_test_request_context(stored_data=data_with_missing_fields), \
                 patch('app.forms.flows.step_chooser.StepChooser.default_data', return_value=False), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data') as get_overview, \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
@@ -69,12 +69,12 @@ class TestStepSummary:
             patch('app.model.form_data.ngettext', MagicMock(side_effect=lambda text_id, _, **kwargs: text_id)), \
             patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
                   MagicMock(side_effect=missing_fields_error)):
-            with make_test_request_context(method='POST', stored_data=data_with_missing_fields):
+            with make_test_request_context(stored_data=data_with_missing_fields):
                 step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
                 step.handle()
 
-            with make_test_request_context(method='GET', stored_data=data_with_missing_fields):
-                step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
+            with make_test_request_context(stored_data=data_with_missing_fields):
+                step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
                 step.handle()
 
             mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
@@ -83,7 +83,7 @@ class TestStepSummary:
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': '04452397687'}}
 
-        with make_test_request_context(method='POST', stored_data=data_without_missing_fields), \
+        with make_test_request_context(stored_data=data_without_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry'):
             step = LotseStepChooser().get_correct_step(StepSummary.name, True,
@@ -97,7 +97,7 @@ class TestStepSummary:
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': idnr}}
 
-        with make_test_request_context(method='POST', stored_data=data_without_missing_fields), \
+        with make_test_request_context(stored_data=data_without_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
             step = LotseStepChooser().get_correct_step(StepSummary.name, True,
@@ -114,7 +114,7 @@ class TestStepSummary:
     def test_if_data_missing_and_required_fields_set_then_do_not_create_audit_log(self, make_test_request_context):
         data_with_missing_fields = {}
 
-        with make_test_request_context(method='POST', stored_data=data_with_missing_fields,
+        with make_test_request_context(stored_data=data_with_missing_fields,
                                        form_data={'confirm_complete_correct': True}), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
@@ -130,7 +130,7 @@ class TestStepSummary:
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
                                        **{'idnr': idnr}}
 
-        with make_test_request_context(method='POST', stored_data=data_without_missing_fields), \
+        with make_test_request_context(stored_data=data_without_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
                 patch('app.forms.steps.lotse.confirmation.create_audit_log_confirmation_entry') as audit_log_method:
             step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
