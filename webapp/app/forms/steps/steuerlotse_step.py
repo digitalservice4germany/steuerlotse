@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 
-from flask import request, session, url_for, render_template
+from flask import request, session, url_for, render_template, flash
 from flask_babel import ngettext
 from pydantic import ValidationError
 from werkzeug.utils import redirect
@@ -104,9 +104,10 @@ class SteuerlotseStep(object):
             try:
                 precondition.parse_obj(stored_data)
             except ValidationError:
-                return precondition._step_to_redirect_to, \
-                       precondition._message_to_flash if hasattr(precondition, '_message_to_flash') else None
-        return None, None
+                if hasattr(precondition, '_message_to_flash'):
+                    flash(precondition._message_to_flash, 'warn')
+                return precondition._step_to_redirect_to
+        return None
 
     def render(self, **kwargs):
         raise NotImplementedError

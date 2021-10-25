@@ -398,23 +398,6 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
 
     @classmethod
-    def get_redirection_step(cls, stored_data):
-        # TODO refactor preconditions to hold redirection step?!
-        try:
-            ShowHandwerkerPrecondition.parse_obj(stored_data)
-        except ValidationError:
-            return StepSelectStmind.name, _l('form.lotse.skip_reason.steuerminderung_is_no')
-        try:
-            NotShowPersonBPrecondition.parse_obj(stored_data)
-        except ValidationError:
-            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
-        try:
-            HandwerkerHaushaltsnaheSetPrecondition.parse_obj(stored_data)
-        except ValidationError:
-            return StepHaushaltsnaheHandwerker.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe')
-        return None, None
-
-    @classmethod
     def get_label(cls, data):
         return cls.label
 

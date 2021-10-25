@@ -489,27 +489,28 @@ class TestCheckPrecondition:
 
 class TestGetRedirectionStep:
     def test_if_no_precondition_set_return_none(self):
-        redirection_step, flash_message = MockRenderStep.get_redirection_step({})
+        redirection_step = MockRenderStep.get_redirection_step({})
         assert redirection_step is None
-        assert flash_message is None
 
     def test_if_precondition_set_and_fulfilled_return_none(self):
-        redirection_step, flash_message = MockStepWithPreconditionAndMessage.get_redirection_step(
+        redirection_step = MockStepWithPreconditionAndMessage.get_redirection_step(
             {'second_precondition_met': True})
         assert redirection_step is None
-        assert flash_message is None
 
-    def test_if_precondition_set_and_not_fulfilled_then_returns_correct_step(self):
-        redirection_step, _ = MockStepWithPreconditionAndMessage.get_redirection_step({})
+    def test_if_precondition_set_and_not_fulfilled_then_returns_correct_step(self, test_request_context):
+        redirection_step = MockStepWithPreconditionAndMessage.get_redirection_step({})
         assert redirection_step == MockSecondPreconditionModelWithMessage._step_to_redirect_to
 
-    def test_if_precondition_set_and_not_fulfilled_and_message_set_then_returns_correct_message(self):
-        _, flash_message = MockStepWithPreconditionAndMessage.get_redirection_step({})
-        assert flash_message == MockSecondPreconditionModelWithMessage._message_to_flash
+    def test_if_precondition_set_and_not_fulfilled_and_message_set_then_flashes_correct_message(self,
+                                                                                                test_request_context):
+        with patch('app.forms.steps.steuerlotse_step.flash') as flash_mock:
+            MockStepWithPreconditionAndMessage.get_redirection_step({})
+            flash_mock.assert_called_once_with(MockSecondPreconditionModelWithMessage._message_to_flash, 'warn')
 
-    def test_if_precondition_set_and_not_fulfilled_and_message_not_set_then_returns_none(self):
-        _, flash_message = MockStepWithPrecondition.get_redirection_step({})
-        assert flash_message is None
+    def test_if_precondition_set_and_not_fulfilled_and_message_not_set_then_does_not_flash_message(self):
+        with patch('app.forms.steps.steuerlotse_step.flash') as flash_mock:
+            MockStepWithPrecondition.get_redirection_step({})
+            flash_mock.assert_not_called()
 
 
 class TestSteuerlotseFormStepHandle(unittest.TestCase):
