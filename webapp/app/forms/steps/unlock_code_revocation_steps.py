@@ -6,7 +6,7 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import LegacySteuerlotseDateField, SteuerlotseStringField, LegacyIdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr, ValidDayOfBirth
+from app.forms.validators import ValidIdNr, ValidDateOfBirth
 
 
 class UnlockCodeRevocationInputStep(FormStep):
@@ -14,7 +14,10 @@ class UnlockCodeRevocationInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = LegacyIdNrField(_l('unlock-code-revocation.idnr'), [InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
-        dob = LegacySteuerlotseDateField(label=_l('unlock-code-revocation.dob'), validators=[InputRequired(message=_l('form.unlock-code-revocation.validation-dob-missing')), ValidDayOfBirth()])
+        dob = LegacySteuerlotseDateField(label=_l('unlock-code-revocation.dob'), 
+                                         format_error_message=_l('validate.day-of-birth-missing'), 
+                                         validators=[InputRequired(message=_l('validate.day-of-birth-missing')), 
+                                         ValidDateOfBirth()])
 
     def __init__(self, **kwargs):
         super(UnlockCodeRevocationInputStep, self).__init__(

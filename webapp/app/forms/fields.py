@@ -187,7 +187,7 @@ class LegacySteuerlotseDateWidget(NumericInputModeMixin, NumericInputMaskMixin, 
 
 class LegacySteuerlotseDateField(DateField):
 
-    def __init__(self, validate_date = True, **kwargs):
+    def __init__(self, format_error_message = None, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
 
         if kwargs.get('render_kw'):
@@ -199,7 +199,7 @@ class LegacySteuerlotseDateField(DateField):
                                    'data-example-input': _('fields.date_field.example_input.text')}
         super().__init__(**kwargs)
         self.widget = LegacySteuerlotseDateWidget()
-        self.validate_date = validate_date
+        self.format_error_message = format_error_message
 
     def _value(self):
         if self.data:
@@ -208,22 +208,21 @@ class LegacySteuerlotseDateField(DateField):
             return self.raw_data if self.raw_data else []
 
     def process_formdata(self, valuelist):
-        try:
-            super().process_formdata(valuelist)
-        # Prevent standard date validation if validate_date is false.
-        except ValueError as e:
-            if self.validate_date:
-                raise e
-            pass
+        # process_formdata throws an error when format error happens. 
+        # So we override here the default message for the ValueError.
+        if self.format_error_message != None:
+            self._translations._catalog['Not a valid date value'] = _(self.format_error_message)
+            
+        super().process_formdata(valuelist)
 
 class SteuerlotseDateField(DateField):
 
-    def __init__(self, validate_date = True, **kwargs):
+    def __init__(self, format_error_message = None, **kwargs):
         kwargs.setdefault('format', "%d %m %Y")
 
         super().__init__(**kwargs)
 
-        self.validate_date = validate_date
+        self.format_error_message = format_error_message
 
     def _value(self):
         if self.data:
@@ -232,13 +231,12 @@ class SteuerlotseDateField(DateField):
             return self.raw_data if self.raw_data else []
 
     def process_formdata(self, valuelist):
-        try:
-            super().process_formdata(valuelist)
-        # Prevent standard date validation if validate_date is false.
-        except ValueError as e:
-            if self.validate_date:
-                raise e
-            pass
+        # process_formdata throws an error when format error happens. 
+        # So we override here the default message for the ValueError.
+        if self.format_error_message != None:
+            self._translations._catalog['Not a valid date value'] = _(self.format_error_message)
+            
+        super().process_formdata(valuelist)
 
 class LegacyIdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
