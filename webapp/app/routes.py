@@ -6,6 +6,7 @@ import io
 from flask import current_app, render_template, request, send_file, session, make_response
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
+from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import InternalServerError
 
 from app.config import Config
@@ -77,6 +78,16 @@ login_manager.login_message_category = 'warn'
 login_manager.refresh_view = "unlock_code_activation"
 
 
+def extract_information_from_request():
+    update_data = request.method == 'POST'
+    form_data = request.form
+
+    if not form_data:
+        form_data = ImmutableMultiDict({})
+
+    return update_data, form_data
+
+
 def register_request_handlers(app):
     app.before_request(log_flask_request)
 
@@ -113,9 +124,9 @@ def register_request_handlers(app):
 
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):
-        update_data = request.method == 'POST'
+        update_data, form_data = extract_information_from_request()
         return EligibilityStepChooser(endpoint='eligibility') \
-            .get_correct_step(step_name=step, update_data=update_data) \
+            .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
@@ -127,9 +138,10 @@ def register_request_handlers(app):
                     StepConfirmation.name, StepFiling.name,
                     StepAck.name]:
             return flow.handle(step_name=step)
-        update_data = request.method == 'POST'
+
+        update_data, form_data = extract_information_from_request()
         return LotseStepChooser(endpoint='lotse') \
-            .get_correct_step(step_name=step, update_data=update_data) \
+            .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
 
     @app.route('/unlock_code_request/step', methods=['GET', 'POST'])

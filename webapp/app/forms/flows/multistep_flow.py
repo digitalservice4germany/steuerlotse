@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class RenderInfo(object):
-    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None, back_link_text=None):
+    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None, stored_data=None, data_is_valid=False):
         self.step_title = step_title
         self.step_intro = step_intro
         self.header_title = None
@@ -27,6 +27,8 @@ class RenderInfo(object):
         self.back_link_text = None
         self.redirect_url = None
         self.additional_info = {}
+        self.stored_data = stored_data
+        self.data_is_valid = data_is_valid
 
     def __eq__(self, other):
         if isinstance(other, RenderInfo):

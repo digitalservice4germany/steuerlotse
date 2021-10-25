@@ -13,11 +13,8 @@ from app.forms.steps.steuerlotse_step import SteuerlotseStep, FormSteuerlotseSte
 class MockStartStep(SteuerlotseStep):
     name = 'mock_start_step'
 
-    def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockStartStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
+        super(MockStartStep, self).__init__(header_title=header_title, default_data=default_data, render_info=render_info, *args, **kwargs)
 
 
 class MockMiddleStep(SteuerlotseStep):
@@ -25,11 +22,8 @@ class MockMiddleStep(SteuerlotseStep):
     title = 'The Middle',
     intro = 'The one where the empire strikes back'
 
-    def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockMiddleStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
+        super(MockMiddleStep, self).__init__(header_title=header_title, default_data=default_data, render_info=render_info, *args, **kwargs)
 
 
 class MockFinalStep(SteuerlotseStep):
@@ -37,11 +31,8 @@ class MockFinalStep(SteuerlotseStep):
     title = 'The Finale'
     intro = 'The one with the ewoks'
 
-    def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockFinalStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
+        super(MockFinalStep, self).__init__(header_title=header_title, default_data=default_data, render_info=render_info, *args, **kwargs)
 
 
 class MockRenderStep(SteuerlotseStep):
@@ -49,11 +40,8 @@ class MockRenderStep(SteuerlotseStep):
     title = 'The Rendering'
     intro = 'Nice, this one can also render'
 
-    def __init__(self, header_title=None, default_data=None, **kwargs):
-        super(MockRenderStep, self).__init__(
-            header_title=header_title,
-            default_data=default_data,
-            **kwargs)
+    def __init__(self, header_title=None, default_data=None, render_info=None,  *args, **kwargs):
+        super(MockRenderStep, self).__init__(header_title=header_title, default_data=default_data, render_info=render_info, *args, **kwargs)
 
     def render(self):
         return make_response(json.dumps(["Data"], default=str), 200)
@@ -64,8 +52,8 @@ class MockFormStep(FormSteuerlotseStep):
     title = 'The Form'
     intro = 'The form is strong with you'
 
-    def __init__(self, header_title=None, stored_data=None, **kwargs):
-        super(MockFormStep, self).__init__(header_title=header_title, stored_data=stored_data, **kwargs)
+    def __init__(self, header_title=None, stored_data=None, render_info=None, *args, **kwargs):
+        super(MockFormStep, self).__init__(header_title=header_title, stored_data=stored_data, render_info=render_info, *args, **kwargs)
 
     def render(self):
         return make_response(json.dumps([self.render_info.step_title], default=str), 200)
@@ -79,6 +67,10 @@ class MockFormWithInputStep(MockFormStep):
         date = SteuerlotseDateField()
         decimal = EuroField(label="decimal")
 
+        def validate(self, extra_validators=None):
+            # This implementation is needed to act as an anchor for mocking the validate function of WTForms
+            return super().validate(extra_validators=extra_validators)
+
 
 class MockYesNoStep(FormSteuerlotseStep):
     name = 'yes_no_step'
@@ -87,8 +79,8 @@ class MockYesNoStep(FormSteuerlotseStep):
     class InputForm(SteuerlotseBaseForm):
         yes_no_field = YesNoField('Yes/No', validators=[validators.Optional()])
 
-    def __init__(self, stored_data=None, **kwargs):
-        super(MockYesNoStep, self).__init__(header_title="Yes or No", stored_data=stored_data, **kwargs)
+    def __init__(self, stored_data=None, render_info=None, *args, **kwargs):
+        super(MockYesNoStep, self).__init__(header_title="Yes or No", stored_data=stored_data, render_info=render_info,  *args, **kwargs)
 
 
 class MockPreconditionModel(BaseModel):
@@ -115,11 +107,12 @@ class MockStepWithPrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
     preconditions = [MockPreconditionModel]
 
-    def __init__(self, header_title=None, default_data=None, **kwargs):
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
         super(MockStepWithPrecondition, self).__init__(
             header_title=header_title,
             default_data=default_data,
-            **kwargs)
+            render_info=render_info,
+            *args, **kwargs)
 
     def render(self):
         return make_response(json.dumps([self.render_info.step_title], default=str), 200)
@@ -149,11 +142,12 @@ class MockStepWithRedirection(SteuerlotseStep):
             return MockStartStep.name, 'The FLASH!'
         return None, None
 
-    def __init__(self, header_title=None, default_data=None, **kwargs):
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
         super(MockStepWithRedirection, self).__init__(
             header_title=header_title,
             default_data=default_data,
-            **kwargs)
+            render_info=render_info,
+            *args, **kwargs)
 
     def render(self):
         return make_response(json.dumps([self.render_info.step_title], default=str), 200)
