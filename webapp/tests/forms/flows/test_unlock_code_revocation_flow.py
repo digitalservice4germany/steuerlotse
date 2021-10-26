@@ -121,7 +121,7 @@ class TestUnlockCodeRevocationHandle(unittest.TestCase):
             response = self.flow.handle(MockRenderStep.name)
 
             self.assertEqual(200, response.status_code)
-            # Check response data because that's what our Mock returns. Decode because response stores as bytestring
+            # Check response data because that's what our Mock returns. Decode because response stored as bytestring
             self.assertEqual(expected_data, json.loads(str(response.get_data(), 'utf-8'))[0])
 
 

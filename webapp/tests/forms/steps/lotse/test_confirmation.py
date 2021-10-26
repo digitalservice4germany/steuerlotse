@@ -13,38 +13,38 @@ from app.model.form_data import MandatoryFieldMissingValidationError
 @pytest.mark.usefixtures('test_request_context')
 class TestStepSummary:
     @pytest.fixture
-    def step(self):
+    def summary_step(self):
         step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
         return step
 
-    def test_if_complete_correct_not_set_then_fail_validation(self, step):
+    def test_if_complete_correct_not_set_then_fail_validation(self, summary_step):
         data = MultiDict({})
-        form = step.InputForm(formdata=data)
+        form = summary_step.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_complete_correct_set_then_succ_validation(self, step):
+    def test_if_complete_correct_set_then_succ_validation(self, summary_step):
         data = MultiDict({'confirm_complete_correct': True})
-        form = step.InputForm(formdata=data)
+        form = summary_step.InputForm(formdata=data)
         assert form.validate() is True
 
-    def test_set_section_steps_in_render_info(self, new_test_request_context, step):
+    def test_set_section_steps_in_render_info(self, new_test_request_context, summary_step):
         expected_summary_session_steps = {}
         with new_test_request_context(), \
                 patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data",
                       MagicMock(return_value=expected_summary_session_steps)), \
                 patch("app.forms.flows.lotse_flow.MandatoryFormData.parse_obj"):
-            step.handle()
+            summary_step.handle()
 
-            assert step.render_info.additional_info['section_steps'] == expected_summary_session_steps
+            assert summary_step.render_info.additional_info['section_steps'] == expected_summary_session_steps
 
-    def test_if_data_missing_then_set_next_url_correct(self, new_test_request_context, step):
+    def test_if_data_missing_then_set_next_url_correct(self, new_test_request_context, summary_step):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
 
         with new_test_request_context(stored_data=data_with_missing_fields), \
                 patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            step.handle()
+            summary_step.handle()
 
-            assert step.render_info.next_url == LotseMultiStepFlow(endpoint='lotse').url_for_step(StepSummary.name)
+            assert summary_step.render_info.next_url == LotseMultiStepFlow(endpoint='lotse').url_for_step(StepSummary.name)
 
     def test_if_data_missing_then_call_get_overview_data_with_missing_fields(self, new_test_request_context):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
