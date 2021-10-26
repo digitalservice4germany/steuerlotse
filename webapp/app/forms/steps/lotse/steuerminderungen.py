@@ -139,7 +139,7 @@ class ShowReligionPrecondition(BaseModel):
 
 class NotShowPersonBPrecondition(FamilienstandModel):
     _step_to_redirect_to = StepFamilienstand.name
-    _message_toflash = _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
+    _message_to_flash = _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
 
     @root_validator(skip_on_failure=True)
     def person_b_must_not_be_shown(cls, values):
@@ -347,7 +347,7 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
 
 class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
     _step_to_redirect_to = StepHaushaltsnaheHandwerker.name
-    _message_toflash = _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe')
+    _message_to_flash = _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe')
 
     stmind_handwerker_summe: Optional[Decimal]
     stmind_haushaltsnahe_summe: Optional[Decimal]
