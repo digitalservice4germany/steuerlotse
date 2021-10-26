@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 class StepSummary(LotseFormSteuerlotseStep):
     name = 'summary'
     title = _l('form.lotse.summary-title')
-    intro = _l('form.lotse.summary-intro')
     header_title = _l('form.lotse.summary.header-title')
     template = 'lotse/display_summary.html'
     next_step = StepConfirmation
