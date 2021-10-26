@@ -6,7 +6,8 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import LegacySteuerlotseDateField, SteuerlotseStringField, LegacyIdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr, ValidDateOfBirth
+from app.forms.validators import ValidIdNr
+from app.forms.validations.date_validations import ValidDateOfBirth
 
 
 class UnlockCodeRevocationInputStep(FormStep):

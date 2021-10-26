@@ -9,7 +9,8 @@ from wtforms import validators
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr, ValidDateOfBirth
+from app.forms.validators import ValidIdNr
+from app.forms.validations.date_validations import ValidDateOfBirth
 from app.model.components import RegistrationProps
 from app.model.components.helpers import form_fields_dict
 
@@ -19,7 +20,7 @@ class UnlockCodeRequestInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
-        dob = SteuerlotseDateField(validators=[InputRequired(message=_l('validation-dob-missing')), ValidDateOfBirth()], validate_date=False)
+        dob = SteuerlotseDateField(validators=[InputRequired(message=_l('validation-date-of-birth-missing')), ValidDateOfBirth()], format_error_message=_l('validate.date-of-birth-missing'))
         registration_confirm_data_privacy = ConfirmationField()
         registration_confirm_terms_of_service = ConfirmationField()
         registration_confirm_incomes = ConfirmationField()

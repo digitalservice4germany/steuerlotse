@@ -11,8 +11,8 @@ from flask_babel import lazy_gettext as _l
 from wtforms import RadioField, validators, BooleanField
 from wtforms.validators import InputRequired
 
-from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly, ValidDateOfBirth, \
-    ValidDateOfMarriage, ValidDateOfDeath, ValidDateOfDivorce
+from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
+from app.forms.validations.date_validations import ValidDateOfBirth, ValidDateOfMarriage, ValidDateOfDivorce, ValidDateOfDeath
 from app.model.form_data import FamilienstandModel, show_person_b
 from app.utils import get_first_day_of_tax_period
 
@@ -40,8 +40,8 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_date'),
             render_kw={'data_label': _l('form.lotse.familienstand_date.data_label')},
             format_error_message=_l('validate.date-of-marriage-missing'), 
-            validators=[InputRequired(message=_l('validate.date-of-marriage-missing')), 
-                        ValidDateOfBirth()])
+            validators=[ValidDateOfBirth()])
+        
         familienstand_married_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_married_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
@@ -50,8 +50,7 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
             format_error_message=_l('validate.date-of-divorce-missing'),
-            validators=[InputRequired(message=_l('validate.date-of-divorce-missing')), 
-                        ValidDateOfMarriage()])
+            validators=[ValidDateOfMarriage()])
         familienstand_widowed_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
@@ -60,8 +59,7 @@ class StepFamilienstand(FormStep):
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
             format_error_message=_l('validate.date-of-death-missing'), 
-            validators=[InputRequired(message=_l('validate.date-of-death-missing')), 
-                        ValidDateOfDeath()])
+            validators=[ValidDateOfDeath()])
         familienstand_zusammenveranlagung = YesNoField(
             label=_l('form.lotse.field_familienstand_zusammenveranlagung'),
             render_kw={'data_label': _l('form.lotse.familienstand_zusammenveranlagung.data_label')})
@@ -74,7 +72,7 @@ class StepFamilienstand(FormStep):
             if self.familienstand.data == 'single':
                 validators.Optional()(self, field)
             else:
-                validators.InputRequired(_l('form.lotse.validation-familienstand-date'))(self, field)
+                validators.InputRequired(_l('validate.date-of-marriage-missing'))(self, field)
 
         def validate_familienstand_married_lived_separated(self, field):
             if self.familienstand.data == 'married':
@@ -84,7 +82,7 @@ class StepFamilienstand(FormStep):
 
         def validate_familienstand_married_lived_separated_since(self, field):
             if self.familienstand.data == 'married' and self.familienstand_married_lived_separated.data == 'yes':
-                validators.InputRequired(_l('form.lotse.validation-familienstand-married-lived-separated-since'))(self,
+                validators.InputRequired(_l('validate.date-of-divorce-missing'))(self,
                                                                                                                   field)
             else:
                 validators.Optional()(self, field)
@@ -96,7 +94,7 @@ class StepFamilienstand(FormStep):
             if self.familienstand.data == 'widowed' and \
                     self.familienstand_date.data and \
                     self.familienstand_date.data >= get_first_day_of_tax_period():
-                validators.InputRequired(_l('form.lotse.validation-familienstand-widowed-lived-separated'))(self, field)
+                validators.InputRequired(_l('validate.date-of-death-missing'))(self, field)
             else:
                 validators.Optional()(self, field)
 
