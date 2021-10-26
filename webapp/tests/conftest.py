@@ -37,9 +37,9 @@ def test_request_context(app):
 
 
 @pytest.fixture
-def make_test_request_context(app):
+def new_test_request_context(app):
     @contextmanager
-    def _make_test_request_context(method='GET', form_data=None, stored_data=None, session_identifier='form_data'):
+    def _new_test_request_context(method='GET', form_data=None, stored_data=None, session_identifier='form_data'):
         with app.test_request_context() as req:
             req.request.method = method
             if stored_data:
@@ -48,7 +48,7 @@ def make_test_request_context(app):
                 req.request.data = ImmutableMultiDict(form_data)
                 req.request.form = ImmutableMultiDict(form_data)
             yield req
-    yield _make_test_request_context
+    return _new_test_request_context
 
 
 @pytest.fixture(scope="session")
