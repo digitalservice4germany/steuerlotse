@@ -3518,11 +3518,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
-        expected_information = [_('form.eligibility.result-note.deadline')]
-        step = EligibilitySuccessDisplaySteuerlotseStep(
-                endpoint='eligibility',
-                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
-                    {}))
-        step.handle()
+        expected_information = ['form.eligibility.result-note.deadline']
+        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                    endpoint='eligibility',
+                    render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                        {}))
+            step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
