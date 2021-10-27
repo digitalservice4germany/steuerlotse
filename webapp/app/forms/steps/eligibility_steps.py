@@ -808,6 +808,9 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
                 [CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.capital_investment'))
+            
+        dependent_notes.append(_('form.eligibility.result-note.deadline'))
+        
         self.render_info.additional_info['dependent_notes'] = dependent_notes
 
         self.render_info.next_url = None
