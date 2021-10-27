@@ -380,7 +380,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             :param form_data: The form_data from the cookie
         """
         step_data = {}
-        for attr in step.create_form(request, form_data).__dict__:
+        for attr in step.create_form(request.form, form_data).__dict__:
             if attr in form_data:
                 field = getattr(step.form, attr)
                 label, value = self._generate_value_representation(field, form_data[attr])

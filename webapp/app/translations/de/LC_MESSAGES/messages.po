@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-21 01:35+0200\n"
+"POT-Creation-Date: 2021-10-22 17:04+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,50 +18,50 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:66
+#: app/routes.py:67
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:67
+#: app/routes.py:68
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:68
+#: app/routes.py:69
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:69
+#: app/routes.py:70
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:71
+#: app/routes.py:72
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:73
+#: app/routes.py:74
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:77
+#: app/routes.py:78
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:145
+#: app/routes.py:157
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:146
+#: app/routes.py:158
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:173
+#: app/routes.py:185
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:174
+#: app/routes.py:186
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
@@ -120,7 +120,59 @@ msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:309
+#: app/routes.py:199 app/routes.py:307
+msgid "404.header-title"
+msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:219 app/templates/basis/base.html:37
+msgid "page.title"
+msgstr "Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:226
+msgid "howitworks.header-title"
+msgstr "Informieren - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:233
+msgid "contact.header-title"
+msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:240
+msgid "imprint.header-title"
+msgstr "Impressum - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:247
+msgid "barrierefreiheit.header-title"
+msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:254
+msgid "data_privacy.header-title"
+msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:261
+msgid "agb.header-title"
+msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:273
+msgid "about.header-title"
+msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:278
+msgid "about_digitalservice.header-title"
+msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:299
+msgid "erica-error.header-title"
+msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:303 app/routes.py:311
+msgid "400.header-title"
+msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:315
+msgid "429.header-title"
+msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:321
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -179,54 +231,65 @@ msgstr "Ja"
 msgid "switch.no"
 msgstr "Nein"
 
-#: app/forms/validators.py:22
+#: app/forms/validators.py:23
 msgid "validate.not-a-decimal"
 msgstr "Der Wert darf nur Ziffern beinhalten."
 
-#: app/forms/validators.py:35
+#: app/forms/validators.py:36
 msgid "validate.integer-length-max"
 msgstr "Das Feld darf maximal %(max)s Ziffern lang sein."
 
-#: app/forms/validators.py:37
+#: app/forms/validators.py:38
 msgid "validate.integer-length-min"
 msgstr "Das Feld muss mindestens %(min)s Ziffern lang sein."
 
-#: app/forms/validators.py:39
+#: app/forms/validators.py:40
 msgid "validate.integer-length-between"
 msgstr "Das Feld muss zwischen %(min)s und %(max)s Ziffern lang sein."
 
-#: app/forms/validators.py:53
+#: app/forms/validators.py:54
 msgid "validate.invalid-iban"
 msgstr "Ungültige IBAN Nummer"
 
-#: app/forms/validators.py:56
+#: app/forms/validators.py:57
 msgid "validate.country-code-not-de"
 msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
 
-#: app/forms/validators.py:71 app/forms/validators.py:81
-#: app/forms/validators.py:84 app/forms/validators.py:87
-#: app/forms/validators.py:90
+#: app/forms/validators.py:72 app/forms/validators.py:82
+#: app/forms/validators.py:85 app/forms/validators.py:88
+#: app/forms/validators.py:91
 msgid "validate.invalid-idnr"
 msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
 
-#: app/forms/validators.py:74
+#: app/forms/validators.py:75
 msgid "validate.idnr-length"
 msgstr ""
 "Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
 "insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
 "entsprechen: 00 000 000 000"
 
-#: app/forms/validators.py:98
+#: app/forms/validators.py:99
 msgid "validate.unlock-code-length"
 msgstr "Ein gültiger Freischaltcode hat genau 12 Zeichen."
 
-#: app/forms/validators.py:101
+#: app/forms/validators.py:102
 msgid "validate.invalid-unlock-code"
 msgstr "Der Freischaltcode ist nicht valide."
 
-#: app/forms/validators.py:109 app/forms/validators.py:117
+#: app/forms/validators.py:110 app/forms/validators.py:118
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
+
+#: app/forms/validators.py:127
+msgid "validate.invalid-hessen-tax-number"
+msgstr ""
+"In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
+"Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
+"Stelle eine 0 ein."
+
+#: app/forms/validators.py:135
+msgid "validate.invalid-tax-number"
+msgstr "Die Steuernummer ist nicht valide."
 
 #: app/forms/flows/eligibility_step_chooser.py:49
 msgid "form.eligibility.title"
@@ -279,22 +342,22 @@ msgstr "Registrieren"
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
-#: app/forms/steps/eligibility_steps.py:72
+#: app/forms/steps/eligibility_steps.py:71
 msgid "form.eligibility.failure.title"
 msgstr "Sie können den Steuerlotsen zurzeit nicht für Ihre Steuererklärung nutzen."
 
-#: app/forms/steps/eligibility_steps.py:73
+#: app/forms/steps/eligibility_steps.py:72
 msgid "form.eligibility.failure.intro"
 msgstr ""
 "Der Steuerlotse ist im Juni mit den Grundfunktionen gestartet und wird "
 "stetig verbessert. Es gibt bereits Überlegungen, den Steuerlotsen so "
 "weiterzuentwickeln, dass er auch in diesem Fall genutzt werden kann."
 
-#: app/forms/steps/eligibility_steps.py:78
+#: app/forms/steps/eligibility_steps.py:77
 #: app/forms/steps/eligibility_steps.py:99
-#: app/forms/steps/eligibility_steps.py:158
-#: app/forms/steps/eligibility_steps.py:792
-#: app/forms/steps/eligibility_steps.py:821
+#: app/forms/steps/eligibility_steps.py:159
+#: app/forms/steps/eligibility_steps.py:795
+#: app/forms/steps/eligibility_steps.py:825
 msgid "form.eligibility.header-title"
 msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 
@@ -302,11 +365,11 @@ msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 msgid "form.eligibility.back_link_text"
 msgstr "Zur vorherigen Frage"
 
-#: app/forms/steps/eligibility_steps.py:152
+#: app/forms/steps/eligibility_steps.py:153
 msgid "form.eligibility.start-title"
 msgstr "Finden Sie heraus, ob Sie den Steuerlotsen nutzen können"
 
-#: app/forms/steps/eligibility_steps.py:153
+#: app/forms/steps/eligibility_steps.py:154
 msgid "form.eligibility.start-intro"
 msgstr ""
 "Der Steuerlotse bietet Rentner:innen und Pensionär:innen eine "
@@ -315,28 +378,28 @@ msgstr ""
 "zugeschnitten. Durch die Beantwortung weniger Fragen finden Sie heraus, "
 "ob Sie alle Voraussetzungen erfüllen."
 
-#: app/forms/steps/eligibility_steps.py:167
+#: app/forms/steps/eligibility_steps.py:170
 #: app/templates/eligibility/display_start.html:6
 msgid "form.eligibility.check-now-button"
 msgstr "Fragebogen starten"
 
-#: app/forms/steps/eligibility_steps.py:172
+#: app/forms/steps/eligibility_steps.py:175
 msgid "form.eligibility.marital_status-title"
 msgstr "Was war Ihr letzter Familienstand im Jahr 2020?"
 
-#: app/forms/steps/eligibility_steps.py:185
+#: app/forms/steps/eligibility_steps.py:188
 msgid "form.eligibility.marital_status.married"
 msgstr "verheiratet / in eingetragener Lebenspartnerschaft"
 
-#: app/forms/steps/eligibility_steps.py:186
+#: app/forms/steps/eligibility_steps.py:189
 msgid "form.eligibility.marital_status.single"
 msgstr "ledig"
 
-#: app/forms/steps/eligibility_steps.py:187
+#: app/forms/steps/eligibility_steps.py:190
 msgid "form.eligibility.marital_status.divorced"
 msgstr "geschieden / Lebenspartnerschaft aufgehoben"
 
-#: app/forms/steps/eligibility_steps.py:188
+#: app/forms/steps/eligibility_steps.py:191
 msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
@@ -344,19 +407,19 @@ msgstr "verwitwet"
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
-#: app/forms/steps/eligibility_steps.py:194
+#: app/forms/steps/eligibility_steps.py:197
 msgid "form.eligibility.marital_status.back_link_text"
 msgstr "Zurück zum Start"
 
-#: app/forms/steps/eligibility_steps.py:203
+#: app/forms/steps/eligibility_steps.py:206
 msgid "form.eligibility.separated_since_last_year-title"
 msgstr "Haben Sie im Jahr 2020 als Paar dauernd getrennt gelebt?"
 
-#: app/forms/steps/eligibility_steps.py:209
+#: app/forms/steps/eligibility_steps.py:212
 msgid "form.eligibility.separated_since_last_year.detail.title"
 msgstr "Ich weiß nicht, was dauernd getrennt lebend bedeutet."
 
-#: app/forms/steps/eligibility_steps.py:210
+#: app/forms/steps/eligibility_steps.py:213
 msgid "form.eligibility.separated_since_last_year.detail.text"
 msgstr ""
 "Wenn Sie Ihre Lebens- und Wirtschaftsgemeinschaft dauerhaft aufgelöst "
@@ -365,35 +428,35 @@ msgstr ""
 "Betten schlafen, eigene Konten besitzen und getrennt haushalten (ohne den"
 " anderen kochen oder Wäsche waschen)."
 
-#: app/forms/steps/eligibility_steps.py:211
+#: app/forms/steps/eligibility_steps.py:214
 msgid "form.eligibility.separated_since_last_year.yes"
 msgstr "Ja, wir haben dauernd getrennt gelebt."
 
-#: app/forms/steps/eligibility_steps.py:212
+#: app/forms/steps/eligibility_steps.py:215
 msgid "form.eligibility.separated_since_last_year.no"
 msgstr "Nein, wir haben nicht dauernd getrennt gelebt."
 
-#: app/forms/steps/eligibility_steps.py:223
+#: app/forms/steps/eligibility_steps.py:226
 msgid "form.eligibility.separated_lived_together-title"
 msgstr "Haben Sie an mindestens einem Tag im Jahr 2020  zusammengelebt?"
 
-#: app/forms/steps/eligibility_steps.py:229
+#: app/forms/steps/eligibility_steps.py:232
 msgid "form.eligibility.separated_lived_together.yes"
 msgstr "Ja, wir haben im Jahr 2020 auch zusammengelebt."
 
-#: app/forms/steps/eligibility_steps.py:230
+#: app/forms/steps/eligibility_steps.py:233
 msgid "form.eligibility.separated_lived_together.no"
 msgstr "Nein, wir haben das gesamte Jahr 2020 über getrennt gelebt."
 
-#: app/forms/steps/eligibility_steps.py:241
+#: app/forms/steps/eligibility_steps.py:244
 msgid "form.eligibility.separated_joint_taxes-title"
 msgstr "Möchten Sie die Steuererklärung 2020 gemeinsam als Paar machen?"
 
-#: app/forms/steps/eligibility_steps.py:247
+#: app/forms/steps/eligibility_steps.py:250
 msgid "form.eligibility.separated_joint_taxes.detail.title"
 msgstr "Was passiert bei der Zusammenveranlagung?"
 
-#: app/forms/steps/eligibility_steps.py:248
+#: app/forms/steps/eligibility_steps.py:251
 msgid "form.eligibility.separated_joint_taxes.detail.text"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam machen, werden Sie zusammen "
@@ -401,32 +464,32 @@ msgstr ""
 "als gemeinsame Einkommensteuererklärung beim Finanzamt abgegeben werden. "
 "Das Finanzamt erlässt dann nur einen Steuerbescheid."
 
-#: app/forms/steps/eligibility_steps.py:249
+#: app/forms/steps/eligibility_steps.py:252
 msgid "form.eligibility.separated_joint_taxes.yes"
 msgstr "Ja, wir möchten die Zusammenveranlagung nutzen."
 
-#: app/forms/steps/eligibility_steps.py:250
+#: app/forms/steps/eligibility_steps.py:253
 msgid "form.eligibility.separated_joint_taxes.no"
 msgstr "Nein, wir möchten die Steuererklärung einzeln machen."
 
-#: app/forms/steps/eligibility_steps.py:257
+#: app/forms/steps/eligibility_steps.py:260
 msgid "form.eligibility.married_joint_taxes_failure-error"
 msgstr ""
 "Der Steuerlotse bildet die Einzelveranlagung für verheiratete Paare sowie"
 " für Paare in eingetragener Lebenspartnerschaft zurzeit nicht ab."
 
-#: app/forms/steps/eligibility_steps.py:267
-#: app/forms/steps/eligibility_steps.py:367
+#: app/forms/steps/eligibility_steps.py:270
+#: app/forms/steps/eligibility_steps.py:370
 msgid "form.eligibility.joint_taxes-title"
 msgstr "Möchten Sie die Steuererklärung 2020 gemeinsam als Paar machen?"
 
-#: app/forms/steps/eligibility_steps.py:273
-#: app/forms/steps/eligibility_steps.py:373
+#: app/forms/steps/eligibility_steps.py:276
+#: app/forms/steps/eligibility_steps.py:376
 msgid "form.eligibility.joint_taxes.detail.title"
 msgstr "Was passiert bei der Zusammenveranlagung?"
 
-#: app/forms/steps/eligibility_steps.py:274
-#: app/forms/steps/eligibility_steps.py:374
+#: app/forms/steps/eligibility_steps.py:277
+#: app/forms/steps/eligibility_steps.py:377
 msgid "form.eligibility.joint_taxes.detail.text"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam machen, werden Sie zusammen "
@@ -434,67 +497,67 @@ msgstr ""
 "als gemeinsame Einkommensteuererklärung beim Finanzamt abgegeben werden. "
 "Das Finanzamt erlässt dann nur einen Steuerbescheid."
 
-#: app/forms/steps/eligibility_steps.py:275
-#: app/forms/steps/eligibility_steps.py:375
+#: app/forms/steps/eligibility_steps.py:278
+#: app/forms/steps/eligibility_steps.py:378
 msgid "form.eligibility.joint_taxes.yes"
 msgstr "Ja, wir möchten die Zusammenveranlagung nutzen."
 
-#: app/forms/steps/eligibility_steps.py:276
-#: app/forms/steps/eligibility_steps.py:376
+#: app/forms/steps/eligibility_steps.py:279
+#: app/forms/steps/eligibility_steps.py:379
 msgid "form.eligibility.joint_taxes.no"
 msgstr "Nein, wir möchten die Steuererklärung einzeln machen."
 
-#: app/forms/steps/eligibility_steps.py:283
-#: app/forms/steps/eligibility_steps.py:383
+#: app/forms/steps/eligibility_steps.py:286
+#: app/forms/steps/eligibility_steps.py:386
 msgid "form.eligibility.alimony_failure-error"
 msgstr ""
 "Wenn Sie Unterhalt zahlen oder beziehen, müssen Sie im Steuerformular "
 "Angaben machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:293
-#: app/forms/steps/eligibility_steps.py:393
+#: app/forms/steps/eligibility_steps.py:296
+#: app/forms/steps/eligibility_steps.py:396
 msgid "form.eligibility.alimony-title"
 msgstr "Zahlen oder beziehen Sie Unterhalt?"
 
-#: app/forms/steps/eligibility_steps.py:299
-#: app/forms/steps/eligibility_steps.py:399
+#: app/forms/steps/eligibility_steps.py:302
+#: app/forms/steps/eligibility_steps.py:402
 msgid "form.eligibility.alimony.detail.title"
 msgstr "Was bedeutet das?"
 
-#: app/forms/steps/eligibility_steps.py:300
-#: app/forms/steps/eligibility_steps.py:400
+#: app/forms/steps/eligibility_steps.py:303
+#: app/forms/steps/eligibility_steps.py:403
 msgid "form.eligibility.alimony.detail.text"
 msgstr ""
 "Beantworten Sie die Frage mit »Ja«, wenn Sie Unterhalt an einen "
 "geschiedenen bzw. dauernd getrennt lebenden Partner oder an bedürftige "
 "Personen leisten oder selbst Unterhalt erhalten."
 
-#: app/forms/steps/eligibility_steps.py:301
-#: app/forms/steps/eligibility_steps.py:310
+#: app/forms/steps/eligibility_steps.py:304
+#: app/forms/steps/eligibility_steps.py:313
 msgid "form.eligibility.alimony.yes"
 msgid_plural "form.eligibility.alimony.yes"
 msgstr[0] "Ja, ich zahle oder beziehe Unterhalt."
 msgstr[1] "Ja, eine Person von uns bzw. wir beide zahlen oder beziehen Unterhalt."
 
-#: app/forms/steps/eligibility_steps.py:302
-#: app/forms/steps/eligibility_steps.py:313
+#: app/forms/steps/eligibility_steps.py:305
+#: app/forms/steps/eligibility_steps.py:316
 msgid "form.eligibility.alimony.no"
 msgid_plural "form.eligibility.alimony.no"
 msgstr[0] "Nein, weder zahle, noch beziehe ich Unterhalt."
 msgstr[1] "Nein, niemand von uns zahlt oder bezieht Unterhalt."
 
-#: app/forms/steps/eligibility_steps.py:323
-#: app/forms/steps/eligibility_steps.py:413
+#: app/forms/steps/eligibility_steps.py:326
+#: app/forms/steps/eligibility_steps.py:416
 msgid "form.eligibility.user_a_has_elster_account-title"
 msgstr "Haben Sie ein Konto bei Mein ELSTER?"
 
-#: app/forms/steps/eligibility_steps.py:329
-#: app/forms/steps/eligibility_steps.py:419
+#: app/forms/steps/eligibility_steps.py:332
+#: app/forms/steps/eligibility_steps.py:422
 msgid "form.eligibility.user_a_has_elster_account.detail.title"
 msgstr "Was ist Mein ELSTER?"
 
-#: app/forms/steps/eligibility_steps.py:330
-#: app/forms/steps/eligibility_steps.py:420
+#: app/forms/steps/eligibility_steps.py:333
+#: app/forms/steps/eligibility_steps.py:423
 msgid "form.eligibility.user_a_has_elster_account.detail.text"
 msgstr ""
 "ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
@@ -503,45 +566,45 @@ msgstr ""
 "ELSTER” können Privatpersonen die für die Einkommensteuererklärung "
 "notwendigen Formulare ausfüllen und abschicken."
 
-#: app/forms/steps/eligibility_steps.py:331
-#: app/forms/steps/eligibility_steps.py:421
+#: app/forms/steps/eligibility_steps.py:334
+#: app/forms/steps/eligibility_steps.py:424
 msgid "form.eligibility.user_a_has_elster_account.yes"
 msgstr "Ja"
 
-#: app/forms/steps/eligibility_steps.py:332
-#: app/forms/steps/eligibility_steps.py:422
+#: app/forms/steps/eligibility_steps.py:335
+#: app/forms/steps/eligibility_steps.py:425
 msgid "form.eligibility.user_a_has_elster_account.no"
 msgstr "Nein"
 
-#: app/forms/steps/eligibility_steps.py:343
+#: app/forms/steps/eligibility_steps.py:346
 msgid "form.eligibility.user_b_has_elster_account-title"
 msgstr ""
 "Hat die Person, mit der Sie zusammen veranlagen möchten, ein Konto bei "
 "Mein ELSTER?"
 
-#: app/forms/steps/eligibility_steps.py:349
+#: app/forms/steps/eligibility_steps.py:352
 msgid "form.eligibility.user_b_has_elster_account.yes"
 msgstr "Ja"
 
-#: app/forms/steps/eligibility_steps.py:350
+#: app/forms/steps/eligibility_steps.py:353
 msgid "form.eligibility.user_b_has_elster_account.no"
 msgstr "Nein"
 
-#: app/forms/steps/eligibility_steps.py:357
+#: app/forms/steps/eligibility_steps.py:360
 msgid "form.eligibility.divorced_joint_taxes_failure-error"
 msgstr ""
 "Der Steuerlotse bildet die Einzelveranlagung für geschiedene Paare "
 "zurzeit nicht ab."
 
-#: app/forms/steps/eligibility_steps.py:401
+#: app/forms/steps/eligibility_steps.py:404
 msgid "form.eligibility.alimony.single.yes"
 msgstr "Ja, ich zahle oder beziehe Unterhalt."
 
-#: app/forms/steps/eligibility_steps.py:402
+#: app/forms/steps/eligibility_steps.py:405
 msgid "form.eligibility.alimony.single.no"
 msgstr "Nein, weder zahle, noch beziehe ich Unterhalt."
 
-#: app/forms/steps/eligibility_steps.py:429
+#: app/forms/steps/eligibility_steps.py:432
 msgid "form.eligibility.elster_registration_method_failure-error"
 msgstr ""
 "Für die Überprüfung Ihrer Identität braucht unser Service einen "
@@ -549,15 +612,15 @@ msgstr ""
 "Post versendet. Aus technischen Gründen geschieht das allerdings in Ihrem"
 " Fall nicht. Daher können Sie den Steuerlotsen derzeit nicht nutzen."
 
-#: app/forms/steps/eligibility_steps.py:440
+#: app/forms/steps/eligibility_steps.py:443
 msgid "form.eligibility.elster_registration_method-title"
 msgstr "Mit welchem Verfahren haben Sie sich bei Mein ELSTER registriert?"
 
-#: app/forms/steps/eligibility_steps.py:446
+#: app/forms/steps/eligibility_steps.py:449
 msgid "form.eligibility.elster_registration_method_eligibility.detail.title"
 msgstr "Wieso ist diese Information relevant?"
 
-#: app/forms/steps/eligibility_steps.py:447
+#: app/forms/steps/eligibility_steps.py:450
 msgid "form.eligibility.elster_registration_method_eligibility.detail.text"
 msgstr ""
 "Je nach Registrierungsverfahren wird Ihnen von Elster ein Freischaltcode "
@@ -567,27 +630,27 @@ msgstr ""
 "per Post erhalten, können Sie den Steuerlotsen daher momentan nicht "
 "nutzen."
 
-#: app/forms/steps/eligibility_steps.py:448
+#: app/forms/steps/eligibility_steps.py:451
 msgid "form.eligibility.elster_registration_method.software"
 msgstr "Zertifikatsdatei"
 
-#: app/forms/steps/eligibility_steps.py:449
+#: app/forms/steps/eligibility_steps.py:452
 msgid "form.eligibility.elster_registration_method.id_card"
 msgstr "Personalausweis"
 
-#: app/forms/steps/eligibility_steps.py:450
+#: app/forms/steps/eligibility_steps.py:453
 msgid "form.eligibility.elster_registration_method.stick"
 msgstr "Sicherheitsstick"
 
-#: app/forms/steps/eligibility_steps.py:451
+#: app/forms/steps/eligibility_steps.py:454
 msgid "form.eligibility.elster_registration_method.card"
 msgstr "Signaturkarte"
 
-#: app/forms/steps/eligibility_steps.py:452
+#: app/forms/steps/eligibility_steps.py:455
 msgid "form.eligibility.elster_registration_method.unknown"
 msgstr "Weiß ich nicht"
 
-#: app/forms/steps/eligibility_steps.py:459
+#: app/forms/steps/eligibility_steps.py:462
 msgid "form.eligibility.elster_abrufcode_failure-error"
 msgstr ""
 "Für die Überprüfung Ihrer Identität braucht unser Service einen "
@@ -595,17 +658,17 @@ msgstr ""
 "Post versendet. Aus technischen Gründen geschieht das allerdings in Ihrem"
 " Fall nicht. Daher können Sie den Steuerlotsen derzeit nicht nutzen."
 
-#: app/forms/steps/eligibility_steps.py:469
+#: app/forms/steps/eligibility_steps.py:472
 msgid "form.eligibility.elster_abrufcode-title"
 msgstr ""
 "Haben Sie einen Abrufcode beantragt, um die der Finanzverwaltung "
 "vorliegenden Daten abrufen zu können?"
 
-#: app/forms/steps/eligibility_steps.py:475
+#: app/forms/steps/eligibility_steps.py:478
 msgid "form.eligibility.elster_abrufcode_eligibility.detail.title"
 msgstr "Was ist ein Abrufcode?"
 
-#: app/forms/steps/eligibility_steps.py:476
+#: app/forms/steps/eligibility_steps.py:479
 msgid "form.eligibility.elster_abrufcode_eligibility.detail.text"
 msgstr ""
 "Elster bietet die Möglichkeit einer „vorausgefüllten Steuererklärung“. "
@@ -614,19 +677,19 @@ msgstr ""
 "beantragen. Wenn Sie einen Abrufcode beantragt haben, um die "
 "„vorausgefüllte Steuererklärung” zu nutzen, wählen Sie bitte „Ja” aus."
 
-#: app/forms/steps/eligibility_steps.py:477
+#: app/forms/steps/eligibility_steps.py:480
 msgid "form.eligibility.elster_abrufcode_eligibility.yes"
 msgstr "Ja"
 
-#: app/forms/steps/eligibility_steps.py:478
+#: app/forms/steps/eligibility_steps.py:481
 msgid "form.eligibility.elster_abrufcode_eligibility.no"
 msgstr "Nein"
 
-#: app/forms/steps/eligibility_steps.py:479
+#: app/forms/steps/eligibility_steps.py:482
 msgid "form.eligibility.elster_abrufcode_eligibility.unknown"
 msgstr "Weiß ich nicht"
 
-#: app/forms/steps/eligibility_steps.py:486
+#: app/forms/steps/eligibility_steps.py:489
 msgid "form.eligibility.pension_failure-error"
 msgstr ""
 "Sie können Ihre Steuererklärung nur mit dem Steuerlotsen machen, wenn die"
@@ -639,13 +702,13 @@ msgstr ""
 "nicht prüfen, arbeiten aber an einer Möglichkeit, Ihnen mehr "
 "Informationen zur Verfügung zu stellen."
 
-#: app/forms/steps/eligibility_steps.py:496
+#: app/forms/steps/eligibility_steps.py:499
 msgid "form.eligibility.pension-title"
 msgstr ""
 "Beziehen Sie eine Rente bzw. eine Pension von einer oder mehrerer dieser "
 "Stellen:"
 
-#: app/forms/steps/eligibility_steps.py:497
+#: app/forms/steps/eligibility_steps.py:500
 msgid "form.eligibility.pension-intro"
 msgstr ""
 "<ul><li>Träger der gesetzlichen Rentenversicherung</li> <li>der "
@@ -654,8 +717,8 @@ msgstr ""
 " der sog. „Rürup- Rente\"</li><li>Anbieter der sog. „Riester-"
 "Rente\"</li><li>frühere Arbeitgeber</li></ul>"
 
-#: app/forms/steps/eligibility_steps.py:503
-#: app/forms/steps/eligibility_steps.py:512
+#: app/forms/steps/eligibility_steps.py:506
+#: app/forms/steps/eligibility_steps.py:515
 msgid "form.eligibility.pension.yes"
 msgid_plural "form.eligibility.pension.yes"
 msgstr[0] "Ja, ich beziehe meine Rente ausschließlich aus den genannten Stellen."
@@ -663,8 +726,8 @@ msgstr[1] ""
 "Ja, wir beziehen unsere Rente beziehungsweise Pensionen ausschließlich "
 "aus den genannten Stellen."
 
-#: app/forms/steps/eligibility_steps.py:504
-#: app/forms/steps/eligibility_steps.py:515
+#: app/forms/steps/eligibility_steps.py:507
+#: app/forms/steps/eligibility_steps.py:518
 msgid "form.eligibility.pension.no"
 msgid_plural "form.eligibility.pension.no"
 msgstr[0] "Nein, ich beziehe meine Rente aus weiteren Stellen."
@@ -672,15 +735,15 @@ msgstr[1] ""
 "Nein, wir beziehen unsere Rente beziehungsweise Pensionen aus weiteren "
 "Stellen."
 
-#: app/forms/steps/eligibility_steps.py:525
+#: app/forms/steps/eligibility_steps.py:528
 msgid "form.eligibility.investment_income-title"
 msgstr "Haben Sie Kapitalerträge?"
 
-#: app/forms/steps/eligibility_steps.py:531
+#: app/forms/steps/eligibility_steps.py:534
 msgid "form.eligibility.investment_income.detail.title"
 msgstr "Ich weiß nicht, ob ich Kapitalerträge habe."
 
-#: app/forms/steps/eligibility_steps.py:532
+#: app/forms/steps/eligibility_steps.py:535
 msgid "form.eligibility.investment_income.detail.text"
 msgstr ""
 "Kapitalerträge sind die Gewinne aus Geldanlagen. Hierzu gehören z.B. "
@@ -688,32 +751,32 @@ msgstr ""
 " aus Aktien oder GmbH-Anteilen. Unter Kapitalerträge fällt aber z.B. "
 "auch, wenn Sie privat Geld verliehen haben und dafür Zinsen erhalten."
 
-#: app/forms/steps/eligibility_steps.py:533
-#: app/forms/steps/eligibility_steps.py:542
+#: app/forms/steps/eligibility_steps.py:536
+#: app/forms/steps/eligibility_steps.py:545
 msgid "form.eligibility.investment_income.yes"
 msgid_plural "form.eligibility.investment_income.yes"
 msgstr[0] "Ja, ich habe Kapitalerträge."
 msgstr[1] "Ja, wir haben Kapitalerträge."
 
-#: app/forms/steps/eligibility_steps.py:534
-#: app/forms/steps/eligibility_steps.py:546
+#: app/forms/steps/eligibility_steps.py:537
+#: app/forms/steps/eligibility_steps.py:549
 msgid "form.eligibility.investment_income.no"
 msgid_plural "form.eligibility.investment_income.no"
 msgstr[0] "Nein, ich habe keine Kapitalerträge."
 msgstr[1] "Nein, wir haben keine Kapitalerträge."
 
-#: app/forms/steps/eligibility_steps.py:557
+#: app/forms/steps/eligibility_steps.py:560
 msgid "form.eligibility.minimal_investment_income-title"
 msgstr ""
 "Haben Sie ausschließlich Kapitalerträge, die nicht versteuert werden "
 "müssen, weil diese den in Anspruch genommenen Sparer-Pauschbetrag nicht "
 "überschreiten?"
 
-#: app/forms/steps/eligibility_steps.py:563
+#: app/forms/steps/eligibility_steps.py:566
 msgid "form.eligibility.minimal_investment_income.detail.title"
 msgstr "Was ist der Sparer-Pauschbetrag?"
 
-#: app/forms/steps/eligibility_steps.py:564
+#: app/forms/steps/eligibility_steps.py:567
 msgid "form.eligibility.minimal_investment_income.detail.text"
 msgstr ""
 "Wenn Sie für Ihre Kapitalerträge bei Ihrer Bank einen "
@@ -722,8 +785,8 @@ msgstr ""
 "Rahmen des Sparer-Pauschbetrags sind 801€ für Alleinstehende und 1.602€ "
 "für gemeinsam Veranlagte steuerfrei."
 
-#: app/forms/steps/eligibility_steps.py:565
-#: app/forms/steps/eligibility_steps.py:575
+#: app/forms/steps/eligibility_steps.py:568
+#: app/forms/steps/eligibility_steps.py:578
 msgid "form.eligibility.minimal_investment_income.yes"
 msgid_plural "form.eligibility.minimal_investment_income.yes"
 msgstr[0] ""
@@ -733,30 +796,30 @@ msgstr[1] ""
 "Ja, alle unsere Kapitalerträge liegen unter dem Sparerpauschbetrag, den "
 "wir in Anspruch genommen haben."
 
-#: app/forms/steps/eligibility_steps.py:566
-#: app/forms/steps/eligibility_steps.py:580
+#: app/forms/steps/eligibility_steps.py:569
+#: app/forms/steps/eligibility_steps.py:583
 msgid "form.eligibility.minimal_investment_income.no"
 msgid_plural "form.eligibility.minimal_investment_income.no"
 msgstr[0] "Nein, das trifft auf die Kapitalerträge nicht zu."
 msgstr[1] "Nein, das trifft auf die Kapitalerträge nicht zu.\""
 
-#: app/forms/steps/eligibility_steps.py:586
+#: app/forms/steps/eligibility_steps.py:589
 msgid "form.eligibility.taxed_investment_failure-error"
 msgstr ""
 "Wenn Sie unversteuerte Kapitalerträge haben, müssen Sie Angaben im "
 "Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:596
+#: app/forms/steps/eligibility_steps.py:599
 msgid "form.eligibility.taxed_investment-title"
 msgstr ""
 "Sind die Kapitalerträge besteuert, weil die Abgeltungsteuer bereits "
 "abgeführt wurde?"
 
-#: app/forms/steps/eligibility_steps.py:602
+#: app/forms/steps/eligibility_steps.py:605
 msgid "form.eligibility.taxed_investment.detail.title"
 msgstr "Ich weiß nicht, wann die Abgeltungsteuer abgeführt wird."
 
-#: app/forms/steps/eligibility_steps.py:603
+#: app/forms/steps/eligibility_steps.py:606
 msgid "form.eligibility.taxed_investment.detail.text"
 msgstr ""
 "Die Abgeltungsteuer hat den Effekt, dass die Steuerschuld auf "
@@ -778,31 +841,31 @@ msgstr ""
 "bei Ablauf der Versicherung und Auszahlung noch versteuert werden. Wenn "
 "dies auf Sie zutrifft, wählen Sie bitte »Nein« aus.</p>"
 
-#: app/forms/steps/eligibility_steps.py:604
+#: app/forms/steps/eligibility_steps.py:607
 msgid "form.eligibility.taxed_investment.yes"
 msgstr "Ja, die Abgeltungsteuer wurde bereits abgeführt."
 
-#: app/forms/steps/eligibility_steps.py:605
+#: app/forms/steps/eligibility_steps.py:608
 msgid "form.eligibility.taxed_investment.no"
 msgstr "Nein, die Abgeltungsteuer wurde noch nicht abgeführt."
 
-#: app/forms/steps/eligibility_steps.py:612
+#: app/forms/steps/eligibility_steps.py:615
 msgid "form.eligibility.cheaper_check_failure-error"
 msgstr ""
 "Wenn Sie die Günstigerprüfung beantragen möchten, müssen Sie Angaben im "
 "Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:622
+#: app/forms/steps/eligibility_steps.py:625
 msgid "form.eligibility.cheaper_check-title"
 msgstr ""
 "Haben Sie ein geringes Einkommen und möchten daher eine Günstigerprüfung "
 "beantragen?"
 
-#: app/forms/steps/eligibility_steps.py:628
+#: app/forms/steps/eligibility_steps.py:631
 msgid "form.eligibility.cheaper_check.detail.title"
 msgstr "Was ist die Günstigerprüfung?"
 
-#: app/forms/steps/eligibility_steps.py:629
+#: app/forms/steps/eligibility_steps.py:632
 msgid "form.eligibility.cheaper_check.detail.text"
 msgstr ""
 "Die Günstigerprüfung ist ein Verfahren, bei dem das Finanzamt den "
@@ -813,66 +876,66 @@ msgstr ""
 "persönlichen Steuersatz besteuert werden anstatt der Besteuerung Ihrer "
 "Kapitalerträge mit der Abgeltungsteuer."
 
-#: app/forms/steps/eligibility_steps.py:630
-#: app/forms/steps/eligibility_steps.py:640
+#: app/forms/steps/eligibility_steps.py:633
+#: app/forms/steps/eligibility_steps.py:643
 msgid "form.eligibility.cheaper_check_eligibility.yes"
 msgid_plural "form.eligibility.cheaper_check_eligibility.yes"
 msgstr[0] "Ja, ich möchte die Günstigerprüfung beantragen."
 msgstr[1] "Ja, wir möchten die Günstigerprüfung beantragen."
 
-#: app/forms/steps/eligibility_steps.py:631
-#: app/forms/steps/eligibility_steps.py:644
+#: app/forms/steps/eligibility_steps.py:634
+#: app/forms/steps/eligibility_steps.py:647
 msgid "form.eligibility.cheaper_check_eligibility.no"
 msgid_plural "form.eligibility.cheaper_check_eligibility.no"
 msgstr[0] "Nein, ich möchte die Günstigerprüfung nicht beantragen."
 msgstr[1] "Nein, wir möchten die Günstigerprüfung nicht beantragen."
 
-#: app/forms/steps/eligibility_steps.py:654
+#: app/forms/steps/eligibility_steps.py:657
 msgid "form.eligibility.employment_income-title"
 msgstr "Haben Sie Einkünfte aus einer Erwerbstätigkeit?"
 
-#: app/forms/steps/eligibility_steps.py:660
+#: app/forms/steps/eligibility_steps.py:663
 msgid "form.eligibility.employment_income.detail.title"
 msgstr "Ich weiß nicht, ob ich erwerbstätig bin."
 
-#: app/forms/steps/eligibility_steps.py:661
+#: app/forms/steps/eligibility_steps.py:664
 msgid "form.eligibility.employment_income.detail.text"
 msgstr ""
 "Sie sind zum Beispiel erwerbstätig, wenn Sie  mindestens eine Stunde in "
 "der Woche gegen Entgelt einer beruflichen Tätigkeit nachgehen, "
 "selbstständig sind, einem Gewerbe, Handwerk oder freien Beruf nachgehen."
 
-#: app/forms/steps/eligibility_steps.py:662
-#: app/forms/steps/eligibility_steps.py:672
+#: app/forms/steps/eligibility_steps.py:665
+#: app/forms/steps/eligibility_steps.py:675
 msgid "form.eligibility.employment_income.yes"
 msgid_plural "form.eligibility.employment_income.yes"
 msgstr[0] "Ja, ich habe Einkünfte aus einer Erwerbstätigkeit."
 msgstr[1] "Ja, wir haben Einkünfte aus einer Erwerbstätigkeit."
 
-#: app/forms/steps/eligibility_steps.py:663
-#: app/forms/steps/eligibility_steps.py:676
+#: app/forms/steps/eligibility_steps.py:666
+#: app/forms/steps/eligibility_steps.py:679
 msgid "form.eligibility.employment_income.no"
 msgid_plural "form.eligibility.employment_income.no"
 msgstr[0] "Nein, ich habe keine Einkünfte aus einer Erwerbstätigkeit."
 msgstr[1] "Nein, wir haben keine Einkünfte aus einer Erwerbstätigkeit."
 
-#: app/forms/steps/eligibility_steps.py:682
+#: app/forms/steps/eligibility_steps.py:685
 msgid "form.eligibility.marginal_employment_failure-error"
 msgstr ""
 "Wenn Sie Einkünfte haben, die noch zu versteuern sind, müssen Sie Angaben"
 " im Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:692
+#: app/forms/steps/eligibility_steps.py:695
 msgid "form.eligibility.marginal_employment-title"
 msgstr ""
 "Handelt es sich bei der Erwerbstätigkeit um eine geringfügige "
 "Beschäftigung bis zu 450€, die bereits pauschal besteuert wurde?"
 
-#: app/forms/steps/eligibility_steps.py:698
+#: app/forms/steps/eligibility_steps.py:701
 msgid "form.eligibility.marginal_employment.detail.title"
 msgstr "Was bedeutet das?"
 
-#: app/forms/steps/eligibility_steps.py:699
+#: app/forms/steps/eligibility_steps.py:702
 msgid "form.eligibility.marginal_employment.detail.text"
 msgstr ""
 "Wer nicht mehr als 450 Euro im Monat verdient, gilt als geringfügig "
@@ -880,99 +943,99 @@ msgstr ""
 "Minijob vom Arbeitgeber mit einem Satz von zwei Prozent pauschal "
 "versteuert."
 
-#: app/forms/steps/eligibility_steps.py:700
+#: app/forms/steps/eligibility_steps.py:703
 msgid "form.eligibility.marginal_employment.yes"
 msgstr ""
 "Ja, es handelt sich um eine geringfügige Beschäftigung. Die Einkünfte "
 "wurden bereits pauschal versteuert."
 
-#: app/forms/steps/eligibility_steps.py:701
+#: app/forms/steps/eligibility_steps.py:704
 msgid "form.eligibility.marginal_employment.no"
 msgstr ""
 "Nein, es handelt sich nicht um eine geringfügige Beschäftigung. Die "
 "Einkünfte wurden noch nicht pauschal besteuert."
 
-#: app/forms/steps/eligibility_steps.py:708
+#: app/forms/steps/eligibility_steps.py:711
 msgid "form.eligibility.income_other_failure-error"
 msgstr ""
 "Wenn Sie Einkünfte haben, die noch zu versteuern sind, müssen Sie Angaben"
 " im Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:718
+#: app/forms/steps/eligibility_steps.py:721
 msgid "form.eligibility.income-other-title"
 msgstr ""
 "Haben Sie noch weitere Einkünfte als die bisher genannten Einkünfte? Zum "
 "Beispiel aus einer Vermietung?"
 
-#: app/forms/steps/eligibility_steps.py:724
+#: app/forms/steps/eligibility_steps.py:727
 msgid "form.eligibility.income-other.detail.title"
 msgstr "Ich bin mir nicht sicher."
 
-#: app/forms/steps/eligibility_steps.py:725
+#: app/forms/steps/eligibility_steps.py:728
 msgid "form.eligibility.income-other.detail.text"
 msgstr ""
 "Wenn Sie außer Ihren Renteneinkünften bzw. Pensionen, Kapitalerträgen "
 "oder Einkünften aus einer Erwerbstätigkeit weitere Einkünfte wie zum "
 "Beispiel aus einer Vermietung haben, wählen Sie bitte »Ja«."
 
-#: app/forms/steps/eligibility_steps.py:726
-#: app/forms/steps/eligibility_steps.py:736
+#: app/forms/steps/eligibility_steps.py:729
+#: app/forms/steps/eligibility_steps.py:739
 msgid "form.eligibility.income_other.yes"
 msgid_plural "form.eligibility.income_other.yes"
 msgstr[0] "Ja, ich habe noch weitere Einkünfte."
 msgstr[1] "Ja, wir haben noch weitere Einkünfte."
 
-#: app/forms/steps/eligibility_steps.py:727
-#: app/forms/steps/eligibility_steps.py:740
+#: app/forms/steps/eligibility_steps.py:730
+#: app/forms/steps/eligibility_steps.py:743
 msgid "form.eligibility.income_other.no"
 msgid_plural "form.eligibility.income_other.no"
 msgstr[0] "Nein, ich habe keine weiteren Einkünfte."
 msgstr[1] "Nein, wir haben keine weiteren Einkünfte."
 
-#: app/forms/steps/eligibility_steps.py:746
+#: app/forms/steps/eligibility_steps.py:749
 msgid "form.eligibility.foreign_country_failure-error"
 msgstr ""
 "Wenn Sie letztes Jahr im Ausland gelebt haben, müssen Sie Angaben im "
 "Steuerformular machen, die der Steuerlotse zurzeit nicht abbildet."
 
-#: app/forms/steps/eligibility_steps.py:757
+#: app/forms/steps/eligibility_steps.py:760
 msgid "form.eligibility.foreign-country-title"
 msgstr ""
 "Leben Sie dauerhaft im Ausland und kommen nur gelegentlich, zum Beispiel "
 "zu Besuchszwecken, nach Deutschland?"
 
-#: app/forms/steps/eligibility_steps.py:763
+#: app/forms/steps/eligibility_steps.py:766
 msgid "form.eligibility.foreign-country.detail.title"
 msgstr "Ab welcher Dauer lebt man dauerhaft im Ausland?"
 
-#: app/forms/steps/eligibility_steps.py:764
+#: app/forms/steps/eligibility_steps.py:767
 msgid "form.eligibility.foreign-country.detail.text"
 msgstr ""
 "Sie leben dauerhaft im Ausland, wenn Sie länger als 183 Tage im Jahr in "
 "einem anderen Land gelebt haben. Sollte dies der Fall sein, wählen Sie "
 "»Ja« aus. "
 
-#: app/forms/steps/eligibility_steps.py:765
-#: app/forms/steps/eligibility_steps.py:775
+#: app/forms/steps/eligibility_steps.py:768
+#: app/forms/steps/eligibility_steps.py:778
 msgid "form.eligibility.foreign_country.yes"
 msgid_plural "form.eligibility.foreign_country.yes"
 msgstr[0] "Ja, ich lebe dauerhaft im Ausland."
 msgstr[1] "Ja, wir leben dauerhaft im Ausland."
 
-#: app/forms/steps/eligibility_steps.py:766
-#: app/forms/steps/eligibility_steps.py:779
+#: app/forms/steps/eligibility_steps.py:769
+#: app/forms/steps/eligibility_steps.py:782
 msgid "form.eligibility.foreign_country.no"
 msgid_plural "form.eligibility.foreign_country.no"
 msgstr[0] "Nein, ich lebe dauerhaft in Deutschland."
 msgstr[1] "Nein, wir leben dauerhaft in Deutschland."
 
-#: app/forms/steps/eligibility_steps.py:785
+#: app/forms/steps/eligibility_steps.py:788
 msgid "form.eligibility.result-title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 mit dem Steuerlotsen "
 "machen."
 
-#: app/forms/steps/eligibility_steps.py:786
+#: app/forms/steps/eligibility_steps.py:789
 msgid "form.eligibility.result-intro"
 msgstr ""
 "Wenn Sie alle Fragen korrekt beantwortet haben, können Sie den "
@@ -981,13 +1044,13 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:801
+#: app/forms/steps/eligibility_steps.py:805
 msgid "form.eligibility.result-note.user_b_elster_account"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss "
 "sich trotzdem nur eine Person registrieren."
 
-#: app/forms/steps/eligibility_steps.py:802
+#: app/forms/steps/eligibility_steps.py:806
 msgid "form.eligibility.result-note.user_b_elster_account-registration"
 msgstr ""
 "Bitte registrieren Sie sich mit den Angaben der Person, die noch kein "
@@ -996,7 +1059,7 @@ msgstr ""
 " erstellt und per Post versendet. Aus technischen Gründen geschieht das "
 "allerdings nur, wenn Sie noch kein Konto bei Mein ELSTER haben."
 
-#: app/forms/steps/eligibility_steps.py:806
+#: app/forms/steps/eligibility_steps.py:810
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -1007,13 +1070,13 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:814
+#: app/forms/steps/eligibility_steps.py:818
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
 "Steuerlotsen machen."
 
-#: app/forms/steps/eligibility_steps.py:815
+#: app/forms/steps/eligibility_steps.py:819
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
 "Es kann allerdings sein, dass Sie <strong>keinen Brief mit Ihrem "
@@ -1194,7 +1257,7 @@ msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:57
-#: app/forms/steps/lotse/personal_data.py:144
+#: app/forms/steps/lotse/personal_data.py:158
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
@@ -1318,7 +1381,7 @@ msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
 #: app/forms/steps/lotse/personal_data.py:100
-#: app/forms/steps/lotse/personal_data.py:147
+#: app/forms/steps/lotse/personal_data.py:161
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1331,6 +1394,15 @@ msgstr[1] ""
 #: app/forms/steps/lotse/personal_data.py:101
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
+
+#: app/forms/steps/lotse/personal_data.py:136
+msgid "form.lotse.tax-number.invalid-tax-number-error"
+msgstr ""
+"Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"
+" Ihnen vorliegende Nummer um die Steuernummer und nicht die Steuer-"
+"Identifikatiosnummer handelt</li><li>ob die Auswahl des Bundeslandes "
+"korrekt ist</li></ul>Bitte wenden Sie sich andernfalls mit einer E-Mail "
+"an uns und schildern Sie uns das Problem. "
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:14
 msgid "form.lotse.field_confirm_complete_correct"
@@ -1400,15 +1472,15 @@ msgstr ""
 "übermittelt. Bewahren Sie Ihre Nachweise für Nachfragen gut auf."
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:64
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:80
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:81
 msgid "form.lotse.filing.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:69
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:70
 msgid "form.lotse.filing.failure.header-title"
 msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:76
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:77
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
@@ -2764,11 +2836,11 @@ msgstr ""
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:35
+#: app/templates/basis/base.html:36
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:42
+#: app/templates/basis/base.html:43
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -5173,17 +5245,18 @@ msgstr ""
 msgid "form.unlock-code-activation.failure.reasons-2"
 msgstr ""
 "Haben Sie sich vor 90 Tagen registriert? In diesem Fall können Sie sich "
-"mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. "
-"Registrieren Sie sich bitte erneut. Sie erhalten dann einen Brief mit "
-"einem neuen Freischaltcode."
+"mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <a "
+"href=%(registration_link)s>Registrieren</a> Sie sich bitte erneut. Sie "
+"erhalten dann einen Brief mit einem neuen Freischaltcode."
 
 #: app/templates/unlock_code/activation_failure.html:24
 msgid "form.unlock-code-activation.failure.reasons-3"
 msgstr ""
 "Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen. Dann ist Ihr "
-"Freischaltcode nicht mehr gültig. Bitte stornieren Sie Ihren "
-"Freischaltcode und registrieren sich erneut. Sie erhalten dann einen "
-"Brief mit einem neuen Freischaltcode."
+"Freischaltcode nicht mehr gültig. Bitte <a "
+"href=%(revocation_link)s>stornieren</a> Sie Ihren Freischaltcode und <a "
+"href=%(registration_link)s>registrieren</a> sich erneut. Sie erhalten "
+"dann einen Brief mit einem neuen Freischaltcode."
 
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"

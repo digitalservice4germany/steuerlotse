@@ -1,5 +1,7 @@
 import datetime
 import unittest
+from copy import deepcopy
+from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
 import pytest
@@ -8,6 +10,7 @@ from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
+from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.session_data import serialize_session_data, deserialize_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
@@ -77,7 +80,7 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
                                         endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
 
     def test_if_correct_step_name_then_return_step_correctly_initialised(self):
-        chosen_step = self.step_chooser.get_correct_step(MockRenderStep.name)
+        chosen_step = self.step_chooser.get_correct_step(MockRenderStep.name, False, ImmutableMultiDict({}))
 
         self.assertIsInstance(chosen_step, MockRenderStep)
         self.assertEqual(MockRenderStep.name, chosen_step.name)
@@ -87,10 +90,10 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
         self.assertEqual(MockFormWithInputStep, chosen_step._next_step)
 
     def test_if_incorrect_step_name_then_raise_404_exception(self):
-        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name")
+        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False, ImmutableMultiDict({}))
 
     def test_if_start_step_then_return_redirect_to_first_step(self):
-        chosen_step = self.step_chooser.get_correct_step("start")
+        chosen_step = self.step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
 
         self.assertIsInstance(chosen_step, RedirectSteuerlotseStep)
         self.assertEqual(chosen_step.redirection_step_name, self.step_chooser.first_step.name)
@@ -100,36 +103,46 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
                                             steps=[MockStartStep, MockMiddleStep, MockFinalStep],
                                             endpoint=self.endpoint_correct)
 
-        chosen_step = simple_step_chooser.get_correct_step(MockStartStep.name)
+        chosen_step = simple_step_chooser.get_correct_step(MockStartStep.name, False, ImmutableMultiDict({}))
         self.assertIsInstance(chosen_step, MockStartStep)
         self.assertEqual(MockMiddleStep, chosen_step._next_step)
 
-        chosen_step = simple_step_chooser.get_correct_step(MockMiddleStep.name)
+        chosen_step = simple_step_chooser.get_correct_step(MockMiddleStep.name, False, ImmutableMultiDict({}))
         self.assertEqual(MockStartStep, chosen_step._prev_step)
         self.assertIsInstance(chosen_step, MockMiddleStep)
         self.assertEqual(MockFinalStep, chosen_step._next_step)
 
-        chosen_step = simple_step_chooser.get_correct_step(MockFinalStep.name)
+        chosen_step = simple_step_chooser.get_correct_step(MockFinalStep.name, False, ImmutableMultiDict({}))
         self.assertEqual(MockMiddleStep, chosen_step._prev_step)
         self.assertIsInstance(chosen_step, MockFinalStep)
 
     def test_if_step_at_ends_then_return_empty_string(self):
-        chosen_step_at_begin = self.step_chooser.get_correct_step(MockStartStep.name)
-        chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name)
+        chosen_step_at_begin = self.step_chooser.get_correct_step(MockStartStep.name, False, ImmutableMultiDict({}))
+        chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name, False, ImmutableMultiDict({}))
         self.assertIsNone(chosen_step_at_begin._prev_step)
         self.assertIsNone(chosen_step_at_end._next_step)
 
-    def test_update_data_is_called_if_update_data_set(self):
-        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
-            self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=True)
+    def test_if_data_given_then_call_prepare_render_info_with_correct_data(self):
+        form_data = ImmutableMultiDict({'Title': 'Happiness begins', 'Year': '2019'})
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info') as preparation_mock:
+            self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
+                                               form_data=form_data)
 
-        update_mock.assert_called_once()
+        preparation_mock.assert_called_once_with({}, form_data, True)
 
-    def test_update_data_is_not_called_if_update_data_not_set(self):
-        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.update_data') as update_mock:
-            self.step_chooser.get_correct_step(MockFormWithInputStep.name, update_data=False)
+    def test_if_prepare_render_info_returns_render_info_then_set_it_correctly(self):
+        render_info = RenderInfo(step_title="Lines, Vines and Trying Times",
+                                 step_intro="The fourth album",
+                                 form=None,
+                                 prev_url=None,
+                                 next_url=None,
+                                 submit_url=None,
+                                 overview_url=None)
+        with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info', MagicMock(return_value=render_info)):
+            step = self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
+                                               form_data=ImmutableMultiDict({}))
 
-        update_mock.assert_not_called()
+        assert step.render_info == render_info
 
 
 class TestDeterminePrevStep:
@@ -297,6 +310,6 @@ class TestInteractionBetweenSteps(unittest.TestCase):
             if session is not None:
                 req.session = session
 
-            step_chooser.get_correct_step(step_name, method == 'POST').handle()
+            step_chooser.get_correct_step(step_name, method == 'POST', req.request.form).handle()
 
             return req.session

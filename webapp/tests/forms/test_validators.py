@@ -1,11 +1,12 @@
 import unittest
 
+import pytest
 from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import UnlockCodeField
 from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
-    ValidUnlockCodeCharacterSet
+    ValidUnlockCodeCharacterSet, ValidHessenTaxNumber
 
 
 class TestDecimalOnly(unittest.TestCase):
@@ -229,3 +230,57 @@ class TestValidUnlockCodeCharacterSet(unittest.TestCase):
             ValidUnlockCodeCharacterSet().__call__(self.form, self.field)
         except ValidationError:
             self.fail("ValidCharacterSet raised ValidationError unexpectedly!")
+
+
+@pytest.fixture
+def tax_number_form():
+    form = SteuerlotseBaseForm()
+    form.steuernummer_exists = StringField()
+    form.bundesland = StringField()
+
+    return form
+
+
+@pytest.fixture
+def tax_number_field():
+    tax_number_field = StringField()
+
+    return tax_number_field
+
+
+class TestValidHessenTaxNumber:
+
+    def test_if_no_tax_number_exists_then_do_not_raise_error(self, tax_number_field, tax_number_form):
+        tax_number_field.data = "0123456789"
+        tax_number_form.steuernummer_exists.data = 'no'
+        tax_number_form.bundesland.data = 'HE'
+        try:
+            ValidHessenTaxNumber().__call__(tax_number_form, tax_number_field)
+        except ValidationError:
+            pytest.fail("ValidHessenTaxNumber raised ValidationError unexpectedly!")
+
+    def test_if_tax_number_exists_and_not_hessen_then_do_not_raise_error(self, tax_number_field, tax_number_form):
+        tax_number_field.data = "0123456789"
+        tax_number_form.steuernummer_exists.data = 'yes'
+        tax_number_form.bundesland.data = 'BY'
+        try:
+            ValidHessenTaxNumber().__call__(tax_number_form, tax_number_field)
+        except ValidationError:
+            pytest.fail("ValidHessenTaxNumber raised ValidationError unexpectedly!")
+
+    def test_if_tax_number_exists_and_hessen_and_11_digits_then_do_not_raise_error(self, tax_number_field, tax_number_form):
+        tax_number_field.data = "01234567891"
+        tax_number_form.steuernummer_exists.data = 'yes'
+        tax_number_form.bundesland.data = 'HE'
+        try:
+            ValidHessenTaxNumber().__call__(tax_number_form, tax_number_field)
+        except ValidationError:
+            pytest.fail("ValidHessenTaxNumber raised ValidationError unexpectedly!")
+
+    def test_if_tax_number_exists_and_hessen_and_not_11_digits_then_raise_error(self, tax_number_field, tax_number_form):
+        tax_number_field.data = "0123456789"
+        tax_number_form.steuernummer_exists.data = 'yes'
+        tax_number_form.bundesland.data = 'HE'
+
+        with pytest.raises(ValidationError):
+            ValidHessenTaxNumber().__call__(tax_number_form, tax_number_field)

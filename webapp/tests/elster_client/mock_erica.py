@@ -45,6 +45,7 @@ class MockErica:
     request_code_already_revoked_error_occurred = False
     invalid_bufa_number_error_occurred = False
     invalid_tax_number_error_occurred = False
+    tax_number_is_invalid = False
 
     INVALID_ID = 'C3PO'
 
@@ -73,6 +74,9 @@ class MockErica:
                 response = MockErica.get_address_data(sent_data, include_elster_responses)
             elif args[0] == _PYERIC_API_BASE_URL + '/tax_offices':
                 response = MockErica.get_tax_offices()
+            elif _PYERIC_API_BASE_URL + '/tax_number_validity' in args[0]:
+                sub_urls = args[0].split('/')
+                response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[2], tax_number=sub_urls[3])
             else:
                 return MockResponse(None, 404)
         except UnexpectedInputDataError:
@@ -290,6 +294,21 @@ class MockErica:
                 return get_json_response('get_address_with_resp')
             else:
                 return get_json_response('get_address_no_resp')
+
+    @staticmethod
+    def is_valid_tax_number(state_abbreviation, tax_number):
+        if err_response := MockErica.errors_from_error_flags(True):
+            return err_response
+
+        _VALID_TAX_NUMBERS = ['19811310010']
+        _VALID_STATE_ABBREVIATIONS = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'ND', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+
+        if MockErica.tax_number_is_invalid \
+                or tax_number not in _VALID_TAX_NUMBERS \
+                or state_abbreviation not in _VALID_STATE_ABBREVIATIONS:
+            return get_json_response('tax_number_is_invalid')
+        else:
+            return get_json_response('tax_number_is_valid')
 
     @staticmethod
     def get_tax_offices():

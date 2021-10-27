@@ -84,16 +84,16 @@ class TestEligibilityStepChooser(unittest.TestCase):
                              'kapitaleink': 'yes', 'other': 'no'}
 
     def test_if_correct_step_name_then_return_correct_step(self):
-        response_step = self.step_chooser.get_correct_step(MockRenderStep.name)
+        response_step = self.step_chooser.get_correct_step(MockRenderStep.name, False, ImmutableMultiDict({}))
 
         self.assertIsInstance(response_step, MockRenderStep)
 
     def test_if_incorrect_step_name_then_raise_404_exception(self):
-        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name")
+        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False, ImmutableMultiDict({}))
 
     def test_if_start_step_then_return_redirect_step(self):
         self.step_chooser.default_data = lambda: None
-        response_step = self.step_chooser.get_correct_step("start")
+        response_step = self.step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
 
         self.assertIsInstance(response_step, RedirectSteuerlotseStep)
         self.assertEqual(response_step.redirection_step_name, MockStartStep.name)
@@ -241,7 +241,7 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual({}, deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
@@ -260,7 +260,7 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(other_session_data, deserialize_session_data(req.session[other_session_key]))
@@ -271,7 +271,7 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual({}, deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
@@ -285,57 +285,59 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(other_session_data, deserialize_session_data(req.session[other_session_key]))
 
 
+@pytest.mark.usefixtures("test_request_context")
 class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, app):
         self.app = app
 
     def test_if_post_and_married_then_set_next_step_correct(self):
-        with self.app.test_request_context(method='POST', data={'marital_status_eligibility': 'married'}):
+        with self.app.test_request_context(method='POST'):
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          True)
+                                                                          True, form_data=ImmutableMultiDict(
+                    {'marital_status_eligibility': 'married'}))
             expected_url = step.url_for_step(SeparatedEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_widowed_then_set_next_step_correct(self):
-        with self.app.test_request_context(method='POST', data={'marital_status_eligibility': 'widowed'}):
-            step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          True)
-            expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
-            step.handle()
+        step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name, True,
+                                                                      form_data=ImmutableMultiDict(
+                                                                          {'marital_status_eligibility': 'widowed'}))
+        expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+        step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_single_then_set_next_step_correct(self):
-        with self.app.test_request_context(method='POST', data={'marital_status_eligibility': 'single'}):
-            step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          True)
-            expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
-            step.handle()
+        step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name, True,
+                                                                      form_data=ImmutableMultiDict(
+                                                                          {'marital_status_eligibility': 'single'}))
+        expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+        step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_divorced_then_set_next_step_correct(self):
-        with self.app.test_request_context(method='POST', data={'marital_status_eligibility': 'divorced'}):
-            step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          True)
-            expected_url = step.url_for_step(DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
-            step.handle()
+        step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name, True,
+                                                                      form_data=ImmutableMultiDict(
+                                                                          {'marital_status_eligibility': 'divorced'}))
+        expected_url = step.url_for_step(DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+        step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_set_prev_input_step_correctly(self):
-        with self.app.test_request_context(method='GET') as req:
+        with self.app.test_request_context(method='GET'):
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(EligibilityStartDisplaySteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -347,7 +349,7 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -358,7 +360,7 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -369,7 +371,7 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          False)
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -385,22 +387,24 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         self.correct_session_data = {'marital_status_eligibility': 'married'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'separated_since_last_year_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_since_last_year_eligibility': 'yes'}))
             expected_url = step.url_for_step(SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'separated_since_last_year_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_since_last_year_eligibility': 'no'}))
             expected_url = step.url_for_step(MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -411,17 +415,18 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MaritalStatusInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'separated_since_last_year_eligibility': 'yes'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_since_last_year_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -433,7 +438,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -445,7 +450,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -457,7 +462,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name)
+                SeparatedEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -474,22 +479,24 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
                                      'separated_since_last_year_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'separated_lived_together_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_lived_together_eligibility': 'yes'}))
             expected_url = step.url_for_step(SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'separated_lived_together_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_lived_together_eligibility': 'no'}))
             expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -500,17 +507,18 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SeparatedEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'separated_lived_together_eligibility': 'yes'}), \
+        with self.app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_lived_together_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -522,7 +530,7 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -533,7 +541,7 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(self.correct_session_data,
@@ -546,7 +554,7 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
+                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -564,22 +572,24 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
                                      'separated_lived_together_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'separated_joint_taxes_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_joint_taxes_eligibility': 'yes'}))
             expected_url = step.url_for_step(MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'separated_joint_taxes_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_joint_taxes_eligibility': 'no'}))
             expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -590,17 +600,18 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'separated_joint_taxes_eligibility': 'yes'}), \
+        with self.app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'separated_joint_taxes_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -610,7 +621,7 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(self.correct_session_data,
@@ -621,7 +632,7 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(self.correct_session_data,
@@ -635,7 +646,7 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
+                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -649,7 +660,10 @@ class TestMarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.Tes
 
     def test_handle_sets_correct_prev_url(self):
         with self.app.test_request_context():
-            step = MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+            step = MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
             expected_url = step.url_for_step(MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -666,22 +680,24 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
                                      'separated_since_last_year_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'yes'}))
             expected_url = step.url_for_step(MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_failure_step(self):
-        with self.app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'no'}))
             expected_url = step.url_for_step(MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -692,17 +708,18 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SeparatedEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'yes'}), \
+        with self.app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -715,7 +732,7 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -728,7 +745,7 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -741,7 +758,7 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -754,7 +771,10 @@ class TestMarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCa
         self.test_request_context = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -772,22 +792,24 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
                                      'joint_taxes_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'alimony_eligibility': 'no'}))
             expected_url = step.url_for_step(UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_failure_step(self):
-        with self.app.test_request_context(method='POST', data={'alimony_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'alimony_eligibility': 'yes'}))
             expected_url = step.url_for_step(MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -798,7 +820,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -810,17 +832,18 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}), \
+        with self.app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'alimony_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -834,7 +857,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -848,7 +871,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -864,7 +887,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -880,7 +903,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.alimony_eligibility.kwargs['choices'])
@@ -895,7 +918,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.alimony_eligibility.kwargs['choices'])
@@ -913,22 +936,24 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
                                      'alimony_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'user_a_has_elster_account_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'no'}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'user_a_has_elster_account_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'yes'}))
             expected_url = step.url_for_step(UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -939,17 +964,18 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'user_a_has_elster_account_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -964,7 +990,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -979,7 +1005,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -996,7 +1022,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -1016,22 +1042,24 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
                                      'user_a_has_elster_account_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'user_b_has_elster_account_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_b_has_elster_account_eligibility': 'no'}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'user_b_has_elster_account_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_b_has_elster_account_eligibility': 'yes'}))
             expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
             step.handle()
 
@@ -1042,17 +1070,18 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'user_b_has_elster_account_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_b_has_elster_account_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -1068,7 +1097,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1084,7 +1113,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1102,7 +1131,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -1115,7 +1144,10 @@ class TestDivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.Te
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -1131,22 +1163,24 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
         self.correct_session_data = {'marital_status_eligibility': 'divorced'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'no'}))
             expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'yes'}))
             expected_url = step.url_for_step(DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -1157,19 +1191,21 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MaritalStatusInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'joint_taxes_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'joint_taxes_eligibility': 'no'}))
 
-            self.assertRaises(IncorrectEligibilityData, step.handle)
+            with pytest.raises(IncorrectEligibilityData):
+                step.handle()
 
     def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1179,7 +1215,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1191,7 +1227,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1203,7 +1239,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
+                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -1216,7 +1252,10 @@ class TestSingleAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCas
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=SingleAlimonyEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -1233,22 +1272,24 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
                                      'joint_taxes_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'alimony_eligibility': 'no'}))
             expected_url = step.url_for_step(SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'alimony_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'alimony_eligibility': 'yes'}))
             expected_url = step.url_for_step(SingleAlimonyEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -1259,7 +1300,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1269,7 +1310,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MaritalStatusInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1279,7 +1320,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MaritalStatusInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1291,7 +1332,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1304,17 +1345,18 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'alimony_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'alimony_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -1327,7 +1369,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1340,7 +1382,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1356,7 +1398,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -1374,22 +1416,24 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
                                      'alimony_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'user_a_has_elster_account_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'no'}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'user_a_has_elster_account_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'yes'}))
             expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
             step.handle()
 
@@ -1400,17 +1444,18 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'user_a_has_elster_account_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -1424,7 +1469,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1438,7 +1483,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1455,7 +1500,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -1465,7 +1510,10 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
 @pytest.mark.usefixtures("test_request_context")
 class TestElsterRegistrationMethodEligibilityFailureStep:
     def test_handle_sets_correct_prev_url(self):
-        step = ElsterRegistrationMethodEligibilityFailureStep(endpoint='eligibility')
+        step = ElsterRegistrationMethodEligibilityFailureStep(
+                endpoint='eligibility',
+                render_info=ElsterRegistrationMethodEligibilityFailureStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
         step.handle()
         assert step.render_info.prev_url == expected_url
@@ -1481,36 +1529,36 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
         return correct_session_data
 
     def test_if_post_and_session_data_correct_and_input_data_software_then_set_next_input_step(self, app, correct_session_data):
-        with app.test_request_context(method='POST',
-                                           data={'elster_registration_method_eligibility': 'software'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility')\
-                .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name, True)
+            step = EligibilityStepChooser('eligibility') \
+                .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name, True,
+                                  form_data=ImmutableMultiDict({'elster_registration_method_eligibility': 'software'}))
             expected_url = step.url_for_step(ElsterAbrufcodeEligibilityDecisionStep.name)
 
             step.handle()
         assert step.render_info.next_url == expected_url
 
     def test_if_post_and_session_data_correct_and_input_data_unknown_then_set_next_input_step(self, app, correct_session_data):
-        with app.test_request_context(method='POST',
-                                           data={'elster_registration_method_eligibility': 'unknown'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility')\
-                .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name, True)
+            step = EligibilityStepChooser('eligibility') \
+                .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name, True,
+                                  form_data=ImmutableMultiDict({'elster_registration_method_eligibility': 'unknown'}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
 
             step.handle()
         assert step.render_info.next_url == expected_url
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_step_failure_step(self, app, correct_session_data):
-        with app.test_request_context(method='POST',
-                                           data={'elster_registration_method_eligibility': 'id_card'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility')\
-                .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name, True)
+            step = EligibilityStepChooser('eligibility') \
+                .get_correct_step(ElsterRegistrationMethodEligibilityDecisionStep.name, True,
+                                  form_data=ImmutableMultiDict({'elster_registration_method_eligibility': 'id_card'}))
             expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityFailureStep.name)
 
             step.handle()
@@ -1521,7 +1569,7 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterRegistrationMethodEligibilityDecisionStep.name)
+                ElsterRegistrationMethodEligibilityDecisionStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         assert step.render_info.prev_url == expected_url
@@ -1538,17 +1586,18 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(married_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterRegistrationMethodEligibilityDecisionStep.name)
+                ElsterRegistrationMethodEligibilityDecisionStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         assert step.render_info.prev_url == expected_url
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self, app):
-        with app.test_request_context(method='POST', data={'elster_registration_method_eligibility': 'unknown'}), \
+        with app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterRegistrationMethodEligibilityDecisionStep.name)
+                ElsterRegistrationMethodEligibilityDecisionStep.name, True,
+                form_data=ImmutableMultiDict({'elster_registration_method_eligibility': 'unknown'}))
 
             with pytest.raises(IncorrectEligibilityData):
                 step.handle()
@@ -1559,7 +1608,7 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterRegistrationMethodEligibilityDecisionStep.name)
+                ElsterRegistrationMethodEligibilityDecisionStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data
@@ -1568,7 +1617,7 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterRegistrationMethodEligibilityDecisionStep.name)
+                ElsterRegistrationMethodEligibilityDecisionStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data
@@ -1586,7 +1635,7 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterRegistrationMethodEligibilityDecisionStep.name)
+                ElsterRegistrationMethodEligibilityDecisionStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == only_necessary_data
@@ -1595,7 +1644,10 @@ class TestElsterRegistrationMethodEligibilityDecisionStep:
 @pytest.mark.usefixtures("test_request_context")
 class TestElsterAbrufCodeEligibilityFailureStep:
     def test_handle_sets_correct_prev_url(self):
-        step = ElsterAbrufcodeEligibilityFailureStep(endpoint='eligibility')
+        step = ElsterAbrufcodeEligibilityFailureStep(
+                endpoint='eligibility',
+                render_info=ElsterAbrufcodeEligibilityFailureStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(ElsterAbrufcodeEligibilityDecisionStep.name)
         step.handle()
 
@@ -1613,36 +1665,36 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
         return correct_session_data
 
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_next_input_step(self, app, correct_session_data):
-        with app.test_request_context(method='POST',
-                                      data={'elster_abrufcode_eligibility': 'no'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility')\
-                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True)
+            step = EligibilityStepChooser('eligibility') \
+                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True,
+                                  form_data=ImmutableMultiDict({'elster_abrufcode_eligibility': 'no'}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
 
             step.handle()
         assert step.render_info.next_url == expected_url
 
     def test_if_post_and_session_data_correct_and_input_data_unknown_then_set_next_input_step(self, app, correct_session_data):
-        with app.test_request_context(method='POST',
-                                      data={'elster_abrufcode_eligibility': 'unknown'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
             step = EligibilityStepChooser('eligibility')\
-                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True)
+                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True,
+                                  form_data=ImmutableMultiDict({'elster_abrufcode_eligibility': 'unknown'}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
 
             step.handle()
         assert step.render_info.next_url == expected_url
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_step_failure_step(self, app, correct_session_data):
-        with app.test_request_context(method='POST',
-                                      data={'elster_abrufcode_eligibility': 'yes'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility')\
-                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True)
+            step = EligibilityStepChooser('eligibility') \
+                .get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name, True,
+                                  form_data=ImmutableMultiDict({'elster_abrufcode_eligibility': 'yes'}))
             expected_url = step.url_for_step(ElsterAbrufcodeEligibilityFailureStep.name)
 
             step.handle()
@@ -1652,18 +1704,19 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterAbrufcodeEligibilityDecisionStep.name)
+            step = EligibilityStepChooser('eligibility').get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name,
+                                                                          False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
             step.handle()
         assert step.render_info.prev_url == expected_url
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self, app):
-        with app.test_request_context(method='POST', data={'elster_abrufcode_eligibility': 'no'}), \
+        with app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterAbrufcodeEligibilityDecisionStep.name)
+            step = EligibilityStepChooser('eligibility').get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name,
+                                                                          True, form_data=ImmutableMultiDict(
+                    {'elster_abrufcode_eligibility': 'no'}))
 
             with pytest.raises(IncorrectEligibilityData):
                 step.handle()
@@ -1673,8 +1726,8 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterAbrufcodeEligibilityDecisionStep.name)
+            step = EligibilityStepChooser('eligibility').get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name,
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data
@@ -1682,8 +1735,8 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self, app, correct_session_data):
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterAbrufcodeEligibilityDecisionStep.name)
+            step = EligibilityStepChooser('eligibility').get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name,
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data
@@ -1701,8 +1754,8 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
                                'alimony_eligibility': 'no', }
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ElsterAbrufcodeEligibilityDecisionStep.name)
+            step = EligibilityStepChooser('eligibility').get_correct_step(ElsterAbrufcodeEligibilityDecisionStep.name,
+                                                                          False, ImmutableMultiDict({}))
             step.handle()
 
         assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == only_necessary_data
@@ -1710,7 +1763,10 @@ class TestElsterAbrufcodeEligibilityDecisionStep:
 
 class TestPensionEligibilityFailureDisplaySteuerlotseStep:
     def test_handle_sets_correct_prev_url(self, test_request_context):
-        step = PensionEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = PensionEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=PensionEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -1729,22 +1785,24 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
                                      'user_a_has_elster_account_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'pension_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'pension_eligibility': 'yes'}))
             expected_url = step.url_for_step(InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'pension_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'pension_eligibility': 'no'}))
             expected_url = step.url_for_step(PensionEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -1755,7 +1813,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1770,7 +1828,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(UserAElsterAccountEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1785,7 +1843,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1801,7 +1859,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityDecisionStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -1818,17 +1876,18 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(ElsterAbrufcodeEligibilityDecisionStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'pension_eligibility': 'yes'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'pension_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -1845,7 +1904,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1862,7 +1921,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -1883,7 +1942,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -1902,7 +1961,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.pension_eligibility.kwargs['choices'])
@@ -1920,7 +1979,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name)
+                PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.pension_eligibility.kwargs['choices'])
@@ -1939,22 +1998,24 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
                                      'pension_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'investment_income_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'investment_income_eligibility': 'yes'}))
             expected_url = step.url_for_step(MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'investment_income_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'investment_income_eligibility': 'no'}))
             expected_url = step.url_for_step(EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -1965,17 +2026,18 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'investment_income_eligibility': 'yes'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'investment_income_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -1993,7 +2055,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2011,7 +2073,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2033,7 +2095,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -2053,7 +2115,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.investment_income_eligibility.kwargs['choices'])
@@ -2072,7 +2134,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.investment_income_eligibility.kwargs['choices'])
@@ -2092,22 +2154,24 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
                                      'investment_income_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'minimal_investment_income_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'minimal_investment_income_eligibility': 'yes'}))
             expected_url = step.url_for_step(EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'minimal_investment_income_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'minimal_investment_income_eligibility': 'no'}))
             expected_url = step.url_for_step(TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -2118,19 +2182,19 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST',
-                                           data={'investment_income_eligibility': 'yes',
-                                                 'minimal_investment_income_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'investment_income_eligibility': 'yes',
+                                              'minimal_investment_income_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -2149,7 +2213,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2168,7 +2232,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2191,7 +2255,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -2212,7 +2276,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.minimal_investment_income_eligibility.kwargs['choices'])
@@ -2232,7 +2296,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.minimal_investment_income_eligibility.kwargs['choices'])
@@ -2244,7 +2308,10 @@ class TestTaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(unittest
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2266,22 +2333,24 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
                                      'minimal_investment_income_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'taxed_investment_income_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'taxed_investment_income_eligibility': 'yes'}))
             expected_url = step.url_for_step(CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'taxed_investment_income_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'taxed_investment_income_eligibility': 'no'}))
             expected_url = step.url_for_step(TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -2292,17 +2361,18 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'taxed_investment_income_eligibility': 'yes'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'taxed_investment_income_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -2322,7 +2392,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2342,7 +2412,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2366,7 +2436,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -2379,7 +2449,10 @@ class TestCheaperCheckEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = CheaperCheckEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = CheaperCheckEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=CheaperCheckEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2402,22 +2475,24 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
                                      'taxed_investment_income_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'cheaper_check_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'cheaper_check_eligibility': 'no'}))
             expected_url = step.url_for_step(EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'cheaper_check_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'cheaper_check_eligibility': 'yes'}))
             expected_url = step.url_for_step(CheaperCheckEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -2428,17 +2503,18 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'cheaper_check_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'cheaper_check_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -2459,7 +2535,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2480,7 +2556,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2505,7 +2581,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -2527,7 +2603,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.cheaper_check_eligibility.kwargs['choices'])
@@ -2548,7 +2624,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
+                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.cheaper_check_eligibility.kwargs['choices'])
@@ -2571,22 +2647,24 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
                                      'cheaper_check_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'employment_income_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'employment_income_eligibility': 'no'}))
             expected_url = step.url_for_step(IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'employment_income_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'employment_income_eligibility': 'yes'}))
             expected_url = step.url_for_step(MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -2597,7 +2675,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -2607,7 +2685,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
@@ -2617,17 +2695,18 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'employment_income_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'employment_income_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -2649,7 +2728,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2671,7 +2750,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2697,7 +2776,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -2720,7 +2799,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.employment_income_eligibility.kwargs['choices'])
@@ -2742,7 +2821,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
+                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.employment_income_eligibility.kwargs['choices'])
@@ -2754,7 +2833,10 @@ class TestMarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(unitt
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2779,11 +2861,12 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
                                      'employment_income_eligibility': 'yes'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'marginal_employment_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'marginal_employment_eligibility': 'yes'}))
             expected_url = step.url_for_step(IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -2794,29 +2877,31 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'marginal_employment_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'marginal_employment_eligibility': 'no'}))
             expected_url = step.url_for_step(MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'marginal_employment_eligibility': 'yes'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'marginal_employment_eligibility': 'yes'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -2839,7 +2924,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2862,7 +2947,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -2889,7 +2974,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
+                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -2902,7 +2987,10 @@ class TestIncomeOtherEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase)
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = IncomeOtherEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = IncomeOtherEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=IncomeOtherEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -2930,22 +3018,24 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
                                      'other_income_eligibility': 'no'}
 
     def test_if_post_and_session_data_correct_and_input_data_correct_than_set_next_input_step(self):
-        with self.app.test_request_context(method='POST', data={'other_income_eligibility': 'no'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'other_income_eligibility': 'no'}))
             expected_url = step.url_for_step(ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_than_set_next_url_to_alternative_step(self):
-        with self.app.test_request_context(method='POST', data={'other_income_eligibility': 'yes'}) as req:
+        with self.app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'other_income_eligibility': 'yes'}))
             expected_url = step.url_for_step(IncomeOtherEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -2956,7 +3046,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(EmploymentDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
@@ -2970,18 +3060,19 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(alternative_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.prev_url)
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self):
-        with self.app.test_request_context(method='POST', data={'other_income_eligibility': 'no'}), \
-                patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
+        with patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'other_income_eligibility': 'no'}))
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
@@ -3005,7 +3096,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(session_data,
@@ -3016,7 +3107,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(self.correct_session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(self.correct_session_data,
@@ -3044,7 +3135,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             self.assertEqual(only_necessary_data,
@@ -3068,7 +3159,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.other_income_eligibility.kwargs['choices'])
@@ -3091,7 +3182,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
+                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         self.assertEqual(expected_choices, step.form.other_income_eligibility.kwargs['choices'])
@@ -3103,7 +3194,10 @@ class TestForeignCountriesEligibilityFailureDisplaySteuerlotseStep(unittest.Test
         self.req = test_request_context
 
     def test_handle_sets_correct_prev_url(self):
-        step = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(endpoint='eligibility')
+        step = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         expected_url = step.url_for_step(ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
@@ -3137,44 +3231,48 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
         return correct_session_data_with_registration_method_unknown
 
     def test_if_post_and_session_data_correct_without_registration_method_and_input_data_correct_then_set_success_step(self, app, correct_session_data_without_registration_method):
-        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
             expected_url = step.url_for_step(EligibilitySuccessDisplaySteuerlotseStep.name)
             step.handle()
 
         assert step.render_info.next_url == expected_url
 
     def test_if_post_and_session_data_correct_with_registration_method_software_and_input_data_correct_then_set_next_step_to_success_step(self, app, correct_session_data_with_registration_method_software):
-        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_with_registration_method_software)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
             expected_url = step.url_for_step(EligibilitySuccessDisplaySteuerlotseStep.name)
             step.handle()
 
         assert step.render_info.next_url == expected_url
-    
+
     def test_if_post_and_session_data_correct_with_registration_method_unknown_and_input_data_correct_then_set_next_step_to_maybe_step(self, app, correct_session_data_with_registration_method_unknown):
-        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'no'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_with_registration_method_unknown)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
             expected_url = step.url_for_step(EligibilityMaybeDisplaySteuerlotseStep.name)
             step.handle()
 
         assert step.render_info.next_url == expected_url
 
     def test_if_post_and_session_data_correct_and_input_data_incorrect_then_set_next_url_to_failure_step(self, app, correct_session_data_without_registration_method):
-        with app.test_request_context(method='POST', data={'foreign_country_eligibility': 'yes'}) as req:
+        with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                ImmutableMultiDict({'foreign_country_eligibility': 'yes'}))
             expected_url = step.url_for_step(ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name)
             step.handle()
 
@@ -3185,19 +3283,20 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         assert step.render_info.prev_url == expected_url
 
     def test_if_post_and_data_from_before_invalid_then_raise_incorrect_eligibility_data_error(self, app):
-        with app.test_request_context(method='POST', data={'other_income_eligibility': 'no',
-                                                                'foreign_country_eligibility': 'no'}), \
+        with app.test_request_context(method='POST'), \
                 patch('app.model.recursive_data.RecursiveDataModel.one_previous_field_has_to_be_set',
                       MagicMock(side_effect=PreviousFieldsMissingError)):
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'other_income_eligibility': 'no',
+                                              'foreign_country_eligibility': 'no'}))
 
             with pytest.raises(IncorrectEligibilityData):
                 step.handle()
@@ -3223,7 +3322,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == session_data
@@ -3233,7 +3332,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_without_registration_method)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data_without_registration_method
@@ -3242,7 +3341,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
             assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == FULL_SESSION_DATA
@@ -3266,7 +3365,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         assert step.form.foreign_country_eligibility.kwargs['choices'] == expected_choices
@@ -3290,7 +3389,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
         assert step.form.foreign_country_eligibility.kwargs['choices'] == expected_choices
@@ -3311,7 +3410,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3327,7 +3431,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3342,7 +3451,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'yes',
                         'taxed_investment_income_eligibility': 'yes', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3363,7 +3477,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
@@ -3383,14 +3502,22 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'yes',
                         'taxed_investment_income_eligibility': 'yes', }
         with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
-            step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility', stored_data=session_data)
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
         expected_information = []
-        step = EligibilitySuccessDisplaySteuerlotseStep(endpoint='eligibility')
+        step = EligibilitySuccessDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                    {}))
         step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
