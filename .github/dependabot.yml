@@ -21,6 +21,6 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "npm"
-    directory: "/client"
+    directory: "/webapp/client"
     schedule:
       interval: "daily"
