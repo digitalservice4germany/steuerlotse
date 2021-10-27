@@ -1,0 +1,46 @@
+name: Restart deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      namespace:
+        description: 'Environment to run in (= Kubernetes namespace)'
+        required: true
+        default: 'staging'
+      deployment:
+        description: 'Deployment to restart'
+        required: true
+        default: 'web'
+env:
+  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+
+jobs:
+  restart:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to container repository
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ env.DOCKER_REGISTRY }}
+        username: ${{ secrets.REGISTRY_USER }}
+        password: ${{ secrets.REGISTRY_PWD }}
+
+    - name: Pull deploy images
+      run: docker pull ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment
+      shell: bash
+
+    - name: Run restart
+      env:
+        NAMESPACE: ${{ github.event.inputs.namespace }}
+      run: |
+        docker run \
+        -e KUBECONFIG_BASE64='${{ secrets.CI_KUBECONFIG_B64 }}' \
+        -e NAMESPACE='${{ env.NAMESPACE }}' -e DEPLOYMENT_NAME='${{ github.event.inputs.deployment }}' \
+        ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment restart-deployment
+      shell: bash
+
+    - name: Logout of docker container repository
+      run: docker logout ${{ env.DOCKER_REGISTRY }}
