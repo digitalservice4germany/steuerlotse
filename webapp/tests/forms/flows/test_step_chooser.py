@@ -73,11 +73,18 @@ class TestGetPossibleRedirect:
         step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithPreconditionAndMessage.name,
                                                                   {'second_precondition_met': True})
         assert step_to_redirect_to is None
+
+    def test_if_step_has_redirection_set_but_met_then_do_not_flash(self, step_chooser):
+        step_chooser._get_possible_redirect(MockStepWithPreconditionAndMessage.name,
+                                            {'second_precondition_met': True})
         assert '_flashes' not in session
 
     def test_if_step_in_list_and_has_no_redirection_set_then_return_none(self, step_chooser):
         step_to_redirect_to = step_chooser._get_possible_redirect(MockRenderStep.name, {})
         assert step_to_redirect_to is None
+
+    def test_if_step_in_list_and_has_no_redirection_set_then_do_not_flash(self, step_chooser):
+        step_chooser._get_possible_redirect(MockRenderStep.name, {})
         assert '_flashes' not in session
 
 

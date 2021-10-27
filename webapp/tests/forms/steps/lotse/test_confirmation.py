@@ -11,21 +11,29 @@ from app.model.form_data import MandatoryFieldMissingValidationError
 
 
 @pytest.mark.usefixtures('test_request_context')
-class TestStepSummary:
+class TestStepSummaryForm:
     @pytest.fixture
     def summary_step(self):
         step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
         return step
 
-    def test_if_complete_correct_not_set_then_fail_validation(self, summary_step):
+    def test_if_confirm_complete_correct_not_set_in_data_then_fail_validation(self, summary_step):
         data = MultiDict({})
         form = summary_step.InputForm(formdata=data)
         assert form.validate() is False
 
-    def test_if_complete_correct_set_then_succ_validation(self, summary_step):
+    def test_if_confirm_complete_correct_set_in_data_then_succ_validation(self, summary_step):
         data = MultiDict({'confirm_complete_correct': True})
         form = summary_step.InputForm(formdata=data)
         assert form.validate() is True
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepSummaryHandle:
+    @pytest.fixture
+    def summary_step(self):
+        step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
+        return step
 
     def test_set_section_steps_in_render_info(self, new_test_request_context, summary_step):
         expected_summary_session_steps = {}
