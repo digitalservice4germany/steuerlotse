@@ -18,6 +18,20 @@ const translations = {
     backToOverview: "Zurück zur Übersicht",
     next: "Weiter",
   },
+  lotse: {
+    fieldDeclarationIncomes: {
+      fieldConfirmIncomes:
+        "Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2020 keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten Einkünfte.",
+    },
+    declarationIncomes: {
+      listItem1:
+        "Renteneinkünfte und / oder Pensionen, die von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet worden sind, und ggf.",
+      listItem2:
+        "Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde (Freistellungsauftrag), und ggf.",
+      listItem3:
+        "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
+    },
+  },
   unlockCodeActivation: {
     idnr: {
       labelText: "Steuer-Identifikationsnummer",

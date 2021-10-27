@@ -1,4 +1,5 @@
 from flask import render_template
+from flask_wtf.csrf import generate_csrf
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink, DisplayStep
@@ -6,6 +7,9 @@ from app.forms.fields import ConfirmationField
 
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
+
+from app.model.components import DeclarationIncomesProps
+from app.model.components.helpers import form_fields_dict
 
 
 class StepDeclarationIncomes(FormStep):
@@ -24,16 +28,28 @@ class StepDeclarationIncomes(FormStep):
             title=_('form.lotse.declaration_incomes.title'),
             intro=_('form.lotse.declaration_incomes.intro'),
             form=self.Form,
-            **kwargs,
-            template='basis/form_standard_with_list.html')
+            **kwargs)
 
     def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
-            _('form.lotse.declaration_incomes.list-item-1'),
-            _('form.lotse.declaration_incomes.list-item-2'),
-            _('form.lotse.declaration_incomes.list-item-3'),
-        ], header_title=_('form.lotse.header-title'))
+        props_dict = DeclarationIncomesProps(
+            step_header={
+                'title': render_info.step_title,
+                'intro': render_info.step_intro,
+            },
+            form={
+                'action': render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(render_info.overview_url),
+            },
+            fields=form_fields_dict(render_info.form),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='DeclarationIncomesPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=render_info.form,
+                               header_title=_('form.lotse.header-title'))
 
 
 class StepDeclarationEdaten(FormStep):

@@ -5,10 +5,12 @@ import ReactDOM from "react-dom";
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import DeclarationIncomesPage from "./pages/DeclarationIncomesPage";
 
 const allowedComponents = {
   LoginPage,
   RegistrationPage,
+  DeclarationIncomesPage,
 };
 
 function mountComponent(element) {
