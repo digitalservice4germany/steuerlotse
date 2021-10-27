@@ -469,21 +469,35 @@ class TestCheckPrecondition:
 
     def test_if_multiple_precondition_set_and_all_met_then_return_true(self):
         precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': True,
-                                                                                    'second_precondition_met': True})
+                                                                                    'second_precondition_met': True,
+                                                                                    'third_precondition_met': True})
         assert precondition_checked == True
 
     def test_if_multiple_precondition_set_and_parts_met_then_return_false(self):
         precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': True,
-                                                                                    'second_precondition_met': False})
+                                                                                    'second_precondition_met': False,
+                                                                                    'third_precondition_met': False})
         assert precondition_checked == False
 
         precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': False,
-                                                                                    'second_precondition_met': True})
+                                                                                    'second_precondition_met': True,
+                                                                                    'third_precondition_met': False})
+        assert precondition_checked == False
+
+        precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': False,
+                                                                                    'second_precondition_met': False,
+                                                                                    'third_precondition_met': True})
+        assert precondition_checked == False
+
+        precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': True,
+                                                                                    'second_precondition_met': False,
+                                                                                    'third_precondition_met': True})
         assert precondition_checked == False
 
     def test_if_multiple_precondition_set_but_none_met_then_return_false(self):
         precondition_checked = MockStepWithMultiplePrecondition.check_precondition({'precondition_met': False,
-                                                                                    'second_precondition_met': False})
+                                                                                    'second_precondition_met': False,
+                                                                                    'third_precondition_met': False})
         assert precondition_checked == False
 
 

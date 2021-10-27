@@ -108,6 +108,19 @@ class MockSecondPreconditionModelWithMessage(BaseModel):
         return v
 
 
+class MockThirdPreconditionModelWithMessage(BaseModel):
+    _step_to_redirect_to = MockStartStep.name
+    _message_to_flash = "This is not for you."
+
+    third_precondition_met: bool
+
+    @validator('third_precondition_met')
+    def precondition_has_to_be_met(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
 class MockStepWithPrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
     preconditions = [MockPreconditionModelWithoutMessage]
@@ -125,7 +138,8 @@ class MockStepWithPrecondition(SteuerlotseStep):
 
 class MockStepWithMultiplePrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
-    preconditions = [MockPreconditionModelWithoutMessage, MockSecondPreconditionModelWithMessage]
+    preconditions = [MockPreconditionModelWithoutMessage, MockSecondPreconditionModelWithMessage,
+                     MockThirdPreconditionModelWithMessage]
 
     def __init__(self, header_title=None, default_data=None, **kwargs):
         super(MockStepWithMultiplePrecondition, self).__init__(
