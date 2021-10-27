@@ -20,7 +20,7 @@ class UnlockCodeRequestInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
-        dob = SteuerlotseDateField(validators=[InputRequired(message=_l('validation-date-of-birth-missing')), ValidDateOfBirth()], format_error_message=_l('validate.date-of-birth-missing'))
+        dob = SteuerlotseDateField(validators=[InputRequired(message=_l('validation-date-of-birth-missing')), ValidDateOfBirth()], prevent_validation_error=True)
         registration_confirm_data_privacy = ConfirmationField()
         registration_confirm_terms_of_service = ConfirmationField()
         registration_confirm_incomes = ConfirmationField()

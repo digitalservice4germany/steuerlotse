@@ -24,7 +24,7 @@ class TestPersonAStep(unittest.TestCase):
         # fill required fields
         self.form.person_a_idnr.raw_data = self.idnr
         self.form.person_a_idnr.data = self.idnr
-        self.form.person_a_dob.raw_data = "01.01.1985"
+        self.form.person_a_dob.raw_data = ["01","01","1985"]
         self.form.person_a_first_name.raw_data = "Hermine"
         self.form.person_a_last_name.raw_data = "Granger"
         self.form.person_a_street.raw_data = "Hogwartsstraße"
@@ -83,7 +83,7 @@ class TestPersonBStep(unittest.TestCase):
         # fill required fields
         self.form.person_b_idnr.raw_data = "04452397687"
         self.form.person_b_idnr.data = "04452397687"
-        self.form.person_b_dob.raw_data = "01.01.1985"
+        self.form.person_b_dob.raw_data = ["01","01","1985"]
         self.form.person_b_first_name.raw_data = "Ronald"
         self.form.person_b_last_name.raw_data = "Weasley"
         self.form.person_b_same_address.data = 'no'

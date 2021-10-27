@@ -30,14 +30,13 @@ class ValidDateOf:
                 
         day, month, year = None, None, None
 
-
-        if isinstance(raw_input_date, str):
-            day, month, year = raw_input_date.split('.')
-        elif isinstance(raw_input_date, list):
+        if isinstance(raw_input_date, list):
             if len(raw_input_date) != 3:
                 raise ValidationError(self.message_incomplete)
 
             day, month, year = raw_input_date
+        else:
+            raise ValidationError(self.message_incorrect)
 
         if not day or not month or not year: 
             raise ValidationError(self.message_incomplete)
@@ -74,7 +73,7 @@ class ValidDateOfDeath(ValidDateOf):
 class ValidDateOfMarriage(ValidDateOf):
     def __init__(self) -> None:
         super().__init__(
-            message_missing = _l('validate.date-of-death-missing'),
+            message_missing = _l('validate.date-of-marriage-missing'),
             message_incomplete = _l('validate.date-of-marriage-incomplete'), 
             message_incorrect = _l('validate.date-of-incorrect'), 
             message_in_the_future = _l('validate.date-of-in-the-future'), 
@@ -84,7 +83,7 @@ class ValidDateOfMarriage(ValidDateOf):
 class ValidDateOfDivorce(ValidDateOf):
     def __init__(self) -> None:
         super().__init__(
-            message_missing = _l('validate.date-of-death-missing'),
+            message_missing = _l('validate.date-of-divorce-missing'),
             message_incomplete = _l('validate.date-of-incomplete'), 
             message_incorrect = _l('validate.date-of-incorrect'), 
             message_in_the_future = _l('validate.date-of-in-the-future'), 

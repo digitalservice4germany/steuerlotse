@@ -39,7 +39,7 @@ class StepFamilienstand(FormStep):
         familienstand_date = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_date'),
             render_kw={'data_label': _l('form.lotse.familienstand_date.data_label')},
-            format_error_message=_l('validate.date-of-marriage-missing'), 
+            prevent_validation_error=True, 
             validators=[ValidDateOfBirth()])
         
         familienstand_married_lived_separated = YesNoField(
@@ -49,7 +49,7 @@ class StepFamilienstand(FormStep):
         familienstand_married_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
-            format_error_message=_l('validate.date-of-divorce-missing'),
+            prevent_validation_error=True, 
             validators=[ValidDateOfMarriage()])
         familienstand_widowed_lived_separated = YesNoField(
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
@@ -58,7 +58,7 @@ class StepFamilienstand(FormStep):
         familienstand_widowed_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
-            format_error_message=_l('validate.date-of-death-missing'), 
+            prevent_validation_error=True, 
             validators=[ValidDateOfDeath()])
         familienstand_zusammenveranlagung = YesNoField(
             label=_l('form.lotse.field_familienstand_zusammenveranlagung'),
@@ -71,9 +71,14 @@ class StepFamilienstand(FormStep):
         def validate_familienstand_date(self, field):
             if self.familienstand.data == 'single':
                 validators.Optional()(self, field)
-            else:
+            elif self.familienstand.data == 'married':
                 validators.InputRequired(_l('validate.date-of-marriage-missing'))(self, field)
-
+            elif self.familienstand.data == 'widowed':
+                validators.InputRequired(_l('validate.date-of-death-missing'))(self, field)      
+            elif self.familienstand.data == 'divorced':
+                validators.InputRequired(_l('validate.date-of-divorce-missing'))(self, field)      
+                
+                
         def validate_familienstand_married_lived_separated(self, field):
             if self.familienstand.data == 'married':
                 validators.InputRequired(_l('form.lotse.validation-familienstand-married-lived-separated'))(self, field)
@@ -82,13 +87,16 @@ class StepFamilienstand(FormStep):
 
         def validate_familienstand_married_lived_separated_since(self, field):
             if self.familienstand.data == 'married' and self.familienstand_married_lived_separated.data == 'yes':
+                
                 validators.InputRequired(_l('validate.date-of-divorce-missing'))(self,
                                                                                                                   field)
             else:
                 validators.Optional()(self, field)
+                
             if field.data and field.data < self.familienstand_date.data:
                 from wtforms.validators import ValidationError
                 raise ValidationError(_('form.lotse.validation.married-after-separated'))
+            
 
         def validate_familienstand_widowed_lived_separated(self, field):
             if self.familienstand.data == 'widowed' and \
@@ -104,6 +112,7 @@ class StepFamilienstand(FormStep):
                                                                                                                   field)
             else:
                 validators.Optional()(self, field)
+                
             if field.data and field.data >= self.familienstand_date.data:
                 from wtforms.validators import ValidationError
                 raise ValidationError(_('form.lotse.validation.widowed-before-separated'))
