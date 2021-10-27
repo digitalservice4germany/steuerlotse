@@ -1,5 +1,5 @@
 from collections import namedtuple
-from flask import render_template
+from flask import render_template, request
 
 SectionLink = namedtuple(
     typename='SectionLink',
@@ -66,15 +66,15 @@ class FormStep(Step):
         self.form = form
         self.template = template
 
-    def create_form(self, request, prefilled_data):
-        # If `form_data` is present it will always override `data` during
-        # value binding. For `BooleanFields` an empty/missing value in the `form_data`
-        # will lead to an unchecked box.
-        form_data = request.form
-        if len(form_data) == 0:
-            form_data = None
+    def create_form(self, form_data=None, prefilled_data=None):
+        # Form_data is only present because the FormStep should work similar to the newer SteuerlotseSteps as they will
+        # be replaced one by one.
 
-        form = self.form(form_data, **prefilled_data)
+        extracted_form_data = request.form  # Override the form_data because the multistep flow does not set it
+        if len(extracted_form_data) == 0:
+            extracted_form_data = None
+
+        form = self.form(extracted_form_data, **prefilled_data)
         return form
 
     def render(self, data, render_info):

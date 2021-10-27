@@ -19,3 +19,8 @@ updates:
     directory: "/erica_app"
     schedule:
       interval: "daily"
+
+  - package-ecosystem: "npm"
+    directory: "/webapp/client"
+    schedule:
+      interval: "daily"

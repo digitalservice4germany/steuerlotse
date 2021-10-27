@@ -20,7 +20,7 @@
     <h2 class="unlock-code-failure-reasons-headline">{{ _('form.unlock-code-activation.failure.reasons-title') }}</h2>
     <ol>
         <li>{{ _('form.unlock-code-activation.failure.reasons-1') }}</li>
-        <li>{{ _('form.unlock-code-activation.failure.reasons-2') }}</li>
-        <li>{{ _('form.unlock-code-activation.failure.reasons-3') }}</li>
+        <li>{{ _('form.unlock-code-activation.failure.reasons-2', registration_link=url_for('unlock_code_request', step='start') ) }}</li>
+        <li>{{ _('form.unlock-code-activation.failure.reasons-3', revocation_link=url_for('unlock_code_revocation', step='start'), registration_link=url_for('unlock_code_request', step='start')) }}</li>
     </ol>
 {% endblock %}

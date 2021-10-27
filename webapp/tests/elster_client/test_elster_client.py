@@ -10,7 +10,8 @@ from markupsafe import escape
 from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
-    send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data
+    send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data, \
+    validate_tax_number
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -129,14 +130,11 @@ class TestSendEst(unittest.TestCase):
     def test_if_fields_missing_raise_error(self):
         data = copy.deepcopy(self.valid_form_data)
         data.pop("familienstand")
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    patch('app.elster_client.elster_client._log_address_data'):
-                self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
-                                  include_elster_responses=False)
-        finally:
-            MockErica.value_error_missing_fields_occurred = False
+        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client._log_address_data'):
+            self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
+                              include_elster_responses=False)
 
     def test_if_invalid_bufa_then_return_error(self):
         MockErica.invalid_bufa_number_error_occurred = True
@@ -487,7 +485,7 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterRequestAlreadyRevoked, send_unlock_code_revocation_with_elster,
-                                  {'idnr': self.new_idnr, 'elster_request_id':  self.correct_elster_request_id}, 'IP')
+                                  {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
         finally:
             MockErica.request_code_already_revoked_error_occurred = False
 
@@ -518,6 +516,38 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
     def tearDown(self):
         if self.new_idnr in MockErica.available_idnrs:
             MockErica.available_idnrs.remove(self.new_idnr)
+
+
+class TestValidateTaxNumber:
+
+    def test_if_tax_number_is_valid_then_return_true(self):
+        state_abbreviation = 'BY'
+        tax_number = '19811310010'
+        result = validate_tax_number(state_abbreviation, tax_number)
+
+        assert result is True
+
+    def test_if_tax_number_is_invalid_then_return_false(self):
+        state_abbreviation = 'BY'
+        tax_number = '00000111111'
+        MockErica.tax_number_is_invalid = True
+        try:
+            result = validate_tax_number(state_abbreviation, tax_number)
+
+        finally:
+            MockErica.tax_number_is_invalid = False
+
+        assert result is False
+
+    def test_if_erica_throws_error_then_raise_error(self):
+        state_abbreviation = 'BY'
+        tax_number = '19811310010'
+        MockErica.eric_process_not_successful_error_occurred = True
+        try:
+            with pytest.raises(ElsterUnknownError):
+                validate_tax_number(state_abbreviation, tax_number)
+        finally:
+            MockErica.eric_process_not_successful_error_occurred = False
 
 
 class TestGenerateEStRequestData(unittest.TestCase):
