@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-22 17:04+0200\n"
+"POT-Creation-Date: 2021-10-28 06:45+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -67,58 +67,6 @@ msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
-
-#: app/routes.py:187 app/routes.py:295
-msgid "404.header-title"
-msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:207 app/templates/basis/base.html:36
-msgid "page.title"
-msgstr "Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:214
-msgid "howitworks.header-title"
-msgstr "Informieren - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:221
-msgid "contact.header-title"
-msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:228
-msgid "imprint.header-title"
-msgstr "Impressum - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:235
-msgid "barrierefreiheit.header-title"
-msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:242
-msgid "data_privacy.header-title"
-msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:249
-msgid "agb.header-title"
-msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:261
-msgid "about.header-title"
-msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:266
-msgid "about_digitalservice.header-title"
-msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:287
-msgid "erica-error.header-title"
-msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:291 app/routes.py:299
-msgid "400.header-title"
-msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:303
-msgid "429.header-title"
-msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:199 app/routes.py:307
 msgid "404.header-title"
@@ -403,7 +351,7 @@ msgstr "geschieden / Lebenspartnerschaft aufgehoben"
 msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
-#: app/forms/steps/eligibility_steps.py:190
+#: app/forms/steps/eligibility_steps.py:193
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1257,7 +1205,7 @@ msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:57
-#: app/forms/steps/lotse/personal_data.py:158
+#: app/forms/steps/lotse/personal_data.py:159
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
@@ -1278,6 +1226,10 @@ msgstr ""
 "keine Steuererklärung abgegeben haben, können Sie eine neue Steuernummer "
 "beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-"
 "Identifikationsnummer zwei verschiedene Nummern sind."
+
+#: app/forms/steps/lotse/personal_data.py:61
+msgid "form.lotse.steuernummer.selection_input_required"
+msgstr "Beantworten Sie die Frage, um fortfahren zu können."
 
 #: app/forms/steps/lotse/personal_data.py:63
 msgid "form.lotse.field_bundesland"
@@ -1360,28 +1312,32 @@ msgstr "Auswahl Bundesland"
 msgid "form.lotse.field_bundesland_required"
 msgstr "Bundesland auswählen"
 
-#: app/forms/steps/lotse/personal_data.py:87
+#: app/forms/steps/lotse/personal_data.py:85
+msgid "form.lotse.steuernummer.input_required"
+msgstr "Diese Angabe wird benötigt, um fortfahren zu können. "
+
+#: app/forms/steps/lotse/personal_data.py:88
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/personal_data.py:91
+#: app/forms/steps/lotse/personal_data.py:92
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/personal_data.py:93
+#: app/forms/steps/lotse/personal_data.py:94
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:96
+#: app/forms/steps/lotse/personal_data.py:97
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:97
+#: app/forms/steps/lotse/personal_data.py:98
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/personal_data.py:100
-#: app/forms/steps/lotse/personal_data.py:161
+#: app/forms/steps/lotse/personal_data.py:101
+#: app/forms/steps/lotse/personal_data.py:162
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1391,11 +1347,11 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:101
+#: app/forms/steps/lotse/personal_data.py:102
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:136
+#: app/forms/steps/lotse/personal_data.py:137
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"
@@ -5342,6 +5298,19 @@ msgstr ""
 " brauchen, und erklärt, wie Sie nach Erhalt des Briefes fortfahren."
 
 #: app/templates/unlock_code/registration_success.html:21
+#, fuzzy
 msgid "register.success.preparation.button"
-msgstr "Vorbereitungshilfe herunterladen"
+msgstr ""
+"Unsere Vorbereitungshilfe gibt Ihnen einen Überblick darüber, welche "
+"Unterlagen Sie für die Erstellung Ihrer Steuererklärung beim Steuerlotsen"
+" brauchen, und erklärt, wie Sie nach Erhalt des Briefes fortfahren."
+
+#~ msgid "validate.date-of-marriage-missing"
+#~ msgstr "Geben Sie Ihr Hochzeitsdatum ein."
+
+#~ msgid "validate.date-of-death-missing"
+#~ msgstr "Geben Sie das Todesdatum ein."
+
+#~ msgid "validate.date-of-divorce-missing"
+#~ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 
