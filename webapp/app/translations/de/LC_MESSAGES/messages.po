@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-27 16:01+0200\n"
+"POT-Creation-Date: 2021-10-28 07:35+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -988,13 +988,22 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:805
+#: app/forms/steps/eligibility_steps.py:804
+msgid "form.eligibility.result-note.deadline"
+msgstr ""
+"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
+" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
+"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
+"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
+"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
+
+#: app/forms/steps/eligibility_steps.py:807
 msgid "form.eligibility.result-note.user_b_elster_account"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss "
 "sich trotzdem nur eine Person registrieren."
 
-#: app/forms/steps/eligibility_steps.py:806
+#: app/forms/steps/eligibility_steps.py:808
 msgid "form.eligibility.result-note.user_b_elster_account-registration"
 msgstr ""
 "Bitte registrieren Sie sich mit den Angaben der Person, die noch kein "
@@ -1003,7 +1012,7 @@ msgstr ""
 " erstellt und per Post versendet. Aus technischen Gründen geschieht das "
 "allerdings nur, wenn Sie noch kein Konto bei Mein ELSTER haben."
 
-#: app/forms/steps/eligibility_steps.py:810
+#: app/forms/steps/eligibility_steps.py:812
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -1013,15 +1022,6 @@ msgstr ""
 "einverstanden sind, dann können Sie in der Einkommensteuererklärung eine "
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
-
-#: app/forms/steps/eligibility_steps.py:812
-msgid "form.eligibility.result-note.deadline"
-msgstr ""
-"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
-" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
-"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
-"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
-"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
 
 #: app/forms/steps/eligibility_steps.py:821
 msgid "form.eligibility.success.maybe.title"
@@ -1094,9 +1094,10 @@ msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 msgid "form.unlock-code-request.input-intro"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
-"Finanzverwaltung. Sie erhalten diesen mit einem Brief innerhalb von zwei "
-"Wochen nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung "
-"nutzen möchten, muss sich nur eine Person registrieren."
+"Finanzverwaltung. Sie erhalten diesen mit einem Brief <b>innerhalb von "
+"zwei Wochen</b> nach erfolgreicher Beantragung. Wenn Sie die "
+"Zusammenveranlagung nutzen möchten, muss sich nur eine Person "
+"registrieren."
 
 #: app/forms/steps/unlock_code_request_steps.py:62
 #: app/forms/steps/unlock_code_request_steps.py:75

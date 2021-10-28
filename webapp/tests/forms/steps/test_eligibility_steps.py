@@ -3401,9 +3401,9 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.req = test_request_context
 
     def test_if_user_b_has_no_elster_account_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.user_b_elster_account',
-                                'form.eligibility.result-note.user_b_elster_account-registration',
-                                'form.eligibility.result-note.deadline']
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.user_b_elster_account',
+                                'form.eligibility.result-note.user_b_elster_account-registration']
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
@@ -3422,8 +3422,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.capital_investment',
-                                'form.eligibility.result-note.deadline']
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.capital_investment']
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -3444,8 +3444,9 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_has_no_minimal_investment_income_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.capital_investment',
-                                'form.eligibility.result-note.deadline']
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.capital_investment']
+        
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -3465,10 +3466,11 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.user_b_elster_account',
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.user_b_elster_account',
                                 'form.eligibility.result-note.user_b_elster_account-registration',
-                                'form.eligibility.result-note.capital_investment',
-                                'form.eligibility.result-note.deadline']
+                                'form.eligibility.result-note.capital_investment']
+        
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
@@ -3492,10 +3494,10 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_b_has_no_elster_account_and_user_has_minimal_investment_income_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.user_b_elster_account',
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.user_b_elster_account',
                                 'form.eligibility.result-note.user_b_elster_account-registration',
-                                'form.eligibility.result-note.capital_investment',
-                                'form.eligibility.result-note.deadline']
+                                'form.eligibility.result-note.capital_investment']
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',

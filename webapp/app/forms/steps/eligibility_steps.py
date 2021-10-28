@@ -801,15 +801,15 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
         # Add notes depending on certain previous answers
         dependent_notes = []
+        dependent_notes.append(_('form.eligibility.result-note.deadline'))
+        
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
         if data_fits_data_model_from_list(
                 [CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
-            dependent_notes.append(_('form.eligibility.result-note.capital_investment'))
-            
-        dependent_notes.append(_('form.eligibility.result-note.deadline'))
+            dependent_notes.append(_('form.eligibility.result-note.capital_investment'))            
         
         self.render_info.additional_info['dependent_notes'] = dependent_notes
 

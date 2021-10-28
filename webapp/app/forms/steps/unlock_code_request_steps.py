@@ -26,8 +26,8 @@ class UnlockCodeRequestInputStep(FormStep):
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestInputStep, self).__init__(
-            title=_('form.unlock-code-request.input-title'),
-            intro=_('form.unlock-code-request.input-intro'),
+            title=_l('form.unlock-code-request.input-title'),
+            intro=_l('form.unlock-code-request.input-intro'),
             form=self.Form,
             **kwargs)
 
@@ -67,8 +67,8 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestSuccessStep, self).__init__(
-            title=_('form.unlock-code-request.success-title'),
-            intro=_('form.unlock-code-request.success-intro'), **kwargs)
+            title=_l('form.unlock-code-request.success-title'),
+            intro=_l('form.unlock-code-request.success-intro'), **kwargs)
 
     def render(self, data, render_info):
         return render_template('unlock_code/registration_success.html', render_info=render_info,
