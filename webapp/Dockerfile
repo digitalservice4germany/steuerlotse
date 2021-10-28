@@ -1,7 +1,7 @@
 #########
 ### Node image for building static assets
 ######
-FROM node:16-alpine as node_builder
+FROM node:17-alpine as node_builder
 ENV NODE_ENV=production
 
 WORKDIR /app
