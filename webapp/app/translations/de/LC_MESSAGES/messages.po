@@ -5299,18 +5299,4 @@ msgstr ""
 
 #: app/templates/unlock_code/registration_success.html:21
 #, fuzzy
-msgid "register.success.preparation.button"
-msgstr ""
-"Unsere Vorbereitungshilfe gibt Ihnen einen Überblick darüber, welche "
-"Unterlagen Sie für die Erstellung Ihrer Steuererklärung beim Steuerlotsen"
-" brauchen, und erklärt, wie Sie nach Erhalt des Briefes fortfahren."
-
-#~ msgid "validate.date-of-marriage-missing"
-#~ msgstr "Geben Sie Ihr Hochzeitsdatum ein."
-
-#~ msgid "validate.date-of-death-missing"
-#~ msgstr "Geben Sie das Todesdatum ein."
-
-#~ msgid "validate.date-of-divorce-missing"
-#~ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
-
+msgid "register.success.preparation.button"msgstr "Vorbereitungshilfe herunterladen"
