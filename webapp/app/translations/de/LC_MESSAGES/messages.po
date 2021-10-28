@@ -1657,7 +1657,7 @@ msgstr "Geben Sie ein Datum an."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:73
 msgid "form.lotse.validation-familienstand-married-lived-separated"
-msgstr "Wählen Sie “Ja” oder “Nein” aus."
+msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:79
 msgid "form.lotse.validation-familienstand-married-lived-separated-since"
@@ -1669,7 +1669,7 @@ msgstr "Dieses Datum darf nicht vor Ihrem Hochzeitsdatum liegen."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:91
 msgid "form.lotse.validation-familienstand-widowed-lived-separated"
-msgstr "Wählen Sie “Ja” oder “Nein” aus."
+msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:97
 msgid "form.lotse.validation-familienstand-widowed-lived-separated-since"
