@@ -40,9 +40,9 @@ describe("Steuernummer", () => {
       cy.login();
       cy.visit("/lotse/step/familienstand");
       cy.get("label[for=familienstand-1]").click();
-      cy.get("#familienstand_date_1").clear().type("1");
-      cy.get("#familienstand_date_2").clear().type("1");
-      cy.get("#familienstand_date_3").clear().type("1980");
+      cy.get("#familienstand_date_1").type("1");
+      cy.get("#familienstand_date_2").type("1");
+      cy.get("#familienstand_date_3").type("1980");
       cy.get("label[for=familienstand_married_lived_separated-no]").click();
       cy.get("label[for=familienstand_confirm_zusammenveranlagung]")
         .first()

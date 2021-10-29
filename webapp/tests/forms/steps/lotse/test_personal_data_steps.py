@@ -17,66 +17,67 @@ class SummaryStep:
     pass
 
 
+def new_step_with_bufa_choices(form_data):
+    step = LotseStepChooser().get_correct_step(StepSteuernummer.name, True, ImmutableMultiDict(form_data))
+    tax_offices = request_tax_offices()
+    step._set_bufa_choices(tax_offices)
+
+    return step
+
+
 @pytest.mark.usefixtures('test_request_context')
 class TestStepSteuernummer:
-    def new_step_with_bufa_choices(self, form_data):
-        step = LotseStepChooser().get_correct_step(StepSteuernummer.name, True, ImmutableMultiDict(form_data))
-        tax_offices = request_tax_offices()
-        step._set_bufa_choices(tax_offices)
-
-        return step
-
     def test_if_steuernummer_exists_and_hessen_and_tax_number_10_digits_then_fail_validation(self):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'bundesland': 'HE',
                           'steuernummer': '9811310010', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_steuernummer_exists_missing_then_fail_validation(self):
         data = MultiDict({'bundesland': 'BY',
                           'steuernummer': '19811310010', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_steuernummer_exists_and_bundesland_missing_then_fail_validation(self):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'steuernummer': '19811310010', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_steuernummer_exists_and_steuernummer_missing_then_fail_validation(self):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'bundesland': 'BY', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_steuernummer_exists_and_nothing_is_missing_then_succeed_validation(self):
         data = MultiDict({'steuernummer_exists': 'yes',
                           'bundesland': 'BY',
                           'steuernummer': '19811310010', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is True
 
     def test_if_no_steuernummer_and_bundesland_missing_then_fail_validation(self):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bufa_nr': '9201',
                           'request_new_tax_number': 'y', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_no_steuernummer_and_bufa_nr_missing_then_fail_validation(self):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bundesland': 'BY',
                           'request_new_tax_number': 'y', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_no_steuernummer_and_request_new_tax_number_missing_then_fail_validation(self):
         data = MultiDict({'steuernummer_exists': 'no',
                           'bundesland': 'BY',
                           'bufa_nr': '9201', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is False
 
     def test_if_no_steuernummer_and_nothing_is_missing_then_succeed_validation(self):
@@ -84,7 +85,7 @@ class TestStepSteuernummer:
                           'bundesland': 'BY',
                           'bufa_nr': '9201',
                           'request_new_tax_number': 'y', })
-        form = self.new_step_with_bufa_choices(form_data=data).render_info.form
+        form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is True
 
     def test_if_multiple_users_then_show_multiple_text(self, app):
