@@ -49,8 +49,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    def __init__(self, endpoint="lotse", render_info=None, *args, **kwargs):
-        super().__init__(endpoint=endpoint, render_info=render_info, *args, **kwargs)
+    def __init__(self, endpoint="lotse", *args, **kwargs):
+        super().__init__(endpoint=endpoint, *args, **kwargs)
 
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
@@ -151,13 +151,14 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         choices = []
         for county in tax_offices:
             choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in county.get('tax_offices')]
-        self.form.bufa_nr.kwargs['choices'] = choices
+        self.render_info.form.bufa_nr.choices = choices
 
     def _set_multiple_texts(self):
         num_of_users = 2 if show_person_b(self.stored_data) else 1
-        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
-                                                                 'form.lotse.steuernummer_exists',
-                                                                 num=num_of_users)
-        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
-                                                                    'form.lotse.steuernummer.request_new_tax_number',
-                                                                    num=num_of_users)
+        self.render_info.form.steuernummer_exists.label.text = ngettext('form.lotse.steuernummer_exists',
+                                                                             'form.lotse.steuernummer_exists',
+                                                                             num=num_of_users)
+        self.render_info.form.request_new_tax_number.label.text = ngettext(
+            'form.lotse.steuernummer.request_new_tax_number',
+            'form.lotse.steuernummer.request_new_tax_number',
+            num=num_of_users)
