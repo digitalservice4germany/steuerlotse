@@ -190,7 +190,7 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
                      ('divorced', _l('form.eligibility.marital_status.divorced')),
                      ('widowed', _l('form.eligibility.marital_status.widowed')),
                      ],
-            validators=[InputRequired()])
+            validators=[InputRequired(_l('validate.input-required'))])
 
     def _main_handle(self):
         super()._main_handle()
