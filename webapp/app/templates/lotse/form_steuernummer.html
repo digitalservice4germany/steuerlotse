@@ -30,7 +30,7 @@
     {{ super() }}
     <script src="{{ url_for('static', filename='js/field_utils.js') }}" type=text/javascript></script>
     <script>
-        const taxOffices = JSON.parse('{{ render_info.additional_info['tax_offices']|tojson }}');
+        const taxOffices = JSON.parse('{{ form.tax_offices|tojson }}');
         const TAX_NUMBER_FORM_STATES = {
             'NothingSelected': 'NothingSelected',
             'StateSelectionTaxNumberExists': 'StateSelectionTaxNumberExists',

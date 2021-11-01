@@ -19,9 +19,6 @@ class SummaryStep:
 
 def new_step_with_bufa_choices(form_data):
     step = LotseStepChooser().get_correct_step(StepSteuernummer.name, True, ImmutableMultiDict(form_data))
-    tax_offices = request_tax_offices()
-    step._set_bufa_choices(tax_offices)
-
     return step
 
 
