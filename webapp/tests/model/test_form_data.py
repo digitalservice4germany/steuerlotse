@@ -1,14 +1,53 @@
-import copy
 import datetime
 import unittest
 import datetime as dt
 from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
+import pytest
 from pydantic import ValidationError, MissingError
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.model.form_data import FamilienstandModel, MandatoryFormData, FormDataDependencies, JointTaxesModel
+
+
+@pytest.fixture
+def valid_stmind_data():
+    return {'familienstand': 'single',
+            'stmind_select_vorsorge': True,
+            'stmind_select_ausserg_bela': True,
+            'stmind_select_handwerker': True,
+            'stmind_select_religion': True,
+            'stmind_select_spenden': True,
+
+            'stmind_haushaltsnahe_entries': ["Gartenarbeiten"],
+            'stmind_haushaltsnahe_summe': Decimal('500.00'),
+
+            'stmind_handwerker_entries': ["Renovierung Badezimmer"],
+            'stmind_handwerker_summe': Decimal('200.00'),
+            'stmind_handwerker_lohn_etc_summe': Decimal('100.00'),
+
+            'stmind_gem_haushalt_count': 2,
+            'stmind_gem_haushalt_entries': ['Gandalf', 'Dumbledore'],
+
+            'stmind_vorsorge_summe': Decimal('111.11'),
+            'stmind_spenden_inland': Decimal('222.22'),
+            'stmind_spenden_inland_parteien': Decimal('333.33'),
+            'stmind_religion_paid_summe': Decimal('444.44'),
+            'stmind_religion_reimbursed_summe': Decimal('555.55'),
+
+            'stmind_krankheitskosten_summe': Decimal('1011.11'),
+            'stmind_krankheitskosten_anspruch': Decimal('1011.12'),
+            'stmind_pflegekosten_summe': Decimal('2022.21'),
+            'stmind_pflegekosten_anspruch': Decimal('2022.22'),
+            'stmind_beh_aufw_summe': Decimal('3033.31'),
+            'stmind_beh_aufw_anspruch': Decimal('3033.32'),
+            'stmind_beh_kfz_summe': Decimal('4044.41'),
+            'stmind_beh_kfz_anspruch': Decimal('4044.42'),
+            'stmind_bestattung_summe': Decimal('5055.51'),
+            'stmind_bestattung_anspruch': Decimal('5055.52'),
+            'stmind_aussergbela_sonst_summe': Decimal('6066.61'),
+            'stmind_aussergbela_sonst_anspruch': Decimal('6066.62')}
 
 
 class TestShowPersonB:
@@ -225,54 +264,18 @@ class TestMandatoryFormData(unittest.TestCase):
 
 
 class TestFormDataDependencies:
-    valid_stmind_data = {'familienstand': 'single',
-                         'stmind_select_vorsorge': True,
-                         'stmind_select_ausserg_bela': True,
-                         'stmind_select_handwerker': True,
-                         'stmind_select_religion': True,
-                         'stmind_select_spenden': True,
-
-                         'stmind_haushaltsnahe_entries': ["Gartenarbeiten"],
-                         'stmind_haushaltsnahe_summe': Decimal('500.00'),
-
-                         'stmind_handwerker_entries': ["Renovierung Badezimmer"],
-                         'stmind_handwerker_summe': Decimal('200.00'),
-                         'stmind_handwerker_lohn_etc_summe': Decimal('100.00'),
-
-                         'stmind_gem_haushalt_count': 2,
-                         'stmind_gem_haushalt_entries': ['Gandalf', 'Dumbledore'],
-
-                         'stmind_vorsorge_summe': Decimal('111.11'),
-                         'stmind_spenden_inland': Decimal('222.22'),
-                         'stmind_spenden_inland_parteien': Decimal('333.33'),
-                         'stmind_religion_paid_summe': Decimal('444.44'),
-                         'stmind_religion_reimbursed_summe': Decimal('555.55'),
-
-                         'stmind_krankheitskosten_summe': Decimal('1011.11'),
-                         'stmind_krankheitskosten_anspruch': Decimal('1011.12'),
-                         'stmind_pflegekosten_summe': Decimal('2022.21'),
-                         'stmind_pflegekosten_anspruch': Decimal('2022.22'),
-                         'stmind_beh_aufw_summe': Decimal('3033.31'),
-                         'stmind_beh_aufw_anspruch': Decimal('3033.32'),
-                         'stmind_beh_kfz_summe': Decimal('4044.41'),
-                         'stmind_beh_kfz_anspruch': Decimal('4044.42'),
-                         'stmind_bestattung_summe': Decimal('5055.51'),
-                         'stmind_bestattung_anspruch': Decimal('5055.52'),
-                         'stmind_aussergbela_sonst_summe': Decimal('6066.61'),
-                         'stmind_aussergbela_sonst_anspruch': Decimal('6066.62')}
-
-    def test_if_valid_stmind_data_then_keep_all_stmind_fields(self):
-        returned_data = FormDataDependencies.parse_obj(self.valid_stmind_data).dict(exclude_none=True)
-        assert returned_data == self.valid_stmind_data
+    def test_if_valid_stmind_data_then_keep_all_stmind_fields(self, valid_stmind_data):
+        returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
+        assert returned_data == valid_stmind_data
 
     def test_if_complete_valid_data_then_keep_all_fields(self):
         complete_valid_data = LotseStepChooser()._DEBUG_DATA
         returned_data = FormDataDependencies.parse_obj(complete_valid_data).dict(exclude_none=True)
         assert returned_data == complete_valid_data
 
-    def test_if_vorsorge_not_shown_then_delete_all_fields_dependent_on_vorsorge(self):
+    def test_if_vorsorge_not_shown_then_delete_all_fields_dependent_on_vorsorge(self, valid_stmind_data):
         dependent_fields = ['stmind_vorsorge_summe']
-        input_data = copy.deepcopy(self.valid_stmind_data)
+        input_data = valid_stmind_data
         input_data.pop('stmind_select_vorsorge')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
         expected_data = input_data
@@ -280,13 +283,13 @@ class TestFormDataDependencies:
             expected_data.pop(dependent_field)
         assert returned_data == expected_data
 
-    def test_if_ausserg_bela_not_shown_then_delete_all_fields_dependent_on_ausserg_bela(self):
+    def test_if_ausserg_bela_not_shown_then_delete_all_fields_dependent_on_ausserg_bela(self, valid_stmind_data):
         dependent_fields = ['stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
                             'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
                             'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
                             'stmind_bestattung_summe', 'stmind_bestattung_anspruch', 'stmind_aussergbela_sonst_summe',
                             'stmind_aussergbela_sonst_anspruch']
-        input_data = copy.deepcopy(self.valid_stmind_data)
+        input_data = valid_stmind_data
         input_data.pop('stmind_select_ausserg_bela')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
         expected_data = input_data
@@ -294,11 +297,11 @@ class TestFormDataDependencies:
             expected_data.pop(dependent_field)
         assert returned_data == expected_data
 
-    def test_if_handwerker_not_shown_then_delete_all_fields_dependent_on_handwerker(self):
+    def test_if_handwerker_not_shown_then_delete_all_fields_dependent_on_handwerker(self, valid_stmind_data):
         dependent_fields = ['stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
                             'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                             'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries']
-        input_data = copy.deepcopy(self.valid_stmind_data)
+        input_data = valid_stmind_data
         input_data.pop('stmind_select_handwerker')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
         expected_data = input_data
@@ -306,9 +309,9 @@ class TestFormDataDependencies:
             expected_data.pop(dependent_field)
         assert returned_data == expected_data
 
-    def test_if_religion_not_shown_then_delete_all_fields_dependent_on_religion(self):
+    def test_if_religion_not_shown_then_delete_all_fields_dependent_on_religion(self, valid_stmind_data):
         dependent_fields = ['stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe']
-        input_data = copy.deepcopy(self.valid_stmind_data)
+        input_data = valid_stmind_data
         input_data.pop('stmind_select_religion')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
         expected_data = input_data
@@ -316,9 +319,9 @@ class TestFormDataDependencies:
             expected_data.pop(dependent_field)
         assert returned_data == expected_data
 
-    def test_if_spenden_not_shown_then_delete_all_fields_dependent_on_spenden(self):
+    def test_if_spenden_not_shown_then_delete_all_fields_dependent_on_spenden(self, valid_stmind_data):
         dependent_fields = ['stmind_spenden_inland', 'stmind_spenden_inland_parteien']
-        input_data = copy.deepcopy(self.valid_stmind_data)
+        input_data = valid_stmind_data
         input_data.pop('stmind_select_spenden')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
         expected_data = input_data
@@ -326,8 +329,8 @@ class TestFormDataDependencies:
             expected_data.pop(dependent_field)
         assert returned_data == expected_data
 
-    def test_if_haushaltsnahe_and_handwerker_are_missing_then_delete_gem_haushalt(self):
-        input_data = copy.deepcopy(self.valid_stmind_data)
+    def test_if_haushaltsnahe_and_handwerker_are_missing_then_delete_gem_haushalt(self, valid_stmind_data):
+        input_data = valid_stmind_data
         input_data.pop('stmind_haushaltsnahe_summe')
         input_data.pop('stmind_handwerker_summe')
         dependent_fields = ['stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries']
@@ -337,16 +340,16 @@ class TestFormDataDependencies:
             expected_data.pop(dependent_field)
         assert returned_data == expected_data
 
-    def test_if_zusammenveranlagung_then_delete_gem_haushalt(self):
+    def test_if_zusammenveranlagung_then_delete_gem_haushalt(self, valid_stmind_data):
         dependent_fields = ['stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries']
         with patch('app.model.form_data.show_person_b', return_value=True):
-            returned_data = FormDataDependencies.parse_obj(self.valid_stmind_data).dict(exclude_none=True)
-            expected_data = copy.deepcopy(self.valid_stmind_data)
+            returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
+            expected_data = valid_stmind_data
             for dependent_field in dependent_fields:
                 expected_data.pop(dependent_field)
             assert returned_data == expected_data
 
-    def test_if_einzelveranlagung_then_do_not_delete_gem_haushalt(self):
+    def test_if_einzelveranlagung_then_do_not_delete_gem_haushalt(self, valid_stmind_data):
         with patch('app.model.form_data.show_person_b', return_value=False):
-            returned_data = FormDataDependencies.parse_obj(self.valid_stmind_data).dict(exclude_none=True)
-            assert returned_data == self.valid_stmind_data
+            returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
+            assert returned_data == valid_stmind_data
