@@ -3,7 +3,7 @@ import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import checkedIcon from "../assets/icons/checked.svg";
 
-const Card = styled.label`
+const CardLabel = styled.label`
   background-color: var(--bg-white);
 
   padding: var(--spacing-04);
@@ -114,7 +114,7 @@ function FormFieldCard({
       }}
       hideLabel
       render={() => (
-        <Card htmlFor={fieldId} className="form-row">
+        <CardLabel htmlFor={fieldId} className="form-row">
           <IconTextWrapper>
             {icon && <CardIcon src={icon} alt="Icon" />}
             <div>
@@ -131,7 +131,7 @@ function FormFieldCard({
             autoFocus={autofocus}
           />
           <span htmlFor={fieldId} className="checkmark" />
-        </Card>
+        </CardLabel>
       )}
     />
   );
