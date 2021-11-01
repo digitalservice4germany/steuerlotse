@@ -4,13 +4,20 @@ from werkzeug.datastructures import MultiDict
 from app.forms.steps.lotse.steuerminderungen import StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt
 
 
+@pytest.fixture
+def step_haushaltsnahe_handwerker():
+    step = StepHaushaltsnaheHandwerker(endpoint='lotse')
+    return step
+
+
+@pytest.fixture
+def step_gem_haushalt():
+    step = StepGemeinsamerHaushalt(endpoint='lotse')
+    return step
+
+
 @pytest.mark.usefixtures('test_request_context')
 class TestHaushaltsnaheStepHaushaltsnahe:
-    @pytest.fixture
-    def step_haushaltsnahe_handwerker(self):
-        step = StepHaushaltsnaheHandwerker(endpoint='lotse')
-        return step
-
     def test_if_no_fields_given_then_succ_validation(self, step_haushaltsnahe_handwerker):
         data = MultiDict({})
         form = step_haushaltsnahe_handwerker.InputForm(formdata=data)
@@ -57,11 +64,6 @@ class TestHaushaltsnaheStepHaushaltsnahe:
 
 @pytest.mark.usefixtures('test_request_context')
 class TestHaushaltsnaheStepHandwerker:
-    @pytest.fixture
-    def step_haushaltsnahe_handwerker(self):
-        step = StepHaushaltsnaheHandwerker(endpoint='lotse')
-        return step
-
     def test_if_summe_zero_then_entries_and_lohn_etc_are_optional(self, step_haushaltsnahe_handwerker):
         data = MultiDict({'stmind_handwerker_summe': '0'})
         form = step_haushaltsnahe_handwerker.InputForm(formdata=data)
@@ -135,11 +137,6 @@ class TestHaushaltsnaheStepHandwerker:
 
 @pytest.mark.usefixtures('test_request_context')
 class TestGemeinsamerHaushaltStep:
-    @pytest.fixture
-    def step_gem_haushalt(self):
-        step = StepGemeinsamerHaushalt(endpoint='lotse')
-        return step
-
     def test_if_no_fields_given_then_fields_are_optional(self, step_gem_haushalt):
         data = MultiDict({})
         form = step_gem_haushalt.InputForm(formdata=data)
