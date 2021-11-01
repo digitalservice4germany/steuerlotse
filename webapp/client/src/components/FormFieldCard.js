@@ -63,13 +63,13 @@ const CardLabel = styled.label`
   }
 `;
 
-const LabelTitle = styled.span`
+const Title = styled.span`
   display: block;
   font-weight: var(--font-bold);
   font-size: var(--text-xl);
 `;
 
-const LabelText = styled.span`
+const Body = styled.span`
   display: block;
   margin-top: var(--spacing-02);
 `;
@@ -100,8 +100,8 @@ function FormFieldCard({
   checked,
   required,
   autofocus,
-  labelTitle,
-  labelText,
+  title,
+  body,
   icon,
   errors,
 }) {
@@ -118,8 +118,8 @@ function FormFieldCard({
           <IconTextWrapper>
             {icon && <CardIcon src={icon} alt="Icon" />}
             <div>
-              <LabelTitle>{labelTitle}</LabelTitle>
-              <LabelText>{labelText}</LabelText>
+              <Title>{title}</Title>
+              <Body>{body}</Body>
             </div>
           </IconTextWrapper>
           <input
@@ -140,10 +140,8 @@ function FormFieldCard({
 FormFieldCard.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
-  labelText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-    .isRequired,
-  labelTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-    .isRequired,
+  body: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   icon: PropTypes.string,
   checked: PropTypes.bool,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,

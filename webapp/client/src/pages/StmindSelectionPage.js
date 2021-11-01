@@ -77,23 +77,15 @@ const checkboxPropType = PropTypes.exact({
 
 StmindSelectionPage.propTypes = {
   stepHeader: PropTypes.exact({
-    // TODO: define these here, not in Python
-    // render_info.step_title
     title: PropTypes.string,
-    // render_info.step_intro
     intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
-    // render_info.submit_url
-    action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
-    // csrf_token()
+    action: PropTypes.string,
     csrfToken: PropTypes.string,
-    // !!render_info.overview_url
     showOverviewButton: PropTypes.bool,
-    // explanatory_button_text
-    explanatoryButtonText: PropTypes.string, // TODO: define here, not in Python
-    // render_info.additional_info.next_button_label
-    nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
+    explanatoryButtonText: PropTypes.string,
+    nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
     stmindSelectVorsorge: checkboxPropType,

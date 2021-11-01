@@ -20,9 +20,8 @@ export const Default = Template.bind({});
 Default.args = {
   fieldId: "card",
   fieldName: "card",
-  labelText:
-    "Das ist eine Card. Sie kann ein Icon haben oder auch nicht. Außerdem kannst du gerne mal draufklicken.",
-  labelTitle: "Titel der Card",
+  body: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen",
+  title: "Vorsorgeaufwendungen",
   icon: vorsorgeIcon,
   errors: [],
   values: [],
