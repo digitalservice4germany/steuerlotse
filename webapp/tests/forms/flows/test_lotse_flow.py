@@ -231,8 +231,9 @@ class TestLotseHandle(unittest.TestCase):
         self.assertRaises(Exception, self.flow.handle, "Incorrect Step Name")
 
     def test_if_start_step_and_debug_ok_then_return_redirect_to_debug_step(self):
+        initital_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = True
         try:
-            Config.PREFILL_SAMPLE_FORM_DATA = True
             response = self.flow.handle("start")
 
             self.assertEqual(
@@ -242,7 +243,7 @@ class TestLotseHandle(unittest.TestCase):
                 response.location
             )
         finally:
-            Config.PREFILL_SAMPLE_FORM_DATA = False
+            Config.PREFILL_SAMPLE_FORM_DATA = initital_prefill_sample_form_data_value
 
     def test_if_start_step_and_debug_none_then_return_redirect_to_first_step(self):
         debug = self.flow.default_data
@@ -490,6 +491,7 @@ class TestLotseGetSessionData(unittest.TestCase):
         self.assertTrue(set(self.session_data).issubset(set(session_data)))
 
     def test_if_no_form_data_in_session_and_debug_data_true_then_return_default_data(self):
+        initital_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
         Config.PREFILL_SAMPLE_FORM_DATA = True
         try:
             self.req.session = SecureCookieSession({})
@@ -497,7 +499,7 @@ class TestLotseGetSessionData(unittest.TestCase):
 
             self.assertEqual(self.flow._DEBUG_DATA[1], session_data)
         finally:
-            Config.PREFILL_SAMPLE_FORM_DATA = False
+            Config.PREFILL_SAMPLE_FORM_DATA = initital_prefill_sample_form_data_value
 
 
 class TestLotseHandleSpecificsForStep(unittest.TestCase):
@@ -1139,21 +1141,33 @@ class TestLotseDebugData(unittest.TestCase):
         self.original_debug_data_config = Config.PREFILL_SAMPLE_FORM_DATA
 
     def test_if_debug_data_true_then_debug_data_non_empty(self):
+        initital_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
         Config.PREFILL_SAMPLE_FORM_DATA = True
-        debug_data = self.flow.default_data()
-        self.assertIsNotNone(debug_data[0])
-        self.assertIsNotNone(debug_data[1])
+        try:
+            debug_data = self.flow.default_data()
+            self.assertIsNotNone(debug_data[0])
+            self.assertIsNotNone(debug_data[1])
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initital_prefill_sample_form_data_value
 
     def test_if_debug_data_true_then_debug_data_correct_types(self):
+        initital_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
         Config.PREFILL_SAMPLE_FORM_DATA = True
-        debug_data = self.flow.default_data()
-        self.assertIsInstance(debug_data[0], type)
-        self.assertIsInstance(debug_data[1], dict)
+        try:
+            debug_data = self.flow.default_data()
+            self.assertIsInstance(debug_data[0], type)
+            self.assertIsInstance(debug_data[1], dict)
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initital_prefill_sample_form_data_value
 
     def test_if_debug_data_false_then_debug_data_none(self):
+        initital_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
         Config.PREFILL_SAMPLE_FORM_DATA = False
-        debug_data = self.flow.default_data()
-        self.assertEqual({}, debug_data)
+        try:
+            debug_data = self.flow.default_data()
+            self.assertEqual({}, debug_data)
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initital_prefill_sample_form_data_value
 
     def tearDown(self):
         Config.PREFILL_SAMPLE_FORM_DATA = self.original_debug_data_config
