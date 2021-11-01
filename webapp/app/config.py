@@ -5,7 +5,7 @@ from os import environ
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
-    DEBUG_DATA = False
+    PREFILL_SAMPLE_FORM_DATA = False
     USE_MOCK_API = False
     WTF_CSRF_ENABLED = True
     ALLOW_RESEND_FOR_TEST_USER = False
@@ -64,7 +64,7 @@ class StagingConfig(BaseConfig):
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    DEBUG_DATA = True
+    PREFILL_SAMPLE_FORM_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
     SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
 
@@ -85,7 +85,7 @@ class DevelopmentConfig(BaseConfig):
 
 class FunctionalTestingConfig(DevelopmentConfig):
     DEBUG = False
-    DEBUG_DATA = False
+    PREFILL_SAMPLE_FORM_DATA = False
     USE_MOCK_API = True
 
     ERICA_BASE_URL = 'ERICA'
@@ -96,7 +96,7 @@ class FunctionalTestingConfig(DevelopmentConfig):
 class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
-    DEBUG_DATA = False
+    PREFILL_SAMPLE_FORM_DATA = False
     USE_MOCK_API = True
     WTF_CSRF_ENABLED = False
     ALLOW_RESEND_FOR_TEST_USER = True

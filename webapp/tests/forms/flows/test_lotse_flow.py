@@ -232,7 +232,7 @@ class TestLotseHandle(unittest.TestCase):
 
     def test_if_start_step_and_debug_ok_then_return_redirect_to_debug_step(self):
         try:
-            Config.DEBUG_DATA = True
+            Config.PREFILL_SAMPLE_FORM_DATA = True
             response = self.flow.handle("start")
 
             self.assertEqual(
@@ -242,7 +242,7 @@ class TestLotseHandle(unittest.TestCase):
                 response.location
             )
         finally:
-            Config.DEBUG_DATA = False
+            Config.PREFILL_SAMPLE_FORM_DATA = False
 
     def test_if_start_step_and_debug_none_then_return_redirect_to_first_step(self):
         debug = self.flow.default_data
@@ -490,14 +490,14 @@ class TestLotseGetSessionData(unittest.TestCase):
         self.assertTrue(set(self.session_data).issubset(set(session_data)))
 
     def test_if_no_form_data_in_session_and_debug_data_true_then_return_default_data(self):
-        Config.DEBUG_DATA = True
+        Config.PREFILL_SAMPLE_FORM_DATA = True
         try:
             self.req.session = SecureCookieSession({})
             session_data = self.flow._get_session_data()
 
             self.assertEqual(self.flow._DEBUG_DATA[1], session_data)
         finally:
-            Config.DEBUG_DATA = False
+            Config.PREFILL_SAMPLE_FORM_DATA = False
 
 
 class TestLotseHandleSpecificsForStep(unittest.TestCase):
@@ -1136,27 +1136,27 @@ class TestLotseDebugData(unittest.TestCase):
 
     def setUp(self):
         self.flow = LotseMultiStepFlow(endpoint='')
-        self.original_debug_data_config = Config.DEBUG_DATA
+        self.original_debug_data_config = Config.PREFILL_SAMPLE_FORM_DATA
 
     def test_if_debug_data_true_then_debug_data_non_empty(self):
-        Config.DEBUG_DATA = True
+        Config.PREFILL_SAMPLE_FORM_DATA = True
         debug_data = self.flow.default_data()
         self.assertIsNotNone(debug_data[0])
         self.assertIsNotNone(debug_data[1])
 
     def test_if_debug_data_true_then_debug_data_correct_types(self):
-        Config.DEBUG_DATA = True
+        Config.PREFILL_SAMPLE_FORM_DATA = True
         debug_data = self.flow.default_data()
         self.assertIsInstance(debug_data[0], type)
         self.assertIsInstance(debug_data[1], dict)
 
     def test_if_debug_data_false_then_debug_data_none(self):
-        Config.DEBUG_DATA = False
+        Config.PREFILL_SAMPLE_FORM_DATA = False
         debug_data = self.flow.default_data()
         self.assertEqual({}, debug_data)
 
     def tearDown(self):
-        Config.DEBUG_DATA = self.original_debug_data_config
+        Config.PREFILL_SAMPLE_FORM_DATA = self.original_debug_data_config
 
 
 class TestLotseGetOverviewData(unittest.TestCase):
