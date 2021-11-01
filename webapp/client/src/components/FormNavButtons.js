@@ -4,12 +4,15 @@ import styled from "styled-components";
 
 const Row = styled.div`
   margin-top: var(--spacing-09);
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: var(--spacing-06);
 `;
 
 // TODO: tidy this up (turn into a proper Button component as per Nadine's designs?)
 const Button = styled.button`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem;
-
+  margin-right: var(--spacing-06);
   font-size: var(--text-base);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
@@ -83,7 +86,6 @@ const OutlineButton = styled.button`
 
 const ExplanatoryText = styled.small`
   margin-bottom: 0;
-  margin-left: var(--spacing-02);
 
   & a {
     color: var(--text-color);
