@@ -1,0 +1,67 @@
+strace: Process 3392322 attached
+select(4, [3], [], [], {tv_sec=0, tv_usec=624226}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}) = 0 (Timeout)
+fstat(6, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(7, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+fstat(9, {st_mode=S_IFREG|000, st_size=0, ...}) = 0
+fstat(8, {st_mode=S_IFREG|001, st_size=0, ...}) = 0
+select(4, [3], [], [], {tv_sec=1, tv_usec=0}

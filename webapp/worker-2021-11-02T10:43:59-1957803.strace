@@ -1,0 +1,718 @@
+strace: Process 1957803 attached
+1635846241.198655 (+     0.000000) select(7, [5 6], [], [], {tv_sec=11, tv_usec=98612}) = 1 (in [5], left {tv_sec=11, tv_usec=8661}) <0.090192>
+1635846241.291893 (+     0.093238) fchmod(7, 001) = 0 <0.000133>
+1635846241.292254 (+     0.000357) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000110>
+1635846241.292698 (+     0.000444) getppid() = 1 <0.000106>
+1635846241.292946 (+     0.000247) fchmod(7, 000) = 0 <0.000097>
+1635846241.293213 (+     0.000266) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=1963}) <1.998168>
+1635846243.291831 (+     1.998619) fchmod(7, 001) = 0 <0.000087>
+1635846243.292035 (+     0.000202) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000276>
+1635846243.292492 (+     0.000457) getppid() = 1 <0.000221>
+1635846243.292833 (+     0.000340) fchmod(7, 000) = 0 <0.000077>
+1635846243.293015 (+     0.000181) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=9, tv_usec=2062}) <5.998050>
+1635846249.291638 (+     5.998625) fchmod(7, 001) = 0 <0.000122>
+1635846249.291999 (+     0.000359) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000174>
+1635846249.292456 (+     0.000457) getppid() = 1 <0.000107>
+1635846249.292695 (+     0.000238) fchmod(7, 000) = 0 <0.000092>
+1635846249.292931 (+     0.000235) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=865708}) <1.134429>
+1635846250.428250 (+     1.135323) fchmod(7, 001) = 0 <0.000119>
+1635846250.428481 (+     0.000226) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000066>
+1635846250.428675 (+     0.000193) getppid() = 1 <0.000053>
+1635846250.428802 (+     0.000126) fchmod(7, 000) = 0 <0.000056>
+1635846250.428970 (+     0.000167) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=137996}) <0.862171>
+1635846251.291583 (+     0.862615) fchmod(7, 001) = 0 <0.000109>
+1635846251.291862 (+     0.000277) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000103>
+1635846251.292204 (+     0.000342) getppid() = 1 <0.000248>
+1635846251.292608 (+     0.000403) fchmod(7, 000) = 0 <0.000087>
+1635846251.292841 (+     0.000233) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=1720}) <1.998407>
+1635846253.291992 (+     1.999153) fchmod(7, 001) = 0 <0.000139>
+1635846253.292333 (+     0.000338) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000140>
+1635846253.292739 (+     0.000405) getppid() = 1 <0.000493>
+1635846253.293425 (+     0.000685) fchmod(7, 000) = 0 <0.000114>
+1635846253.293786 (+     0.000362) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2816}) <1.997313>
+1635846255.291579 (+     1.997793) fchmod(7, 001) = 0 <0.000148>
+1635846255.291994 (+     0.000413) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000119>
+1635846255.292419 (+     0.000424) getppid() = 1 <0.000124>
+1635846255.292736 (+     0.000317) fchmod(7, 000) = 0 <0.000619>
+1635846255.293600 (+     0.000863) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=11, tv_usec=2644}) <3.997527>
+1635846259.291678 (+     3.998081) fchmod(7, 001) = 0 <0.000105>
+1635846259.291976 (+     0.000294) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000105>
+1635846259.292292 (+     0.000316) getppid() = 1 <0.000096>
+1635846259.292528 (+     0.000235) fchmod(7, 000) = 0 <0.000120>
+1635846259.292820 (+     0.000292) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2131}) <1.997992>
+1635846261.291467 (+     1.998649) fchmod(7, 001) = 0 <0.000115>
+1635846261.291726 (+     0.000255) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000079>
+1635846261.291964 (+     0.000237) getppid() = 1 <0.000062>
+1635846261.292119 (+     0.000155) fchmod(7, 000) = 0 <0.000064>
+1635846261.292399 (+     0.000280) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=1782}) <1.998959>
+1635846263.291712 (+     1.999313) fchmod(7, 001) = 0 <0.000149>
+1635846263.292051 (+     0.000338) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000157>
+1635846263.292473 (+     0.000422) getppid() = 1 <0.000123>
+1635846263.292781 (+     0.000308) fchmod(7, 000) = 0 <0.000133>
+1635846263.293057 (+     0.000275) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2000}) <1.998696>
+1635846265.292057 (+     1.999001) fchmod(7, 001) = 0 <0.000038>
+1635846265.292191 (+     0.000131) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000038>
+1635846265.292341 (+     0.000149) getppid() = 1 <0.000021>
+1635846265.292401 (+     0.000059) fchmod(7, 000) = 0 <0.000404>
+1635846265.292907 (+     0.000506) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=865483}) <0.134939>
+1635846265.428123 (+     0.135227) fchmod(7, 001) = 0 <0.000082>
+1635846265.428322 (+     0.000188) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000069>
+1635846265.428529 (+     0.000205) getppid() = 1 <0.000075>
+1635846265.428694 (+     0.000165) fchmod(7, 000) = 0 <0.000070>
+1635846265.428865 (+     0.000170) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=137671}) <1.862390>
+1635846267.291510 (+     1.862646) fchmod(7, 001) = 0 <0.000081>
+1635846267.291707 (+     0.000196) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000075>
+1635846267.292189 (+     0.000483) getppid() = 1 <0.000392>
+1635846267.292727 (+     0.000535) fchmod(7, 000) = 0 <0.000073>
+1635846267.292896 (+     0.000169) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2163}) <1.997885>
+1635846269.290989 (+     1.998093) fchmod(7, 001) = 0 <0.000036>
+1635846269.291117 (+     0.000127) accept4(5, {sa_family=AF_INET, sin_port=htons(45116), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000029>
+1635846269.291876 (+     0.000760) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000017>
+1635846269.291973 (+     0.000094) ioctl(11, FIONBIO, [0]) = 0 <0.000011>
+1635846269.292084 (+     0.000111) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000013>
+1635846269.292162 (+     0.000078) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000041>
+1635846269.292768 (+     0.000606) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000020>
+1635846269.294223 (+     0.001457) getpid() = 14 <0.000016>
+1635846269.295368 (+     0.001143) write(2, "{\"asctime\": \"2021-11-02 09:44:29,293\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000102>
+1635846269.296015 (+     0.000647) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000019>
+1635846269.299499 (+     0.003484) getpid() = 14 <0.000017>
+1635846269.299841 (+     0.000340) write(2, "{\"asctime\": \"2021-11-02 09:44:29,299\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000024>
+1635846269.300909 (+     0.001068) getpid() = 14 <0.000018>
+1635846269.301075 (+     0.000164) getpid() = 14 <0.000014>
+1635846269.301166 (+     0.000091) getpid() = 14 <0.000015>
+1635846269.303554 (+     0.002390) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:44:29 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEIfQ._3Fg700EhFbpw8d-xCQ_DfOZfCk; Expires=Tue, 02 Nov 2021 12:44:29 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000147>
+1635846269.303826 (+     0.000269) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000070>
+1635846269.304362 (+     0.000537) getpid() = 14 <0.000015>
+1635846269.304665 (+     0.000302) getpid() = 14 <0.000013>
+1635846269.305002 (+     0.000337) write(2, "{\"asctime\": \"2021-11-02 09:44:29,304\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:44:29 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000027>
+1635846269.305489 (+     0.000487) close(11) = 0 <0.000096>
+1635846269.305694 (+     0.000204) fchmod(7, 000) = 0 <0.000021>
+1635846269.305766 (+     0.000071) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000026>
+1635846269.305887 (+     0.000120) getppid() = 1 <0.000012>
+1635846269.305935 (+     0.000047) fchmod(7, 001) = 0 <0.000014>
+1635846269.306010 (+     0.000076) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=15185}) <1.984874>
+1635846271.291084 (+     1.985074) fchmod(7, 000) = 0 <0.000019>
+1635846271.291166 (+     0.000081) accept4(5, {sa_family=AF_INET, sin_port=htons(45132), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000031>
+1635846271.291335 (+     0.000169) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000013>
+1635846271.291402 (+     0.000066) ioctl(11, FIONBIO, [0]) = 0 <0.000011>
+1635846271.291462 (+     0.000060) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000012>
+1635846271.291521 (+     0.000059) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000010>
+1635846271.291652 (+     0.000130) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000311>
+1635846271.292428 (+     0.000777) getpid() = 14 <0.000013>
+1635846271.292855 (+     0.000426) write(2, "{\"asctime\": \"2021-11-02 09:44:31,292\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000032>
+1635846271.293024 (+     0.000168) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000013>
+1635846271.293987 (+     0.000965) getpid() = 14 <0.000015>
+1635846271.294205 (+     0.000216) write(2, "{\"asctime\": \"2021-11-02 09:44:31,293\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000019>
+1635846271.294901 (+     0.000697) getpid() = 14 <0.000014>
+1635846271.294979 (+     0.000075) getpid() = 14 <0.000010>
+1635846271.295044 (+     0.000065) getpid() = 14 <0.000011>
+1635846271.296331 (+     0.001288) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:44:31 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEIfw.lK7ip9DfSbH0MkDLibXuK7IlZfw; Expires=Tue, 02 Nov 2021 12:44:31 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000090>
+1635846271.296721 (+     0.000389) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000128>
+1635846271.297032 (+     0.000310) getpid() = 14 <0.000013>
+1635846271.297215 (+     0.000182) getpid() = 14 <0.000014>
+1635846271.297423 (+     0.000209) write(2, "{\"asctime\": \"2021-11-02 09:44:31,297\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:44:31 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000024>
+1635846271.297584 (+     0.000160) close(11) = 0 <0.000104>
+1635846271.297748 (+     0.000163) fchmod(7, 001) = 0 <0.000020>
+1635846271.297802 (+     0.000054) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000022>
+1635846271.297895 (+     0.000093) getppid() = 1 <0.000014>
+1635846271.297941 (+     0.000046) fchmod(7, 000) = 0 <0.000016>
+1635846271.297995 (+     0.000053) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=7134}) <1.992922>
+1635846273.291142 (+     1.993149) fchmod(7, 001) = 0 <0.000031>
+1635846273.291269 (+     0.000125) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000052>
+1635846273.291475 (+     0.000206) getppid() = 1 <0.000019>
+1635846273.291553 (+     0.000076) fchmod(7, 000) = 0 <0.000023>
+1635846273.291634 (+     0.000080) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=908}) <1.999234>
+1635846275.291142 (+     1.999509) fchmod(7, 001) = 0 <0.000025>
+1635846275.291250 (+     0.000107) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000043>
+1635846275.291399 (+     0.000148) getppid() = 1 <0.000015>
+1635846275.291451 (+     0.000051) fchmod(7, 000) = 0 <0.000021>
+1635846275.291521 (+     0.000070) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=699}) <1.999352>
+1635846277.291186 (+     1.999667) fchmod(7, 001) = 0 <0.000058>
+1635846277.291401 (+     0.000214) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000087>
+1635846277.291840 (+     0.000438) getppid() = 1 <0.000402>
+1635846277.292359 (+     0.000518) fchmod(7, 000) = 0 <0.000053>
+1635846277.292588 (+     0.000229) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=1964}) <1.998122>
+1635846279.290971 (+     1.998382) fchmod(7, 001) = 0 <0.000022>
+1635846279.291078 (+     0.000106) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000029>
+1635846279.291215 (+     0.000136) getppid() = 1 <0.000013>
+1635846279.291258 (+     0.000043) fchmod(7, 000) = 0 <0.000014>
+1635846279.291321 (+     0.000062) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=9, tv_usec=401}) <5.999702>
+1635846285.291404 (+     6.000085) fchmod(7, 001) = 0 <0.000035>
+1635846285.291556 (+     0.000149) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000046>
+1635846285.291921 (+     0.000365) getppid() = 1 <0.000041>
+1635846285.292036 (+     0.000127) fchmod(7, 000) = 0 <0.000044>
+1635846285.296404 (+     0.004359) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=5439}) <1.994644>
+1635846287.291334 (+     1.994925) fchmod(7, 001) = 0 <0.000036>
+1635846287.291466 (+     0.000131) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000043>
+1635846287.291676 (+     0.000210) getppid() = 1 <0.000023>
+1635846287.291750 (+     0.000072) fchmod(7, 000) = 0 <0.000023>
+1635846287.291827 (+     0.000078) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=996}) <1.999084>
+1635846289.291181 (+     1.999355) fchmod(7, 001) = 0 <0.000031>
+1635846289.291302 (+     0.000118) accept4(5, {sa_family=AF_INET, sin_port=htons(45268), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000028>
+1635846289.291545 (+     0.000242) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000017>
+1635846289.291622 (+     0.000077) ioctl(11, FIONBIO, [0]) = 0 <0.000016>
+1635846289.291722 (+     0.000100) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000015>
+1635846289.291802 (+     0.000079) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000011>
+1635846289.292038 (+     0.000236) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000312>
+1635846289.293051 (+     0.001013) getpid() = 14 <0.000014>
+1635846289.293418 (+     0.000367) write(2, "{\"asctime\": \"2021-11-02 09:44:49,292\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000026>
+1635846289.293618 (+     0.000199) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000020>
+1635846289.295095 (+     0.001478) getpid() = 14 <0.000017>
+1635846289.295358 (+     0.000261) write(2, "{\"asctime\": \"2021-11-02 09:44:49,295\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000022>
+1635846289.295801 (+     0.000443) getpid() = 14 <0.000042>
+1635846289.295938 (+     0.000136) getpid() = 14 <0.000012>
+1635846289.296018 (+     0.000079) getpid() = 14 <0.000013>
+1635846289.297344 (+     0.001328) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:44:49 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEIkQ.M_kj9OY0YIgVn-Q-UyL1XpY2QE4; Expires=Tue, 02 Nov 2021 12:44:49 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000091>
+1635846289.297556 (+     0.000209) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000061>
+1635846289.297774 (+     0.000218) getpid() = 14 <0.000012>
+1635846289.297974 (+     0.000200) getpid() = 14 <0.000028>
+1635846289.298215 (+     0.000241) write(2, "{\"asctime\": \"2021-11-02 09:44:49,297\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:44:49 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000021>
+1635846289.298391 (+     0.000175) close(11) = 0 <0.000105>
+1635846289.298557 (+     0.000165) fchmod(7, 000) = 0 <0.000018>
+1635846289.298610 (+     0.000052) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000033>
+1635846289.298724 (+     0.000114) getppid() = 1 <0.000011>
+1635846289.298763 (+     0.000038) fchmod(7, 001) = 0 <0.000014>
+1635846289.298822 (+     0.000059) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=1, tv_usec=8198}) <13.991921>
+1635846303.291339 (+    13.992518) fchmod(7, 000) = 0 <0.000059>
+1635846303.291634 (+     0.000293) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000059>
+1635846303.291988 (+     0.000353) getppid() = 1 <0.000017>
+1635846303.292055 (+     0.000066) fchmod(7, 001) = 0 <0.000019>
+1635846303.292136 (+     0.000080) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=3, tv_usec=1146}) <11.998920>
+1635846315.291676 (+    11.999544) fchmod(7, 000) = 0 <0.000107>
+1635846315.292090 (+     0.000411) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000585>
+1635846315.293030 (+     0.000940) getppid() = 1 <0.000176>
+1635846315.293363 (+     0.000331) fchmod(7, 001) = 0 <0.000107>
+1635846315.293726 (+     0.000363) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=7, tv_usec=2888}) <7.997611>
+1635846323.292067 (+     7.998344) fchmod(7, 000) = 0 <0.000147>
+1635846323.292598 (+     0.000527) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000122>
+1635846323.292979 (+     0.000380) getppid() = 1 <0.000095>
+1635846323.293227 (+     0.000248) fchmod(7, 001) = 0 <0.000121>
+1635846323.293500 (+     0.000272) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=11, tv_usec=2769}) <3.997702>
+1635846327.291595 (+     3.998095) fchmod(7, 000) = 0 <0.000103>
+1635846327.291873 (+     0.000277) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000107>
+1635846327.292198 (+     0.000325) getppid() = 1 <0.000090>
+1635846327.292414 (+     0.000215) fchmod(7, 001) = 0 <0.000092>
+1635846327.292654 (+     0.000240) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=3, tv_usec=1871}) <11.998254>
+1635846339.291473 (+    11.998820) fchmod(7, 000) = 0 <0.000128>
+1635846339.291900 (+     0.000425) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000124>
+1635846339.292357 (+     0.000457) getppid() = 1 <0.000104>
+1635846339.292632 (+     0.000274) fchmod(7, 001) = 0 <0.000457>
+1635846339.293358 (+     0.000726) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=866131}) <1.134007>
+1635846340.427687 (+     1.134329) fchmod(7, 000) = 0 <0.000093>
+1635846340.427917 (+     0.000228) accept4(5, {sa_family=AF_INET, sin_port=htons(45654), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000090>
+1635846340.428661 (+     0.000744) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000101>
+1635846340.429187 (+     0.000526) ioctl(11, FIONBIO, [0]) = 0 <0.000095>
+1635846340.429515 (+     0.000326) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000083>
+1635846340.429779 (+     0.000264) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000049>
+1635846340.430788 (+     0.001011) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000084>
+1635846340.432803 (+     0.002013) getpid() = 14 <0.000063>
+1635846340.434319 (+     0.001515) write(2, "{\"asctime\": \"2021-11-02 09:45:40,432\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000075>
+1635846340.434938 (+     0.000618) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000047>
+1635846340.438843 (+     0.003906) getpid() = 14 <0.000114>
+1635846340.439320 (+     0.000476) write(2, "{\"asctime\": \"2021-11-02 09:45:40,438\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000118>
+1635846340.440675 (+     0.001355) getpid() = 14 <0.000088>
+1635846340.440966 (+     0.000289) getpid() = 14 <0.000060>
+1635846340.441176 (+     0.000209) getpid() = 14 <0.000061>
+1635846340.444013 (+     0.002839) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:45:40 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEIxA.hvrSnFkbZGJLPB91wey1L7cKeQ0; Expires=Tue, 02 Nov 2021 12:45:40 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000327>
+1635846340.444529 (+     0.000513) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000268>
+1635846340.445056 (+     0.000528) getpid() = 14 <0.000075>
+1635846340.445427 (+     0.000370) getpid() = 14 <0.000064>
+1635846340.445827 (+     0.000400) write(2, "{\"asctime\": \"2021-11-02 09:45:40,445\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:45:40 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000139>
+1635846340.446316 (+     0.000488) close(11) = 0 <0.000141>
+1635846340.446558 (+     0.000240) fchmod(7, 001) = 0 <0.000043>
+1635846340.446671 (+     0.000113) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000045>
+1635846340.446812 (+     0.000140) getppid() = 1 <0.000031>
+1635846340.446893 (+     0.000079) fchmod(7, 000) = 0 <0.000035>
+1635846340.447003 (+     0.000110) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=12, tv_usec=156075}) <2.844002>
+1635846343.291619 (+     2.844619) fchmod(7, 001) = 0 <0.000134>
+1635846343.291946 (+     0.000324) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000127>
+1635846343.292310 (+     0.000364) getppid() = 1 <0.000120>
+1635846343.292583 (+     0.000272) fchmod(7, 000) = 0 <0.000529>
+1635846343.293339 (+     0.000755) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2554}) <1.997583>
+1635846345.291661 (+     1.998327) fchmod(7, 001) = 0 <0.000139>
+1635846345.291978 (+     0.000311) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000122>
+1635846345.292331 (+     0.000352) getppid() = 1 <0.000097>
+1635846345.292687 (+     0.000356) fchmod(7, 000) = 0 <0.000170>
+1635846345.293045 (+     0.000357) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2148}) <1.997971>
+1635846347.291617 (+     1.998574) fchmod(7, 001) = 0 <0.000110>
+1635846347.291867 (+     0.000246) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000091>
+1635846347.292129 (+     0.000262) getppid() = 1 <0.000075>
+1635846347.292416 (+     0.000286) fchmod(7, 000) = 0 <0.000154>
+1635846347.292734 (+     0.000319) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=1484}) <1.998631>
+1635846349.291742 (+     1.999008) fchmod(7, 001) = 0 <0.000117>
+1635846349.292019 (+     0.000275) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000253>
+1635846349.292577 (+     0.000558) getppid() = 1 <0.000124>
+1635846349.292835 (+     0.000257) fchmod(7, 000) = 0 <0.000098>
+1635846349.293073 (+     0.000237) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2514}) <1.997599>
+1635846351.291060 (+     1.997988) fchmod(7, 001) = 0 <0.000088>
+1635846351.291266 (+     0.000203) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000078>
+1635846351.291492 (+     0.000226) getppid() = 1 <0.000060>
+1635846351.291633 (+     0.000140) fchmod(7, 000) = 0 <0.000060>
+1635846351.291782 (+     0.000149) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=11, tv_usec=975}) <3.999563>
+1635846355.291857 (+     4.000081) fchmod(7, 001) = 0 <0.000144>
+1635846355.292189 (+     0.000326) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000114>
+1635846355.292521 (+     0.000331) getppid() = 1 <0.000089>
+1635846355.292767 (+     0.000245) fchmod(7, 000) = 0 <0.000098>
+1635846355.293042 (+     0.000275) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=2324}) <1.997859>
+1635846357.291163 (+     1.998121) fchmod(7, 001) = 0 <0.000128>
+1635846357.291426 (+     0.000262) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000087>
+1635846357.291654 (+     0.000228) getppid() = 1 <0.000090>
+1635846357.291857 (+     0.000202) fchmod(7, 000) = 0 <0.000081>
+1635846357.292066 (+     0.000209) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=710428}) <1.290118>
+1635846358.582418 (+     1.290352) fchmod(7, 001) = 0 <0.000063>
+1635846358.582575 (+     0.000155) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000036>
+1635846358.582747 (+     0.000171) getppid() = 1 <0.000013>
+1635846358.582807 (+     0.000059) fchmod(7, 000) = 0 <0.000025>
+1635846358.582873 (+     0.000065) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=292047}) <0.708003>
+1635846359.291300 (+     0.708432) fchmod(7, 001) = 0 <0.000027>
+1635846359.291421 (+     0.000116) accept4(5, {sa_family=AF_INET, sin_port=htons(45800), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000032>
+1635846359.291706 (+     0.000286) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000018>
+1635846359.291803 (+     0.000095) ioctl(11, FIONBIO, [0]) = 0 <0.000015>
+1635846359.291923 (+     0.000120) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000015>
+1635846359.292007 (+     0.000083) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000014>
+1635846359.292239 (+     0.000231) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000026>
+1635846359.292906 (+     0.000668) getpid() = 14 <0.000017>
+1635846359.293332 (+     0.000426) write(2, "{\"asctime\": \"2021-11-02 09:45:59,292\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000166>
+1635846359.294013 (+     0.000680) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000021>
+1635846359.295529 (+     0.001516) getpid() = 14 <0.000019>
+1635846359.295809 (+     0.000278) write(2, "{\"asctime\": \"2021-11-02 09:45:59,295\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000079>
+1635846359.296520 (+     0.000712) getpid() = 14 <0.000017>
+1635846359.296617 (+     0.000095) getpid() = 14 <0.000014>
+1635846359.296721 (+     0.000103) getpid() = 14 <0.000014>
+1635846359.298128 (+     0.001408) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:45:59 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEI1w.-a3DUMEpgvRRaJDv7z1GuvL1l-M; Expires=Tue, 02 Nov 2021 12:45:59 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000334>
+1635846359.298600 (+     0.000469) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000237>
+1635846359.299061 (+     0.000462) getpid() = 14 <0.000019>
+1635846359.299282 (+     0.000219) getpid() = 14 <0.000011>
+1635846359.299467 (+     0.000184) write(2, "{\"asctime\": \"2021-11-02 09:45:59,299\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:45:59 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000083>
+1635846359.299816 (+     0.000349) close(11) = 0 <0.000183>
+1635846359.300118 (+     0.000302) fchmod(7, 000) = 0 <0.000026>
+1635846359.300205 (+     0.000087) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000025>
+1635846359.300313 (+     0.000107) getppid() = 1 <0.000011>
+1635846359.300357 (+     0.000043) fchmod(7, 001) = 0 <0.000013>
+1635846359.300414 (+     0.000056) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=9710}) <1.990331>
+1635846361.290930 (+     1.990517) fchmod(7, 000) = 0 <0.000024>
+1635846361.291020 (+     0.000089) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000031>
+1635846361.291141 (+     0.000121) getppid() = 1 <0.000012>
+1635846361.291183 (+     0.000042) fchmod(7, 001) = 0 <0.000014>
+1635846361.291235 (+     0.000051) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=983532}) <0.016509>
+1635846361.307902 (+     0.016668) fchmod(7, 000) = 0 <0.000023>
+1635846361.307993 (+     0.000091) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000028>
+1635846361.308125 (+     0.000132) getppid() = 1 <0.000015>
+1635846361.308176 (+     0.000050) fchmod(7, 001) = 0 <0.000017>
+1635846361.308241 (+     0.000064) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=338746}) <0.661318>
+1635846361.969826 (+     0.661586) fchmod(7, 000) = 0 <0.000032>
+1635846361.970022 (+     0.000196) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000050>
+1635846361.970237 (+     0.000213) getppid() = 1 <0.000017>
+1635846361.970312 (+     0.000074) fchmod(7, 001) = 0 <0.000021>
+1635846361.970402 (+     0.000090) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=9, tv_usec=823867}) <5.176660>
+1635846367.147320 (+     5.176918) fchmod(7, 000) = 0 <0.000020>
+1635846367.147423 (+     0.000103) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000037>
+1635846367.147603 (+     0.000179) getppid() = 1 <0.000015>
+1635846367.147665 (+     0.000060) fchmod(7, 001) = 0 <0.000018>
+1635846367.147730 (+     0.000064) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=856747}) <0.143298>
+1635846367.291238 (+     0.143508) fchmod(7, 000) = 0 <0.000025>
+1635846367.291329 (+     0.000090) accept4(5, {sa_family=AF_INET, sin_port=htons(45864), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000030>
+1635846367.291530 (+     0.000202) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000015>
+1635846367.291601 (+     0.000070) ioctl(11, FIONBIO, [0]) = 0 <0.000014>
+1635846367.291680 (+     0.000078) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000013>
+1635846367.291754 (+     0.000073) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000012>
+1635846367.291948 (+     0.000194) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000026>
+1635846367.292567 (+     0.000621) getpid() = 14 <0.000017>
+1635846367.292964 (+     0.000396) write(2, "{\"asctime\": \"2021-11-02 09:46:07,292\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000038>
+1635846367.293204 (+     0.000237) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000207>
+1635846367.294971 (+     0.001771) getpid() = 14 <0.000026>
+1635846367.295297 (+     0.000322) write(2, "{\"asctime\": \"2021-11-02 09:46:07,294\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000038>
+1635846367.295853 (+     0.000556) getpid() = 14 <0.000016>
+1635846367.295967 (+     0.000112) getpid() = 14 <0.000012>
+1635846367.296054 (+     0.000087) getpid() = 14 <0.000013>
+1635846367.297486 (+     0.001435) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:46:07 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEI3w.aeXxJME9yU9QYkoQSUJgHP8bNck; Expires=Tue, 02 Nov 2021 12:46:07 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000342>
+1635846367.298011 (+     0.000523) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000298>
+1635846367.298606 (+     0.000594) getpid() = 14 <0.000019>
+1635846367.298883 (+     0.000276) getpid() = 14 <0.000014>
+1635846367.299111 (+     0.000227) write(2, "{\"asctime\": \"2021-11-02 09:46:07,298\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:46:07 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000019>
+1635846367.299450 (+     0.000340) close(11) = 0 <0.000094>
+1635846367.299616 (+     0.000165) fchmod(7, 001) = 0 <0.000022>
+1635846367.299690 (+     0.000074) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000037>
+1635846367.299847 (+     0.000157) getppid() = 1 <0.000142>
+1635846367.300094 (+     0.000246) fchmod(7, 000) = 0 <0.000027>
+1635846367.300203 (+     0.000108) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=749993}) <0.250058>
+1635846367.550491 (+     0.250289) fchmod(7, 001) = 0 <0.000028>
+1635846367.550595 (+     0.000102) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000031>
+1635846367.550734 (+     0.000140) getppid() = 1 <0.000061>
+1635846367.550899 (+     0.000163) fchmod(7, 000) = 0 <0.000033>
+1635846367.551004 (+     0.000105) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=999613}) <0.000407>
+1635846367.551485 (+     0.000480) fchmod(7, 001) = 0 <0.000015>
+1635846367.551532 (+     0.000046) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000022>
+1635846367.551607 (+     0.000075) getppid() = 1 <0.000011>
+1635846367.551643 (+     0.000035) fchmod(7, 000) = 0 <0.000012>
+1635846367.551685 (+     0.000041) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=983125}) <0.016908>
+1635846367.568729 (+     0.017044) fchmod(7, 001) = 0 <0.000017>
+1635846367.568798 (+     0.000067) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000030>
+1635846367.568901 (+     0.000103) getppid() = 1 <0.000009>
+1635846367.568934 (+     0.000032) fchmod(7, 000) = 0 <0.000011>
+1635846367.568977 (+     0.000043) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=999211}) <0.000813>
+1635846367.569981 (+     0.001004) fchmod(7, 001) = 0 <0.000037>
+1635846367.570071 (+     0.000089) accept4(5, {sa_family=AF_INET, sin_port=htons(56220), sin_addr=inet_addr("127.0.0.1")}, [16], SOCK_CLOEXEC) = 11 <0.000020>
+1635846367.570182 (+     0.000110) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("127.0.0.1")}, [128->16]) = 0 <0.000012>
+1635846367.570231 (+     0.000048) ioctl(11, FIONBIO, [0]) = 0 <0.000009>
+1635846367.570272 (+     0.000041) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000008>
+1635846367.570311 (+     0.000039) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000009>
+1635846367.570426 (+     0.000114) recvfrom(11, "GET /css/components-73500b74b11e95ba942afb9f24e04bf0.css HTTP/1.1\r\nHost: localhost:5000\r\nConnection: keep-alive\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\r\nAccept: text/css,*/*;q=0.1\r\nSec-GPC: 1\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-Mode: no-cors\r\nSec-Fetch-Dest: style\r\nReferer: http://localhost:5000/\r\nAccept-Encoding: gzip, deflate, br\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nCookie: JSESSIONID=CCA0509F3AAB9FE428036D00374FF9A5; session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.YYEI3w.AmkdGlDuMB3jonKslTWF-A-bO_4\r\n\r\n", 8192, 0, NULL, NULL) = 624 <0.168187>
+1635846367.739480 (+     0.169060) getpid() = 14 <0.000022>
+1635846367.739930 (+     0.000447) write(2, "{\"asctime\": \"2021-11-02 09:46:07,739\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /css/components-73500b74b11e95ba942afb9f24e04bf0.css\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 237) = 237 <0.000199>
+1635846367.740543 (+     0.000611) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000025>
+1635846367.743048 (+     0.002508) getpid() = 14 <0.000035>
+1635846367.743479 (+     0.000428) write(2, "{\"asctime\": \"2021-11-02 09:46:07,742\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /css/components-73500b74b11e95ba942afb9f24e04bf0.css\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/css/components-73500b74b11e95ba942afb9f24e04bf0.css\", \"remote_addr\": \"127.0.0.1\"}\n", 366) = 366 <0.000032>
+1635846367.744456 (+     0.000977) stat("/app/app/static/css/components-73500b74b11e95ba942afb9f24e04bf0.css", {st_mode=S_IFREG|0644, st_size=13521, ...}) = 0 <0.000097>
+1635846367.744999 (+     0.000541) stat("/app/app/static/css/components-73500b74b11e95ba942afb9f24e04bf0.css", {st_mode=S_IFREG|0644, st_size=13521, ...}) = 0 <0.000046>
+1635846367.745729 (+     0.000730) stat("/etc/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000030>
+1635846367.745886 (+     0.000155) stat("/etc/httpd/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000021>
+1635846367.745960 (+     0.000073) stat("/etc/httpd/conf/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000018>
+1635846367.746024 (+     0.000063) stat("/etc/apache/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000019>
+1635846367.746107 (+     0.000083) stat("/etc/apache2/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000030>
+1635846367.746167 (+     0.000059) stat("/usr/local/etc/httpd/conf/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000014>
+1635846367.746219 (+     0.000052) stat("/usr/local/lib/netscape/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000012>
+1635846367.746259 (+     0.000039) stat("/usr/local/etc/httpd/conf/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000011>
+1635846367.746296 (+     0.000037) stat("/usr/local/etc/mime.types", 0x7fff465ad6c0) = -1 ENOENT (No such file or directory) <0.000011>
+1635846367.747433 (+     0.001139) openat(AT_FDCWD, "/app/app/static/css/components-73500b74b11e95ba942afb9f24e04bf0.css", O_RDONLY|O_CLOEXEC) = 18 <0.002710>
+1635846367.750227 (+     0.002791) fstat(18, {st_mode=S_IFREG|0644, st_size=13521, ...}) = 0 <0.000015>
+1635846367.750296 (+     0.000068) ioctl(18, TCGETS, 0x7fff465ada70) = -1 ENOTTY (Inappropriate ioctl for device) <0.000013>
+1635846367.750376 (+     0.000080) lseek(18, 0, SEEK_CUR) = 0 <0.000014>
+1635846367.751541 (+     0.001167) getpid() = 14 <0.000017>
+1635846367.751832 (+     0.000289) getpid() = 14 <0.002485>
+1635846367.754562 (+     0.002730) getpid() = 14 <0.000013>
+1635846367.754714 (+     0.000151) getpid() = 14 <0.000012>
+1635846367.754787 (+     0.000072) getpid() = 14 <0.000009>
+1635846367.754850 (+     0.000062) getpid() = 14 <0.000009>
+1635846367.754911 (+     0.000061) getpid() = 14 <0.000010>
+1635846367.755001 (+     0.000090) getpid() = 14 <0.000010>
+1635846367.755119 (+     0.000118) getpid() = 14 <0.000011>
+1635846367.755200 (+     0.000081) getpid() = 14 <0.000010>
+1635846367.755285 (+     0.000085) getpid() = 14 <0.000010>
+1635846367.755487 (+     0.000202) getpid() = 14 <0.000011>
+1635846367.755570 (+     0.000081) getpid() = 14 <0.000010>
+1635846367.755656 (+     0.000087) getpid() = 14 <0.000010>
+1635846367.755732 (+     0.000074) getpid() = 14 <0.000010>
+1635846367.755803 (+     0.000071) getpid() = 14 <0.000010>
+1635846367.755888 (+     0.000085) getpid() = 14 <0.000010>
+1635846367.755937 (+     0.000048) getpid() = 14 <0.000009>
+1635846367.756033 (+     0.000096) getpid() = 14 <0.000010>
+1635846367.757152 (+     0.001122) lseek(18, 0, SEEK_CUR) = 0 <0.000876>
+1635846367.758228 (+     0.001073) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:46:07 GMT\r\nConnection: close\r\nContent-Disposition: inline; filename=components-73500b74b11e95ba942afb9f24e04bf0.css\r\nContent-Type: text/css; charset=utf-8\r\nContent-Length: 13521\r\nLast-Modified: Fri, 22 Oct 2021 14:51:33 GMT\r\nCache-Control: public, max-age=60\r\nExpires: Tue, 02 Nov 2021 09:47:07 GMT\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.YYEI3w.AmkdGlDuMB3jonKslTWF-A-bO_4; Expires=Tue, 02 Nov 2021 12:46:07 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 766, 0, NULL, 0) = 766 <0.000038>
+1635846367.758425 (+     0.000196) fstat(18, {st_mode=S_IFREG|0644, st_size=13521, ...}) = 0 <0.000031>
+1635846367.758900 (+     0.000475) sendfile(11, 18, [0] => [13521], 13521) = 13521 <0.000112>
+1635846367.759506 (+     0.000606) lseek(18, 13521, SEEK_SET) = 13521 <0.000013>
+1635846367.759557 (+     0.000049) lseek(18, 0, SEEK_SET) = 0 <0.000008>
+1635846367.759672 (+     0.000115) getpid() = 14 <0.000009>
+1635846367.760731 (+     0.001060) getpid() = 14 <0.000012>
+1635846367.760967 (+     0.000234) write(2, "{\"asctime\": \"2021-11-02 09:46:07,759\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 127.0.0.1 - - [02/Nov/2021:09:46:07 +0000] \\\"GET /css/components-73500b74b11e95ba942afb9f24e04bf0.css HTTP/1.1\\\" 200 0 \\\"http://localhost:5000/\\\" \\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 453) = 453 <0.000050>
+1635846367.761204 (+     0.000236) close(18) = 0 <0.000016>
+1635846367.761282 (+     0.000077) close(11) = 0 <0.000032>
+1635846367.761365 (+     0.000082) fchmod(7, 000) = 0 <0.000186>
+1635846367.761796 (+     0.000431) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000030>
+1635846367.761915 (+     0.000118) getppid() = 1 <0.000081>
+1635846367.762042 (+     0.000127) fchmod(7, 001) = 0 <0.000011>
+1635846367.762081 (+     0.000038) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=471113}) <1.528958>
+1635846369.291593 (+     1.529516) fchmod(7, 000) = 0 <0.000026>
+1635846369.291685 (+     0.000088) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000029>
+1635846369.291821 (+     0.000136) getppid() = 1 <0.000016>
+1635846369.291871 (+     0.000049) fchmod(7, 001) = 0 <0.000017>
+1635846369.291932 (+     0.000060) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=989403}) <0.010637>
+1635846369.302762 (+     0.010832) fchmod(7, 000) = 0 <0.000022>
+1635846369.302844 (+     0.000080) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000027>
+1635846369.302957 (+     0.000112) getppid() = 1 <0.000014>
+1635846369.303017 (+     0.000059) fchmod(7, 001) = 0 <0.000015>
+1635846369.303073 (+     0.000056) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=659681}) <0.340638>
+1635846369.643872 (+     0.340800) fchmod(7, 000) = 0 <0.000021>
+1635846369.643952 (+     0.000078) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000027>
+1635846369.644074 (+     0.000122) getppid() = 1 <0.000018>
+1635846369.644137 (+     0.000063) fchmod(7, 001) = 0 <0.000017>
+1635846369.644196 (+     0.000058) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=792135}) <0.208471>
+1635846369.852857 (+     0.208661) fchmod(7, 000) = 0 <0.000019>
+1635846369.852929 (+     0.000071) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000023>
+1635846369.853048 (+     0.000119) getppid() = 1 <0.000016>
+1635846369.853110 (+     0.000061) fchmod(7, 001) = 0 <0.000019>
+1635846369.853197 (+     0.000086) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=998130}) <0.002300>
+1635846369.855624 (+     0.002426) fchmod(7, 000) = 0 <0.000016>
+1635846369.855683 (+     0.000059) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000020>
+1635846369.855768 (+     0.000084) getppid() = 1 <0.000011>
+1635846369.855815 (+     0.000046) fchmod(7, 001) = 0 <0.000013>
+1635846369.855862 (+     0.000047) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=994128}) <0.005903>
+1635846369.861880 (+     0.006018) fchmod(7, 000) = 0 <0.000013>
+1635846369.861939 (+     0.000058) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000017>
+1635846369.862017 (+     0.000077) getppid() = 1 <0.000009>
+1635846369.862046 (+     0.000029) fchmod(7, 001) = 0 <0.000010>
+1635846369.862084 (+     0.000038) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=999797}) <0.000220>
+1635846369.862423 (+     0.000339) fchmod(7, 000) = 0 <0.000050>
+1635846369.862511 (+     0.000087) accept4(5, {sa_family=AF_INET, sin_port=htons(56254), sin_addr=inet_addr("127.0.0.1")}, [16], SOCK_CLOEXEC) = 11 <0.000016>
+1635846369.862626 (+     0.000115) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("127.0.0.1")}, [128->16]) = 0 <0.000010>
+1635846369.862677 (+     0.000049) ioctl(11, FIONBIO, [0]) = 0 <0.000009>
+1635846369.862728 (+     0.000051) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000009>
+1635846369.862771 (+     0.000042) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000009>
+1635846369.862901 (+     0.000130) recvfrom(11, "GET /static/js/runtime-main-805d83525362614b2fe816689af117fc.js HTTP/1.1\r\nHost: localhost:5000\r\nConnection: keep-alive\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\r\nAccept: */*\r\nSec-GPC: 1\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-Mode: no-cors\r\nSec-Fetch-Dest: script\r\nReferer: http://localhost:5000/\r\nAccept-Encoding: gzip, deflate, br\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nCookie: JSESSIONID=CCA0509F3AAB9FE428036D00374FF9A5; session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.YYEI3w.AmkdGlDuMB3jonKslTWF-A-bO_4\r\n\r\n", 8192, 0, NULL, NULL) = 617 <0.176024>
+1635846370.040379 (+     0.177483) getpid() = 14 <0.000020>
+1635846370.040797 (+     0.000414) write(2, "{\"asctime\": \"2021-11-02 09:46:10,040\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /static/js/runtime-main-805d83525362614b2fe816689af117fc.js\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 244) = 244 <0.000049>
+1635846370.041016 (+     0.000218) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000018>
+1635846370.042810 (+     0.001795) getpid() = 14 <0.000020>
+1635846370.043405 (+     0.000595) write(2, "{\"asctime\": \"2021-11-02 09:46:10,042\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /static/js/runtime-main-805d83525362614b2fe816689af117fc.js\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/static/js/runtime-main-805d83525362614b2fe816689af117fc.js\", \"remote_addr\": \"127.0.0.1\"}\n", 380) = 380 <0.000026>
+1635846370.043910 (+     0.000504) stat("/app/app/static/static/js/runtime-main-805d83525362614b2fe816689af117fc.js", {st_mode=S_IFREG|0644, st_size=1574, ...}) = 0 <0.006820>
+1635846370.050960 (+     0.007048) stat("/app/app/static/static/js/runtime-main-805d83525362614b2fe816689af117fc.js", {st_mode=S_IFREG|0644, st_size=1574, ...}) = 0 <0.000031>
+1635846370.051333 (+     0.000373) openat(AT_FDCWD, "/app/app/static/static/js/runtime-main-805d83525362614b2fe816689af117fc.js", O_RDONLY|O_CLOEXEC) = 18 <0.000029>
+1635846370.051405 (+     0.000069) fstat(18, {st_mode=S_IFREG|0644, st_size=1574, ...}) = 0 <0.000011>
+1635846370.051445 (+     0.000039) ioctl(18, TCGETS, 0x7fff465ada70) = -1 ENOTTY (Inappropriate ioctl for device) <0.000009>
+1635846370.051491 (+     0.000046) lseek(18, 0, SEEK_CUR) = 0 <0.000008>
+1635846370.053185 (+     0.001697) getpid() = 14 <0.000013>
+1635846370.053371 (+     0.000184) getpid() = 14 <0.000013>
+1635846370.053479 (+     0.000106) getpid() = 14 <0.000009>
+1635846370.053567 (+     0.000087) getpid() = 14 <0.000009>
+1635846370.053651 (+     0.000084) getpid() = 14 <0.000012>
+1635846370.053737 (+     0.000085) getpid() = 14 <0.000009>
+1635846370.053824 (+     0.000088) getpid() = 14 <0.000009>
+1635846370.053928 (+     0.000103) getpid() = 14 <0.000010>
+1635846370.054004 (+     0.000076) getpid() = 14 <0.000013>
+1635846370.054086 (+     0.000081) getpid() = 14 <0.000009>
+1635846370.054162 (+     0.000075) getpid() = 14 <0.000009>
+1635846370.054238 (+     0.000076) getpid() = 14 <0.000013>
+1635846370.054332 (+     0.000094) getpid() = 14 <0.000009>
+1635846370.054397 (+     0.000064) getpid() = 14 <0.000009>
+1635846370.054523 (+     0.000125) getpid() = 14 <0.000012>
+1635846370.054616 (+     0.000092) getpid() = 14 <0.000009>
+1635846370.054696 (+     0.000079) getpid() = 14 <0.000011>
+1635846370.054742 (+     0.000046) getpid() = 14 <0.000009>
+1635846370.054837 (+     0.000094) getpid() = 14 <0.000009>
+1635846370.055882 (+     0.001047) lseek(18, 0, SEEK_CUR) = 0 <0.000015>
+1635846370.056025 (+     0.000141) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:46:10 GMT\r\nConnection: close\r\nContent-Disposition: inline; filename=runtime-main-805d83525362614b2fe816689af117fc.js\r\nContent-Type: application/javascript; charset=utf-8\r\nContent-Length: 1574\r\nLast-Modified: Fri, 22 Oct 2021 14:51:50 GMT\r\nCache-Control: public, max-age=60\r\nExpires: Tue, 02 Nov 2021 09:47:10 GMT\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.YYEI4g.-DxLCb8TT18VrJLND1CwDWbdyII; Expires=Tue, 02 Nov 2021 12:46:10 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 780, 0, NULL, 0) = 780 <0.000258>
+1635846370.056453 (+     0.000427) fstat(18, {st_mode=S_IFREG|0644, st_size=1574, ...}) = 0 <0.000018>
+1635846370.056571 (+     0.000117) sendfile(11, 18, [0] => [1574], 1574) = 1574 <0.000236>
+1635846370.056902 (+     0.000331) lseek(18, 1574, SEEK_SET) = 1574 <0.000013>
+1635846370.056956 (+     0.000053) lseek(18, 0, SEEK_SET) = 0 <0.000008>
+1635846370.057072 (+     0.000116) getpid() = 14 <0.000013>
+1635846370.057336 (+     0.000263) getpid() = 14 <0.000010>
+1635846370.057563 (+     0.000226) write(2, "{\"asctime\": \"2021-11-02 09:46:10,057\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 127.0.0.1 - - [02/Nov/2021:09:46:10 +0000] \\\"GET /static/js/runtime-main-805d83525362614b2fe816689af117fc.js HTTP/1.1\\\" 200 0 \\\"http://localhost:5000/\\\" \\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 460) = 460 <0.000018>
+1635846370.057719 (+     0.000156) close(18) = 0 <0.000015>
+1635846370.057903 (+     0.000183) close(11) = 0 <0.000084>
+1635846370.058060 (+     0.000156) fchmod(7, 001) = 0 <0.000015>
+1635846370.058115 (+     0.000054) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000019>
+1635846370.058200 (+     0.000085) getppid() = 1 <0.000009>
+1635846370.058237 (+     0.000036) fchmod(7, 000) = 0 <0.000010>
+1635846370.058283 (+     0.000045) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=630840}) <0.369220>
+1635846370.427716 (+     0.369434) fchmod(7, 001) = 0 <0.000032>
+1635846370.427821 (+     0.000103) accept4(5, {sa_family=AF_INET, sin_port=htons(45916), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000034>
+1635846370.427999 (+     0.000178) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000017>
+1635846370.428079 (+     0.000079) ioctl(11, FIONBIO, [0]) = 0 <0.000016>
+1635846370.428152 (+     0.000072) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000016>
+1635846370.428221 (+     0.000068) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000014>
+1635846370.428387 (+     0.000167) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000341>
+1635846370.429238 (+     0.000850) getpid() = 14 <0.000018>
+1635846370.429586 (+     0.000347) write(2, "{\"asctime\": \"2021-11-02 09:46:10,429\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000075>
+1635846370.429842 (+     0.000254) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000019>
+1635846370.431493 (+     0.001654) getpid() = 14 <0.000024>
+1635846370.431820 (+     0.000324) write(2, "{\"asctime\": \"2021-11-02 09:46:10,431\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000029>
+1635846370.432267 (+     0.000446) getpid() = 14 <0.000017>
+1635846370.432354 (+     0.000086) getpid() = 14 <0.000015>
+1635846370.432455 (+     0.000101) getpid() = 14 <0.000018>
+1635846370.433856 (+     0.001404) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:46:10 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEI4g.YEz7LGpkID4cd4kbXrTa9z2YuKU; Expires=Tue, 02 Nov 2021 12:46:10 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000114>
+1635846370.434112 (+     0.000253) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000048>
+1635846370.434296 (+     0.000183) getpid() = 14 <0.000011>
+1635846370.434526 (+     0.000231) getpid() = 14 <0.000018>
+1635846370.434835 (+     0.000309) write(2, "{\"asctime\": \"2021-11-02 09:46:10,434\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:46:10 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000051>
+1635846370.435045 (+     0.000208) close(11) = 0 <0.000104>
+1635846370.435208 (+     0.000161) fchmod(7, 000) = 0 <0.000019>
+1635846370.435294 (+     0.000086) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000025>
+1635846370.435434 (+     0.000140) getppid() = 1 <0.000013>
+1635846370.435485 (+     0.000049) fchmod(7, 001) = 0 <0.000035>
+1635846370.435569 (+     0.000084) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=884558}) <0.115477>
+1635846370.551173 (+     0.115604) fchmod(7, 000) = 0 <0.000017>
+1635846370.551235 (+     0.000060) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000027>
+1635846370.551333 (+     0.000098) getppid() = 1 <0.000009>
+1635846370.551370 (+     0.000036) fchmod(7, 001) = 0 <0.000015>
+1635846370.551421 (+     0.000051) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=260444}) <0.739897>
+1635846371.291606 (+     0.740187) fchmod(7, 000) = 0 <0.000036>
+1635846371.291738 (+     0.000130) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000035>
+1635846371.291893 (+     0.000154) getppid() = 1 <0.000022>
+1635846371.291972 (+     0.000078) fchmod(7, 001) = 0 <0.000023>
+1635846371.292058 (+     0.000085) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=13, tv_usec=443176}) <1.557304>
+1635846372.849724 (+     1.557668) fchmod(7, 000) = 0 <0.000083>
+1635846372.849963 (+     0.000237) accept4(5, 0x7fff465af4f0, [16], SOCK_CLOEXEC) = -1 EAGAIN (Resource temporarily unavailable) <0.000060>
+1635846372.850173 (+     0.000210) getppid() = 1 <0.000068>
+1635846372.850312 (+     0.000138) fchmod(7, 001) = 0 <0.000051>
+1635846372.850436 (+     0.000123) select(7, [5 6], [], [], {tv_sec=15, tv_usec=0}) = 1 (in [5], left {tv_sec=14, tv_usec=699790}) <0.300554>
+1635846373.151202 (+     0.300766) fchmod(7, 000) = 0 <0.000032>
+1635846373.151343 (+     0.000140) accept4(5, {sa_family=AF_INET, sin_port=htons(56288), sin_addr=inet_addr("127.0.0.1")}, [16], SOCK_CLOEXEC) = 11 <0.000047>
+1635846373.151599 (+     0.000256) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("127.0.0.1")}, [128->16]) = 0 <0.000060>
+1635846373.151740 (+     0.000140) ioctl(11, FIONBIO, [0]) = 0 <0.000042>
+1635846373.151867 (+     0.000126) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000040>
+1635846373.151961 (+     0.000094) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000027>
+1635846373.152180 (+     0.000218) recvfrom(11, "GET /images/hero-image-big.png HTTP/1.1\r\nHost: localhost:5000\r\nConnection: keep-alive\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\r\nAccept: image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8\r\nSec-GPC: 1\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-Mode: no-cors\r\nSec-Fetch-Dest: image\r\nReferer: http://localhost:5000/\r\nAccept-Encoding: gzip, deflate, br\r\nAccept-Language: en-GB,en-US;q=0.9,en;q=0.8\r\nCookie: JSESSIONID=CCA0509F3AAB9FE428036D00374FF9A5; session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.YYEI3w.AmkdGlDuMB3jonKslTWF-A-bO_4\r\n\r\n", 8192, 0, NULL, NULL) = 644 <0.893634>
+1635846374.046882 (+     0.894712) getpid() = 14 <0.000042>
+1635846374.047388 (+     0.000500) write(2, "{\"asctime\": \"2021-11-02 09:46:14,046\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /images/hero-image-big.png\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 211) = 211 <0.000050>
+1635846374.047703 (+     0.000313) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000034>
+1635846374.051186 (+     0.003485) getpid() = 14 <0.000026>
+1635846374.051591 (+     0.000402) write(2, "{\"asctime\": \"2021-11-02 09:46:14,051\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /images/hero-image-big.png\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/images/hero-image-big.png\", \"remote_addr\": \"127.0.0.1\"}\n", 314) = 314 <0.000029>
+1635846374.052027 (+     0.000435) stat("/app/app/static/images/hero-image-big.png", {st_mode=S_IFREG|0644, st_size=437903, ...}) = 0 <0.000082>
+1635846374.052289 (+     0.000261) stat("/app/app/static/images/hero-image-big.png", {st_mode=S_IFREG|0644, st_size=437903, ...}) = 0 <0.000034>
+1635846374.052553 (+     0.000265) openat(AT_FDCWD, "/app/app/static/images/hero-image-big.png", O_RDONLY|O_CLOEXEC) = 18 <0.000046>
+1635846374.052669 (+     0.000114) fstat(18, {st_mode=S_IFREG|0644, st_size=437903, ...}) = 0 <0.000021>
+1635846374.052757 (+     0.000087) ioctl(18, TCGETS, 0x7fff465ada70) = -1 ENOTTY (Inappropriate ioctl for device) <0.000016>
+1635846374.052844 (+     0.000086) lseek(18, 0, SEEK_CUR) = 0 <0.000017>
+1635846374.053977 (+     0.001136) getpid() = 14 <0.000027>
+1635846374.054249 (+     0.000270) getpid() = 14 <0.000021>
+1635846374.054474 (+     0.000224) getpid() = 14 <0.000020>
+1635846374.054640 (+     0.000165) getpid() = 14 <0.000017>
+1635846374.054798 (+     0.000158) getpid() = 14 <0.000020>
+1635846374.054958 (+     0.000159) getpid() = 14 <0.000019>
+1635846374.055109 (+     0.000151) getpid() = 14 <0.000018>
+1635846374.055261 (+     0.000152) getpid() = 14 <0.000020>
+1635846374.055438 (+     0.000178) getpid() = 14 <0.000020>
+1635846374.055612 (+     0.000172) getpid() = 14 <0.000020>
+1635846374.055928 (+     0.000317) getpid() = 14 <0.000022>
+1635846374.056096 (+     0.000166) getpid() = 14 <0.000019>
+1635846374.056242 (+     0.000145) getpid() = 14 <0.000048>
+1635846374.056494 (+     0.000253) getpid() = 14 <0.000019>
+1635846374.056642 (+     0.000146) getpid() = 14 <0.000018>
+1635846374.056789 (+     0.000146) getpid() = 14 <0.000017>
+1635846374.056927 (+     0.000137) getpid() = 14 <0.000017>
+1635846374.057000 (+     0.000073) getpid() = 14 <0.000017>
+1635846374.057133 (+     0.000133) getpid() = 14 <0.000017>
+1635846374.058479 (+     0.001347) lseek(18, 0, SEEK_CUR) = 0 <0.000054>
+1635846374.058783 (+     0.000303) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:46:14 GMT\r\nConnection: close\r\nContent-Disposition: inline; filename=hero-image-big.png\r\nContent-Type: image/png\r\nContent-Length: 437903\r\nLast-Modified: Fri, 22 Oct 2021 14:51:33 GMT\r\nCache-Control: public, max-age=60\r\nExpires: Tue, 02 Nov 2021 09:47:14 GMT\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfZnJlc2giOmZhbHNlLCJfcGVybWFuZW50Ijp0cnVlfQ.YYEI5g.5l_xr48VYhwJ-9QSw4yxkfFe99U; Expires=Tue, 02 Nov 2021 12:46:14 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 724, 0, NULL, 0) = 724 <0.000070>
+1635846374.059172 (+     0.000389) fstat(18, {st_mode=S_IFREG|0644, st_size=437903, ...}) = 0 <0.000027>
+1635846374.059333 (+     0.000160) sendfile(11, 18, [0] => [437903], 437903) = 437903 <0.002937>
+1635846374.062370 (+     0.003036) lseek(18, 437903, SEEK_SET) = 437903 <0.000015>
+1635846374.062427 (+     0.000056) lseek(18, 0, SEEK_SET) = 0 <0.000028>
+1635846374.062594 (+     0.000167) getpid() = 14 <0.000014>
+1635846374.062848 (+     0.000254) getpid() = 14 <0.000014>
+1635846374.063134 (+     0.000286) write(2, "{\"asctime\": \"2021-11-02 09:46:14,062\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 127.0.0.1 - - [02/Nov/2021:09:46:14 +0000] \\\"GET /images/hero-image-big.png HTTP/1.1\\\" 200 0 \\\"http://localhost:5000/\\\" \\\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 427) = 427 <0.000018>
+1635846374.063250 (+     0.000115) close(18) = 0 <0.000014>
+1635846374.063323 (+     0.000071) close(11) = 0 <0.000032>
+1635846374.063403 (+     0.000080) fchmod(7, 001) = 0 <0.000018>
+1635846374.063457 (+     0.000054) accept4(5, {sa_family=AF_INET, sin_port=htons(45944), sin_addr=inet_addr("10.1.0.12")}, [16], SOCK_CLOEXEC) = 11 <0.000129>
+1635846374.063748 (+     0.000290) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("172.25.2.130")}, [128->16]) = 0 <0.000013>
+1635846374.063809 (+     0.000060) ioctl(11, FIONBIO, [0]) = 0 <0.000009>
+1635846374.063854 (+     0.000044) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000009>
+1635846374.063903 (+     0.000049) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000009>
+1635846374.064014 (+     0.000111) recvfrom(11, "GET /ping HTTP/1.1\r\nHost: 172.25.2.130:5000\r\nUser-Agent: kube-probe/1.20\r\nAccept: */*\r\nConnection: close\r\n\r\n", 8192, 0, NULL, NULL) = 108 <0.000014>
+1635846374.064282 (+     0.000267) getpid() = 14 <0.000009>
+1635846374.064474 (+     0.000192) write(2, "{\"asctime\": \"2021-11-02 09:46:14,064\", \"levelname\": \"DEBUG\", \"name\": \"gunicorn.error\", \"message\": \"GET /ping\", \"module\": \"glogging\", \"lineno\": 267, \"process\": 14, \"thread\": 140119183058752}\n", 190) = 190 <0.000016>
+1635846374.064610 (+     0.000135) getsockname(5, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("0.0.0.0")}, [16]) = 0 <0.000011>
+1635846374.065369 (+     0.000760) getpid() = 14 <0.000026>
+1635846374.065585 (+     0.000214) write(2, "{\"asctime\": \"2021-11-02 09:46:14,065\", \"levelname\": \"INFO\", \"name\": \"app\", \"message\": \"Received request: GET /ping\", \"module\": \"logging\", \"lineno\": 29, \"process\": 14, \"thread\": 140119183058752, \"request_method\": \"GET\", \"request_path\": \"/ping\", \"remote_addr\": \"10.1.0.12\"}\n", 272) = 272 <0.000016>
+1635846374.065984 (+     0.000399) getpid() = 14 <0.000023>
+1635846374.066057 (+     0.000070) getpid() = 14 <0.000008>
+1635846374.066112 (+     0.000055) getpid() = 14 <0.000009>
+1635846374.067170 (+     0.001060) sendto(11, "HTTP/1.1 200 OK\r\nServer: gunicorn\r\nDate: Tue, 02 Nov 2021 09:46:14 GMT\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: 4\r\nX-Content-Type-Options: no-sniff\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' plausible.io; style-src 'self' 'unsafe-inline'; connect-src plausible.io; object-src 'none';\r\nVary: Cookie\r\nSet-Cookie: session=eyJfcGVybWFuZW50Ijp0cnVlfQ.YYEI5g.2jkN0ExacCTI5brW_7uu9POPZY4; Expires=Tue, 02 Nov 2021 12:46:14 GMT; Secure; HttpOnly; Path=/; SameSite=Lax\r\n\r\n", 535, 0, NULL, 0) = 535 <0.000067>
+1635846374.067322 (+     0.000149) sendto(11, "pong", 4, 0, NULL, 0) = 4 <0.000029>
+1635846374.067459 (+     0.000137) getpid() = 14 <0.000009>
+1635846374.067627 (+     0.000168) getpid() = 14 <0.000010>
+1635846374.067786 (+     0.000158) write(2, "{\"asctime\": \"2021-11-02 09:46:14,067\", \"levelname\": \"INFO\", \"name\": \"gunicorn.access\", \"message\": \"- 10.1.0.12 - - [02/Nov/2021:09:46:14 +0000] \\\"GET /ping HTTP/1.1\\\" 200 4 \\\"-\\\" \\\"kube-probe/1.20\\\"\", \"module\": \"glogging\", \"lineno\": 349, \"process\": 14, \"thread\": 140119183058752}\n", 280) = 280 <0.000017>
+1635846374.067908 (+     0.000122) close(11) = 0 <0.000087>
+1635846374.068045 (+     0.000136) fchmod(7, 000) = 0 <0.000016>
+1635846374.068099 (+     0.000053) accept4(5, {sa_family=AF_INET, sin_port=htons(56294), sin_addr=inet_addr("127.0.0.1")}, [16], SOCK_CLOEXEC) = 11 <0.000018>
+1635846374.068185 (+     0.000085) getsockname(11, {sa_family=AF_INET, sin_port=htons(5000), sin_addr=inet_addr("127.0.0.1")}, [128->16]) = 0 <0.000014>
+1635846374.068251 (+     0.000066) ioctl(11, FIONBIO, [0]) = 0 <0.000013>
+1635846374.068311 (+     0.000059) fcntl(11, F_GETFD) = 0x1 (flags FD_CLOEXEC) <0.000011>
+1635846374.068365 (+     0.000054) fcntl(11, F_SETFD, FD_CLOEXEC) = 0 <0.000009>
+1635846374.068456 (+     0.000090) recvfrom(11, 0x562c2ad874b0, 8192, 0, NULL, NULL) = ? ERESTARTSYS (To be restarted if SA_RESTART is set) <30.996479>
+1635846405.065071 (+    30.996616) --- SIGABRT {si_signo=SIGABRT, si_code=SI_USER, si_pid=1, si_uid=0} ---
+1635846405.065267 (+     0.000195) write(8, "\6", 1) = 1 <0.000021>
+1635846405.065366 (+     0.000098) rt_sigreturn({mask=[]}) = -1 EINTR (Interrupted system call) <0.000014>
+1635846405.066171 (+     0.000806) close(11) = 0 <0.000067>
+1635846405.068434 (+     0.002266) getpid() = 14 <0.000017>
+1635846405.069190 (+     0.000753) write(2, "{\"asctime\": \"2021-11-02 09:46:45,066\", \"levelname\": \"INFO\", \"name\": \"gunicorn.error\", \"message\": \"Worker exiting (pid: 14)\", \"module\": \"glogging\", \"lineno\": 264, \"process\": 14, \"thread\": 140119183058752}\n", 204) = 204 <0.000089>
+1635846405.069468 (+     0.000276) close(7) = 0 <0.000014>
+1635846405.070486 (+     0.001019) rt_sigaction(SIGINT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, 8) = 0 <0.000013>
+1635846405.070554 (+     0.000065) rt_sigaction(SIGQUIT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, 8) = 0 <0.000008>
+1635846405.070585 (+     0.000031) rt_sigaction(SIGABRT, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, 8) = 0 <0.000008>
+1635846405.070622 (+     0.000036) rt_sigaction(SIGUSR1, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f700a258840}, 8) = 0 <0.000009>
+1635846405.070654 (+     0.000031) rt_sigaction(SIGTERM, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7f700a258840}, 8) = 0 <0.000008>
+1635846405.070683 (+     0.000029) rt_sigaction(SIGTTIN, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, 8) = 0 <0.000008>
+1635846405.070724 (+     0.000041) rt_sigaction(SIGTTOU, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, 8) = 0 <0.000014>
+1635846405.070810 (+     0.000085) rt_sigaction(SIGWINCH, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, {sa_handler=0x7f700a6dfe29, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f700a583730}, 8) = 0 <0.000009>
+1635846405.321482 (+     0.250680) munmap(0x7f700393d000, 262144) = 0 <0.000060>
+1635846405.323227 (+     0.001739) munmap(0x7f700424b000, 262144) = 0 <0.000047>
+1635846405.323451 (+     0.000221) munmap(0x7f70041cb000, 262144) = 0 <0.000032>
+1635846405.323744 (+     0.000293) munmap(0x7f700418b000, 262144) = 0 <0.000042>
+1635846405.323956 (+     0.000212) munmap(0x7f700414b000, 262144) = 0 <0.000041>
+1635846405.324169 (+     0.000212) munmap(0x7f700410b000, 262144) = 0 <0.000041>
+1635846405.324711 (+     0.000543) munmap(0x7f7003f3d000, 262144) = 0 <0.000049>
+1635846405.324918 (+     0.000206) munmap(0x7f7003fbd000, 262144) = 0 <0.000053>
+1635846405.325057 (+     0.000137) munmap(0x7f7003efd000, 262144) = 0 <0.000040>
+1635846405.325437 (+     0.000381) munmap(0x7f7003ebd000, 262144) = 0 <0.000053>
+1635846405.325528 (+     0.000090) munmap(0x7f7003e7d000, 262144) = 0 <0.000040>
+1635846405.325811 (+     0.000283) munmap(0x7f7003dfd000, 262144) = 0 <0.000068>
+1635846405.326020 (+     0.000208) munmap(0x7f7003e3d000, 262144) = 0 <0.000039>
+1635846405.326126 (+     0.000105) munmap(0x7f7003dbd000, 262144) = 0 <0.000042>
+1635846405.326493 (+     0.000369) munmap(0x7f7003d7d000, 262144) = 0 <0.000045>
+1635846405.326666 (+     0.000171) munmap(0x7f7003f7d000, 262144) = 0 <0.000046>
+1635846405.330577 (+     0.003912) munmap(0x7f700428b000, 262144) = 0 <0.003939>
+1635846405.334629 (+     0.004049) munmap(0x7f700420b000, 262144) = 0 <0.000042>
+1635846405.334758 (+     0.000128) munmap(0x7f7003d3d000, 262144) = 0 <0.000044>
+1635846405.335867 (+     0.001111) munmap(0x7f700404b000, 262144) = 0 <0.000056>
+1635846405.341335 (+     0.005469) munmap(0x7f70040cb000, 262144) = 0 <0.000078>
+1635846405.341522 (+     0.000184) munmap(0x7f7003cbd000, 262144) = 0 <0.000044>
+1635846405.342060 (+     0.000538) munmap(0x7f7003c3d000, 262144) = 0 <0.000048>
+1635846405.342730 (+     0.000670) munmap(0x7f7003bfd000, 262144) = 0 <0.000046>
+1635846405.342887 (+     0.000156) munmap(0x7f7003cfd000, 262144) = 0 <0.000057>
+1635846405.343038 (+     0.000150) munmap(0x7f7003bbd000, 262144) = 0 <0.000056>
+1635846405.344481 (+     0.001444) munmap(0x7f7003a3d000, 262144) = 0 <0.000079>
+1635846405.344760 (+     0.000278) munmap(0x7f700408b000, 262144) = 0 <0.000040>
+1635846405.344841 (+     0.000080) munmap(0x7f7003b7d000, 262144) = 0 <0.000047>
+1635846405.344937 (+     0.000095) munmap(0x7f700430b000, 262144) = 0 <0.000042>
+1635846405.345007 (+     0.000070) munmap(0x7f7003c7d000, 262144) = 0 <0.000040>
+1635846405.360220 (+     0.015219) munmap(0x7f7003abd000, 262144) = 0 <0.000130>
+1635846405.434537 (+     0.074317) close(5) = 0 <0.000015>
+1635846405.437067 (+     0.002527) lseek(9, 0, SEEK_CUR) = 0 <0.000068>
+1635846405.437202 (+     0.000129) close(9) = 0 <0.000019>
+1635846405.437690 (+     0.000489) close(17) = 0 <0.000208>
+1635846405.438405 (+     0.000715) lseek(14, 0, SEEK_CUR) = 0 <0.000012>
+1635846405.438462 (+     0.000056) close(14) = 0 <0.000009>
+1635846405.438505 (+     0.000042) lseek(12, 0, SEEK_CUR) = 0 <0.000009>
+1635846405.438532 (+     0.000026) close(12) = 0 <0.000008>
+1635846405.486087 (+     0.047563) munmap(0x7f7003b3d000, 262144) = 0 <0.000090>
+1635846405.507750 (+     0.021661) munmap(0x7f7000260000, 262144) = 0 <0.000052>
+1635846405.508428 (+     0.000673) munmap(0x7f7000220000, 262144) = 0 <0.000036>
+1635846405.511273 (+     0.002847) munmap(0x7f6fffb20000, 262144) = 0 <0.000051>
+1635846405.511371 (+     0.000092) close(10) = 0 <0.000008>
+1635846405.511393 (+     0.000021) munmap(0x7f7007765000, 1048576) = 0 <0.000019>
+1635846405.511427 (+     0.000034) close(13) = 0 <0.000007>
+1635846405.511446 (+     0.000018) munmap(0x7f70033bd000, 1048576) = 0 <0.000030>
+1635846405.511601 (+     0.000156) close(15) = 0 <0.000007>
+1635846405.511625 (+     0.000023) munmap(0x7f70032bd000, 1048576) = 0 <0.000013>
+1635846405.512114 (+     0.000490) getpid() = 14 <0.000008>
+1635846405.512287 (+     0.000172) sendto(16, "\27\3\3\0\26\357\3\356\"\304\17\372\370f\35O\24\v\342\2230\340\336\226b\17%", 27, MSG_NOSIGNAL, NULL, 0) = 27 <0.000084>
+1635846405.512455 (+     0.000168) sendto(16, "\27\3\3\0\23`}bB\342Q\200\362pl\5\302\275Z\315\256Z\31(", 24, MSG_NOSIGNAL, NULL, 0) = 24 <0.000023>
+1635846405.512671 (+     0.000216) close(16) = 0 <0.000033>
+1635846405.519468 (+     0.006802) munmap(0x7f700400b000, 262144) = 0 <0.000056>
+1635846405.521215 (+     0.001744) munmap(0x7f70001e0000, 262144) = 0 <0.000049>
+1635846405.521473 (+     0.000254) munmap(0x7f6ffffa0000, 262144) = 0 <0.000048>
+1635846405.523063 (+     0.001591) munmap(0x7f70038bd000, 262144) = 0 <0.000058>
+1635846405.526188 (+     0.003126) munmap(0x7f7003afd000, 262144) = 0 <0.000053>
+1635846405.527332 (+     0.001142) munmap(0x7f7003a7d000, 262144) = 0 <0.000383>
+1635846405.528566 (+     0.001233) munmap(0x7f7006012000, 2101288) = 0 <0.000027>
+1635846405.530030 (+     0.001464) munmap(0x7f7004a87000, 535424) = 0 <0.000050>
+1635846405.530887 (+     0.000856) munmap(0x7f70051fb000, 2101288) = 0 <0.000027>
+1635846405.530978 (+     0.000089) munmap(0x7f7005e0f000, 2105408) = 0 <0.000023>
+1635846405.531065 (+     0.000086) munmap(0x7f7005c0b000, 2109520) = 0 <0.000019>
+1635846405.531135 (+     0.000070) munmap(0x7f7005a06000, 2113624) = 0 <0.000017>
+1635846405.531198 (+     0.000063) munmap(0x7f7005803000, 2105424) = 0 <0.000016>
+1635846405.531259 (+     0.000061) munmap(0x7f7005600000, 2105400) = 0 <0.000018>
+1635846405.531324 (+     0.000064) munmap(0x7f70053fd000, 2105416) = 0 <0.000017>
+1635846405.531395 (+     0.000071) munmap(0x7f7006a9f000, 2101288) = 0 <0.000023>
+1635846405.531466 (+     0.000071) munmap(0x7f700689c000, 2105408) = 0 <0.000018>
+1635846405.531533 (+     0.000066) munmap(0x7f7006699000, 2105424) = 0 <0.000017>
+1635846405.531591 (+     0.000057) munmap(0x7f7006497000, 2101320) = 0 <0.000425>
+1635846405.532128 (+     0.000537) munmap(0x7f7006254000, 2105432) = 0 <0.000020>
+1635846405.532223 (+     0.000095) munmap(0x7f7004bb4000, 2105416) = 0 <0.000018>
+1635846405.532290 (+     0.000066) munmap(0x7f7000936000, 2138168) = 0 <0.000021>
+1635846405.532359 (+     0.000069) munmap(0x7f700072b000, 2138168) = 0 <0.000020>
+1635846405.532427 (+     0.000067) munmap(0x7f70004e4000, 2121784) = 0 <0.000017>
+1635846405.532488 (+     0.000061) munmap(0x7f70002e0000, 2109520) = 0 <0.000017>
+1635846405.533285 (+     0.000798) munmap(0x7f7004db7000, 2101304) = 0 <0.000025>
+1635846405.533385 (+     0.000098) munmap(0x7f7004ff9000, 2101304) = 0 <0.000017>
+1635846405.537271 (+     0.003890) munmap(0x7f6fffbe0000, 262144) = 0 <0.000067>
+1635846405.538828 (+     0.001554) munmap(0x7f70042cb000, 262144) = 0 <0.000045>
+1635846405.539030 (+     0.000200) munmap(0x7f7008236000, 262144) = 0 <0.000056>
+1635846405.539122 (+     0.000091) munmap(0x7f70039bd000, 262144) = 0 <0.000047>
+1635846405.540274 (+     0.001154) munmap(0x7f6fffae0000, 262144) = 0 <0.000044>
+1635846405.543499 (+     0.003225) exit_group(1) = ?
+1635846405.551211 (+     0.007715) +++ exited with 1 +++
