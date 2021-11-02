@@ -1,7 +1,14 @@
+from unittest.mock import patch
+
 import pytest
+from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict
 
-from app.forms.steps.lotse.steuerminderungen import StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt
+from app.forms.steps.lotse.steuerminderungen import StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, \
+    StepSelectStmind, ShowHandwerkerPrecondition, NotShowPersonBPrecondition, HandwerkerHaushaltsnaheSetPrecondition, \
+    StepVorsorge, StepAussergBela, StepReligion, StepSpenden, ShowReligionPrecondition, ShowSpendenPrecondition, \
+    ShowVorsorgePrecondition, ShowAussergBelaPrecondition
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 
 
 @pytest.fixture
@@ -14,6 +21,184 @@ def step_haushaltsnahe_handwerker():
 def step_gem_haushalt():
     step = StepGemeinsamerHaushalt(endpoint='lotse')
     return step
+
+
+# PRECONDITIONS
+class TestShowVorsorgePrecondition:
+    def test_if_vorsorge_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            ShowVorsorgePrecondition.parse_obj(data)
+
+    def test_if_vorsorge_set_false_then_raise_validation_error(self):
+        data = {'stmind_select_vorsorge': False}
+        with pytest.raises(ValidationError):
+            ShowVorsorgePrecondition.parse_obj(data)
+
+    def test_if_vorsorge_set_true_then_do_not_raise_validation_error(self):
+        data = {'stmind_select_vorsorge': True}
+        try:
+            ShowVorsorgePrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+    
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert ShowVorsorgePrecondition._step_to_redirect_to == StepSelectStmind.name
+
+
+class TestShowAussergBelaPrecondition:
+    def test_if_ausserg_bela_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            ShowAussergBelaPrecondition.parse_obj(data)
+
+    def test_if_ausserg_bela_set_false_then_raise_validation_error(self):
+        data = {'stmind_select_ausserg_bela': False}
+        with pytest.raises(ValidationError):
+            ShowAussergBelaPrecondition.parse_obj(data)
+
+    def test_if_ausserg_bela_set_true_then_do_not_raise_validation_error(self):
+        data = {'stmind_select_ausserg_bela': True}
+        try:
+            ShowAussergBelaPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+    
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert ShowAussergBelaPrecondition._step_to_redirect_to == StepSelectStmind.name
+
+
+class TestShowHandwerkerPrecondition:
+    def test_if_handwerker_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            ShowHandwerkerPrecondition.parse_obj(data)
+
+    def test_if_handwerker_set_false_then_raise_validation_error(self):
+        data = {'stmind_select_handwerker': False}
+        with pytest.raises(ValidationError):
+            ShowHandwerkerPrecondition.parse_obj(data)
+
+    def test_if_handwerker_set_true_then_do_not_raise_validation_error(self):
+        data = {'stmind_select_handwerker': True}
+        try:
+            ShowHandwerkerPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert ShowHandwerkerPrecondition._step_to_redirect_to == StepSelectStmind.name
+
+
+class TestShowSpendenPrecondition:
+    def test_if_spenden_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            ShowSpendenPrecondition.parse_obj(data)
+
+    def test_if_spenden_set_false_then_raise_validation_error(self):
+        data = {'stmind_select_spenden': False}
+        with pytest.raises(ValidationError):
+            ShowSpendenPrecondition.parse_obj(data)
+
+    def test_if_spenden_set_true_then_do_not_raise_validation_error(self):
+        data = {'stmind_select_spenden': True}
+        try:
+            ShowSpendenPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert ShowSpendenPrecondition._step_to_redirect_to == StepSelectStmind.name
+
+
+class TestShowReligionPrecondition:
+    def test_if_religion_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            ShowReligionPrecondition.parse_obj(data)
+
+    def test_if_religion_set_false_then_raise_validation_error(self):
+        data = {'stmind_select_religion': False}
+        with pytest.raises(ValidationError):
+            ShowReligionPrecondition.parse_obj(data)
+
+    def test_if_religion_set_true_then_do_not_raise_validation_error(self):
+        data = {'stmind_select_religion': True}
+        try:
+            ShowReligionPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert ShowReligionPrecondition._step_to_redirect_to == StepSelectStmind.name
+
+
+class TestNotShowPersonBPrecondition:
+    def test_if_show_person_b_true_then_raise_validation_error(self):
+        with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=True), \
+                pytest.raises(ValidationError):
+            NotShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
+
+    def test_if_show_person_b_false_then_do_not_raise_validation_error(self):
+        try:
+            with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=False):
+                NotShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert NotShowPersonBPrecondition._step_to_redirect_to == StepFamilienstand.name
+
+
+class TestHandwerkerHaushaltsnaheSetPrecondition:
+    def test_if_haushaltsnahe_and_handwerker_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            HandwerkerHaushaltsnaheSetPrecondition.parse_obj(data)
+
+    def test_if_haushaltsnahe_summe_set_then_do_not_raise_validation_error(self):
+        data = {'stmind_haushaltsnahe_summe': 30.0}
+        try:
+            HandwerkerHaushaltsnaheSetPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_handwerker_summe_set_then_do_not_raise_validation_error(self):
+        data = {'stmind_handwerker_summe': 30.0}
+        try:
+            HandwerkerHaushaltsnaheSetPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_step_to_redirect_to_is_set_correctly(self):
+        assert HandwerkerHaushaltsnaheSetPrecondition._step_to_redirect_to == StepHaushaltsnaheHandwerker.name
+
+
+# STEPS
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepSelectStmind:
+    def test_no_precondition_set(self):
+        assert StepSelectStmind.preconditions == []
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepVorsorge:
+    def test_preconditions_set_correctly(self):
+        assert StepVorsorge.preconditions == [ShowVorsorgePrecondition]
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepAussergBela:
+    def test_preconditions_set_correctly(self):
+        assert StepAussergBela.preconditions == [ShowAussergBelaPrecondition]
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepSelectStmind:
+    def test_no_precondition_set(self):
+        assert StepSelectStmind.preconditions == []
 
 
 @pytest.mark.usefixtures('test_request_context')
@@ -60,6 +245,9 @@ class TestHaushaltsnaheStepHaushaltsnahe:
                           'stmind_haushaltsnahe_summe': "3"})
         form = step_haushaltsnahe_handwerker.InputForm(formdata=data)
         assert form.validate() is True
+
+    def test_precondition_set_correctly(self):
+        assert StepHaushaltsnaheHandwerker.preconditions == [ShowHandwerkerPrecondition]
 
 
 @pytest.mark.usefixtures('test_request_context')
@@ -179,3 +367,19 @@ class TestGemeinsamerHaushaltStep:
                           'stmind_gem_haushalt_count': '3'})
         form = step_gem_haushalt.InputForm(formdata=data)
         assert form.validate() is True
+
+    def test_preconditions_set_correctly(self):
+        assert StepGemeinsamerHaushalt.preconditions == [NotShowPersonBPrecondition, ShowHandwerkerPrecondition,
+                                                         HandwerkerHaushaltsnaheSetPrecondition]
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepReligion:
+    def test_preconditions_set_correctly(self):
+        assert StepReligion.preconditions == [ShowReligionPrecondition]
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestStepSpenden:
+    def test_preconditions_set_correctly(self):
+        assert StepSpenden.preconditions == [ShowSpendenPrecondition]
