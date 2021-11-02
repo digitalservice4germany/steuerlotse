@@ -1,18 +1,18 @@
 import React from "react";
 
-import FormFieldCard from "../components/FormFieldCard";
+import SelectableCard from "../components/SelectableCard";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
 import vorsorgeIcon from "../assets/icons/vorsorge_icon.svg";
 
 export default {
-  title: "Form Fields/Card",
-  component: FormFieldCard,
+  title: "Form Fields/SelectableCard",
+  component: SelectableCard,
 };
 
 const Template = (args) => (
   <StepForm {...StepFormDefault.args}>
-    <FormFieldCard {...args} />
+    <SelectableCard {...args} />
   </StepForm>
 );
 

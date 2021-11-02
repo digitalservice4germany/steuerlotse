@@ -94,7 +94,7 @@ const IconTextWrapper = styled.div`
   }
 `;
 
-function FormFieldCard({
+function SelectableCard({
   fieldName,
   fieldId,
   checked,
@@ -137,7 +137,7 @@ function FormFieldCard({
   );
 }
 
-FormFieldCard.propTypes = {
+SelectableCard.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   body: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
@@ -149,11 +149,11 @@ FormFieldCard.propTypes = {
   autofocus: PropTypes.bool,
 };
 
-FormFieldCard.defaultProps = {
+SelectableCard.defaultProps = {
   icon: null,
   checked: false,
   required: false,
   autofocus: false,
 };
 
-export default FormFieldCard;
+export default SelectableCard;

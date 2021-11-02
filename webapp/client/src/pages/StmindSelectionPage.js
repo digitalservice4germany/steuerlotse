@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import FormFieldCard from "../components/FormFieldCard";
+import SelectableCard from "../components/SelectableCard";
 import vorsorgeIcon from "../assets/icons/vorsorge_icon.svg";
 import aussergBelaIcon from "../assets/icons/ausserg_bela_icon.svg";
 import handwerkerIcon from "../assets/icons/handwerker_icon.svg";
@@ -19,7 +19,7 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
-        <FormFieldCard
+        <SelectableCard
           autofocus
           fieldName="stmind_select_vorsorge"
           fieldId="stmind_select_vorsorge"
@@ -29,7 +29,7 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           icon={vorsorgeIcon}
           errors={fields.stmindSelectVorsorge.errors}
         />
-        <FormFieldCard
+        <SelectableCard
           fieldName="stmind_select_ausserg_bela"
           fieldId="stmind_select_ausserg_bela"
           checked={fields.stmindSelectAussergBela.checked}
@@ -38,7 +38,7 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           icon={aussergBelaIcon}
           errors={fields.stmindSelectAussergBela.errors}
         />
-        <FormFieldCard
+        <SelectableCard
           fieldName="stmind_select_handwerker"
           fieldId="stmind_select_handwerker"
           checked={fields.stmindSelectHandwerker.checked}
@@ -47,7 +47,7 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           icon={handwerkerIcon}
           errors={fields.stmindSelectHandwerker.errors}
         />
-        <FormFieldCard
+        <SelectableCard
           fieldName="stmind_select_spenden"
           fieldId="stmind_select_spenden"
           checked={fields.stmindSelectSpenden.checked}
@@ -56,7 +56,7 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           icon={spendenIcon}
           errors={fields.stmindSelectSpenden.errors}
         />
-        <FormFieldCard
+        <SelectableCard
           fieldName="stmind_select_religion"
           fieldId="stmind_select_religion"
           checked={fields.stmindSelectReligion.checked}
