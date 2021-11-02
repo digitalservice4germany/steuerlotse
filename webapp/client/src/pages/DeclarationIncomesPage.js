@@ -6,7 +6,7 @@ import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import listMarker from "../assets/images/list_marker.svg";
+import listMarker from "../assets/icons/list_marker.svg";
 
 const IntroList = styled.ul`
   margin-bottom: var(--spacing-06);
