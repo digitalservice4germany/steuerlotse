@@ -2,6 +2,10 @@ name: CI/CD Pipeline
 
 on: push
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
   ERICA_HOST: ${{ secrets.ERICA_HOST_STAGING }}

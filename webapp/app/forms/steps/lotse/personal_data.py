@@ -49,8 +49,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    def __init__(self, endpoint="lotse", render_info=None, *args, **kwargs):
-        super().__init__(endpoint=endpoint, render_info=render_info, *args, **kwargs)
+    def __init__(self, endpoint="lotse", *args, **kwargs):
+        super().__init__(endpoint=endpoint, *args, **kwargs)
 
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
@@ -100,6 +100,16 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             label=_l('form.lotse.steuernummer.request_new_tax_number'),
             render_kw={'data_label': _l('form.lotse.steuernummer.request_new_tax_number.data_label')})
 
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            tax_offices = request_tax_offices()
+            self.tax_offices = tax_offices
+            choices = []
+            for county in tax_offices:
+                choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
+                            county.get('tax_offices')]
+            self.bufa_nr.choices = choices
+
         def validate_bundesland(form, field):
             if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
                 validators.InputRequired()(form, field)
@@ -139,25 +149,15 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             return all_fields_are_valid
 
     def _pre_handle(self):
-        tax_offices = request_tax_offices()
-
-        # Set bufa choices here because WTForms will otherwise not accept choices because they are invalid
-        self._set_bufa_choices(tax_offices)
         self._set_multiple_texts()
         super()._pre_handle()
-        self.render_info.additional_info['tax_offices'] = tax_offices
-
-    def _set_bufa_choices(self, tax_offices):
-        choices = []
-        for county in tax_offices:
-            choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in county.get('tax_offices')]
-        self.form.bufa_nr.kwargs['choices'] = choices
 
     def _set_multiple_texts(self):
         num_of_users = 2 if show_person_b(self.stored_data) else 1
-        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
-                                                                 'form.lotse.steuernummer_exists',
-                                                                 num=num_of_users)
-        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
-                                                                    'form.lotse.steuernummer.request_new_tax_number',
-                                                                    num=num_of_users)
+        self.render_info.form.steuernummer_exists.label.text = ngettext('form.lotse.steuernummer_exists',
+                                                                             'form.lotse.steuernummer_exists',
+                                                                             num=num_of_users)
+        self.render_info.form.request_new_tax_number.label.text = ngettext(
+            'form.lotse.steuernummer.request_new_tax_number',
+            'form.lotse.steuernummer.request_new_tax_number',
+            num=num_of_users)

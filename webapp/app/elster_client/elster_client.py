@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
+_REQUEST_TIMEOUT = 20
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'person_a_blind', 'person_a_gehbeh',
@@ -43,7 +44,7 @@ def send_to_erica(*args, **kwargs):
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
-        response = requests.post(*args, headers=headers, **kwargs)
+        response = requests.post(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
     logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
     return response
 
@@ -55,7 +56,7 @@ def request_from_erica(*args, **kwargs):
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
-        response = requests.get(*args, headers=headers, **kwargs)
+        response = requests.get(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
     logger.info(f'Completed Erica GET request with args {args!r}, got code {response.status_code}')
     return response
 
