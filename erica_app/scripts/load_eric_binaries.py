@@ -73,13 +73,17 @@ def download_file(bucket_name, object_name, file_name, s3client=None):
     if not s3client:
         s3client = get_connected_client()
 
-    s3client.download_file(bucket_name, object_name, file_name)
+    object = s3client.get_object(Bucket=bucket_name, Key="{0}".format(object_name))
+    raw_data = object['Body']._raw_stream.data
+
+    with open(file_name, "wb") as file:
+        file.write(raw_data)
 
 
 @cli.command()
-@click.option('--bucket_name', help='Name of the bucket you want to list of which you want to list the files.')
+@click.option('--bucket', help='Name of the bucket you want to list of which you want to list the files.')
 def list_objects_in_bucket(bucket):
-    if isinstance(str, bucket):
+    if isinstance(bucket, str):
         bucket = get_connected_session().Bucket(bucket)
     for bucket_object in bucket.objects.all():
         print(bucket_object)
