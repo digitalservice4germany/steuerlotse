@@ -1,8 +1,0 @@
-# robots.txt for Steuerlotse
-
-User-agent: *
-Disallow: /lotse/*
-Disallow: /unlock_code_request/*
-Disallow: /download_pdf/*
-Disallow: /logout
-Disallow: /login/*
