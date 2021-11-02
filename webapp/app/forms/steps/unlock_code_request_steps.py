@@ -34,8 +34,8 @@ class UnlockCodeRequestInputStep(FormStep):
     def render(self, data, render_info):
         props_dict = RegistrationProps(
             step_header={
-                'title': render_info.step_title,
-                'intro': render_info.step_intro,
+                'title': str(render_info.step_title),
+                'intro': str(render_info.step_intro),
             },
             form={
                 'action': render_info.submit_url,
