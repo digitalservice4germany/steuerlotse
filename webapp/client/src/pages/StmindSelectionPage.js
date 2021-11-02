@@ -24,8 +24,8 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           fieldName="stmind_select_vorsorge"
           fieldId="stmind_select_vorsorge"
           checked={fields.stmindSelectVorsorge.checked}
-          labelTitle={t("stmindSelection.selectVorsorge.label.title")}
-          labelText={t("stmindSelection.selectVorsorge.label.text")}
+          title={t("stmindSelection.selectVorsorge.label.title")}
+          body={t("stmindSelection.selectVorsorge.label.text")}
           icon={vorsorgeIcon}
           errors={fields.stmindSelectVorsorge.errors}
         />
@@ -33,8 +33,8 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           fieldName="stmind_select_ausserg_bela"
           fieldId="stmind_select_ausserg_bela"
           checked={fields.stmindSelectAussergBela.checked}
-          labelTitle={t("stmindSelection.selectAussergBela.label.title")}
-          labelText={t("stmindSelection.selectAussergBela.label.text")}
+          title={t("stmindSelection.selectAussergBela.label.title")}
+          body={t("stmindSelection.selectAussergBela.label.text")}
           icon={aussergBelaIcon}
           errors={fields.stmindSelectAussergBela.errors}
         />
@@ -42,8 +42,8 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           fieldName="stmind_select_handwerker"
           fieldId="stmind_select_handwerker"
           checked={fields.stmindSelectHandwerker.checked}
-          labelTitle={t("stmindSelection.selectHandwerker.label.title")}
-          labelText={t("stmindSelection.selectHandwerker.label.text")}
+          title={t("stmindSelection.selectHandwerker.label.title")}
+          body={t("stmindSelection.selectHandwerker.label.text")}
           icon={handwerkerIcon}
           errors={fields.stmindSelectHandwerker.errors}
         />
@@ -51,8 +51,8 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           fieldName="stmind_select_spenden"
           fieldId="stmind_select_spenden"
           checked={fields.stmindSelectSpenden.checked}
-          labelTitle={t("stmindSelection.selectSpenden.label.title")}
-          labelText={t("stmindSelection.selectSpenden.label.text")}
+          title={t("stmindSelection.selectSpenden.label.title")}
+          body={t("stmindSelection.selectSpenden.label.text")}
           icon={spendenIcon}
           errors={fields.stmindSelectSpenden.errors}
         />
@@ -60,8 +60,8 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
           fieldName="stmind_select_religion"
           fieldId="stmind_select_religion"
           checked={fields.stmindSelectReligion.checked}
-          labelTitle={t("stmindSelection.selectReligion.label.title")}
-          labelText={t("stmindSelection.selectReligion.label.text")}
+          title={t("stmindSelection.selectReligion.label.title")}
+          body={t("stmindSelection.selectReligion.label.text")}
           icon={religionIcon}
           errors={fields.stmindSelectReligion.errors}
         />
