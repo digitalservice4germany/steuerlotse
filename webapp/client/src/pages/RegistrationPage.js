@@ -197,7 +197,7 @@ RegistrationPage.propTypes = {
   stepHeader: PropTypes.exact({
     // TODO: define these here, not in Python
     title: PropTypes.string,
-    intro: PropTypes.any,
+    intro: PropTypes.element,
   }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
