@@ -9,7 +9,9 @@ export default function FormHeader({ title, intro, hideIntro }) {
   return (
     <div>
       <h1 className="my-4">{title}</h1>
-      {intro && !hideIntro && <Intro>{intro}</Intro>}
+      {intro && !hideIntro && (
+        <Intro dangerouslySetInnerHTML={{ __html: intro }} />
+      )}
     </div>
   );
 }
