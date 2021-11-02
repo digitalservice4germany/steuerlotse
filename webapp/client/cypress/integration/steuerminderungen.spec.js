@@ -4,6 +4,14 @@ describe("Steuerminderungen", () => {
       cy.login();
     });
 
+    it("next page should be summary", () => {
+      cy.visit("/lotse/step/select_stmind");
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
+    });
+
     it("vorsorge should be skipped", () => {
       cy.visit("/lotse/step/vorsorge");
       cy.location().should((loc) => {
@@ -55,6 +63,36 @@ describe("Steuerminderungen", () => {
       cy.get("label[for=stmind_select_spenden]").click();
       cy.get("label[for=stmind_select_religion]").click();
       cy.get("[name=next_button]").click();
+    });
+
+    it("page order should be correct", () => {
+      cy.visit("/lotse/step/select_stmind");
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/vorsorge");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/ausserg_bela");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain(
+          "/lotse/step/haushaltsnahe_handwerker"
+        );
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/spenden");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/religion");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
     });
 
     it("vorsorge should not be skipped", () => {
