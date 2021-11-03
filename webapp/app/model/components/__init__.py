@@ -49,3 +49,8 @@ class RegistrationProps(StepFormProps):
     eligibility_link: str
     terms_of_service_link: str
     data_privacy_link: str
+
+
+class ConfirmationProps(StepFormProps):
+    terms_of_service_link: str
+    data_privacy_link: str
