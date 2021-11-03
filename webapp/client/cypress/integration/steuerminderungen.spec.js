@@ -53,6 +53,83 @@ describe("Steuerminderungen", () => {
     });
   });
 
+  context("when parts of steuerminderungen selected", () => {
+    beforeEach(() => {
+      cy.login();
+      cy.visit("/lotse/step/select_stmind");
+    });
+
+    it("correct steps displayed if only first step selected", () => {
+      cy.get("label[for=stmind_select_vorsorge]").click();
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/vorsorge");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
+    });
+
+    it("correct steps displayed if only last step selected", () => {
+      cy.get("label[for=stmind_select_religion]").click();
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/religion");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
+    });
+
+    it("correct steps displayed if only step in the middle selected", () => {
+      cy.get("label[for=stmind_select_ausserg_bela]").click();
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/ausserg_bela");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
+    });
+
+    it("correct steps displayed if multiple consecutive steps selected", () => {
+      cy.get("label[for=stmind_select_spenden]").click();
+      cy.get("label[for=stmind_select_religion]").click();
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/spenden");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/religion");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
+    });
+
+    it("correct steps displayed if multiple non-consecutive steps selected", () => {
+      cy.get("label[for=stmind_select_ausserg_bela]").click();
+      cy.get("label[for=stmind_select_spenden]").click();
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/ausserg_bela");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/spenden");
+      });
+      cy.get("[name=next_button]").click();
+      cy.location().should((loc) => {
+        expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
+      });
+    });
+  });
+
   context("when all steuerminderungen selected", () => {
     beforeEach(() => {
       cy.login();
