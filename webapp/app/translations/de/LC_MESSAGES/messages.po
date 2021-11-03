@@ -1146,15 +1146,6 @@ msgstr "Anmeldung fehlgeschlagen"
 msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
-#: app/forms/steps/unlock_code_request_steps.py:30
-msgid "form.unlock-code-request.input-intro"
-msgstr ""
-"Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
-"Finanzverwaltung. Sie erhalten diesen mit einem Brief <b>innerhalb von "
-"zwei Wochen</b> nach erfolgreicher Beantragung. Wenn Sie die "
-"Zusammenveranlagung nutzen möchten, muss sich nur eine Person "
-"registrieren."
-
 #: app/forms/steps/unlock_code_request_steps.py:62
 #: app/forms/steps/unlock_code_request_steps.py:75
 #: app/forms/steps/unlock_code_request_steps.py:88

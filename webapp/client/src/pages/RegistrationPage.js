@@ -38,8 +38,8 @@ export default function RegistrationPage({
         intro={
           <Trans
             t={t}
-            i18nKey="unlockCodeRequest.deadlineIntro"
-            components={{ bold: <strong /> }}
+            i18nKey="unlockCodeRequest.input.intro"
+            components={{ bold: <b /> }}
           />
         }
       />
@@ -197,7 +197,6 @@ RegistrationPage.propTypes = {
   stepHeader: PropTypes.exact({
     // TODO: define these here, not in Python
     title: PropTypes.string,
-    intro: PropTypes.element,
   }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
