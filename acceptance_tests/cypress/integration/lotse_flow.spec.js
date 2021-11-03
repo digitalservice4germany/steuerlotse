@@ -456,12 +456,12 @@ context('Acceptance tests', () => {
                 cy.get('#stmind_handwerker_lohn_etc_summe').type(taxReturnData.stmind.handwerker.lohnEtcSumme)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#stmind_religion_paid_summe').type(taxReturnData.stmind.religion.paidSumme)
-                cy.get('#stmind_religion_reimbursed_summe').type(taxReturnData.stmind.religion.reimbursedSumme)
-                cy.get(submitBtnSelector).click()
-
                 cy.get('#stmind_spenden_inland').type(taxReturnData.stmind.spenden.inland)
                 cy.get('#stmind_spenden_inland_parteien').type(taxReturnData.stmind.spenden.inlandParteien)
+                cy.get(submitBtnSelector).click()
+
+                cy.get('#stmind_religion_paid_summe').type(taxReturnData.stmind.religion.paidSumme)
+                cy.get('#stmind_religion_reimbursed_summe').type(taxReturnData.stmind.religion.reimbursedSumme)
                 cy.get(submitBtnSelector).click()
 
                 // Step 4
