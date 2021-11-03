@@ -1,97 +1,202 @@
-from app.forms import SteuerlotseBaseForm
-from app.forms.steps.lotse.personal_data import show_person_b
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
-from app.forms.steps.step import FormStep, SectionLink
-from app.forms.fields import EntriesField, EuroField, SteuerlotseIntegerField
+from decimal import Decimal
+from typing import Optional
 
 from flask import render_template
-from flask_babel import _
-from flask_babel import lazy_gettext as _l
-from wtforms import RadioField, IntegerField, validators
-from wtforms.validators import InputRequired
+from flask_wtf.csrf import generate_csrf
+from pydantic import BaseModel, validator, ValidationError, root_validator
+from wtforms import validators, BooleanField
 
-from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH
+from app.forms import SteuerlotseBaseForm
+from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
+from flask_babel import lazy_gettext as _l, _
 
-class StepSteuerminderungYesNo(FormStep):
-    name = 'steuerminderung_yesno'
-    label = _l('form.lotse.step_steuerminderung.label')
-    section_link = SectionLink('section_steuerminderung', name, _l('form.lotse.section_steuerminderung.label'))
-
-    class Form(SteuerlotseBaseForm):
-        steuerminderung = RadioField(
-            # Field overrides the label with a default value if we don't explicitly set it to an empty string
-            label='',
-            render_kw={'data_label': _l('form.lotse.field_steuerminderung.data_label'),
-                       'hide_label': True},
-            choices=[
-                ('yes', _l('form.lotse.field_steuerminderung-yes')),
-                ('no', _l('form.lotse.field_steuerminderung-no')),
-            ],
-            validators=[InputRequired()]
-        )
-
-    def __init__(self, **kwargs):
-        super(StepSteuerminderungYesNo, self).__init__(
-            title=_l('form.lotse.steuerminderung-title'),
-            intro=_l('form.lotse.steuerminderung-intro'),
-            form=self.Form,
-            header_title=_('form.lotse.steuerminderungen.header-title'),
-            template='basis/form_full_width.html',
-            **kwargs,
-        )
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
+from app.forms.steps.step import SectionLink
+from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
+from app.model.components import SelectStmindProps
+from app.model.components.helpers import form_fields_dict
+from app.model.form_data import FamilienstandModel, JointTaxesModel
 
 
-class StepVorsorge(FormStep):
+class StepSelectStmind(LotseFormSteuerlotseStep):
+    name = 'select_stmind'
+    title = _l('form.lotse.select_stmind-title')
+    intro = _l('form.lotse.select_stmind-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'react_component.html'
+    # TODO remove this once all steps are converted to steuerlotse steps
+    prev_step = StepIban
+
+    label = _l('form.lotse.step_select_stmind.label')
+    section_link = SectionLink('section_steuerminderung',
+                               name,
+                               _l('form.lotse.section_steuerminderung.label'))
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
+    class InputForm(SteuerlotseBaseForm):
+        stmind_select_vorsorge = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_vorsorge.data_label')})
+        stmind_select_ausserg_bela = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_ausserg_bela.data_label')})
+        stmind_select_handwerker = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_handwerker.data_label')})
+        stmind_select_spenden = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_spenden.data_label')})
+        stmind_select_religion = BooleanField(
+            render_kw={'data_label': _l('form.lotse.stmind_select_religion.data_label')})
+
+    def render(self, **kwargs):
+        props_dict = SelectStmindProps(
+            step_header={
+                'title': str(self.render_info.step_title),
+                'intro': str(self.render_info.step_intro),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='StmindSelectionPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=self.form,
+                               header_title=self.header_title)
+
+
+class ShowVorsorgePrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_vorsorge: bool
+
+    @validator('stmind_select_vorsorge', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowAussergBelaPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_ausserg_bela: bool
+
+    @validator('stmind_select_ausserg_bela', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowHandwerkerPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_handwerker: bool
+
+    @validator('stmind_select_handwerker', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowSpendenPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_spenden: bool
+
+    @validator('stmind_select_spenden', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class ShowReligionPrecondition(BaseModel):
+    _step_to_redirect_to = StepSelectStmind.name
+    _message_to_flash = _l('form.lotse.skip_reason.steuerminderung_is_no')
+
+    stmind_select_religion: bool
+
+    @validator('stmind_select_religion', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class NotShowPersonBPrecondition(FamilienstandModel):
+    _step_to_redirect_to = StepFamilienstand.name
+    _message_to_flash = _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
+
+    @root_validator(skip_on_failure=True)
+    def person_b_must_not_be_shown(cls, values):
+        if JointTaxesModel.show_person_b(values):
+            raise ValidationError
+        return values
+
+
+class StepVorsorge(LotseFormSteuerlotseStep):
     name = 'vorsorge'
+    title = _l('form.lotse.vorsorge-title')
+    intro = _l('form.lotse.vorsorge-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'lotse/form_aufwendungen_with_list.html'
+    preconditions = [ShowVorsorgePrecondition]
+
     label = _l('form.lotse.step_vorsorge.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name,
+                               StepSelectStmind.name,
                                _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [
-        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))
-    ]
 
-    class Form(SteuerlotseBaseForm):
+    class InputForm(SteuerlotseBaseForm):
         stmind_vorsorge_summe = EuroField(
             label=_l('form.lotse.field_vorsorge_summe'),
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)],
             render_kw={'help': _l('form.lotse.field_vorsorge_summe-help'),
                        'data_label': _l('form.lotse.field_vorsorge_summe.data_label')})
 
-    def __init__(self, **kwargs):
-        super(StepVorsorge, self).__init__(
-            title=_('form.lotse.vorsorge-title'),
-            intro=_('form.lotse.vorsorge-intro'),
-            form=self.Form,
-            template='lotse/form_aufwendungen_with_list.html',
-            **kwargs,
-        )
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
 
-    def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info,
+    def render(self):
+        self.render_info.form.first_field = next(iter(self.render_info.form))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
                                post_list_text=_('form.lotse.vorsorge.post-list-text'),
                                list_items=[
                                         _('form.lotse.vorsorge-list-item-1'),
                                         _('form.lotse.vorsorge-list-item-2'),
                                         _('form.lotse.vorsorge-list-item-3'),
                                     ],
-                               header_title=_('form.lotse.steuerminderungen.header-title'),)
+                               header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
-class StepAussergBela(FormStep):
+class StepAussergBela(LotseFormSteuerlotseStep):
     name = 'ausserg_bela'
+    title = _l('form.lotse.ausserg_bela-title')
+    intro = _l('form.lotse.ausserg_bela-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'lotse/form_aufwendungen_with_list.html'
+    preconditions = [ShowAussergBelaPrecondition]
+
     label = _l('form.lotse.step_ausserg_bela.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [
-        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))
-    ]
+                               StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
 
-    class Form(SteuerlotseBaseForm):
+    class InputForm(SteuerlotseBaseForm):
         stmind_krankheitskosten_summe = EuroField(
             label=_l('form.lotse.field_krankheitskosten_summe'),
             render_kw={'help': _l('form.lotse.field_krankheitskosten-help'),
@@ -147,28 +252,24 @@ class StepAussergBela(FormStep):
             render_kw={'data_label': _l('form.lotse.aussergbela_sonst_anspruch.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
-    def __init__(self, **kwargs):
-        super(StepAussergBela, self).__init__(
-            title=_('form.lotse.ausserg_bela-title'),
-            intro=_l('form.lotse.ausserg_bela-intro'),
-            form=self.Form,
-            header_title=_('form.lotse.steuerminderungen.header-title'),
-            template='lotse/form_aufwendungen_with_list.html',
-            **kwargs,
-        )
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
 
 
-class StepHaushaltsnaheHandwerker(FormStep):
+class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
     name = 'haushaltsnahe_handwerker'
+    title = _l('form.lotse.haushaltsnahe-handwerker-title')
+    intro = _l('form.lotse.handwerker-haushaltsnahe-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'lotse/form_haushaltsnahe_handwerker.html'
+    preconditions = [ShowHandwerkerPrecondition]
+
     label = _l('form.lotse.step_haushaltsnahe_handwerker.label')
     section_link = SectionLink('section_steuerminderung',
-                               StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [
-        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))
-    ]
+                               StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
 
-    class Form(SteuerlotseBaseForm):
+    class InputForm(SteuerlotseBaseForm):
         stmind_haushaltsnahe_entries = EntriesField(
             label=_l('form.lotse.field_haushaltsnahe_entries'), default=[''],
             validators=[validators.Length(max=999)],
@@ -197,6 +298,7 @@ class StepHaushaltsnaheHandwerker(FormStep):
         def validate_stmind_haushaltsnahe_summe(self, field):
             if SteuerlotseBaseForm._list_has_entries(self.stmind_haushaltsnahe_entries):
                 validators.InputRequired(_l('form.lotse.validation-haushaltsnahe-summe'))(self, field)
+                NoZero()(self, field)
             else:
                 validators.Optional()(self, field)
 
@@ -209,6 +311,7 @@ class StepHaushaltsnaheHandwerker(FormStep):
         def validate_stmind_handwerker_summe(self, field):
             if SteuerlotseBaseForm._list_has_entries(self.stmind_handwerker_entries) or self.stmind_handwerker_lohn_etc_summe.data:
                 validators.InputRequired(_l('form.lotse.validation-handwerker-summe'))(self, field)
+                NoZero()(self, field)
             else:
                 validators.Optional()(self, field)
 
@@ -221,21 +324,17 @@ class StepHaushaltsnaheHandwerker(FormStep):
         def validate_stmind_handwerker_lohn_etc_summe(self, field):
             if self.stmind_handwerker_summe.data or SteuerlotseBaseForm._list_has_entries(self.stmind_handwerker_entries):
                 validators.InputRequired(_l('form.lotse.validation-handwerker-lohn-etc-summe'))(self, field)
+                NoZero()(self, field)
             else:
                 validators.Optional()(self, field)
 
-    def __init__(self, **kwargs):
-        super(StepHaushaltsnaheHandwerker, self).__init__(
-            title=_('form.lotse.haushaltsnahe-handwerker-title'),
-            intro=_('form.lotse.handwerker-haushaltsnahe-intro'),
-            form=self.Form,
-            template='lotse/form_haushaltsnahe_handwerker.html',
-            **kwargs,
-        )
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
 
-    def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info,
+    def render(self):
+        self.render_info.form.first_field = next(iter(self.render_info.form))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
                                header_title=_('form.lotse.steuerminderungen.header-title'),
                                input_details_title=_('form.lotse.steuerminderungen.details-title'),
                                input_details_text=_('form.lotse.steuerminderungen.details-text'),
@@ -246,18 +345,33 @@ class StepHaushaltsnaheHandwerker(FormStep):
                                ],)
 
 
-class StepGemeinsamerHaushalt(FormStep):
-    name = 'gem_haushalt'
-    label = _l('form.lotse.step_gem_haushalt.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [
-        ([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-        ([('stmind_handwerker_summe', None), ('stmind_haushaltsnahe_summe', None)], StepHaushaltsnaheHandwerker.name,
-         _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe'))
-    ]
+class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
+    _step_to_redirect_to = StepHaushaltsnaheHandwerker.name
+    _message_to_flash = _l('form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe')
 
-    class Form(SteuerlotseBaseForm):
+    stmind_handwerker_summe: Optional[Decimal]
+    stmind_haushaltsnahe_summe: Optional[Decimal]
+
+    @validator('stmind_haushaltsnahe_summe', always=True)
+    def one_must_be_set(cls, v, values):
+        if not v and ('stmind_handwerker_summe' not in values or not values['stmind_handwerker_summe']):
+            raise ValidationError
+        return v
+
+
+class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
+    name = 'gem_haushalt'
+    title = _l('form.lotse.gem-haushalt-title')
+    intro = _l('form.lotse.gem-haushalt-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'lotse/form_aufwendungen_with_list.html'
+    preconditions = [NotShowPersonBPrecondition, ShowHandwerkerPrecondition, HandwerkerHaushaltsnaheSetPrecondition]
+
+    label = _l('form.lotse.step_gem_haushalt.label')
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name,
+                               _l('form.lotse.section_steuerminderung.label'))
+
+    class InputForm(SteuerlotseBaseForm):
         stmind_gem_haushalt_count = SteuerlotseIntegerField(
             label=_l('form.lotse.field_gem_haushalt_count'),
             render_kw={'data_label': _l('form.lotse.field_gem_haushalt_count.data_label')},
@@ -273,6 +387,7 @@ class StepGemeinsamerHaushalt(FormStep):
         def validate_stmind_gem_haushalt_count(self, field):
             if SteuerlotseBaseForm._list_has_entries(self.stmind_gem_haushalt_entries):
                 validators.InputRequired(_l('form.lotse.validation-gem-haushalt-count'))(self, field)
+                NoZero()(self, field)
             else:
                 validators.Optional()(self, field)
 
@@ -282,42 +397,31 @@ class StepGemeinsamerHaushalt(FormStep):
             else:
                 validators.Optional()(self, field)
 
-    def __init__(self, **kwargs):
-        super(StepGemeinsamerHaushalt, self).__init__(
-            title=_('form.lotse.gem-haushalt-title'),
-            intro=_('form.lotse.gem-haushalt-intro'),
-            form=self.Form,
-            template='lotse/form_aufwendungen_with_list.html',
-            **kwargs,
-        )
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
 
-    def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[
+    def render(self):
+        self.render_info.form.first_field = next(iter(self.render_info.form))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info, list_items=[
             _('form.lotse.gem_haushalt-list-item-1'),
             _('form.lotse.gem_haushalt-list-item-2')
         ], header_title=_('form.lotse.steuerminderungen.header-title'))
 
-    @classmethod
-    def get_redirection_info_if_skipped(cls, input_data):
-        result = super().get_redirection_info_if_skipped(input_data)
-        if result != (None, None):
-            return result
 
-        if show_person_b(input_data):
-            return StepFamilienstand.name, _l('form.lotse.skip_reason.stmind_gem_haushalt.not-alleinstehend')
-
-        return None, None
-
-
-class StepReligion(FormStep):
+class StepReligion(LotseFormSteuerlotseStep):
     name = 'religion'
-    label = _l('form.lotse.step_religion.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-                 ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))]
+    title = _l('form.lotse.religion-title')
+    intro = _l('form.lotse.religion-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'lotse/form_aufwendungen_with_list.html'
+    preconditions = [ShowReligionPrecondition]
 
-    class Form(SteuerlotseBaseForm):
+    label = _l('form.lotse.step_religion.label')
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name,
+                               _l('form.lotse.section_steuerminderung.label'))
+
+    class InputForm(SteuerlotseBaseForm):
         stmind_religion_paid_summe = EuroField(
             label=_l('form.lotse.field_religion_paid_summe'),
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)],
@@ -329,29 +433,28 @@ class StepReligion(FormStep):
                        'data_label': _l('form.lotse.field_religion_reimbursed_summe.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
-    def __init__(self, **kwargs):
-        super(StepReligion, self).__init__(
-            title=_('form.lotse.religion-title'),
-            intro=_l('form.lotse.religion-intro'),
-            form=self.Form,
-            template='lotse/form_aufwendungen_with_list.html',
-            **kwargs,
-        )
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
 
-    def render(self, data, render_info):
-        render_info.form.first_field = next(iter(render_info.form))
-        return render_template(self.template, form=render_info.form, render_info=render_info, list_items=[],
+    def render(self):
+        self.render_info.form.first_field = next(iter(self.render_info.form))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info, list_items=[],
                                header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
-class StepSpenden(FormStep):
+class StepSpenden(LotseFormSteuerlotseStep):
     name = 'spenden'
-    label = _l('form.lotse.step_spenden.label')
-    section_link = SectionLink('section_steuerminderung', StepSteuerminderungYesNo.name, _l('form.lotse.section_steuerminderung.label'))
-    SKIP_COND = [([('steuerminderung', 'no')], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no')),
-                 ([('steuerminderung', None)], StepSteuerminderungYesNo.name, _l('form.lotse.skip_reason.steuerminderung_is_no'))]
+    title = _l('form.lotse.spenden-inland-title')
+    intro = _l('form.lotse.spenden-inland-intro')
+    header_title = _l('form.lotse.steuerminderungen.header-title')
+    template = 'basis/form_standard.html'
+    preconditions = [ShowSpendenPrecondition]
 
-    class Form(SteuerlotseBaseForm):
+    label = _l('form.lotse.step_spenden.label')
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
+
+    class InputForm(SteuerlotseBaseForm):
         stmind_spenden_inland = EuroField(
             label=_l('form.lotse.spenden-inland'),
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)],
@@ -363,12 +466,6 @@ class StepSpenden(FormStep):
                        'data_label': _l('form.lotse.spenden-inland-parteien.data_label}')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
-    def __init__(self, **kwargs):
-        super(StepSpenden, self).__init__(
-            title=_('form.lotse.spenden-inland-title'),
-            intro=_('form.lotse.spenden-inland-intro'),
-            form=self.Form,
-            header_title=_('form.lotse.steuerminderungen.header-title'),
-            template='basis/form_standard.html',
-            **kwargs,
-        )
+    @classmethod
+    def get_label(cls, data):
+        return cls.label

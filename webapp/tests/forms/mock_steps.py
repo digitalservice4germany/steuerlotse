@@ -6,11 +6,9 @@ from wtforms import Form, validators
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
 from app.forms.steps.logout_steps import LogoutInputStep
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepSummary, StepConfirmation
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepPersonB, StepFamilienstand
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, \
-    StepReligion, StepGemeinsamerHaushalt, StepHaushaltsnaheHandwerker
 from app.forms.steps.step import Step, FormStep
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
@@ -134,14 +132,6 @@ class MockFilingStep(StepFiling):
         return make_response(json.dumps([data], default=str), 200)
 
 
-class MockSummaryStep(StepSummary):
-    def __init__(self, **kwargs):
-        super(MockSummaryStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
 class MockDeclarationIncomesStep(StepDeclarationIncomes):
     def __init__(self, **kwargs):
         super(MockDeclarationIncomesStep, self).__init__(**kwargs)
@@ -189,37 +179,6 @@ class MockIbanStep(StepIban):
     def render(self, data, render_info):
         return make_response(json.dumps([data], default=str), 200)
 
-
-class MockStrMindYNStep(StepSteuerminderungYesNo):
-    def __init__(self, **kwargs):
-        super(MockStrMindYNStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockHaushaltsnaheStepHandwerker(StepHaushaltsnaheHandwerker):
-    def __init__(self, **kwargs):
-        super(MockHaushaltsnaheStepHandwerker, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockGemeinsamerHaushaltStep(StepGemeinsamerHaushalt):
-    def __init__(self, **kwargs):
-        super(MockGemeinsamerHaushaltStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockReligionStep(StepReligion):
-    def __init__(self, **kwargs):
-        super(MockReligionStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
 
 class MockUnlockCodeRequestInputStep(UnlockCodeRequestInputStep):
 

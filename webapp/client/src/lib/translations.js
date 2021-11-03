@@ -81,6 +81,38 @@ const translations = {
       },
     },
   },
+  stmindSelection: {
+    selectVorsorge: {
+      label: {
+        title: "Vorsorgeaufwendungen",
+        text: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen",
+      },
+    },
+    selectAussergBela: {
+      label: {
+        title: "Krankheitskosten und weitere außergewöhnliche Belastungen",
+        text: "Hierzu zählen beispielsweise Kosten, die durch Krankheit, Unwetter oder Naturkatastrophen entstanden sind.",
+      },
+    },
+    selectHandwerker: {
+      label: {
+        title: "Haushaltsnahe Dienstleistungen und Handwerkerleistungen",
+        text: "Hierzu zählen beispielsweise Aufwendungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
+      },
+    },
+    selectSpenden: {
+      label: {
+        title: "Spenden und Mitgliedsbeiträge",
+        text: "Wählen Sie diesen Punkt aus, wenn Sie einen gemeinnützigen Verein, eine Stiftung, Partei oder Wählervereinigungen unterstützt haben.",
+      },
+    },
+    selectReligion: {
+      label: {
+        title: "Steuern für Ihre Religionsgemeinschaft",
+        text: "Im Jahr 2020 geleistete Steuern für eine Religionsgemeinschaft – nach Abzug der vom Finanzamt erstatteten Beträge – können Sie als Sonderausgaben angeben.",
+      },
+    },
+  },
 };
 
 export default translations;

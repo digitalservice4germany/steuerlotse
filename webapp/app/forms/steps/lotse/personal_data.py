@@ -1,4 +1,6 @@
 from flask import request, flash, Markup
+from flask import request
+from pydantic import ValidationError
 from wtforms import validators
 from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
@@ -7,29 +9,12 @@ from flask_babel import lazy_gettext as _l, ngettext, _
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA
 from app.forms.steps.step import SectionLink
-from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber
+from app.forms.validators import DecimalOnly, IntegerLength
 from app.model.form_data import show_person_b
-
-
-class LotseFormSteuerlotseStep(FormSteuerlotseStep):
-    template = 'basis/form_standard.html'
-    header_title = None
-    prev_step = StepFamilienstand
-    next_step = StepPersonA
-
-    def __init__(self, endpoint, render_info=None, *args, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=self.header_title, render_info=render_info,  *args, **kwargs)
-
-    def _main_handle(self):
-        super()._main_handle()
-
-        # redirect in any case if overview button pressed
-        if 'overview_button' in request.form:
-            self.render_info.next_url = self.url_for_step(StepSummary.name)
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
@@ -39,8 +24,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     template = 'lotse/form_steuernummer.html'
     # TODO remove this once all steps are converted to steuerlotse steps
-    prev_step_name = StepFamilienstand.name
-    next_step_name = StepPersonA.name
+    prev_step = StepFamilienstand
+    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -48,10 +33,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
-
-    def __init__(self, endpoint="lotse", *args, **kwargs):
-        super().__init__(endpoint=endpoint, *args, **kwargs)
-
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
