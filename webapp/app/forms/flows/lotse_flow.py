@@ -166,7 +166,6 @@ class LotseMultiStepFlow(MultiStepFlow):
         render_info, stored_data = super(LotseMultiStepFlow, self)._handle_specifics_for_step(step, render_info,
                                                                                               stored_data)
         if isinstance(step, StepConfirmation):
-            render_info.additional_info['next_button_label'] = _('form.finish')
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed data privacy', request.remote_addr,
                                                     stored_data['idnr'], 'confirm_data_privacy',
