@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-22 17:04+0200\n"
+"POT-Creation-Date: 2021-10-28 07:35+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -357,7 +357,7 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:99
 #: app/forms/steps/eligibility_steps.py:159
 #: app/forms/steps/eligibility_steps.py:795
-#: app/forms/steps/eligibility_steps.py:825
+#: app/forms/steps/eligibility_steps.py:828
 msgid "form.eligibility.header-title"
 msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 
@@ -1044,13 +1044,22 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:805
+#: app/forms/steps/eligibility_steps.py:804
+msgid "form.eligibility.result-note.deadline"
+msgstr ""
+"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
+" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
+"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
+"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
+"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
+
+#: app/forms/steps/eligibility_steps.py:807
 msgid "form.eligibility.result-note.user_b_elster_account"
 msgstr ""
 "Wenn Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss "
 "sich trotzdem nur eine Person registrieren."
 
-#: app/forms/steps/eligibility_steps.py:806
+#: app/forms/steps/eligibility_steps.py:808
 msgid "form.eligibility.result-note.user_b_elster_account-registration"
 msgstr ""
 "Bitte registrieren Sie sich mit den Angaben der Person, die noch kein "
@@ -1059,7 +1068,7 @@ msgstr ""
 " erstellt und per Post versendet. Aus technischen Gründen geschieht das "
 "allerdings nur, wenn Sie noch kein Konto bei Mein ELSTER haben."
 
-#: app/forms/steps/eligibility_steps.py:810
+#: app/forms/steps/eligibility_steps.py:812
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -1070,13 +1079,13 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:818
+#: app/forms/steps/eligibility_steps.py:821
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
 "Steuerlotsen machen."
 
-#: app/forms/steps/eligibility_steps.py:819
+#: app/forms/steps/eligibility_steps.py:822
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
 "Es kann allerdings sein, dass Sie <strong>keinen Brief mit Ihrem "
@@ -1137,14 +1146,6 @@ msgstr "Anmeldung fehlgeschlagen"
 msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
-#: app/forms/steps/unlock_code_request_steps.py:30
-msgid "form.unlock-code-request.input-intro"
-msgstr ""
-"Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
-"Finanzverwaltung. Sie erhalten diesen mit einem Brief wenige Tage nach "
-"erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen "
-"möchten, muss sich nur eine Person registrieren."
-
 #: app/forms/steps/unlock_code_request_steps.py:62
 #: app/forms/steps/unlock_code_request_steps.py:75
 #: app/forms/steps/unlock_code_request_steps.py:88
@@ -1160,9 +1161,12 @@ msgid "form.unlock-code-request.success-intro"
 msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
 "können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren "
-"Freischaltcode erhalten haben. Melden Sie sich innerhalb von 90 Tagen "
-"nach Erhalt des Briefes an. Andernfalls müssen Sie sich erneut "
-"registrieren."
+"Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern bis Sie "
+"Ihren Brief erhalten. </p><p>Sollten Sie die Steuerabgabefrist am 31. "
+"Oktober verpasst haben, können Sie Ihre Steuererklärung auch nach der "
+"Frist noch einreichen. Warten Sie jedoch lieber nicht allzu lange. Es "
+"kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, "
+"wenn Sie sich zu viel Zeit lassen."
 
 #: app/forms/steps/unlock_code_request_steps.py:83
 msgid "form.unlock-code-request.failure-title"
@@ -4219,7 +4223,7 @@ msgstr ""
 #: app/templates/content/howitworks.html:32
 #: app/templates/content/landing_page.html:30
 msgid "info-stl.card-submission.heading"
-msgstr "Bis wann muss ich meine Steuererklärung abgeben?"
+msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 
 #: app/templates/content/howitworks.html:34
 #: app/templates/content/landing_page.html:32
@@ -4232,9 +4236,8 @@ msgstr ""
 #: app/templates/content/landing_page.html:33
 msgid "info-stl.card-submission.p2-content"
 msgstr ""
-"Personen, die verpflichtet sind, eine Einkommensteuererklärung "
-"einzureichen, müssen ihre Steuererklärung <strong>bis zum "
-"31.Oktober</strong> an das Finanzamt übermitteln."
+"Für Personen, die verpflichtet sind, eine Einkommensteuererklärung "
+"einzureichen, endete die Steuerabgabefrist am 31. Oktober."
 
 #: app/templates/content/howitworks.html:36
 #: app/templates/content/landing_page.html:34

@@ -11,7 +11,7 @@ class ComponentProps(BaseModel, extra=Extra.forbid):
 
 class StepHeaderProps(ComponentProps):
     title: str
-    intro: str
+    intro: Optional[str]
 
 
 class FormProps(ComponentProps):
