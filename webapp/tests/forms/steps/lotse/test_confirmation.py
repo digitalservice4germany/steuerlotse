@@ -68,7 +68,22 @@ class TestStepSummaryHandle:
 
             get_overview.assert_called_once_with(data_with_missing_fields, missing_fields)
 
-    def test_if_data_missing_then_flash_message_with_missing_fields_once(self, new_test_request_context):
+    def test_if_should_update_data_false_and_data_missing_then_flash_message(self, new_test_request_context):
+        data_with_missing_fields = {'steuernummer': 'C3P0'}
+        missing_fields = ['spacecraft', 'droids']
+        missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
+
+        with patch('app.forms.steps.lotse.confirmation.flash') as mock_flash, \
+            patch('app.model.form_data.ngettext', MagicMock(side_effect=lambda text_id, _, **kwargs: text_id)), \
+            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
+                  MagicMock(side_effect=missing_fields_error)):
+            with new_test_request_context(stored_data=data_with_missing_fields):
+                step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
+                step.handle()
+
+            mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
+
+    def test_if_should_update_data_true_and_data_missing_then_do_not_flash_message(self, new_test_request_context):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
         missing_fields = ['spacecraft', 'droids']
         missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
@@ -81,11 +96,7 @@ class TestStepSummaryHandle:
                 step = LotseStepChooser().get_correct_step(StepSummary.name, True, ImmutableMultiDict({}))
                 step.handle()
 
-            with new_test_request_context(stored_data=data_with_missing_fields):
-                step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
-                step.handle()
-
-            mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
+            mock_flash.assert_not_called()
 
     def test_if_data_not_missing_then_set_next_url_correct(self, new_test_request_context):
         data_without_missing_fields = {**LotseStepChooser(endpoint='lotse')._DEBUG_DATA,
