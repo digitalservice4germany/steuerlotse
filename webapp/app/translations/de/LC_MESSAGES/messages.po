@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-22 17:04+0200\n"
+"POT-Creation-Date: 2021-11-03 10:07+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -334,7 +334,7 @@ msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
 #: app/forms/flows/unlock_code_request_flow.py:51
-#: app/forms/steps/unlock_code_request_steps.py:44
+#: app/forms/steps/unlock_code_request_steps.py:48
 msgid "form.register"
 msgstr "Registrieren"
 
@@ -403,7 +403,7 @@ msgstr "geschieden / Lebenspartnerschaft aufgehoben"
 msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
-#: app/forms/steps/eligibility_steps.py:190
+#: app/forms/steps/eligibility_steps.py:193
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1133,11 +1133,33 @@ msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
+#: app/forms/steps/unlock_code_request_steps.py:23
+msgid "form.unlock-code-request.confirm_data_privacy.required"
+msgstr ""
+"Bestätigen Sie, dass Sie mit den Datenschutzrichtlinien einverstanden "
+"sind, um fortfahren zu können."
+
+#: app/forms/steps/unlock_code_request_steps.py:25
+msgid "form.unlock-code-request.confirm_terms_of_service.required"
+msgstr ""
+"Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen,  um fortfahren"
+" zu können."
+
+#: app/forms/steps/unlock_code_request_steps.py:27
+msgid "form.unlock-code-request.confirm_incomes.required"
+msgstr ""
+"Bestätigen Sie, dass Sie keine weiteren Einkünfte hatten, um fortfahren "
+"zu können."
+
 #: app/forms/steps/unlock_code_request_steps.py:29
+msgid "form.unlock-code-request.confirm_e_data.required"
+msgstr "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können."
+
+#: app/forms/steps/unlock_code_request_steps.py:33
 msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
-#: app/forms/steps/unlock_code_request_steps.py:30
+#: app/forms/steps/unlock_code_request_steps.py:34
 msgid "form.unlock-code-request.input-intro"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
@@ -1145,17 +1167,17 @@ msgstr ""
 "erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen "
 "möchten, muss sich nur eine Person registrieren."
 
-#: app/forms/steps/unlock_code_request_steps.py:62
-#: app/forms/steps/unlock_code_request_steps.py:75
-#: app/forms/steps/unlock_code_request_steps.py:88
+#: app/forms/steps/unlock_code_request_steps.py:66
+#: app/forms/steps/unlock_code_request_steps.py:79
+#: app/forms/steps/unlock_code_request_steps.py:92
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_request_steps.py:70
+#: app/forms/steps/unlock_code_request_steps.py:74
 msgid "form.unlock-code-request.success-title"
 msgstr "Ihre Registrierung war erfolgreich!"
 
-#: app/forms/steps/unlock_code_request_steps.py:71
+#: app/forms/steps/unlock_code_request_steps.py:75
 msgid "form.unlock-code-request.success-intro"
 msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
@@ -1164,11 +1186,11 @@ msgstr ""
 "nach Erhalt des Briefes an. Andernfalls müssen Sie sich erneut "
 "registrieren."
 
-#: app/forms/steps/unlock_code_request_steps.py:83
+#: app/forms/steps/unlock_code_request_steps.py:87
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:84
+#: app/forms/steps/unlock_code_request_steps.py:88
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie "
@@ -1257,7 +1279,7 @@ msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:57
-#: app/forms/steps/lotse/personal_data.py:158
+#: app/forms/steps/lotse/personal_data.py:157
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
@@ -1381,7 +1403,7 @@ msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
 #: app/forms/steps/lotse/personal_data.py:100
-#: app/forms/steps/lotse/personal_data.py:161
+#: app/forms/steps/lotse/personal_data.py:160
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1395,7 +1417,7 @@ msgstr[1] ""
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:136
+#: app/forms/steps/lotse/personal_data.py:146
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"

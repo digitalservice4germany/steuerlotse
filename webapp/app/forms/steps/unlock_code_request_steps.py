@@ -19,10 +19,14 @@ class UnlockCodeRequestInputStep(FormStep):
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
         dob = SteuerlotseDateField(validators=[InputRequired()])
-        registration_confirm_data_privacy = ConfirmationField()
-        registration_confirm_terms_of_service = ConfirmationField()
-        registration_confirm_incomes = ConfirmationField()
-        registration_confirm_e_data = ConfirmationField()
+        registration_confirm_data_privacy = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_data_privacy.required'))])
+        registration_confirm_terms_of_service = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_terms_of_service.required'))])
+        registration_confirm_incomes = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_incomes.required'))])
+        registration_confirm_e_data = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_e_data.required'))])
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestInputStep, self).__init__(
