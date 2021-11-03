@@ -27,7 +27,6 @@ class UnlockCodeRequestInputStep(FormStep):
     def __init__(self, **kwargs):
         super(UnlockCodeRequestInputStep, self).__init__(
             title=_('form.unlock-code-request.input-title'),
-            intro=_('form.unlock-code-request.input-intro'),
             form=self.Form,
             **kwargs)
 
@@ -35,7 +34,6 @@ class UnlockCodeRequestInputStep(FormStep):
         props_dict = RegistrationProps(
             step_header={
                 'title': render_info.step_title,
-                'intro': render_info.step_intro,
             },
             form={
                 'action': render_info.submit_url,
@@ -67,8 +65,8 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestSuccessStep, self).__init__(
-            title=_('form.unlock-code-request.success-title'),
-            intro=_('form.unlock-code-request.success-intro'), **kwargs)
+            title=_l('form.unlock-code-request.success-title'),
+            intro=_l('form.unlock-code-request.success-intro'), **kwargs)
 
     def render(self, data, render_info):
         return render_template('unlock_code/registration_success.html', render_info=render_info,
