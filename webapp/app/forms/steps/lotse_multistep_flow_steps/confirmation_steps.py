@@ -1,3 +1,5 @@
+from wtforms.validators import InputRequired
+
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.fields import ConfirmationField
@@ -11,7 +13,8 @@ class StepSummary(FormStep):
     name = 'summary'
 
     class Form(SteuerlotseBaseForm):
-        confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct'))
+        confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct',),
+                                                     validators=[InputRequired(message=_l('form.lotse.confirm_complete_correct.required'))])
 
     def __init__(self, **kwargs):
         super(StepSummary, self).__init__(
@@ -28,8 +31,10 @@ class StepConfirmation(FormStep):
     name = 'confirmation'
 
     class Form(SteuerlotseBaseForm):
-        confirm_data_privacy = ConfirmationField(label=_l('form.lotse.field_confirm_data_privacy'))
-        confirm_terms_of_service = ConfirmationField(label=_l('form.lotse.field_confirm_terms_of_service'))
+        confirm_data_privacy = ConfirmationField(label=_l('form.lotse.field_confirm_data_privacy'),
+                                                 validators=[InputRequired(message=_l('form.lotse.confirm_data_privacy.required'))])
+        confirm_terms_of_service = ConfirmationField(label=_l('form.lotse.field_confirm_terms_of_service'),
+                                                     validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
 
         def __init__(self, *args, **kwargs):
             super(StepConfirmation.Form, self).__init__(*args, **kwargs)
