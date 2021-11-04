@@ -9,24 +9,6 @@ from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
 
-class StepSummary(FormStep):
-    name = 'summary'
-
-    class Form(SteuerlotseBaseForm):
-        confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct',),
-                                                     validators=[InputRequired(message=_l('form.lotse.confirm_complete_correct.required'))])
-
-    def __init__(self, **kwargs):
-        super(StepSummary, self).__init__(
-            title=_('form.lotse.summary-title'),
-            intro=_('form.lotse.summary-intro'),
-            form=self.Form,
-            header_title=_('form.lotse.summary.header-title'),
-            template='lotse/display_summary.html',
-            **kwargs,
-        )
-
-
 class StepConfirmation(FormStep):
     name = 'confirmation'
 

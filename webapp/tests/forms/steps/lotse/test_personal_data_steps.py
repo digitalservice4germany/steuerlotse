@@ -7,7 +7,8 @@ from flask_babel import ngettext, _
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.elster_client.elster_client import request_tax_offices
-from app.forms.steps.lotse.personal_data import StepSteuernummer, LotseFormSteuerlotseStep
+from app.forms.steps.lotse.personal_data import StepSteuernummer
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data

@@ -71,8 +71,6 @@ class TestSampleDataValidation(unittest.TestCase):
     def test_07_steuerminderungen(self):
         single_data = create_est_single(True)
         single_data.est_data.__dict__.update({
-            'steuerminderung': 'yes',
-
             'haushaltsnahe_entries': ["Gartenarbeiten"],
             'haushaltsnahe_summe': Decimal('500.00'),
 

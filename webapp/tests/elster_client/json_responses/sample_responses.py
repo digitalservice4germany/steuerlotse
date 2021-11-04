@@ -3,7 +3,7 @@ def get_json_response(keyword, idnr=None, elster_request_id=None):
     if keyword == 'value_err_missing_fields':
         return {
                     'detail': [
-                        {'loc': ['body', 'est_data', 'bundesland'],
+                        {'loc': ['body', 'est_data', 'somewhere!!'],
                          'msg': 'field required',
                          'type': 'value_error.missing'
                          }

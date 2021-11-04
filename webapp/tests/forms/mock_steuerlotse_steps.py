@@ -83,7 +83,9 @@ class MockYesNoStep(FormSteuerlotseStep):
         super(MockYesNoStep, self).__init__(header_title="Yes or No", stored_data=stored_data, render_info=render_info,  *args, **kwargs)
 
 
-class MockPreconditionModel(BaseModel):
+class MockPreconditionModelWithoutMessage(BaseModel):
+    _step_to_redirect_to = MockStartStep
+
     precondition_met: bool
 
     @validator('precondition_met')
@@ -93,9 +95,35 @@ class MockPreconditionModel(BaseModel):
         return v
 
 
+class MockSecondPreconditionModelWithMessage(BaseModel):
+    _step_to_redirect_to = MockStartStep.name
+    _message_to_flash = "This is not for you."
+
+    second_precondition_met: bool
+
+    @validator('second_precondition_met')
+    def precondition_has_to_be_met(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
+class MockThirdPreconditionModelWithMessage(BaseModel):
+    _step_to_redirect_to = MockStartStep.name
+    _message_to_flash = "This is not for you."
+
+    third_precondition_met: bool
+
+    @validator('third_precondition_met')
+    def precondition_has_to_be_met(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
 class MockStepWithPrecondition(SteuerlotseStep):
     name = 'mock_step_with_precondition'
-    precondition = MockPreconditionModel
+    preconditions = [MockPreconditionModelWithoutMessage]
 
     def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
         super(MockStepWithPrecondition, self).__init__(
@@ -108,14 +136,45 @@ class MockStepWithPrecondition(SteuerlotseStep):
         return make_response(json.dumps([self.render_info.step_title], default=str), 200)
 
 
+class MockStepWithMultiplePrecondition(SteuerlotseStep):
+    name = 'mock_step_with_precondition'
+    preconditions = [MockPreconditionModelWithoutMessage, MockSecondPreconditionModelWithMessage,
+                     MockThirdPreconditionModelWithMessage]
+
+    def __init__(self, header_title=None, default_data=None, **kwargs):
+        super(MockStepWithMultiplePrecondition, self).__init__(
+            header_title=header_title,
+            default_data=default_data,
+            **kwargs)
+
+    def render(self):
+        return make_response(json.dumps([self.render_info.step_title], default=str), 200)
+
+
+class MockStepWithPreconditionAndMessage(SteuerlotseStep):
+    name = 'mock_step_with_precondition_and_message'
+    preconditions = [MockSecondPreconditionModelWithMessage]
+
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
+        super().__init__(
+            header_title=header_title,
+            default_data=default_data,
+            render_info=render_info,
+            *args, **kwargs)
+
+    def render(self):
+        return make_response(json.dumps([self.render_info.step_title], default=str), 200)
+
+
 class MockStepWithRedirection(SteuerlotseStep):
     name = 'mock_step_with_redirection'
-    precondition = MockPreconditionModel
+    preconditions = [MockPreconditionModelWithoutMessage]
 
     @classmethod
     def get_redirection_step(cls, stored_data):
         if not cls.check_precondition(stored_data):
-            return MockStartStep.name
+            return MockStartStep.name, 'The FLASH!'
+        return None, None
 
     def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
         super(MockStepWithRedirection, self).__init__(
