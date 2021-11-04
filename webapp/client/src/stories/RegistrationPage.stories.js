@@ -15,7 +15,7 @@ Default.args = {
   stepHeader: {
     title: "Registrieren und persönlichen Freischaltcode beantragen",
     intro:
-      "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief wenige Tage nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, muss sich nur eine Person registrieren.",
+      "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief innerhalb von zwei Wochen nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, muss sich nur eine Person registrieren.",
   },
   form: {
     ...StepFormDefault.args,

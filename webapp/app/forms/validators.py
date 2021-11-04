@@ -23,6 +23,12 @@ class DecimalOnly:
             raise ValidationError(_('validate.not-a-decimal'))
 
 
+class NoZero:
+    def __call__(self, form, field):
+        if field.data == 0:
+            raise ValidationError(_('validate.must-not-be-zero'))
+
+
 class IntegerLength:
     def __init__(self, min=-1, max=-1, message=None):
         if (min != -1 and min < 0) \

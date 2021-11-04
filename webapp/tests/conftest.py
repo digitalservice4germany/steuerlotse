@@ -1,7 +1,15 @@
 import os
 import sys
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 os.environ["FLASK_ENV"] = 'testing'
+
+from contextlib import contextmanager
+
+from flask.sessions import SecureCookieSession
+from werkzeug.datastructures import ImmutableMultiDict
+
+from tests.utils import create_session_form_data
 
 import pytest
 
@@ -28,6 +36,21 @@ def test_request_context(app):
         yield req
 
 
+@pytest.fixture
+def new_test_request_context(app):
+    @contextmanager
+    def _new_test_request_context(method='GET', form_data=None, stored_data=None, session_identifier='form_data'):
+        with app.test_request_context() as req:
+            req.request.method = method
+            if stored_data:
+                req.session = SecureCookieSession({session_identifier: create_session_form_data(stored_data)})
+            if form_data:
+                req.request.data = ImmutableMultiDict(form_data)
+                req.request.form = ImmutableMultiDict(form_data)
+            yield req
+    return _new_test_request_context
+
+
 @pytest.fixture(scope="session")
 def db(app):
     """Ensure tables are created and dropped at the start and end of test runs."""
@@ -50,6 +73,7 @@ def _truncate_all_tables(db):
         connection.execute(table.delete())
     connection.execute('PRAGMA foreign_keys = ON;')  # SQLite specific
     transaction.commit()
+
 
 @pytest.fixture
 def transactional_session(db):

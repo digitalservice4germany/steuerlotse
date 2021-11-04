@@ -25,20 +25,20 @@ from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalVal
 from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepSummary, StepFiling, StepAck
+from app.forms.steps.lotse.confirmation import StepSummary
+from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepSteuerminderungYesNo, StepVorsorge, StepAussergBela, \
-    StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion, StepSpenden
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
-    MockForm, MockFilingStep, MockSummaryStep, MockPersonAStep, MockStrMindYNStep, MockIbanStep, \
-    MockPersonBStep, MockGemeinsamerHaushaltStep, MockReligionStep, MockFamilienstandStep, MockHaushaltsnaheStepHandwerker, \
-    MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
+    MockForm, MockFilingStep, MockPersonAStep, MockIbanStep, \
+    MockPersonBStep, MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
 
@@ -170,7 +170,7 @@ class TestLotseInit(unittest.TestCase):
             StepPersonB,
             StepIban,
 
-            StepSteuerminderungYesNo,
+            StepSelectStmind,
             StepVorsorge,
             StepAussergBela,
             StepHaushaltsnaheHandwerker,
@@ -231,14 +231,19 @@ class TestLotseHandle(unittest.TestCase):
         self.assertRaises(Exception, self.flow.handle, "Incorrect Step Name")
 
     def test_if_start_step_and_debug_ok_then_return_redirect_to_debug_step(self):
-        response = self.flow.handle("start")
+        initial_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = True
+        try:
+            response = self.flow.handle("start")
 
-        self.assertEqual(
-            redirect(
-                "/" + self.endpoint_correct + "/step/" + self.flow.default_data()[0].name
-                + "?link_overview=" + str(self.flow.has_link_overview)).location,
-            response.location
-        )
+            self.assertEqual(
+                redirect(
+                    "/" + self.endpoint_correct + "/step/" + self.flow._DEBUG_DATA[0].name
+                    + "?link_overview=" + str(self.flow.has_link_overview)).location,
+                response.location
+            )
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
 
     def test_if_start_step_and_debug_none_then_return_redirect_to_first_step(self):
         debug = self.flow.default_data
@@ -485,11 +490,16 @@ class TestLotseGetSessionData(unittest.TestCase):
 
         self.assertTrue(set(self.session_data).issubset(set(session_data)))
 
-    def test_if_no_form_data_in_session_then_return_default_data(self):
-        self.req.session = SecureCookieSession({})
-        session_data = self.flow._get_session_data()
+    def test_if_no_form_data_in_session_and_debug_data_true_then_return_default_data(self):
+        initial_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = True
+        try:
+            self.req.session = SecureCookieSession({})
+            session_data = self.flow._get_session_data()
 
-        self.assertEqual(self.flow.default_data()[1], session_data)
+            self.assertEqual(self.flow._DEBUG_DATA[1], session_data)
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
 
 
 class TestLotseHandleSpecificsForStep(unittest.TestCase):
@@ -501,9 +511,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
     def setUp(self):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
                          MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
-                         MockStrMindYNStep,
-                         MockHaushaltsnaheStepHandwerker, MockGemeinsamerHaushaltStep, MockReligionStep,
-                         MockSummaryStep, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
+                         StepSelectStmind,
+                         StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
+                         StepSummary, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
                          MockFinalStep]
         testing_steps = {s.name: s for s in testing_steps}
         self.endpoint_correct = "lotse"
@@ -554,14 +564,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                 'eric_response': 'Could we get the bill, please?',
                                 'server_response': 'What do you want to drink?',
                                 'transfer_ticket': 'Passierschein A38'}
-
-        prev_step, self.summary_step, next_step = self.flow._generate_steps(MockSummaryStep.name)
-        self.render_info_summary_step = RenderInfo(step_title=self.filing_step.title,
-                                                    step_intro=self.filing_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
-                                                    next_url=self.flow.url_for_step(self.filing_step.name),
-                                                    submit_url=self.flow.url_for_step(self.filing_step.name),
-                                                    overview_url=None)
 
         prev_step, self.declaration_incomes_step, next_step = self.flow._generate_steps(
             MockDeclarationIncomesStep.name)
@@ -630,50 +632,23 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         self.summary_url = '/' + self.endpoint_correct + '/step/' + StepSummary.name + \
                             '?link_overview=' + str(self.flow.has_link_overview)
 
-        self.data_st_mind_yes = {'steuerminderung': 'yes'}
-        self.data_st_mind_no = {'steuerminderung': 'no'}
-        prev_step, self.st_mind_yesno_step, next_step = self.flow._generate_steps(MockStrMindYNStep.name)
-        self.render_info_st_mind_yesno_step = RenderInfo(step_title=self.st_mind_yesno_step.title,
-                                                            step_intro=self.st_mind_yesno_step.intro, form=None,
-                                                            prev_url=self.flow.url_for_step(prev_step.name),
-                                                            next_url=None, submit_url=self.flow.url_for_step(
-                self.st_mind_yesno_step.name), overview_url="Overview URL")
-        self.st_mind_yesno_url = '/' + self.endpoint_correct + '/step/' + StepSteuerminderungYesNo.name + \
-                                    '?link_overview=' + str(self.flow.has_link_overview)
-        self.st_mind_yes_url = self.render_info_st_mind_yesno_step.next_url
-        self.st_mind_no_url = '/' + self.endpoint_correct + '/step/' + StepSummary.name + \
-                                '?link_overview=' + str(self.flow.has_link_overview)
-
         self.data_haushaltsnahe_yes = {'stmind_haushaltsnahe_summe': Decimal(1.0),
                                        'stmind_haushaltsnahe_entries': 'Dach',
                                        'stmind_handwerker_summe': Decimal(1.0),
                                        'stmind_handwerker_entries': 'Badezimmer',
                                        'stmind_handwerker_lohn_etc_summe': Decimal(0.0)}
         self.data_haushaltsnahe_no = {}
-        prev_step, self.haushaltsnahe_step, next_step = self.flow._generate_steps(MockHaushaltsnaheStepHandwerker.name)
-        self.render_info_haushaltsnahe_step = RenderInfo(step_title=self.haushaltsnahe_step.title,
-                                                            step_intro=self.haushaltsnahe_step.intro, form=None,
-                                                            prev_url=self.flow.url_for_step(prev_step.name),
-                                                            next_url=self.flow.url_for_step(next_step.name),
-                                                            submit_url=self.flow.url_for_step(
-                                                                self.haushaltsnahe_step.name),
-                                                            overview_url="Overview URL")
+
         self.haushaltsnahe_url = '/' + self.endpoint_correct + '/step/' + StepHaushaltsnaheHandwerker.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
-        self.haushaltsnahe_yes_url = self.render_info_haushaltsnahe_step.next_url
+        self.haushaltsnahe_yes_url = '/' + self.endpoint_correct + '/step/' + StepGemeinsamerHaushalt.name + \
+                                    '?link_overview=' + str(self.flow.has_link_overview)
         self.haushaltsnahe_no_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
                                     '?link_overview=' + str(self.flow.has_link_overview)
 
         self.gem_haushalt_url = '/' + self.endpoint_correct + '/step/' + StepGemeinsamerHaushalt.name + \
                                 '?link_overview=' + str(self.flow.has_link_overview)
 
-        prev_step, self.religion_step, next_step = self.flow._generate_steps(MockReligionStep.name)
-        self.render_info_religion_step = RenderInfo(step_title=self.religion_step.title,
-                                                    step_intro=self.religion_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
-                                                    next_url=self.flow.url_for_step(next_step.name),
-                                                    submit_url=self.flow.url_for_step(
-                                                        self.religion_step.name), overview_url="Overview URL")
         self.religion_url = '/' + self.endpoint_correct + '/step/' + StepReligion.name + \
                             '?link_overview=' + str(self.flow.has_link_overview)
 
@@ -855,82 +830,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
             self.assertNotIn('pdf', returned_render_info.additional_info['elster_data'])
-
-    def test_if_step_is_summary_step_then_return_render_info_with_sectionsteps(self):
-        expected_summary_session_steps = []
-        with patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data",
-                      MagicMock(return_value=expected_summary_session_steps)), \
-             patch("app.forms.flows.lotse_flow.MandatoryFormData.parse_obj"):
-            data = self.session_data.copy()
-            data['steuerminderung'] = 'yes'  # to prevent adaption of prev_url
-            returned_data, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, copy.deepcopy(self.render_info_summary_step), data)
-
-            self.assertEqual(expected_summary_session_steps, returned_data.additional_info['section_steps'])
-
-    def test_if_summary_step_then_set_prev_url_correct(self):
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, self.data_st_mind_yes)
-            self.assertEqual(self.religion_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, self.data_st_mind_no)
-            self.assertEqual(self.st_mind_yesno_url, render_info.prev_url)
-
-    def test_if_summary_step_and_data_missing_then_set_next_url_correct(self):
-        data_with_missing_fields = {'steuernummer': 'C3P0'}
-
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            self.assertEqual(self.flow.url_for_step(StepSummary.name), render_info.next_url)
-
-    def test_if_summary_step_and_data_missing_then_call_get_overview_data_with_missing_fields(self):
-        data_with_missing_fields = {'steuernummer': 'C3P0'}
-        missing_fields = ['spacecraft', 'droids']
-
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data') as get_overview, \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
-                      MagicMock(side_effect=MandatoryFieldMissingValidationError(missing_fields))):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            get_overview.assert_called_once_with(data_with_missing_fields, missing_fields)
-
-    def test_if_summary_step_and_data_missing_then_flash_message_with_missing_fields_once(self):
-        data_with_missing_fields = {'steuernummer': 'C3P0'}
-        missing_fields = ['spacecraft', 'droids']
-        missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
-
-        with patch('app.forms.flows.lotse_flow.flash') as mock_flash, \
-            patch('app.model.form_data.ngettext', MagicMock(side_effect=lambda text_id, _, **kwargs: text_id)), \
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
-                  MagicMock(side_effect=missing_fields_error)):
-            with self.app.test_request_context(method='POST'):
-                render_info, _ = self.flow._handle_specifics_for_step(
-                    self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            with self.app.test_request_context(method='GET'):
-                render_info, _ = self.flow._handle_specifics_for_step(
-                    self.summary_step, self.render_info_summary_step, data_with_missing_fields)
-
-            mock_flash.assert_called_once_with(missing_fields_error.get_message(), 'warn')
-
-    def test_if_summary_step_and_data_not_missing_then_set_next_url_correct(self):
-        data_without_missing_fields = self.flow.default_data()[1]
-
-        with self.app.test_request_context(method='POST'), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.summary_step, self.render_info_summary_step, data_without_missing_fields)
-
-            self.assertEqual(self.flow.url_for_step(self.filing_step.name), render_info.next_url)
 
     def test_if_step_is_declaration_incomes_step_and_valid_form_then_call_create_auditlog_for_all_fields(self):
         valid_session_data = {'idnr': '02293417683'}
@@ -1140,113 +1039,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 self.iban_step, self.render_info_iban_step, self.data_not_married)
             self.assertEqual(self.personA_url, render_info.prev_url)
 
-    def test_if_st_mind_yesno_step_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, self.data_st_mind_yes)
-            self.assertEqual(self.st_mind_yes_url, render_info.next_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, self.data_st_mind_no)
-            self.assertEqual(self.st_mind_no_url, render_info.next_url)
-
-    def test_if_st_mind_yesno_step_and_steuerminderung_not_set_then_set_confirmation_step_as_next_url(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, {})
-            self.assertEqual(self.st_mind_no_url, render_info.next_url)
-
-    def test_if_st_mind_yesno_step_and_steuerminderung_not_set_then_delete_all_st_mind_entries(self):
-        data_before_st_mind_no = {
-            'steuerminderung': 'no',
-            'stmind_vorsorge_summe': 'some_value',
-
-            'stmind_krankheitskosten_summe': 'some_value',
-            'stmind_krankheitskosten_anspruch': 'some_value',
-            'stmind_pflegekosten_summe': 'some_value',
-            'stmind_pflegekosten_anspruch': 'some_value',
-            'stmind_beh_aufw_summe': 'some_value',
-            'stmind_beh_aufw_anspruch': 'some_value',
-            'stmind_beh_kfz_summe': 'some_value',
-            'stmind_beh_kfz_anspruch': 'some_value',
-            'stmind_bestattung_summe': 'some_value',
-            'stmind_bestattung_anspruch': 'some_value',
-            'stmind_aussergbela_sonst_summe': 'some_value',
-            'stmind_aussergbela_sonst_anspruch': 'some_value',
-
-            'stmind_haushaltsnahe_entries': 'some_value',
-            'stmind_haushaltsnahe_summe': 'some_value',
-            'stmind_handwerker_entries': 'some_value',
-            'stmind_handwerker_summe': 'some_value',
-            'stmind_handwerker_lohn_etc_summe': 'some_value',
-
-            'stmind_gem_haushalt': 'some_value',
-            'stmind_religion_paid_summe': 'some_value',
-            'stmind_religion_reimbursed_summe': 'some_value',
-            'stmind_spenden_inland': 'some_value',
-            'stmind_spenden_inland_parteien': 'some_value',
-
-            'person_a_first_name': 'IWillStay'
-        }
-        expected_updated_data = {'steuerminderung': 'no', 'person_a_first_name': 'IWillStay'}
-        with self.app.test_request_context(method='POST'):
-            _, updated_data = self.flow._handle_specifics_for_step(
-                self.st_mind_yesno_step, self.render_info_st_mind_yesno_step, data_before_st_mind_no)
-
-            self.assertEqual(expected_updated_data, updated_data)
-
-    def test_if_haushaltsnahe_step_then_delete_stmind_gem_haushalt_correctly(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
-                {'familienstand': 'single', 'gem_haushalt_entries': ['Helene Fischer'], 'gem_haushalt_count': 1})
-            self.assertIn('gem_haushalt_entries', returned_data)
-            self.assertIn('gem_haushalt_count', returned_data)
-
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_no):
-            _, returned_data = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step,
-                {'familienstand': 'single', 'stmind_gem_haushalt_entries': ['Helene Fischer'],
-                 'stmind_gem_haushalt_count': 1})
-            self.assertNotIn('stmind_gem_haushalt_entries', returned_data)
-            self.assertNotIn('stmind_gem_haushalt_count', returned_data)
-
-    def test_if_handwerker_filled_and_zusammenveranlagung_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes), \
-            patch('app.forms.flows.lotse_flow.show_person_b', MagicMock(return_value=True)):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {})
-            self.assertEqual(self.haushaltsnahe_no_url, render_info.next_url)
-
-    def test_if_handwerker_filled_and_einzelveranlagung_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST', data=self.data_haushaltsnahe_yes), \
-            patch('app.forms.flows.lotse_flow.show_person_b', MagicMock(return_value=False)):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.haushaltsnahe_step, self.render_info_haushaltsnahe_step, {})
-            self.assertEqual(self.haushaltsnahe_yes_url, render_info.next_url)
-
-    def test_if_religion_step_then_set_prev_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.gem_haushalt_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**{'familienstand': 'single'}, **self.data_haushaltsnahe_no})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_haushaltsnahe_yes})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.religion_step, self.render_info_religion_step,
-                {**self.data_married, **self.data_haushaltsnahe_no})
-            self.assertEqual(self.haushaltsnahe_url, render_info.prev_url)
-
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):
         with (
@@ -1346,27 +1138,39 @@ class TestLotseDebugData(unittest.TestCase):
 
     def setUp(self):
         self.flow = LotseMultiStepFlow(endpoint='')
-        self.original_debug_data_config = Config.DEBUG_DATA
+        self.original_debug_data_config = Config.PREFILL_SAMPLE_FORM_DATA
 
     def test_if_debug_data_true_then_debug_data_non_empty(self):
-        Config.DEBUG_DATA = True
-        debug_data = self.flow.default_data()
-        self.assertIsNotNone(debug_data[0])
-        self.assertIsNotNone(debug_data[1])
+        initial_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = True
+        try:
+            debug_data = self.flow.default_data()
+            self.assertIsNotNone(debug_data[0])
+            self.assertIsNotNone(debug_data[1])
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
 
     def test_if_debug_data_true_then_debug_data_correct_types(self):
-        Config.DEBUG_DATA = True
-        debug_data = self.flow.default_data()
-        self.assertIsInstance(debug_data[0], type)
-        self.assertIsInstance(debug_data[1], dict)
+        initial_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = True
+        try:
+            debug_data = self.flow.default_data()
+            self.assertIsInstance(debug_data[0], type)
+            self.assertIsInstance(debug_data[1], dict)
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
 
     def test_if_debug_data_false_then_debug_data_none(self):
-        Config.DEBUG_DATA = False
-        debug_data = self.flow.default_data()
-        self.assertEqual({}, debug_data)
+        initial_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = False
+        try:
+            debug_data = self.flow.default_data()
+            self.assertEqual({}, debug_data)
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
 
     def tearDown(self):
-        Config.DEBUG_DATA = self.original_debug_data_config
+        Config.PREFILL_SAMPLE_FORM_DATA = self.original_debug_data_config
 
 
 class TestLotseGetOverviewData(unittest.TestCase):
@@ -1377,7 +1181,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
     def test_if_steps_set_and_input_data_given_then_return_correct_sections_with_input_data(self):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
-        debug_data = flow.default_data()[1]
+        debug_data = flow._DEBUG_DATA[1]
         expected_data = {
             'mandatory_data': Section(
                 StepIban.section_link.label,
@@ -1423,7 +1227,7 @@ class TestLotseGetOverviewData(unittest.TestCase):
     def test_if_missing_steps_are_missing_then_set_mandatory_missing_value(self):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
-        debug_data = copy.deepcopy(flow.default_data()[1])
+        debug_data = copy.deepcopy(flow._DEBUG_DATA[1])
         missing_fields = ['iban', 'account_holder']
         for missing_field in missing_fields:
             debug_data.pop(missing_field)
@@ -1480,7 +1284,7 @@ class TestShowPersonBLotseFlow(unittest.TestCase):
 
     def test_if_familienstand_given_familienstand_model_show_person_b_is_called(self):
         data = {'familienstand': 'single'}
-        with patch('app.model.form_data.FamilienstandModel._show_person_b') as model_show_person_b_mock:
+        with patch('app.model.form_data.JointTaxesModel.show_person_b') as model_show_person_b_mock:
             show_person_b(data)
             model_show_person_b_mock.assert_called()
 
@@ -1514,9 +1318,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_gehbeh': True,
 
             'is_user_account_holder': 'yes',
-            'iban': 'DE35133713370000012345',
-
-            'steuerminderung': 'yes', }
+            'iban': 'DE35133713370000012345',}
         self.valid_data_married = {
             'steuernummer_exists': True,
             'steuernummer': '19811310010',
@@ -1550,9 +1352,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_gehbeh': False,
 
             'account_holder': 'person_a',
-            'iban': 'DE35133713370000012345',
-
-            'steuerminderung': 'yes', }
+            'iban': 'DE35133713370000012345',}
 
     @staticmethod
     def _create_logged_in_user(idnr):
@@ -1695,7 +1495,7 @@ class TestLotseValidateInput(unittest.TestCase):
         expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'steuerminderung', 'iban', 'is_user_account_holder', ]
+                                   'person_a_gehbeh', 'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,

@@ -161,7 +161,7 @@ class MultiStepFlow:
         return render_info, stored_data
 
     def default_data(self):
-        if Config.DEBUG_DATA:
+        if Config.PREFILL_SAMPLE_FORM_DATA:
             return self._DEBUG_DATA
         else:
             return {}

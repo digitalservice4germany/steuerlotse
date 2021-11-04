@@ -21,12 +21,10 @@ from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow
 from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepFlow
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary, StepConfirmation, StepFiling, StepAck
+from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
-from app.forms.steps.lotse_multistep_flow_steps.steuerminderungen_steps import StepHaushaltsnaheHandwerker, StepSpenden, \
-    StepGemeinsamerHaushalt, StepReligion, StepAussergBela, StepVorsorge, StepSteuerminderungYesNo
 from app.logging import log_flask_request
 
 
@@ -137,9 +135,8 @@ def register_request_handlers(app):
         flow = LotseMultiStepFlow(endpoint='lotse')
         if step in ["start", StepDeclarationIncomes.name, StepDeclarationEdaten.name, StepSessionNote.name,
                     StepFamilienstand.name, StepPersonA.name, StepPersonB.name, StepIban.name,
-                    StepSteuerminderungYesNo.name, StepVorsorge.name, StepAussergBela.name, StepHaushaltsnaheHandwerker.name,
-                    StepGemeinsamerHaushalt.name, StepReligion.name, StepSpenden.name,
-                    StepSummary.name, StepConfirmation.name, StepFiling.name, StepAck.name]:
+                    StepConfirmation.name, StepFiling.name,
+                    StepAck.name]:
             return flow.handle(step_name=step)
 
         update_data, form_data = extract_information_from_request()

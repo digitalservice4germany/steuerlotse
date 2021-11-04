@@ -5,18 +5,18 @@ from decimal import Decimal
 from unittest.mock import patch, MagicMock
 
 import pytest
-from flask import Flask
+from flask import Flask, get_flashed_messages, session
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import serialize_session_data, deserialize_session_data
+from app.forms.session_data import deserialize_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
-    MockRenderStep, MockFormStep, MockYesNoStep, MockStepWithRedirection, MockStepWithPrecondition
-from tests.utils import create_session_form_data
+    MockRenderStep, MockFormStep, MockYesNoStep, MockStepWithPrecondition, \
+    MockStepWithPreconditionAndMessage, MockSecondPreconditionModelWithMessage
 
 
 class TestStepChooserInit(unittest.TestCase):
@@ -37,10 +37,11 @@ class TestStepChooserInit(unittest.TestCase):
         self.assertEqual(None, step_chooser.overview_step)
 
 
+@pytest.mark.usefixtures('test_request_context')
 class TestGetPossibleRedirect:
     @pytest.fixture
     def step_chooser(self):
-        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockStepWithRedirection, MockFinalStep]
+        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockStepWithPreconditionAndMessage, MockFinalStep]
         self.endpoint_correct = "lotse"
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
                           endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
@@ -54,18 +55,37 @@ class TestGetPossibleRedirect:
         assert step_to_redirect_to == MockStartStep.name
 
     def test_if_step_has_redirection_set_and_not_met_then_return_step_to_redirect_to(self, step_chooser):
-        step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithRedirection.name,
-                                                                  {'precondition_met': False})
+        step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithPreconditionAndMessage.name,
+                                                                  {'second_precondition_met': False})
         assert step_to_redirect_to == MockStartStep.name
 
+    def test_if_step_has_redirection_set_and_not_met_then_flash(self, step_chooser):
+        assert '_flashes' not in session
+
+        step_chooser._get_possible_redirect(MockStepWithPreconditionAndMessage.name,
+                                            {'second_precondition_met': False})
+
+        flashed_messages = session['_flashes']
+        assert len(flashed_messages) == 1
+        assert flashed_messages[0][1] == MockSecondPreconditionModelWithMessage._message_to_flash
+
     def test_if_step_has_redirection_set_but_met_then_return_none(self, step_chooser):
-        step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithRedirection.name,
-                                                                  {'precondition_met': True})
+        step_to_redirect_to = step_chooser._get_possible_redirect(MockStepWithPreconditionAndMessage.name,
+                                                                  {'second_precondition_met': True})
         assert step_to_redirect_to is None
+
+    def test_if_step_has_redirection_set_but_met_then_do_not_flash(self, step_chooser):
+        step_chooser._get_possible_redirect(MockStepWithPreconditionAndMessage.name,
+                                            {'second_precondition_met': True})
+        assert '_flashes' not in session
 
     def test_if_step_in_list_and_has_no_redirection_set_then_return_none(self, step_chooser):
         step_to_redirect_to = step_chooser._get_possible_redirect(MockRenderStep.name, {})
         assert step_to_redirect_to is None
+
+    def test_if_step_in_list_and_has_no_redirection_set_then_do_not_flash(self, step_chooser):
+        step_chooser._get_possible_redirect(MockRenderStep.name, {})
+        assert '_flashes' not in session
 
 
 class TestStepChooserGetCorrectStep(unittest.TestCase):

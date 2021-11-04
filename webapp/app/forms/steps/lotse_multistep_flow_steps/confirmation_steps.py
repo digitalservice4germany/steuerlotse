@@ -12,23 +12,6 @@ from app.model.components import ConfirmationProps
 from app.model.components.helpers import form_fields_dict
 
 
-class StepSummary(FormStep):
-    name = 'summary'
-
-    class Form(SteuerlotseBaseForm):
-        confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct'))
-
-    def __init__(self, **kwargs):
-        super(StepSummary, self).__init__(
-            title=_('form.lotse.summary-title'),
-            intro=_('form.lotse.summary-intro'),
-            form=self.Form,
-            header_title=_('form.lotse.summary.header-title'),
-            template='lotse/display_summary.html',
-            **kwargs,
-        )
-
-
 class StepConfirmation(FormStep):
     name = 'confirmation'
 
