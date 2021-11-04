@@ -5,11 +5,13 @@ import ReactDOM from "react-dom";
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import DeclarationIncomesPage from "./pages/DeclarationIncomesPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
 
 const allowedComponents = {
   LoginPage,
   RegistrationPage,
+  DeclarationIncomesPage,
   StmindSelectionPage,
 };
 

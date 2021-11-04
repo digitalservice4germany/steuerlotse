@@ -51,5 +51,9 @@ class RegistrationProps(StepFormProps):
     data_privacy_link: str
 
 
+class DeclarationIncomesProps(StepFormProps):
+    pass
+
+
 class SelectStmindProps(StepFormProps):
     pass
