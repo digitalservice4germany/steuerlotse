@@ -1,10 +1,11 @@
 import copy
 from datetime import date
-from typing import Optional, Any
+from decimal import Decimal
+from typing import Optional, Any, List
 
 from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
-from pydantic import BaseModel, validator, MissingError, ValidationError
+from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator, Extra
 from pydantic.error_wrappers import ErrorWrapper
 
 from app.data_access.user_controller import check_idnr
@@ -27,43 +28,53 @@ class FamilienstandModel(BaseModel):
     familienstand_zusammenveranlagung: Optional[str]
     familienstand_confirm_zusammenveranlagung: Optional[bool]
 
-    def _show_person_b(self):
+
+class JointTaxesModel(FamilienstandModel):
+    @root_validator
+    def check_that_joint_taxes(cls, values):
         married_not_separated = \
-            self.familienstand == 'married' and \
-            self.familienstand_married_lived_separated == 'no'
+            values.get('familienstand') == 'married' and \
+            values.get('familienstand_married_lived_separated') == 'no'
         married_separated_recently_zusammenveranlagung = \
-            self.familienstand == 'married' and \
-            self.familienstand_married_lived_separated == 'yes' and \
-            self.familienstand_married_lived_separated_since > get_first_day_of_tax_period() and \
-            self.familienstand_zusammenveranlagung == 'yes'
+            values.get('familienstand') == 'married' and \
+            values.get('familienstand_married_lived_separated') == 'yes' and \
+            values.get('familienstand_married_lived_separated_since') > get_first_day_of_tax_period() and \
+            values.get('familienstand_zusammenveranlagung') == 'yes'
         widowed_recently_not_separated = \
-            self.familienstand == 'widowed' and \
-            self.familienstand_date >= get_first_day_of_tax_period() and \
-            self.familienstand_widowed_lived_separated == 'no'
+            values.get('familienstand') == 'widowed' and \
+            values.get('familienstand_date') >= get_first_day_of_tax_period() and \
+            values.get('familienstand_widowed_lived_separated') == 'no'
         widowed_separated_recently_zusammenveranlagung = \
-            self.familienstand == 'widowed' and \
-            self.familienstand_date >= get_first_day_of_tax_period() and \
-            self.familienstand_widowed_lived_separated == 'yes' and \
-            self.familienstand_widowed_lived_separated_since > get_first_day_of_tax_period() and \
-            self.familienstand_zusammenveranlagung == 'yes'
+            values.get('familienstand') == 'widowed' and \
+            values.get('familienstand_date') >= get_first_day_of_tax_period() and \
+            values.get('familienstand_widowed_lived_separated') == 'yes' and \
+            values.get('familienstand_widowed_lived_separated_since') > get_first_day_of_tax_period() and \
+            values.get('familienstand_zusammenveranlagung') == 'yes'
 
-        return (
-                married_not_separated or
-                married_separated_recently_zusammenveranlagung or
-                widowed_recently_not_separated or
-                widowed_separated_recently_zusammenveranlagung
-        )
-
+        if married_not_separated or married_separated_recently_zusammenveranlagung or \
+                widowed_recently_not_separated or widowed_separated_recently_zusammenveranlagung:
+            return values
+        else:
+            raise ValidationError
+    
+    @classmethod
+    def show_person_b(cls, values):
+        try:
+            cls.parse_obj(values)
+            return True
+        except ValidationError:
+            return False
+    
 
 class MandatoryFormData(BaseModel):
     declaration_edaten: bool
     declaration_incomes: bool
 
-    steuernummer_exists: bool
+    steuernummer_exists: str
     bundesland: str
     bufa_nr: Optional[str]
     steuernummer: Optional[str]
-    request_new_tax_number: Optional[str]
+    request_new_tax_number: Optional[bool]
 
     familienstandStruct: FamilienstandModel
 
@@ -87,8 +98,6 @@ class MandatoryFormData(BaseModel):
     person_b_religion: Optional[str]
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
-
-    steuerminderung: str
 
     iban: str
     account_holder: Optional[str]
@@ -115,13 +124,14 @@ class MandatoryFormData(BaseModel):
 
     @validator('bufa_nr', 'request_new_tax_number', always=True)
     def must_be_set_if_no_tax_number(cls, v, values):
-        if not values.get('steuernummer_exists') and not v:
+        if (not values.get('steuernummer_exists') or values.get('steuernummer_exists') == 'no') \
+                and not v:
             raise MissingError()
         return v
 
     @validator('steuernummer', always=True)
     def must_be_set_if_tax_number(cls, v, values):
-        if values.get('steuernummer_exists') and not v:
+        if values.get('steuernummer_exists') == 'yes' and not v:
             raise MissingError()
         return v
 
@@ -171,6 +181,153 @@ class MandatoryConfirmations(MandatoryFormData):
             raise MissingError  # We want to treat an incorrect error in the same way as it missing
 
 
+class FormDataDependencies(BaseModel):
+    idnr: Optional[str]
+    dob: Optional[date]
+    unlock_code: Optional[str]
+
+    declaration_edaten: Optional[bool]
+    declaration_incomes: Optional[bool]
+
+    steuernummer_exists: Optional[str]
+    bundesland: Optional[str]
+    bufa_nr: Optional[str]
+    steuernummer: Optional[str]
+    request_new_tax_number: Optional[bool]
+
+    iban: Optional[str]
+    account_holder: Optional[str]
+    is_user_account_holder: Optional[bool]
+
+    person_a_idnr: Optional[str]
+    person_a_dob: Optional[date]
+    person_a_last_name: Optional[str]
+    person_a_first_name: Optional[str]
+    person_a_religion: Optional[str]
+    person_a_street: Optional[str]
+    person_a_street_number: Optional[int]
+    person_a_street_number_ext: Optional[str]
+    person_a_address_ext: Optional[str]
+    person_a_plz: Optional[str]
+    person_a_town: Optional[str]
+    person_a_beh_grad: Optional[int]
+    person_a_blind: Optional[bool]
+    person_a_gehbeh: Optional[bool]
+
+    person_b_same_address: Optional[str]
+    person_b_idnr: Optional[str]
+    person_b_dob: Optional[date]
+    person_b_last_name: Optional[str]
+    person_b_first_name: Optional[str]
+    person_b_religion: Optional[str]
+    person_b_street: Optional[str]
+    person_b_street_number: Optional[int]
+    person_b_street_number_ext: Optional[str]
+    person_b_address_ext: Optional[str]
+    person_b_plz: Optional[str]
+    person_b_town: Optional[str]
+    person_b_beh_grad: Optional[int]
+    person_b_blind: Optional[bool]
+    person_b_gehbeh: Optional[bool]
+
+    familienstand: Optional[str]
+    familienstand_date: Optional[date]
+    familienstand_married_lived_separated: Optional[str]
+    familienstand_married_lived_separated_since: Optional[date]
+    familienstand_widowed_lived_separated: Optional[str]
+    familienstand_widowed_lived_separated_since: Optional[date]
+    familienstand_zusammenveranlagung: Optional[str]
+    familienstand_confirm_zusammenveranlagung: Optional[bool]
+
+    stmind_select_vorsorge: Optional[bool]
+    stmind_select_ausserg_bela: Optional[bool]
+    stmind_select_handwerker: Optional[bool]
+    stmind_select_spenden: Optional[bool]
+    stmind_select_religion: Optional[bool]
+
+    stmind_vorsorge_summe: Optional[Decimal]
+
+    stmind_haushaltsnahe_entries: Optional[List[str]]
+    stmind_haushaltsnahe_summe: Optional[Decimal]
+    stmind_handwerker_entries: Optional[List[str]]
+    stmind_handwerker_summe: Optional[Decimal]
+    stmind_handwerker_lohn_etc_summe: Optional[Decimal]
+
+    stmind_gem_haushalt_count: Optional[int]
+    stmind_gem_haushalt_entries: Optional[List[str]]
+
+    stmind_religion_paid_summe: Optional[Decimal]
+    stmind_religion_reimbursed_summe: Optional[Decimal]
+
+    stmind_spenden_inland: Optional[Decimal]
+    stmind_spenden_inland_parteien: Optional[Decimal]
+
+    stmind_krankheitskosten_summe: Optional[Decimal]
+    stmind_krankheitskosten_anspruch: Optional[Decimal]
+    stmind_pflegekosten_summe: Optional[Decimal]
+    stmind_pflegekosten_anspruch: Optional[Decimal]
+    stmind_beh_aufw_summe: Optional[Decimal]
+    stmind_beh_aufw_anspruch: Optional[Decimal]
+    stmind_beh_kfz_summe: Optional[Decimal]
+    stmind_beh_kfz_anspruch: Optional[Decimal]
+    stmind_bestattung_summe: Optional[Decimal]
+    stmind_bestattung_anspruch: Optional[Decimal]
+    stmind_aussergbela_sonst_summe: Optional[Decimal]
+    stmind_aussergbela_sonst_anspruch: Optional[Decimal]
+
+    confirm_complete_correct: Optional[bool]
+    confirm_data_privacy: Optional[bool]
+    confirm_terms_of_service: Optional[bool]
+
+    @validator('stmind_vorsorge_summe')
+    def delete_if_vorsorge_not_shown(cls, v, values):
+        if not values.get('stmind_select_vorsorge'):
+            return None
+        return v
+
+    @validator('stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
+               'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
+               'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
+               'stmind_bestattung_summe', 'stmind_bestattung_anspruch', 'stmind_aussergbela_sonst_summe',
+               'stmind_aussergbela_sonst_anspruch')
+    def delete_if_ausserg_bela_not_shown(cls, v, values):
+        if not values.get('stmind_select_ausserg_bela'):
+            return None
+        return v
+
+    @validator('stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
+               'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
+               'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
+    def delete_if_handwerker_not_shown(cls, v, values):
+        if not values.get('stmind_select_handwerker'):
+            return None
+        return v
+
+    @validator('stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe')
+    def delete_if_religion_not_shown(cls, v, values):
+        if not values.get('stmind_select_religion'):
+            return None
+        return v
+
+    @validator('stmind_spenden_inland', 'stmind_spenden_inland_parteien')
+    def delete_if_spenden_not_shown(cls, v, values):
+        if not values.get('stmind_select_spenden'):
+            return None
+        return v
+
+    @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
+    def delete_if_haushaltsnahe_not_filled(cls, v, values):
+        if not values.get('stmind_haushaltsnahe_summe') and not values.get('stmind_handwerker_summe'):
+            return None
+        return v
+
+    @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
+    def delete_if_show_person_b(cls, v, values):
+        if show_person_b(values):
+            return None
+        return v
+
+
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.
     Therefore the message is kept empty."""
@@ -202,9 +359,5 @@ class IdNrMismatchInputValidationError(InputDataInvalidError):
     pass
 
 
-def show_person_b(personal_data):
-    try:
-        familienstand_model = FamilienstandModel.parse_obj(personal_data)
-        return familienstand_model._show_person_b()
-    except ValidationError:
-        return False
+def show_person_b(input_data):
+    return JointTaxesModel.show_person_b(input_data)
