@@ -1,5 +1,6 @@
 from flask import render_template
 from flask_wtf.csrf import generate_csrf
+from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink, DisplayStep
@@ -21,6 +22,7 @@ class StepDeclarationIncomes(FormStep):
     class Form(SteuerlotseBaseForm):
         declaration_incomes = ConfirmationField(
             label=_l('form.lotse.field_declaration_incomes.field-confirm-incomes'),
+            validators=[InputRequired(message=_l('form.lotse.declaration_incomes.required'))],
             render_kw={'data_label': _l('form.lotse.field_declaration_incomes.data_label')})
 
     def __init__(self, **kwargs):
@@ -61,6 +63,7 @@ class StepDeclarationEdaten(FormStep):
     class Form(SteuerlotseBaseForm):
         declaration_edaten = ConfirmationField(
             label=_l('form.lotse.field_declaration_edaten'),
+            validators=[InputRequired(message=_l('form.lotse.declaration_edaten.required'))],
             render_kw={'data_label': _l('form.lotse.field_declaration_edaten.data_label')})
 
     def __init__(self, **kwargs):

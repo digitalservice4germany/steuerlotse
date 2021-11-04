@@ -1,4 +1,5 @@
 from flask_wtf.csrf import generate_csrf
+from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, DisplayStep
@@ -16,8 +17,10 @@ class StepConfirmation(FormStep):
     name = 'confirmation'
 
     class Form(SteuerlotseBaseForm):
-        confirm_data_privacy = ConfirmationField(label=_l('form.lotse.field_confirm_data_privacy'))
-        confirm_terms_of_service = ConfirmationField(label=_l('form.lotse.field_confirm_terms_of_service'))
+        confirm_data_privacy = ConfirmationField(label=_l('form.lotse.field_confirm_data_privacy'),
+                                                 validators=[InputRequired(message=_l('form.lotse.confirm_data_privacy.required'))])
+        confirm_terms_of_service = ConfirmationField(label=_l('form.lotse.field_confirm_terms_of_service'),
+                                                     validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
 
     def __init__(self, **kwargs):
         super(StepConfirmation, self).__init__(

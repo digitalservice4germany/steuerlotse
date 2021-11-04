@@ -1,6 +1,7 @@
 import logging
 
 from flask import request, flash
+from wtforms.validators import InputRequired
 
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
 from app.forms import SteuerlotseBaseForm
@@ -24,7 +25,8 @@ class StepSummary(LotseFormSteuerlotseStep):
     next_step = StepConfirmation
 
     class InputForm(SteuerlotseBaseForm):
-        confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct'))
+        confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct'),
+                                                     validators=[InputRequired(message=_l('form.lotse.confirm_complete_correct.required'))])
 
     def _main_handle(self):
         super()._main_handle()

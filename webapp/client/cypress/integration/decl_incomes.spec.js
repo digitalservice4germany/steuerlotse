@@ -10,7 +10,7 @@ describe("DeclarationIncomes", () => {
 
     // Should have error in the right place.
     cy.get("[role=alert][for=declaration_incomes]").contains(
-      "Sie müssen dieses Feld auswählen, um weiter zu machen"
+      "Bestätigen Sie, dass Sie keine weiteren Einkünfte hatten, um fortfahren zu können"
     );
   });
 

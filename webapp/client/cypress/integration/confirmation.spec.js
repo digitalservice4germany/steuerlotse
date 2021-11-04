@@ -11,10 +11,10 @@ describe("Confirmation", () => {
 
     it("should have errors in the right places.", () => {
       cy.get("[role=alert][for=confirm_data_privacy]").contains(
-        "Sie müssen dieses Feld auswählen, um weiter zu machen"
+        "Bestätigen Sie, dass Sie mit den Datenschutzrichtlinien einverstanden sind, um fortfahren zu können."
       );
       cy.get("[role=alert][for=confirm_terms_of_service]").contains(
-        "Sie müssen dieses Feld auswählen, um weiter zu machen"
+        "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen, um fortfahren zu können."
       );
     });
   });
