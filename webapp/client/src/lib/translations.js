@@ -31,6 +31,9 @@ const translations = {
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
     },
+    confirmation: {
+      finish: "Steuererklärung abgeben",
+    },
   },
   unlockCodeActivation: {
     idnr: {

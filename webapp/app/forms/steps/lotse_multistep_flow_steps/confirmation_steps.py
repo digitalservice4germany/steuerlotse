@@ -38,7 +38,6 @@ class StepConfirmation(FormStep):
                 'action': render_info.submit_url,
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(render_info.overview_url),
-                'next_button_label': _('form.finish'),
             },
             fields=form_fields_dict(render_info.form),
             terms_of_service_link=url_for('agb'),

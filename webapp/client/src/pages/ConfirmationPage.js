@@ -20,7 +20,7 @@ export default function ConfirmationPage({
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm {...form} nextButtonLabel={t("lotse.confirmation.finish")}>
         <FormFieldConsentBox
           required
           fieldName="confirm_data_privacy"

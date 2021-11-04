@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-04 17:27+0100\n"
+"POT-Creation-Date: 2021-11-04 17:36+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2077,36 +2077,32 @@ msgstr ""
 "(EStG). Die mit der Erklärung angeforderten Daten werden aufgrund der §§ "
 "149 und 150 AO und der §§ 25 und 46 EStG erhoben."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:41
-msgid "form.finish"
-msgstr "Steuererklärung abgeben"
-
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:53
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:52
 msgid "form.lotse.confirmation.header-title"
 msgstr "Steuerformular - Versand - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:60
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:59
 msgid "form.lotse.filing.title"
 msgstr ""
 "Ihre Informationen wurden erfolgreich verschickt. Speichern Sie Ihre "
 "Nachweise für Ihre Unterlagen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:61
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:60
 msgid "form.lotse.filing.intro"
 msgstr ""
 "Ihre Informationen wurden erfolgreich an Ihre Finanzverwaltung "
 "übermittelt. Bewahren Sie Ihre Nachweise für Nachfragen gut auf."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:68
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:85
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:67
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:84
 msgid "form.lotse.filing.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:74
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:73
 msgid "form.lotse.filing.failure.header-title"
 msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:81
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:80
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
