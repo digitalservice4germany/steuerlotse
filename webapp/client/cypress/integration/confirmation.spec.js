@@ -31,8 +31,4 @@ describe("Confirmation", () => {
       cy.url().should("include", "/lotse/step/summary");
     });
   });
-
-  it("submitting a complete form with full data", () => {
-    // TODO implement this once route to set data for functional tests is implemented
-  });
 });
