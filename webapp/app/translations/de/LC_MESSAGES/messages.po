@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-04 16:01+0100\n"
+"POT-Creation-Date: 2021-11-04 17:27+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2052,43 +2052,24 @@ msgid "form.lotse.spenden-inland-parteien.data_label}"
 msgstr "an inländische politische Parteien"
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:20
-msgid "form.lotse.field_confirm_data_privacy"
-msgstr ""
-"Ich habe die <a href=%(link)s target=\"_blank\">Datenschutzerklärung</a> "
-"inklusive der <a "
-"href=\"https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2020-07-01"
-"-Korrektur-Allgemeine-Informationen-Datenschutz-Grundverordnung-"
-"Steuerverwaltung-anlage-1.pdf?__blob=publicationFile&v=3\" "
-"target=\"_blank\">Allgemeinen Informationen zur Umsetzung der "
-"datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-"
-"Grundverordnung in der Steuerverwaltung</a> zur Kenntnis genommen und "
-"akzeptiere diese."
-
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:21
 msgid "form.lotse.confirm_data_privacy.required"
 msgstr ""
 "Bestätigen Sie, dass Sie mit den Datenschutzrichtlinien einverstanden "
 "sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:22
-msgid "form.lotse.field_confirm_terms_of_service"
-msgstr ""
-"Ich habe die <a href=%(link)s target=\"_blank\">Nutzungsbedingungen</a> "
-"gelesen und stimme ihnen zu. "
-
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:23
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:21
 msgid "form.lotse.confirm_terms_of_service.required"
 msgstr ""
 "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen, um fortfahren "
 "zu können."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:27
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:36
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:25
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:34
 msgid "form.lotse.confirmation-title"
 msgstr "Bestätigung und Versand an Ihre Finanzverwaltung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:28
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:37
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:26
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:35
 msgid "form.lotse.confirmation-intro"
 msgstr ""
 "Diese Erklärung ist eine Einkommensteuererklärung im Sinne des § 150 Abs."
@@ -2096,36 +2077,36 @@ msgstr ""
 "(EStG). Die mit der Erklärung angeforderten Daten werden aufgrund der §§ "
 "149 und 150 AO und der §§ 25 und 46 EStG erhoben."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:43
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:41
 msgid "form.finish"
 msgstr "Steuererklärung abgeben"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:55
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:53
 msgid "form.lotse.confirmation.header-title"
 msgstr "Steuerformular - Versand - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:62
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:60
 msgid "form.lotse.filing.title"
 msgstr ""
 "Ihre Informationen wurden erfolgreich verschickt. Speichern Sie Ihre "
 "Nachweise für Ihre Unterlagen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:63
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:61
 msgid "form.lotse.filing.intro"
 msgstr ""
 "Ihre Informationen wurden erfolgreich an Ihre Finanzverwaltung "
 "übermittelt. Bewahren Sie Ihre Nachweise für Nachfragen gut auf."
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:70
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:87
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:68
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:85
 msgid "form.lotse.filing.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:76
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:74
 msgid "form.lotse.filing.failure.header-title"
 msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:83
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:81
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 

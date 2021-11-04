@@ -17,10 +17,8 @@ class StepConfirmation(FormStep):
     name = 'confirmation'
 
     class Form(SteuerlotseBaseForm):
-        confirm_data_privacy = ConfirmationField(label=_l('form.lotse.field_confirm_data_privacy'),
-                                                 validators=[InputRequired(message=_l('form.lotse.confirm_data_privacy.required'))])
-        confirm_terms_of_service = ConfirmationField(label=_l('form.lotse.field_confirm_terms_of_service'),
-                                                     validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
+        confirm_data_privacy = ConfirmationField(validators=[InputRequired(message=_l('form.lotse.confirm_data_privacy.required'))])
+        confirm_terms_of_service = ConfirmationField(validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
 
     def __init__(self, **kwargs):
         super(StepConfirmation, self).__init__(
