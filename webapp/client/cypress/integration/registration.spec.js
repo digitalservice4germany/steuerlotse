@@ -19,7 +19,7 @@ describe("Registration", () => {
       "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen, um fortfahren zu können"
     );
     cy.get("[role=alert][for=registration_confirm_incomes]").contains(
-      "Bestätigen Sie, dass Sie die Vorraussetzungen erfüllen, um fortfahren zu können."
+      "Bestätigen Sie, dass Sie die Voraussetzungen zur Nutzung des Steuerlotsen erfüllen, um fortfahren zu können."
     );
     cy.get("[role=alert][for=registration_confirm_e_data]").contains(
       "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können"
