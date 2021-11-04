@@ -6,13 +6,13 @@ const Row = styled.div`
   margin-top: var(--spacing-09);
   display: flex;
   flex-wrap: wrap;
-  row-gap: var(--spacing-06);
+  row-gap: var(--spacing-05);
 `;
 
 // TODO: tidy this up (turn into a proper Button component as per Nadine's designs?)
 const Button = styled.button`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem;
-  margin-right: var(--spacing-06);
+  margin-right: var(--spacing-05);
   font-size: var(--text-base);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
