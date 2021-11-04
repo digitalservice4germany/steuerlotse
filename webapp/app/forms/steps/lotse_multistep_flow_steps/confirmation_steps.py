@@ -1,3 +1,4 @@
+from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
@@ -7,6 +8,9 @@ from app.forms.fields import ConfirmationField
 from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
+
+from app.model.components import ConfirmationProps
+from app.model.components.helpers import form_fields_dict
 
 
 class StepConfirmation(FormStep):
@@ -18,22 +22,37 @@ class StepConfirmation(FormStep):
         confirm_terms_of_service = ConfirmationField(label=_l('form.lotse.field_confirm_terms_of_service'),
                                                      validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
 
-        def __init__(self, *args, **kwargs):
-            super(StepConfirmation.Form, self).__init__(*args, **kwargs)
-            self.confirm_data_privacy.label.text = _l('form.lotse.field_confirm_data_privacy',
-                                                      link=url_for('data_privacy'))
-            self.confirm_terms_of_service.label.text = _l('form.lotse.field_confirm_terms_of_service',
-                                                          link=url_for('agb'))
-
     def __init__(self, **kwargs):
         super(StepConfirmation, self).__init__(
             title=_('form.lotse.confirmation-title'),
             intro=_('form.lotse.confirmation-intro'),
             form=self.Form,
-            header_title=_('form.lotse.confirmation.header-title'),
-            template='basis/form_full_width.html',
             **kwargs,
         )
+
+    def render(self, data, render_info):
+        props_dict = ConfirmationProps(
+            step_header={
+                'title': _('form.lotse.confirmation-title'),
+                'intro': _('form.lotse.confirmation-intro'),
+            },
+            form={
+                'action': render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(render_info.overview_url),
+                'next_button_label': _('form.finish'),
+            },
+            fields=form_fields_dict(render_info.form),
+            terms_of_service_link=url_for('agb'),
+            data_privacy_link=url_for('data_privacy'),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+            component='ConfirmationPage',
+            props=props_dict,
+            # TODO: These are still required by base.html to set the page title.
+            form=render_info.form,
+            header_title=_('form.lotse.confirmation.header-title'))
 
 
 class StepFiling(DisplayStep):
