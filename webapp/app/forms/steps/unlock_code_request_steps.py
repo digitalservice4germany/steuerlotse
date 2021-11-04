@@ -24,7 +24,7 @@ class UnlockCodeRequestInputStep(FormStep):
         registration_confirm_terms_of_service = ConfirmationField(
             validators=[InputRequired(message=_l('form.unlock-code-request.confirm_terms_of_service.required'))])
         registration_confirm_incomes = ConfirmationField(
-            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_incomes.required'))])
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_eligibility.required'))])
         registration_confirm_e_data = ConfirmationField(
             validators=[InputRequired(message=_l('form.unlock-code-request.confirm_e_data.required'))])
 
