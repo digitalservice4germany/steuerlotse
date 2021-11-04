@@ -31,3 +31,20 @@ Default.args = {
   termsOfServiceLink: "/agb",
   dataPrivacyLink: "/datenschutz",
 };
+
+export const WithErrors = Template.bind({});
+WithErrors.args = {
+  ...Default.args,
+  fields: {
+    confirmDataPrivacy: {
+      errors: [
+        "Bestätigen Sie, dass Sie mit der Datenschutzrichtlinien einverstanden sind, um fortfahren zu können.",
+      ],
+    },
+    confirmTermsOfService: {
+      errors: [
+        "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen,  um fortfahren zu können.",
+      ],
+    },
+  },
+};
