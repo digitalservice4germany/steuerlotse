@@ -10,6 +10,7 @@ import aussergBelaIcon from "../assets/icons/ausserg_bela_icon.svg";
 import handwerkerIcon from "../assets/icons/handwerker_icon.svg";
 import spendenIcon from "../assets/icons/spenden_icon.svg";
 import religionIcon from "../assets/icons/religion_icon.svg";
+import { checkboxPropType } from "../lib/propTypes";
 
 export default function StmindSelectionPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
@@ -69,11 +70,6 @@ export default function StmindSelectionPage({ stepHeader, form, fields }) {
     </>
   );
 }
-
-const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-});
 
 StmindSelectionPage.propTypes = {
   stepHeader: PropTypes.exact({

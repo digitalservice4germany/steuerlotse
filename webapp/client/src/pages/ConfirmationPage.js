@@ -5,6 +5,7 @@ import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import { checkboxPropType } from "../lib/propTypes";
 
 export default function ConfirmationPage({
   stepHeader,
@@ -68,11 +69,6 @@ export default function ConfirmationPage({
     </>
   );
 }
-
-const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-});
 
 ConfirmationPage.propTypes = {
   stepHeader: PropTypes.exact({

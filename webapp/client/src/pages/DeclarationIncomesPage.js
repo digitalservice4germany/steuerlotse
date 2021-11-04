@@ -7,6 +7,7 @@ import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import listMarker from "../assets/icons/list_marker.svg";
+import { checkboxPropType } from "../lib/propTypes";
 
 const IntroList = styled.ul`
   margin-bottom: var(--spacing-06);
@@ -51,11 +52,6 @@ export default function DeclarationIncomesPage({ stepHeader, form, fields }) {
     </>
   );
 }
-
-const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-});
 
 DeclarationIncomesPage.propTypes = {
   stepHeader: PropTypes.exact({
