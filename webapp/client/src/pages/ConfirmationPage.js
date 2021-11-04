@@ -29,7 +29,7 @@ export default function ConfirmationPage({
           labelText={
             <Trans
               t={t}
-              i18nKey="unlockCodeRequest.fieldRegistrationConfirmDataPrivacy.labelText"
+              i18nKey="lotse.confirmation.fieldRegistrationConfirmDataPrivacy.labelText"
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
@@ -55,7 +55,7 @@ export default function ConfirmationPage({
           labelText={
             <Trans
               t={t}
-              i18nKey="unlockCodeRequest.fieldRegistrationConfirmTermsOfService.labelText"
+              i18nKey="lotse.confirmation.fieldRegistrationConfirmTermsOfService.labelText"
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
