@@ -5,6 +5,7 @@ import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import { checkboxPropType } from "../lib/propTypes";
 
 export default function ConfirmationPage({
   stepHeader,
@@ -19,7 +20,7 @@ export default function ConfirmationPage({
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm {...form} nextButtonLabel={t("lotse.confirmation.finish")}>
         <FormFieldConsentBox
           required
           fieldName="confirm_data_privacy"
@@ -28,7 +29,7 @@ export default function ConfirmationPage({
           labelText={
             <Trans
               t={t}
-              i18nKey="unlockCodeRequest.fieldRegistrationConfirmDataPrivacy.labelText"
+              i18nKey="lotse.confirmation.fieldRegistrationConfirmDataPrivacy.labelText"
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
@@ -54,7 +55,7 @@ export default function ConfirmationPage({
           labelText={
             <Trans
               t={t}
-              i18nKey="unlockCodeRequest.fieldRegistrationConfirmTermsOfService.labelText"
+              i18nKey="lotse.confirmation.fieldRegistrationConfirmTermsOfService.labelText"
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
@@ -68,11 +69,6 @@ export default function ConfirmationPage({
     </>
   );
 }
-
-const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-});
 
 ConfirmationPage.propTypes = {
   stepHeader: PropTypes.exact({
