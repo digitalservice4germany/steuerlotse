@@ -39,6 +39,7 @@ jobs:
       run: |
         cd webapp
         pipenv install --dev
+        pipenv run pip freeze
       shell: bash
 
     - name: Client dependencies - get yarn cache directory path
