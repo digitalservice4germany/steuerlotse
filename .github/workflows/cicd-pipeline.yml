@@ -72,7 +72,7 @@ jobs:
         cd webapp
         pipenv run pip freeze
         pipenv run which python
-        pipenv run env
+        pipenv run pip -V
         pipenv --venv
         pipenv run invoke --echo lint    
       shell: bash
