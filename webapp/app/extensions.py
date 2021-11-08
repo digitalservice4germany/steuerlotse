@@ -44,6 +44,7 @@ csrf = CSRFProtect()
 #   https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters)
 db = SQLAlchemy(engine_options={
     'pool_pre_ping': True,
+    'pool_recycle': 45,
     'pool_timeout': 20,
     'hide_parameters': True,
 })
