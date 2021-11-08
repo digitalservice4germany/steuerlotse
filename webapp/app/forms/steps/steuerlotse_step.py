@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 
-from flask import request, session, url_for, render_template
+from flask import request, session, url_for, render_template, flash
 from flask_babel import ngettext
 from pydantic import ValidationError
 from werkzeug.utils import redirect
@@ -21,7 +21,7 @@ class SteuerlotseStep(object):
     intro = None
     intro_multiple = None
     template = None
-    precondition = None
+    preconditions = []
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                  session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
@@ -91,15 +91,22 @@ class SteuerlotseStep(object):
 
     @classmethod
     def check_precondition(cls, stored_data):
-        if cls.precondition:
+        for precondition in cls.preconditions:
             try:
-                cls.precondition.parse_obj(stored_data)
+                precondition.parse_obj(stored_data)
             except ValidationError:
                 return False
         return True
 
     @classmethod
     def get_redirection_step(cls, stored_data):
+        for precondition in cls.preconditions:
+            try:
+                precondition.parse_obj(stored_data)
+            except ValidationError:
+                if hasattr(precondition, '_message_to_flash'):
+                    flash(precondition._message_to_flash, 'warn')
+                return precondition._step_to_redirect_to
         return None
 
     def render(self, **kwargs):

@@ -10,6 +10,7 @@ import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import { checkboxPropType, fieldPropType } from "../lib/propTypes";
 
 const SubHeading = styled.h2`
   &.form-sub-heading-smaller {
@@ -33,7 +34,16 @@ export default function RegistrationPage({
   return (
     <>
       <StepHeaderButtons />
-      <FormHeader {...stepHeader} />
+      <FormHeader
+        {...stepHeader}
+        intro={
+          <Trans
+            t={t}
+            i18nKey="unlockCodeRequest.input.intro"
+            components={{ bold: <b /> }}
+          />
+        }
+      />
       <StepForm
         {...form}
         explanatoryButtonText={
@@ -174,21 +184,10 @@ export default function RegistrationPage({
   );
 }
 
-const fieldPropType = PropTypes.exact({
-  value: PropTypes.any,
-  errors: PropTypes.arrayOf(PropTypes.string),
-});
-
-const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-});
-
 RegistrationPage.propTypes = {
   stepHeader: PropTypes.exact({
     // TODO: define these here, not in Python
     title: PropTypes.string,
-    intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python

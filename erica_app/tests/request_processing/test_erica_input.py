@@ -42,8 +42,6 @@ def standard_est_data():
             'iban': 'DE35133713370000012345',
             'account_holder': 'person_a',
 
-            'steuerminderung': True,
-
             'haushaltsnahe_entries': ["Gartenarbeiten"],
             'haushaltsnahe_summe': Decimal('500.00'),
 

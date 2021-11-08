@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 
 import pytest
 from flask.sessions import SecureCookieSession
-from flask_babel import ngettext
+from flask_babel import ngettext, _
 from pydantic import ValidationError
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
@@ -906,7 +906,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
                 MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.alimony_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.alimony_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -921,7 +921,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
                 MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.alimony_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.alimony_eligibility.choices)
 
 
 class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -1964,7 +1964,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
                 PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.pension_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.pension_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1982,7 +1982,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
                 PensionDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.pension_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.pension_eligibility.choices)
 
 
 class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -2118,7 +2118,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.investment_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.investment_income_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2137,7 +2137,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.investment_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.investment_income_eligibility.choices)
 
 
 class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -2279,7 +2279,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.minimal_investment_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.minimal_investment_income_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2299,7 +2299,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.minimal_investment_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.minimal_investment_income_eligibility.choices)
 
 
 class TestTaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -2606,7 +2606,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
                 CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.cheaper_check_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.cheaper_check_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2627,7 +2627,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
                 CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.cheaper_check_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.cheaper_check_eligibility.choices)
 
 
 class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -2802,7 +2802,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
                 EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.employment_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.employment_income_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2824,7 +2824,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
                 EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.employment_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.employment_income_eligibility.choices)
 
 
 class TestMarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -3162,7 +3162,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.other_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.other_income_eligibility.choices)
 
     def test_if_single_user_then_show_single_text(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -3185,7 +3185,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        self.assertEqual(expected_choices, step.form.other_income_eligibility.kwargs['choices'])
+        self.assertEqual(expected_choices, step.render_info.form.other_income_eligibility.choices)
 
 
 class TestForeignCountriesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -3368,7 +3368,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        assert step.form.foreign_country_eligibility.kwargs['choices'] == expected_choices
+        assert step.render_info.form.foreign_country_eligibility.choices == expected_choices
 
     def test_if_single_user_then_show_single_text(self, app):
         session_data = {'marital_status_eligibility': 'single',
@@ -3392,7 +3392,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step._pre_handle()
 
-        assert step.form.foreign_country_eligibility.kwargs['choices'] == expected_choices
+        assert step.render_info.form.foreign_country_eligibility.choices == expected_choices
 
 
 class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
@@ -3401,7 +3401,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.req = test_request_context
 
     def test_if_user_b_has_no_elster_account_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.user_b_elster_account',
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.user_b_elster_account',
                                 'form.eligibility.result-note.user_b_elster_account-registration']
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
@@ -3421,7 +3422,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.capital_investment']
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.capital_investment']
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -3442,7 +3444,9 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_has_no_minimal_investment_income_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.capital_investment']
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.capital_investment']
+        
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -3462,9 +3466,11 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.user_b_elster_account',
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.user_b_elster_account',
                                 'form.eligibility.result-note.user_b_elster_account-registration',
                                 'form.eligibility.result-note.capital_investment']
+        
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
@@ -3488,7 +3494,8 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_b_has_no_elster_account_and_user_has_minimal_investment_income_check_then_set_correct_info(self):
-        expected_information = ['form.eligibility.result-note.user_b_elster_account',
+        expected_information = ['form.eligibility.result-note.deadline',
+                                'form.eligibility.result-note.user_b_elster_account',
                                 'form.eligibility.result-note.user_b_elster_account-registration',
                                 'form.eligibility.result-note.capital_investment']
         session_data = {'marital_status_eligibility': 'married',
@@ -3513,11 +3520,12 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
-        expected_information = []
-        step = EligibilitySuccessDisplaySteuerlotseStep(
-                endpoint='eligibility',
-                render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
-                    {}))
-        step.handle()
+        expected_information = ['form.eligibility.result-note.deadline']
+        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+            step = EligibilitySuccessDisplaySteuerlotseStep(
+                    endpoint='eligibility',
+                    render_info=EligibilitySuccessDisplaySteuerlotseStep.prepare_render_info(
+                        {}))
+            step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])

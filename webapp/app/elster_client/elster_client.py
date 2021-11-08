@@ -20,11 +20,12 @@ logger = logging.getLogger(__name__)
 
 
 _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
+_REQUEST_TIMEOUT = 20
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'person_a_blind', 'person_a_gehbeh',
-              'person_b_same_address', 'person_b_blind', 'person_b_gehbeh', 'steuerminderung',
-              'is_digitally_signed', 'request_new_tax_number', 'steuernummer_exists']
+              'person_b_same_address', 'person_b_blind', 'person_b_gehbeh',
+              'is_digitally_signed', 'request_new_tax_number']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -43,7 +44,7 @@ def send_to_erica(*args, **kwargs):
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
-        response = requests.post(*args, headers=headers, **kwargs)
+        response = requests.post(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
     logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
     return response
 
@@ -55,7 +56,7 @@ def request_from_erica(*args, **kwargs):
         response = MockErica.mocked_elster_requests(*args, **kwargs)
     else:
         headers = {'Content-type': 'application/json'}
-        response = requests.get(*args, headers=headers, **kwargs)
+        response = requests.get(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
     logger.info(f'Completed Erica GET request with args {args!r}, got code {response.status_code}')
     return response
 
@@ -208,7 +209,7 @@ def _generate_est_request_data(form_data, year=2020):
         if isinstance(adapted_form_data[key], str):
             adapted_form_data[key] = datetime.strptime(adapted_form_data[key], '%Y-%m-%d').date()
 
-    if not adapted_form_data.get('steuernummer_exists') and adapted_form_data.get('request_new_tax_number'):
+    if adapted_form_data.get('steuernummer_exists') == 'no' and adapted_form_data.get('request_new_tax_number'):
         adapted_form_data['submission_without_tax_nr'] = True
 
     if not current_user.is_active:

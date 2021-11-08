@@ -81,8 +81,6 @@ def create_form_data(correct=True, with_tax_number=True):
             iban='DE35133713370000012345',
             account_holder='person_a',
 
-            steuerminderung=True,
-
             haushaltsnahe_entries=["Gartenarbeiten"],
             haushaltsnahe_summe=Decimal('500.00'),
 
@@ -114,7 +112,6 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_beh_grad=20,
             person_a_blind=False,
             person_a_gehbeh=True,
-            steuerminderung=False
         )
 
     return form_data
@@ -143,7 +140,6 @@ def create_form_data_single(correct=True, with_tax_number=True):
 
             iban='DE35133713370000012345',
             account_holder='person_a',
-            steuerminderung=False,
 
             confirm_complete_correct=True,
             confirm_send=True
@@ -169,7 +165,6 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_gehbeh=False,
 
             iban='DE35133713370000012345',
-            steuerminderung=False,
 
             confirm_complete_correct=True,
             confirm_send=True
