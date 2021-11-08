@@ -38,7 +38,7 @@ jobs:
     - name: Python dependencies - install
       run: |
         cd webapp
-        pipenv install --dev
+        pipenv install --dev --verbose
         pipenv run pip freeze
       shell: bash
 
@@ -126,7 +126,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd erica_app
-        pipenv install --dev
+        pipenv install --dev --verbose
       shell: bash
 
     - name: Get Eric binaries
