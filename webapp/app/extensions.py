@@ -42,7 +42,11 @@ csrf = CSRFProtect()
 #   https://docs.syseleven.de/syseleven-stack/de/reference/network/known-issues#idle-tcp-sessions-being-closed).
 # - hide_parameters: don't log any parameters with errors or when logging SQL statements (
 #   https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters)
-db = SQLAlchemy(engine_options={'pool_pre_ping': True, 'hide_parameters': True})
+db = SQLAlchemy(engine_options={
+    'pool_pre_ping': True,
+    'pool_timeout': 20,
+    'hide_parameters': True,
+})
 
 flask_static_digest = FlaskStaticDigest()
 
