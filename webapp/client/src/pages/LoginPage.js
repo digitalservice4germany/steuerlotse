@@ -7,6 +7,7 @@ import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import { fieldPropType } from "../lib/propTypes";
 
 export default function LoginPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
@@ -54,11 +55,6 @@ export default function LoginPage({ stepHeader, form, fields }) {
     </>
   );
 }
-
-const fieldPropType = PropTypes.exact({
-  value: PropTypes.any,
-  errors: PropTypes.arrayOf(PropTypes.string),
-});
 
 LoginPage.propTypes = {
   stepHeader: PropTypes.exact({

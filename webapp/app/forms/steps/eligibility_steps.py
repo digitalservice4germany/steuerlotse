@@ -1,7 +1,6 @@
-from flask import request
 from flask_babel import _, ngettext
 from flask_babel import lazy_gettext as _l
-from pydantic import ValidationError, BaseModel
+from pydantic import ValidationError
 from wtforms import RadioField
 from wtforms.validators import InputRequired
 
@@ -56,7 +55,7 @@ class EligibilityStepMixin:
         return False
 
     @classmethod
-    def number_of_users(cls, input_data):
+    def number_of_users(cls, input_data, *args, **kwargs):
         if data_fits_data_model(MarriedJointTaxesEligibilityData, input_data) \
                 or data_fits_data_model(SeparatedJointTaxesEligibilityData, input_data):
             return 2
@@ -72,11 +71,12 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     title = _l('form.eligibility.failure.title')
     intro = _l('form.eligibility.failure.intro')
 
-    def __init__(self, endpoint, stored_data=None, **kwargs):
+    def __init__(self, endpoint, stored_data=None, render_info=None, *args, **kwargs):
         super(EligibilityFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
-                                                                       **kwargs)
+                                                                       render_info=render_info,
+                                                                       *args, **kwargs)
 
     def _main_handle(self):
         self.render_info.prev_url = self.url_for_step(self.input_step_name)
@@ -95,16 +95,17 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     class InputForm(SteuerlotseBaseForm):
         pass
 
-    def __init__(self, endpoint, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), **kwargs)
+    def __init__(self, endpoint, render_info=None, *args, **kwargs):
+        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), render_info=render_info,  *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.back_link_text')
 
-        if request.method == "GET":
+        if not self.should_update_data:
             self.delete_not_dependent_data()
-        if request.method == "POST" and self.render_info.form.validate():
+            return
+        if self.should_update_data and self.render_info.data_is_valid:
             found_next_step_url = None
             for data_model, step_name in self.next_step_data_models:
                 if self._validate(data_model):
@@ -153,10 +154,12 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
     intro = _l('form.eligibility.start-intro')
     template = 'basis/display_standard.html'
 
-    def __init__(self, stored_data=None, **kwargs):
+    def __init__(self, stored_data=None, render_info=None, *args, **kwargs):
         super(EligibilityStartDisplaySteuerlotseStep, self).__init__(
             header_title=_('form.eligibility.header-title'),
             stored_data=stored_data,
+            render_info=render_info,
+            *args,
             **kwargs)
 
     def _main_handle(self):
@@ -187,7 +190,7 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
                      ('divorced', _l('form.eligibility.marital_status.divorced')),
                      ('widowed', _l('form.eligibility.marital_status.widowed')),
                      ],
-            validators=[InputRequired()])
+            validators=[InputRequired(_l('validate.input-required'))])
 
     def _main_handle(self):
         super()._main_handle()
@@ -304,7 +307,7 @@ class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibil
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.alimony_eligibility.kwargs['choices'] = [
+        self.render_info.form.alimony_eligibility.choices = [
             ('yes', ngettext('form.eligibility.alimony.yes',
                              'form.eligibility.alimony.yes',
                              num=self.number_of_users(self.stored_data))),
@@ -506,7 +509,7 @@ class PensionDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInpu
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.pension_eligibility.kwargs['choices'] = [
+        self.render_info.form.pension_eligibility.choices = [
             ('yes', ngettext('form.eligibility.pension.yes',
                              'form.eligibility.pension.yes',
                              num=self.number_of_users(self.stored_data))),
@@ -536,7 +539,7 @@ class InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.investment_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.investment_income_eligibility.choices = [
             ('yes', ngettext('form.eligibility.investment_income.yes',
                              'form.eligibility.investment_income.yes',
                              num=self.number_of_users(
@@ -568,7 +571,7 @@ class MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(Decisio
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.minimal_investment_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.minimal_investment_income_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.minimal_investment_income.yes',
                 'form.eligibility.minimal_investment_income.yes',
@@ -633,7 +636,7 @@ class CheaperCheckDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilit
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.cheaper_check_eligibility.kwargs['choices'] = [
+        self.render_info.form.cheaper_check_eligibility.choices = [
             ('yes', ngettext(
                  'form.eligibility.cheaper_check_eligibility.yes',
                  'form.eligibility.cheaper_check_eligibility.yes',
@@ -665,7 +668,7 @@ class EmploymentDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.employment_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.employment_income_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.employment_income.yes',
                 'form.eligibility.employment_income.yes',
@@ -729,7 +732,7 @@ class IncomeOtherDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibility
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.other_income_eligibility.kwargs['choices'] = [
+        self.render_info.form.other_income_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.income_other.yes',
                 'form.eligibility.income_other.yes',
@@ -768,7 +771,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
             validators=[InputRequired()])
 
     def _pre_handle(self):
-        self.form.foreign_country_eligibility.kwargs['choices'] = [
+        self.render_info.form.foreign_country_eligibility.choices = [
             ('yes', ngettext(
                 'form.eligibility.foreign_country.yes',
                 'form.eligibility.foreign_country.yes',
@@ -786,24 +789,27 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     intro = _l('form.eligibility.result-intro')
     template = 'eligibility/display_success.html'
 
-    def __init__(self, endpoint, stored_data=None, **kwargs):
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
         super(EligibilitySuccessDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
+                                                                       *args,
                                                                        **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
 
         # Add notes depending on certain previous answers
-        dependent_notes = []
+        dependent_notes = [(_('form.eligibility.result-note.deadline'))]
+        
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
             dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
         if data_fits_data_model_from_list(
                 [CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
-            dependent_notes.append(_('form.eligibility.result-note.capital_investment'))
+            dependent_notes.append(_('form.eligibility.result-note.capital_investment'))            
+        
         self.render_info.additional_info['dependent_notes'] = dependent_notes
 
         self.render_info.next_url = None
@@ -815,8 +821,8 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
     intro = _l('form.eligibility.success.maybe.intro')
     template = 'eligibility/display_maybe.html'
 
-    def __init__(self, endpoint, stored_data=None, **kwargs):
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
         super(EligibilityMaybeDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                      stored_data=stored_data,
                                                                      header_title=_('form.eligibility.header-title'),
-                                                                     **kwargs)
+                                                                     *args, **kwargs)

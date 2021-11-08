@@ -8,6 +8,7 @@ from wtforms import ValidationError
 
 from stdnum.iso7064.mod_11_10 import is_valid
 
+from app.elster_client.elster_client import validate_tax_number
 from app.forms.valid_characters import VALID_ELSTER_CHARACTERS, VALID_UNLOCK_CODE_CHARACTERS
 
 # TODO: Unify validation and error messages (some is done on the client, some on the backend)
@@ -21,6 +22,12 @@ class DecimalOnly:
     def __call__(self, form, field):
         if not field.data.isdecimal():
             raise ValidationError(_('validate.not-a-decimal'))
+
+
+class NoZero:
+    def __call__(self, form, field):
+        if field.data == 0:
+            raise ValidationError(_('validate.must-not-be-zero'))
 
 
 class IntegerLength:
@@ -116,3 +123,19 @@ class ValidUnlockCodeCharacterSet:
         for char in input_str:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))
+
+class ValidHessenTaxNumber:
+
+    def __call__(self, form, field):
+        if form.steuernummer_exists.data == 'yes' and form.bundesland.data == 'HE':
+            tax_number_str = str(field.data)
+            if len(tax_number_str) != 11:
+                raise ValidationError(_('validate.invalid-hessen-tax-number'))
+
+
+class ValidTaxNumber:
+    def __call__(self, form, field):
+        if form.steuernummer_exists.data == 'yes':
+            valid_tax_number = validate_tax_number(form.bundesland.data, form.steuernummer.data)
+            if not valid_tax_number:
+                raise ValidationError(_('validate.invalid-tax-number'))

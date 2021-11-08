@@ -18,3 +18,15 @@
     {{ components.downloadLink(text=_('form.lotse.ack-pdf-download-button'), url=url_for('download_pdf'), large=True) }}
 
 {% endblock %}
+
+{% block optional_js %}
+    {{ super() }}
+    {% if plausible_domain %}
+    <!-- Add custom plausible goal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            plausible('summary_submitted', {props: {tax_number_provided: {{ tax_number_provided|tojson }} }})
+        });
+    </script>
+    {% endif %}
+{% endblock %}

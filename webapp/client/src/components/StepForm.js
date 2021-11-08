@@ -10,12 +10,7 @@ export default function StepForm({
   nextButtonLabel,
 }) {
   return (
-    <form
-      noValidate
-      className="container px-0 form-container"
-      method="POST"
-      action={action}
-    >
+    <form noValidate method="POST" action={action}>
       <input type="hidden" name="csrf_token" value={csrfToken} />
       {children}
       <FormNavButtons

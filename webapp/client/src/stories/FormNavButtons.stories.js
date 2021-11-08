@@ -21,6 +21,11 @@ WithOverviewLink.args = {
 export const WithExplanatoryText = Template.bind({});
 WithExplanatoryText.args = {
   ...Default.args,
-  explanatoryButtonText:
-    'Sie haben Ihren Freischaltcode bereits erhalten? <br><a href="#">Dann können Sie sich anmelden</a>',
+  explanatoryButtonText: (
+    <>
+      Sie haben Ihren Freischaltcode bereits erhalten?
+      <br />
+      <a href="/">Dann können Sie sich anmelden</a>
+    </>
+  ),
 };

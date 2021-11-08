@@ -10,7 +10,8 @@ from markupsafe import escape
 from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
-    send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data
+    send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data, \
+    validate_tax_number
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -35,8 +36,8 @@ class TestSendEst(unittest.TestCase):
 
         self.est_response_including_responses = MockResponse(self.est_including_json, 200)
         self.est_response_without_responses = MockResponse(self.est_without_json, 200)
-        self.valid_form_data = {**LotseMultiStepFlow(None).default_data()[1],
-                                **{'idnr': LotseMultiStepFlow(None).default_data()[1]['person_a_idnr']}}
+        self.valid_form_data = {**LotseMultiStepFlow(None)._DEBUG_DATA[1],
+                                **{'idnr': LotseMultiStepFlow(None)._DEBUG_DATA[1]['person_a_idnr']}}
 
         self.invalid_form_data = copy.deepcopy(self.valid_form_data)
         self.invalid_form_data['person_a_idnr'] = MockErica.INVALID_ID
@@ -129,14 +130,11 @@ class TestSendEst(unittest.TestCase):
     def test_if_fields_missing_raise_error(self):
         data = copy.deepcopy(self.valid_form_data)
         data.pop("familienstand")
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
-                    patch('app.elster_client.elster_client._log_address_data'):
-                self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
-                                  include_elster_responses=False)
-        finally:
-            MockErica.value_error_missing_fields_occurred = False
+        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client._log_address_data'):
+            self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
+                              include_elster_responses=False)
 
     def test_if_invalid_bufa_then_return_error(self):
         MockErica.invalid_bufa_number_error_occurred = True
@@ -173,7 +171,7 @@ class TestValidateEst(unittest.TestCase):
 
         self.est_response_including_responses = MockResponse(self.est_including_json, 200)
         self.est_response_without_responses = MockResponse(self.est_without_json, 200)
-        self.valid_form_data = LotseMultiStepFlow(None).default_data()[1]
+        self.valid_form_data = LotseMultiStepFlow(None)._DEBUG_DATA[1]
 
         self.invalid_form_data = copy.deepcopy(self.valid_form_data)
         self.invalid_form_data['person_a_idnr'] = MockErica.INVALID_ID
@@ -487,7 +485,7 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterRequestAlreadyRevoked, send_unlock_code_revocation_with_elster,
-                                  {'idnr': self.new_idnr, 'elster_request_id':  self.correct_elster_request_id}, 'IP')
+                                  {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
         finally:
             MockErica.request_code_already_revoked_error_occurred = False
 
@@ -520,13 +518,45 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
             MockErica.available_idnrs.remove(self.new_idnr)
 
 
+class TestValidateTaxNumber:
+
+    def test_if_tax_number_is_valid_then_return_true(self):
+        state_abbreviation = 'BY'
+        tax_number = '19811310010'
+        result = validate_tax_number(state_abbreviation, tax_number)
+
+        assert result is True
+
+    def test_if_tax_number_is_invalid_then_return_false(self):
+        state_abbreviation = 'BY'
+        tax_number = '00000111111'
+        MockErica.tax_number_is_invalid = True
+        try:
+            result = validate_tax_number(state_abbreviation, tax_number)
+
+        finally:
+            MockErica.tax_number_is_invalid = False
+
+        assert result is False
+
+    def test_if_erica_throws_error_then_raise_error(self):
+        state_abbreviation = 'BY'
+        tax_number = '19811310010'
+        MockErica.eric_process_not_successful_error_occurred = True
+        try:
+            with pytest.raises(ElsterUnknownError):
+                validate_tax_number(state_abbreviation, tax_number)
+        finally:
+            MockErica.eric_process_not_successful_error_occurred = False
+
+
 class TestGenerateEStRequestData(unittest.TestCase):
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, test_request_context):
         self.req = test_request_context
 
     def test_set_form_data_dict_results_in_dict_with_est_data_field_and_meta_data_field(self):
-        form_data = LotseMultiStepFlow(None).default_data()[1]
+        form_data = LotseMultiStepFlow(None)._DEBUG_DATA[1]
 
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
             result = _generate_est_request_data(form_data)
@@ -535,7 +565,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertIn('meta_data', result)
 
     def test_set_form_data_dict_results_in_est_data_dict_with_same_keys(self):
-        form_data = LotseMultiStepFlow(None).default_data()[1]
+        form_data = LotseMultiStepFlow(None)._DEBUG_DATA[1]
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
             result = _generate_est_request_data(form_data)
 

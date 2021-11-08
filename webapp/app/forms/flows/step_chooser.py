@@ -1,3 +1,7 @@
+from typing import Dict
+
+from werkzeug.datastructures import ImmutableMultiDict
+from flask import flash
 from werkzeug.exceptions import abort
 
 from app.config import Config
@@ -37,27 +41,32 @@ class StepChooser:
                 return dbg[0].name
             else:
                 return self.first_step.name
-        elif step_to_redirect_to := self.steps[step_name].get_redirection_step(stored_data):
+        step_to_redirect_to = self.steps[step_name].get_redirection_step(stored_data)
+        if step_to_redirect_to:
             return step_to_redirect_to
         else:
             return None
 
-    def get_correct_step(self, step_name: str, update_data: bool = False) -> SteuerlotseStep:
-        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
-        if step_name_to_redirect_to := self._get_possible_redirect(step_name, stored_data):
-            return RedirectSteuerlotseStep(step_name_to_redirect_to, endpoint=self.endpoint)
+    def get_correct_step(self, step_name: str, should_update_data: bool, form_data: ImmutableMultiDict) -> SteuerlotseStep:
 
-        if update_data:
-            stored_data = self.steps[step_name].update_data(stored_data)
+        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
+
+        if redirected_step_name := self._get_possible_redirect(step_name, stored_data):
+            return RedirectSteuerlotseStep(redirected_step_name, endpoint=self.endpoint)
+
+        render_info = self.steps[step_name].prepare_render_info(stored_data, form_data, should_update_data)
 
         # By default set `prev_step` and `next_step` in order of definition
         return self.steps[step_name](
             endpoint=self.endpoint,
-            stored_data=stored_data,
+            stored_data=render_info.stored_data,
             overview_step=self.overview_step,
-            prev_step=self.determine_prev_step(step_name, stored_data),
-            next_step=self.determine_next_step(step_name, stored_data),
-            session_data_identifier=self.session_data_identifier
+            prev_step=self.determine_prev_step(step_name, render_info.stored_data),
+            next_step=self.determine_next_step(step_name, render_info.stored_data),
+            session_data_identifier=self.session_data_identifier,
+            should_update_data=should_update_data,
+            form_data=form_data,
+            render_info=render_info
         )
 
     def determine_prev_step(self, current_step_name, stored_data):
@@ -97,7 +106,7 @@ class StepChooser:
         return None
 
     def default_data(self):
-        if Config.DEBUG_DATA:
+        if Config.PREFILL_SAMPLE_FORM_DATA:
             return self._DEBUG_DATA
         else:
             return {}

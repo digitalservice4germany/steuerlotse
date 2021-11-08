@@ -288,7 +288,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
-                cy.get('label[for=steuerminderung-1]').click()
+                // Do not select any stmind
                 cy.get(submitBtnSelector).click()
 
                 // Step 4
@@ -338,7 +338,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
-                cy.get('label[for=steuerminderung-1]').click()
+                // Do not select any stmind
                 cy.get(submitBtnSelector).click()
 
                 // Step 4
@@ -417,7 +417,11 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
-                cy.get('label[for=steuerminderung-0]').click()
+                cy.get('label[for=stmind_select_vorsorge]').click()
+                cy.get('label[for=stmind_select_ausserg_bela]').click()
+                cy.get('label[for=stmind_select_handwerker]').click()
+                cy.get('label[for=stmind_select_spenden]').click()
+                cy.get('label[for=stmind_select_religion]').click()
                 cy.get(submitBtnSelector).click()
                 cy.get('#stmind_vorsorge_summe').type(taxReturnData.stmind.vorsorge.summe)
                 cy.get(submitBtnSelector).click()
@@ -452,12 +456,12 @@ context('Acceptance tests', () => {
                 cy.get('#stmind_handwerker_lohn_etc_summe').type(taxReturnData.stmind.handwerker.lohnEtcSumme)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#stmind_religion_paid_summe').type(taxReturnData.stmind.religion.paidSumme)
-                cy.get('#stmind_religion_reimbursed_summe').type(taxReturnData.stmind.religion.reimbursedSumme)
-                cy.get(submitBtnSelector).click()
-
                 cy.get('#stmind_spenden_inland').type(taxReturnData.stmind.spenden.inland)
                 cy.get('#stmind_spenden_inland_parteien').type(taxReturnData.stmind.spenden.inlandParteien)
+                cy.get(submitBtnSelector).click()
+
+                cy.get('#stmind_religion_paid_summe').type(taxReturnData.stmind.religion.paidSumme)
+                cy.get('#stmind_religion_reimbursed_summe').type(taxReturnData.stmind.religion.reimbursedSumme)
                 cy.get(submitBtnSelector).click()
 
                 // Step 4
@@ -589,93 +593,6 @@ context('Acceptance tests', () => {
             cy.visit('/lotse/step/person_b?link_overview=True')
             cy.location().should((loc) => {
                 expect(loc.pathname.toString()).to.contain('/lotse/step/familienstand');
-            });
-
-            // No steuerminderung set
-            // Redirect spenden
-            cy.visit('/lotse/step/spenden?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-            // Set steuerminderung no
-            cy.visit('/lotse/step/steuerminderung_yesno')
-            cy.get('label[for=steuerminderung-1]').click()
-            cy.get(submitBtnSelector).click()
-
-            // Redirect vorsorge
-            cy.visit('/lotse/step/vorsorge?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-            // Redirect ausserg_bela
-            cy.visit('/lotse/step/ausserg_bela?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-            // Redirect haushaltsnahe
-            cy.visit('/lotse/step/haushaltsnahe_handwerker?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-            // Redirect gem_haushalt
-            cy.visit('/lotse/step/gem_haushalt?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-            // Redirect religion
-            cy.visit('/lotse/step/religion?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-            // Redirect spenden
-            cy.visit('/lotse/step/spenden?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/steuerminderung_yesno');
-            });
-
-
-            // Set steuerminderung yes
-            cy.visit('/lotse/step/steuerminderung_yesno')
-            cy.get('label[for=steuerminderung-0]').click()
-            cy.get(submitBtnSelector).click()
-
-            // No redirect vorsorge
-            cy.visit('/lotse/step/vorsorge?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/vorsorge');
-            });
-
-
-            // Set familienstand divorced
-            cy.visit('/lotse/step/familienstand')
-            cy.get('label[for=familienstand-3]').click()
-            cy.get('#familienstand_date_1').clear().type(taxReturnData.marriedDateDay)
-            cy.get('#familienstand_date_2').clear().type(taxReturnData.marriedDateMonth)
-            cy.get('#familienstand_date_3').clear().type(taxReturnData.marriedDateYear)
-            cy.get(submitBtnSelector).click()
-
-            // Redirect gem_haushalt
-            cy.visit('/lotse/step/gem_haushalt?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/haushaltsnahe_handwerker');
-            });
-
-
-            // Set haushaltsnahe
-            cy.get('#stmind_haushaltsnahe_entries-div').children().eq(0).type(taxReturnData.stmind.haushaltsnahe.entries[0])
-            cy.get('#stmind_haushaltsnahe_summe').type(taxReturnData.stmind.haushaltsnahe.summe)
-            cy.get(submitBtnSelector).click()
-
-            // No redirect gem_haushalt
-            cy.visit('/lotse/step/gem_haushalt?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/gem_haushalt');
             });
         });
     });

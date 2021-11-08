@@ -1,35 +1,20 @@
+from flask import request, flash, Markup
 from flask import request
+from pydantic import ValidationError
 from wtforms import validators
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
-from flask_babel import lazy_gettext as _l, ngettext
+from flask_babel import lazy_gettext as _l, ngettext, _
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField
-from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepSummary
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA
 from app.forms.steps.step import SectionLink
-from app.forms.steps.steuerlotse_step import FormSteuerlotseStep
+from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber
 from app.forms.validators import DecimalOnly, IntegerLength
 from app.model.form_data import show_person_b
-
-
-class LotseFormSteuerlotseStep(FormSteuerlotseStep):
-    template = 'basis/form_standard.html'
-    header_title = None
-    prev_step = StepFamilienstand
-    next_step = StepPersonA
-
-    def __init__(self, endpoint, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
-
-    def _main_handle(self):
-        super()._main_handle()
-
-        # redirect in any case if overview button pressed
-        if 'overview_button' in request.form:
-            self.render_info.next_url = self.url_for_step(StepSummary.name)
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
@@ -39,8 +24,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     template = 'lotse/form_steuernummer.html'
     # TODO remove this once all steps are converted to steuerlotse steps
-    prev_step_name = StepFamilienstand.name
-    next_step_name = StepPersonA.name
+    prev_step = StepFamilienstand
+    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -48,10 +33,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
-
-    def __init__(self, endpoint="lotse", **kwargs):
-        super().__init__(endpoint=endpoint, **kwargs)
-
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
@@ -91,14 +72,24 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.bufa_nr.data_label')}
         )
         steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
-                                              validators=[DecimalOnly(),
-                                                          IntegerLength(min=10, max=11)],
-                                              render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
+                                                     validators=[DecimalOnly(),
+                                                                 IntegerLength(min=10, max=11), ValidHessenTaxNumber()],
+                                                     render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
                                                          'data-example-input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
             input_required=False,
             label=_l('form.lotse.steuernummer.request_new_tax_number'),
             render_kw={'data_label': _l('form.lotse.steuernummer.request_new_tax_number.data_label')})
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            tax_offices = request_tax_offices()
+            self.tax_offices = tax_offices
+            choices = []
+            for county in tax_offices:
+                choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
+                            county.get('tax_offices')]
+            self.bufa_nr.choices = choices
 
         def validate_bundesland(form, field):
             if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
@@ -124,26 +115,30 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             else:
                 validators.Optional()(form, field)
 
-    def _pre_handle(self):
-        tax_offices = request_tax_offices()
+        def validate(self, extra_validators=None):
+            all_fields_are_valid = super().validate(extra_validators)
 
-        # Set bufa choices here because WTForms will otherwise not accept choices because they are invalid
-        self._set_bufa_choices(tax_offices)
+            if not all_fields_are_valid and (self.steuernummer.errors or self.bundesland.errors):
+                return False  # Only validate tax number if all other validations of tax number are correct
+
+            try:
+                ValidTaxNumber()(self, self.steuernummer)
+            except WTFormsValidationError:
+                flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')
+                return False
+
+            return all_fields_are_valid
+
+    def _pre_handle(self):
         self._set_multiple_texts()
         super()._pre_handle()
-        self.render_info.additional_info['tax_offices'] = tax_offices
-
-    def _set_bufa_choices(self, tax_offices):
-        choices = []
-        for county in tax_offices:
-            choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in county.get('tax_offices')]
-        self.form.bufa_nr.kwargs['choices'] = choices
 
     def _set_multiple_texts(self):
         num_of_users = 2 if show_person_b(self.stored_data) else 1
-        self.form.steuernummer_exists.kwargs['label'] = ngettext('form.lotse.steuernummer_exists',
-                                                                 'form.lotse.steuernummer_exists',
-                                                                 num=num_of_users)
-        self.form.request_new_tax_number.kwargs['label'] = ngettext('form.lotse.steuernummer.request_new_tax_number',
-                                                                    'form.lotse.steuernummer.request_new_tax_number',
-                                                                    num=num_of_users)
+        self.render_info.form.steuernummer_exists.label.text = ngettext('form.lotse.steuernummer_exists',
+                                                                             'form.lotse.steuernummer_exists',
+                                                                             num=num_of_users)
+        self.render_info.form.request_new_tax_number.label.text = ngettext(
+            'form.lotse.steuernummer.request_new_tax_number',
+            'form.lotse.steuernummer.request_new_tax_number',
+            num=num_of_users)
