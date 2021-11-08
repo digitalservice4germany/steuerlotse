@@ -75,6 +75,7 @@ jobs:
         pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         pipenv run which python
         pipenv run env
+        pipenv --venv
         pipenv run invoke --echo lint    
       shell: bash
 
