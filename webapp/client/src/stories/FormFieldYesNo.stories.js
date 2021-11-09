@@ -19,7 +19,6 @@ export const Default = Template.bind({});
 Default.args = {
   fieldId: "yesNo",
   fieldName: "yesNo",
-  defaultValue: undefined,
   label: {
     text: "Haben Sie eine Steuernummer?",
   },
@@ -30,7 +29,6 @@ export const YesPreselected = Template.bind({});
 YesPreselected.args = {
   fieldId: "yesNo",
   fieldName: "yesNo",
-  defaultValue: undefined,
   label: {
     text: "Haben Sie eine Steuernummer?",
   },
@@ -42,7 +40,6 @@ export const NoPreselected = Template.bind({});
 NoPreselected.args = {
   fieldId: "yesNo",
   fieldName: "yesNo",
-  defaultValue: undefined,
   label: {
     text: "Haben Sie eine Steuernummer?",
   },
@@ -54,7 +51,6 @@ export const WithDetails = Template.bind({});
 WithDetails.args = {
   fieldId: "yesNo",
   fieldName: "yesNo",
-  defaultValue: undefined,
   label: {
     text: "Haben Sie eine Steuernummer?",
   },
@@ -70,7 +66,6 @@ export const YesNoWithChangeHandler = Template.bind({});
 YesNoWithChangeHandler.args = {
   fieldId: "yesNo",
   fieldName: "yesNo",
-  defaultValue: undefined,
   label: {
     text: "Haben Sie eine Steuernummer?",
   },
