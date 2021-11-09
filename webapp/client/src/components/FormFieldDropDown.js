@@ -58,7 +58,7 @@ function FormFieldDropDown({
             className="custom-select steuerlotse-select"
             input_req_err_msg="Bundesland auswählen"
             name={fieldId}
-            value={preselectedValue}
+            defaultValue={preselectedValue}
             required={required}
             autoFocus={autofocus || Boolean(errors.length)}
             onBlur={onChangeHandler}
@@ -95,7 +95,7 @@ FormFieldDropDown.defaultProps = {
   required: false,
   autofocus: false,
   details: FieldLabelForSeparatedFields.defaultProps.details,
-  onChangeHandler: () => {},
+  onChangeHandler: undefined,
 };
 
 export default FormFieldDropDown;
