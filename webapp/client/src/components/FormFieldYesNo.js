@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
@@ -85,6 +86,14 @@ function FormFieldYesNo({
     setSelectedValue(event.target.value);
   };
 
+  const switchYesClassNames = classNames("switch-yes", {
+    active: selectedValue === "yes",
+  });
+
+  const switchNoClassNames = classNames("switch-no", {
+    active: selectedValue === "no",
+  });
+
   return (
     <FormFieldScaffolding
       {...{
@@ -97,12 +106,7 @@ function FormFieldYesNo({
         <YesNo>
           <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
           <fieldset id={fieldId} name={fieldId}>
-            <label
-              htmlFor={yesFieldId}
-              className={`switch-yes ${
-                selectedValue === "yes" ? "active" : ""
-              }`}
-            >
+            <label htmlFor={yesFieldId} className={switchYesClassNames}>
               <input
                 type="radio"
                 id={yesFieldId}
@@ -115,10 +119,7 @@ function FormFieldYesNo({
               />
               Ja
             </label>
-            <label
-              htmlFor={noFieldId}
-              className={`switch-no ${selectedValue === "no" ? "active" : ""}`}
-            >
+            <label htmlFor={noFieldId} className={switchNoClassNames}>
               <input
                 type="radio"
                 id={noFieldId}
@@ -156,7 +157,7 @@ FormFieldYesNo.defaultProps = {
   required: false,
   autofocus: false,
   details: FieldLabelForSeparatedFields.defaultProps.details,
-  onChangeHandler: () => {},
+  onChangeHandler: undefined,
 };
 
 export default FormFieldYesNo;
