@@ -27,50 +27,28 @@ Default.args = {
 
 export const YesPreselected = Template.bind({});
 YesPreselected.args = {
-  fieldId: "yesNo",
-  fieldName: "yesNo",
-  label: {
-    text: "Haben Sie eine Steuernummer?",
-  },
-  errors: [],
+  ...Default.args,
   value: "yes",
 };
 
 export const NoPreselected = Template.bind({});
 NoPreselected.args = {
-  fieldId: "yesNo",
-  fieldName: "yesNo",
-  label: {
-    text: "Haben Sie eine Steuernummer?",
-  },
-  errors: [],
+  ...Default.args,
   value: "no",
 };
 
 export const WithDetails = Template.bind({});
 WithDetails.args = {
-  fieldId: "yesNo",
-  fieldName: "yesNo",
-  label: {
-    text: "Haben Sie eine Steuernummer?",
-  },
-  errors: [],
+  ...Default.args,
   details: {
     title: "Warum diese Frage?",
     text: "Wenn Sie keine Steuernummer haben, dann müssen Sie eine neue Steuernummer beantragen.",
   },
-  value: "no",
 };
 
 export const YesNoWithChangeHandler = Template.bind({});
 YesNoWithChangeHandler.args = {
-  fieldId: "yesNo",
-  fieldName: "yesNo",
-  label: {
-    text: "Haben Sie eine Steuernummer?",
-  },
-  errors: [],
-  value: "no",
+  ...Default.args,
   onChangeHandler: (event) => {
     if (event.target.value === "yes") {
       alert("Sie haben eine Steuernummer!");
