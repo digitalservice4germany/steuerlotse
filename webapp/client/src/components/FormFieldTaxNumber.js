@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
@@ -15,13 +16,25 @@ function FormFieldTaxNumber({
   values,
   required,
   autofocus,
-  label,
   details,
   errors,
   isSplit,
 }) {
-  const labelComponent = (
-    <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
+  const { t } = useTranslation();
+
+  const notSplitLabel = {
+    text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
+    exampleInput: t("lotseFlow.taxNumber.taxNumberInput.label.exampleInput"),
+  };
+  const notSplitLabelComponent = (
+    <FieldLabelForSeparatedFields {...{ notSplitLabel, fieldId, details }} />
+  );
+
+  const splitLabel = {
+    text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
+  };
+  const splitLabelComponent = (
+    <FieldLabelForSeparatedFields {...{ splitLabel, fieldId, details }} />
   );
 
   const extraFieldProps = {
@@ -31,6 +44,9 @@ function FormFieldTaxNumber({
   };
 
   const inputFieldLengths = isSplit ? [3, 4, 4] : [11];
+  const labelComponent = isSplit ? splitLabelComponent : notSplitLabelComponent;
+
+  console.log(labelComponent);
 
   return (
     <FormFieldScaffolding
@@ -69,7 +85,6 @@ FormFieldTaxNumber.propTypes = {
   autofocus: PropTypes.bool,
   required: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
-  label: FieldLabelForSeparatedFields.propTypes.label,
   details: FieldLabelForSeparatedFields.propTypes.details,
   isSplit: PropTypes.bool.isRequired,
 };
@@ -77,7 +92,6 @@ FormFieldTaxNumber.propTypes = {
 FormFieldTaxNumber.defaultProps = {
   autofocus: FormFieldSeparatedField.defaultProps.autofocus,
   required: FormFieldSeparatedField.defaultProps.required,
-  label: FieldLabelForSeparatedFields.defaultProps.label,
   details: FieldLabelForSeparatedFields.defaultProps.details,
 };
 
