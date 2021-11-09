@@ -46,10 +46,10 @@ PreSelection.args = {
   preselectedValue: "by",
 };
 
-export const DefaultDropDownValue = Template.bind({});
-DefaultDropDownValue.args = {
+export const DefaultDropDownOption = Template.bind({});
+DefaultDropDownOption.args = {
   ...Default.args,
-  defaultValue: "Bitte auswählen",
+  defaultOption: "Bitte auswählen",
 };
 
 export const WithChangeHandler = Template.bind({});

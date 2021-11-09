@@ -32,8 +32,8 @@ const DropDown = styled.div`
 function FormFieldDropDown({
   fieldName,
   fieldId,
-  values,
-  defaultValue,
+  options,
+  defaultOption,
   preselectedValue,
   required,
   autofocus,
@@ -64,9 +64,9 @@ function FormFieldDropDown({
             onBlur={onChangeHandler}
             onChange={onChangeHandler}
           >
-            {defaultValue && <option value="">{defaultValue}</option>}
-            {values.map((value) => (
-              <option value={value[0]}>{value[1]}</option>
+            {defaultOption && <option value="">{defaultOption}</option>}
+            {options.map((option) => (
+              <option value={option[0]}>{option[1]}</option>
             ))}
           </select>
         </DropDown>
@@ -78,8 +78,8 @@ function FormFieldDropDown({
 FormFieldDropDown.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
-  values: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
-  defaultValue: PropTypes.string,
+  options: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  defaultOption: PropTypes.string,
   preselectedValue: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   details: FieldLabelForSeparatedFields.propTypes.details,
@@ -90,7 +90,7 @@ FormFieldDropDown.propTypes = {
 };
 
 FormFieldDropDown.defaultProps = {
-  defaultValue: undefined,
+  defaultOption: undefined,
   preselectedValue: undefined,
   required: false,
   autofocus: false,
