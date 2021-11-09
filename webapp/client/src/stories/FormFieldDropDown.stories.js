@@ -52,6 +52,12 @@ DefaultDropDownOption.args = {
   defaultOption: "Bitte auswählen",
 };
 
+export const Required = Template.bind({});
+Required.args = {
+  ...DefaultDropDownOption.args,
+  required: true,
+};
+
 export const WithChangeHandler = Template.bind({});
 WithChangeHandler.args = {
   ...Default.args,
