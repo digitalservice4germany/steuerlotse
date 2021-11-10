@@ -56,7 +56,7 @@ class DeclarationIncomesProps(StepFormProps):
 
 
 class SelectStmindProps(StepFormProps):
-    prev_url: str
+    prev_url: str  # TODO place this at a more general place when implementing more StepFormProps for the LotseFlow
 
 
 class ConfirmationProps(StepFormProps):
