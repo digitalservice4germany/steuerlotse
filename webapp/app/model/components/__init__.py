@@ -11,7 +11,7 @@ class ComponentProps(BaseModel, extra=Extra.forbid):
 
 class StepHeaderProps(ComponentProps):
     title: str
-    intro: str
+    intro: Optional[str]
 
 
 class FormProps(ComponentProps):
@@ -47,5 +47,18 @@ class LoginProps(StepFormProps):
 class RegistrationProps(StepFormProps):
     login_link: str
     eligibility_link: str
+    terms_of_service_link: str
+    data_privacy_link: str
+
+
+class DeclarationIncomesProps(StepFormProps):
+    pass
+
+
+class SelectStmindProps(StepFormProps):
+    pass
+
+
+class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str

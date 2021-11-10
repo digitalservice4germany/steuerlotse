@@ -8,21 +8,21 @@ describe("Registration", () => {
     cy.get("button[type=submit]").contains("Registrieren").click();
 
     // Should have errors in the right places.
-    cy.get("[role=alert][for=dob]").contains("Dieses Feld wird benötigt");
+    cy.get("[role=alert][for=dob]").contains("Geben Sie Ihr Geburtsdatum ein");
     cy.get("[role=alert][for=idnr]").contains(
       "Geben Sie Ihre Steuer-Identifikationsnummer ein"
     );
     cy.get("[role=alert][for=registration_confirm_data_privacy]").contains(
-      "Sie müssen dieses Feld auswählen, um weiter zu machen"
+      "Bestätigen Sie, dass Sie mit den Datenschutzrichtlinien einverstanden sind, um fortfahren zu können"
     );
     cy.get("[role=alert][for=registration_confirm_terms_of_service]").contains(
-      "Sie müssen dieses Feld auswählen, um weiter zu machen"
+      "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen, um fortfahren zu können"
     );
     cy.get("[role=alert][for=registration_confirm_incomes]").contains(
-      "Sie müssen dieses Feld auswählen, um weiter zu machen"
+      "Bestätigen Sie, dass Sie die Voraussetzungen zur Nutzung des Steuerlotsen erfüllen, um fortfahren zu können."
     );
     cy.get("[role=alert][for=registration_confirm_e_data]").contains(
-      "Sie müssen dieses Feld auswählen, um weiter zu machen"
+      "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können"
     );
   });
 

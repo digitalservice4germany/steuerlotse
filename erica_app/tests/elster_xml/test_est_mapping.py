@@ -317,7 +317,6 @@ class TestEstMapping(unittest.TestCase):
 
     def test_steuerminderungen(self):
         form_data = {
-            'steuerminderung': True,
             'stmind_haushaltsnahe_entries': ["Gartenarbeiten"],
             'stmind_haushaltsnahe_summe': Decimal('500.00'),
         }
@@ -326,7 +325,6 @@ class TestEstMapping(unittest.TestCase):
         self.assertEqual('Gartenarbeiten', results['E0107206'])
 
         form_data = {
-            'steuerminderung': True,
             'stmind_handwerker_entries': ["Renovierung Badezimmer"],
             'stmind_handwerker_summe': Decimal('200.00'),
             'stmind_handwerker_lohn_etc_summe': Decimal('100.00'),

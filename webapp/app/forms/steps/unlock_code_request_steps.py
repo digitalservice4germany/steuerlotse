@@ -4,11 +4,13 @@ from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
 from wtforms.fields.core import BooleanField
 from wtforms.validators import InputRequired
+from wtforms import validators
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr
+from app.forms.validations.date_validations import ValidDateOfBirth
 from app.model.components import RegistrationProps
 from app.model.components.helpers import form_fields_dict
 
@@ -18,16 +20,19 @@ class UnlockCodeRequestInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
-        dob = SteuerlotseDateField(validators=[InputRequired()])
-        registration_confirm_data_privacy = ConfirmationField()
-        registration_confirm_terms_of_service = ConfirmationField()
-        registration_confirm_incomes = ConfirmationField()
-        registration_confirm_e_data = ConfirmationField()
+        dob = SteuerlotseDateField(validators=[InputRequired(message=_l('validation-date-of-birth-missing')), ValidDateOfBirth()], prevent_validation_error=True)
+        registration_confirm_data_privacy = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_data_privacy.required'))])
+        registration_confirm_terms_of_service = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_terms_of_service.required'))])
+        registration_confirm_incomes = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_eligibility.required'))])
+        registration_confirm_e_data = ConfirmationField(
+            validators=[InputRequired(message=_l('form.unlock-code-request.confirm_e_data.required'))])
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestInputStep, self).__init__(
             title=_('form.unlock-code-request.input-title'),
-            intro=_('form.unlock-code-request.input-intro'),
             form=self.Form,
             **kwargs)
 
@@ -35,7 +40,6 @@ class UnlockCodeRequestInputStep(FormStep):
         props_dict = RegistrationProps(
             step_header={
                 'title': render_info.step_title,
-                'intro': render_info.step_intro,
             },
             form={
                 'action': render_info.submit_url,
@@ -67,8 +71,8 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestSuccessStep, self).__init__(
-            title=_('form.unlock-code-request.success-title'),
-            intro=_('form.unlock-code-request.success-intro'), **kwargs)
+            title=_l('form.unlock-code-request.success-title'),
+            intro=_l('form.unlock-code-request.success-intro'), **kwargs)
 
     def render(self, data, render_info):
         return render_template('unlock_code/registration_success.html', render_info=render_info,
