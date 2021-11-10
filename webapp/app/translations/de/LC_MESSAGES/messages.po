@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-28 06:45+0200\n"
+"POT-Creation-Date: 2021-11-10 09:07+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -85,8 +85,9 @@ msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:240
-msgid "about.header-title"
-msgstr "Impressum - Der Steuerlotse für Rente und Pension"
+#, fuzzy
+msgid "imprint.header-title"
+msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:247
 msgid "barrierefreiheit.header-title"
@@ -102,7 +103,7 @@ msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:273
 msgid "about.header-title"
-msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
+msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:278
 msgid "about_digitalservice.header-title"
@@ -5301,3 +5302,4 @@ msgstr ""
 #, fuzzy
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
+
