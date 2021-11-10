@@ -46,8 +46,6 @@ function FormFieldTaxNumber({
   const inputFieldLengths = isSplit ? [3, 4, 4] : [11];
   const labelComponent = isSplit ? splitLabelComponent : notSplitLabelComponent;
 
-  console.log(labelComponent);
-
   return (
     <FormFieldScaffolding
       {...{
