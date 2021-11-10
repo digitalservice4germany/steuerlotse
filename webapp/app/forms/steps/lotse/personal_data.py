@@ -39,7 +39,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
                        'data-detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
                                   'text': _l('form.lotse.steuernummer_exists.detail.text')}},
-            validators=[InputRequired()], )
+            validators=[InputRequired()])
         bundesland = SteuerlotseSelectField(
             label=_l('form.lotse.field_bundesland'),
             choices=[

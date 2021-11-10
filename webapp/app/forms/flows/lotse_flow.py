@@ -14,7 +14,8 @@ from app.data_access.user_controller import store_pdf_and_transfer_ticket, check
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
 from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
-    ConfirmationField, EntriesField, EuroField, IntegerField
+    ConfirmationField, EntriesField, EuroField
+from wtforms.fields.core import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
