@@ -36,14 +36,7 @@ class PrometheusExporterWrapper:
 
 babel = Babel()
 csrf = CSRFProtect()
-
-# SQLAlchemy options
-# - pool_pre_ping: fix problems with stale connection we've been seeing (see also:
-#   https://docs.syseleven.de/syseleven-stack/de/reference/network/known-issues#idle-tcp-sessions-being-closed).
-# - hide_parameters: don't log any parameters with errors or when logging SQL statements (
-#   https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters)
-db = SQLAlchemy(engine_options={'pool_pre_ping': True, 'hide_parameters': True})
-
+db = SQLAlchemy()
 flask_static_digest = FlaskStaticDigest()
 
 limiter = Limiter(

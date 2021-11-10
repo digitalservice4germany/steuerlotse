@@ -19,9 +19,22 @@ class BaseConfig(object):
     SESSION_COOKIE_SAMESITE = 'Lax'
     SESSION_COOKIE_SECURE = True
     PERMANENT_SESSION_LIFETIME = 10800
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
     PLAUSIBLE_DOMAIN = None
     REACT_BUNDLE_NAME = 'runtime-main.js'
+
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        # pool_pre_ping and pool_recycle both attempt to fix problems stemming from this:
+        # https://docs.syseleven.de/syseleven-stack/de/reference/network/known-issues#idle-tcp-sessions-being-closed
+        'pool_pre_ping': True,
+        'pool_recycle': 45,
+        # ensure we get a connection error before gunicorn kills our process after 30s
+        'pool_timeout': 20,
+        # don't log any parameters with errors or when logging SQL statements
+        # https://docs.sqlalchemy.org/en/14/core/engines.html#sqlalchemy.create_engine.params.hide_parameters
+        'hide_parameters': True,
+    }
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     USE_LRU_CACHE = True
 
@@ -73,6 +86,7 @@ class DevelopmentConfig(BaseConfig):
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL') or "memory://"
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///dev.db"
+    SQLALCHEMY_ENGINE_OPTIONS = {}  # Some of our settings don't work with sqlite.
 
     ENCRYPTION_KEY = b'DZq_fTImMfOUsZr74Fy278GJ1Zva5j24lUJeZ-OWXxE='  # Generate a new random key for production
     # Find the according private key in tests/crypto/test_encryption
@@ -105,6 +119,7 @@ class TestingConfig(BaseConfig):
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_STORAGE_URL = "memory://"
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    SQLALCHEMY_ENGINE_OPTIONS = {}  # Some of our settings don't work with sqlite.
 
     ENCRYPTION_KEY = b'DZq_fTImMfOUsZr74Fy278GJ1Zva5j24lUJeZ-OWXxE='  # Generate a new random key for production
     RSA_ENCRYPT_PUBLIC_KEY = b'rsa encrypt public key'
