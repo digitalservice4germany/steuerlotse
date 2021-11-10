@@ -144,8 +144,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepAussergBela,
                 StepHaushaltsnaheHandwerker,
                 StepGemeinsamerHaushalt,
-                StepReligion,
                 StepSpenden,
+                StepReligion,
+
 
                 StepSummary,
                 StepConfirmation,

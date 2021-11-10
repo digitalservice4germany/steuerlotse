@@ -175,8 +175,8 @@ class TestLotseInit(unittest.TestCase):
             StepAussergBela,
             StepHaushaltsnaheHandwerker,
             StepGemeinsamerHaushalt,
-            StepReligion,
             StepSpenden,
+            StepReligion,
 
             StepSummary,
             StepConfirmation,

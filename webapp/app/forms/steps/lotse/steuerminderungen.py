@@ -69,7 +69,7 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
                                component='StmindSelectionPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
-                               form=self.form,
+                               form=self.render_info.form,
                                header_title=self.header_title)
 
 
