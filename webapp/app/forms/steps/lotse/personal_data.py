@@ -29,11 +29,12 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-
+    
     @classmethod
     def get_label(cls, data):
         return cls.label
     class InputForm(SteuerlotseBaseForm):
+        
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
@@ -73,7 +74,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         )
         steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
                                                      validators=[DecimalOnly(),
-                                                                 IntegerLength(min=10, max=11), ValidHessenTaxNumber()],
+                                                                 IntegerLength(max=11, message=_l('form.lotse.steuernummer.validation_too_large')),
+                                                                 ValidHessenTaxNumber()],
                                                      render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
                                                          'data-example-input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
@@ -91,15 +93,29 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                             county.get('tax_offices')]
             self.bufa_nr.choices = choices
 
-        def validate_bundesland(form, field):
+        def validate_bundesland(form, field):            
             if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
                 validators.InputRequired()(form, field)
             else:
                 validators.Optional()(form, field)
 
         def validate_steuernummer(form, field):
-            if form.steuernummer_exists.data == 'yes' and form.bundesland:
-                validators.InputRequired()(form, field)
+            if form.steuernummer_exists.data == 'yes':
+                bundesland_with_10_digits = {'BW', 'BE', 'HB', 'HH', 'NI', 'RP', 'SH'}
+                bundesland_with_11_digits = {'BY', 'BB', 'MV', 'NW', 'SL', 'SN', 'ST', 'TH'}
+                steuernummer_length = len(form.steuernummer.data);
+                
+                if form.bundesland:
+                    # Steuernummer is empty
+                    if not form.steuernummer.data or steuernummer_length == 0:                        
+                        raise validators.ValidationError(_l('form.lotse.steuernummer.input_required'))                
+                    elif form.bundesland.data in bundesland_with_10_digits and steuernummer_length < 10:
+                        raise validators.ValidationError(_l('form.lotse.steuernummer.input_required_with_10_digits'))                  
+                    elif form.bundesland.data in bundesland_with_11_digits and steuernummer_length < 11:
+                        raise validators.ValidationError(_l('form.lotse.steuernummer.input_required_with_11_digits'))            
+                    elif form.bundesland.data == 'HE' and steuernummer_length == 10:
+                        raise validators.ValidationError(_l('form.lotse.steuernummer.input_required_with_hessen_11_digits'))
+                        
             else:
                 validators.Optional()(form, field)
 
