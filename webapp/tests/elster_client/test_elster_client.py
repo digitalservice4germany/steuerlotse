@@ -52,7 +52,7 @@ class TestSendEst(unittest.TestCase):
         }
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
             actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
@@ -67,7 +67,7 @@ class TestSendEst(unittest.TestCase):
         }
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
             actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=False)
@@ -76,7 +76,7 @@ class TestSendEst(unittest.TestCase):
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry') as audit_log_fun:
             send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=False)
@@ -86,7 +86,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 send_est_with_elster(self.invalid_form_data, 'IP', include_elster_responses=False)
                 self.fail("No validation error raised")
         except ElsterGlobalValidationError as e:
@@ -97,7 +97,7 @@ class TestSendEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP', include_elster_responses=False)
         finally:
             MockErica.eric_transfer_error_occurred = False
@@ -107,7 +107,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
         except ElsterTransferError as e:
             self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
@@ -121,7 +121,7 @@ class TestSendEst(unittest.TestCase):
         MockErica.eric_process_not_successful_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterProcessNotSuccessful, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -131,7 +131,7 @@ class TestSendEst(unittest.TestCase):
         data = copy.deepcopy(self.valid_form_data)
         data.pop("familienstand")
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'):
             self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
                               include_elster_responses=False)
@@ -141,7 +141,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterInvalidBufaNumberError, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -152,7 +152,7 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterInvalidTaxNumberError, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -186,7 +186,7 @@ class TestValidateEst(unittest.TestCase):
         }
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             actual_returned_data = validate_est_with_elster(self.valid_form_data, include_elster_responses=True)
 
         self.assertEqual(expected_data, actual_returned_data)
@@ -199,7 +199,7 @@ class TestValidateEst(unittest.TestCase):
         }
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             actual_returned_data = validate_est_with_elster(self.valid_form_data, include_elster_responses=False)
 
         self.assertEqual(expected_data, actual_returned_data)
@@ -207,7 +207,7 @@ class TestValidateEst(unittest.TestCase):
     def test_if_validation_error_occurred_raise_error(self):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 validate_est_with_elster(self.invalid_form_data, include_elster_responses=False)
                 self.fail("No validation error occurred.")
         except ElsterGlobalValidationError as e:
@@ -218,7 +218,7 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterTransferError, validate_est_with_elster, self.valid_form_data,
                                   include_elster_responses=False)
         finally:
@@ -228,7 +228,7 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 validate_est_with_elster(self.valid_form_data, include_elster_responses=True)
         except ElsterTransferError as e:
             self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
@@ -242,7 +242,7 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_process_not_successful_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterProcessNotSuccessful, validate_est_with_elster, self.valid_form_data,
                                   include_elster_responses=False)
         finally:
@@ -558,7 +558,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
     def test_set_form_data_dict_results_in_dict_with_est_data_field_and_meta_data_field(self):
         form_data = LotseMultiStepFlow(None)._DEBUG_DATA[1]
 
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(form_data)
 
         self.assertIn('est_data', result)
@@ -566,7 +566,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
 
     def test_set_form_data_dict_results_in_est_data_dict_with_same_keys(self):
         form_data = LotseMultiStepFlow(None)._DEBUG_DATA[1]
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(form_data)
 
         for key in form_data.keys():
@@ -576,7 +576,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         bool_strs = {}
         for key in _BOOL_KEYS:
             bool_strs[key] = 'yes'
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(bool_strs)
 
         for key in _BOOL_KEYS:
@@ -587,7 +587,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         bool_strs = {}
         for key in _BOOL_KEYS:
             bool_strs[key] = 'no'
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(bool_strs)
 
         for key in _BOOL_KEYS:
@@ -598,7 +598,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         bool_strs = {}
         for key in _BOOL_KEYS:
             bool_strs[key] = None
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(bool_strs)
 
         for key in _BOOL_KEYS:
@@ -609,7 +609,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         floats = {}
         for key in _DECIMAL_KEYS:
             floats[key] = 1.2
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(floats)
 
         for key in _DECIMAL_KEYS:
@@ -620,7 +620,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         decimals = {}
         for key in _DECIMAL_KEYS:
             decimals[key] = Decimal(1.2)
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(decimals)
 
         for key in _DECIMAL_KEYS:
@@ -631,7 +631,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         floats = {}
         for key in _DECIMAL_KEYS:
             floats[key] = '1.2'
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(floats)
 
         for key in _DECIMAL_KEYS:
@@ -642,7 +642,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         decimals = {}
         for key in _DECIMAL_KEYS:
             decimals[key] = None
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(decimals)
 
         for key in _DECIMAL_KEYS:
@@ -653,14 +653,14 @@ class TestGenerateEStRequestData(unittest.TestCase):
         for key in _DECIMAL_KEYS:
             decimals[key] = "This str has no master! This str is a free elf."
 
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             self.assertRaises(DecimalException, _generate_est_request_data, decimals)
 
     def test_correct_date_str_for_date_keys_results_in_date(self):
         dates = {}
         for key in _DATE_KEYS:
             dates[key] = '1963-08-28'
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(dates)
 
         for key in _DATE_KEYS:
@@ -671,7 +671,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         dates = {}
         for key in _DATE_KEYS:
             dates[key] = '1963-1963-28'
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             self.assertRaises(ValueError, _generate_est_request_data, dates)
 
     def test_none_for_date_keys_raises_value_error(self):
@@ -679,7 +679,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
         for key in _DATE_KEYS:
             dates[key] = None
 
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(dates)
 
         for key in _DATE_KEYS:
@@ -688,38 +688,58 @@ class TestGenerateEStRequestData(unittest.TestCase):
     def test_not_known_key_results_in_unchanged_value(self):
         unknown_keys = {'first_unknown_key': object(), 'second_unknown_key': 42}
 
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(unknown_keys)
 
         self.assertEqual(unknown_keys, result['est_data'])
 
     def test_set_year_results_in_correct_year_in_result(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data({}, 2010)
 
         self.assertEqual(result['meta_data']['year'], 2010)
         self.assertEqual(result['meta_data']['is_digitally_signed'], True)
 
     def test_unset_year_results_in_2020_year_value(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data({})
 
         self.assertEqual(result['meta_data']['year'], 2020)
 
     def test_activated_user_results_in_correct_attribute_set_true(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data({})
 
         self.assertEqual(True, result['meta_data']['is_digitally_signed'])
 
     def test_inactive_user_results_in_correct_attribute_set_false(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=True)):
+            result = _generate_est_request_data({})
+
+        self.assertEqual(False, result['meta_data']['is_digitally_signed'])
+        
+    def test_not_authenticated_user_results_in_correct_attribute_set_false(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=False)):
             result = _generate_est_request_data({})
 
         self.assertEqual(False, result['meta_data']['is_digitally_signed'])
 
     def test_if_inactive_user_logout_user_is_called(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False)), \
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=False)), \
+                patch('app.elster_client.elster_client.logout_user') as logout_fun:
+            _generate_est_request_data({})
+
+            logout_fun.assert_called_once()
+            
+    def test_if_not_authenticated_but_active_user_logout_user_is_called(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=False)), \
+                patch('app.elster_client.elster_client.logout_user') as logout_fun:
+            _generate_est_request_data({})
+
+            logout_fun.assert_called_once()
+            
+    def test_if_authenticated_but_inactive_user_logout_user_is_called(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=True)), \
                 patch('app.elster_client.elster_client.logout_user') as logout_fun:
             _generate_est_request_data({})
 
@@ -957,7 +977,7 @@ class TestLogAddressData(unittest.TestCase):
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client.send_to_erica', MagicMock(return_value=self.success_response)), \
                 patch('app.elster_client.elster_client.create_audit_log_address_entry') as audit_log_fun:
             _log_address_data('IP', '04452397687', {'include_elster_responses': False})
@@ -965,7 +985,7 @@ class TestLogAddressData(unittest.TestCase):
 
     def test_if_unsuccessful_case_then_raise_transfer_error_and_do_not_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client.send_to_erica', MagicMock(return_value=self.error_response)), \
                 patch('app.elster_client.elster_client.create_audit_log_address_entry') as audit_log_fun:
             self.assertRaises(ElsterTransferError, _log_address_data, 'IP', '04452397687',
