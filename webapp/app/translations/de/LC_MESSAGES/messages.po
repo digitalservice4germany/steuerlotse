@@ -85,7 +85,7 @@ msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:240
-msgid "imprint.header-title"
+msgid "about.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:247
@@ -5299,4 +5299,5 @@ msgstr ""
 
 #: app/templates/unlock_code/registration_success.html:21
 #, fuzzy
-msgid "register.success.preparation.button"msgstr "Vorbereitungshilfe herunterladen"
+msgid "register.success.preparation.button"
+msgstr "Vorbereitungshilfe herunterladen"
