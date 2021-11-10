@@ -1,40 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { fireEvent } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 import FormFieldYesNo from "./FormFieldYesNo";
 
 describe("FormFieldYesNo", () => {
   let props;
-
-  beforeEach(() => {
-    props = {
-      fieldName: "fooName",
-      fieldId: "fooId",
-      label: {
-        text: "foo",
-      },
-      errors: [],
-    };
-  });
-
-  it("should activate the Yes field when Ja has been clicked", () => {
-    render(<FormFieldYesNo {...props} />);
-    fireEvent.click(screen.getByText("Ja"));
-    expect(screen.getByText("Ja")).toHaveClass("active");
-    expect(screen.getByText("Nein")).not.toHaveClass("active");
-  });
-
-  it("should activate the No field when Nein has been clicked", () => {
-    render(<FormFieldYesNo {...props} />);
-    fireEvent.click(screen.getByText("Nein"));
-    expect(screen.getByText("Nein")).toHaveClass("active");
-    expect(screen.getByText("Ja")).not.toHaveClass("active");
-  });
-});
-
-describe("FormFieldYesNo with an onChangeHandler", () => {
-  let props;
-
   const onChangeHandler = jest.fn();
 
   beforeEach(() => {
@@ -47,17 +18,102 @@ describe("FormFieldYesNo with an onChangeHandler", () => {
       errors: [],
       onChangeHandler: onChangeHandler,
     };
+    render(<FormFieldYesNo {...props} />);
   });
 
-  it("should call the change handler when Ja has been clicked", () => {
-    render(<FormFieldYesNo {...props} />);
-    fireEvent.click(screen.getByText("Ja"));
-    expect(onChangeHandler).toHaveBeenCalled();
+  describe("When Ja clicked", () => {
+    beforeEach(() => {
+      fireEvent.click(screen.getByText("Ja"));
+    });
+
+    it("Activate Ja field", () => {
+      expect(screen.getByText("Ja")).toHaveClass("active");
+    });
+
+    it("Check Ja Field", () => {
+      expect(screen.getByLabelText("Ja")).toBeChecked();
+    });
+
+    it("Do not activate Nein field", () => {
+      expect(screen.getByText("Nein")).not.toHaveClass("active");
+    });
+
+    it("Call the change handler with yes", () => {
+      expect(onChangeHandler).toHaveBeenCalled();
+
+      const changeEvent = onChangeHandler.mock.calls[0][0];
+      expect(changeEvent.target.value).toEqual("yes");
+    });
   });
 
-  it("should call the change handler when Nein has been clicked", () => {
-    render(<FormFieldYesNo {...props} />);
-    fireEvent.click(screen.getByText("Nein"));
-    expect(onChangeHandler).toHaveBeenCalled();
+  describe("When Nein clicked", () => {
+    beforeEach(() => {
+      fireEvent.click(screen.getByText("Nein"));
+    });
+
+    it("Activate Nein field", () => {
+      expect(screen.getByText("Nein")).toHaveClass("active");
+    });
+
+    it("Check Nein Field", () => {
+      expect(screen.getByLabelText("Nein")).toBeChecked();
+    });
+
+    it("Do not activate Ja field", () => {
+      expect(screen.getByText("Ja")).not.toHaveClass("active");
+    });
+
+    it("Call the change handler with no", () => {
+      expect(onChangeHandler).toHaveBeenCalled();
+
+      const changeEvent = onChangeHandler.mock.calls[0][0];
+      expect(changeEvent.target.value).toEqual("no");
+    });
+  });
+
+  describe("When pressing tab", () => {
+    beforeEach(() => {
+      userEvent.tab();
+    });
+
+    it("set focus on yes field", () => {
+      expect(screen.getByLabelText("Ja")).toHaveFocus();
+    });
+
+    describe("When pressing space", () => {
+      beforeEach(() => {
+        userEvent.keyboard(" ");
+      });
+
+      it("Focus Ja Field", () => {
+        expect(screen.getByLabelText("Ja")).toHaveFocus();
+      });
+
+      it("Activate Ja Field", () => {
+        expect(screen.getByText("Ja")).toHaveClass("active");
+      });
+
+      it("Check Ja Field", () => {
+        expect(screen.getByLabelText("Ja")).toBeChecked();
+      });
+    });
+
+    describe("When pressing right arrow key", () => {
+      beforeEach(() => {
+        userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
+      });
+
+      it("Focus Nein Field", () => {
+        expect(screen.getByLabelText("Nein")).toHaveFocus();
+      });
+
+      it("Activate Nein Field", () => {
+        expect(screen.getByText("Nein")).toHaveClass("active");
+      });
+
+      it("Check Nein Field", () => {
+        expect(screen.getByLabelText("Nein")).toBeChecked();
+      });
+    });
   });
 });
