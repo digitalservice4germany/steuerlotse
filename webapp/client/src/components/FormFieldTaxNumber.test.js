@@ -52,6 +52,41 @@ describe("FormFieldTaxNumber is split", () => {
       );
     });
   });
+
+  describe("When pressing tab", () => {
+    beforeEach(() => {
+      userEvent.tab();
+    });
+
+    it("Set focus on first input field", () => {
+      expect(screen.getAllByRole("textbox")[0]).toHaveFocus();
+    });
+
+    describe("When typing", () => {
+      const input_characters = "123456789012";
+
+      beforeEach(() => {
+        userEvent.keyboard(input_characters);
+      });
+
+      it("Enter letters into first input field", () => {
+        expect(screen.getAllByRole("textbox")[0]).toHaveValue(
+          input_characters.slice(0, 3)
+        );
+      });
+    });
+
+    it("Set focus on second input field after second tab", () => {
+      userEvent.tab();
+      expect(screen.getAllByRole("textbox")[1]).toHaveFocus();
+    });
+
+    it("Set focus on third input field after third tab", () => {
+      userEvent.tab();
+      userEvent.tab();
+      expect(screen.getAllByRole("textbox")[2]).toHaveFocus();
+    });
+  });
 });
 
 describe("FormFieldTaxNumber is not split", () => {
@@ -86,6 +121,30 @@ describe("FormFieldTaxNumber is not split", () => {
       expect(screen.getByRole("textbox")).toHaveValue(
         input_characters.slice(0, 11)
       );
+    });
+  });
+
+  describe("When pressing tab", () => {
+    beforeEach(() => {
+      userEvent.tab();
+    });
+
+    it("Set focus on input field", () => {
+      expect(screen.getByRole("textbox")).toHaveFocus();
+    });
+
+    describe("When typing", () => {
+      const input_characters = "123456789012";
+
+      beforeEach(() => {
+        userEvent.keyboard(input_characters);
+      });
+
+      it("Enter letters into input field", () => {
+        expect(screen.getByRole("textbox")).toHaveValue(
+          input_characters.slice(0, 11)
+        );
+      });
     });
   });
 });
