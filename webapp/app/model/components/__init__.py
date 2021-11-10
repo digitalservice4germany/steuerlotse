@@ -56,7 +56,7 @@ class DeclarationIncomesProps(StepFormProps):
 
 
 class SelectStmindProps(StepFormProps):
-    pass
+    prev_url: str
 
 
 class ConfirmationProps(StepFormProps):
