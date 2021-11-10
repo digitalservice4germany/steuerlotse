@@ -215,7 +215,7 @@ def _generate_est_request_data(form_data, year=2020):
     digitally_signed = current_user.is_authenticated and current_user.is_active
 
     if not digitally_signed:
-        logger.warn('_generate_est_request_data: User is not authenticated')  
+        logger.warn('Elster_Client: User is not authenticated or active.')  
         # no non-active user should come until here, but they should certainly not be able to send a tax        
         logout_user()
         
