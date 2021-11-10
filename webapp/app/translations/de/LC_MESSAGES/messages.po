@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-10 09:13+0100\n"
+"POT-Creation-Date: 2021-11-10 09:14+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -5376,7 +5376,6 @@ msgstr ""
 " brauchen, und erklärt, wie Sie nach Erhalt des Briefes fortfahren."
 
 #: app/templates/unlock_code/registration_success.html:21
-#, fuzzy
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
 
