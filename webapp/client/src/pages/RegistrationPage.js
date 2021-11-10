@@ -153,7 +153,7 @@ export default function RegistrationPage({
           errors={fields.registrationConfirmIncomes.errors}
         />
         <SubHeading className="form-sub-heading-smaller">
-          {t("unlockCodeRequest.dataPrivacyAndAgb.title")}
+          {t("unlockCodeRequest.eData.title")}
         </SubHeading>
         <Details
           title={t("unlockCodeRequest.eData.helpTitle")}
