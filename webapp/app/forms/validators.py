@@ -1,5 +1,6 @@
 from collections import Counter
 
+
 from schwifty import IBAN
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
@@ -122,7 +123,6 @@ class ValidUnlockCodeCharacterSet:
         for char in input_str:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))
-
 
 class ValidHessenTaxNumber:
 
