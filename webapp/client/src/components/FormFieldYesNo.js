@@ -113,7 +113,7 @@ function FormFieldYesNo({
                 name={fieldId}
                 required={required}
                 value="yes"
-                active={selectedValue === "yes"}
+                defaultChecked={selectedValue === "yes"}
                 onClick={toggleYesNoButton}
                 onChange={onChangeHandler}
               />
@@ -127,7 +127,7 @@ function FormFieldYesNo({
                 required={required}
                 autoFocus={autofocus || Boolean(errors.length)}
                 value="no"
-                active={selectedValue === "no"}
+                defaultChecked={selectedValue === "no"}
                 onClick={toggleYesNoButton}
                 onChange={onChangeHandler}
               />
