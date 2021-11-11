@@ -5,15 +5,6 @@ import FieldLabel from "./FieldLabel";
 import selectIcon from "../assets/icons/select_icon.svg";
 
 const DropDown = styled.div`
-  & label {
-    display: block;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    background: white;
-    position: absolute;
-  }
-
   & .steuerlotse-select {
     border: 2px solid var(--border-color);
     border-radius: 0;
