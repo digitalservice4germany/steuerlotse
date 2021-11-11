@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { fireEvent } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import FormFieldDropDown from "./FormFieldDropDown";
 
