@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
-import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
+import FieldLabel from "./FieldLabel";
 import selectIcon from "../assets/icons/select_icon.svg";
 
 const DropDown = styled.div`
@@ -52,7 +52,7 @@ function FormFieldDropDown({
       hideLabel
       render={() => (
         <DropDown>
-          <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
+          <FieldLabel {...{ label, fieldId, details }} />
           <select
             id={fieldId}
             className="custom-select steuerlotse-select"
@@ -82,7 +82,7 @@ FormFieldDropDown.propTypes = {
   defaultOption: PropTypes.string,
   preselectedValue: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-  details: FieldLabelForSeparatedFields.propTypes.details,
+  details: FieldLabel.propTypes.details,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
@@ -94,7 +94,7 @@ FormFieldDropDown.defaultProps = {
   preselectedValue: undefined,
   required: false,
   autofocus: false,
-  details: FieldLabelForSeparatedFields.defaultProps.details,
+  details: FieldLabel.defaultProps.details,
   onChangeHandler: undefined,
 };
 
