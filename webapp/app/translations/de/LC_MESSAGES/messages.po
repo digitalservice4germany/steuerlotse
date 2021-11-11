@@ -86,7 +86,7 @@ msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:237
 msgid "imprint.header-title"
-msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
+msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:244
 msgid "barrierefreiheit.header-title"
