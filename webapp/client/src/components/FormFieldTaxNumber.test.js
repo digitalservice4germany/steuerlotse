@@ -6,6 +6,7 @@ import FormFieldTaxNumber from "./FormFieldTaxNumber";
 
 describe("FormFieldTaxNumber is split", () => {
   let props;
+  const exampleInput = "exampleInput";
 
   beforeEach(() => {
     props = {
@@ -13,6 +14,7 @@ describe("FormFieldTaxNumber is split", () => {
       fieldId: "fooId",
       label: {
         text: "foo",
+        exampleInput: exampleInput,
       },
       errors: [],
       values: [],
@@ -23,6 +25,10 @@ describe("FormFieldTaxNumber is split", () => {
 
   it("Show three input fields", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(3);
+  });
+
+  it("Do not show example input", () => {
+    expect(screen.queryByText("exampleInput")).toBeNull();
   });
 
   describe("Type 12 characters into each input", () => {
@@ -91,6 +97,7 @@ describe("FormFieldTaxNumber is split", () => {
 
 describe("FormFieldTaxNumber is not split", () => {
   let props;
+  const exampleInput = "exampleInput";
 
   beforeEach(() => {
     props = {
@@ -98,6 +105,7 @@ describe("FormFieldTaxNumber is not split", () => {
       fieldId: "fooId",
       label: {
         text: "foo",
+        exampleInput: exampleInput,
       },
       errors: [],
       values: [],
@@ -108,6 +116,10 @@ describe("FormFieldTaxNumber is not split", () => {
 
   it("Show only one input field", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(1);
+  });
+
+  it("show example input", () => {
+    expect(screen.queryByText("exampleInput")).toBeNull();
   });
 
   describe("Type 12 characters into input", () => {
