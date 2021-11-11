@@ -82,7 +82,7 @@ msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:230
 msgid "contact.header-title"
-msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
+msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:237
 msgid "imprint.header-title"
@@ -102,7 +102,7 @@ msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:270
 msgid "about.header-title"
-msgstr "Impressum - Der Steuerlotse für Rente und Pension"
+msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:275
 msgid "about_digitalservice.header-title"
