@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import TaxNumberPage from "./pages/TaxNumberPage";
 import DeclarationIncomesPage from "./pages/DeclarationIncomesPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
@@ -12,6 +13,7 @@ import ConfirmationPage from "./pages/ConfirmationPage";
 const allowedComponents = {
   LoginPage,
   RegistrationPage,
+  TaxNumberPage,
   DeclarationIncomesPage,
   StmindSelectionPage,
   ConfirmationPage,

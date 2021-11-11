@@ -97,11 +97,34 @@ const translations = {
   },
   lotseFlow: {
     taxNumber: {
+      taxNumberExists: {
+        labelText_one: "Haben Sie bereits eine Steuernummer?",
+        labelText_other: "Haben Sie bereits eine gemeinsame Steuernummer?",
+        help: {
+          title: "Wo finde ich diese Nummer?",
+          text: "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch keine Steuererklärung abgegeben haben, können Sie eine neue Steuernummer beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-Identifikationsnummer zwei verschiedene Nummern sind.",
+        },
+      },
+      bundesland: {
+        labelText: "Wählen Sie Ihr Bundesland",
+      },
+      taxOffices: {
+        labelText: "Wählen Sie Ihr Finanzamt",
+      },
       taxNumberInput: {
         label: {
           labelText: "Steuernummer",
           exampleInput: "Muss 10 oder 11 Ziffern haben",
         },
+      },
+      requestNewTaxNumber: {
+        labelText_one:
+          "Hiermit bestätige ich, dass ich noch keine Steuernummer bei meinem Finanzamt habe und eine neue Steuernummer beantragen möchten.",
+        labelText_other:
+          "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem Finanzamt haben und eine neue Steuernummer beantragen möchten.",
+        headline: "Neue Steuernummer beantragen",
+        intro:
+          "Mit der Abgabe der Steuererklärung wird eine neue Steuernummer beim zuständigen Finanzamt beantragt. Die neue Steuernummer wird Ihnen dann mit dem Steuerbescheid mitgeteilt.",
       },
     },
   },

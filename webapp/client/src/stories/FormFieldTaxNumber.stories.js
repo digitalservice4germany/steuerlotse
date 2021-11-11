@@ -40,3 +40,19 @@ SplitDefaultValue.args = {
   values: ["123", "4567", "8901"],
   isSplit: true,
 };
+
+export const SplitWithError = Template.bind({});
+SplitWithError.args = {
+  ...Default.args,
+  values: ["123", "4567", "8901"],
+  errors: ["Sie müssen eine gültige Steuernummer angeben"],
+  isSplit: true,
+};
+
+export const NotSplitWithError = Template.bind({});
+NotSplitWithError.args = {
+  ...Default.args,
+  values: ["123", "4567", "8901"],
+  errors: ["Sie müssen eine gültige Steuernummer angeben"],
+  isSplit: false,
+};
