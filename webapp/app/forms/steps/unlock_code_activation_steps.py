@@ -17,7 +17,7 @@ class UnlockCodeActivationInputStep(FormStep):
 
     class Form(SteuerlotseBaseForm):
         idnr = IdNrField(validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
-        unlock_code = UnlockCodeField(validators=[InputRequired(), ValidUnlockCode()])
+        unlock_code = UnlockCodeField(validators=[InputRequired(message=_l('validate.unlock-code-required')), ValidUnlockCode()])
 
     def __init__(self, **kwargs):
         super(UnlockCodeActivationInputStep, self).__init__(

@@ -59,16 +59,17 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
             form={
                 'action': self.render_info.submit_url,
                 'csrf_token': generate_csrf(),
-                'show_overview_button': bool(self.render_info.overview_url),
+                'show_overview_button': bool(self.render_info.overview_url)
             },
             fields=form_fields_dict(self.render_info.form),
+            prev_url = self.render_info.prev_url
         ).camelized_dict()
 
         return render_template('react_component.html',
                                component='StmindSelectionPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
-                               form=self.form,
+                               form=self.render_info.form,
                                header_title=self.header_title)
 
 

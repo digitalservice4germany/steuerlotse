@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-10 09:14+0100\n"
+"POT-Creation-Date: 2021-11-10 15:11+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -223,7 +223,9 @@ msgstr ""
 
 #: app/forms/validators.py:106
 msgid "validate.unlock-code-length"
-msgstr "Ein gültiger Freischaltcode hat genau 12 Zeichen."
+msgstr ""
+"Ihr Freischaltcode ist nicht vollständig. Der Freischaltcode muss aus 3 x"
+" 4 Zeichen bestehen."
 
 #: app/forms/validators.py:109
 msgid "validate.invalid-unlock-code"
@@ -265,16 +267,16 @@ msgstr "Sie haben sich erfolgreich abgemeldet."
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:184
+#: app/forms/flows/lotse_flow.py:185
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:319
+#: app/forms/flows/lotse_flow.py:320
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:371
+#: app/forms/flows/lotse_flow.py:372
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -1072,6 +1074,10 @@ msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 msgid "validate.missing-idnr"
 msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
 
+#: app/forms/steps/unlock_code_activation_steps.py:20
+msgid "validate.unlock-code-required"
+msgstr "Geben Sie Ihren Freischaltcode ein. "
+
 #: app/forms/steps/unlock_code_activation_steps.py:24
 msgid "form.unlock-code-activation.input-title"
 msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
@@ -1259,7 +1265,7 @@ msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:38
-#: app/forms/steps/lotse/personal_data.py:139
+#: app/forms/steps/lotse/personal_data.py:138
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
@@ -1544,7 +1550,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/steuerminderungen.py:189
 msgid "form.lotse.ausserg_bela-title"
-msgstr "Außergewöhnliche Belastungen"
+msgstr "Krankheitskosten und weitere außergewöhnliche Belastungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:190
 msgid "form.lotse.ausserg_bela-intro"
@@ -1563,7 +1569,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/steuerminderungen.py:195
 msgid "form.lotse.step_ausserg_bela.label"
-msgstr "Außergewöhnliche Belastungen"
+msgstr "Krankheitskosten und weitere außergewöhnliche Belastungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:201
 msgid "form.lotse.field_krankheitskosten_summe"
@@ -1755,7 +1761,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/steuerminderungen.py:268
 msgid "form.lotse.step_haushaltsnahe_handwerker.label"
-msgstr " Handwerker, Tätigkeiten und Dienstleistungen im Haushalt"
+msgstr "Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:274
 msgid "form.lotse.field_haushaltsnahe_entries"

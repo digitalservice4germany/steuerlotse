@@ -12,12 +12,17 @@ import spendenIcon from "../assets/icons/spenden_icon.svg";
 import religionIcon from "../assets/icons/religion_icon.svg";
 import { checkboxPropType } from "../lib/propTypes";
 
-export default function StmindSelectionPage({ stepHeader, form, fields }) {
+export default function StmindSelectionPage({
+  stepHeader,
+  form,
+  fields,
+  prevUrl,
+}) {
   const { t } = useTranslation();
 
   return (
     <>
-      <StepHeaderButtons />
+      <StepHeaderButtons url={prevUrl} />
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
         <SelectableCard
@@ -90,4 +95,5 @@ StmindSelectionPage.propTypes = {
     stmindSelectSpenden: checkboxPropType,
     stmindSelectReligion: checkboxPropType,
   }).isRequired,
+  prevUrl: PropTypes.string.isRequired,
 };
