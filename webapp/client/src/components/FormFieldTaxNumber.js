@@ -26,16 +26,22 @@ function FormFieldTaxNumber({
     text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
     exampleInput: t("lotseFlow.taxNumber.taxNumberInput.label.exampleInput"),
   };
-  const notSplitLabelComponent = (
-    <FieldLabelForSeparatedFields {...{ notSplitLabel, fieldId, details }} />
-  );
 
   const splitLabel = {
     text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
   };
-  const splitLabelComponent = (
-    <FieldLabelForSeparatedFields {...{ splitLabel, fieldId, details }} />
-  );
+
+  const fieldLabelProps = {
+    label: notSplitLabel,
+    fieldId,
+    details,
+  };
+
+  if (isSplit) {
+    fieldLabelProps.label = splitLabel;
+  }
+
+  const labelComponent = <FieldLabelForSeparatedFields {...fieldLabelProps} />;
 
   const extraFieldProps = {
     ...numericInputMode,
@@ -44,7 +50,6 @@ function FormFieldTaxNumber({
   };
 
   const inputFieldLengths = isSplit ? [3, 4, 4] : [11];
-  const labelComponent = isSplit ? splitLabelComponent : notSplitLabelComponent;
 
   return (
     <FormFieldScaffolding

@@ -21,6 +21,7 @@ Default.args = {
   fieldName: "taxNumber",
   label: {
     text: "Steuernummer",
+    exampleInput: "123 3455 3456",
   },
   errors: [],
   values: [],
