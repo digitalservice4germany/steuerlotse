@@ -340,7 +340,7 @@ class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
     name = "user_b_has_elster_account"
     next_step_data_models = [
         (UserBNoElsterAccountEligibilityData, 'pension'),
-        (UserBElsterAccountEligibilityData, 'elster_registration_method_failure')
+        (UserBElsterAccountEligibilityData, 'pension')
     ]
     title = _l('form.eligibility.user_b_has_elster_account-title')
 
@@ -410,7 +410,7 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
     name = "single_elster_account"
     next_step_data_models = [
         (SingleUserNoElsterAccountEligibilityData, 'pension'),
-        (SingleUserElsterAccountEligibilityData, 'elster_registration_method_failure')
+        (SingleUserElsterAccountEligibilityData, 'pension')
     ]
     title = _l('form.eligibility.user_a_has_elster_account-title')
 
@@ -424,17 +424,6 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
                      ('no', _l('form.eligibility.user_a_has_elster_account.no')),
                      ],
             validators=[InputRequired()])
-
-
-class ElsterRegistrationMethodEligibilityFailureStep(EligibilityFailureDisplaySteuerlotseStep):
-    name = 'elster_registration_method_failure'
-    eligibility_error = _l('form.eligibility.elster_registration_method_failure-error')
-    input_step_name = 'elster_registration_method'
-
-class ElsterAbrufcodeEligibilityFailureStep(EligibilityFailureDisplaySteuerlotseStep):
-    name = 'elster_abrufcode_failure'
-    eligibility_error = _l('form.eligibility.elster_abrufcode_failure-error')
-    input_step_name = 'elster_abrufcode'
 
 class PensionEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'pension_failure'
