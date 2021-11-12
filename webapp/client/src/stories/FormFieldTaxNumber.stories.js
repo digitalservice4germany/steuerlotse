@@ -27,3 +27,16 @@ Default.args = {
   values: [],
   isSplit: false,
 };
+
+export const NotSplitDefaultValue = Template.bind({});
+NotSplitDefaultValue.args = {
+  ...Default.args,
+  values: ["12345678901"],
+};
+
+export const SplitDefaultValue = Template.bind({});
+SplitDefaultValue.args = {
+  ...Default.args,
+  values: ["123", "4567", "8901"],
+  isSplit: true,
+};

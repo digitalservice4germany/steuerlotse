@@ -50,6 +50,7 @@ function FormFieldTaxNumber({
   };
 
   const inputFieldLengths = isSplit ? [3, 4, 4] : [11];
+  const concatValues = isSplit ? values : [values.join()];
 
   return (
     <FormFieldScaffolding
@@ -70,7 +71,7 @@ function FormFieldTaxNumber({
             details,
             extraFieldProps,
             fieldId,
-            values,
+            values: concatValues,
             required,
           }}
           autoFocus={autofocus || Boolean(errors.length)}
