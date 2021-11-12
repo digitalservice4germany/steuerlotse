@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
-import FieldLabel from "./FieldLabel";
+import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
 
 const YesNo = styled.div`
   & .switch-yes,
@@ -104,7 +104,7 @@ function FormFieldYesNo({
       hideLabel
       render={() => (
         <YesNo>
-          <FieldLabel {...{ label, fieldId, details }} />
+          <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
           <fieldset id={fieldId} name={fieldId}>
             <label htmlFor={yesFieldId} className={switchYesClassNames}>
               <input
@@ -145,7 +145,7 @@ FormFieldYesNo.propTypes = {
   fieldId: PropTypes.string.isRequired,
   value: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  details: FieldLabel.propTypes.details,
+  details: FieldLabelForSeparatedFields.propTypes.details,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
@@ -156,7 +156,7 @@ FormFieldYesNo.defaultProps = {
   value: undefined,
   required: false,
   autofocus: false,
-  details: FieldLabel.defaultProps.details,
+  details: FieldLabelForSeparatedFields.defaultProps.details,
   onChangeHandler: undefined,
 };
 
