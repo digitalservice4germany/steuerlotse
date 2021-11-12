@@ -25,9 +25,8 @@ function FormFieldDropDown({
   fieldId,
   options,
   defaultOption,
-  preselectedValue,
+  selectedValue,
   required,
-  autofocus,
   label,
   details,
   errors,
@@ -47,17 +46,22 @@ function FormFieldDropDown({
           <select
             id={fieldId}
             className="custom-select steuerlotse-select"
-            input_req_err_msg="Bundesland auswählen"
             name={fieldId}
-            defaultValue={preselectedValue}
+            defaultValue={selectedValue}
             required={required}
-            autoFocus={autofocus || Boolean(errors.length)}
+            autoFocus={Boolean(errors.length)}
             onBlur={onChangeHandler}
             onChange={onChangeHandler}
           >
-            {defaultOption && <option value="">{defaultOption}</option>}
+            {defaultOption && (
+              <option value="" key={defaultOption}>
+                {defaultOption}
+              </option>
+            )}
             {options.map((option) => (
-              <option value={option[0]}>{option[1]}</option>
+              <option value={option[0]} key={option[1]}>
+                {option[1]}
+              </option>
             ))}
           </select>
         </DropDown>
@@ -71,8 +75,8 @@ FormFieldDropDown.propTypes = {
   fieldId: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   defaultOption: PropTypes.string,
-  preselectedValue: PropTypes.string,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
+  selectedValue: PropTypes.string,
+  label: FieldLabel.propTypes.label,
   details: FieldLabel.propTypes.details,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
@@ -82,7 +86,8 @@ FormFieldDropDown.propTypes = {
 
 FormFieldDropDown.defaultProps = {
   defaultOption: undefined,
-  preselectedValue: undefined,
+  selectedValue: undefined,
+  label: FieldLabel.defaultProps.label,
   required: false,
   autofocus: false,
   details: FieldLabel.defaultProps.details,

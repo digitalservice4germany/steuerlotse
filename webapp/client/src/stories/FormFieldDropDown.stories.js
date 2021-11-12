@@ -43,19 +43,13 @@ WithDetails.args = {
 export const PreSelection = Template.bind({});
 PreSelection.args = {
   ...Default.args,
-  preselectedValue: "by",
+  selectedValue: "by",
 };
 
 export const DefaultDropDownOption = Template.bind({});
 DefaultDropDownOption.args = {
   ...Default.args,
   defaultOption: "Bitte auswählen",
-};
-
-export const Required = Template.bind({});
-Required.args = {
-  ...DefaultDropDownOption.args,
-  required: true,
 };
 
 export const WithChangeHandler = Template.bind({});
