@@ -54,13 +54,13 @@ function FormFieldDropDown({
             onChange={onChangeHandler}
           >
             {defaultOption && (
-              <option value="" key={defaultOption}>
+              <option value="" key={fieldId + defaultOption}>
                 {defaultOption}
               </option>
             )}
             {options.map((option) => (
-              <option value={option[0]} key={option[1]}>
-                {option[1]}
+              <option value={option.value} key={fieldId + option.value}>
+                {option.displayName}
               </option>
             ))}
           </select>
@@ -73,7 +73,7 @@ function FormFieldDropDown({
 FormFieldDropDown.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
   defaultOption: PropTypes.string,
   selectedValue: PropTypes.string,
   label: FieldLabel.propTypes.label,

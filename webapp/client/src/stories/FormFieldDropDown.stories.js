@@ -24,10 +24,10 @@ Default.args = {
   },
   errors: [],
   options: [
-    ["bw", "Baden-Württemberg"],
-    ["by", "Bayern"],
-    ["hh", "Hamburg"],
-    ["he", "Hessen"],
+    { value: "bw", displayName: "Baden-Württemberg" },
+    { value: "by", displayName: "Bayern" },
+    { value: "hh", displayName: "Hamburg" },
+    { value: "he", displayName: "Hessen" },
   ],
 };
 

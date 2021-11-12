@@ -16,9 +16,9 @@ describe("FormFieldDropDown", () => {
       },
       errors: [],
       options: [
-        ["A", "Vulcan"],
-        ["B", "Terra"],
-        ["C", "Earth"],
+        { value: "A", displayName: "Vulcan" },
+        { value: "B", displayName: "Terra" },
+        { value: "C", displayName: "Earth" },
       ],
       onChangeHandler: onChangeHandler,
     };
