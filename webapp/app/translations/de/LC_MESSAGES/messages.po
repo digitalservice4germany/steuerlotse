@@ -2501,7 +2501,9 @@ msgstr "Geburtsdatum"
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:202
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:323
 msgid "form.lotse.validation-dob-missing"
-msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
+msgstr ""
+"Geben Sie Ihr vollständiges Geburtsdatum ein. Ihre Angabe muss folgendem "
+"Muster entsprechen: 29 2 1951 "
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:204
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:325
