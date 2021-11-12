@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { fireEvent } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import FormFieldYesNo from "./FormFieldYesNo";
 
@@ -23,7 +22,7 @@ describe("FormFieldYesNo", () => {
 
   describe("When Ja clicked", () => {
     beforeEach(() => {
-      fireEvent.click(screen.getByText("Ja"));
+      userEvent.click(screen.getByText("Ja"));
     });
 
     it("Activate Ja field", () => {
@@ -48,7 +47,7 @@ describe("FormFieldYesNo", () => {
 
   describe("When Nein clicked", () => {
     beforeEach(() => {
-      fireEvent.click(screen.getByText("Nein"));
+      userEvent.click(screen.getByText("Nein"));
     });
 
     it("Activate Nein field", () => {
