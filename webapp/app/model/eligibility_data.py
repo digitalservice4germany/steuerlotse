@@ -275,67 +275,17 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
-
-class ElsterRegistrationMethodSoftwareEligibilityData(RecursiveDataModel):
-    single_elster_account: Optional[SingleUserElsterAccountEligibilityData]
-    user_b_elster_account: Optional[UserBElsterAccountEligibilityData]
-    elster_registration_method_eligibility: str
-
-    @validator('elster_registration_method_eligibility')
-    def registration_method_must_be_software(cls, v):
-        if v != 'software':
-            raise ValueError
-        return v
-
-    @validator('user_b_elster_account', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
-class ElsterRegistrationMethodUnknownEligibilityData(RecursiveDataModel):
-    single_elster_account: Optional[SingleUserElsterAccountEligibilityData]
-    user_b_elster_account: Optional[UserBElsterAccountEligibilityData]
-    elster_registration_method_eligibility: str
-
-    @validator('elster_registration_method_eligibility')
-    def registration_method_must_be_unknown(cls, v):
-        if v != 'unknown':
-            raise ValueError
-        return v
-
-    @validator('user_b_elster_account', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
-class ElsterNoAbrufcodeEligibilityData(RecursiveDataModel):
-    elster_registration_method_is_software: Optional[ElsterRegistrationMethodSoftwareEligibilityData]
-    elster_abrufcode_eligibility: str
-
-    @validator('elster_abrufcode_eligibility')
-    def must_not_be_yes(cls, v):
-        if v == 'yes':
-            raise InvalidEligiblityError
-        return v
-
-    @validator('elster_registration_method_is_software', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
 class PensionEligibilityData(RecursiveDataModel):
     single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
     user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
     user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
-    elster_registration_method_is_unknown: Optional[ElsterRegistrationMethodUnknownEligibilityData]
-    elster_no_abrufcode: Optional[ElsterNoAbrufcodeEligibilityData]
     pension_eligibility: str
 
     @validator('pension_eligibility')
     def has_to_get_pension(cls, v):
         return declarations_must_be_set_yes(v)
 
-    @validator('elster_no_abrufcode', always=True, check_fields=False)
+    @validator('user_b_has_no_elster_account', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 

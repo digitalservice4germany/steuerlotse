@@ -16,9 +16,8 @@ from app.model.eligibility_data import SeparatedEligibilityData, \
     SingleEligibilityData, WidowedEligibilityData, DivorcedEligibilityData, MoreThanMinimalInvestmentIncome, \
     MinimalInvestmentIncome, UserAElsterAccountEligibilityData, SeparatedLivedTogetherEligibilityData, \
     SeparatedNotLivedTogetherEligibilityData, SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
-    SingleUserElsterAccountEligibilityData, ElsterRegistrationMethodUnknownEligibilityData, \
-    UserBElsterAccountEligibilityData, ElsterRegistrationMethodSoftwareEligibilityData, \
-    ElsterNoAbrufcodeEligibilityData, ForeignCountryMaybeEligibility
+    SingleUserElsterAccountEligibilityData, UserBElsterAccountEligibilityData, \
+    ForeignCountryMaybeEligibility
 
 
 class TestMarriedEligibilityData(unittest.TestCase):
@@ -592,117 +591,6 @@ class TestSingleUserElsterAccountEligibilityData:
         with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__',
                    MagicMock(return_value=None)):
             SingleUserElsterAccountEligibilityData.parse_obj(valid_data)
-
-
-class TestElsterRegistrationMethodSoftwareEligibilityData:
-
-    def test_if_single_elster_account_valid_and_registration_method_not_software_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodSoftwareEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_single_elster_account_invalid_and_registration_method_software_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'software'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodSoftwareEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_single_elster_account_valid_and_registration_method_software_then_raise_no_validation_error(self):
-        valid_data = {'elster_registration_method_eligibility': 'software'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ElsterRegistrationMethodSoftwareEligibilityData.parse_obj(valid_data)
-            
-    def test_if_user_b_elster_account_valid_and_registration_method_not_software_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodSoftwareEligibilityData.parse_obj(non_valid_data)
-        
-    def test_if_user_b_elster_account_invalid_and_registration_method_software_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'software'}
-        with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodSoftwareEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_user_b_elster_account_valid_and_registration_method_software_then_raise_no_validation_error(self):
-        valid_data = {'elster_registration_method_eligibility': 'software'}
-        with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ElsterRegistrationMethodSoftwareEligibilityData.parse_obj(valid_data)
-
-
-class TestElsterRegistrationMethodNoneEligibilityData:
-
-    def test_if_single_elster_account_valid_and_registration_method_not_unknown_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'NOT_UNKNOWN'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodUnknownEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_single_elster_account_invalid_and_registration_method_unknown_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], SingleUserElsterAccountEligibilityData))), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodUnknownEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_single_elster_account_valid_and_registration_method_unknown_then_raise_no_validation_error(self):
-        valid_data = {'elster_registration_method_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ElsterRegistrationMethodUnknownEligibilityData.parse_obj(valid_data)
-
-    def test_if_user_b_elster_account_valid_and_registration_method_not_unknown_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'NOT_UNKNOWN'}
-        with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodUnknownEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_user_b_elster_account_invalid_and_registration_method_unknown_then_raise_validation_error(self):
-        non_valid_data = {'elster_registration_method_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], UserBElsterAccountEligibilityData))), \
-                pytest.raises(ValidationError):
-            ElsterRegistrationMethodUnknownEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_user_b_elster_account_valid_and_registration_method_unknown_then_raise_no_validation_error(self):
-        valid_data = {'elster_registration_method_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ElsterRegistrationMethodUnknownEligibilityData.parse_obj(valid_data)
-
-
-class TestElsterNoAbrufcodeEligibilityData:
-
-    def test_if_registration_method_valid_and_abrufcode_yes_then_raise_validation_error(self):
-        non_valid_data = {'elster_abrufcode_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.ElsterRegistrationMethodSoftwareEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ElsterNoAbrufcodeEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_single_elster_account_invalid_and_abrufcode_no_then_raise_validation_error(self):
-        non_valid_data = {'elster_abrufcode_eligibility': 'no'}
-        with patch('app.model.eligibility_data.ElsterRegistrationMethodSoftwareEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], ElsterRegistrationMethodSoftwareEligibilityData))), \
-                pytest.raises(ValidationError):
-            ElsterNoAbrufcodeEligibilityData.parse_obj(non_valid_data)
-
-    def test_if_single_elster_account_valid_and_abrufcode_no_then_raise_no_validation_error(self):
-        valid_data = {'elster_abrufcode_eligibility': 'no'}
-        with patch('app.model.eligibility_data.ElsterRegistrationMethodSoftwareEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ElsterNoAbrufcodeEligibilityData.parse_obj(valid_data)
-
-    def test_if_single_elster_account_valid_and_abrufcode_unknown_then_raise_no_validation_error(self):
-        valid_data = {'elster_abrufcode_eligibility': 'unknown'}
-        with patch('app.model.eligibility_data.ElsterRegistrationMethodSoftwareEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ElsterNoAbrufcodeEligibilityData.parse_obj(valid_data)
-
 
 class TestPensionEligibilityData(unittest.TestCase):
 

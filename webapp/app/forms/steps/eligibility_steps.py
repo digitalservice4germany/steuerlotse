@@ -18,9 +18,8 @@ from app.model.eligibility_data import OtherIncomeEligibilityData, \
     UserAElsterAccountEligibilityData, EmploymentIncomeEligibilityData, NoInvestmentIncomeEligibilityData, \
     MoreThanMinimalInvestmentIncome, SeparatedLivedTogetherEligibilityData, SeparatedNotLivedTogetherEligibilityData, \
     SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
-    ElsterRegistrationMethodUnknownEligibilityData, \
-    ElsterRegistrationMethodSoftwareEligibilityData, SingleUserElsterAccountEligibilityData, \
-    UserBElsterAccountEligibilityData, ElsterNoAbrufcodeEligibilityData, ForeignCountryMaybeEligibility
+    SingleUserElsterAccountEligibilityData, \
+    UserBElsterAccountEligibilityData, ForeignCountryMaybeEligibility
 from app.model.recursive_data import PreviousFieldsMissingError
 
 
@@ -341,7 +340,7 @@ class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
     name = "user_b_has_elster_account"
     next_step_data_models = [
         (UserBNoElsterAccountEligibilityData, 'pension'),
-        (UserBElsterAccountEligibilityData, 'elster_registration_method')
+        (UserBElsterAccountEligibilityData, 'elster_registration_method_failure')
     ]
     title = _l('form.eligibility.user_b_has_elster_account-title')
 
@@ -411,7 +410,7 @@ class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEli
     name = "single_elster_account"
     next_step_data_models = [
         (SingleUserNoElsterAccountEligibilityData, 'pension'),
-        (SingleUserElsterAccountEligibilityData, 'elster_registration_method')
+        (SingleUserElsterAccountEligibilityData, 'elster_registration_method_failure')
     ]
     title = _l('form.eligibility.user_a_has_elster_account-title')
 
@@ -432,57 +431,10 @@ class ElsterRegistrationMethodEligibilityFailureStep(EligibilityFailureDisplaySt
     eligibility_error = _l('form.eligibility.elster_registration_method_failure-error')
     input_step_name = 'elster_registration_method'
 
-
-class ElsterRegistrationMethodEligibilityDecisionStep(DecisionEligibilityInputFormSteuerlotseStep):
-    name = "elster_registration_method"
-    next_step_data_models = [
-        (ElsterRegistrationMethodSoftwareEligibilityData, "elster_abrufcode"),
-        (ElsterRegistrationMethodUnknownEligibilityData, "pension"),
-    ]
-    failure_step_name = ElsterRegistrationMethodEligibilityFailureStep.name
-    title = _l('form.eligibility.elster_registration_method-title')
-
-    class InputForm(SteuerlotseBaseForm):
-        elster_registration_method_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.elster_registration_method_eligibility.detail.title'),
-                                       'text': _l('form.eligibility.elster_registration_method_eligibility.detail.text')}},
-            choices=[('software', _l('form.eligibility.elster_registration_method.software')),
-                     ('id_card', _l('form.eligibility.elster_registration_method.id_card')),
-                     ('stick', _l('form.eligibility.elster_registration_method.stick')),
-                     ('card', _l('form.eligibility.elster_registration_method.card')),
-                     ('unknown', _l('form.eligibility.elster_registration_method.unknown')),
-                     ],
-            validators=[InputRequired()])
-
-
 class ElsterAbrufcodeEligibilityFailureStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'elster_abrufcode_failure'
     eligibility_error = _l('form.eligibility.elster_abrufcode_failure-error')
     input_step_name = 'elster_abrufcode'
-
-
-class ElsterAbrufcodeEligibilityDecisionStep(DecisionEligibilityInputFormSteuerlotseStep):
-    name = "elster_abrufcode"
-    next_step_data_models = [
-        (ElsterNoAbrufcodeEligibilityData, 'pension'),
-    ]
-    failure_step_name = ElsterAbrufcodeEligibilityFailureStep.name
-    title = _l('form.eligibility.elster_abrufcode-title')
-
-    class InputForm(SteuerlotseBaseForm):
-        elster_abrufcode_eligibility = RadioField(
-            label="",
-            render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.elster_abrufcode_eligibility.detail.title'),
-                                       'text': _l('form.eligibility.elster_abrufcode_eligibility.detail.text')}},
-            choices=[('yes', _l('form.eligibility.elster_abrufcode_eligibility.yes')),
-                     ('no', _l('form.eligibility.elster_abrufcode_eligibility.no')),
-                     ('unknown', _l('form.eligibility.elster_abrufcode_eligibility.unknown')),
-                     ],
-            validators=[InputRequired()])
-
 
 class PensionEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'pension_failure'
