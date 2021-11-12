@@ -13,7 +13,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
-    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
+    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError, EricaNotAuthenticatedError
 from app.utils import lru_cached
 
 logger = logging.getLogger(__name__)
@@ -214,10 +214,10 @@ def _generate_est_request_data(form_data, year=2020):
     
 
     if not current_user.is_authenticated:
-        logger.warn('Elster_Client: User is not authenticated')  
+        logger.error('Elster_Client: User is not authenticated')  
         # no non-active user should come until here, but they should certainly not be able to send a tax        
         logout_user()
-        return        
+        raise EricaNotAuthenticatedError()      
         
     digitally_signed = bool(adapted_form_data.get('unlock_code'))
     
