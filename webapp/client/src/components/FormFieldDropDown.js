@@ -4,8 +4,8 @@ import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
 import selectIcon from "../assets/icons/select_icon.svg";
 
-const DropDown = styled.div`
-  & .steuerlotse-select {
+const DropDown = styled.select`
+  .steuerlotse-select {
     border: 2px solid var(--border-color);
     border-radius: 0;
     background-image: url(${selectIcon});
@@ -14,7 +14,7 @@ const DropDown = styled.div`
     min-height: 55px;
   }
 
-  & .steuerlotse-select:focus {
+  .steuerlotse-select:focus {
     border: 2px solid var(--focus-border-color);
     box-shadow: 0 0 0 2px var(--focus-color);
   }
@@ -39,31 +39,27 @@ function FormFieldDropDown({
         errors,
         cols: "6",
       }}
-      hideLabel
+      labelComponent=<FieldLabel {...{ label, fieldId, details }} />
       render={() => (
-        <DropDown>
-          <FieldLabel {...{ label, fieldId, details }} />
-          <select
-            id={fieldId}
-            className="custom-select steuerlotse-select"
-            name={fieldId}
-            defaultValue={selectedValue}
-            required={required}
-            autoFocus={Boolean(errors.length)}
-            onBlur={onChangeHandler}
-            onChange={onChangeHandler}
-          >
-            {defaultOption && (
-              <option value="" key={fieldId + defaultOption}>
-                {defaultOption}
-              </option>
-            )}
-            {options.map((option) => (
-              <option value={option.value} key={fieldId + option.value}>
-                {option.displayName}
-              </option>
-            ))}
-          </select>
+        <DropDown
+          id={fieldId}
+          className="custom-select steuerlotse-select"
+          fieldName={fieldId}
+          defaultValue={selectedValue}
+          required={required}
+          autoFocus={Boolean(errors.length)}
+          onChange={onChangeHandler}
+        >
+          {defaultOption && (
+            <option value="" key={fieldId + defaultOption}>
+              {defaultOption}
+            </option>
+          )}
+          {options.map((option) => (
+            <option value={option.value} key={fieldId + option.value}>
+              {option.displayName}
+            </option>
+          ))}
         </DropDown>
       )}
     />
