@@ -22,24 +22,17 @@ function FormFieldTaxNumber({
 }) {
   const { t } = useTranslation();
 
-  const notSplitLabel = {
+  const label = {
     text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
-    exampleInput: t("lotseFlow.taxNumber.taxNumberInput.label.exampleInput"),
-  };
-
-  const splitLabel = {
-    text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
-  };
-
-  const fieldLabelProps = {
-    label: notSplitLabel,
-    fieldId,
-    details,
   };
 
   if (isSplit) {
-    fieldLabelProps.label = splitLabel;
+    label.exampleInput = t(
+      "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
+    );
   }
+
+  const fieldLabelProps = { label, fieldId, details };
 
   const labelComponent = <FieldLabelForSeparatedFields {...fieldLabelProps} />;
 
