@@ -23,7 +23,7 @@ describe("FormFieldTaxNumber is split", () => {
     render(<FormFieldTaxNumber {...props} />);
   });
 
-  it("Show three input fields", () => {
+  it("should show three input fields", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(3);
   });
 
