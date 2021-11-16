@@ -44,7 +44,7 @@ function FormFieldDropDown({
         <DropDown
           id={fieldId}
           className="custom-select steuerlotse-select"
-          fieldName={fieldId}
+          name={fieldName}
           defaultValue={selectedValue}
           required={required}
           autoFocus={Boolean(errors.length)}
