@@ -97,4 +97,4 @@ class ValidDateOfSeparatedSince(ValidDateOf):
             message_incomplete = _l('validate.date-of-incomplete'), 
             message_incorrect = _l('validate.date-of-incorrect'), 
             message_in_the_future = _l('validate.date-of-in-the-future'), 
-            message_to_far_in_past = _l('validate.date-of-to-far-in-past'))
+            message_to_far_in_past = _l('validate.date-of-too-far-in-past'))
