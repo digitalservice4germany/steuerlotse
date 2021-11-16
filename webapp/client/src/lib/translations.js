@@ -12,6 +12,9 @@ const translations = {
       ariaLabel: "Schließen",
     },
   },
+  dropDown: {
+    defaultOption: "Bitte auswählen",
+  },
   form: {
     optional: "optional",
     back: "Zurück",
