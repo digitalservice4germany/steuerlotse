@@ -7,9 +7,19 @@ describe("Steuernummer", () => {
       cy.get('[name="next_button"]').click();
     });
 
-    it("displays correct text", () => {
-      cy.get("label[for=steuernummer_exists]").contains(
-        /^Haben Sie bereits eine Steuernummer/
+    it("displays correct single text for tax number exists question", () => {
+      cy.get("#steuernummer_exists")
+        .siblings()
+        .find("legend")
+        .contains(/^Haben Sie bereits eine Steuernummer/);
+    });
+
+    it("displays correct single text for confirmation field", () => {
+      cy.get("label[for=steuernummer_exists-no]").click();
+      cy.get("select[name=bundesland]").select("BY");
+      cy.get("select[name=bufa_nr]").select("9201");
+      cy.get("label[for=request_new_tax_number]").contains(
+        /^Hiermit bestätige ich/
       );
     });
 
@@ -33,6 +43,19 @@ describe("Steuernummer", () => {
         .children("option[value=9170]")
         .should("exist");
     });
+
+    it("displays confirmation field", () => {
+      cy.get("label[for=steuernummer_exists-no]").click();
+      cy.get("select[name=bundesland]").select("BY");
+      cy.get("select[name=bufa_nr]").select("9201");
+      cy.get("label[for=request_new_tax_number]").should("exist");
+    });
+
+    it("displays tax number input", () => {
+      cy.get("label[for=steuernummer_exists-yes]").click();
+      cy.get("select[name=bundesland]").select("BY");
+      cy.get("input[name=steuernummer]").should("exist");
+    });
   });
 
   context("when married", () => {
@@ -50,9 +73,19 @@ describe("Steuernummer", () => {
       cy.get('[name="next_button"]').click();
     });
 
-    it("displays correct text", () => {
-      cy.get("label[for=steuernummer_exists]").contains(
-        /^Haben Sie bereits eine gemeinsame Steuernummer/
+    it("displays correct multiple text for tax number exists question", () => {
+      cy.get("#steuernummer_exists")
+        .siblings()
+        .find("legend")
+        .contains(/^Haben Sie bereits eine gemeinsame Steuernummer/);
+    });
+
+    it("displays correct multiple text for confirmation field", () => {
+      cy.get("label[for=steuernummer_exists-no]").click();
+      cy.get("select[name=bundesland]").select("BY");
+      cy.get("select[name=bufa_nr]").select("9201");
+      cy.get("label[for=request_new_tax_number]").contains(
+        /^Hiermit bestätigen wir/
       );
     });
   });
