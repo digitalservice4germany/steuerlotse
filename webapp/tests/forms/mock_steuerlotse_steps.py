@@ -5,7 +5,7 @@ from pydantic import BaseModel, validator, ValidationError
 from wtforms import Form, validators
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
+from app.forms.fields import EuroField, SteuerlotseDateField, LegacyYesNoField, SteuerlotseStringField
 from app.forms.steps.eligibility_steps import DecisionEligibilityInputFormSteuerlotseStep
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, FormSteuerlotseStep
 
@@ -77,7 +77,7 @@ class MockYesNoStep(FormSteuerlotseStep):
     title = 'yes_no_title'
 
     class InputForm(SteuerlotseBaseForm):
-        yes_no_field = YesNoField('Yes/No', validators=[validators.Optional()])
+        yes_no_field = LegacyYesNoField('Yes/No', validators=[validators.Optional()])
 
     def __init__(self, stored_data=None, render_info=None, *args, **kwargs):
         super(MockYesNoStep, self).__init__(header_title="Yes or No", stored_data=stored_data, render_info=render_info,  *args, **kwargs)

@@ -443,7 +443,7 @@ class EuroField(Field):
             self.data = Decimal(parse_decimal(raw_data[0], locale=self.locale))
 
 
-class SteuerlotseSelectField(SelectField):
+class LegacySteuerlotseSelectField(SelectField):
 
     def __init__(self, **kwargs):
         if kwargs.get('render_kw'):
@@ -543,9 +543,10 @@ class YesNoWidget(object):
 
 
 class YesNoField(RadioField):
+
     def __init__(self, label='', validators=None, **kwargs):
+        kwargs['choices'] = [('yes', _('switch.yes')), ('no', _('switch.no'))]
         super().__init__(label, validators, **kwargs)
-        self.widget = YesNoWidget()
 
     def process(self, formdata, data=unset_value):
         # In a POST-request, `formdata` is all data posted by the user (MultiDict).
@@ -569,3 +570,11 @@ class YesNoField(RadioField):
             super().process(formdata)
         else:
             super().process(formdata, data)
+
+
+class LegacyYesNoField(YesNoField):
+
+    def __init__(self, label='', validators=None, **kwargs):
+        super().__init__(label, validators, **kwargs)
+        self.widget = YesNoWidget()
+

@@ -22,7 +22,7 @@ from app.crypto.pw_hashing import global_salt_hash
 from app.data_access.user_controller import find_user
 from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalValidationError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
-from app.forms.fields import YesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
+from app.forms.fields import LegacyYesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse.confirmation import StepSummary
@@ -70,7 +70,7 @@ class TestComputeValue(unittest.TestCase):
         data_label = 'Is this a test?'
         expected_result = (data_label, 'Ja')
         field = UnboundField(
-            field_class=YesNoField, render_kw={'data_label': data_label})
+            field_class=LegacyYesNoField, render_kw={'data_label': data_label})
 
         actual_result = LotseMultiStepFlow._generate_value_representation(field, 'yes')
 

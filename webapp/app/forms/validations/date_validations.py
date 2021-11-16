@@ -22,7 +22,6 @@ class ValidDateOf:
         self.message_incorrect = message_incorrect
         self.message_in_the_future = message_in_the_future
         self.message_to_far_in_past = message_to_far_in_past
-        
 
     def __call__(self, form, field):
         raw_input_date = field._value()
@@ -51,6 +50,7 @@ class ValidDateOf:
 
         if input_date < elster_min_date:
             raise ValidationError(self.message_to_far_in_past)
+
 
 class ValidDateOfBirth(ValidDateOf):
     def __init__(self) -> None:

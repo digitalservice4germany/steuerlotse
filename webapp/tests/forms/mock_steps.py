@@ -4,7 +4,7 @@ from flask import make_response
 from wtforms import Form, validators
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
+from app.forms.fields import EuroField, SteuerlotseDateField, LegacyYesNoField, SteuerlotseStringField
 from app.forms.steps.logout_steps import LogoutInputStep
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
@@ -102,7 +102,7 @@ class MockFormWithInputStep(MockFormStep):
 
 
 class MockYesNoForm(SteuerlotseBaseForm):
-    yes_no_field = YesNoField('Yes/No', validators=[validators.Optional()])
+    yes_no_field = LegacyYesNoField('Yes/No', validators=[validators.Optional()])
 
 
 class MockYesNoStep(FormStep):

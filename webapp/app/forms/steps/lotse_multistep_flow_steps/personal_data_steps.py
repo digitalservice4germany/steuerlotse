@@ -1,6 +1,6 @@
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
-from app.forms.fields import YesNoField, LegacySteuerlotseDateField, SteuerlotseSelectField, ConfirmationField, \
+from app.forms.fields import LegacyYesNoField, LegacySteuerlotseDateField, LegacySteuerlotseSelectField, ConfirmationField, \
     SteuerlotseStringField, LegacyIdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
     SteuerlotseNameStringField, SteuerlotseIbanField, SteuerlotseHouseNumberIntegerField
 
@@ -40,7 +40,7 @@ class StepFamilienstand(FormStep):
             prevent_validation_error=True, 
             validators=[ValidDateOfBirth()])
         
-        familienstand_married_lived_separated = YesNoField(
+        familienstand_married_lived_separated = LegacyYesNoField(
             label=_l('form.lotse.familienstand_married_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_married_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_married_lived_separated.data_label')})
@@ -49,7 +49,7 @@ class StepFamilienstand(FormStep):
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
             prevent_validation_error=True, 
             validators=[ValidDateOfMarriage()])
-        familienstand_widowed_lived_separated = YesNoField(
+        familienstand_widowed_lived_separated = LegacyYesNoField(
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
             render_kw={'data-example-input': _l('form.lotse.familienstand_widowed_lived_separated.example_input'),
                        'data_label': _l('form.lotse.familienstand_widowed_lived_separated.data_label')})
@@ -58,7 +58,7 @@ class StepFamilienstand(FormStep):
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
             prevent_validation_error=True, 
             validators=[ValidDateOfDeath()])
-        familienstand_zusammenveranlagung = YesNoField(
+        familienstand_zusammenveranlagung = LegacyYesNoField(
             label=_l('form.lotse.field_familienstand_zusammenveranlagung'),
             render_kw={'data_label': _l('form.lotse.familienstand_zusammenveranlagung.data_label')})
         familienstand_confirm_zusammenveranlagung = ConfirmationField(
@@ -154,7 +154,7 @@ class StepFamilienstand(FormStep):
 
 
 def get_religion_field():
-    return SteuerlotseSelectField(
+    return LegacySteuerlotseSelectField(
         label=_l('form.lotse.field_person_religion'),
         choices=[
             ('none', _l('form.lotse.field_person_religion.none')),
