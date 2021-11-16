@@ -38,7 +38,7 @@ class SelectOption(BaseModel, extra=Extra.forbid):
 
 class SelectFieldProps(ComponentProps):
     selected_value: Optional[str]
-    choices: List[SelectOption]
+    options: List[SelectOption]
     errors: List[str]
 
 
