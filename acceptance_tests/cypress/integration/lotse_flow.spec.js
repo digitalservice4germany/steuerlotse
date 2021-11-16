@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 const authPassword = Cypress.env('STAGING_AUTH_PASSWORD')
-Cypress.config('baseUrl', `https://lotse:${authPassword}@www-staging.stl.ds4g.dev`)
+Cypress.config('baseUrl', `http://localhost:3000`)
 
 const unlockCodeData = {
     idnr1: '09',
@@ -17,7 +17,9 @@ const taxReturnData = {
     unlockCode1: 'DBNH',
     unlockCode2: 'B8JS',
     unlockCode3: '9JE7',
-    taxNr: '19811310010',
+    taxNr1: '198',
+    taxNr2: '1131',
+    taxNr3: '0010',
     marriedDateDay: '01',
     marriedDateMonth: '01',
     marriedDateYear: '1990',
@@ -215,34 +217,37 @@ context('Acceptance tests', () => {
             cy.get('#familienstand_date_3').clear().type(older_date_year)
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('not.be.visible')
         })
-
+    
         it('Enter different tax number data ', () => {
             cy.visit('/lotse/step/steuernummer?link_overview=True')
 
             // Tax number exists
             cy.get('label[for=steuernummer_exists-yes]').click()
-            cy.get('#steuernummer').should('not.be.visible')
-            cy.get('select[id=bufa_nr]').should('not.be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+            cy.get('#steuernummer').should('not.exist');
+            cy.get('#steuernummer1').should('not.exist')
+            cy.get('select[id=bufa_nr]').should('not.exist')
+            cy.get('label[for=request_new_tax_number]').should('not.exist')
 
             // Select state
             cy.get('select[id=bundesland]').select('BY')
             cy.get('#steuernummer').should('be.visible')
-            cy.get('select[id=bufa_nr]').should('not.be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
+            cy.get('select[id=bufa_nr]').should('not.exist')
+            cy.get('label[for=request_new_tax_number]').should('not.exist')
 
             // Tax number does not exist
             cy.get('label[for=steuernummer_exists-no]').click()
             cy.get('select[id=bundesland]').should('be.visible').and('have.value', 'BY')
             cy.get('select[id=bufa_nr]').should('be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
-            cy.get('#steuernummer').should('not.be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.exist')
+            cy.get('#steuernummer').should('not.exist');
+            cy.get('#steuernummer1').should('not.exist')
 
             // Select state
             cy.get('select[id=bundesland]').select('BY')
             cy.get('select[id=bufa_nr]').should('be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.be.visible')
-            cy.get('#steuernummer').should('not.be.visible')
+            cy.get('label[for=request_new_tax_number]').should('not.exist')
+            cy.get('#steuernummer').should('not.exist');
+            cy.get('#steuernummer1').should('not.exist')
 
             //Select bufa_nr
             cy.get('select[id=bufa_nr]').select('9203')
@@ -266,7 +271,9 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
                 cy.get('label[for=steuernummer_exists-yes]').click()
                 cy.get('select[id=bundesland]').select('BY')
-                cy.get('#steuernummer').type(taxReturnData.taxNr)
+                cy.get('#steuernummer_1').type(taxReturnData.taxNr1)
+                cy.get('#steuernummer_2').type(taxReturnData.taxNr2)
+                cy.get('#steuernummer_3').type(taxReturnData.taxNr3)
                 cy.get(submitBtnSelector).click()
                 cy.get('#person_a_idnr_1').type(taxReturnData.personA.idnr1)
                 cy.get('#person_a_idnr_2').type(taxReturnData.personA.idnr2)
@@ -374,7 +381,9 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
                 cy.get('label[for=steuernummer_exists-yes]').click()
                 cy.get('select[id=bundesland]').select('BY')
-                cy.get('#steuernummer').type(taxReturnData.taxNr)
+                cy.get('#steuernummer_1').type(taxReturnData.taxNr1)
+                cy.get('#steuernummer_2').type(taxReturnData.taxNr2)
+                cy.get('#steuernummer_3').type(taxReturnData.taxNr3)
                 cy.get(submitBtnSelector).click()
                 cy.get('#person_a_idnr_1').type(taxReturnData.personA.idnr1)
                 cy.get('#person_a_idnr_2').type(taxReturnData.personA.idnr2)

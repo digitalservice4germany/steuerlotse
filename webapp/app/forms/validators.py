@@ -124,11 +124,21 @@ class ValidUnlockCodeCharacterSet:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))
 
+
+class ValidTaxNumberLength:
+
+    def __call__(self, form, field):
+        if form.steuernummer_exists.data == 'yes':
+            tax_number_str = ''.join(field.data)
+            if len(tax_number_str) != 11 and len(tax_number_str) != 11:
+                raise ValidationError(_('validate.invalid-tax-number-length'))
+
+
 class ValidHessenTaxNumber:
 
     def __call__(self, form, field):
         if form.steuernummer_exists.data == 'yes' and form.bundesland.data == 'HE':
-            tax_number_str = str(field.data)
+            tax_number_str = ''.join(field.data)
             if len(tax_number_str) != 11:
                 raise ValidationError(_('validate.invalid-hessen-tax-number'))
 
