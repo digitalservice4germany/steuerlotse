@@ -95,6 +95,16 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, muss sich nur eine Person registrieren.",
     },
   },
+  lotseFlow: {
+    taxNumber: {
+      taxNumberInput: {
+        label: {
+          labelText: "Steuernummer",
+          exampleInput: "Muss 10 oder 11 Ziffern haben",
+        },
+      },
+    },
+  },
   dateField: {
     day: "Tag",
     month: "Monat",
