@@ -119,18 +119,34 @@ NoTaxNumber.args = {
   },
 };
 
-export const WithErrors = Template.bind({});
-WithErrors.args = {
+export const WithTaxNumber = Template.bind({});
+WithTaxNumber.args = {
   ...Default.args,
   fields: {
-    ...Default.args.fields,
-    idnr: {
-      value: ["12", "345", "678", "90"],
-      errors: ["Geben Sie bitte eine gültige Steuer-Identifikationsnummer an."],
+    steuernummerExists: {
+      value: "yes",
+      errors: [],
     },
-    unlockCode: {
-      value: ["xxxx", "abc", ""],
-      errors: ["Ein gültiger Freischaltcode hat genau 12 Zeichen."],
+    bundesland: {
+      selectedValue: "by",
+      options: [
+        { value: "bw", displayName: "Baden-Württemberg" },
+        { value: "by", displayName: "Bayern" },
+        { value: "he", displayName: "Hessen" },
+      ],
+      errors: [],
+    },
+    bufaNr: {
+      selectedValue: undefined,
+      errors: [],
+    },
+    steuernummer: {
+      value: ["198", "1131", "0010"],
+      errors: [],
+    },
+    requestNewTaxNumber: {
+      checked: true,
+      errors: [],
     },
   },
 };
