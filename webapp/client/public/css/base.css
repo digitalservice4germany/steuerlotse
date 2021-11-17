@@ -126,6 +126,11 @@ input.form-control.field-error-found {
   min-height: 55px;
 }
 
+.steuerlotse-select:focus {
+  border: 2px solid var(--focus-border-color);
+  box-shadow: 0 0 0 2px var(--focus-color);
+}
+
 .input-group input,
 .input-group input:hover,
 .input-group input:focus,
