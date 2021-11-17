@@ -25,12 +25,12 @@ describe("FormFieldDropDown", () => {
     render(<FormFieldDropDown {...props} />);
   });
 
-  describe("When second option selected", () => {
+  describe("When second option has been selected", () => {
     beforeEach(() => {
       userEvent.selectOptions(screen.getByRole("combobox"), ["B"]);
     });
 
-    it("Only second option has been selected", () => {
+    it("Only second option should be selected", () => {
       expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(
         false
       );
@@ -40,11 +40,36 @@ describe("FormFieldDropDown", () => {
       );
     });
 
-    it("Call the change handler with B", () => {
+    it("Should call the change handler with B", () => {
       expect(onChangeHandler).toHaveBeenCalled();
 
       const changeEvent = onChangeHandler.mock.calls[0][0];
       expect(changeEvent.target.value).toEqual("B");
+    });
+
+    describe("When third option has been selected", () => {
+      beforeEach(() => {
+        userEvent.selectOptions(screen.getByRole("combobox"), ["C"]);
+      });
+
+      it("Only third option should be selected", () => {
+        expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(
+          false
+        );
+        expect(screen.getByRole("option", { name: "Terra" }).selected).toBe(
+          false
+        );
+        expect(screen.getByRole("option", { name: "Earth" }).selected).toBe(
+          true
+        );
+      });
+
+      it("Should call the change handler with C", () => {
+        expect(onChangeHandler).toHaveBeenCalled();
+
+        const changeEvent = onChangeHandler.mock.calls[0][0];
+        expect(changeEvent.target.value).toEqual("C");
+      });
     });
   });
 
@@ -53,27 +78,17 @@ describe("FormFieldDropDown", () => {
       userEvent.tab();
     });
 
-    it("set focus on dropDown", () => {
+    it("Should set focus on dropDown", () => {
       expect(screen.getByRole("combobox")).toHaveFocus();
     });
 
-    describe("When pressing space", () => {
+    describe("When pressing tab again", () => {
       beforeEach(() => {
-        userEvent.keyboard(" ");
-        userEvent.keyboard("{arrowDown}");
-        userEvent.keyboard(" ");
+        userEvent.tab();
       });
 
-      it("Only first option has been selected", () => {
-        expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(
-          true
-        );
-        expect(screen.getByRole("option", { name: "Terra" }).selected).toBe(
-          false
-        );
-        expect(screen.getByRole("option", { name: "Earth" }).selected).toBe(
-          false
-        );
+      it("Should not set focus on dropDown", () => {
+        expect(screen.getByRole("combobox")).not.toHaveFocus();
       });
     });
   });
