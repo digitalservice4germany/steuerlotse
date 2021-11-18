@@ -3,10 +3,10 @@ import React from "react";
 import FormSuccessHeader from "../components/FormSuccessHeader";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 
-export default function RevocationSuccessPage({ stepHeader }) {
+export default function RevocationSuccessPage({ stepHeader, prevUrl }) {
   return (
     <>
-      <StepHeaderButtons />
+      <StepHeaderButtons url={prevUrl} />
       <FormSuccessHeader {...stepHeader} />
     </>
   );
@@ -17,4 +17,5 @@ RevocationSuccessPage.propTypes = {
     title: PropTypes.string,
     intro: PropTypes.string,
   }).isRequired,
+  prevUrl: PropTypes.string.isRequired,
 };

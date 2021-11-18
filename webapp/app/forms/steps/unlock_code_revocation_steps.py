@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from wtforms.validators import InputRequired
@@ -45,6 +45,7 @@ class UnlockCodeRevocationSuccessStep(DisplayStep):
                 'title': render_info.step_title,
                 'intro': render_info.step_intro,
             },
+            prev_url=url_for('unlock_code_revocation', step='data_input'),
         ).camelized_dict()
 
         return render_template('react_component.html',
