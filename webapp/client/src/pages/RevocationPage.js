@@ -9,7 +9,7 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function RecovationPage({ stepHeader, form, fields }) {
+export default function RevocationPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
 
   return (
@@ -47,7 +47,7 @@ export default function RecovationPage({ stepHeader, form, fields }) {
   );
 }
 
-RecovationPage.propTypes = {
+RevocationPage.propTypes = {
   stepHeader: PropTypes.exact({
     title: PropTypes.string,
     intro: PropTypes.string,
