@@ -93,7 +93,7 @@ const ExplanatoryText = styled.small`
   }
 `;
 
-export default function FormNavButtons({
+export default function StepNavButtons({
   explanatoryButtonText,
   showOverviewButton,
   nextButtonLabel,
@@ -126,7 +126,7 @@ export default function FormNavButtons({
   );
 }
 
-FormNavButtons.propTypes = {
+StepNavButtons.propTypes = {
   nextButtonLabel: PropTypes.string,
   showOverviewButton: PropTypes.bool,
   explanatoryButtonText: PropTypes.oneOfType([
@@ -135,7 +135,7 @@ FormNavButtons.propTypes = {
   ]),
 };
 
-FormNavButtons.defaultProps = {
+StepNavButtons.defaultProps = {
   nextButtonLabel: undefined,
   showOverviewButton: false,
   explanatoryButtonText: undefined,
