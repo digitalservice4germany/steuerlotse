@@ -40,6 +40,10 @@ class StepFormProps(ComponentProps):
     fields: Dict[str, FieldProps]
 
 
+class StepDisplayProps(ComponentProps):
+    step_header: StepHeaderProps
+
+
 class LoginProps(StepFormProps):
     pass
 
@@ -49,6 +53,10 @@ class RegistrationProps(StepFormProps):
     eligibility_link: str
     terms_of_service_link: str
     data_privacy_link: str
+
+
+class RevocationSuccessProps(StepDisplayProps):
+    pass
 
 
 class DeclarationIncomesProps(StepFormProps):
