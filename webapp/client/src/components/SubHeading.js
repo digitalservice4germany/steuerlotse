@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledSubHeading = styled.h2`
+const SubHeading = styled.h2`
   & {
     font-size: var(--text-medium);
     margin-top: var(--spacing-09);
@@ -8,4 +8,4 @@ const StyledSubHeading = styled.h2`
   }
 `;
 
-export default StyledSubHeading;
+export default SubHeading;
