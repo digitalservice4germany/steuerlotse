@@ -27,6 +27,10 @@ export default function RevocationPage({ stepHeader, form, fields }) {
             label={{
               text: t("unlockCodeRevocation.idnr.labelText"),
             }}
+            details={{
+              title: t("unlockCodeRevocation.idnr.help.title"),
+              text: t("unlockCodeRevocation.idnr.help.text"),
+            }}
             errors={fields.idnr.errors}
           />
         </FormRowCentered>
