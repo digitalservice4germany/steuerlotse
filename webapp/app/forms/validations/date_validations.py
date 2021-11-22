@@ -40,6 +40,9 @@ class ValidDateOf:
 
         if not day or not month or not year: 
             raise ValidationError(self.message_incomplete)
+        
+        if len(year) < 4:            
+            raise ValidationError(self.message_incomplete)
             
         try:
             input_date = datetime.date(int(year), int(month), int(day))
