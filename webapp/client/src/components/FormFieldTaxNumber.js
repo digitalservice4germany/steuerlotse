@@ -26,7 +26,7 @@ function FormFieldTaxNumber({
     text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
   };
 
-  if (isSplit) {
+  if (!isSplit) {
     label.exampleInput = t(
       "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
     );
