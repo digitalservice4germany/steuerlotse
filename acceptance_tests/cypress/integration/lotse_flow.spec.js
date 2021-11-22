@@ -224,7 +224,6 @@ context('Acceptance tests', () => {
             // Tax number exists
             cy.get('label[for=steuernummer_exists-yes]').click()
             cy.get('#steuernummer').should('not.exist');
-            cy.get('#steuernummer1').should('not.exist')
             cy.get('select[id=bufa_nr]').should('not.exist')
             cy.get('label[for=request_new_tax_number]').should('not.exist')
 
@@ -240,14 +239,12 @@ context('Acceptance tests', () => {
             cy.get('select[id=bufa_nr]').should('be.visible')
             cy.get('label[for=request_new_tax_number]').should('not.exist')
             cy.get('#steuernummer').should('not.exist');
-            cy.get('#steuernummer1').should('not.exist')
 
             // Select state
             cy.get('select[id=bundesland]').select('BY')
             cy.get('select[id=bufa_nr]').should('be.visible')
             cy.get('label[for=request_new_tax_number]').should('not.exist')
             cy.get('#steuernummer').should('not.exist');
-            cy.get('#steuernummer1').should('not.exist')
 
             //Select bufa_nr
             cy.get('select[id=bufa_nr]').select('9203')
