@@ -52,7 +52,7 @@ Default.args = {
       stateAbbreviation: "bw",
       name: "Baden-Württemberg",
       taxOffices: [
-        { name: "Finanzamt Villingen-Schwenningen", bufa_nr: "2801" },
+        { name: "Finanzamt Villingen-Schwenningen", bufaNr: "2801" },
       ],
     },
     {
@@ -119,6 +119,38 @@ NoTaxNumber.args = {
   },
 };
 
+export const NoTaxNumberAndErrors = Template.bind({});
+NoTaxNumberAndErrors.args = {
+  ...Default.args,
+  fields: {
+    steuernummerExists: {
+      value: "no",
+      errors: ["Diese Angabe fehlt."],
+    },
+    bundesland: {
+      selectedValue: "by",
+      options: [
+        { value: "bw", displayName: "Baden-Württemberg" },
+        { value: "by", displayName: "Bayern" },
+        { value: "he", displayName: "Hessen" },
+      ],
+      errors: ["Diese Angabe fehlt."],
+    },
+    bufaNr: {
+      selectedValue: "9101",
+      errors: ["Diese Angabe fehlt."],
+    },
+    steuernummer: {
+      value: [""],
+      errors: ["Diese Angabe fehlt."],
+    },
+    requestNewTaxNumber: {
+      checked: true,
+      errors: ["Diese Angabe fehlt."],
+    },
+  },
+};
+
 export const WithTaxNumber = Template.bind({});
 WithTaxNumber.args = {
   ...Default.args,
@@ -147,6 +179,38 @@ WithTaxNumber.args = {
     requestNewTaxNumber: {
       checked: true,
       errors: [],
+    },
+  },
+};
+
+export const WithTaxNumberAndErrors = Template.bind({});
+WithTaxNumberAndErrors.args = {
+  ...Default.args,
+  fields: {
+    steuernummerExists: {
+      value: "yes",
+      errors: ["Diese Angabe fehlt."],
+    },
+    bundesland: {
+      selectedValue: "by",
+      options: [
+        { value: "bw", displayName: "Baden-Württemberg" },
+        { value: "by", displayName: "Bayern" },
+        { value: "he", displayName: "Hessen" },
+      ],
+      errors: ["Diese Angabe fehlt."],
+    },
+    bufaNr: {
+      selectedValue: undefined,
+      errors: ["Diese Angabe fehlt."],
+    },
+    steuernummer: {
+      value: ["198", "1131", "0010"],
+      errors: ["Diese Angabe fehlt."],
+    },
+    requestNewTaxNumber: {
+      checked: true,
+      errors: ["Diese Angabe fehlt."],
     },
   },
 };

@@ -10,6 +10,11 @@ import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import SubHeading from "../components/SubHeading";
+import {
+  checkboxPropType,
+  fieldPropType,
+  selectionFieldPropType,
+} from "../lib/propTypes";
 
 const TAX_NUMBER_FORM_STATES = {
   NothingSelected: "NothingSelected",
@@ -20,26 +25,24 @@ const TAX_NUMBER_FORM_STATES = {
   RequestNewTaxNumber: "RequestNewTaxNumber",
 };
 
-function currentState(taxNumberFormState, fields) {
-  if (taxNumberFormState === TAX_NUMBER_FORM_STATES.NothingSelected) {
-    if (fields.steuernummerExists.value === "yes") {
-      if (fields.bundesland.selectedValue) {
-        return TAX_NUMBER_FORM_STATES.TaxNumberInput;
-      }
-      return TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists;
+function currentState(fields) {
+  if (fields.steuernummerExists.value === "yes") {
+    if (fields.bundesland.selectedValue) {
+      return TAX_NUMBER_FORM_STATES.TaxNumberInput;
     }
-    if (fields.steuernummerExists.value === "no") {
-      if (fields.bundesland.selectedValue) {
-        if (fields.bufaNr.selectedValue) {
-          return TAX_NUMBER_FORM_STATES.RequestNewTaxNumber;
-        }
-        return TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
+    return TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists;
+  }
+  if (fields.steuernummerExists.value === "no") {
+    if (fields.bundesland.selectedValue) {
+      if (fields.bufaNr.selectedValue) {
+        return TAX_NUMBER_FORM_STATES.RequestNewTaxNumber;
       }
-      return TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists;
+      return TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
     }
+    return TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists;
   }
 
-  return taxNumberFormState;
+  return TAX_NUMBER_FORM_STATES.NothingSelected;
 }
 
 function extractCorrespondingTaxOffices(
@@ -74,7 +77,7 @@ export default function TaxNumberPage({
   const { t } = useTranslation();
 
   const [taxNumberFormState, setTaxNumberFormState] = useState(
-    TAX_NUMBER_FORM_STATES.NothingSelected
+    currentState(fields)
   );
 
   const [selectedStateAbbreviation, setSelectedStateAbbreviation] = useState(
@@ -155,38 +158,40 @@ export default function TaxNumberPage({
   };
 
   const stateDropDown = (
-    <FormFieldDropDown
-      fieldName="bundesland"
-      fieldId="bundesland"
-      key="bundesland"
-      selectedValue={fields.bundesland.selectedValue}
-      options={fields.bundesland.options}
-      label={{
-        text: t("lotseFlow.taxNumber.bundesland.labelText"),
-      }}
-      errors={fields.bundesland.errors}
-      onChangeHandler={changeStateSelection}
-      defaultValue="Bitte auswählen"
-    />
+    <FormRowCentered key="bundeslandRow">
+      <FormFieldDropDown
+        fieldName="bundesland"
+        fieldId="bundesland"
+        key="bundesland"
+        selectedValue={fields.bundesland.selectedValue}
+        options={fields.bundesland.options}
+        label={{
+          text: t("lotseFlow.taxNumber.bundesland.labelText"),
+        }}
+        errors={fields.bundesland.errors}
+        onChangeHandler={changeStateSelection}
+      />
+    </FormRowCentered>
   );
 
   const bufaNrDropdown = (
-    <FormFieldDropDown
-      fieldName="bufa_nr"
-      fieldId="bufa_nr"
-      key="bufa_nr"
-      selectedValue={fields.bufaNr.selectedValue}
-      options={extractCorrespondingTaxOffices(
-        selectedStateAbbreviation,
-        taxOfficeList
-      )}
-      label={{
-        text: t("lotseFlow.taxNumber.taxOffices.labelText"),
-      }}
-      errors={fields.bufaNr.errors}
-      onChangeHandler={changeTaxOffices}
-      defaultValue="Bitte auswählen"
-    />
+    <FormRowCentered key="bufaNrRow">
+      <FormFieldDropDown
+        fieldName="bufa_nr"
+        fieldId="bufa_nr"
+        key="bufa_nr"
+        selectedValue={fields.bufaNr.selectedValue}
+        options={extractCorrespondingTaxOffices(
+          selectedStateAbbreviation,
+          taxOfficeList
+        )}
+        label={{
+          text: t("lotseFlow.taxNumber.taxOffices.labelText"),
+        }}
+        errors={fields.bufaNr.errors}
+        onChangeHandler={changeTaxOffices}
+      />
+    </FormRowCentered>
   );
 
   const taxNumberInput = (
@@ -201,7 +206,7 @@ export default function TaxNumberPage({
           exampleInput: t("lotseFlow.taxNumber.taxNumberInput.labelText"),
         }}
         errors={fields.steuernummer.errors}
-        key={selectedStateAbbreviation} // Added render a new DOM Element whenever the selected state changes
+        key={selectedStateAbbreviation}
         isSplit={selectedStateAbbreviation !== "he"} // Do not split field for Hessen
       />
     </FormRowCentered>
@@ -212,7 +217,7 @@ export default function TaxNumberPage({
       <SubHeading>
         {t("lotseFlow.taxNumber.requestNewTaxNumber.headline")}
       </SubHeading>
-      <div>{t("lotseFlow.taxNumber.requestNewTaxNumber.intro")}</div>
+      <p>{t("lotseFlow.taxNumber.requestNewTaxNumber.intro")}</p>
       <FormFieldConsentBox
         required
         fieldName="request_new_tax_number"
@@ -232,7 +237,7 @@ export default function TaxNumberPage({
 
   let shownFields;
 
-  switch (currentState(taxNumberFormState, fields)) {
+  switch (taxNumberFormState) {
     case TAX_NUMBER_FORM_STATES.NothingSelected:
       break;
     case TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists:
@@ -286,38 +291,16 @@ export default function TaxNumberPage({
   );
 }
 
-const fieldPropType = PropTypes.exact({
-  value: PropTypes.any,
-  errors: PropTypes.arrayOf(PropTypes.string),
-});
-
-const selectionFieldPropType = PropTypes.exact({
-  selectedValue: PropTypes.any,
-  options: PropTypes.arrayOf(
-    PropTypes.exact({
-      value: PropTypes.string,
-      displayName: PropTypes.string,
-    })
-  ),
-  errors: PropTypes.arrayOf(PropTypes.string),
-});
-
-const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-});
-
 TaxNumberPage.propTypes = {
   stepHeader: PropTypes.exact({
-    // TODO: define these here, not in Python
     title: PropTypes.string,
     intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
-    action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
+    action: PropTypes.string,
     csrfToken: PropTypes.string,
     showOverviewButton: PropTypes.bool,
-    nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
+    nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
     steuernummerExists: fieldPropType,
@@ -326,6 +309,17 @@ TaxNumberPage.propTypes = {
     bufaNr: selectionFieldPropType,
     requestNewTaxNumber: checkboxPropType,
   }).isRequired,
-  taxOfficeList: PropTypes.arrayOf(PropTypes.any).isRequired,
+  taxOfficeList: PropTypes.arrayOf(
+    PropTypes.exact({
+      stateAbbreviation: PropTypes.string,
+      name: PropTypes.string,
+      taxOffices: PropTypes.arrayOf(
+        PropTypes.exact({
+          name: PropTypes.string,
+          bufaNr: PropTypes.string,
+        })
+      ),
+    })
+  ).isRequired,
   numberOfUsers: PropTypes.number.isRequired,
 };

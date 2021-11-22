@@ -183,7 +183,7 @@ describe("TaxNumberPage", () => {
         expect(screen.queryAllByRole("textbox")).toHaveLength(3);
       });
 
-      it("Do not tax office selection", () => {
+      it("Should not show tax office selection", () => {
         expect(
           screen.queryByLabelText(
             "Wählen Sie Ihr Finanzamt",
@@ -230,7 +230,7 @@ describe("TaxNumberPage", () => {
         expect(screen.queryAllByRole("textbox")).toHaveLength(1);
       });
 
-      it("Do not tax office selection", () => {
+      it("Should not show tax office selection", () => {
         expect(
           screen.queryByLabelText(
             "Wählen Sie Ihr Finanzamt",
