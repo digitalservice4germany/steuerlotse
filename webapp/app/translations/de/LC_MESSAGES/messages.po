@@ -185,7 +185,7 @@ msgstr "Der Wert darf nur Ziffern beinhalten."
 
 #: app/forms/validators.py:30
 msgid "validate.must-not-be-zero"
-msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
+msgstr "Dieses Feld darf nicht 0 sein."
 
 #: app/forms/validators.py:43
 msgid "validate.integer-length-max"
@@ -240,7 +240,7 @@ msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
 
 #: app/forms/validators.py:139
 msgid "validate.invalid-tax-number-length.shorter-than-eleven"
-msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
+msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
 
 #: app/forms/validators.py:141
 msgid "validate.invalid-tax-number-length.too-long"
