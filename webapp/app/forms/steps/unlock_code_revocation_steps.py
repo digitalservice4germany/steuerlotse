@@ -46,6 +46,7 @@ class UnlockCodeRevocationSuccessStep(DisplayStep):
                 'intro': render_info.step_intro,
             },
             prev_url=url_for('unlock_code_revocation', step='data_input'),
+            next_url=url_for('unlock_code_request', step='data_input')
         ).camelized_dict()
 
         return render_template('react_component.html',
