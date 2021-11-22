@@ -22,13 +22,6 @@
 {% block optional_js %}
     {# TODO Restructure and clean up the optional javascript (Use single script tag and restructure masking/validation) #}
     <script src="{{ static_url_for('static', filename='js/customValidation.js') }}" type=text/javascript></script>
-    <script type="text/javascript">
-        $("[required]").each(function () {
-            if ($(this)[0].hasAttribute("input_req_err_msg")) {
-                inputMissingErrorMessageHelper($(this)[0], $(this).attr("input_req_err_msg"));
-            }
-        });
-    </script>
     <script src="{{ static_url_for('static', filename='js/autonumeric.js') }}" type=text/javascript></script>
     <script>
         new AutoNumeric.multiple('.euro_field', {decimalCharacter: ",", digitGroupSeparator: ".", minimumValue: 0});

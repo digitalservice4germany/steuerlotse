@@ -1287,6 +1287,10 @@ msgstr ""
 "beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-"
 "Identifikationsnummer zwei verschiedene Nummern sind."
 
+#: app/forms/steps/lotse/personal_data.py:42
+msgid "form.lotse.steuernummer.selection_input_required"
+msgstr "Beantworten Sie die Frage, um fortfahren zu können."
+
 #: app/forms/steps/lotse/personal_data.py:44
 msgid "form.lotse.field_bundesland"
 msgstr "Wählen Sie Ihr Bundesland"
@@ -1368,28 +1372,32 @@ msgstr "Auswahl Bundesland"
 msgid "form.lotse.field_bundesland_required"
 msgstr "Bundesland auswählen"
 
-#: app/forms/steps/lotse/personal_data.py:68
+#: app/forms/steps/lotse/personal_data.py:66
+msgid "form.lotse.steuernummer.input_required"
+msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
+
+#: app/forms/steps/lotse/personal_data.py:69
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/personal_data.py:72
+#: app/forms/steps/lotse/personal_data.py:73
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/personal_data.py:74
+#: app/forms/steps/lotse/personal_data.py:75
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:77
+#: app/forms/steps/lotse/personal_data.py:78
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:78
+#: app/forms/steps/lotse/personal_data.py:79
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/personal_data.py:81
-#: app/forms/steps/lotse/personal_data.py:141
+#: app/forms/steps/lotse/personal_data.py:82
+#: app/forms/steps/lotse/personal_data.py:142
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1399,11 +1407,11 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:82
+#: app/forms/steps/lotse/personal_data.py:83
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:127
+#: app/forms/steps/lotse/personal_data.py:128
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"
