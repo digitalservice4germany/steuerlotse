@@ -75,6 +75,10 @@ class LotseStepFormProps(StepFormProps):
     prev_url: str
 
 
+class SelectStMindProps(LotseStepFormProps):
+    pass
+
+
 class TaxNumberStepFormProps(LotseStepFormProps):
     tax_office_list: List[Dict]
     number_of_users: int
