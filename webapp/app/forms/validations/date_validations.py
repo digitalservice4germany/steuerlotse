@@ -88,3 +88,13 @@ class ValidDateOfDivorce(ValidDateOf):
             message_incorrect = _l('validate.date-of-incorrect'), 
             message_in_the_future = _l('validate.date-of-in-the-future'), 
             message_to_far_in_past = _l('validate.date-of-to-far-in-past'))
+        
+        
+class ValidDateOfSeparatedSince(ValidDateOf):
+    def __init__(self) -> None:
+        super().__init__(
+            message_missing = _l('validate.date-of-separated-missing'),
+            message_incomplete = _l('validate.date-of-incomplete'), 
+            message_incorrect = _l('validate.date-of-incorrect'), 
+            message_in_the_future = _l('validate.date-of-in-the-future'), 
+            message_to_far_in_past = _l('validate.date-of-too-far-in-past'))

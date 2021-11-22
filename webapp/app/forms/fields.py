@@ -212,7 +212,8 @@ class LegacySteuerlotseDateField(DateField):
         # If a ValueError is thrown inside the process_formdata, 
         # the subsequent validators are executed (weird side effect) and this can lead to 
         # duplicate validation errors.
-        # Overwriting only the default 'Not a valid date' message will have the effect described above. 
+        # Overwriting only the default 'Not a valid date' message will have the effect described above.
+        # If prevent_validation_error is True, then the validation should be handled by the caller / custom validator.
         try:
             super().process_formdata(valuelist)
         except ValueError as e:
@@ -240,6 +241,7 @@ class SteuerlotseDateField(DateField):
         # the subsequent validators are executed (weird side effect) and this can lead to 
         # duplicate validation errors.
         # Overwriting only the default 'Not a valid date' message will have the effect described above. 
+        # If prevent_validation_error is True, then the validation should be handled by the caller / custom validator.
         try:
             super().process_formdata(valuelist)
         except ValueError as e:

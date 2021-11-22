@@ -16,7 +16,7 @@ class UnlockCodeRevocationInputStep(FormStep):
     class Form(SteuerlotseBaseForm):
         idnr = LegacyIdNrField(_l('unlock-code-revocation.idnr'), [InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
         dob = LegacySteuerlotseDateField(label=_l('unlock-code-revocation.dob'), 
-                                         prevent_validation_error=False,
+                                         prevent_validation_error=True,
                                          validators=[InputRequired(message=_l('validate.day-of-birth-missing')), 
                                          ValidDateOfBirth()])
 
