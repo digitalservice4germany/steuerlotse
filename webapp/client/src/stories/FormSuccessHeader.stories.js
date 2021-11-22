@@ -13,5 +13,5 @@ export const Default = Template.bind({});
 Default.args = {
   title: "Stornierung erfolgreich",
   intro:
-    "Ihr Freischaltcode wurde stoniert. Wenn Sie einen Neuen beantragen wollen, fahren Sie mit dem nächsten Formular fort.",
+    "Ihr Freischaltcode wurde storniert. Wenn Sie einen Neuen beantragen wollen, fahren Sie mit dem nächsten Formular fort.",
 };
