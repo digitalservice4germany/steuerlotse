@@ -510,6 +510,34 @@ img.icon {
   }
 }
 
+.tax-period-banner {
+  --banner-icon-width: 29px;
+
+  display: flex;
+  justify-content: center;
+
+  padding: var(--spacing-02) 0;
+  background-color: var(--link-color);
+
+  color: var(--inverse-text-color);
+  line-height: 2rem;
+  font-size: var(--text-medium);
+}
+
+.tax-period-banner img {
+  width: calc(2*var(--spacing-03) + var(--banner-icon-width));
+  padding: 0 var(--spacing-03);
+}
+
+.tax-period-banner p {
+  width: 100%;
+  max-width: calc(var(--banner-icon-width) + var(--main-max-width));
+
+  padding: 0;
+  margin: 0;
+}
+
+
 .hidden {
   display: none;
 }
