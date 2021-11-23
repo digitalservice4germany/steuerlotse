@@ -1055,7 +1055,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
                 form_data=ImmutableMultiDict({'user_b_has_elster_account_eligibility': 'yes'}))
-            expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityFailureStep.name)
+            expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
@@ -1429,7 +1429,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True,
                 form_data=ImmutableMultiDict({'user_a_has_elster_account_eligibility': 'yes'}))
-            expected_url = step.url_for_step(ElsterRegistrationMethodEligibilityFailureStep.name)
+            expected_url = step.url_for_step(PensionDecisionEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
         self.assertEqual(expected_url, step.render_info.next_url)
