@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-23 18:52+0100\n"
+"POT-Creation-Date: 2021-11-23 19:03+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -5311,31 +5311,6 @@ msgstr ""
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#: app/templates/unlock_code/registration_data_input.html:12
-msgid "unlock-code-request.data-privacy-and-agb.title"
-msgstr "Datenschutzerklärung und Nutzungsbedingungen"
-
-#: app/templates/unlock_code/registration_data_input.html:17
-msgid "unlock-code-request.edata.title"
-msgstr "Einverständnis zur automatischen Übernahme vorliegender Daten"
-
-#: app/templates/unlock_code/registration_data_input.html:18
-msgid "unlock-code-request.e-data.help-title"
-msgstr "Was bedeutet das?"
-
-#: app/templates/unlock_code/registration_data_input.html:18
-msgid "unlock-code-request.e-data.help-text"
-msgstr ""
-"Daten zu beispielsweise <b>inländischen Renten, Pensionen oder Kranken- "
-"und Pflegeversicherungen</b> erhält die Steuerverwaltung vom jeweiligen "
-"Träger elektronisch. Diese Daten werden vom Finanzamt automatisch "
-"übernommen und müssen von Ihnen nicht in diese Steuererklärung "
-"eingetragen werden. </br> Welche Beträge über Sie übermittelt wurden, "
-"können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle "
-"per Post erhalten haben. Die Daten kommen aus der gleichen Quelle. "
-"Sollten Sie mit der Übernahme nicht einverstanden sein, können Sie die "
-"vereinfachte Steuererklärung leider nicht nutzen."
 
 #: app/templates/unlock_code/registration_success.html:4
 msgid "register.success.next-steps.heading"
