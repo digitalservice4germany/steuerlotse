@@ -382,13 +382,8 @@ class TaxNumberField(SteuerlotseStringField):
         # Once the validation has gone through, post_validate() stores the data as string.
         # As we know that it is correct, we can just separate it in chunks here.
         split_data = []
-        chunk_sizes = [3, 4, 4]
-        start_idx = 0
-        for chunk_size in chunk_sizes:
-            end_index = start_idx + chunk_size
-            if self.data:
-                split_data.append(self.data[start_idx: end_index])
-            start_idx = end_index
+        if self.data:
+            split_data.append(self.data)
         return split_data
 
     def post_validate(self, form, validation_stopped):

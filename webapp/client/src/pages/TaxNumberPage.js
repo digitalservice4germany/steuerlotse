@@ -25,6 +25,31 @@ const TAX_NUMBER_FORM_STATES = {
   RequestNewTaxNumber: "RequestNewTaxNumber",
 };
 
+function getSplitTypeForState(selectedStateAbbreviation) {
+  switch (selectedStateAbbreviation) {
+    case "bw":
+    case "be":
+    case "hb":
+    case "hh":
+    case "nd":
+    case "rp":
+    case "sh":
+      return "0";
+    case "by":
+    case "bb":
+    case "mv":
+    case "sl":
+    case "sn":
+    case "st":
+    case "th":
+      return "1";
+    case "nw":
+      return "2";
+    default:
+      return "3";
+  }
+}
+
 function currentState(fields) {
   if (fields.steuernummerExists.value === "yes") {
     if (fields.bundesland.selectedValue) {
@@ -207,7 +232,7 @@ export default function TaxNumberPage({
         }}
         errors={fields.steuernummer.errors}
         key={selectedStateAbbreviation}
-        isSplit={selectedStateAbbreviation !== "he"} // Do not split field for Hessen
+        splitType={getSplitTypeForState(selectedStateAbbreviation)} // Do not split field for Hessen
       />
     </FormRowCentered>
   );
