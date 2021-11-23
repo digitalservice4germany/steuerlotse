@@ -1,9 +1,6 @@
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-// eslint-disable-next-line
-import styled from "styled-components";
-// eslint-disable-next-line
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
 
 const Row = styled.div`
   margin-top: var(--spacing-09);
