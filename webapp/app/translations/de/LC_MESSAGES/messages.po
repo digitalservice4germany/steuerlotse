@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-12 16:32+0100\n"
+"POT-Creation-Date: 2021-11-23 18:52+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -656,8 +656,8 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:499
 msgid "form.eligibility.pension-title"
 msgstr ""
-"Beziehen Sie eine Rente bzw. eine Pension von einer oder mehrerer dieser "
-"Stellen:"
+"Beziehen Sie eine inländische Rente bzw. eine Pension von einer oder "
+"mehrerer dieser Stellen:"
 
 #: app/forms/steps/eligibility_steps.py:500
 msgid "form.eligibility.pension-intro"
@@ -1369,35 +1369,31 @@ msgid "form.lotse.field_bundesland.data_label"
 msgstr "Auswahl Bundesland"
 
 #: app/forms/steps/lotse/personal_data.py:65
-msgid "form.lotse.field_bundesland_required"
-msgstr "Bundesland auswählen"
-
-#: app/forms/steps/lotse/personal_data.py:66
 msgid "form.lotse.steuernummer.input_required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
-#: app/forms/steps/lotse/personal_data.py:69
+#: app/forms/steps/lotse/personal_data.py:68
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/personal_data.py:73
+#: app/forms/steps/lotse/personal_data.py:72
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/personal_data.py:75
+#: app/forms/steps/lotse/personal_data.py:74
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:78
+#: app/forms/steps/lotse/personal_data.py:77
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:79
+#: app/forms/steps/lotse/personal_data.py:78
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/personal_data.py:82
-#: app/forms/steps/lotse/personal_data.py:142
+#: app/forms/steps/lotse/personal_data.py:81
+#: app/forms/steps/lotse/personal_data.py:141
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1407,11 +1403,11 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:83
+#: app/forms/steps/lotse/personal_data.py:82
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:128
+#: app/forms/steps/lotse/personal_data.py:127
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"
@@ -2195,10 +2191,10 @@ msgstr ""
 "Da viele Informationen der Finanzverwaltung bereits vorliegen, müssen Sie"
 " diese nicht mehr in Ihre Steuererklärung eintragen. Dazu gehören zum "
 "Beispiel die elektronisch an die Finanzverwaltung übermittelten "
-"Renteneinkünfte, Pensionen und Krankenversicherungsbeiträge.</p><p>Welche"
-" Beträge über Sie übermittelt wurden, können Sie den Bescheiden "
-"entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die"
-" Daten kommen aus der gleichen Quelle."
+"inländischen Renteneinkünfte, Pensionen und "
+"Krankenversicherungsbeiträge.</p><p>Welche Beträge über Sie übermittelt "
+"wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen "
+"Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle."
 
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:85
 msgid "form.lotse.session-note.title"
@@ -2330,19 +2326,19 @@ msgid "form.lotse.familienstand_confirm_zusammenveranlagung.data_label"
 msgstr "Einverständnis Zusammenveranlagung"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:70
-#: app/forms/validations/date_validations.py:76
+#: app/forms/validations/date_validations.py:79
 msgid "validate.date-of-marriage-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:73
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:102
-#: app/forms/validations/date_validations.py:67
+#: app/forms/validations/date_validations.py:70
 msgid "validate.date-of-death-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:76
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:89
-#: app/forms/validations/date_validations.py:86
+#: app/forms/validations/date_validations.py:89
 msgid "validate.date-of-divorce-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
@@ -2758,63 +2754,66 @@ msgstr ""
 "finden Sie zum Beispiel auf dem Kontoauszug Ihres kontoführenden "
 "Kreditinstituts."
 
-#: app/forms/validations/date_validations.py:58
+#: app/forms/validations/date_validations.py:61
 #, fuzzy
 msgid "validate.date-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/validations/date_validations.py:59
+#: app/forms/validations/date_validations.py:62
 msgid "validate.date-of-birth-incomplete"
 msgstr ""
 "Geben Sie Ihr vollständiges Geburtsdatum ein. Ihre Angabe muss folgendem "
 "Muster entsprechen: 29 2 1951"
 
-#: app/forms/validations/date_validations.py:60
-#: app/forms/validations/date_validations.py:69
-#: app/forms/validations/date_validations.py:78
-#: app/forms/validations/date_validations.py:88
-#: app/forms/validations/date_validations.py:98
+#: app/forms/validations/date_validations.py:63
+#: app/forms/validations/date_validations.py:72
+#: app/forms/validations/date_validations.py:81
+#: app/forms/validations/date_validations.py:91
+#: app/forms/validations/date_validations.py:101
 msgid "validate.date-of-incorrect"
 msgstr "Das ist kein korrektes Datum. Prüfen Sie Ihre Angabe."
 
-#: app/forms/validations/date_validations.py:61
-#: app/forms/validations/date_validations.py:70
-#: app/forms/validations/date_validations.py:79
-#: app/forms/validations/date_validations.py:89
-#: app/forms/validations/date_validations.py:99
+#: app/forms/validations/date_validations.py:64
+#: app/forms/validations/date_validations.py:73
+#: app/forms/validations/date_validations.py:82
+#: app/forms/validations/date_validations.py:92
+#: app/forms/validations/date_validations.py:102
 msgid "validate.date-of-in-the-future"
 msgstr "Das Datum darf nicht in der Zukunft liegen."
 
-#: app/forms/validations/date_validations.py:62
-#: app/forms/validations/date_validations.py:71
-#: app/forms/validations/date_validations.py:80
-#: app/forms/validations/date_validations.py:90
-#: app/forms/validations/date_validations.py:100
+#: app/forms/validations/date_validations.py:65
+#: app/forms/validations/date_validations.py:74
+#: app/forms/validations/date_validations.py:83
+#: app/forms/validations/date_validations.py:93
 msgid "validate.date-of-to-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/forms/validations/date_validations.py:68
+#: app/forms/validations/date_validations.py:71
 msgid "validate.date-of-death-incomplete"
 msgstr ""
 "Geben Sie ein vollständiges Datum ein. Ihre Angabe muss folgendem Muster "
 "entsprechen: 29 2 1951"
 
-#: app/forms/validations/date_validations.py:77
+#: app/forms/validations/date_validations.py:80
 msgid "validate.date-of-marriage-incomplete"
 msgstr ""
 "Geben Sie Ihr vollständiges Hochzeitsdatum ein. Ihre Angabe muss "
 "folgendem Muster entsprechen: 29 2 1951"
 
-#: app/forms/validations/date_validations.py:87
-#: app/forms/validations/date_validations.py:97
+#: app/forms/validations/date_validations.py:90
+#: app/forms/validations/date_validations.py:100
 msgid "validate.date-of-incomplete"
 msgstr ""
 "Geben Sie ein vollständiges Datum ein. Ihre Angabe muss folgendem Muster "
 "entsprechen: 29 2 1951"
 
-#: app/forms/validations/date_validations.py:96
+#: app/forms/validations/date_validations.py:99
 msgid "validate.date-of-separated-missing"
 msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
+
+#: app/forms/validations/date_validations.py:103
+msgid "validate.date-of-too-far-in-past"
+msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
 #: app/model/form_data.py:347
 msgid "form.lotse.input_invalid.mandatory_field_missing"
@@ -3175,7 +3174,7 @@ msgstr ""
 #: app/templates/content/agb.html:21
 msgid "agb.programmumfang-list-1"
 msgstr ""
-"Renteneinkünfte und / oder Pensionen, die von den "
+"inländische Renteneinkünfte und / oder Pensionen, die von den "
 "Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet "
 "worden sind, und ggf."
 
@@ -4541,8 +4540,9 @@ msgstr "Welche Daten werden automatisch in meine Steuererklärung übernommen?"
 #: app/templates/content/howitworks.html:154
 msgid "info.card-takeover.p1-content"
 msgstr ""
-"Daten zu Renten, Pensionen sowie zu Kranken- und Pflegeversicherungen "
-"erhält die Finanzverwaltung von der jeweiligen Stelle elektronisch."
+"Daten zu inländischen Renten, Pensionen sowie zu Kranken- und "
+"Pflegeversicherungen erhält die Finanzverwaltung von der jeweiligen "
+"Stelle elektronisch."
 
 #: app/templates/content/howitworks.html:155
 msgid "info.card-takeover.p2-content"
@@ -5327,8 +5327,8 @@ msgstr "Was bedeutet das?"
 #: app/templates/unlock_code/registration_data_input.html:18
 msgid "unlock-code-request.e-data.help-text"
 msgstr ""
-"Daten zu beispielsweise <strong>Renten, Pensionen oder Kranken- und "
-"Pflegeversicherungen</strong> erhält die Steuerverwaltung vom jeweiligen "
+"Daten zu beispielsweise <b>inländischen Renten, Pensionen oder Kranken- "
+"und Pflegeversicherungen</b> erhält die Steuerverwaltung vom jeweiligen "
 "Träger elektronisch. Diese Daten werden vom Finanzamt automatisch "
 "übernommen und müssen von Ihnen nicht in diese Steuererklärung "
 "eingetragen werden. </br> Welche Beträge über Sie übermittelt wurden, "
