@@ -63,7 +63,7 @@ describe("Revocation", () => {
       cy.visit("/unlock_code_revocation/step/data_input");
     });
 
-    it("should redirect to success page", function () {
+    it("should redirect to success page for correct input", function () {
       cy.get("input[id=idnr_1]").clear().type(idnr[0]);
       cy.get("input[id=idnr_2]").clear().type(idnr[1]);
       cy.get("input[id=idnr_3]").clear().type(idnr[2]);
