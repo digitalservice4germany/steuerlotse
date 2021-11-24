@@ -382,7 +382,7 @@ class TaxNumberField(SteuerlotseStringField):
             return self.data
 
         # Once the validation has gone through, post_validate() stores the data as string.
-        return [self.data]
+        return [self.data if self.data else '']
 
     def post_validate(self, form, validation_stopped):
         # Once the validation has gone through, we know that the idnr is correct.
