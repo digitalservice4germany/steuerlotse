@@ -45,7 +45,7 @@ class TestSetTestingDataRoute:
             assert response.status_code == 404
 
     @pytest.mark.usefixtures("staging_flask_env")
-    def test_if_non_production_environment_then_return_set_data(self, app):
+    def test_if_non_production_environment_then_return_set_data(self):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
         app = create_app()
