@@ -1050,8 +1050,8 @@ class TestForeignCountrySuccessEligibility(unittest.TestCase):
                    MagicMock(side_effect=ValidationError([], OtherIncomeEligibilityData))):
             self.assertRaises(ValidationError, ForeignCountrySuccessEligibility.parse_obj, valid_data)
 
-    def test_if_other_income_valid_and_foreign_country_no_and_no_user_a_has_elster_account_eligibility_set_then_raise_no_validation_error(self):
-        valid_data = {'foreign_country_eligibility': 'no'}
+    def test_if_other_income_valid_and_foreign_country_no_and_no_user_a_has_elster_account_eligibility_then_raise_no_validation_error(self):
+        valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)):
@@ -1059,8 +1059,8 @@ class TestForeignCountrySuccessEligibility(unittest.TestCase):
         except ValidationError:
             self.fail("ForeignCountryEligibility.parse_obj should not raise validation error")
 
-    def test_if_other_income_valid_and_foreign_country_no_but_abrufcode_not_no_and_user_a_has_elster_account_eligibility_no_then_raise_validation_error(self):
-        non_valid_data = {'foreign_country_eligibility': 'no', 'elster_abrufcode_eligibility': 'NOT_NO', 'user_a_has_elster_account_eligibility': 'no'}
+    def test_if_other_income_valid_and_foreign_country_no_but_abrufcode_not_no_then_raise_validation_error(self):
+        non_valid_data = {'foreign_country_eligibility': 'no', 'elster_abrufcode_eligibility': 'NOT_NO'}
         with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, ForeignCountrySuccessEligibility.parse_obj, non_valid_data)
 
