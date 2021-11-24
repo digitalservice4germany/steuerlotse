@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FormNavButtons from "./FormNavButtons";
+import StepNavButtons from "./StepNavButtons";
 
-describe("a FormNavButtons without props", () => {
+describe("a StepNavButtons without props", () => {
   beforeEach(() => {
-    render(<FormNavButtons />);
+    render(<StepNavButtons />);
   });
 
   it("should render a button with the default button text", () => {
@@ -17,9 +17,9 @@ describe("a FormNavButtons without props", () => {
   });
 });
 
-describe("a FormNavButtons with a nextButtonLabel", () => {
+describe("a StepNavButtons with a nextButtonLabel", () => {
   beforeEach(() => {
-    render(<FormNavButtons nextButtonLabel="neeeeeext" />);
+    render(<StepNavButtons nextButtonLabel="neeeeeext" />);
   });
 
   it("should render a button with the custom button text", () => {
@@ -27,9 +27,9 @@ describe("a FormNavButtons with a nextButtonLabel", () => {
   });
 });
 
-describe("a FormNavButtons with an overview button", () => {
+describe("a StepNavButtons with an overview button", () => {
   beforeEach(() => {
-    render(<FormNavButtons showOverviewButton />);
+    render(<StepNavButtons showOverviewButton />);
   });
 
   it("should render a button to go to the overview", () => {
@@ -38,9 +38,9 @@ describe("a FormNavButtons with an overview button", () => {
   });
 });
 
-describe("a FormNavButtons with an explanatoryButtonText", () => {
+describe("a StepNavButtons with an explanatoryButtonText", () => {
   beforeEach(() => {
-    render(<FormNavButtons explanatoryButtonText="some text" />);
+    render(<StepNavButtons explanatoryButtonText="some text" />);
   });
 
   it("should render the explanatory button text", () => {
