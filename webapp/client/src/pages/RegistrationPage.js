@@ -58,7 +58,7 @@ export default function RegistrationPage({
             fieldId="dob"
             values={fields.dob.value}
             label={{
-              text: t("unlockCodeRequest.dob.labelText"),
+              text: t("fields.dob.labelText"),
             }}
             errors={fields.dob.errors}
           />
@@ -70,11 +70,11 @@ export default function RegistrationPage({
             fieldId="idnr"
             values={fields.idnr.value}
             label={{
-              text: t("unlockCodeActivation.idnr.labelText"),
+              text: t("fields.idnr.labelText"),
             }}
             details={{
-              title: t("unlockCodeActivation.idnr.help.title"),
-              text: t("unlockCodeActivation.idnr.help.text"),
+              title: t("fields.idnr.help.title"),
+              text: t("fields.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />

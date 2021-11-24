@@ -52,8 +52,15 @@ FieldProps = Union[SelectFieldProps, InputFieldProps, CheckboxFieldProps, YesNoF
 
 class StepFormProps(ComponentProps):
     step_header: StepHeaderProps
+    prev_url: Optional[str]
     form: FormProps
     fields: Dict[str, FieldProps]
+
+
+class StepDisplayProps(ComponentProps):
+    step_header: StepHeaderProps
+    prev_url: Optional[str]
+    next_url: Optional[str]
 
 
 class LoginProps(StepFormProps):
@@ -65,6 +72,14 @@ class RegistrationProps(StepFormProps):
     eligibility_link: str
     terms_of_service_link: str
     data_privacy_link: str
+
+
+class RevocationProps(StepFormProps):
+    pass
+
+
+class RevocationSuccessProps(StepDisplayProps):
+    pass
 
 
 class DeclarationIncomesProps(StepFormProps):

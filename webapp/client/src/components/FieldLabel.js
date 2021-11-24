@@ -10,11 +10,12 @@ const Label = styled.label`
 `;
 
 export default function FieldLabel(props) {
+  const { fieldId } = props;
   return (
     <FieldLabelScaffolding
       {...props}
       render={(innerContent, className) => (
-        <Label htmlFor={props.fieldId} className={className}>
+        <Label htmlFor={fieldId} className={className}>
           {innerContent}
         </Label>
       )}
