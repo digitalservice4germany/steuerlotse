@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormFieldDropDown from "../components/FormFieldDropDown";
@@ -16,14 +16,98 @@ import {
   selectionFieldPropType,
 } from "../lib/propTypes";
 
-const TAX_NUMBER_FORM_STATES = {
+const TAX_NUMBER_FORM_STATE_CHANGES = {
   NothingSelected: "NothingSelected",
-  StateSelectionTaxNumberExists: "StateSelectionTaxNumberExists",
-  StateSelectionNoTaxNumberExists: "StateSelectionNoTaxNumberExists",
-  TaxOfficeSelection: "TaxOfficeSelection",
-  TaxNumberInput: "TaxNumberInput",
-  RequestNewTaxNumber: "RequestNewTaxNumber",
+  TaxNumberExistsSelected: "TaxNumberExistsSelected",
+  BundeslandSelected: "BundeslandSelected",
+  TaxOfficeSelected: "TaxOfficeSelected",
 };
+
+function changeTaxNumberState(state, action) {
+  switch (action.type) {
+    case TAX_NUMBER_FORM_STATE_CHANGES.TaxNumberExistsSelected:
+      return {
+        ...state,
+        taxNumberExists: action.value,
+        steuernummer:
+          action.value === "yes" && state.bundesland
+            ? state.steuernummer
+            : [""],
+        bufaNr:
+          action.value !== "yes" && state.bundesland ? state.bufaNr : undefined,
+        requestNewTaxNumber: undefined,
+        showTaxNumberExists: true,
+        showBundesland: true,
+        showSteuernummer: action.value === "yes" && state.bundesland,
+        showBufaNr: action.value !== "yes" && state.bundesland,
+        showRequestNewTaxNumber: false,
+      };
+    case TAX_NUMBER_FORM_STATE_CHANGES.BundeslandSelected:
+      if (!action.value) {
+        return {
+          ...state,
+          bundesland: action.value,
+          bufaNr: undefined,
+          requestNewTaxNumber: undefined,
+          showTaxNumberExists: true,
+          showBundesland: true,
+          showBufaNr: false,
+          showSteuernummer: false,
+          showRequestNewTaxNumber: false,
+        };
+      }
+
+      if (state.taxNumberExists === "yes") {
+        return {
+          ...state,
+          bundesland: action.value,
+          bufaNr: undefined,
+          requestNewTaxNumber: undefined,
+          showTaxNumberExists: true,
+          showBundesland: true,
+          showBufaNr: false,
+          showSteuernummer: true,
+          showRequestNewTaxNumber: false,
+        };
+      }
+      return {
+        ...state,
+        bundesland: action.value,
+        steuernummer: [""],
+        requestNewTaxNumber: undefined,
+        showTaxNumberExists: true,
+        showBundesland: true,
+        showBufaNr: true,
+        showSteuernummer: false,
+        showRequestNewTaxNumber: false,
+      };
+    case TAX_NUMBER_FORM_STATE_CHANGES.TaxOfficeSelected:
+      return {
+        ...state,
+        bufaNr: action.value,
+        requestNewTaxNumber: undefined,
+        showTaxNumberExists: true,
+        showBundesland: true,
+        showBufaNr: true,
+        showSteuernummer: false,
+        showRequestNewTaxNumber: true,
+      };
+    default:
+      return {
+        ...state,
+        taxNumberExists: undefined,
+        bundesland: undefined,
+        bufaNr: undefined,
+        steuernummer: [""],
+        requestNewTaxNumber: undefined,
+        showTaxNumberExists: true,
+        showBundesland: false,
+        showBufaNr: false,
+        showSteuernummer: false,
+        showRequestNewTaxNumber: false,
+      };
+  }
+}
 
 function getSplitTypeForState(selectedStateAbbreviation) {
   switch (selectedStateAbbreviation) {
@@ -50,24 +134,54 @@ function getSplitTypeForState(selectedStateAbbreviation) {
   }
 }
 
-function currentState(fields) {
+function getCurrentState(fields) {
+  const currentState = {
+    taxNumberExists: fields.steuernummerExists.value,
+    bundesland: fields.bundesland.selectedValue,
+    bufaNr: fields.bufaNr.selectedValue,
+    steuernummer: fields.steuernummer.value,
+    requestNewTaxNumber: fields.requestNewTaxNumber.checked,
+    showTaxNumberExists: true,
+    showBundesland: false,
+    showBufaNr: false,
+    showSteuernummer: false,
+    showRequestNewTaxNumber: false,
+  };
   if (fields.steuernummerExists.value === "yes") {
     if (fields.bundesland.selectedValue) {
-      return TAX_NUMBER_FORM_STATES.TaxNumberInput;
+      return {
+        ...currentState,
+        showBundesland: true,
+        showSteuernummer: true,
+      };
     }
-    return TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists;
+    return {
+      ...currentState,
+      showBundesland: true,
+    };
   }
   if (fields.steuernummerExists.value === "no") {
     if (fields.bundesland.selectedValue) {
       if (fields.bufaNr.selectedValue) {
-        return TAX_NUMBER_FORM_STATES.RequestNewTaxNumber;
+        return {
+          ...currentState,
+          showBundesland: true,
+          showBufaNr: true,
+          showRequestNewTaxNumber: true,
+        };
       }
-      return TAX_NUMBER_FORM_STATES.TaxOfficeSelection;
+      return {
+        ...currentState,
+        showBundesland: true,
+        showBufaNr: true,
+      };
     }
-    return TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists;
+    return {
+      ...currentState,
+      showBundesland: true,
+    };
   }
-
-  return TAX_NUMBER_FORM_STATES.NothingSelected;
+  return currentState;
 }
 
 function extractCorrespondingTaxOffices(
@@ -101,8 +215,9 @@ export default function TaxNumberPage({
 }) {
   const { t } = useTranslation();
 
-  const [taxNumberFormState, setTaxNumberFormState] = useState(
-    currentState(fields)
+  const [taxNumberPageData, changeTaxNumberPageData] = useReducer(
+    changeTaxNumberState,
+    getCurrentState(fields)
   );
 
   const [selectedStateAbbreviation, setSelectedStateAbbreviation] = useState(
@@ -114,87 +229,29 @@ export default function TaxNumberPage({
     }
   );
 
-  const changeTaxNumberExists = (event) => {
-    switch (taxNumberFormState) {
-      case TAX_NUMBER_FORM_STATES.NothingSelected:
-      case TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists:
-      case TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists:
-        if (event.target.value === "yes") {
-          setTaxNumberFormState(
-            TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists
-          );
-        } else if (event.target.value === "no") {
-          setTaxNumberFormState(
-            TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists
-          );
-        }
-        break;
-      default:
-        if (event.target.value === "yes") {
-          setTaxNumberFormState(TAX_NUMBER_FORM_STATES.TaxNumberInput);
-        } else if (event.target.value === "no") {
-          setTaxNumberFormState(TAX_NUMBER_FORM_STATES.TaxOfficeSelection);
-        }
-        break;
-    }
-  };
-
-  const changeStateSelection = (event) => {
-    const currentSelectedStateAbbreviation =
-      event.target.options[event.target.selectedIndex].value.toLowerCase();
-    setSelectedStateAbbreviation(currentSelectedStateAbbreviation);
-
-    if (currentSelectedStateAbbreviation) {
-      switch (taxNumberFormState) {
-        case TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists:
-          setTaxNumberFormState(TAX_NUMBER_FORM_STATES.TaxNumberInput);
-          break;
-        case TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists:
-        case TAX_NUMBER_FORM_STATES.TaxOfficeSelection:
-        case TAX_NUMBER_FORM_STATES.RequestNewTaxNumber:
-          setTaxNumberFormState(TAX_NUMBER_FORM_STATES.TaxOfficeSelection);
-          break;
-        default:
-          break;
-      }
-    } else if (taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxNumberInput) {
-      setTaxNumberFormState(
-        TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists
-      );
-    } else {
-      setTaxNumberFormState(
-        TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists
-      );
-    }
-  };
-
-  const changeTaxOffices = (event) => {
-    if (
-      event.target.value &&
-      taxNumberFormState === TAX_NUMBER_FORM_STATES.TaxOfficeSelection
-    ) {
-      setTaxNumberFormState(TAX_NUMBER_FORM_STATES.RequestNewTaxNumber);
-    } else if (
-      !event.target.value &&
-      taxNumberFormState === TAX_NUMBER_FORM_STATES.RequestNewTaxNumber
-    ) {
-      setTaxNumberFormState(TAX_NUMBER_FORM_STATES.TaxOfficeSelection);
-    }
-  };
-
   const stateDropDown = (
     <FormRowCentered key="bundeslandRow">
       <FormFieldDropDown
         fieldName="bundesland"
         fieldId="bundesland"
         key="bundesland"
-        selectedValue={fields.bundesland.selectedValue}
+        selectedValue={taxNumberPageData.bundesland}
         options={fields.bundesland.options}
         label={{
           text: t("lotseFlow.taxNumber.bundesland.labelText"),
         }}
         errors={fields.bundesland.errors}
-        onChangeHandler={changeStateSelection}
+        onChangeHandler={(event) => {
+          const currentSelectedStateAbbreviation =
+            event.target.options[
+              event.target.selectedIndex
+            ].value.toLowerCase();
+          setSelectedStateAbbreviation(currentSelectedStateAbbreviation);
+          changeTaxNumberPageData({
+            value: event.target.value,
+            type: TAX_NUMBER_FORM_STATE_CHANGES.BundeslandSelected,
+          });
+        }}
       />
     </FormRowCentered>
   );
@@ -205,7 +262,7 @@ export default function TaxNumberPage({
         fieldName="bufa_nr"
         fieldId="bufa_nr"
         key="bufa_nr"
-        selectedValue={fields.bufaNr.selectedValue}
+        selectedValue={taxNumberPageData.bufaNr}
         options={extractCorrespondingTaxOffices(
           selectedStateAbbreviation,
           taxOfficeList
@@ -214,7 +271,12 @@ export default function TaxNumberPage({
           text: t("lotseFlow.taxNumber.taxOffices.labelText"),
         }}
         errors={fields.bufaNr.errors}
-        onChangeHandler={changeTaxOffices}
+        onChangeHandler={(event) => {
+          changeTaxNumberPageData({
+            value: event.target.value,
+            type: TAX_NUMBER_FORM_STATE_CHANGES.TaxOfficeSelected,
+          });
+        }}
       />
     </FormRowCentered>
   );
@@ -225,7 +287,7 @@ export default function TaxNumberPage({
         required
         fieldName="steuernummer"
         fieldId="steuernummer"
-        values={fields.steuernummer.value}
+        values={taxNumberPageData.steuernummer}
         label={{
           text: t("lotseFlow.taxNumber.taxNumberInput.labelText"),
           exampleInput: t("lotseFlow.taxNumber.taxNumberInput.labelText"),
@@ -247,7 +309,7 @@ export default function TaxNumberPage({
         required
         fieldName="request_new_tax_number"
         fieldId="request_new_tax_number"
-        checked={fields.requestNewTaxNumber.checked}
+        checked={taxNumberPageData.requestNewTaxNumber}
         labelText={
           <Trans
             t={t}
@@ -260,31 +322,19 @@ export default function TaxNumberPage({
     </FormRowCentered>
   );
 
-  let shownFields;
+  const shownFields = [];
 
-  switch (taxNumberFormState) {
-    case TAX_NUMBER_FORM_STATES.NothingSelected:
-      break;
-    case TAX_NUMBER_FORM_STATES.StateSelectionTaxNumberExists:
-      shownFields = [stateDropDown];
-      break;
-    case TAX_NUMBER_FORM_STATES.StateSelectionNoTaxNumberExists:
-      shownFields = [stateDropDown];
-      break;
-    case TAX_NUMBER_FORM_STATES.TaxOfficeSelection:
-      shownFields = [stateDropDown, bufaNrDropdown];
-      break;
-    case TAX_NUMBER_FORM_STATES.TaxNumberInput:
-      shownFields = [stateDropDown, taxNumberInput];
-      break;
-    case TAX_NUMBER_FORM_STATES.RequestNewTaxNumber:
-      shownFields = [
-        stateDropDown,
-        bufaNrDropdown,
-        requestNewTaxNumberCheckbox,
-      ];
-      break;
-    default:
+  if (taxNumberPageData.showBundesland) {
+    shownFields.push(stateDropDown);
+  }
+  if (taxNumberPageData.showBufaNr) {
+    shownFields.push(bufaNrDropdown);
+  }
+  if (taxNumberPageData.showRequestNewTaxNumber) {
+    shownFields.push(requestNewTaxNumberCheckbox);
+  }
+  if (taxNumberPageData.showSteuernummer) {
+    shownFields.push(taxNumberInput);
   }
 
   return (
@@ -296,7 +346,7 @@ export default function TaxNumberPage({
           <FormFieldYesNo
             fieldName="steuernummer_exists"
             fieldId="steuernummer_exists"
-            value={fields.steuernummerExists.value}
+            value={taxNumberPageData.taxNumberExists}
             label={{
               text: t("lotseFlow.taxNumber.taxNumberExists.labelText", {
                 count: numberOfUsers,
@@ -307,7 +357,12 @@ export default function TaxNumberPage({
               text: t("lotseFlow.taxNumber.taxNumberExists.help.text"),
             }}
             errors={fields.steuernummerExists.errors}
-            onChangeHandler={changeTaxNumberExists}
+            onChangeHandler={(event) => {
+              changeTaxNumberPageData({
+                value: event.target.value,
+                type: TAX_NUMBER_FORM_STATE_CHANGES.TaxNumberExistsSelected,
+              });
+            }}
           />
         </FormRowCentered>
         {shownFields}
