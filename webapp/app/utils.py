@@ -1,6 +1,8 @@
 import datetime as dt
 from functools import lru_cache
 
+from werkzeug.exceptions import abort
+
 from app.config import Config
 
 
@@ -13,3 +15,12 @@ def lru_cached(func):
         return lru_cache(func)
 
     return func
+
+
+def non_production_environment_required(f):
+    if Config.ALLOW_TESTING_ROUTES:
+        return f
+    else:
+        def disable_route(*args, **kwargs):
+            abort(404)
+        return disable_route
