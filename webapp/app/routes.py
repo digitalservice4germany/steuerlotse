@@ -12,9 +12,10 @@ from werkzeug.exceptions import InternalServerError
 from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
-from app.extensions import nav, login_manager, limiter
+from app.extensions import nav, login_manager, limiter, csrf
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
+from app.forms.session_data import override_session_data
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
@@ -26,6 +27,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.logging import log_flask_request
+from app.utils import non_production_environment_required
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -121,6 +123,14 @@ def register_request_handlers(app):
             "object-src 'none'; "
         )
         return response
+
+    @csrf.exempt
+    @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
+    @non_production_environment_required
+    def set_data(session_identifier):
+        data = request.get_json()
+        override_session_data(data, session_identifier)
+        return data, 200
 
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):

@@ -1,6 +1,13 @@
+import pytest
+from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 
-from app.routes import extract_information_from_request
+from app.app import create_app
+from app.forms.session_data import get_session_data
+from tests.utils import configuration_with_production_environment_testing_route_policy, configuration_with_staging_environment_testing_route_policy
+
+
+from app.routes import extract_information_from_request, register_request_handlers
 
 
 class TestExtractInformationFromRequest:
@@ -23,3 +30,36 @@ class TestExtractInformationFromRequest:
             update_data, extracted_form_data = extract_information_from_request()
 
         assert extracted_form_data == ImmutableMultiDict(form_data)
+
+
+class TestSetTestingDataRoute:
+
+    @pytest.mark.usefixtures("configuration_with_production_environment_testing_route_policy")
+    def test_if_production_environment_then_return_404(self):
+        identifier = "form_data"
+        data = {'username': 'flask', 'password': 'secret'}
+        app = create_app()
+
+        with app.app_context(), app.test_client() as c:
+            response = c.post(f'/testing/set_data/{identifier}', json=data)
+            assert response.status_code == 404
+
+    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
+    def test_if_non_production_environment_then_return_set_data(self, app):
+        identifier = "form_data"
+        data = {'username': 'flask', 'password': 'secret'}
+        app = create_app()
+
+        with app.app_context(), app.test_client() as c:
+            response = c.post(f'/testing/set_data/{identifier}', json=data)
+        assert response.status_code == 200
+        assert response.json == data
+
+    def test_if_data_provided_then_set_session_correctly(self, app):
+        identifier = "form_data"
+        data = {'username': 'flask', 'password': 'secret'}
+        with app.test_request_context(method="POST", json=data) as req:
+            req.session = SecureCookieSession({})
+            app.view_functions.get('set_data')(identifier)
+
+            assert get_session_data(identifier) == data
