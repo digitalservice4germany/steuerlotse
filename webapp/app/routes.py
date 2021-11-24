@@ -89,7 +89,6 @@ def extract_information_from_request():
 
     return update_data, form_data
 
-
 def register_request_handlers(app):
     app.before_request(log_flask_request)
 
@@ -123,14 +122,6 @@ def register_request_handlers(app):
             "object-src 'none'; "
         )
         return response
-
-    @csrf.exempt
-    @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
-    @non_production_environment_required
-    def set_data(session_identifier):
-        data = request.get_json()
-        override_session_data(data, session_identifier)
-        return data, 200
 
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):
@@ -326,3 +317,13 @@ def register_error_handlers(app):
         current_app.logger.error(
             'An uncaught error occurred', exc_info=error.original_exception)
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+
+
+@non_production_environment_required
+def register_testing_request_handlers(app):
+    @csrf.exempt
+    @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
+    def set_data(session_identifier):
+        data = request.get_json()
+        override_session_data(data, session_identifier)
+        return data, 200

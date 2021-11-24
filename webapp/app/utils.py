@@ -19,9 +19,11 @@ def lru_cached(func):
 
 
 def non_production_environment_required(f):
-    if os.environ.get('FLASK_ENV') != "production":
-        return f
-    else:
-        def disable_route(*args, **kwargs):
-            abort(404)
-        return disable_route
+
+    def decorated(*args, **kwargs):
+        if os.environ.get('FLASK_ENV') != "production":
+            return f(*args, **kwargs)
+        else:
+            return
+
+    return decorated

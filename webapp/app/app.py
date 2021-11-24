@@ -18,7 +18,7 @@ from app.extensions import (
     prometheus_exporter,
 )
 from app.json_serializer import SteuerlotseJSONEncoder, SteuerlotseJSONDecoder
-from app.routes import register_request_handlers, register_error_handlers
+from app.routes import register_request_handlers, register_error_handlers, register_testing_request_handlers
 
 
 def create_app() -> Flask:
@@ -33,6 +33,7 @@ def create_app() -> Flask:
     register_extensions(app)
     register_request_handlers(app)
     register_error_handlers(app)
+    register_testing_request_handlers(app)
     register_context_processor(app)
     register_commands(app)
     configure_json_handling(app)
