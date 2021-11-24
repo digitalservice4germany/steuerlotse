@@ -37,7 +37,7 @@ class TestSetTestingDataRoute:
     @pytest.mark.usefixtures("production_flask_env")
     def test_if_production_environment_then_return_404(self):
         identifier = "form_data"
-        data = {'username': 'flask', 'password': 'secret'}
+        data = {'username': 'Frodo', 'ring': 'one'}
         app = create_app()
 
         with app.app_context(), app.test_client() as c:
@@ -47,7 +47,7 @@ class TestSetTestingDataRoute:
     @pytest.mark.usefixtures("staging_flask_env")
     def test_if_non_production_environment_then_return_set_data(self, app):
         identifier = "form_data"
-        data = {'username': 'flask', 'password': 'secret'}
+        data = {'username': 'Frodo', 'ring': 'one'}
         app = create_app()
 
         with app.app_context(), app.test_client() as c:
@@ -57,7 +57,7 @@ class TestSetTestingDataRoute:
 
     def test_if_data_provided_then_set_session_correctly(self, app):
         identifier = "form_data"
-        data = {'username': 'flask', 'password': 'secret'}
+        data = {'username': 'Frodo', 'ring': 'one'}
         with app.test_request_context(method="POST", json=data) as req:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)
