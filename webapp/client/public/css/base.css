@@ -511,23 +511,22 @@ img.icon {
 }
 
 .tax-period-banner {
-  --banner-icon-width: 29px;
+  --banner-icon-width: 17px;
 
   display: flex;
   justify-content: center;
 
-  padding: var(--spacing-02) 0;
+  padding: var(--spacing-02) var(--spacing-02) var(--spacing-02) 0;
   background-color: var(--link-color);
 
   color: var(--inverse-text-color);
-  line-height: 2rem;
   font-size: var(--text-medium);
 }
 
 .tax-period-banner img {
   width: calc(2*var(--spacing-03) + var(--banner-icon-width));
   padding: 0 var(--spacing-03);
-  padding-top: 8px; /* to fit to the beginning of the text */
+  padding-top: 5px; /* to fit to the middle of the text */
 }
 
 .tax-period-banner p {
@@ -544,14 +543,19 @@ img.icon {
 }
 
 .landing-page-tax-period-banner .tax-period-banner img {
-  --banner-icon-width: 17px;
   /* width of the landing page's left padding: var(--spacing-08) - 15px */
-  --banner-icon-spacing: calc((var(--spacing-08) - 15px - var(--banner-icon-width))/2);
-  width: calc(var(--banner-icon-width) + 2*var(--banner-icon-spacing));
+  --banner-icon-spacing: calc((var(--spacing-08) - 15px - var(--banner-icon-width)) / 2);
+  width: calc(var(--banner-icon-width) + 2 * var(--banner-icon-spacing));
   padding-left: var(--banner-icon-spacing);
   padding-right: var(--banner-icon-spacing);
 }
 
+@media (max-width: 1024px) {
+  .landing-page-tax-period-banner .tax-period-banner img {
+    width: calc(var(--banner-icon-width) + var(--banner-icon-spacing) + (var(--spacing-06) - 15px));
+    padding-left: calc(var(--spacing-06) - 15px);
+  }
+}
 
 .hidden {
   display: none;
