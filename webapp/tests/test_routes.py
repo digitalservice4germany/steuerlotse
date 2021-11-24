@@ -52,7 +52,7 @@ class TestRegisterTestingRequestHandlers:
         assert app.view_functions == old_view_functions
 
     @pytest.mark.usefixtures("staging_flask_env")
-    def test_if_staging_environment_then_register_testing_routes(self, app):
+    def test_if_staging_environment_then_register_testing_routes(self):
         app = Flask(
             __name__.split(".")[0],
             static_url_path="",
