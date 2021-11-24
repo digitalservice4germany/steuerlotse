@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import FormNavButtons from "./FormNavButtons";
+import StepNavButtons from "./StepNavButtons";
 
 export default function StepForm({
   children,
@@ -13,7 +13,7 @@ export default function StepForm({
     <form noValidate method="POST" action={action}>
       <input type="hidden" name="csrf_token" value={csrfToken} />
       {children}
-      <FormNavButtons
+      <StepNavButtons
         explanatoryButtonText={explanatoryButtonText}
         showOverviewButton={showOverviewButton}
         nextButtonLabel={nextButtonLabel}
@@ -35,5 +35,5 @@ StepForm.propTypes = {
 };
 
 StepForm.defaultProps = {
-  ...FormNavButtons.defaultProps,
+  ...StepNavButtons.defaultProps,
 };

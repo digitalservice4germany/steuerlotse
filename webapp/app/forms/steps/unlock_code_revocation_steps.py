@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from wtforms.validators import InputRequired
@@ -8,6 +8,7 @@ from app.forms.fields import LegacySteuerlotseDateField, SteuerlotseStringField,
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
+from app.model.components import RevocationSuccessProps
 
 
 class UnlockCodeRevocationInputStep(FormStep):
@@ -39,7 +40,20 @@ class UnlockCodeRevocationSuccessStep(DisplayStep):
             intro=_('form.unlock-code-revocation.success-intro'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('basis/display_success.html', render_info=render_info,
+        props_dict = RevocationSuccessProps(
+            step_header={
+                'title': render_info.step_title,
+                'intro': render_info.step_intro,
+            },
+            prev_url=url_for('unlock_code_revocation', step='data_input'),
+            next_url=url_for('unlock_code_request', step='data_input')
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='RevocationSuccessPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=render_info.form,
                                header_title=_('form.unlock-code-revocation.header-title'))
 
 

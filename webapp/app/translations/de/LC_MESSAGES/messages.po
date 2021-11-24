@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-24 09:46+0100\n"
+"POT-Creation-Date: 2021-11-23 12:18+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1070,7 +1070,7 @@ msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:320
 #: app/forms/steps/unlock_code_activation_steps.py:19
 #: app/forms/steps/unlock_code_request_steps.py:22
-#: app/forms/steps/unlock_code_revocation_steps.py:17
+#: app/forms/steps/unlock_code_revocation_steps.py:18
 msgid "validate.missing-idnr"
 msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
 
@@ -1160,50 +1160,50 @@ msgstr ""
 "sich nicht erneut registrieren und bekommen einen Brief mit Ihrem "
 "persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:17
+#: app/forms/steps/unlock_code_revocation_steps.py:18
 msgid "unlock-code-revocation.idnr"
 msgstr "Steueridentifikationsnummer"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:18
+#: app/forms/steps/unlock_code_revocation_steps.py:19
 msgid "unlock-code-revocation.dob"
 msgstr "Geburtsdatum"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:20
+#: app/forms/steps/unlock_code_revocation_steps.py:21
 #, fuzzy
 msgid "validate.day-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:25
+#: app/forms/steps/unlock_code_revocation_steps.py:26
 msgid "form.unlock-code-revocation.input-title"
 msgstr "Ihre Dateneingabe zur Stornierung"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:26
+#: app/forms/steps/unlock_code_revocation_steps.py:27
 msgid "form.unlock-code-revocation.input-intro"
 msgstr ""
 "Wenn Sie Ihren Freischaltcode verloren haben oder aus anderen Gründen "
 "einen neuen beantragen wollen, können Sie den alten hier stornieren."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:29
-#: app/forms/steps/unlock_code_revocation_steps.py:43
-#: app/forms/steps/unlock_code_revocation_steps.py:56
+#: app/forms/steps/unlock_code_revocation_steps.py:30
+#: app/forms/steps/unlock_code_revocation_steps.py:57
+#: app/forms/steps/unlock_code_revocation_steps.py:70
 msgid "form.unlock-code-revocation.header-title"
 msgstr "Stornieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:38
+#: app/forms/steps/unlock_code_revocation_steps.py:39
 msgid "form.unlock-code-revocation.success-title"
 msgstr "Stornierung erfolgreich"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:39
+#: app/forms/steps/unlock_code_revocation_steps.py:40
 msgid "form.unlock-code-revocation.success-intro"
 msgstr ""
-"Ihr Freischaltcode wurde stoniert. Wenn Sie einen Neuen beantragen "
+"Ihr Freischaltcode wurde storniert. Wenn Sie einen Neuen beantragen "
 "wollen, fahren Sie mit dem nächsten Formular fort."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:51
+#: app/forms/steps/unlock_code_revocation_steps.py:65
 msgid "form.unlock-code-revocation.failure-title"
 msgstr "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:52
+#: app/forms/steps/unlock_code_revocation_steps.py:66
 msgid "form.unlock-code-revocation.failure-intro"
 msgstr ""
 "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können"
