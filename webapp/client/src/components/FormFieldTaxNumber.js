@@ -26,36 +26,36 @@ function FormFieldTaxNumber({
     text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
   };
 
-  let concatValues = values.join("");
+  let reformattedValues = values.join("");
   let inputFieldLengths;
   switch (splitType) {
     case "splitType_0":
       inputFieldLengths = [2, 3, 5];
-      concatValues = [
-        concatValues.slice(0, 2),
-        concatValues.slice(2, 5),
-        concatValues.slice(5, 10),
+      reformattedValues = [
+        reformattedValues.slice(0, 2),
+        reformattedValues.slice(2, 5),
+        reformattedValues.slice(5, 10),
       ];
       break;
     case "splitType_1":
       inputFieldLengths = [3, 3, 5];
-      concatValues = [
-        concatValues.slice(0, 3),
-        concatValues.slice(3, 6),
-        concatValues.slice(6, 11),
+      reformattedValues = [
+        reformattedValues.slice(0, 3),
+        reformattedValues.slice(3, 6),
+        reformattedValues.slice(6, 11),
       ];
       break;
     case "splitType_2":
       inputFieldLengths = [3, 4, 4];
-      concatValues = [
-        concatValues.slice(0, 3),
-        concatValues.slice(3, 7),
-        concatValues.slice(7, 11),
+      reformattedValues = [
+        reformattedValues.slice(0, 3),
+        reformattedValues.slice(3, 7),
+        reformattedValues.slice(7, 11),
       ];
       break;
     default:
       inputFieldLengths = [11];
-      concatValues = [concatValues];
+      reformattedValues = [reformattedValues];
       label.exampleInput = t(
         "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
       );
@@ -91,7 +91,11 @@ function FormFieldTaxNumber({
             details,
             extraFieldProps,
             fieldId,
-            values: concatValues,
+            values: values.every(
+              (item, index) => item.length <= inputFieldLengths[index]
+            )
+              ? values
+              : reformattedValues,
             required,
           }}
           key={`steuernummerField-${splitType}`} // Enforce re-rendering if other splitType is used

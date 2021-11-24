@@ -31,29 +31,29 @@ describe("FormFieldTaxNumber has splitType_0", () => {
   });
 
   describe("When typing 12 characters into each input", () => {
-    const input_characters = "123456789012";
+    const inputCharacters = "123456789012";
 
     beforeEach(() => {
-      userEvent.type(screen.getAllByRole("textbox")[0], input_characters);
-      userEvent.type(screen.getAllByRole("textbox")[1], input_characters);
-      userEvent.type(screen.getAllByRole("textbox")[2], input_characters);
+      userEvent.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      userEvent.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      userEvent.type(screen.getAllByRole("textbox")[2], inputCharacters);
     });
 
     it("First input should only contain first 2 characters", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveValue(
-        input_characters.slice(0, 2)
+        inputCharacters.slice(0, 2)
       );
     });
 
     it("Second input should only contain first 3 characters", () => {
       expect(screen.getAllByRole("textbox")[1]).toHaveValue(
-        input_characters.slice(0, 3)
+        inputCharacters.slice(0, 3)
       );
     });
 
     it("Third input should only contain first 5 characters", () => {
       expect(screen.getAllByRole("textbox")[2]).toHaveValue(
-        input_characters.slice(0, 5)
+        inputCharacters.slice(0, 5)
       );
     });
   });
@@ -68,15 +68,15 @@ describe("FormFieldTaxNumber has splitType_0", () => {
     });
 
     describe("When typing", () => {
-      const input_characters = "123456789012";
+      const inputCharacters = "123456789012";
 
       beforeEach(() => {
-        userEvent.keyboard(input_characters);
+        userEvent.keyboard(inputCharacters);
       });
 
       it("Should enter letters into first input field", () => {
         expect(screen.getAllByRole("textbox")[0]).toHaveValue(
-          input_characters.slice(0, 2)
+          inputCharacters.slice(0, 2)
         );
       });
     });
@@ -122,29 +122,29 @@ describe("FormFieldTaxNumber has splitType_1", () => {
   });
 
   describe("When typing 12 characters into each input", () => {
-    const input_characters = "123456789012";
+    const inputCharacters = "123456789012";
 
     beforeEach(() => {
-      userEvent.type(screen.getAllByRole("textbox")[0], input_characters);
-      userEvent.type(screen.getAllByRole("textbox")[1], input_characters);
-      userEvent.type(screen.getAllByRole("textbox")[2], input_characters);
+      userEvent.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      userEvent.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      userEvent.type(screen.getAllByRole("textbox")[2], inputCharacters);
     });
 
     it("First input should only contain first 3 characters", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveValue(
-        input_characters.slice(0, 3)
+        inputCharacters.slice(0, 3)
       );
     });
 
     it("Second input should only contain first 3 characters", () => {
       expect(screen.getAllByRole("textbox")[1]).toHaveValue(
-        input_characters.slice(0, 3)
+        inputCharacters.slice(0, 3)
       );
     });
 
     it("Third input should only contain first 5 characters", () => {
       expect(screen.getAllByRole("textbox")[2]).toHaveValue(
-        input_characters.slice(0, 5)
+        inputCharacters.slice(0, 5)
       );
     });
   });
@@ -178,29 +178,29 @@ describe("FormFieldTaxNumber has splitType_2", () => {
   });
 
   describe("When typing 12 characters into each input", () => {
-    const input_characters = "123456789012";
+    const inputCharacters = "123456789012";
 
     beforeEach(() => {
-      userEvent.type(screen.getAllByRole("textbox")[0], input_characters);
-      userEvent.type(screen.getAllByRole("textbox")[1], input_characters);
-      userEvent.type(screen.getAllByRole("textbox")[2], input_characters);
+      userEvent.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      userEvent.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      userEvent.type(screen.getAllByRole("textbox")[2], inputCharacters);
     });
 
     it("First input should only contain first 3 characters", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveValue(
-        input_characters.slice(0, 3)
+        inputCharacters.slice(0, 3)
       );
     });
 
     it("Second input should only contain first 4 characters", () => {
       expect(screen.getAllByRole("textbox")[1]).toHaveValue(
-        input_characters.slice(0, 4)
+        inputCharacters.slice(0, 4)
       );
     });
 
     it("Third input should only contain first 4 characters", () => {
       expect(screen.getAllByRole("textbox")[2]).toHaveValue(
-        input_characters.slice(0, 4)
+        inputCharacters.slice(0, 4)
       );
     });
   });
@@ -234,15 +234,15 @@ describe("FormFieldTaxNumber is not split", () => {
   });
 
   describe("When typing 12 characters into input", () => {
-    const input_characters = "123456789012";
+    const inputCharacters = "123456789012";
 
     beforeEach(() => {
-      userEvent.type(screen.getByRole("textbox"), input_characters);
+      userEvent.type(screen.getByRole("textbox"), inputCharacters);
     });
 
     it("Input should contain only first 11 characters", () => {
       expect(screen.getByRole("textbox")).toHaveValue(
-        input_characters.slice(0, 11)
+        inputCharacters.slice(0, 11)
       );
     });
   });
@@ -257,17 +257,43 @@ describe("FormFieldTaxNumber is not split", () => {
     });
 
     describe("When typing", () => {
-      const input_characters = "123456789012";
+      const inputCharacters = "123456789012";
 
       beforeEach(() => {
-        userEvent.keyboard(input_characters);
+        userEvent.keyboard(inputCharacters);
       });
 
       it("Should enter letters into input field", () => {
         expect(screen.getByRole("textbox")).toHaveValue(
-          input_characters.slice(0, 11)
+          inputCharacters.slice(0, 11)
         );
       });
     });
+  });
+});
+
+describe("FormFieldTaxNumber with some values already set", () => {
+  let props;
+  const inputTaxNumber = ["198", "", "0010"];
+
+  beforeEach(() => {
+    props = {
+      fieldName: "fooName",
+      fieldId: "fooId",
+      label: {
+        text: "foo",
+        exampleInput: "fooExampleInput",
+      },
+      errors: [],
+      values: inputTaxNumber,
+      splitType: "splitType_2",
+    };
+    render(<FormFieldTaxNumber {...props} />);
+  });
+
+  it("Should set the values into the correct inputs", () => {
+    expect(screen.getAllByRole("textbox")[0]).toHaveValue(inputTaxNumber[0]);
+    expect(screen.getAllByRole("textbox")[1]).toHaveValue(inputTaxNumber[1]);
+    expect(screen.getAllByRole("textbox")[2]).toHaveValue(inputTaxNumber[2]);
   });
 });
