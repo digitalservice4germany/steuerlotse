@@ -10,7 +10,7 @@ const SuccessAlertArea = styled.div`
 
   &.alert-success {
     background-color: var(--success-color);
-    color: white;
+    color: var(--inverse-text-color);
   }
 `;
 
