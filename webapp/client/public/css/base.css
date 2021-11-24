@@ -527,6 +527,7 @@ img.icon {
 .tax-period-banner img {
   width: calc(2*var(--spacing-03) + var(--banner-icon-width));
   padding: 0 var(--spacing-03);
+  padding-top: 8px; /* to fit to the beginning of the text */
 }
 
 .tax-period-banner p {
@@ -535,6 +536,20 @@ img.icon {
 
   padding: 0;
   margin: 0;
+}
+
+.landing-page-tax-period-banner .tax-period-banner {
+  justify-content: start;
+  padding-left: 0;
+}
+
+.landing-page-tax-period-banner .tax-period-banner img {
+  --banner-icon-width: 17px;
+  /* width of the landing page's left padding: var(--spacing-08) - 15px */
+  --banner-icon-spacing: calc((var(--spacing-08) - 15px - var(--banner-icon-width))/2);
+  width: calc(var(--banner-icon-width) + 2*var(--banner-icon-spacing));
+  padding-left: var(--banner-icon-spacing);
+  padding-right: var(--banner-icon-spacing);
 }
 
 
