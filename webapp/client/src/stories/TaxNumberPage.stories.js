@@ -142,7 +142,7 @@ NoTaxNumberAndErrors.args = {
     },
     steuernummer: {
       value: [""],
-      errors: ["Diese Angabe fehlt."],
+      errors: [],
     },
     requestNewTaxNumber: {
       checked: true,
@@ -202,15 +202,15 @@ WithTaxNumberAndErrors.args = {
     },
     bufaNr: {
       selectedValue: undefined,
-      errors: ["Diese Angabe fehlt."],
+      errors: [],
     },
     steuernummer: {
       value: ["198", "1131", "0010"],
       errors: ["Diese Angabe fehlt."],
     },
     requestNewTaxNumber: {
-      checked: true,
-      errors: ["Diese Angabe fehlt."],
+      checked: undefined,
+      errors: [],
     },
   },
 };

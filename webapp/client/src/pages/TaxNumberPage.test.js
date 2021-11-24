@@ -420,9 +420,9 @@ describe("TaxNumberPage with tax number set", () => {
           errors: [],
         },
         bundesland: {
-          selectedValue: "bw",
+          selectedValue: "nw",
           options: [
-            { value: "bw", displayName: "Baden-Württemberg" },
+            { value: "nw", displayName: "Nordrhein-Westfalen" },
             { value: "by", displayName: "Bayern" },
             { value: "he", displayName: "Hessen" },
           ],
@@ -442,11 +442,9 @@ describe("TaxNumberPage with tax number set", () => {
       },
       taxOfficeList: [
         {
-          stateAbbreviation: "bw",
-          name: "Baden-Württemberg",
-          taxOffices: [
-            { name: "Finanzamt Villingen-Schwenningen", bufaNr: "2801" },
-          ],
+          stateAbbreviation: "nw",
+          name: "Nordrhein-Westfalen",
+          taxOffices: [{ name: "Köln", bufaNr: "5215" }],
         },
         {
           stateAbbreviation: "by",
@@ -474,6 +472,18 @@ describe("TaxNumberPage with tax number set", () => {
       numberOfUsers: 1,
     };
     render(<TaxNumberPage {...props} />);
+  });
+
+  it("Should enter the correct default values into the taxnumber inputs", () => {
+    expect(screen.queryAllByRole("textbox")[0]).toHaveValue(
+      taxNumber.slice(0, 3)
+    );
+    expect(screen.queryAllByRole("textbox")[1]).toHaveValue(
+      taxNumber.slice(3, 7)
+    );
+    expect(screen.queryAllByRole("textbox")[2]).toHaveValue(
+      taxNumber.slice(7, 11)
+    );
   });
 
   it("Should show keep tax number if state changes", () => {

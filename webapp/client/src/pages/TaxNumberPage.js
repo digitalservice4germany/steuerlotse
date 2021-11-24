@@ -135,53 +135,27 @@ function getSplitTypeForState(selectedStateAbbreviation) {
 }
 
 function getInitialTaxNumberPageData(fields) {
-  const currentState = {
+  return {
     taxNumberExists: fields.steuernummerExists.value,
     bundesland: fields.bundesland.selectedValue,
     bufaNr: fields.bufaNr.selectedValue,
     steuernummer: fields.steuernummer.value,
     requestNewTaxNumber: fields.requestNewTaxNumber.checked,
     showTaxNumberExists: true,
-    showBundesland: false,
-    showBufaNr: false,
-    showSteuernummer: false,
-    showRequestNewTaxNumber: false,
+    showBundesland:
+      fields.steuernummerExists.value === "yes" ||
+      fields.steuernummerExists.value === "no",
+    showBufaNr:
+      fields.steuernummerExists.value === "no" &&
+      fields.bundesland.selectedValue,
+    showSteuernummer:
+      fields.steuernummerExists.value === "yes" &&
+      fields.bundesland.selectedValue,
+    showRequestNewTaxNumber:
+      fields.steuernummerExists.value === "no" &&
+      fields.bundesland.selectedValue &&
+      fields.bufaNr.selectedValue,
   };
-  if (fields.steuernummerExists.value === "yes") {
-    if (fields.bundesland.selectedValue) {
-      return {
-        ...currentState,
-        showBundesland: true,
-        showSteuernummer: true,
-      };
-    }
-    return {
-      ...currentState,
-      showBundesland: true,
-    };
-  }
-  if (fields.steuernummerExists.value === "no") {
-    if (fields.bundesland.selectedValue) {
-      if (fields.bufaNr.selectedValue) {
-        return {
-          ...currentState,
-          showBundesland: true,
-          showBufaNr: true,
-          showRequestNewTaxNumber: true,
-        };
-      }
-      return {
-        ...currentState,
-        showBundesland: true,
-        showBufaNr: true,
-      };
-    }
-    return {
-      ...currentState,
-      showBundesland: true,
-    };
-  }
-  return currentState;
 }
 
 function extractCorrespondingTaxOffices(
