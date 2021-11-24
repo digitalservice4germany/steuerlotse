@@ -1,6 +1,7 @@
 from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
+from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
@@ -8,7 +9,8 @@ from app.forms.fields import LegacySteuerlotseDateField, SteuerlotseStringField,
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.model.components import RevocationSuccessProps
+from app.model.components import RevocationProps, RevocationSuccessProps
+from app.model.components.helpers import form_fields_dict
 
 
 class UnlockCodeRevocationInputStep(FormStep):
@@ -26,9 +28,28 @@ class UnlockCodeRevocationInputStep(FormStep):
             title=_('form.unlock-code-revocation.input-title'),
             intro=_('form.unlock-code-revocation.input-intro'),
             form=self.Form,
-            **kwargs,
-            header_title=_('form.unlock-code-revocation.header-title'),
-            template='basis/form_standard.html')
+            **kwargs)
+
+    def render(self, data, render_info):
+        props_dict = RevocationProps(
+            step_header={
+                'title': render_info.step_title,
+                'intro': render_info.step_intro,
+            },
+            form={
+                'action': render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(render_info.overview_url),
+            },
+            fields=form_fields_dict(render_info.form),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='RevocationPage',
+                               props=props_dict,
+                               form=render_info.form,
+                               header_title=_('form.unlock-code-revocation.header-title'))
+
 
 
 class UnlockCodeRevocationSuccessStep(DisplayStep):

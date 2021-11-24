@@ -44,13 +44,6 @@ const translations = {
     },
   },
   unlockCodeActivation: {
-    idnr: {
-      labelText: "Steuer-Identifikationsnummer",
-      help: {
-        title: "Wo finde ich diese Nummer?",
-        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
-      },
-    },
     unlockCode: {
       labelText: "Freischaltcode",
       help: {
@@ -60,9 +53,6 @@ const translations = {
     },
   },
   unlockCodeRequest: {
-    dob: {
-      labelText: "Geburtsdatum",
-    },
     dataPrivacyAndAgb: {
       title: "Datenschutzerklärung und Nutzungsbedingungen",
     },
@@ -111,6 +101,16 @@ const translations = {
     year: "Jahr",
   },
   fields: {
+    idnr: {
+      labelText: "Steuer-Identifikationsnummer",
+      help: {
+        title: "Wo finde ich diese Nummer?",
+        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
+      },
+    },
+    dob: {
+      labelText: "Geburtsdatum",
+    },
     dateField: {
       exampleInput: {
         text: "z.B. 29.2.1951",

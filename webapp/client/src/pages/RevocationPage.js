@@ -2,14 +2,14 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import FormFieldIdNr from "../components/FormFieldIdNr";
-import FormFieldUnlockCode from "../components/FormFieldUnlockCode";
+import FormFieldDate from "../components/FormFieldDate";
 import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function LoginPage({ stepHeader, form, fields }) {
+export default function RevocationPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
 
   return (
@@ -22,7 +22,6 @@ export default function LoginPage({ stepHeader, form, fields }) {
             autofocus
             required
             fieldName="idnr"
-            // TODO: is the fieldId ever different from the fieldName?
             fieldId="idnr"
             values={fields.idnr.value}
             label={{
@@ -36,19 +35,15 @@ export default function LoginPage({ stepHeader, form, fields }) {
           />
         </FormRowCentered>
         <FormRowCentered>
-          <FormFieldUnlockCode
+          <FormFieldDate
             required
-            fieldName="unlock_code"
-            fieldId="unlock_code"
-            values={fields.unlockCode.value}
+            fieldName="dob"
+            fieldId="dob"
+            values={fields.dob.value}
             label={{
-              text: t("unlockCodeActivation.unlockCode.labelText"),
+              text: t("fields.dob.labelText"),
             }}
-            details={{
-              title: t("unlockCodeActivation.unlockCode.help.title"),
-              text: t("unlockCodeActivation.unlockCode.help.text"),
-            }}
-            errors={fields.unlockCode.errors}
+            errors={fields.dob.errors}
           />
         </FormRowCentered>
       </StepForm>
@@ -56,20 +51,18 @@ export default function LoginPage({ stepHeader, form, fields }) {
   );
 }
 
-LoginPage.propTypes = {
+RevocationPage.propTypes = {
   stepHeader: PropTypes.exact({
-    // TODO: define these here, not in Python
     title: PropTypes.string,
     intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
-    action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
+    action: PropTypes.string,
     csrfToken: PropTypes.string,
     showOverviewButton: PropTypes.bool,
-    nextButtonLabel: PropTypes.string, // TODO: define here, not in Python
   }).isRequired,
   fields: PropTypes.exact({
     idnr: fieldPropType,
-    unlockCode: fieldPropType,
+    dob: fieldPropType,
   }).isRequired,
 };
