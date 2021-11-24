@@ -23,7 +23,7 @@ const TAX_NUMBER_FORM_STATE_CHANGES = {
   TaxOfficeSelected: "TaxOfficeSelected",
 };
 
-function changeTaxNumberState(state, action) {
+function reduceTaxNumberPageData(state, action) {
   switch (action.type) {
     case TAX_NUMBER_FORM_STATE_CHANGES.TaxNumberExistsSelected:
       return {
@@ -134,7 +134,7 @@ function getSplitTypeForState(selectedStateAbbreviation) {
   }
 }
 
-function getCurrentState(fields) {
+function getInitialTaxNumberPageData(fields) {
   const currentState = {
     taxNumberExists: fields.steuernummerExists.value,
     bundesland: fields.bundesland.selectedValue,
@@ -216,8 +216,8 @@ export default function TaxNumberPage({
   const { t } = useTranslation();
 
   const [taxNumberPageData, changeTaxNumberPageData] = useReducer(
-    changeTaxNumberState,
-    getCurrentState(fields)
+    reduceTaxNumberPageData,
+    getInitialTaxNumberPageData(fields)
   );
 
   const [selectedStateAbbreviation, setSelectedStateAbbreviation] = useState(
