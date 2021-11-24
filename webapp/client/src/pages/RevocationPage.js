@@ -25,11 +25,11 @@ export default function RevocationPage({ stepHeader, form, fields }) {
             fieldId="idnr"
             values={fields.idnr.value}
             label={{
-              text: t("unlockCodeRevocation.idnr.labelText"),
+              text: t("fields.idnr.labelText"),
             }}
             details={{
-              title: t("unlockCodeRevocation.idnr.help.title"),
-              text: t("unlockCodeRevocation.idnr.help.text"),
+              title: t("fields.idnr.help.title"),
+              text: t("fields.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />
@@ -41,7 +41,7 @@ export default function RevocationPage({ stepHeader, form, fields }) {
             fieldId="dob"
             values={fields.dob.value}
             label={{
-              text: t("unlockCodeRevocation.dob.labelText"),
+              text: t("fields.dob.labelText"),
             }}
             errors={fields.dob.errors}
           />

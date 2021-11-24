@@ -26,11 +26,11 @@ export default function LoginPage({ stepHeader, form, fields }) {
             fieldId="idnr"
             values={fields.idnr.value}
             label={{
-              text: t("unlockCodeActivation.idnr.labelText"),
+              text: t("fields.idnr.labelText"),
             }}
             details={{
-              title: t("unlockCodeActivation.idnr.help.title"),
-              text: t("unlockCodeActivation.idnr.help.text"),
+              title: t("fields.idnr.help.title"),
+              text: t("fields.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />
