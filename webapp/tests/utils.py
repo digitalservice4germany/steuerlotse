@@ -1,6 +1,8 @@
+import os
 import secrets
 
 import pytest
+from flask import current_app
 
 from app.config import Config, ProductionConfig, StagingConfig
 from app.data_access.user_controller import create_user, find_user
@@ -21,20 +23,20 @@ def create_and_activate_user(idnr, dob, request_id, unlock_code):
 
 
 @pytest.fixture
-def configuration_with_production_environment_testing_route_policy():
-    current_configuration_value = Config.ALLOW_TESTING_ROUTES
-    Config.ALLOW_TESTING_ROUTES = ProductionConfig.ALLOW_TESTING_ROUTES
+def production_flask_env():
+    current_configuration_value = os.environ.get('FLASK_ENV')
+    os.environ['FLASK_ENV'] = 'production'
 
-    yield Config
+    yield current_app
 
-    Config.ALLOW_TESTING_ROUTES = current_configuration_value
+    os.environ['FLASK_ENV'] = current_configuration_value
 
 
 @pytest.fixture
-def configuration_with_staging_environment_testing_route_policy():
-    current_configuration_value = Config.ALLOW_TESTING_ROUTES
-    Config.ALLOW_TESTING_ROUTES = StagingConfig.ALLOW_TESTING_ROUTES
+def staging_flask_env():
+    current_configuration_value = os.environ.get('FLASK_ENV')
+    os.environ['FLASK_ENV'] = 'staging'
 
-    yield Config
+    yield current_app
 
-    Config.ALLOW_TESTING_ROUTES = current_configuration_value
+    os.environ['FLASK_ENV'] = current_configuration_value

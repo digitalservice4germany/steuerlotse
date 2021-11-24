@@ -4,7 +4,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 
 from app.app import create_app
 from app.forms.session_data import get_session_data
-from tests.utils import configuration_with_production_environment_testing_route_policy, configuration_with_staging_environment_testing_route_policy
+from tests.utils import production_flask_env, staging_flask_env
 
 
 from app.routes import extract_information_from_request, register_request_handlers
@@ -34,7 +34,7 @@ class TestExtractInformationFromRequest:
 
 class TestSetTestingDataRoute:
 
-    @pytest.mark.usefixtures("configuration_with_production_environment_testing_route_policy")
+    @pytest.mark.usefixtures("production_flask_env")
     def test_if_production_environment_then_return_404(self):
         identifier = "form_data"
         data = {'username': 'flask', 'password': 'secret'}
@@ -44,7 +44,7 @@ class TestSetTestingDataRoute:
             response = c.post(f'/testing/set_data/{identifier}', json=data)
             assert response.status_code == 404
 
-    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
+    @pytest.mark.usefixtures("staging_flask_env")
     def test_if_non_production_environment_then_return_set_data(self, app):
         identifier = "form_data"
         data = {'username': 'flask', 'password': 'secret'}

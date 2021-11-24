@@ -1,4 +1,5 @@
 import datetime as dt
+import os
 from functools import lru_cache
 
 from werkzeug.exceptions import abort
@@ -18,7 +19,7 @@ def lru_cached(func):
 
 
 def non_production_environment_required(f):
-    if Config.ALLOW_TESTING_ROUTES:
+    if os.environ.get('FLASK_ENV') != "production":
         return f
     else:
         def disable_route(*args, **kwargs):
