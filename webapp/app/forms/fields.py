@@ -380,11 +380,7 @@ class TaxNumberField(SteuerlotseStringField):
             return self.data
 
         # Once the validation has gone through, post_validate() stores the data as string.
-        # As we know that it is correct, we can just separate it in chunks here.
-        split_data = []
-        if self.data:
-            split_data.append(self.data)
-        return split_data
+        return [self.data]
 
     def post_validate(self, form, validation_stopped):
         # Once the validation has gone through, we know that the idnr is correct.
