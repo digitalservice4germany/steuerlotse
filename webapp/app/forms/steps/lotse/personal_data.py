@@ -14,7 +14,7 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.forms.steps.step import SectionLink
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength
 from app.forms.validators import DecimalOnly, IntegerLength
-from app.model.components import LotseStepFormProps, TaxNumberStepFormProps
+from app.model.components import TaxNumberStepFormProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b
 
@@ -73,9 +73,9 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.bufa_nr.data_label')}
         )
         steuernummer = TaxNumberField(label=_l('form.lotse.steuernummer'),
-                                                     validators=[ValidTaxNumberLength(), ValidHessenTaxNumber()],
-                                                     render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
-                                                         'data-example-input': _l('form.lotse.steuernummer.example_input')})
+                                      validators=[ValidTaxNumberLength(), ValidHessenTaxNumber()],
+                                      render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
+                                                 'data-example-input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
             input_required=False,
             label=_l('form.lotse.steuernummer.request_new_tax_number'),

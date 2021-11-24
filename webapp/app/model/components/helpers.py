@@ -25,7 +25,6 @@ def form_fields_dict(form):
         elif hasattr(field, "_value"):
             field_dict['value'] = field._value()
 
-
         fields[field.name] = field_dict
 
     return fields

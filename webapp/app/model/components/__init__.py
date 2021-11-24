@@ -86,15 +86,11 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 
-class LotseStepFormProps(StepFormProps):
-    prev_url: str
-
-
-class SelectStMindProps(LotseStepFormProps):
+class SelectStMindProps(StepFormProps):
     pass
 
 
-class TaxNumberStepFormProps(LotseStepFormProps):
+class TaxNumberStepFormProps(StepFormProps):
     tax_office_list: List[Dict]
     number_of_users: int
 
