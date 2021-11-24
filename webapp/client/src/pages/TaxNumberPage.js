@@ -118,7 +118,7 @@ function getSplitTypeForState(selectedStateAbbreviation) {
     case "nd":
     case "rp":
     case "sh":
-      return "0";
+      return "splitType_0";
     case "by":
     case "bb":
     case "mv":
@@ -126,11 +126,11 @@ function getSplitTypeForState(selectedStateAbbreviation) {
     case "sn":
     case "st":
     case "th":
-      return "1";
+      return "splitType_1";
     case "nw":
-      return "2";
+      return "splitType_2";
     default:
-      return "3";
+      return "splitType_notSplit";
   }
 }
 

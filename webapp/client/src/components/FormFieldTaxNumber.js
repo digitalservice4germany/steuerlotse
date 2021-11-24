@@ -29,7 +29,7 @@ function FormFieldTaxNumber({
   let concatValues = values.join("");
   let inputFieldLengths;
   switch (splitType) {
-    case "0":
+    case "splitType_0":
       inputFieldLengths = [2, 3, 5];
       concatValues = [
         concatValues.slice(0, 2),
@@ -37,7 +37,7 @@ function FormFieldTaxNumber({
         concatValues.slice(5, 10),
       ];
       break;
-    case "1":
+    case "splitType_1":
       inputFieldLengths = [3, 3, 5];
       concatValues = [
         concatValues.slice(0, 3),
@@ -45,7 +45,7 @@ function FormFieldTaxNumber({
         concatValues.slice(6, 11),
       ];
       break;
-    case "2":
+    case "splitType_2":
       inputFieldLengths = [3, 4, 4];
       concatValues = [
         concatValues.slice(0, 3),
@@ -111,7 +111,12 @@ FormFieldTaxNumber.propTypes = {
   required: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   details: FieldLabelForSeparatedFields.propTypes.details,
-  splitType: PropTypes.oneOf(["0", "1", "2", "3"]).isRequired,
+  splitType: PropTypes.oneOf([
+    "splitType_0",
+    "splitType_1",
+    "splitType_2",
+    "splitType_notSplit",
+  ]).isRequired,
 };
 
 FormFieldTaxNumber.defaultProps = {

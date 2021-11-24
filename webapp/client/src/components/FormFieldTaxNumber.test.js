@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import FormFieldTaxNumber from "./FormFieldTaxNumber";
 
-describe("FormFieldTaxNumber has splitType 0", () => {
+describe("FormFieldTaxNumber has splitType_0", () => {
   let props;
   const exampleInput = "exampleInput";
 
@@ -17,7 +17,7 @@ describe("FormFieldTaxNumber has splitType 0", () => {
       },
       errors: [],
       values: [],
-      splitType: "0",
+      splitType: "splitType_0",
     };
     render(<FormFieldTaxNumber {...props} />);
   });
@@ -94,7 +94,7 @@ describe("FormFieldTaxNumber has splitType 0", () => {
   });
 });
 
-describe("FormFieldTaxNumber has splitType 1", () => {
+describe("FormFieldTaxNumber has splitType_1", () => {
   let props;
   const exampleInput = "exampleInput";
 
@@ -108,7 +108,7 @@ describe("FormFieldTaxNumber has splitType 1", () => {
       },
       errors: [],
       values: [],
-      splitType: "1",
+      splitType: "splitType_1",
     };
     render(<FormFieldTaxNumber {...props} />);
   });
@@ -150,7 +150,7 @@ describe("FormFieldTaxNumber has splitType 1", () => {
   });
 });
 
-describe("FormFieldTaxNumber has splitType 2", () => {
+describe("FormFieldTaxNumber has splitType_2", () => {
   let props;
   const exampleInput = "exampleInput";
 
@@ -164,7 +164,7 @@ describe("FormFieldTaxNumber has splitType 2", () => {
       },
       errors: [],
       values: [],
-      splitType: "2",
+      splitType: "splitType_2",
     };
     render(<FormFieldTaxNumber {...props} />);
   });
@@ -220,7 +220,7 @@ describe("FormFieldTaxNumber is not split", () => {
       },
       errors: [],
       values: [],
-      splitType: "3",
+      splitType: "splitType_notSplit",
     };
     render(<FormFieldTaxNumber {...props} />);
   });
