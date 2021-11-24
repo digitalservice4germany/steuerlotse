@@ -656,8 +656,8 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:499
 msgid "form.eligibility.pension-title"
 msgstr ""
-"Beziehen Sie eine Rente bzw. eine Pension von einer oder mehrerer dieser "
-"Stellen:"
+"Beziehen Sie eine inländische Rente bzw. eine Pension von einer oder "
+"mehrerer dieser Stellen:"
 
 #: app/forms/steps/eligibility_steps.py:500
 msgid "form.eligibility.pension-intro"
@@ -2191,10 +2191,10 @@ msgstr ""
 "Da viele Informationen der Finanzverwaltung bereits vorliegen, müssen Sie"
 " diese nicht mehr in Ihre Steuererklärung eintragen. Dazu gehören zum "
 "Beispiel die elektronisch an die Finanzverwaltung übermittelten "
-"Renteneinkünfte, Pensionen und Krankenversicherungsbeiträge.</p><p>Welche"
-" Beträge über Sie übermittelt wurden, können Sie den Bescheiden "
-"entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die"
-" Daten kommen aus der gleichen Quelle."
+"inländischen Renteneinkünfte, Pensionen und "
+"Krankenversicherungsbeiträge.</p><p>Welche Beträge über Sie übermittelt "
+"wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen "
+"Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle."
 
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:85
 msgid "form.lotse.session-note.title"
@@ -3174,7 +3174,7 @@ msgstr ""
 #: app/templates/content/agb.html:21
 msgid "agb.programmumfang-list-1"
 msgstr ""
-"Renteneinkünfte und / oder Pensionen, die von den "
+"inländische Renteneinkünfte und / oder Pensionen, die von den "
 "Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet "
 "worden sind, und ggf."
 
@@ -4540,8 +4540,9 @@ msgstr "Welche Daten werden automatisch in meine Steuererklärung übernommen?"
 #: app/templates/content/howitworks.html:154
 msgid "info.card-takeover.p1-content"
 msgstr ""
-"Daten zu Renten, Pensionen sowie zu Kranken- und Pflegeversicherungen "
-"erhält die Finanzverwaltung von der jeweiligen Stelle elektronisch."
+"Daten zu inländischen Renten, Pensionen sowie zu Kranken- und "
+"Pflegeversicherungen erhält die Finanzverwaltung von der jeweiligen "
+"Stelle elektronisch."
 
 #: app/templates/content/howitworks.html:155
 msgid "info.card-takeover.p2-content"
@@ -5310,31 +5311,6 @@ msgstr ""
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#: app/templates/unlock_code/registration_data_input.html:12
-msgid "unlock-code-request.data-privacy-and-agb.title"
-msgstr "Datenschutzerklärung und Nutzungsbedingungen"
-
-#: app/templates/unlock_code/registration_data_input.html:17
-msgid "unlock-code-request.edata.title"
-msgstr "Einverständnis zur automatischen Übernahme vorliegender Daten"
-
-#: app/templates/unlock_code/registration_data_input.html:18
-msgid "unlock-code-request.e-data.help-title"
-msgstr "Was bedeutet das?"
-
-#: app/templates/unlock_code/registration_data_input.html:18
-msgid "unlock-code-request.e-data.help-text"
-msgstr ""
-"Daten zu beispielsweise <strong>Renten, Pensionen oder Kranken- und "
-"Pflegeversicherungen</strong> erhält die Steuerverwaltung vom jeweiligen "
-"Träger elektronisch. Diese Daten werden vom Finanzamt automatisch "
-"übernommen und müssen von Ihnen nicht in diese Steuererklärung "
-"eingetragen werden. </br> Welche Beträge über Sie übermittelt wurden, "
-"können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle "
-"per Post erhalten haben. Die Daten kommen aus der gleichen Quelle. "
-"Sollten Sie mit der Übernahme nicht einverstanden sein, können Sie die "
-"vereinfachte Steuererklärung leider nicht nutzen."
 
 #: app/templates/unlock_code/registration_success.html:4
 msgid "register.success.next-steps.heading"
