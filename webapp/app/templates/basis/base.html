@@ -58,7 +58,7 @@
             {% endif %}
             <div id="main_content" class="container-fluid p-0 d-flex flex-column min-vh-100">
                 <div class="tax-period-banner">
-                    <img src={{ static_url_for('static', filename='icons/banner_arrow.svg') }}>
+                    <img src="{{ static_url_for('static', filename='icons/banner_arrow.svg') }}" alt="{{ _('tax-period-banner.alt-text') }}">
                     <p>
                         {{ _('tax-period-banner.text') }}
                     </p>

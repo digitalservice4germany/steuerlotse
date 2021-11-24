@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-23 18:19+0100\n"
+"POT-Creation-Date: 2021-11-24 09:46+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2894,7 +2894,11 @@ msgstr "Fehler: "
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
-#: app/templates/basis/base.html:63
+#: app/templates/basis/base.html:62
+msgid "tax-period-banner.alt-text"
+msgstr "Pfeil"
+
+#: app/templates/basis/base.html:64
 msgid "tax-period-banner.text"
 msgstr ""
 "<b>Wir stellen auf das neue Steuerjahr 2021 um!</b></br>Steuererklärung "
@@ -4204,19 +4208,19 @@ msgstr ""
 "zugeschnitten."
 
 #: app/templates/content/howitworks.html:11
-#: app/templates/content/landing_page.html:9
+#: app/templates/content/landing_page.html:15
 msgid "info-stl.card-who.heading"
 msgstr "Wer kann den Steuerlotsen nutzen?"
 
 #: app/templates/content/howitworks.html:13
-#: app/templates/content/landing_page.html:11
+#: app/templates/content/landing_page.html:17
 msgid "info-stl.card-who.p1-content"
 msgstr ""
 "Der Steuerlotse richtet sich derzeit an Rentner:innen und Pensionär:innen"
 " mit ausschließlich klassischen Alterseinkünften."
 
 #: app/templates/content/howitworks.html:14
-#: app/templates/content/landing_page.html:12
+#: app/templates/content/landing_page.html:18
 msgid "info-stl.card-who.p2-content"
 msgstr ""
 "Sie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus "
@@ -4225,33 +4229,33 @@ msgstr ""
 "nicht nutzen."
 
 #: app/templates/content/howitworks.html:15
-#: app/templates/content/landing_page.html:13
+#: app/templates/content/landing_page.html:19
 msgid "info-stl.card-who.p3-content"
 msgstr ""
 "Jedoch können Sie <a href=%(link)s>mit unserem Fragebogen</a> prüfen, ob "
 "Sie alle Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
 #: app/templates/content/howitworks.html:20
-#: app/templates/content/landing_page.html:18
+#: app/templates/content/landing_page.html:24
 msgid "info-stl.card-process.heading"
 msgstr "Wie läuft die Nutzung des Steuerlotsen ab?"
 
 #: app/templates/content/howitworks.html:22
-#: app/templates/content/landing_page.html:20
+#: app/templates/content/landing_page.html:26
 msgid "info-stl.card-process.p1-content"
 msgstr ""
 "Mit dem Steuerlotsen kommen Sie ganz automatisch in 4 Schritten durch "
 "Ihre Steuererklärung:"
 
 #: app/templates/content/howitworks.html:25
-#: app/templates/content/landing_page.html:23
+#: app/templates/content/landing_page.html:29
 msgid "info-stl.card-process.list-item-1"
 msgstr ""
 "<a href=%(link)s>Prüfen Sie</a>, ob Sie die Voraussetzung für die Nutzung"
 " des Steuerlotsen erfüllen."
 
 #: app/templates/content/howitworks.html:26
-#: app/templates/content/landing_page.html:24
+#: app/templates/content/landing_page.html:30
 msgid "info-stl.card-process.list-item-2"
 msgstr ""
 "<a href=%(link)s>Registrieren Sie sich </a>beim Steuerlotsen für Ihre "
@@ -4259,12 +4263,12 @@ msgstr ""
 "Sie einen Freischaltcode bei Ihrer Finanzverwaltung."
 
 #: app/templates/content/howitworks.html:27
-#: app/templates/content/landing_page.html:25
+#: app/templates/content/landing_page.html:31
 msgid "info-stl.card-process.list-item-3"
 msgstr "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode. "
 
 #: app/templates/content/howitworks.html:28
-#: app/templates/content/landing_page.html:26
+#: app/templates/content/landing_page.html:32
 msgid "info-stl.card-process.list-item-4"
 msgstr ""
 "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie "
@@ -4273,26 +4277,26 @@ msgstr ""
 "Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen."
 
 #: app/templates/content/howitworks.html:32
-#: app/templates/content/landing_page.html:30
+#: app/templates/content/landing_page.html:36
 msgid "info-stl.card-submission.heading"
 msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 
 #: app/templates/content/howitworks.html:34
-#: app/templates/content/landing_page.html:32
+#: app/templates/content/landing_page.html:38
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Das hängt davon ab, ob Sie zur Abgabe einer Steuererklärung verpflichtet "
 "sind oder Ihre Steuererklärung freiwillig machen."
 
 #: app/templates/content/howitworks.html:35
-#: app/templates/content/landing_page.html:33
+#: app/templates/content/landing_page.html:39
 msgid "info-stl.card-submission.p2-content"
 msgstr ""
 "Für Personen, die verpflichtet sind, eine Einkommensteuererklärung "
 "einzureichen, endete die Steuerabgabefrist am 31. Oktober."
 
 #: app/templates/content/howitworks.html:36
-#: app/templates/content/landing_page.html:34
+#: app/templates/content/landing_page.html:40
 msgid "info-stl.card-submission.p3-content"
 msgstr ""
 "Sollten Sie den Abgabetermin verpasst haben, können Sie Ihre "
@@ -4303,12 +4307,12 @@ msgstr ""
 "Jahre Zeit."
 
 #: app/templates/content/howitworks.html:41
-#: app/templates/content/landing_page.html:39
+#: app/templates/content/landing_page.html:45
 msgid "info-stl.card-steuerminderung.heading"
 msgstr "Kann ich Angaben machen, die gegebenenfalls meine Steuerlast mindern?"
 
 #: app/templates/content/howitworks.html:43
-#: app/templates/content/landing_page.html:41
+#: app/templates/content/landing_page.html:47
 msgid "info-stl.card-steuerminderung.p1-content"
 msgstr ""
 "Ja. Spenden und Mitgliedsbeiträge, Krankheits- und Pflegekosten sowie "
@@ -4320,7 +4324,7 @@ msgstr ""
 "Steuerlotsen nicht steuerlich absetzen."
 
 #: app/templates/content/howitworks.html:44
-#: app/templates/content/landing_page.html:42
+#: app/templates/content/landing_page.html:48
 msgid "info-stl.card-steuerminderung.p2-content"
 msgstr ""
 "Wenn Sie weitere Aufwendungen geltend machen möchten, müssen Sie zurzeit "
@@ -4328,7 +4332,7 @@ msgstr ""
 "ELSTER verwenden."
 
 #: app/templates/content/howitworks.html:45
-#: app/templates/content/landing_page.html:43
+#: app/templates/content/landing_page.html:49
 msgid "info-stl.card-steuerminderung.p3-content"
 msgstr ""
 "Eine Übersicht, die Auskunft darüber gibt, welche Unterlagen beispielhaft"
@@ -4856,83 +4860,83 @@ msgstr ""
 msgid "interviews.button"
 msgstr "<a href=\"mailto:kontakt@steuerlotse-rente.de\">Schreiben Sie uns!</a>"
 
-#: app/templates/content/landing_page.html:6
+#: app/templates/content/landing_page.html:12
 msgid "info.heading-accordeon-home"
 msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 
-#: app/templates/content/landing_page.html:57
+#: app/templates/content/landing_page.html:63
 msgid "landing.hero-title"
 msgstr ""
 "Mit dem Steuerlotsen können Rentner:innen und Pensionär:innen ihre "
 "Steuererklärung online machen!"
 
-#: app/templates/content/landing_page.html:58
+#: app/templates/content/landing_page.html:64
 msgid "landing.hero-desc"
 msgstr ""
 "Der Steuerlotse bietet Rentner:innen und Pensionär:innen ohne weitere "
 "Einkünfte die Möglichkeit, ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen zu machen."
 
-#: app/templates/content/landing_page.html:60
+#: app/templates/content/landing_page.html:66
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:61
+#: app/templates/content/landing_page.html:67
 msgid "landing.hero-list-item-2"
 msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
 
-#: app/templates/content/landing_page.html:62
+#: app/templates/content/landing_page.html:68
 msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
-#: app/templates/content/landing_page.html:74
+#: app/templates/content/landing_page.html:80
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:84
+#: app/templates/content/landing_page.html:90
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:85
+#: app/templates/content/landing_page.html:91
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:92
+#: app/templates/content/landing_page.html:98
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:93
+#: app/templates/content/landing_page.html:99
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:100
+#: app/templates/content/landing_page.html:106
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:101
+#: app/templates/content/landing_page.html:107
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/templates/content/landing_page.html:117
+#: app/templates/content/landing_page.html:123
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:118
+#: app/templates/content/landing_page.html:124
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:119
+#: app/templates/content/landing_page.html:125
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
