@@ -87,6 +87,18 @@ class TestSetTestingDataRoute:
         assert response.status_code == 200
         assert response.json == data
 
+    @pytest.mark.usefixtures("staging_flask_env")
+    def test_if_staging_environment_and_incorrect_identifier_then_return_set_data(self):
+        identifier = "INCORRECT_IDENTIFIER"
+        data = {'username': 'Frodo', 'ring': 'one'}
+        app = create_app()
+
+        with app.app_context(), app.test_client() as c:
+            response = c.post(f'/testing/set_data/{identifier}', json=data)
+        assert response.status_code == 200
+        assert response.json is None
+        assert response.data == b"Not allowed identifier"
+
     def test_if_data_provided_then_set_session_correctly(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
@@ -95,3 +107,12 @@ class TestSetTestingDataRoute:
             app.view_functions.get('set_data')(identifier)
 
             assert get_session_data(identifier) == data
+
+    def test_if_data_provided_but_incorrect_session_identifier_then_do_not_set_session(self, app):
+        identifier = "INCORRECT_IDENTIFIER"
+        data = {'username': 'Frodo', 'ring': 'one'}
+        with app.test_request_context(method="POST", json=data) as req:
+            req.session = SecureCookieSession({})
+            app.view_functions.get('set_data')(identifier)
+
+            assert get_session_data(identifier) == {}

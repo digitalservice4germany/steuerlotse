@@ -13,8 +13,8 @@ from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
 from app.extensions import nav, login_manager, limiter, csrf
-from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
-from app.forms.flows.lotse_step_chooser import LotseStepChooser
+from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
+from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
 from app.forms.session_data import override_session_data
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
@@ -324,6 +324,9 @@ def register_testing_request_handlers(app):
     @csrf.exempt
     @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
     def set_data(session_identifier):
+        _ALLOWED_IDENTIFIERS = [_LOTSE_DATA_KEY, _ELIGIBILITY_DATA_KEY]
+        if session_identifier not in _ALLOWED_IDENTIFIERS:
+            return "Not allowed identifier", 200
         data = request.get_json()
         override_session_data(data, session_identifier)
         return data, 200
