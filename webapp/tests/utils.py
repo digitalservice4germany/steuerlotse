@@ -22,19 +22,19 @@ def create_and_activate_user(idnr, dob, request_id, unlock_code):
 
 @pytest.fixture
 def configuration_with_production_environment_testing_route_policy():
-    in_production_value = Config.ALLOW_TESTING_ROUTES
+    current_configuration_value = Config.ALLOW_TESTING_ROUTES
     Config.ALLOW_TESTING_ROUTES = ProductionConfig.ALLOW_TESTING_ROUTES
 
     yield Config
 
-    Config.ALLOW_TESTING_ROUTES = in_production_value
+    Config.ALLOW_TESTING_ROUTES = current_configuration_value
 
 
 @pytest.fixture
 def configuration_with_staging_environment_testing_route_policy():
-    in_production_value = Config.ALLOW_TESTING_ROUTES
+    current_configuration_value = Config.ALLOW_TESTING_ROUTES
     Config.ALLOW_TESTING_ROUTES = StagingConfig.ALLOW_TESTING_ROUTES
 
     yield Config
 
-    Config.ALLOW_TESTING_ROUTES = in_production_value
+    Config.ALLOW_TESTING_ROUTES = current_configuration_value
