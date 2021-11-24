@@ -400,3 +400,94 @@ describe("TaxNumberPage", () => {
     });
   });
 });
+
+describe("TaxNumberPage with tax number set", () => {
+  let props;
+  const taxNumber = "12345678910";
+
+  beforeEach(() => {
+    props = {
+      stepHeader: {
+        title: "fooTitle",
+        intro: "fooIntro",
+      },
+      form: {
+        ...StepFormDefault.args,
+      },
+      fields: {
+        steuernummerExists: {
+          value: "yes",
+          errors: [],
+        },
+        bundesland: {
+          selectedValue: "bw",
+          options: [
+            { value: "bw", displayName: "Baden-Württemberg" },
+            { value: "by", displayName: "Bayern" },
+            { value: "he", displayName: "Hessen" },
+          ],
+          errors: [],
+        },
+        bufaNr: {
+          options: [],
+          errors: [],
+        },
+        steuernummer: {
+          value: [taxNumber],
+          errors: [],
+        },
+        requestNewTaxNumber: {
+          errors: [],
+        },
+      },
+      taxOfficeList: [
+        {
+          stateAbbreviation: "bw",
+          name: "Baden-Württemberg",
+          taxOffices: [
+            { name: "Finanzamt Villingen-Schwenningen", bufaNr: "2801" },
+          ],
+        },
+        {
+          stateAbbreviation: "by",
+          name: "Bayern",
+          taxOffices: [
+            {
+              name: "Finanzamt München Arbeitnehmerbereich (101)",
+              bufaNr: "9101",
+            },
+            {
+              name: "Finanzamt München Arbeitgeberbereich (102)",
+              bufaNr: "9102",
+            },
+          ],
+        },
+        {
+          stateAbbreviation: "he",
+          name: "Hessen",
+          taxOffices: [
+            { name: "Finanzamt Hessen 1", bufaNr: "2250" },
+            { name: "Finanzamt Hessen 2", bufaNr: "2251" },
+          ],
+        },
+      ],
+      numberOfUsers: 1,
+    };
+    render(<TaxNumberPage {...props} />);
+  });
+
+  it("Should show keep tax number if state changes", () => {
+    userEvent.selectOptions(screen.getByRole("combobox"), ["by"]);
+    expect(screen.queryByText("Steuernummer")).not.toBeNull();
+    expect(screen.queryAllByRole("textbox")).toHaveLength(3);
+    expect(screen.queryAllByRole("textbox")[0]).toHaveValue(
+      taxNumber.slice(0, 3)
+    );
+    expect(screen.queryAllByRole("textbox")[1]).toHaveValue(
+      taxNumber.slice(3, 6)
+    );
+    expect(screen.queryAllByRole("textbox")[2]).toHaveValue(
+      taxNumber.slice(6, 11)
+    );
+  });
+});
