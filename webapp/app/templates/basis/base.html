@@ -57,6 +57,14 @@
                 </noscript>
             {% endif %}
             <div id="main_content" class="container-fluid p-0 d-flex flex-column min-vh-100">
+            {% block tax_period_banner %}
+                <div class="tax-period-banner">
+                    <img src="{{ static_url_for('static', filename='icons/banner_arrow.svg') }}" alt="{{ _('tax-period-banner.alt-text') }}">
+                    <p>
+                        {{ _('tax-period-banner.text') }}
+                    </p>
+                </div>
+            {% endblock %}
                 {% block flashed_messages %}
                     {% for category, message in get_flashed_messages(with_categories=True) %}
                         {% if category == 'success' %}
