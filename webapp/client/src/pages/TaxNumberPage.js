@@ -184,6 +184,7 @@ export default function TaxNumberPage({
   stepHeader,
   form,
   fields,
+  prevUrl,
   taxOfficeList,
   numberOfUsers,
 }) {
@@ -313,7 +314,7 @@ export default function TaxNumberPage({
 
   return (
     <>
-      <StepHeaderButtons />
+      <StepHeaderButtons url={prevUrl} />
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
         <FormRowCentered>
@@ -363,6 +364,7 @@ TaxNumberPage.propTypes = {
     bufaNr: selectionFieldPropType,
     requestNewTaxNumber: checkboxPropType,
   }).isRequired,
+  prevUrl: PropTypes.string.isRequired,
   taxOfficeList: PropTypes.arrayOf(
     PropTypes.exact({
       stateAbbreviation: PropTypes.string,
