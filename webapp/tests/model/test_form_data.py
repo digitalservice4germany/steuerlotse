@@ -1,3 +1,4 @@
+import copy
 import datetime
 import unittest
 import datetime as dt
@@ -48,6 +49,16 @@ def valid_stmind_data():
             'stmind_bestattung_anspruch': Decimal('5055.52'),
             'stmind_aussergbela_sonst_summe': Decimal('6066.61'),
             'stmind_aussergbela_sonst_anspruch': Decimal('6066.62')}
+
+@pytest.fixture
+def tax_number_page_data():
+    return {
+        'steuernummer_exists': None,
+        'bundesland': 'BY',
+        'steuernummer': '19811310010',
+        'bufa_nr': '9201',
+        'request_new_tax_number': True,
+    }
 
 
 class TestShowPersonB:
@@ -353,3 +364,24 @@ class TestFormDataDependencies:
         with patch('app.model.form_data.show_person_b', return_value=False):
             returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
             assert returned_data == valid_stmind_data
+
+    def test_if_no_tax_number_exists_then_delete_tax_number(self, tax_number_page_data):
+        input_data = tax_number_page_data
+        input_data['steuernummer_exists'] = "no"
+        expected_data = copy.deepcopy(input_data)
+        expected_data.pop('steuernummer')
+
+        returned_data = FormDataDependencies.parse_obj(tax_number_page_data).dict(exclude_none=True)
+        assert returned_data == expected_data
+
+    def test_if_tax_number_exists_then_delete_bufa_nr_and_request_new_tax_number(self, tax_number_page_data):
+        input_data = tax_number_page_data
+        input_data['steuernummer_exists'] = "yes"
+        expected_data = copy.deepcopy(input_data)
+        expected_data.pop('bufa_nr')
+        expected_data.pop('request_new_tax_number')
+
+        returned_data = FormDataDependencies.parse_obj(tax_number_page_data).dict(exclude_none=True)
+        assert returned_data == expected_data
+
+

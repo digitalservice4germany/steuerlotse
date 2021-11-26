@@ -184,9 +184,8 @@ msgid "validate.not-a-decimal"
 msgstr "Der Wert darf nur Ziffern beinhalten."
 
 #: app/forms/validators.py:30
-#, fuzzy
 msgid "validate.must-not-be-zero"
-msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
+msgstr "Dieses Feld darf nicht 0 sein."
 
 #: app/forms/validators.py:43
 msgid "validate.integer-length-max"
@@ -235,14 +234,26 @@ msgstr "Der Freischaltcode ist nicht valide."
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
 
-#: app/forms/validators.py:133
+#: app/forms/validators.py:137
+msgid "validate.invalid-tax-number-length.shorter-than-ten"
+msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
+
+#: app/forms/validators.py:139
+msgid "validate.invalid-tax-number-length.shorter-than-eleven"
+msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
+
+#: app/forms/validators.py:141
+msgid "validate.invalid-tax-number-length.too-long"
+msgstr "Die Angabe darf höchstens 11 Ziffern umfassen."
+
+#: app/forms/validators.py:150
 msgid "validate.invalid-hessen-tax-number"
 msgstr ""
 "In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
 "Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
 "Stelle eine 0 ein."
 
-#: app/forms/validators.py:141
+#: app/forms/validators.py:158
 msgid "validate.invalid-tax-number"
 msgstr "Die Steuernummer ist nicht valide."
 
@@ -263,20 +274,20 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:129 app/forms/flows/lotse_step_chooser.py:103
+#: app/forms/flows/lotse_flow.py:130 app/forms/flows/lotse_step_chooser.py:103
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:185
+#: app/forms/flows/lotse_flow.py:186
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:320
+#: app/forms/flows/lotse_flow.py:321
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:372
+#: app/forms/flows/lotse_flow.py:373
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -1169,7 +1180,6 @@ msgid "unlock-code-revocation.dob"
 msgstr "Geburtsdatum"
 
 #: app/forms/steps/unlock_code_revocation_steps.py:21
-#, fuzzy
 msgid "validate.day-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
@@ -1229,11 +1239,11 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse/personal_data.py:22
+#: app/forms/steps/lotse/personal_data.py:24
 msgid "form.lotse.steuernummer-title"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:23
+#: app/forms/steps/lotse/personal_data.py:25
 msgid "form.lotse.steuernummer-intro"
 msgstr ""
 "Die Steuernummer wird Ihnen vom zuständigen Finanzamt zugeteilt – dort, "
@@ -1242,7 +1252,7 @@ msgstr ""
 "beispielsweise ein Umzug, eine Heirat oder die Änderung der "
 "Veranlagungsart sein."
 
-#: app/forms/steps/lotse/personal_data.py:24
+#: app/forms/steps/lotse/personal_data.py:26
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:151
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:276
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:402
@@ -1250,11 +1260,11 @@ msgstr ""
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/personal_data.py:30
+#: app/forms/steps/lotse/personal_data.py:31
 msgid "form.lotse.step_steuernummer.label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:31
+#: app/forms/steps/lotse/personal_data.py:32
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
@@ -1264,22 +1274,22 @@ msgstr "Steuernummer"
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
-#: app/forms/steps/lotse/personal_data.py:38
-#: app/forms/steps/lotse/personal_data.py:138
+#: app/forms/steps/lotse/personal_data.py:40
+#: app/forms/steps/lotse/personal_data.py:137
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
 msgstr[1] "Haben Sie bereits eine gemeinsame Steuernummer?"
 
-#: app/forms/steps/lotse/personal_data.py:39
+#: app/forms/steps/lotse/personal_data.py:41
 msgid "form.lotse.steuernummer_exists.data_label"
 msgstr "Steuernummer vorhanden"
 
-#: app/forms/steps/lotse/personal_data.py:40
+#: app/forms/steps/lotse/personal_data.py:42
 msgid "form.lotse.steuernummer_exists.detail.title"
 msgstr "Wo finde Ich diese Nummer?"
 
-#: app/forms/steps/lotse/personal_data.py:41
+#: app/forms/steps/lotse/personal_data.py:43
 msgid "form.lotse.steuernummer_exists.detail.text"
 msgstr ""
 "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch "
@@ -1295,76 +1305,71 @@ msgstr "Beantworten Sie die Frage, um fortfahren zu können."
 msgid "form.lotse.field_bundesland"
 msgstr "Wählen Sie Ihr Bundesland"
 
-#: app/forms/steps/lotse/personal_data.py:46
-#: app/templates/lotse/form_steuernummer.html:61
-msgid "form.select_input.default_selection"
-msgstr "Bitte auswählen"
-
-#: app/forms/steps/lotse/personal_data.py:47
+#: app/forms/steps/lotse/personal_data.py:48
 msgid "form.lotse.field_bundesland_bw"
 msgstr "Baden-Württemberg"
 
-#: app/forms/steps/lotse/personal_data.py:48
+#: app/forms/steps/lotse/personal_data.py:49
 msgid "form.lotse.field_bundesland_by"
 msgstr "Bayern"
 
-#: app/forms/steps/lotse/personal_data.py:49
+#: app/forms/steps/lotse/personal_data.py:50
 msgid "form.lotse.field_bundesland_be"
 msgstr "Berlin"
 
-#: app/forms/steps/lotse/personal_data.py:50
+#: app/forms/steps/lotse/personal_data.py:51
 msgid "form.lotse.field_bundesland_bb"
 msgstr "Brandenburg"
 
-#: app/forms/steps/lotse/personal_data.py:51
+#: app/forms/steps/lotse/personal_data.py:52
 msgid "form.lotse.field_bundesland_hb"
 msgstr "Bremen"
 
-#: app/forms/steps/lotse/personal_data.py:52
+#: app/forms/steps/lotse/personal_data.py:53
 msgid "form.lotse.field_bundesland_hh"
 msgstr "Hamburg"
 
-#: app/forms/steps/lotse/personal_data.py:53
+#: app/forms/steps/lotse/personal_data.py:54
 msgid "form.lotse.field_bundesland_he"
 msgstr "Hessen"
 
-#: app/forms/steps/lotse/personal_data.py:54
+#: app/forms/steps/lotse/personal_data.py:55
 msgid "form.lotse.field_bundesland_mv"
 msgstr "Mecklenburg-Vorpommern "
 
-#: app/forms/steps/lotse/personal_data.py:55
+#: app/forms/steps/lotse/personal_data.py:56
 msgid "form.lotse.field_bundesland_nd"
 msgstr "Niedersachsen"
 
-#: app/forms/steps/lotse/personal_data.py:56
+#: app/forms/steps/lotse/personal_data.py:57
 msgid "form.lotse.field_bundesland_nw"
 msgstr "Nordrhein-Westfalen"
 
-#: app/forms/steps/lotse/personal_data.py:57
+#: app/forms/steps/lotse/personal_data.py:58
 msgid "form.lotse.field_bundesland_rp"
 msgstr "Rheinland-Pfalz"
 
-#: app/forms/steps/lotse/personal_data.py:58
+#: app/forms/steps/lotse/personal_data.py:59
 msgid "form.lotse.field_bundesland_sl"
 msgstr "Saarland"
 
-#: app/forms/steps/lotse/personal_data.py:59
+#: app/forms/steps/lotse/personal_data.py:60
 msgid "form.lotse.field_bundesland_sn"
 msgstr "Sachsen"
 
-#: app/forms/steps/lotse/personal_data.py:60
+#: app/forms/steps/lotse/personal_data.py:61
 msgid "form.lotse.field_bundesland_st"
 msgstr "Sachsen-Anhalt "
 
-#: app/forms/steps/lotse/personal_data.py:61
+#: app/forms/steps/lotse/personal_data.py:62
 msgid "form.lotse.field_bundesland_sh"
 msgstr "Schleswig-Holstein"
 
-#: app/forms/steps/lotse/personal_data.py:62
+#: app/forms/steps/lotse/personal_data.py:63
 msgid "form.lotse.field_bundesland_th"
 msgstr "Thüringen"
 
-#: app/forms/steps/lotse/personal_data.py:64
+#: app/forms/steps/lotse/personal_data.py:65
 msgid "form.lotse.field_bundesland.data_label"
 msgstr "Auswahl Bundesland"
 
@@ -1384,16 +1389,16 @@ msgstr "Auswahl Finanzamt"
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:77
+#: app/forms/steps/lotse/personal_data.py:76
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:78
+#: app/forms/steps/lotse/personal_data.py:77
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/personal_data.py:81
-#: app/forms/steps/lotse/personal_data.py:141
+#: app/forms/steps/lotse/personal_data.py:80
+#: app/forms/steps/lotse/personal_data.py:140
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1403,11 +1408,11 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:82
+#: app/forms/steps/lotse/personal_data.py:81
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:127
+#: app/forms/steps/lotse/personal_data.py:126
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"
@@ -2755,7 +2760,6 @@ msgstr ""
 "Kreditinstituts."
 
 #: app/forms/validations/date_validations.py:61
-#, fuzzy
 msgid "validate.date-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
@@ -5277,17 +5281,6 @@ msgstr ""
 #: app/templates/lotse/form_person_b.html:72
 msgid "form.lotse.person-merkzeichen.title"
 msgstr "Angaben zum Merkzeichen"
-
-#: app/templates/lotse/form_steuernummer.html:22
-msgid "form.lotse.request_new_tax_number.title"
-msgstr "Neue Steuernummer beantragen"
-
-#: app/templates/lotse/form_steuernummer.html:23
-msgid "form.lotse.request_new_tax_number.intro"
-msgstr ""
-"Mit der Abgabe der Steuererklärung wird eine neue Steuernummer beim "
-"zuständigen Finanzamt beantragt. Die neue Steuernummer wird Ihnen dann "
-"mit dem Steuerbescheid mitgeteilt."
 
 #: app/templates/unlock_code/activation_failure.html:20
 msgid "form.unlock-code-activation.failure.reasons-title"

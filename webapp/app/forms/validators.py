@@ -124,11 +124,28 @@ class ValidUnlockCodeCharacterSet:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
                 raise ValidationError(_('validate.invalid-character'))
 
+
+class ValidTaxNumberLength:
+
+    def __call__(self, form, field):
+        _TAX_NUMBER_AT_LEAST_TEN_STATES = ['BW', 'BE', 'HB', 'HH', 'ND', 'RP', 'SH']
+        _TAX_NUMBER_AT_LEAST_ELEVEN_STATES = ['BY', 'BB', 'MV', 'NW', 'SL', 'SN', 'ST', 'TH']
+        if form.steuernummer_exists.data == 'yes':
+            tax_number_str = ''.join(field.data)
+
+            if form.bundesland.data in _TAX_NUMBER_AT_LEAST_TEN_STATES and len(tax_number_str) < 10:
+                raise ValidationError(_('validate.invalid-tax-number-length.shorter-than-ten'))
+            if form.bundesland.data in _TAX_NUMBER_AT_LEAST_ELEVEN_STATES and len(tax_number_str) < 11:
+                raise ValidationError(_('validate.invalid-tax-number-length.shorter-than-eleven'))
+            if len(tax_number_str) > 11:
+                raise ValidationError(_('validate.invalid-tax-number-length.too-long'))
+
+
 class ValidHessenTaxNumber:
 
     def __call__(self, form, field):
         if form.steuernummer_exists.data == 'yes' and form.bundesland.data == 'HE':
-            tax_number_str = str(field.data)
+            tax_number_str = ''.join(field.data)
             if len(tax_number_str) != 11:
                 raise ValidationError(_('validate.invalid-hessen-tax-number'))
 

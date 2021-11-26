@@ -1,19 +1,21 @@
-from flask import request, flash, Markup
-from flask import request
-from pydantic import ValidationError
-from wtforms import validators
+from flask import flash, Markup, render_template
+from flask_wtf.csrf import generate_csrf
+from wtforms import validators, SelectField
 from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
 from flask_babel import lazy_gettext as _l, ngettext, _
 
 from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import SteuerlotseSelectField, SteuerlotseNumericStringField, YesNoField, ConfirmationField
+from app.forms.fields import ConfirmationField, \
+    TaxNumberField, YesNoField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA
 from app.forms.steps.step import SectionLink
-from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber
+from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength
 from app.forms.validators import DecimalOnly, IntegerLength
+from app.model.components import TaxNumberStepFormProps
+from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b
 
 
@@ -22,7 +24,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     title = _l('form.lotse.steuernummer-title')
     intro = _l('form.lotse.steuernummer-intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    template = 'lotse/form_steuernummer.html'
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepFamilienstand
     next_step = StepPersonA
@@ -33,17 +34,17 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
     class InputForm(SteuerlotseBaseForm):
         steuernummer_exists = YesNoField(
             label=_l('form.lotse.steuernummer_exists'),
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
                        'data-detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
-                                  'text': _l('form.lotse.steuernummer_exists.detail.text')}},
+                        'text': _l('form.lotse.steuernummer_exists.detail.text')}},
             validators=[InputRequired(_l('form.lotse.steuernummer.selection_input_required'))])
-        bundesland = SteuerlotseSelectField(
+        bundesland = SelectField(
             label=_l('form.lotse.field_bundesland'),
             choices=[
-                ('', _l('form.select_input.default_selection')),
                 ('BW', _l('form.lotse.field_bundesland_bw')),
                 ('BY', _l('form.lotse.field_bundesland_by')),
                 ('BE', _l('form.lotse.field_bundesland_be')),
@@ -64,18 +65,17 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.field_bundesland.data_label')},
             validators=[InputRequired(_l('form.lotse.steuernummer.input_required'))], 
         )
-        bufa_nr = SteuerlotseSelectField(
+        bufa_nr = SelectField(
             label=_l('form.lotse.bufa_nr'),
             choices=[
                 ('', '---'),
             ],
             render_kw={'data_label': _l('form.lotse.bufa_nr.data_label')}
         )
-        steuernummer = SteuerlotseNumericStringField(label=_l('form.lotse.steuernummer'),
-                                                     validators=[DecimalOnly(),
-                                                                 IntegerLength(min=10, max=11), ValidHessenTaxNumber()],
-                                                     render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
-                                                         'data-example-input': _l('form.lotse.steuernummer.example_input')})
+        steuernummer = TaxNumberField(label=_l('form.lotse.steuernummer'),
+                                      validators=[ValidTaxNumberLength(), ValidHessenTaxNumber()],
+                                      render_kw={'data_label': _l('form.lotse.steuernummer.data_label'),
+                                                 'data-example-input': _l('form.lotse.steuernummer.example_input')})
         request_new_tax_number = ConfirmationField(
             input_required=False,
             label=_l('form.lotse.steuernummer.request_new_tax_number'),
@@ -142,3 +142,27 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             'form.lotse.steuernummer.request_new_tax_number',
             'form.lotse.steuernummer.request_new_tax_number',
             num=num_of_users)
+
+    def render(self, **kwargs):
+        props_dict = TaxNumberStepFormProps(
+            step_header={
+                'title': str(self.render_info.step_title),
+                'intro': str(self.render_info.step_intro),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url,
+            tax_office_list=self.render_info.form.tax_offices,
+            number_of_users=2 if show_person_b(self.stored_data) else 1
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='TaxNumberPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=self.render_info.form,
+                               header_title=self.header_title)
