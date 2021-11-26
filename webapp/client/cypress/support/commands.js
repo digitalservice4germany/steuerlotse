@@ -51,3 +51,31 @@ Cypress.Commands.add("login", () => {
     });
   });
 });
+
+// Fast registration command that circumvents the UI as much as possible.
+Cypress.Commands.add("register", (idnr, dob) => {
+  Cypress.log({
+    name: "register",
+  });
+
+  cy.visit("/unlock_code_request/step/data_input");
+
+  cy.get("input[name=csrf_token]").then((input) => {
+    const csrf = input.val();
+    // Make request to set session cookie.
+    cy.request({
+      method: "POST",
+      url: "/unlock_code_request/step/data_input",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `idnr=${idnr[0]}&idnr=${idnr[1]}&idnr=${idnr[2]}&idnr=${idnr[3]}&dob=${dob.day}&dob=${dob.month}&dob=${dob.year}&registration_confirm_data_privacy=on&registration_confirm_terms_of_service=on&registration_confirm_incomes=on&registration_confirm_e_data=on&csrf_token=${csrf}`,
+      followRedirect: false,
+    }).then((resp) => {
+      expect(resp.status).to.eq(302);
+      expect(resp.redirectedToUrl).to.contain(
+        "/unlock_code_request/step/unlock_code_success"
+      );
+    });
+  });
+});

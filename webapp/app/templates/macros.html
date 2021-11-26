@@ -95,7 +95,7 @@
                 {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'RadioField' %}
                 {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'YesNoField' %}
+            {% elif field.type == 'LegacyYesNoField' %}
                 {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
                 {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}

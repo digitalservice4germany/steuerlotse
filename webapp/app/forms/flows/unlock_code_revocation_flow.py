@@ -56,9 +56,6 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     pass  # go to failure step
         elif isinstance(step, UnlockCodeRevocationFailureStep):
             render_info.next_url = None
-        elif isinstance(step, UnlockCodeRevocationSuccessStep):
-            render_info.prev_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
-            render_info.next_url = url_for('unlock_code_request', step='data_input')
 
         return render_info, stored_data
 

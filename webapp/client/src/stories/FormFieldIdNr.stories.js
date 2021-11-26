@@ -25,3 +25,18 @@ Default.args = {
   errors: [],
   values: [],
 };
+
+export const WithDetails = Template.bind({});
+WithDetails.args = {
+  fieldId: "idnr",
+  fieldName: "idnr",
+  label: {
+    text: "Steuer-Identifikationsnummer",
+  },
+  details: {
+    title: "Was ist das für eine Nummer?",
+    text: "Das ist Ihre persönliche Nummer, mit der Sie sich beim Finanzamt identifizieren können.",
+  },
+  errors: [],
+  values: [],
+};

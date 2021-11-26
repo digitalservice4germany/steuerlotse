@@ -219,6 +219,7 @@ class LegacySteuerlotseDateField(DateField):
             if not self.prevent_validation_error:
                 raise e
 
+
 class SteuerlotseDateField(DateField):
 
     def __init__(self, prevent_validation_error = False, **kwargs):
@@ -246,6 +247,7 @@ class SteuerlotseDateField(DateField):
         except ValueError as e:
             if not self.prevent_validation_error:
                 raise e
+
 
 class LegacyIdNrWidget(NumericInputModeMixin, NumericInputMaskMixin, MultipleInputFieldWidget):
     """A divided input field with four text input fields, limited to two to three chars."""
@@ -353,6 +355,41 @@ class IdNrField(SteuerlotseStringField):
             self.data = ''.join(self.data)
 
 
+class TaxNumberField(SteuerlotseStringField):
+    """
+        Field to store the tax number in either one or three separate input fields.
+
+        We get the formdata either as a list of one or three  strings (e.g. ['043', '4523', '3397'])
+        but want to handle it in the rest of the program as one string (e.g. '04345233397').
+        At the same time, in case of a validation error (e.g. for ['04', '4523', '3397']) we want to keep the order
+        of inputs to not confuse the user. Thus, we only concatenate the strings to one string on succeeded validation
+        in post_validate().
+        Once the input validates, we can be sure to have the complete, valid string in our data and
+        can split it into the expected chunks as seen in _value().
+    """
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self.data = valuelist
+        elif self.data is None:
+            self.data = ''
+
+    def _value(self):
+        """ Returns the representation of data as needed by the widget. In this case: a list of strings. """
+        # In case the validation was not successful, we already have the data as a list of strings
+        # (as it is not concatenated in post_validate()).
+        if isinstance(self.data, list):
+            return self.data
+
+        # Once the validation has gone through, post_validate() stores the data as string.
+        return [self.data if self.data else '']
+
+    def post_validate(self, form, validation_stopped):
+        # Once the validation has gone through, we know that the idnr is correct.
+        # We can therefore store it as a string and just separate it into chunks in self._value().
+        if not validation_stopped and len(self.errors) == 0:
+            self.data = ''.join(self.data)
+
+
 class EuroFieldWidget(TextInput):
     """A simple Euro widget that uses Bootstrap features for nice looks."""
 
@@ -398,7 +435,7 @@ class EuroField(Field):
             self.data = Decimal(parse_decimal(raw_data[0], locale=self.locale))
 
 
-class SteuerlotseSelectField(SelectField):
+class LegacySteuerlotseSelectField(SelectField):
 
     def __init__(self, **kwargs):
         if kwargs.get('render_kw'):
@@ -498,10 +535,10 @@ class YesNoWidget(object):
 
 
 class YesNoField(RadioField):
+
     def __init__(self, label='', validators=None, **kwargs):
         kwargs['choices'] = [('yes', _('switch.yes')), ('no', _('switch.no'))]
         super().__init__(label, validators, **kwargs)
-        self.widget = YesNoWidget()
 
     def process(self, formdata, data=unset_value, extra_filters=None):
         # In a POST-request, `formdata` is all data posted by the user (MultiDict).
@@ -525,3 +562,11 @@ class YesNoField(RadioField):
             super().process(formdata)
         else:
             super().process(formdata, data)
+
+
+class LegacyYesNoField(YesNoField):
+
+    def __init__(self, label='', validators=None, **kwargs):
+        super().__init__(label, validators, **kwargs)
+        self.widget = YesNoWidget()
+

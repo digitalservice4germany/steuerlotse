@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import styled from "styled-components";
 import Details from "../components/Details";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormFieldDate from "../components/FormFieldDate";
@@ -10,15 +9,8 @@ import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import SubHeading from "../components/SubHeading";
 import { checkboxPropType, fieldPropType } from "../lib/propTypes";
-
-const SubHeading = styled.h2`
-  &.form-sub-heading-smaller {
-    font-size: var(--text-medium);
-    margin-top: var(--spacing-09);
-    margin-bottom: var(--spacing-03);
-  }
-`;
 
 export default function RegistrationPage({
   stepHeader,
@@ -66,7 +58,7 @@ export default function RegistrationPage({
             fieldId="dob"
             values={fields.dob.value}
             label={{
-              text: t("unlockCodeRequest.dob.labelText"),
+              text: t("fields.dob.labelText"),
             }}
             errors={fields.dob.errors}
           />
@@ -78,16 +70,16 @@ export default function RegistrationPage({
             fieldId="idnr"
             values={fields.idnr.value}
             label={{
-              text: t("unlockCodeActivation.idnr.labelText"),
+              text: t("fields.idnr.labelText"),
             }}
             details={{
-              title: t("unlockCodeActivation.idnr.help.title"),
-              text: t("unlockCodeActivation.idnr.help.text"),
+              title: t("fields.idnr.help.title"),
+              text: t("fields.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />
         </FormRowCentered>
-        <SubHeading className="form-sub-heading-smaller">
+        <SubHeading>
           {t("unlockCodeRequest.dataPrivacyAndAgb.title")}
         </SubHeading>
         <FormFieldConsentBox
@@ -152,9 +144,7 @@ export default function RegistrationPage({
           }
           errors={fields.registrationConfirmIncomes.errors}
         />
-        <SubHeading className="form-sub-heading-smaller">
-          {t("unlockCodeRequest.eData.title")}
-        </SubHeading>
+        <SubHeading>{t("unlockCodeRequest.eData.title")}</SubHeading>
         <Details
           title={t("unlockCodeRequest.eData.helpTitle")}
           detailsId="registration_confirm_e_data"

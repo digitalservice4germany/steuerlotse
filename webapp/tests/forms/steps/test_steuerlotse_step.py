@@ -699,7 +699,7 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
         assert render_info.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': None}
 
     def test_if_update_and_yes_no_field_empty_then_stored_data_overridden(self, test_request_context):
-        test_request_context.request.method = 'POST' # Has to be set because YesNoField still relies on request
+        test_request_context.request.method = 'POST' # Has to be set because LegacyYesNoField still relies on request
 
         input_form_data = ImmutableMultiDict({})
         stored_data = {'yes_no_field': 'yes'}

@@ -14,8 +14,10 @@ from app.data_access.audit_log_controller import create_audit_log_confirmation_e
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
-from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
-    ConfirmationField, EntriesField, EuroField
+from app.forms.fields import SteuerlotseDateField, LegacySteuerlotseSelectField, LegacyYesNoField, \
+    LegacySteuerlotseDateField, SteuerlotseStringField, \
+    ConfirmationField, EntriesField, EuroField, YesNoField
+from wtforms.fields import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
@@ -324,13 +326,13 @@ class LotseMultiStepFlow(MultiStepFlow):
             for choice in field.kwargs['choices']:
                 if choice[0] == value:
                     value_representation = choice[1]
-        elif field.field_class == SelectField or field.field_class == SteuerlotseSelectField:
+        elif field.field_class in (SelectField, LegacySteuerlotseSelectField):
             for choice in field.kwargs['choices']:  # choice is a tuple of (value, label)
                 if choice[0] == value:
                     value_representation = choice[
                         1]  # Use label because this is also shown to user when making selections
                     break
-        elif field.field_class == YesNoField:
+        elif field.field_class in (LegacyYesNoField, YesNoField):
             value_representation = "Ja" if value == "yes" else "Nein"
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"

@@ -255,6 +255,7 @@ class MockErica:
         # Successful case
         if idnr_exists:
             elster_request_id_for_revocation = gen_random_key()
+            MockErica.available_idnrs = [idnr for idnr in MockErica.available_idnrs if idnr[0] != input_data.get('idnr')]
             if show_response:
                 return get_json_response('unlock_code_revocation_with_resp',
                                          elster_request_id=elster_request_id_for_revocation)
