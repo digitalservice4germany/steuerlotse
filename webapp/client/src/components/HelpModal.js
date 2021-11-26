@@ -32,9 +32,9 @@ const Help = styled.button`
   }
 `;
 
-const Title = ({ children }) => (
-  <h5 className="modal-title mb-n2">{children}</h5>
-);
+function Title({ children }) {
+  return <h5 className="modal-title mb-n2">{children}</h5>;
+}
 Title.propTypes = { children: PropTypes.node.isRequired };
 
 function HelpModal({ title, body }) {
