@@ -217,7 +217,7 @@ def _generate_est_request_data(form_data, year=2020):
     if adapted_form_data.get('steuernummer_exists') == 'no' and adapted_form_data.get('request_new_tax_number'):
         adapted_form_data['submission_without_tax_nr'] = True
         
-    digitally_signed = current_user.is_authenticated and current_user.is_active
+    digitally_signed = bool(current_user.unlock_code_hashed is not None)
 
     if not digitally_signed:
         logger.warning('Elster_Client: User is not authenticated')

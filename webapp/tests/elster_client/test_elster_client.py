@@ -712,45 +712,24 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertEqual(result['meta_data']['is_digitally_signed'], True)
 
     def test_unset_year_results_in_2020_year_value(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
             result = _generate_est_request_data({})
 
         self.assertEqual(result['meta_data']['year'], 2020)
 
     def test_activated_user_results_in_correct_attribute_set_true(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
             result = _generate_est_request_data({})
 
         self.assertEqual(True, result['meta_data']['is_digitally_signed'])
 
-    def test_if_inactive_user_then_raise_not_digitally_signed_exception(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=True)), \
+    def test_if_user_has_no_unlock_code_then_raise_not_digitally_signed_exception(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed=None)), \
                 pytest.raises(TaxDeclarationNotDigitallySigned):
             _generate_est_request_data({})
 
-    def test_if_not_authenticated_user_then_raise_not_digitally_signed_exception(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=False)), \
-                pytest.raises(TaxDeclarationNotDigitallySigned):
-            _generate_est_request_data({})
-
-    def test_if_inactive_user_logout_user_is_called_and_not_digitally_signed_error_is_raised(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=False)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun, \
-                pytest.raises(TaxDeclarationNotDigitallySigned):
-            _generate_est_request_data({})
-
-            logout_fun.assert_called_once()
-
-    def test_if_not_authenticated_but_active_user_logout_user_is_called_and_not_digitally_signed_error_is_raised(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=False)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun, \
-                pytest.raises(TaxDeclarationNotDigitallySigned):
-            _generate_est_request_data({})
-
-            logout_fun.assert_called_once()
-
-    def test_if_authenticated_but_inactive_user_logout_user_is_called_and_not_digitally_signed_error_is_raised(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=True)), \
+    def test_if_user_has_no_unlock_code_then_logout_user_is_called(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed=None)), \
                 patch('app.elster_client.elster_client.logout_user') as logout_fun, \
                 pytest.raises(TaxDeclarationNotDigitallySigned):
             _generate_est_request_data({})
@@ -989,7 +968,7 @@ class TestLogAddressData(unittest.TestCase):
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")), \
                 patch('app.elster_client.elster_client.send_to_erica', MagicMock(return_value=self.success_response)), \
                 patch('app.elster_client.elster_client.create_audit_log_address_entry') as audit_log_fun:
             _log_address_data('IP', '04452397687', {'include_elster_responses': False})
@@ -997,7 +976,7 @@ class TestLogAddressData(unittest.TestCase):
 
     def test_if_unsuccessful_case_then_raise_transfer_error_and_do_not_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")), \
                 patch('app.elster_client.elster_client.send_to_erica', MagicMock(return_value=self.error_response)), \
                 patch('app.elster_client.elster_client.create_audit_log_address_entry') as audit_log_fun:
             self.assertRaises(ElsterTransferError, _log_address_data, 'IP', '04452397687',
