@@ -79,6 +79,7 @@ Default.args = {
     },
   ],
   numberOfUsers: 1,
+  prevUrl: "FooWebsite",
 };
 
 export const MultipleUsers = Template.bind({});
