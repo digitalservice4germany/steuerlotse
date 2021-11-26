@@ -762,8 +762,20 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
     intro = _l('form.eligibility.success.maybe.intro')
     template = 'eligibility/display_maybe.html'
 
-    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):                
         super(EligibilityMaybeDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                                                      stored_data=stored_data,
                                                                      header_title=_('form.eligibility.header-title'),
-                                                                     *args, **kwargs)
+                                                                     *args, **kwargs)        
+        
+        
+    def _main_handle(self):  
+        super()._main_handle()
+        dependent_notes = [(_('form.eligibility.result-note.capital_investment'))]
+        dependent_notes.append(_('form.eligibility.result-note.deadline'))
+              
+        self.render_info.additional_info['dependent_notes'] = dependent_notes
+        self.render_info.detail = {'render_kw': {
+                'data-detail': {'title': _l('form.eligibility.result-note.when_unlock_code.title'),
+                                'text': _l('form.eligibility.result-note.when_unlock_code.description')}}
+                }  
