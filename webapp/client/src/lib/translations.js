@@ -25,7 +25,7 @@ const translations = {
     },
     declarationIncomes: {
       listItem1:
-        "Renteneinkünfte und / oder Pensionen, die von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet worden sind, und ggf.",
+        "inländische Renteneinkünfte und / oder Pensionen, die von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet worden sind, und ggf.",
       listItem2:
         "Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde (Freistellungsauftrag), und ggf.",
       listItem3:
@@ -44,13 +44,6 @@ const translations = {
     },
   },
   unlockCodeActivation: {
-    idnr: {
-      labelText: "Steuer-Identifikationsnummer",
-      help: {
-        title: "Wo finde ich diese Nummer?",
-        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
-      },
-    },
     unlockCode: {
       labelText: "Freischaltcode",
       help: {
@@ -60,9 +53,6 @@ const translations = {
     },
   },
   unlockCodeRequest: {
-    dob: {
-      labelText: "Geburtsdatum",
-    },
     dataPrivacyAndAgb: {
       title: "Datenschutzerklärung und Nutzungsbedingungen",
     },
@@ -86,7 +76,7 @@ const translations = {
       title: "Einverständnis zur automatischen Übernahme vorliegender Daten",
       helpTitle: "Was bedeutet das?",
       helpText:
-        "Daten zu beispielsweise <bold>Renten, Pensionen oder Kranken- und Pflegeversicherungen</bold> erhält die Steuerverwaltung vom jeweiligen Träger elektronisch. Diese Daten werden vom Finanzamt automatisch übernommen und müssen von Ihnen nicht in diese Steuererklärung eingetragen werden. Welche Beträge über Sie übermittelt wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle. Sollten Sie mit der Übernahme nicht einverstanden sein, können Sie die vereinfachte Steuererklärung leider nicht nutzen.",
+        "Daten zu beispielsweise <bold>inländischen Renten, Pensionen oder Kranken- und Pflegeversicherungen</bold> erhält die Steuerverwaltung vom jeweiligen Träger elektronisch. Diese Daten werden vom Finanzamt automatisch übernommen und müssen von Ihnen nicht in diese Steuererklärung eingetragen werden. Welche Beträge über Sie übermittelt wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle. Sollten Sie mit der Übernahme nicht einverstanden sein, können Sie die vereinfachte Steuererklärung leider nicht nutzen.",
     },
     gotFsc:
       "Sie haben Ihren Freischaltcode bereits erhalten? <br><loginLink>Dann können Sie sich anmelden</loginLink>.",
@@ -95,12 +85,32 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, muss sich nur eine Person registrieren.",
     },
   },
+  lotseFlow: {
+    taxNumber: {
+      taxNumberInput: {
+        label: {
+          labelText: "Steuernummer",
+          exampleInput: "Muss 10 oder 11 Ziffern haben",
+        },
+      },
+    },
+  },
   dateField: {
     day: "Tag",
     month: "Monat",
     year: "Jahr",
   },
   fields: {
+    idnr: {
+      labelText: "Steuer-Identifikationsnummer",
+      help: {
+        title: "Wo finde ich diese Nummer?",
+        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
+      },
+    },
+    dob: {
+      labelText: "Geburtsdatum",
+    },
     dateField: {
       exampleInput: {
         text: "z.B. 29.2.1951",

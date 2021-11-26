@@ -512,7 +512,7 @@ a.back-link:focus a.back-link:active{
     border: 1px solid var(--border-color) !important;
 }
 
-.switch-yes.focus, .switch-no.focus {
+.switch-yes:focus, .switch-no:focus {
     color: var(--focus-text-color) !important;
     background: var(--focus-color) !important;
 
@@ -528,10 +528,12 @@ a.back-link:focus a.back-link:active{
     border: 1px solid var(--link-color) !important;
 }
 
-.switch-yes.active.focus, .switch-no.active.focus {
+.switch-yes:active, .switch-no:active,
+.switch-yes.active:focus, .switch-no.active:focus {
     box-shadow: 0 0 0 3px var(--focus-color) !important;
 }
 
+.switch-yes:active, .switch-no:active,
 .switch-yes.active:hover, .switch-no.active:hover {
     background: var(--link-hover-color) !important;
     border: 1px solid var(--link-hover-color) !important;

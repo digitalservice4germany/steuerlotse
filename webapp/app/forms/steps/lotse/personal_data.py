@@ -39,7 +39,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
                        'data-detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
                                   'text': _l('form.lotse.steuernummer_exists.detail.text')}},
-            validators=[InputRequired()])
+            validators=[InputRequired(_l('form.lotse.steuernummer.selection_input_required'))])
         bundesland = SteuerlotseSelectField(
             label=_l('form.lotse.field_bundesland'),
             choices=[
@@ -61,8 +61,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                 ('SH', _l('form.lotse.field_bundesland_sh')),
                 ('TH', _l('form.lotse.field_bundesland_th'))
             ],
-            render_kw={'data_label': _l('form.lotse.field_bundesland.data_label'),
-                       'input_req_err_msg': _l('form.lotse.field_bundesland_required')}
+            render_kw={'data_label': _l('form.lotse.field_bundesland.data_label')},
+            validators=[InputRequired(_l('form.lotse.steuernummer.input_required'))], 
         )
         bufa_nr = SteuerlotseSelectField(
             label=_l('form.lotse.bufa_nr'),

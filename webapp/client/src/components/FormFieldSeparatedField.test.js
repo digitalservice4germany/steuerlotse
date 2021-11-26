@@ -29,7 +29,7 @@ describe("FormFieldSeparatedField", () => {
     expect(screen.getByDisplayValue("baz")).toHaveAttribute("id", "foo_2");
   });
 
-  it("should set the lenghts", () => {
+  it("should set the lengths", () => {
     render(<FormFieldSeparatedField {...props} />);
     const bar = screen.getByDisplayValue("bar");
     expect(bar).toHaveAttribute("maxlength", "3");

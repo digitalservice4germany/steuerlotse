@@ -7,9 +7,13 @@ const Legend = styled.legend`
   &.field-label {
     margin-bottom: var(--spacing-01);
   }
+
+  &.field-label-example {
+    margin-bottom: 0;
+  }
 `;
 
-// TODO: Use for Radio, SteuerlotseDate fields
+// TODO: Use for Radio
 export default function FieldLabelForSeparatedFields(props) {
   return (
     <FieldLabelScaffolding

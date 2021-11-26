@@ -1,13 +1,13 @@
 import React from "react";
 
-import FormNavButtons from "../components/FormNavButtons";
+import StepNavButtons from "../components/StepNavButtons";
 
 export default {
   title: "Forms/Nav Buttons",
-  component: FormNavButtons,
+  component: StepNavButtons,
 };
 
-const Template = (args) => <FormNavButtons {...args} />;
+const Template = (args) => <StepNavButtons {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};

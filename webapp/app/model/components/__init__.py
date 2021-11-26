@@ -36,8 +36,15 @@ FieldProps = Union[InputFieldProps, CheckboxFieldProps]
 
 class StepFormProps(ComponentProps):
     step_header: StepHeaderProps
+    prev_url: Optional[str]
     form: FormProps
     fields: Dict[str, FieldProps]
+
+
+class StepDisplayProps(ComponentProps):
+    step_header: StepHeaderProps
+    prev_url: Optional[str]
+    next_url: Optional[str]
 
 
 class LoginProps(StepFormProps):
@@ -51,12 +58,20 @@ class RegistrationProps(StepFormProps):
     data_privacy_link: str
 
 
+class RevocationProps(StepFormProps):
+    pass
+
+
+class RevocationSuccessProps(StepDisplayProps):
+    pass
+
+
 class DeclarationIncomesProps(StepFormProps):
     pass
 
 
 class SelectStmindProps(StepFormProps):
-    prev_url: str  # TODO place this at a more general place when implementing more StepFormProps for the LotseFlow
+    pass
 
 
 class ConfirmationProps(StepFormProps):
