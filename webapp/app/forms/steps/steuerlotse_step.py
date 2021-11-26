@@ -60,6 +60,7 @@ class SteuerlotseStep(object):
             step_intro=ngettext(cls.intro, cls.intro_multiple, num=cls.number_of_users(stored_data))
             if cls.intro_multiple else cls.intro,
             form=None,
+            stored_data=stored_data,
             prev_url=None,
             next_url=None,
             submit_url=None,
