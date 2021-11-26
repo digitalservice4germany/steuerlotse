@@ -65,8 +65,9 @@ class StepFiling(DisplayStep):
             return render_template('lotse/display_filing_success.html', render_info=render_info,
                                    elster_data=render_info.additional_info['elster_data'],
                                    header_title=_('form.lotse.filing.header-title'),
-                                   tax_number_provided=data.get('steuernummer_exists') and
-                                                       data['steuernummer_exists'] == 'yes')
+                                   tax_number_provided=data.get('steuernummer_exists') == 'yes'
+                                                       if data.get('steuernummer_exists')
+                                                       else None)
         else:
             render_info.next_url = None
             return render_template('lotse/display_filing_failure.html', render_info=render_info,
