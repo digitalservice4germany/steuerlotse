@@ -275,19 +275,26 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 class PensionEligibilityData(RecursiveDataModel):
+    single_user_a_has_elster_account: Optional[SingleUserElsterAccountEligibilityData]
     single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
+    
     user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
     user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
+    
+    user_a_has_elster_account: Optional[UserAElsterAccountEligibilityData]
+    user_b_has_elster_account: Optional[UserBElsterAccountEligibilityData]
+        
     pension_eligibility: str
 
     @validator('pension_eligibility')
     def has_to_get_pension(cls, v):
         return declarations_must_be_set_yes(v)
 
-    @validator('user_b_has_no_elster_account', always=True, check_fields=False)
+    @validator('user_b_has_elster_account', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
-
+    
+    
 
 class InvestmentIncomeEligibilityData(RecursiveDataModel):
     has_pension: Optional[PensionEligibilityData]
