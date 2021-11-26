@@ -14,8 +14,8 @@ from pydantic.errors import MissingError
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
-from wtforms import Field
-from wtforms.fields.core import UnboundField, IntegerField, SelectField, RadioField
+from wtforms import Field, IntegerField, SelectField, RadioField
+from wtforms.fields.core import UnboundField
 
 from app.config import Config
 from app.crypto.pw_hashing import global_salt_hash

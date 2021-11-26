@@ -1,7 +1,7 @@
 import pytest
 from werkzeug.datastructures import MultiDict
 from wtforms import Form, validators
-from wtforms.fields.core import BooleanField, StringField
+from wtforms import BooleanField, StringField
 
 from app.model.components.helpers import form_fields_dict
 

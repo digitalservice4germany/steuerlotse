@@ -22,12 +22,24 @@ class TestDecimalOnly(unittest.TestCase):
         except ValidationError:
             self.fail("DecimalOnly raised ValidationError unexpectedly!")
 
+    def test_if_empty_string_then_do_not_raise_value_error(self):
+        validator = DecimalOnly()
+        invalid_characters = ['', None]
+
+        for char in invalid_characters:
+            self.field.data = char
+            try:
+                validator.__call__(self.form, self.field)
+            except ValidationError:
+                self.fail("DecimalOnly raised ValidationError unexpectedly!")
+
     def test_if_not_only_decimal_raise_value_error(self):
         validator = DecimalOnly()
         invalid_characters = ['.', '/', ' ', 'a']
         for char in invalid_characters:
             self.field.data = '12' + char
-            self.assertRaises(ValidationError, validator.__call__, self.form, self.field)
+            with pytest.raises(ValidationError):
+                validator.__call__(self.form, self.field)
 
 
 class TestIntegerLength(unittest.TestCase):

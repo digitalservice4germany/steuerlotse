@@ -6,7 +6,8 @@ from flask import request, flash, url_for
 from flask_babel import _, lazy_gettext as _l
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
-from wtforms.fields.core import UnboundField, SelectField, BooleanField, RadioField
+from wtforms import SelectField, BooleanField, RadioField, IntegerField
+from wtforms.fields.core import UnboundField
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
@@ -15,7 +16,6 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
     ElsterInvalidBufaNumberError
 from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField
-from wtforms.fields.core import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \

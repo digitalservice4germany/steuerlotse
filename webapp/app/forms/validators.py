@@ -20,7 +20,7 @@ EURO_FIELD_MAX_LENGTH = 15
 
 class DecimalOnly:
     def __call__(self, form, field):
-        if not field.data.isdecimal():
+        if field.data and not field.data.isdecimal():
             raise ValidationError(_('validate.not-a-decimal'))
 
 
