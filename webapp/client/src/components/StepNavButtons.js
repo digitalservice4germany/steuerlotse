@@ -162,6 +162,6 @@ StepNavButtons.defaultProps = {
   nextButtonLabel: undefined,
   showOverviewButton: false,
   explanatoryButtonText: undefined,
-  nextUrl: PropTypes.string,
+  nextUrl: undefined,
   isForm: true,
 };
