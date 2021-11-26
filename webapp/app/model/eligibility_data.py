@@ -274,16 +274,14 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
+
 class PensionEligibilityData(RecursiveDataModel):
     single_user_a_has_elster_account: Optional[SingleUserElsterAccountEligibilityData]
     single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
-    
-    user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
+    user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]   
     user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
-    
-    user_a_has_elster_account: Optional[UserAElsterAccountEligibilityData]
     user_b_has_elster_account: Optional[UserBElsterAccountEligibilityData]
-        
+
     pension_eligibility: str
 
     @validator('pension_eligibility')
@@ -293,8 +291,7 @@ class PensionEligibilityData(RecursiveDataModel):
     @validator('user_b_has_elster_account', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
-    
-    
+
 
 class InvestmentIncomeEligibilityData(RecursiveDataModel):
     has_pension: Optional[PensionEligibilityData]
@@ -443,18 +440,21 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
     user_b_has_elster_account_eligibility: Optional[str]
     
     @validator('user_b_has_elster_account_eligibility', always=True)
-    def has_user_b_elster_account_eligibility(cls,v, values):
-        user_a = values.get('user_a_has_elster_account_eligibility')
-        user_b = v
+    def users_must_not_all_have_elster_accounts(cls,v, values):
+        user_a_has_elster_account = values.get('user_a_has_elster_account_eligibility')
+        user_b_has_elster_account = v
         
-        try:
-            declarations_must_be_set_no(user_a)
-        except:
-            if user_b:
-                return declarations_must_be_set_no(user_b)
-            raise
+        # One person case
+        if not user_b_has_elster_account:
+            declarations_must_be_set_no(user_a_has_elster_account)
+        else:
+        # Two person case
+            try:
+                declarations_must_be_set_no(user_a_has_elster_account)
+            except:
+                declarations_must_be_set_no(user_b_has_elster_account)
 
-        return v if v else "" 
+        return user_b_has_elster_account
     
 
     @validator('foreign_country_eligibility')
