@@ -46,7 +46,6 @@ class StepFamilienstand(FormStep):
         familienstand_married_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_married_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_married_lived_separated_since.data_label')},
-            prevent_validation_error=True, 
             validators=[ValidDateOfSeparatedSince()])
         familienstand_widowed_lived_separated = LegacyYesNoField(
             label=_l('form.lotse.familienstand_widowed_lived_separated'),
@@ -55,7 +54,6 @@ class StepFamilienstand(FormStep):
         familienstand_widowed_lived_separated_since = LegacySteuerlotseDateField(
             label=_l('form.lotse.familienstand_widowed_lived_separated_since'),
             render_kw={'data_label': _l('form.lotse.familienstand_widowed_lived_separated_since.data_label')},
-            prevent_validation_error=True, 
             validators=[ValidDateOfSeparatedSince()])
         familienstand_zusammenveranlagung = LegacyYesNoField(
             label=_l('form.lotse.field_familienstand_zusammenveranlagung'),
