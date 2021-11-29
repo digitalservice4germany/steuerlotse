@@ -173,6 +173,10 @@ class TestSteuerlotseStepHandle(unittest.TestCase):
             self.assertEqual(post_handle_stored_data, handle_result)
 
 class TestSteuerlotseStepPrepareRenderInfo:
+    def test_stored_data_set_to_render_info(self):
+        stored_data = {'favourite_characters': 'Fred & George'}
+        render_info = MockMiddleStep.prepare_render_info(stored_data)
+        assert render_info.stored_data == stored_data
 
     def test_if_single_then_set_title_and_intro_correct(self):
         single_title = "Joe"
@@ -191,9 +195,6 @@ class TestSteuerlotseStepPrepareRenderInfo:
 
         assert render_info.step_title == single_title
         assert render_info.step_intro == single_intro
-
-
-
 
     def test_if_multiple_then_set_title_and_intro_correct(self):
         multiple_title = "Kevin, Joe, Nick"
@@ -699,7 +700,7 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
         assert render_info.stored_data == {'date': datetime.date(1980, 12, 12), 'decimal': None, 'pet': ''}
 
     def test_if_update_and_yes_no_field_empty_then_stored_data_overridden(self, test_request_context):
-        test_request_context.request.method = 'POST' # Has to be set because YesNoField still relies on request
+        test_request_context.request.method = 'POST' # Has to be set because LegacyYesNoField still relies on request
 
         input_form_data = ImmutableMultiDict({})
         stored_data = {'yes_no_field': 'yes'}

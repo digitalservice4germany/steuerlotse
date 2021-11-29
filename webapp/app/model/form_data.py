@@ -327,6 +327,18 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+    @validator('steuernummer')
+    def delete_if_no_tax_number_exists(cls, v, values):
+        if values.get('steuernummer_exists') == "no":
+            return None
+        return v
+
+    @validator('bufa_nr', 'request_new_tax_number')
+    def delete_if_tax_number_exists(cls, v, values):
+        if values.get('steuernummer_exists') == "yes":
+            return None
+        return v
+
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.

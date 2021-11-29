@@ -53,7 +53,7 @@
 {% macro render_field(field, cols=6, class="", field_div_classes="", d_block=False, as_card=False, position_details_after=False, hide_label=False, hide_errors=False, first_field=False, optional=False) %}
     {% if field.type == 'ConfirmationField' %}
         {{ _render_field(field, 12, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
-    {% elif field.type in ('BooleanField', 'YesNoField') %}
+    {% elif field.type in ('BooleanField', 'LegacyYesNoField') %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=hide_errors, first_field=first_field, optional=optional) }}
     {% elif field.type == 'RadioField' or field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
         {{ _render_field(field, cols, class=class, field_div_classes=field_div_classes, d_block=d_block, as_card=as_card, position_details_after=position_details_after, hide_label=True, hide_errors=True, first_field=first_field, optional=optional) }}
@@ -95,7 +95,7 @@
                 {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'RadioField' %}
                 {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'YesNoField' %}
+            {% elif field.type == 'LegacyYesNoField' %}
                 {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
             {% elif field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
                 {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}

@@ -21,12 +21,12 @@
 
 {% block optional_js %}
     {{ super() }}
-    {% if plausible_domain %}
-    <!-- Add custom plausible goal -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            plausible('summary_submitted', {props: {tax_number_provided: {{ tax_number_provided|tojson }} }})
-        });
-    </script>
+    {% if plausible_domain and tax_number_provided is not none %}
+        <!-- Add custom plausible goal -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                plausible('summary_submitted', {props: {tax_number_provided: {{ tax_number_provided|tojson }} }})
+            });
+        </script>
     {% endif %}
 {% endblock %}

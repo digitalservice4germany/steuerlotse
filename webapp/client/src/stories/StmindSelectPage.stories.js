@@ -42,4 +42,5 @@ Default.args = {
       errors: [],
     },
   },
+  prevUrl: "FooWebsite",
 };
