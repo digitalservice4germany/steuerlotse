@@ -21,7 +21,7 @@ Default.args = {
   fieldName: "taxNumber",
   errors: [],
   values: [],
-  splitType: "3",
+  splitType: "splitType_notSplit",
 };
 
 export const NotSplitDefaultValue = Template.bind({});
@@ -34,13 +34,14 @@ export const SplitDefaultValue = Template.bind({});
 SplitDefaultValue.args = {
   ...Default.args,
   values: ["123", "4567", "8901"],
-  splitType: "0",
+  splitType: "splitType_0",
 };
 
 export const SplitWithError = Template.bind({});
 SplitWithError.args = {
   ...Default.args,
   values: ["123", "4567", "8901"],
+  splitType: "splitType_0",
   errors: ["Sie müssen eine gültige Steuernummer angeben"],
 };
 
