@@ -16,14 +16,3 @@ def lru_cached(func):
         return lru_cache(func)
 
     return func
-
-
-def non_production_environment_required(f):
-
-    def decorated(*args, **kwargs):
-        if os.environ.get('FLASK_ENV') != "production":
-            return f(*args, **kwargs)
-        else:
-            return
-
-    return decorated

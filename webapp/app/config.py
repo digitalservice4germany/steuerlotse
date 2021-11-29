@@ -3,6 +3,7 @@ from os import environ
 
 
 class BaseConfig(object):
+    ALLOW_TESTING_ROUTES = False
     DEBUG = False
     TESTING = False
     PREFILL_SAMPLE_FORM_DATA = False
@@ -57,6 +58,7 @@ class ProductionConfig(BaseConfig):
 
 
 class StagingConfig(BaseConfig):
+    ALLOW_TESTING_ROUTES = True
     PROMETHEUS_EXPORTER_ENABLED = True
     PLAUSIBLE_DOMAIN = 'www-staging.stl.ds4g.dev'
 
@@ -77,6 +79,7 @@ class StagingConfig(BaseConfig):
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
+    ALLOW_TESTING_ROUTES = True
     PREFILL_SAMPLE_FORM_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
     SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
@@ -99,6 +102,7 @@ class DevelopmentConfig(BaseConfig):
 
 class FunctionalTestingConfig(DevelopmentConfig):
     DEBUG = False
+    ALLOW_TESTING_ROUTES = True
     PREFILL_SAMPLE_FORM_DATA = False
     USE_MOCK_API = True
 
@@ -110,6 +114,7 @@ class FunctionalTestingConfig(DevelopmentConfig):
 class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
+    ALLOW_TESTING_ROUTES = True
     PREFILL_SAMPLE_FORM_DATA = False
     USE_MOCK_API = True
     WTF_CSRF_ENABLED = False

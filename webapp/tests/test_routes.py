@@ -1,15 +1,13 @@
 import copy
-from unittest.mock import patch
 
 import pytest
 from flask import Flask
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 
-from app import routes
 from app.app import create_app
+from app.config import Config, ProductionConfig, StagingConfig
 from app.forms.session_data import get_session_data
-from tests.utils import production_flask_env, staging_flask_env
 
 
 from app.routes import extract_information_from_request, register_testing_request_handlers
@@ -37,9 +35,29 @@ class TestExtractInformationFromRequest:
         assert extracted_form_data == ImmutableMultiDict(form_data)
 
 
+@pytest.fixture
+def configuration_with_production_environment_testing_route_policy():
+    in_production_value = Config.ALLOW_TESTING_ROUTES
+    Config.ALLOW_TESTING_ROUTES = ProductionConfig.ALLOW_TESTING_ROUTES
+
+    yield Config
+
+    Config.ALLOW_TESTING_ROUTES = in_production_value
+
+
+@pytest.fixture
+def configuration_with_staging_environment_testing_route_policy():
+    in_production_value = Config.ALLOW_TESTING_ROUTES
+    Config.ALLOW_TESTING_ROUTES = StagingConfig.ALLOW_TESTING_ROUTES
+
+    yield Config
+
+    Config.ALLOW_TESTING_ROUTES = in_production_value
+
+
 class TestRegisterTestingRequestHandlers:
 
-    @pytest.mark.usefixtures("production_flask_env")
+    @pytest.mark.usefixtures("configuration_with_production_environment_testing_route_policy")
     def test_if_production_environment_then_do_not_register_testing_routes(self):
         app = Flask(
             __name__.split(".")[0],
@@ -51,7 +69,7 @@ class TestRegisterTestingRequestHandlers:
 
         assert app.view_functions == old_view_functions
 
-    @pytest.mark.usefixtures("staging_flask_env")
+    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
     def test_if_staging_environment_then_register_testing_routes(self):
         app = Flask(
             __name__.split(".")[0],
@@ -66,7 +84,7 @@ class TestRegisterTestingRequestHandlers:
 
 class TestSetTestingDataRoute:
 
-    @pytest.mark.usefixtures("production_flask_env")
+    @pytest.mark.usefixtures("configuration_with_production_environment_testing_route_policy")
     def test_if_production_environment_then_return_405(self):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
@@ -76,7 +94,7 @@ class TestSetTestingDataRoute:
             response = c.post(f'/testing/set_data/{identifier}', json=data)
             assert response.status_code == 405
 
-    @pytest.mark.usefixtures("staging_flask_env")
+    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
     def test_if_staging_environment_then_return_set_data(self):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
@@ -87,7 +105,7 @@ class TestSetTestingDataRoute:
         assert response.status_code == 200
         assert response.json == data
 
-    @pytest.mark.usefixtures("staging_flask_env")
+    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
     def test_if_staging_environment_and_incorrect_identifier_then_return_set_data(self):
         identifier = "INCORRECT_IDENTIFIER"
         data = {'username': 'Frodo', 'ring': 'one'}

@@ -27,7 +27,6 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
     StepIban
 from app.logging import log_flask_request
-from app.utils import non_production_environment_required
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -88,6 +87,7 @@ def extract_information_from_request():
         form_data = ImmutableMultiDict({})
 
     return update_data, form_data
+
 
 def register_request_handlers(app):
     app.before_request(log_flask_request)
@@ -319,8 +319,10 @@ def register_error_handlers(app):
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
 
 
-@non_production_environment_required
 def register_testing_request_handlers(app):
+    if not Config.ALLOW_TESTING_ROUTES:
+        return
+
     @csrf.exempt
     @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
     def set_data(session_identifier):
