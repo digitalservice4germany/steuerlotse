@@ -12,6 +12,7 @@ const FormRowCentered = styled.div`
 
   & > * {
     margin: 0 var(--spacing-02);
+    flex: 1;
   }
 
   /* TODO: adapt to make sure this keeps working when adding grouped fields component */
