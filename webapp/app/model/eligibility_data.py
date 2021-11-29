@@ -5,7 +5,6 @@ from pydantic.fields import ModelField
 
 from app.model.recursive_data import RecursiveDataModel, PotentialDataModelKeysMixin
 
-
 class InvalidEligiblityError(ValueError):
     """Exception thrown in case the eligibility check failed."""
     pass
@@ -276,66 +275,20 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
-class ElsterRegistrationMethodSoftwareEligibilityData(RecursiveDataModel):
-    single_elster_account: Optional[SingleUserElsterAccountEligibilityData]
-    user_b_elster_account: Optional[UserBElsterAccountEligibilityData]
-    elster_registration_method_eligibility: str
-
-    @validator('elster_registration_method_eligibility')
-    def registration_method_must_be_software(cls, v):
-        if v != 'software':
-            raise ValueError
-        return v
-
-    @validator('user_b_elster_account', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
-class ElsterRegistrationMethodUnknownEligibilityData(RecursiveDataModel):
-    single_elster_account: Optional[SingleUserElsterAccountEligibilityData]
-    user_b_elster_account: Optional[UserBElsterAccountEligibilityData]
-    elster_registration_method_eligibility: str
-
-    @validator('elster_registration_method_eligibility')
-    def registration_method_must_be_unknown(cls, v):
-        if v != 'unknown':
-            raise ValueError
-        return v
-
-    @validator('user_b_elster_account', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
-class ElsterNoAbrufcodeEligibilityData(RecursiveDataModel):
-    elster_registration_method_is_software: Optional[ElsterRegistrationMethodSoftwareEligibilityData]
-    elster_abrufcode_eligibility: str
-
-    @validator('elster_abrufcode_eligibility')
-    def must_not_be_yes(cls, v):
-        if v == 'yes':
-            raise InvalidEligiblityError
-        return v
-
-    @validator('elster_registration_method_is_software', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
 class PensionEligibilityData(RecursiveDataModel):
+    single_user_a_has_elster_account: Optional[SingleUserElsterAccountEligibilityData]
     single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
-    user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]
+    user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]   
     user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
-    elster_registration_method_is_unknown: Optional[ElsterRegistrationMethodUnknownEligibilityData]
-    elster_no_abrufcode: Optional[ElsterNoAbrufcodeEligibilityData]
+    user_b_has_elster_account: Optional[UserBElsterAccountEligibilityData]
+
     pension_eligibility: str
 
     @validator('pension_eligibility')
     def has_to_get_pension(cls, v):
         return declarations_must_be_set_yes(v)
 
-    @validator('elster_no_abrufcode', always=True, check_fields=False)
+    @validator('user_b_has_elster_account', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
@@ -483,24 +436,30 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
     """
     has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
-    elster_registration_method_eligibility: Optional[str]
-    elster_abrufcode_eligibility: Optional[str]
+    user_a_has_elster_account_eligibility: str
+    user_b_has_elster_account_eligibility: Optional[str]
+    
+    @validator('user_b_has_elster_account_eligibility', always=True)
+    def users_must_not_all_have_elster_accounts(cls,v, values):
+        user_a_has_elster_account = values.get('user_a_has_elster_account_eligibility')
+        user_b_has_elster_account = v
+        
+        # One person case
+        if not user_b_has_elster_account:
+            declarations_must_be_set_no(user_a_has_elster_account)
+        else:
+        # Two person case
+            try:
+                declarations_must_be_set_no(user_a_has_elster_account)
+            except:
+                declarations_must_be_set_no(user_b_has_elster_account)
+
+        return user_b_has_elster_account
+    
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
-
-    @validator('elster_registration_method_eligibility')
-    def elster_registration_method_must_be_software(cls, v):
-        if v != 'software':
-            raise ValueError
-        return v
-
-    @validator('elster_abrufcode_eligibility')
-    def elster_abrufcode_must_be_no(cls, v):
-        if v != 'no':
-            raise ValueError
-        return v
 
     @validator('has_no_other_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
@@ -515,21 +474,21 @@ class ForeignCountryMaybeEligibility(RecursiveDataModel):
     """
     has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
-    elster_registration_method_eligibility: Optional[str]
-    elster_abrufcode_eligibility: Optional[str]
+    user_a_has_elster_account_eligibility: str
+    user_b_has_elster_account_eligibility: Optional[str]
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
-
-    @validator('elster_abrufcode_eligibility', always=True)
-    def elster_abrufcode_or_registration_method_must_be_unknown(cls, v, values):
-        registration_method = values.get('elster_registration_method_eligibility')
-        if (not v or v != 'unknown') and \
-                (not registration_method or registration_method != 'unknown'):
-            raise ValueError
-        return v
-
+    
+    @validator('user_a_has_elster_account_eligibility')
+    def has_user_a_elster_account_eligibility(cls,v):
+        return declarations_must_be_set_yes(v)
+    
+    @validator('user_b_has_elster_account_eligibility')
+    def has_user_b_elster_account_eligibility(cls,v):
+        return declarations_must_be_set_yes(v)
+    
     @validator('has_no_other_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
