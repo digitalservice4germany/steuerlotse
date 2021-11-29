@@ -28,6 +28,7 @@ function FormFieldTaxNumber({
 
   let reformattedValues = values.join("");
   let inputFieldLengths;
+  let setMaxLength = true;
   switch (splitType) {
     case "splitType_0":
       inputFieldLengths = [2, 3, 5];
@@ -55,6 +56,7 @@ function FormFieldTaxNumber({
       break;
     default:
       inputFieldLengths = [11];
+      setMaxLength = false;
       reformattedValues = [reformattedValues];
       label.exampleInput = t(
         "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
@@ -97,6 +99,7 @@ function FormFieldTaxNumber({
               ? values
               : reformattedValues,
             required,
+            setMaxLength,
           }}
           key={`steuernummerField-${splitType}`} // Enforce re-rendering if other splitType is used
           autoFocus={autofocus || Boolean(errors.length)}
