@@ -279,6 +279,25 @@ class FormDataDependencies(BaseModel):
     confirm_data_privacy: Optional[bool]
     confirm_terms_of_service: Optional[bool]
 
+    @validator('steuernummer')
+    def delete_if_no_tax_number_exists(cls, v, values):
+        if values.get('steuernummer_exists') == "no":
+            return None
+        return v
+
+    @validator('bufa_nr', 'request_new_tax_number')
+    def delete_if_tax_number_exists(cls, v, values):
+        if values.get('steuernummer_exists') == "yes":
+            return None
+        return v
+
+    @validator('person_b_street', 'person_b_street_number', 'person_b_street_number_ext', 'person_b_address_ext',
+               'person_b_plz', 'person_b_town')
+    def delete_if_same_address(cls, v, values):
+        if values.get('person_b_same_address') == "yes":
+            return None
+        return v
+
     @validator('stmind_vorsorge_summe')
     def delete_if_vorsorge_not_shown(cls, v, values):
         if not values.get('stmind_select_vorsorge'):
@@ -324,18 +343,6 @@ class FormDataDependencies(BaseModel):
     @validator('stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
     def delete_if_show_person_b(cls, v, values):
         if show_person_b(values):
-            return None
-        return v
-
-    @validator('steuernummer')
-    def delete_if_no_tax_number_exists(cls, v, values):
-        if values.get('steuernummer_exists') == "no":
-            return None
-        return v
-
-    @validator('bufa_nr', 'request_new_tax_number')
-    def delete_if_tax_number_exists(cls, v, values):
-        if values.get('steuernummer_exists') == "yes":
             return None
         return v
 
