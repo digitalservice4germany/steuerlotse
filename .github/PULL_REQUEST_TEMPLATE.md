@@ -11,7 +11,7 @@
 - Which parts of the code would you like feedback on?
 - Questions that are open are also good (e. g. "Do you see any tests missing for class x?")
 
-# Review guide boilerplate (don't remove)
+# How to review this Pull Request
 Someone asked you to review this PR. What do you look for?
 
 - Highlight inconsistencies, bugs, code smells.
