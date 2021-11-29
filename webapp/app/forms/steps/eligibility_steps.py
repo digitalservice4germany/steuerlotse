@@ -741,7 +741,7 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     def _main_handle(self):
         super()._main_handle()
                 
-        self.render_info.additional_info['dependent_notes'] = get_dependent_note(self)
+        self.render_info.additional_info['dependent_notes'] = get_dependent_notes(self)
         self.render_info.next_url = None
 
 
@@ -762,14 +762,14 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
     def _main_handle(self):  
         super()._main_handle()
               
-        self.render_info.additional_info['dependent_notes'] = get_dependent_note(self)
+        self.render_info.additional_info['dependent_notes'] = get_dependent_notes(self)
         self.render_info.detail = {'render_kw': {
                 'data-detail': {'title': _l('form.eligibility.result-note.when_unlock_code.title'),
                                 'text': _l('form.eligibility.result-note.when_unlock_code.description')}}
                 }  
 
 
-def get_dependent_note(self):                 
+def get_dependent_notes(self):                 
     # Add notes depending on certain previous answers
     dependent_notes = [(_('form.eligibility.result-note.deadline'))]
     
