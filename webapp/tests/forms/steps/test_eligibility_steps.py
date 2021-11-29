@@ -3122,8 +3122,28 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
 
 class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
     @pytest.fixture(autouse=True)
-    def attach_fixtures(self, test_request_context):
+    def attach_fixtures(self, test_request_context, app):
         self.req = test_request_context
+        self.app = app
+
+    def test_if_session_data_correct_then_set_prev_input_step_correctly(self):
+        correct_session_data = {'marital_status_eligibility': 'single',
+                                'user_a_has_elster_account_eligibility': 'no',
+                                'alimony_eligibility': 'no',
+                                'pension_eligibility': 'yes',
+                                'investment_income_eligibility': 'no',
+                                'taxed_investment_income_eligibility': 'no',
+                                'employment_income_eligibility': 'no',
+                                'other_income_eligibility': 'no',
+                                'foreign_country_eligibility': 'no'}
+        with self.app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                EligibilitySuccessDisplaySteuerlotseStep.name, False, ImmutableMultiDict({}))
+            expected_url = step.url_for_step(ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name)
+            step.handle()
+        self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_user_b_has_no_elster_account_then_set_correct_info(self):
         expected_information = ['form.eligibility.result-note.deadline',
