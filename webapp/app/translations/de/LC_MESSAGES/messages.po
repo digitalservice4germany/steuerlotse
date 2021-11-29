@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-26 13:16+0100\n"
+"POT-Creation-Date: 2021-11-29 10:58+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -911,7 +911,6 @@ msgstr ""
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
 #: app/forms/steps/eligibility_steps.py:744
-#: app/forms/steps/eligibility_steps.py:775
 msgid "form.eligibility.result-note.deadline"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
