@@ -40,11 +40,11 @@ function FormFieldDropDown({
         errors,
         cols: "6",
       }}
-      labelComponent=<FieldLabel {...{ label, fieldId, details }} />
+      labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
         <DropDown
           id={fieldId}
-          className="custom-select steuerlotse-select"
+          className="custom-select steuerlotse-select input-width-25"
           name={fieldName}
           defaultValue={selectedValue}
           required={required}
