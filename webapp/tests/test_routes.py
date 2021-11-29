@@ -6,7 +6,7 @@ from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 
 from app.app import create_app
-from app.config import Config, ProductionConfig, StagingConfig
+from app.config import Config, ProductionConfig, FunctionalTestingConfig
 from app.forms.session_data import get_session_data
 
 
@@ -46,9 +46,9 @@ def configuration_with_production_environment_testing_route_policy():
 
 
 @pytest.fixture
-def configuration_with_staging_environment_testing_route_policy():
+def configuration_with_functional_environment_testing_route_policy():
     in_production_value = Config.ALLOW_TESTING_ROUTES
-    Config.ALLOW_TESTING_ROUTES = StagingConfig.ALLOW_TESTING_ROUTES
+    Config.ALLOW_TESTING_ROUTES = FunctionalTestingConfig.ALLOW_TESTING_ROUTES
 
     yield Config
 
@@ -69,7 +69,7 @@ class TestRegisterTestingRequestHandlers:
 
         assert app.view_functions == old_view_functions
 
-    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
+    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy")
     def test_if_staging_environment_then_register_testing_routes(self):
         app = Flask(
             __name__.split(".")[0],
@@ -94,7 +94,7 @@ class TestSetTestingDataRoute:
             response = c.post(f'/testing/set_data/{identifier}', json=data)
             assert response.status_code == 405
 
-    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
+    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy")
     def test_if_staging_environment_then_return_set_data(self):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
@@ -105,7 +105,7 @@ class TestSetTestingDataRoute:
         assert response.status_code == 200
         assert response.json == data
 
-    @pytest.mark.usefixtures("configuration_with_staging_environment_testing_route_policy")
+    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy")
     def test_if_staging_environment_and_incorrect_identifier_then_return_set_data(self):
         identifier = "INCORRECT_IDENTIFIER"
         data = {'username': 'Frodo', 'ring': 'one'}

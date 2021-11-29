@@ -58,7 +58,6 @@ class ProductionConfig(BaseConfig):
 
 
 class StagingConfig(BaseConfig):
-    ALLOW_TESTING_ROUTES = True
     PROMETHEUS_EXPORTER_ENABLED = True
     PLAUSIBLE_DOMAIN = 'www-staging.stl.ds4g.dev'
 
