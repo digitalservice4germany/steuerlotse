@@ -289,3 +289,7 @@ class StepPersonB(LotseFormSteuerlotseStep):
         person_b_gehbeh = BooleanField(
             label=_l('form.lotse.field_person_gehbeh'),
             render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
