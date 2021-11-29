@@ -226,7 +226,7 @@ describe("FormFieldTaxNumber is not split", () => {
   });
 
   it("Should set no maxLength attribute", () => {
-    expect(screen.getAllByRole("textbox")).not.toHaveProperty("max-lenght");
+    expect(screen.getByRole("textbox").hasOwnProperty("maxLength")).toBe(false);
   });
 
   it("Should only show one input field", () => {
