@@ -15,7 +15,7 @@ from flask_babel import lazy_gettext as _l, _
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
-from app.model.components import SelectStmindProps
+from app.model.components import SelectStMindProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import FamilienstandModel, JointTaxesModel
 
@@ -51,7 +51,7 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.stmind_select_religion.data_label')})
 
     def render(self, **kwargs):
-        props_dict = SelectStmindProps(
+        props_dict = SelectStMindProps(
             step_header={
                 'title': str(self.render_info.step_title),
                 'intro': str(self.render_info.step_intro),
@@ -62,7 +62,7 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
                 'show_overview_button': bool(self.render_info.overview_url)
             },
             fields=form_fields_dict(self.render_info.form),
-            prev_url = self.render_info.prev_url
+            prev_url=self.render_info.prev_url
         ).camelized_dict()
 
         return render_template('react_component.html',

@@ -18,7 +18,7 @@ function FormFieldTaxNumber({
   autofocus,
   details,
   errors,
-  isSplit,
+  splitType,
 }) {
   const { t } = useTranslation();
 
@@ -26,10 +26,40 @@ function FormFieldTaxNumber({
     text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
   };
 
-  if (isSplit) {
-    label.exampleInput = t(
-      "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
-    );
+  let reformattedValues = values.join("");
+  let inputFieldLengths;
+  switch (splitType) {
+    case "splitType_0":
+      inputFieldLengths = [2, 3, 5];
+      reformattedValues = [
+        reformattedValues.slice(0, 2),
+        reformattedValues.slice(2, 5),
+        reformattedValues.slice(5, 10),
+      ];
+      break;
+    case "splitType_1":
+      inputFieldLengths = [3, 3, 5];
+      reformattedValues = [
+        reformattedValues.slice(0, 3),
+        reformattedValues.slice(3, 6),
+        reformattedValues.slice(6, 11),
+      ];
+      break;
+    case "splitType_2":
+      inputFieldLengths = [3, 4, 4];
+      reformattedValues = [
+        reformattedValues.slice(0, 3),
+        reformattedValues.slice(3, 7),
+        reformattedValues.slice(7, 11),
+      ];
+      break;
+    default:
+      inputFieldLengths = [11];
+      reformattedValues = [reformattedValues];
+      label.exampleInput = t(
+        "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
+      );
+      break;
   }
 
   const fieldLabelProps = { label, fieldId, details };
@@ -41,9 +71,6 @@ function FormFieldTaxNumber({
     ...numericInputMask,
     ...baselineBugFix,
   };
-
-  const inputFieldLengths = isSplit ? [3, 4, 4] : [11];
-  const concatValues = isSplit ? values : [values.join()];
 
   return (
     <FormFieldScaffolding
@@ -64,9 +91,14 @@ function FormFieldTaxNumber({
             details,
             extraFieldProps,
             fieldId,
-            values: concatValues,
+            values: values.every(
+              (item, index) => item.length <= inputFieldLengths[index]
+            )
+              ? values
+              : reformattedValues,
             required,
           }}
+          key={`steuernummerField-${splitType}`} // Enforce re-rendering if other splitType is used
           autoFocus={autofocus || Boolean(errors.length)}
           inputFieldLengths={inputFieldLengths}
         />
@@ -83,7 +115,12 @@ FormFieldTaxNumber.propTypes = {
   required: PropTypes.bool,
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   details: FieldLabelForSeparatedFields.propTypes.details,
-  isSplit: PropTypes.bool.isRequired,
+  splitType: PropTypes.oneOf([
+    "splitType_0",
+    "splitType_1",
+    "splitType_2",
+    "splitType_notSplit",
+  ]).isRequired,
 };
 
 FormFieldTaxNumber.defaultProps = {

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
 import selectIcon from "../assets/icons/select_icon.svg";
@@ -24,7 +25,6 @@ function FormFieldDropDown({
   fieldName,
   fieldId,
   options,
-  defaultOption,
   selectedValue,
   required,
   label,
@@ -32,6 +32,7 @@ function FormFieldDropDown({
   errors,
   onChangeHandler,
 }) {
+  const { t } = useTranslation();
   return (
     <FormFieldScaffolding
       {...{
@@ -50,11 +51,11 @@ function FormFieldDropDown({
           autoFocus={Boolean(errors.length)}
           onChange={onChangeHandler}
         >
-          {defaultOption && (
-            <option value="" key={fieldId + defaultOption}>
-              {defaultOption}
+          {
+            <option value="" key={`${fieldId}defaultOption`}>
+              {t("dropDown.defaultOption")}
             </option>
-          )}
+          }
           {options.map((option) => (
             <option value={option.value} key={fieldId + option.value}>
               {option.displayName}
@@ -70,7 +71,6 @@ FormFieldDropDown.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  defaultOption: PropTypes.string,
   selectedValue: PropTypes.string,
   label: FieldLabel.propTypes.label,
   details: FieldLabel.propTypes.details,
@@ -81,7 +81,6 @@ FormFieldDropDown.propTypes = {
 };
 
 FormFieldDropDown.defaultProps = {
-  defaultOption: undefined,
   selectedValue: undefined,
   label: FieldLabel.defaultProps.label,
   required: false,

@@ -13,7 +13,7 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-jest": "^25.2.4",
+    "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.27.1",
     "http-proxy-middleware": "^2.0.1",
@@ -32,15 +32,15 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-actions": "^6.4.0",
     "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.3.12",
+    "@storybook/addon-links": "^6.4.0",
     "@storybook/node-logger": "^6.3.12",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.12",
     "husky": "^7.0.2",
     "lint-staged": "^12.1.2",
-    "prettier": "2.4.1"
+    "prettier": "2.5.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

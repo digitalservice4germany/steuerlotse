@@ -21,7 +21,7 @@ def populate_database():
         from app.data_access.db_model.user import User
 
         if os.environ.get('FLASK_ENV') == 'production':
-            logger.warn('Refusing to run populate database cron job on production '
+            logger.warning('Refusing to run populate database cron job on production '
                             '(would create unwanted users).')
             return
 
@@ -38,7 +38,7 @@ def populate_database():
                 logger.info('Added user with IdNr: ' + idnr)
             except IntegrityError:
                 db.session.rollback()
-                logger.warn('User with IdNr ' + idnr + ' already exists in database.')
+                logger.warning('User with IdNr ' + idnr + ' already exists in database.')
     except Exception:
         logger.exception('An unexpected error occurred.')
 
@@ -49,7 +49,7 @@ cronjob_cli = AppGroup('cronjob')
 def delete_outdated_users():
     try:
         if os.environ.get('FLASK_ENV') == 'staging':
-            logger.warn('Refusing to run lifecycle cron job on staging (would delete users needed for testing)')
+            logger.warning('Refusing to run lifecycle cron job on staging (would delete users needed for testing)')
             return
 
         _delete_outdated_users()
@@ -124,7 +124,7 @@ def _revoke_permission_and_delete_users(users_to_delete, success_message):
             db.session.delete(user_to_delete)
             logger.info(success_message)
         except (ElsterRequestAlreadyRevoked, ElsterRequestIdUnkownError) as e:
-            logger.warn(str(e))
+            logger.warning(str(e))
             db.session.delete(user_to_delete)
             logger.info(success_message)
         except ElsterProcessNotSuccessful as e:
