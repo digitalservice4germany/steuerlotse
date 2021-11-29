@@ -32,6 +32,7 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, \
     EligibilityStepMixin, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
     EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
+    EligibilityMaybeDisplaySteuerlotseStep, \
     data_fits_data_model_from_list, data_fits_data_model
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
@@ -2908,11 +2909,57 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             'other_income_eligibility': 'no'}
         return correct_session_data
     
+    @pytest.fixture
+    def correct_session_data_users_have_elster(self):
+        correct_session_data = {
+            'marital_status_eligibility': 'divorced', 'joint_taxes_eligibility': 'no', 'alimony_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes', 'user_b_has_elster_account_eligibility': 'yes',
+            'pension_eligibility': 'yes', 'investment_income_eligibility': 'yes', 'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes', 'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no'}
+        return correct_session_data
+        
+    @pytest.fixture
+    def correct_session_data_user_a_have_elster(self):
+        correct_session_data = {
+            'marital_status_eligibility': 'divorced', 'joint_taxes_eligibility': 'no', 'alimony_eligibility': 'no',
+            'user_a_has_elster_account_eligibility': 'yes', 'user_b_has_elster_account_eligibility': 'no',
+            'pension_eligibility': 'yes', 'investment_income_eligibility': 'yes', 'minimal_investment_income_eligibility': 'no',
+            'taxed_investment_income_eligibility': 'yes', 'cheaper_check_eligibility': 'no',
+            'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
+            'other_income_eligibility': 'no'}
+        return correct_session_data
+    
     
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_success_step(self, app, correct_session_data):
         with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
+            expected_url = step.url_for_step(EligibilitySuccessDisplaySteuerlotseStep.name)
+            step.handle()
+
+        assert step.render_info.next_url == expected_url
+        
+    def test_if_post_and_session_data_correct_and_both_user_has_elster_and_input_data_correct_then_set_maybe_step(self, app, correct_session_data_users_have_elster):
+        with app.test_request_context(method='POST') as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_users_have_elster)})
+            step = EligibilityStepChooser('eligibility').get_correct_step(
+                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
+                form_data=ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
+            expected_url = step.url_for_step(EligibilityMaybeDisplaySteuerlotseStep.name)
+            step.handle()
+
+        assert step.render_info.next_url == expected_url
+                
+    def test_if_post_and_session_data_correct_and_user_a_has_elster_and_input_data_correct_then_set_success_step(self, app, correct_session_data_user_a_have_elster):
+        with app.test_request_context(method='POST') as req:
+            req.session = SecureCookieSession(
+                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_user_a_have_elster)})
             step = EligibilityStepChooser('eligibility').get_correct_step(
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
                 form_data=ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
