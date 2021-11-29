@@ -23,5 +23,5 @@ Someone asked you to review this PR. What do you look for?
 
 Finally, submit your review:
 - *Approve*: this means "I'm ok with this PR being merged". It also means "I may have a number of suggestions for you but I trust you to decide for yourself which ones you should apply."
-- *Request Changes*: this means "I don't think this PR should be merged in its current state". Could be because of structural problems, uncovered bugs or doubts about security aspects.
+- *Request Changes*: this means "I don't think this PR should be merged in its current state". Could be because of structural problems, uncovered bugs, doubts about security aspects, or something else.
 - *Comment*: this means "I have some questions / comments but am not ready to approve or request changes, yet".
