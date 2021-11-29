@@ -103,7 +103,10 @@ function FormFieldSeparatedField({
               // eslint-disable-next-line
               autoFocus={autofocus && index === 0}
               required={required}
-              className={classNames("form-control", `input-width-${length}`)}
+              className={classNames(
+                "form-control",
+                `input-width-${length < 11 ? length : 25}`
+              )}
               style={transformUppercase ? { textTransform: "uppercase" } : {}}
               {...extraFieldProps}
             />
