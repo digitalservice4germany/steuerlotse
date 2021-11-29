@@ -117,7 +117,11 @@ function FormFieldSeparatedField({
             // eslint-disable-next-line
             <React.Fragment key={index}>
               {inputFieldLabels.length > index ? (
-                <div>
+                <div
+                  className={classNames(
+                    `input-width-${length < 11 ? length : 25}`
+                  )}
+                >
                   <SeparatedFieldLabel
                     htmlFor={subFieldId}
                     className="sub-field-label"
