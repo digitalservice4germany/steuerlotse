@@ -655,15 +655,11 @@ class TestPensionEligibilityData(unittest.TestCase):
             self.fail("PensionEligibilityData.parse_obj should not raise validation error")
             
     def test_if_joint_taxes_user_a_has_elster_account_pension_yes_then_raise_validation_error(self):
-        valid_data = {'pension_eligibility': 'yes'}
-        try:
-            with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__', 
-                       MagicMock(return_value=None)):
-                PensionEligibilityData.parse_obj(valid_data)
-        except ValidationError as e:
-            self.fail("PensionEligibilityData.parse_obj should not raise validation error")
+        non_valid_data = {'pension_eligibility': 'yes'}
         
-
+        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__', 
+                MagicMock(return_value=None)):        
+            self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, non_valid_data)
 class TestInvestmentIncome(unittest.TestCase):
 
     def test_if_pension_valid_and_investment_income_no_then_raise_validation_error(self):
