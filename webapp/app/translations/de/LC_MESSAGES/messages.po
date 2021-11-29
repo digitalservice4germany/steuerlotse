@@ -965,16 +965,37 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:762
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
-"Es kann allerdings sein, dass Sie <strong>keinen Brief mit Ihrem "
-"persönlichen Freischaltcode erhalten</strong>, weil Ihnen aufgrund Ihres "
-"Kontos bei Mein ELSTER kein Brief zugeschickt wird. Haben Sie bei "
-"erfolgreicher Registrierung nach 2 Wochen keinen Brief erhalten, können "
-"Sie den Steuerlotsen nicht nutzen.</p><p> Wenn Sie alle Fragen korrekt "
-"beantwortet haben, erfüllen Sie aber die formalen Voraussetzungen für die"
-" Nutzung des Steuerlotsen. Sie erhalten in diesem Fall Ihre Rente "
-"beziehungsweise Ihre Pension von Trägern, die Ihre Daten automatisch an "
-"die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
-"Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen. "
+"Sie können Ihre Steuererklärung mit dem Steuerlotsen machen, wenn Ihnen "
+"ein Brief mit einem Freischaltcode zugeschickt wird. In einigen Fällen "
+"erhalten Menschen mit einem Mein ELSTER-Konto diesen Brief jedoch nicht. "
+"Daher können wir Ihnen nicht versichern, dass Sie den Steuerlotsen nutzen"
+" können. <p></p> Wenn Ihnen der Brief innerhalb von 2 Wochen nicht "
+"zugestellt wird, können Sie den Steuerlotsen leider nicht nutzen. Das "
+"liegt daran, dass Sie den Freischaltcode benötigen, um sich beim "
+"Steuerlotsen anzumelden. <p></p> Wenn Sie alle Fragen korrekt beantwortet"
+" haben, erfüllen Sie aber die formalen Voraussetzungen für die Nutzung "
+"des Steuerlotsen. Sie erhalten in diesem Fall Ihre Rente beziehungsweise "
+"Ihre Pension von Trägern, die Ihre Daten automatisch an die "
+"Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
+"Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
+
+#: app/forms/steps/eligibility_steps.py:779
+msgid "form.eligibility.result-note.when_unlock_code.title"
+msgstr "Wann bekomme ich einen Freischaltcode?"
+
+#: app/forms/steps/eligibility_steps.py:780
+msgid "form.eligibility.result-note.when_unlock_code.description"
+msgstr ""
+"Sie bekommen einen Freischaltcode, wenn Sie sich bei Mein Elster mit "
+"einer Zertifikatsdatei identifiziert und keinen Abrufcode beantragt "
+"haben. Wenn Sie sich z.B. mit Ihrem Personalausweis, einer Karte oder "
+"einem Stick bei Mein Elster identifiziert oder einen Abrufcode beantragt "
+"haben, bekommen Sie den Brief mit dem Freischaltcode nicht. <p></p> Wenn "
+"Sie nicht wissen, wie Sie sich bei Mein Elster identifiziert haben, "
+"können Sie versuchen, einen Freischaltcode zu beantragen. Sollten Sie "
+"einen Brief mit einem Freischaltcode erhalten, können Sie diesen nutzen, "
+"um Ihre Steuererklärung mit dem Steuerlotsen zu machen. Wenn Sie keinen "
+"Brief erhalten, können Sie den Steuerlotsen leider nicht nutzen."
 
 #: app/forms/steps/logout_steps.py:16
 msgid "form.logout.input-title"
@@ -4890,24 +4911,24 @@ msgstr "Zu Mein ELSTER"
 msgid "maybe_icon"
 msgstr "Fragezeichen Icon auf gelbem Kreis"
 
-#: app/templates/eligibility/display_maybe.html:25
+#: app/templates/eligibility/display_maybe.html:27
 #: app/templates/eligibility/display_success.html:25
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_maybe.html:26
+#: app/templates/eligibility/display_maybe.html:28
 #: app/templates/eligibility/display_success.html:26
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_maybe.html:32
+#: app/templates/eligibility/display_maybe.html:34
 #: app/templates/eligibility/display_success.html:32
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_maybe.html:42
+#: app/templates/eligibility/display_maybe.html:44
 #: app/templates/eligibility/display_success.html:42
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
