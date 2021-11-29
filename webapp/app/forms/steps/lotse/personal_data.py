@@ -29,6 +29,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepFamilienstand
+    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
