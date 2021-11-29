@@ -99,7 +99,6 @@ function FormFieldYesNo({
       {...{
         fieldName,
         errors,
-        cols: "6",
       }}
       hideLabel
       render={() => (

@@ -38,7 +38,6 @@ function FormFieldDropDown({
       {...{
         fieldName,
         errors,
-        cols: "6",
       }}
       labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
