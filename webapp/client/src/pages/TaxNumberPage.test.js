@@ -76,6 +76,7 @@ describe("TaxNumberPage", () => {
         },
       ],
       numberOfUsers: 1,
+      prevUrl: "fooUrl",
     };
     render(<TaxNumberPage {...props} />);
   });
@@ -470,6 +471,7 @@ describe("TaxNumberPage with tax number set", () => {
         },
       ],
       numberOfUsers: 1,
+      prevUrl: "fooUrl",
     };
     render(<TaxNumberPage {...props} />);
   });

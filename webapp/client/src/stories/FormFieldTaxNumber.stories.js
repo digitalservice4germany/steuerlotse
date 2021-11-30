@@ -30,6 +30,13 @@ NotSplitDefaultValue.args = {
   values: ["12345678901"],
 };
 
+export const NotSplitWithError = Template.bind({});
+NotSplitWithError.args = {
+  ...Default.args,
+  values: ["123", "4567", "8901"],
+  errors: ["Sie müssen eine gültige Steuernummer angeben"],
+};
+
 export const SplitDefaultValue = Template.bind({});
 SplitDefaultValue.args = {
   ...Default.args,
@@ -39,15 +46,6 @@ SplitDefaultValue.args = {
 
 export const SplitWithError = Template.bind({});
 SplitWithError.args = {
-  ...Default.args,
-  values: ["123", "4567", "8901"],
-  splitType: "splitType_0",
-  errors: ["Sie müssen eine gültige Steuernummer angeben"],
-};
-
-export const NotSplitWithError = Template.bind({});
-NotSplitWithError.args = {
-  ...Default.args,
-  values: ["123", "4567", "8901"],
+  ...SplitDefaultValue.args,
   errors: ["Sie müssen eine gültige Steuernummer angeben"],
 };
