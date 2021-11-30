@@ -22,7 +22,6 @@ export default function FormFieldScaffolding({
   fieldName,
   labelComponent,
   errors,
-  cols,
   displayBlock,
   maxCharacters,
   extraClassNames,
@@ -41,7 +40,7 @@ export default function FormFieldScaffolding({
     });
   }, []);
 
-  const divClassNames = classNames(`col-md-${cols}`, "px-0", fieldDivClasses, {
+  const divClassNames = classNames("px-0", fieldDivClasses, {
     "error-found-line": errors.length,
   });
 
@@ -89,7 +88,6 @@ FormFieldScaffolding.propTypes = {
   fieldName: PropTypes.string.isRequired,
   labelComponent: PropTypes.element,
   errors: PropTypes.arrayOf(PropTypes.string),
-  cols: PropTypes.string,
   extraClassNames: PropTypes.string, // field.render_kw['class']
   maxCharacters: PropTypes.string, // field.render_kw['max_characters']
   fieldDivClasses: PropTypes.string,
@@ -101,7 +99,6 @@ FormFieldScaffolding.propTypes = {
 FormFieldScaffolding.defaultProps = {
   labelComponent: undefined,
   errors: [],
-  cols: "6",
   extraClassNames: "",
   fieldDivClasses: "",
   maxCharacters: undefined,
