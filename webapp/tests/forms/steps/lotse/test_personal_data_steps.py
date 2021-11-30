@@ -4,11 +4,10 @@ from unittest.mock import patch, MagicMock
 import pytest
 from flask.sessions import SecureCookieSession
 from flask_babel import ngettext, _
+from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
-from app.elster_client.elster_client import request_tax_offices
-from app.forms.steps.lotse.personal_data import StepSteuernummer
-from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, ShowPersonBPrecondition
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -233,3 +232,83 @@ class TestStepSteuernummerValidate:
             StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_not_called()
+
+
+def new_person_b_step(form_data):
+    return LotseStepChooser().get_correct_step(StepPersonB.name, True, ImmutableMultiDict(form_data))
+
+
+class TestShowPersonBPrecondition:
+    def test_if_show_person_b_false_then_raise_validation_error(self):
+        with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=False), \
+                pytest.raises(ValidationError):
+            ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
+
+    def test_if_show_person_b_true_then_do_not_raise_validation_error(self):
+        try:
+            with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=True):
+                ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+
+class TestPersonBValidation:
+    valid_stored_data = {'familienstand': 'married', 'familienstand_date': datetime.date(2000, 1, 31),
+                         'familienstand_married_lived_separated': 'no',
+                         'familienstand_confirm_zusammenveranlagung': True}
+
+    @pytest.fixture()
+    def valid_form_data(self):
+        return {'person_b_idnr': '04452397687', 'person_b_first_name': 'Hermine',
+                'person_b_last_name': 'Granger', 'person_b_dob': ['01', '01', '1985'],
+                'person_b_same_address': 'yes', 'person_b_religion': 'none'}
+
+    def test_if_plz_starts_with_zero_then_succ_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, ** {'person_b_plz': '01234'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict(valid_form_data)
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_gehbeh_yes_and_beh_grad_not_set_then_fail_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_gehbeh': 'on'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is False
+
+    def test_if_gehbeh_yes_and_beh_grad_set_then_succ_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_gehbeh': 'on', 'person_b_beh_grad': '30'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_not_gehbeh_but_beh_grad_set_then_succ_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_beh_grad': '30'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_same_address_yes_then_validation_succ_without_address(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_same_address': 'yes'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_same_address_no_and_no_address_set_then_fail_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_same_address': 'no'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is False
+
+    def test_if_same_address_no_and_address_set_then_succ_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_same_address': 'no', 'person_b_street': 'Diagon Alley',
+                                                'person_b_street_number': '7', 'person_b_plz': '12345',
+                                                'person_b_town': 'Hogsmeade'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
