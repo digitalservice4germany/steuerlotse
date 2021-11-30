@@ -219,9 +219,13 @@ def _generate_est_request_data(form_data, year=2020):
         
     digitally_signed = bool(current_user.unlock_code_hashed is not None)
 
+    if not current_user.is_active:
+        # no non-active user should come until here, but we want to log that as an error
+        logger.error('Elster_Client: Non-active user tries to send tax declaration.')
+
     if not digitally_signed:
-        logger.warning('Elster_Client: User is not authenticated')
-        # no non-active user should come until here, but they should certainly not be able to send a tax declaration
+        logger.warning('Elster_Client: User without unlock code tries to send tax declaration.')
+        # no user should come until that point without an unlock code, but they should certainly not be able to send a tax declaration
         logout_user()
         raise TaxDeclarationNotDigitallySigned
     
