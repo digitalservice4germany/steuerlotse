@@ -163,26 +163,32 @@ a:visited {
 /* INPUTS */
 .input-width-2 {
   width: var(--input-width-2);
+  max-width: var(--input-width-2);
 }
 
 .input-width-3 {
   width: var(--input-width-3);
+  max-width: var(--input-width-3);
 }
 
 .input-width-4 {
   width: var(--input-width-4);
+  max-width: var(--input-width-4);
 }
 
 .input-width-5 {
   width: var(--input-width-5);
+  max-width: var(--input-width-5);
 }
 
 .input-width-6 {
   width: var(--input-width-6);
+  max-width: var(--input-width-6);
 }
 
 .input-width-10 {
   width: var(--input-width-10);
+  max-width: var(--input-width-10);
 }
 
 .input-width-25 {
@@ -600,4 +606,4 @@ img.icon {
 /** END copied unorganised CSS from base.css **/
 
 
-/*# sourceMappingURL=main.f0d90fc9.chunk.css.map*/
+/*# sourceMappingURL=main.c9e3c8fc.chunk.css.map*/
