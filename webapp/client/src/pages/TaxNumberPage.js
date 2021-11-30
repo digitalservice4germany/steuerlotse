@@ -275,7 +275,7 @@ export default function TaxNumberPage({
   );
 
   const requestNewTaxNumberCheckbox = (
-    <>
+    <div key="requestNewTaxNumberRow">
       <SubHeading>
         {t("lotseFlow.taxNumber.requestNewTaxNumber.headline")}
       </SubHeading>
@@ -294,7 +294,7 @@ export default function TaxNumberPage({
         }
         errors={fields.requestNewTaxNumber.errors}
       />
-    </>
+    </div>
   );
 
   const shownFields = [];
