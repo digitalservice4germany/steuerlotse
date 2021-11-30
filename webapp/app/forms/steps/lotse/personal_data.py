@@ -207,12 +207,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
             else:
                 validators.InputRequired()(form, field)
 
-        def validate_person_b_beh_grad(self, field):
-            if self.person_b_gehbeh.data:
-                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
-            else:
-                validators.Optional()(self, field)
-
         person_b_idnr = LegacyIdNrField(
             label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
@@ -289,6 +283,12 @@ class StepPersonB(LotseFormSteuerlotseStep):
         person_b_gehbeh = BooleanField(
             label=_l('form.lotse.field_person_gehbeh'),
             render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
+
+        def validate_person_b_beh_grad(self, field):
+            if self.person_b_gehbeh.data:
+                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
+            else:
+                validators.Optional()(self, field)
 
     @classmethod
     def get_label(cls, data):
