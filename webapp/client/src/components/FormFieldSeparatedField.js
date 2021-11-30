@@ -38,6 +38,7 @@ function FormFieldSeparatedField({
   inputFieldLabels,
   extraFieldProps,
   transformUppercase,
+  setMaxLength,
 }) {
   const container = useRef();
 
@@ -97,7 +98,7 @@ function FormFieldSeparatedField({
               name={fieldName}
               onPaste={handlePaste}
               defaultValue={values.length > index ? values[index] : ""}
-              maxLength={length}
+              maxLength={setMaxLength ? length : null}
               data-field-length={length}
               // TODO: autofocus is under review.
               // eslint-disable-next-line
@@ -168,6 +169,7 @@ FormFieldSeparatedField.propTypes = {
   transformUppercase: PropTypes.bool,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
+  setMaxLength: PropTypes.bool,
 };
 
 FormFieldSeparatedField.defaultProps = {
@@ -179,6 +181,7 @@ FormFieldSeparatedField.defaultProps = {
   transformUppercase: false,
   required: false,
   autofocus: false,
+  setMaxLength: true,
 };
 
 export default FormFieldSeparatedField;
