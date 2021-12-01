@@ -21,7 +21,6 @@ export default function TelephoneNumberPage({
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
         <FormFieldTextInput
-          autofocus
           fieldName="telephone_number"
           fieldId="telephone_number"
           value={fields.telephoneNumber.value}
