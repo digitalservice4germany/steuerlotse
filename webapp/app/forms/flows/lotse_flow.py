@@ -23,7 +23,7 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, \
     StepFamilienstand
 from app.forms.steps.step import Section
@@ -138,6 +138,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepSteuernummer,
                 StepPersonA,
                 StepPersonB,
+                StepTelephoneNumber,
                 StepIban,
 
                 StepSelectStmind,
