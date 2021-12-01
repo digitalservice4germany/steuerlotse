@@ -13,7 +13,7 @@ from app.forms.fields import ConfirmationField, \
     SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban, \
-    get_religion_field
+    get_religion_field, get_number_of_users
 from app.forms.steps.step import SectionLink, FormStep
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
