@@ -34,6 +34,11 @@ const translations = {
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
     },
+    telephoneNumber: {
+      fieldTelephoneNumber: {
+        label: "Telefonnummer",
+      },
+    },
     confirmation: {
       fieldRegistrationConfirmDataPrivacy: {
         labelText:
