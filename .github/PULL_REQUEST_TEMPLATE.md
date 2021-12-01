@@ -16,6 +16,7 @@ Someone asked you to review this PR. What do you look for?
 
 - Highlight inconsistencies, bugs, code smells.
 - Ask open questions whenever you do not understand decisions or choices.
+- Try to comment on the questions raised in the "Feedback" section.
 - Try to uncover implications for security, privacy, accessibility & performance.
 - Do the tests sufficiently cover the added functionality at all appropriate levels (unit, functional, acceptance)?
 - If you think it's necessary: check out the code to see how something works when used.
