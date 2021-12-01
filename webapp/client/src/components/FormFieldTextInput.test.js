@@ -6,7 +6,7 @@ import FormFieldTextInput from "./FormFieldTextInput";
 describe("FormFieldTextInput", () => {
   let props;
 
-  describe("Base Field", () => {
+  describe("When default props used", () => {
     beforeEach(() => {
       props = {
         fieldId: "text-input",
@@ -41,6 +41,36 @@ describe("FormFieldTextInput", () => {
     });
   });
 
+  describe("When maxWidth given", () => {
+    beforeEach(() => {
+      props = {
+        fieldId: "text-input",
+        fieldName: "text-input",
+        label: {
+          text: "Label",
+        },
+        errors: [],
+        value: "",
+        maxWidth: 5,
+      };
+      render(<FormFieldTextInput {...props} />);
+    });
+
+    it("Should not limit input of values", () => {
+      userEvent.type(
+        screen.getByLabelText("Label"),
+        "Supercalifragilisticexpialidocious"
+      );
+      expect(screen.getByLabelText("Label")).toHaveValue(
+        "Supercalifragilisticexpialidocious"
+      );
+    });
+
+    it("should set width class", () => {
+      expect(screen.getByLabelText("Label")).toHaveClass("input-width-5");
+    });
+  });
+
   describe("When maxLength given", () => {
     beforeEach(() => {
       props = {
@@ -56,39 +86,16 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should not limit input of values", () => {
-      userEvent.type(
-        screen.getByLabelText("Label"),
-        "Supercalifragilisticexpialidocious"
-      );
-      expect(screen.getByLabelText("Label")).toHaveValue(
-        "Supercalifragilisticexpialidocious"
-      );
-    });
-  });
-
-  describe("When maxLength given and setMaxLength true", () => {
-    beforeEach(() => {
-      props = {
-        fieldId: "text-input",
-        fieldName: "text-input",
-        label: {
-          text: "Label",
-        },
-        errors: [],
-        value: "",
-        maxLength: 5,
-        setMaxLength: true,
-      };
-      render(<FormFieldTextInput {...props} />);
-    });
-
     it("Should limit input of values", () => {
       userEvent.type(
         screen.getByLabelText("Label"),
         "Supercalifragilisticexpialidocious"
       );
       expect(screen.getByLabelText("Label")).toHaveValue("Super");
+    });
+
+    it("should not set width class", () => {
+      expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
     });
   });
 });
