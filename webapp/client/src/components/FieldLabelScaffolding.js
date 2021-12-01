@@ -27,7 +27,7 @@ export default function FieldLabelScaffolding({
       {render(
         <>
           {label.text}
-          {label.optional && <OptionalHint />}
+          {label.showOptionalTag && <OptionalHint />}
           {label.help && <HelpModal title={label.text} body={label.help} />}
         </>,
         labelClassNames
@@ -52,7 +52,7 @@ FieldLabelScaffolding.propTypes = {
   fieldId: PropTypes.string.isRequired,
   label: PropTypes.exact({
     text: PropTypes.string,
-    optional: PropTypes.bool,
+    showOptionalTag: PropTypes.bool,
     help: PropTypes.string, // field.render_kw['help']
     exampleInput: PropTypes.string, // field.render_kw["example_input"]
   }),
@@ -66,7 +66,7 @@ FieldLabelScaffolding.propTypes = {
 FieldLabelScaffolding.defaultProps = {
   label: {
     text: undefined,
-    optional: false,
+    showOptionalTag: false,
     help: undefined,
     exampleInput: undefined,
   },
