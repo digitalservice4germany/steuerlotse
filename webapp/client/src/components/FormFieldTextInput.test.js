@@ -20,24 +20,21 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    describe("When pressing tab", () => {
-      beforeEach(() => {
-        userEvent.tab();
-      });
+    it("Should set focus on field on tab", () => {
+      userEvent.tab();
+      expect(screen.getByRole("textbox")).toHaveFocus();
+    });
 
-      it("Should set focus on field", () => {
-        expect(screen.getByRole("textbox")).toHaveFocus();
-      });
+    it("Should enter keyboard input into input after pressing tab", () => {
+      userEvent.tab();
+      userEvent.keyboard("Helloo");
+      expect(screen.getByLabelText("Label")).toHaveValue("Helloo");
+    });
 
-      describe("When pressing tab again", () => {
-        beforeEach(() => {
-          userEvent.tab();
-        });
-
-        it("Should unset focus on field", () => {
-          expect(screen.getByRole("textbox")).not.toHaveFocus();
-        });
-      });
+    it("Should unset focus on field when pressing tab two times", () => {
+      userEvent.tab();
+      userEvent.tab();
+      expect(screen.getByRole("textbox")).not.toHaveFocus();
     });
   });
 
@@ -96,6 +93,12 @@ describe("FormFieldTextInput", () => {
 
     it("should not set width class", () => {
       expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
+    });
+
+    it("Should enter keyboard input into input after pressing tab", () => {
+      userEvent.tab();
+      userEvent.keyboard("Helloo");
+      expect(screen.getByLabelText("Label")).toHaveValue("Hello");
     });
   });
 });
