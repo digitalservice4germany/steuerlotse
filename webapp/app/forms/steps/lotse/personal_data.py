@@ -325,6 +325,7 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
                 'show_overview_button': bool(self.render_info.overview_url),
             },
             fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url,
         ).camelized_dict()
 
         return render_template('react_component.html',
