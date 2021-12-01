@@ -15,3 +15,5 @@ def create_session_form_data(data):
 def create_and_activate_user(idnr, dob, request_id, unlock_code):
     create_user(idnr, dob, request_id)
     find_user(idnr).activate(unlock_code)
+
+

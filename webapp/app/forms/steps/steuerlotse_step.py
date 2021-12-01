@@ -60,6 +60,7 @@ class SteuerlotseStep(object):
             step_intro=ngettext(cls.intro, cls.intro_multiple, num=cls.number_of_users(stored_data))
             if cls.intro_multiple else cls.intro,
             form=None,
+            stored_data=stored_data,
             prev_url=None,
             next_url=None,
             submit_url=None,
@@ -140,13 +141,11 @@ class FormSteuerlotseStep(SteuerlotseStep):
     @classmethod
     def prepare_render_info(cls, stored_data, input_data=None, should_update_data=False, *args, **kwargs):
         render_info = super().prepare_render_info(stored_data, input_data, should_update_data, *args, **kwargs)
-        render_info.form = cls.create_form(form_data=input_data, prefilled_data=stored_data)
+        render_info.form = cls.create_form(form_data=input_data, prefilled_data=render_info.stored_data)
 
         if should_update_data and render_info.form.validate():
             render_info.data_is_valid = True
-            stored_data.update(render_info.form.data)
-
-        render_info.stored_data = stored_data
+            render_info.stored_data.update(render_info.form.data)
 
         return render_info
 

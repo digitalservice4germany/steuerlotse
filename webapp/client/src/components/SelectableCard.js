@@ -110,7 +110,6 @@ function SelectableCard({
       {...{
         fieldName,
         errors,
-        cols: "12",
       }}
       hideLabel
       render={() => (

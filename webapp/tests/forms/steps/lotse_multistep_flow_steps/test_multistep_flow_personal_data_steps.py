@@ -5,7 +5,7 @@ from flask import request
 from werkzeug.datastructures import MultiDict
 
 from app.data_access.user_controller import create_user, activate_user
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepFamilienstand, StepPersonB, StepIban
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepFamilienstand, StepIban
 
 
 class TestPersonAStep(unittest.TestCase):
@@ -73,69 +73,6 @@ class TestPersonAStep(unittest.TestCase):
         self.form.person_a_beh_grad.data = 30
         self.form.person_a_beh_grad.raw_data = "30"
         self.assertTrue(self.form.validate())
-
-
-class TestPersonBStep(unittest.TestCase):
-    def setUp(self):
-        step = StepPersonB
-        self.form = step.Form()
-
-        # fill required fields
-        self.form.person_b_idnr.raw_data = "04452397687"
-        self.form.person_b_idnr.data = "04452397687"
-        self.form.person_b_dob.raw_data = ["01","01","1985"]
-        self.form.person_b_first_name.raw_data = "Ronald"
-        self.form.person_b_last_name.raw_data = "Weasley"
-        self.form.person_b_same_address.data = 'no'
-        self.form.person_b_street.raw_data = "Hogwartsstraße"
-        self.form.person_b_street_number.raw_data = "7"
-        self.form.person_b_plz.raw_data = "12345"
-        self.form.person_b_plz.data = "12345"
-        self.form.person_b_town.raw_data = "Hogsmeade"
-        self.form.person_b_religion.raw_data = "none"
-        self.form.person_b_religion.data = "none"
-        self.form.person_b_blind.data = False
-        self.form.person_b_gehbeh.data = False
-
-    def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self):
-        self.form.person_b_gehbeh.data = None
-        self.form.person_b_beh_grad.data = None
-        self.assertTrue(self.form.validate())
-
-    def test_if_gehbeh_yes_and_beh_grad_not_set_then_fail_validation(self):
-        self.form.person_b_gehbeh.data = 'yes'
-        self.form.person_b_beh_grad.data = None
-        self.assertFalse(self.form.validate())
-
-    def test_if_gehbeh_yes_and_beh_grad_set_then_succ_validation(self):
-        self.form.person_b_gehbeh.data = 'yes'
-        self.form.person_b_beh_grad.data = 30
-        self.form.person_b_beh_grad.raw_data = "30"
-        self.assertTrue(self.form.validate())
-
-    def test_if_not_gehbeh_but_beh_grad_set_then_succ_validation(self):
-        self.form.person_b_gehbeh.data = 'no'
-        self.form.person_b_beh_grad.data = 30
-        self.form.person_b_beh_grad.raw_data = "30"
-        self.assertTrue(self.form.validate())
-
-    def test_if_same_address_yes_then_address_is_optional(self):
-        self.form.person_b_street.raw_data = None
-        self.form.person_b_street_number.raw_data = None
-        self.form.person_b_plz.raw_data = None
-        self.form.person_b_town.raw_data = None
-
-        self.form.person_b_same_address.data = 'yes'
-        self.assertTrue(self.form.validate())
-
-    def test_if_same_address_no_then_address_is_not_optional(self):
-        self.form.person_b_street.raw_data = None
-        self.form.person_b_street_number.raw_data = None
-        self.form.person_b_plz.raw_data = None
-        self.form.person_b_town.raw_data = None
-
-        self.form.person_b_same_address.data = 'no'
-        self.assertFalse(self.form.validate())
 
 
 class TestFamilienstand(unittest.TestCase):

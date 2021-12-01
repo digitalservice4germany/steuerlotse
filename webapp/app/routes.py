@@ -12,9 +12,10 @@ from werkzeug.exceptions import InternalServerError
 from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError
-from app.extensions import nav, login_manager, limiter
-from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
-from app.forms.flows.lotse_step_chooser import LotseStepChooser
+from app.extensions import nav, login_manager, limiter, csrf
+from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
+from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
+from app.forms.session_data import override_session_data
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
@@ -23,8 +24,7 @@ from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepF
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
-    StepIban
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban
 from app.logging import log_flask_request
 
 
@@ -134,7 +134,7 @@ def register_request_handlers(app):
     def lotse(step):
         flow = LotseMultiStepFlow(endpoint='lotse')
         if step in ["start", StepDeclarationIncomes.name, StepDeclarationEdaten.name, StepSessionNote.name,
-                    StepFamilienstand.name, StepPersonA.name, StepPersonB.name, StepIban.name,
+                    StepFamilienstand.name, StepPersonA.name, StepIban.name,
                     StepConfirmation.name, StepFiling.name,
                     StepAck.name]:
             return flow.handle(step_name=step)
@@ -316,3 +316,18 @@ def register_error_handlers(app):
         current_app.logger.error(
             'An uncaught error occurred', exc_info=error.original_exception)
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+
+
+def register_testing_request_handlers(app):
+    if not Config.ALLOW_TESTING_ROUTES:
+        return
+
+    @csrf.exempt
+    @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
+    def set_data(session_identifier):
+        _ALLOWED_IDENTIFIERS = [_LOTSE_DATA_KEY, _ELIGIBILITY_DATA_KEY]
+        if session_identifier not in _ALLOWED_IDENTIFIERS:
+            return "Not allowed identifier", 200
+        data = request.get_json()
+        override_session_data(data, session_identifier)
+        return data, 200

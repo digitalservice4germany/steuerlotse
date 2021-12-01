@@ -1,6 +1,5 @@
 import datetime as dt
 from functools import lru_cache
-
 from app.config import Config
 
 

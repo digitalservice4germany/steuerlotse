@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 const Hint = styled.span`
+  margin-left: var(--spacing-01);
   font-size: var(--text-medium);
   font-weight: var(--font-normal);
 `;

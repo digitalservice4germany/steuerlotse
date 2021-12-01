@@ -38,6 +38,7 @@ function FormFieldSeparatedField({
   inputFieldLabels,
   extraFieldProps,
   transformUppercase,
+  setMaxLength,
 }) {
   const container = useRef();
 
@@ -90,6 +91,9 @@ function FormFieldSeparatedField({
       <SeparatedField ref={container} className="separated-field">
         {inputFieldLengths.map((length, index) => {
           const subFieldId = `${fieldId}_${index + 1}`;
+          const subFieldLengthClass = `input-width-${
+            length < 11 ? length : 25
+          }`;
           const inputElement = (
             <input
               type="text"
@@ -97,13 +101,13 @@ function FormFieldSeparatedField({
               name={fieldName}
               onPaste={handlePaste}
               defaultValue={values.length > index ? values[index] : ""}
-              maxLength={length}
+              maxLength={setMaxLength ? length : null}
               data-field-length={length}
               // TODO: autofocus is under review.
               // eslint-disable-next-line
               autoFocus={autofocus && index === 0}
               required={required}
-              className={classNames("form-control", `input-width-${length}`)}
+              className={classNames("form-control", subFieldLengthClass)}
               style={transformUppercase ? { textTransform: "uppercase" } : {}}
               {...extraFieldProps}
             />
@@ -114,7 +118,7 @@ function FormFieldSeparatedField({
             // eslint-disable-next-line
             <React.Fragment key={index}>
               {inputFieldLabels.length > index ? (
-                <div>
+                <div className={classNames(subFieldLengthClass)}>
                   <SeparatedFieldLabel
                     htmlFor={subFieldId}
                     className="sub-field-label"
@@ -168,6 +172,7 @@ FormFieldSeparatedField.propTypes = {
   transformUppercase: PropTypes.bool,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
+  setMaxLength: PropTypes.bool,
 };
 
 FormFieldSeparatedField.defaultProps = {
@@ -179,6 +184,7 @@ FormFieldSeparatedField.defaultProps = {
   transformUppercase: false,
   required: false,
   autofocus: false,
+  setMaxLength: true,
 };
 
 export default FormFieldSeparatedField;
