@@ -318,3 +318,23 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
+    def render(self):
+        props_dict = TelephoneNumberProps(
+            step_header={
+                'title': str(self.title),
+                'intro': str(self.intro),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='TelephoneNumberPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))

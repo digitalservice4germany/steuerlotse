@@ -86,6 +86,10 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 
+class TelephoneNumberProps(StepFormProps):
+    pass
+
+
 class SelectStMindProps(StepFormProps):
     pass
 
