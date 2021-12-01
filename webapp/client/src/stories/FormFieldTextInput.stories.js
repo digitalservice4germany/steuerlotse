@@ -19,8 +19,9 @@ export const Default = Template.bind({});
 export const WithValue = Template.bind({});
 export const WithErrors = Template.bind({});
 export const WithDetails = Template.bind({});
+export const WithMaxWidth = Template.bind({});
 export const WithMaxLength = Template.bind({});
-export const WithVisualMaxLength = Template.bind({});
+export const WithMaxLengthAndWidth = Template.bind({});
 
 Default.args = {
   fieldId: "text-input",
@@ -50,13 +51,18 @@ WithDetails.args = {
   },
 };
 
+WithMaxWidth.args = {
+  ...Default.args,
+  maxWidth: 4,
+};
+
 WithMaxLength.args = {
   ...Default.args,
   maxLength: 4,
-  setMaxLength: true,
 };
 
-WithVisualMaxLength.args = {
+WithMaxLengthAndWidth.args = {
   ...Default.args,
   maxLength: 4,
+  maxWidth: 4,
 };

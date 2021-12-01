@@ -12,8 +12,8 @@ function FormFieldTextInput({
   required,
   autofocus,
   label,
+  maxWidth,
   maxLength,
-  setMaxLength,
   details,
   errors,
 }) {
@@ -30,13 +30,12 @@ function FormFieldTextInput({
           id={fieldId}
           name={fieldName}
           defaultValue={value}
-          maxLength={setMaxLength ? maxLength : null}
-          data-field-length={maxLength}
+          maxLength={maxLength}
           // TODO: autofocus is under review.
           // eslint-disable-next-line
           autoFocus={autofocus || Boolean(errors.length)}
           required={required}
-          className={classNames("form-control", `input-width-${maxLength}`)}
+          className={classNames("form-control", `input-width-${maxWidth}`)}
         />
       )}
     />
@@ -51,8 +50,8 @@ FormFieldTextInput.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
   label: FieldLabel.propTypes.label,
+  maxWidth: PropTypes.number,
   maxLength: PropTypes.number,
-  setMaxLength: PropTypes.bool,
   details: FieldLabel.propTypes.details,
 };
 
@@ -60,8 +59,8 @@ FormFieldTextInput.defaultProps = {
   autofocus: FormFieldSeparatedField.defaultProps.autofocus,
   required: FormFieldSeparatedField.defaultProps.required,
   label: FieldLabel.defaultProps.label,
-  maxLength: 25,
-  setMaxLength: false,
+  maxWidth: 25,
+  maxLength: undefined,
   details: FieldLabel.defaultProps.details,
 };
 

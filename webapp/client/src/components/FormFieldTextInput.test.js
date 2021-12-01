@@ -6,7 +6,7 @@ import FormFieldTextInput from "./FormFieldTextInput";
 describe("FormFieldTextInput", () => {
   let props;
 
-  describe("Base Field", () => {
+  describe("When default props used", () => {
     beforeEach(() => {
       props = {
         fieldId: "text-input",
@@ -20,24 +20,51 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    describe("When pressing tab", () => {
-      beforeEach(() => {
-        userEvent.tab();
-      });
+    it("Should set focus on field on tab", () => {
+      userEvent.tab();
+      expect(screen.getByRole("textbox")).toHaveFocus();
+    });
 
-      it("Should set focus on field", () => {
-        expect(screen.getByRole("textbox")).toHaveFocus();
-      });
+    it("Should enter keyboard input into input after pressing tab", () => {
+      userEvent.tab();
+      userEvent.keyboard("Helloo");
+      expect(screen.getByLabelText("Label")).toHaveValue("Helloo");
+    });
 
-      describe("When pressing tab again", () => {
-        beforeEach(() => {
-          userEvent.tab();
-        });
+    it("Should unset focus on field when pressing tab two times", () => {
+      userEvent.tab();
+      userEvent.tab();
+      expect(screen.getByRole("textbox")).not.toHaveFocus();
+    });
+  });
 
-        it("Should unset focus on field", () => {
-          expect(screen.getByRole("textbox")).not.toHaveFocus();
-        });
-      });
+  describe("When maxWidth given", () => {
+    beforeEach(() => {
+      props = {
+        fieldId: "text-input",
+        fieldName: "text-input",
+        label: {
+          text: "Label",
+        },
+        errors: [],
+        value: "",
+        maxWidth: 5,
+      };
+      render(<FormFieldTextInput {...props} />);
+    });
+
+    it("Should not limit input of values", () => {
+      userEvent.type(
+        screen.getByLabelText("Label"),
+        "Supercalifragilisticexpialidocious"
+      );
+      expect(screen.getByLabelText("Label")).toHaveValue(
+        "Supercalifragilisticexpialidocious"
+      );
+    });
+
+    it("should set width class", () => {
+      expect(screen.getByLabelText("Label")).toHaveClass("input-width-5");
     });
   });
 
@@ -56,39 +83,22 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should not limit input of values", () => {
-      userEvent.type(
-        screen.getByLabelText("Label"),
-        "Supercalifragilisticexpialidocious"
-      );
-      expect(screen.getByLabelText("Label")).toHaveValue(
-        "Supercalifragilisticexpialidocious"
-      );
-    });
-  });
-
-  describe("When maxLength given and setMaxLength true", () => {
-    beforeEach(() => {
-      props = {
-        fieldId: "text-input",
-        fieldName: "text-input",
-        label: {
-          text: "Label",
-        },
-        errors: [],
-        value: "",
-        maxLength: 5,
-        setMaxLength: true,
-      };
-      render(<FormFieldTextInput {...props} />);
-    });
-
     it("Should limit input of values", () => {
       userEvent.type(
         screen.getByLabelText("Label"),
         "Supercalifragilisticexpialidocious"
       );
       expect(screen.getByLabelText("Label")).toHaveValue("Super");
+    });
+
+    it("should not set width class", () => {
+      expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
+    });
+
+    it("Should enter keyboard input into input after pressing tab", () => {
+      userEvent.tab();
+      userEvent.keyboard("Helloo");
+      expect(screen.getByLabelText("Label")).toHaveValue("Hello");
     });
   });
 });
