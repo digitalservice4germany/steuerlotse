@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-01 17:42+0100\n"
+"POT-Creation-Date: 2021-12-01 18:30+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -187,73 +187,77 @@ msgstr "Der Wert darf nur Ziffern beinhalten."
 msgid "validate.must-not-be-zero"
 msgstr "Dieses Feld darf nicht 0 sein."
 
-#: app/forms/validators.py:43
+#: app/forms/validators.py:40
+msgid "validate.length-max-reached"
+msgstr "Die Angabe ist %(diff)s Zeichen zu lang."
+
+#: app/forms/validators.py:53
 msgid "validate.integer-length-max"
 msgstr "Das Feld darf maximal %(max)s Ziffern lang sein."
 
-#: app/forms/validators.py:45
+#: app/forms/validators.py:55
 msgid "validate.integer-length-min"
 msgstr "Das Feld muss mindestens %(min)s Ziffern lang sein."
 
-#: app/forms/validators.py:47
+#: app/forms/validators.py:57
 msgid "validate.integer-length-between"
 msgstr "Das Feld muss zwischen %(min)s und %(max)s Ziffern lang sein."
 
-#: app/forms/validators.py:61
+#: app/forms/validators.py:71
 msgid "validate.invalid-iban"
 msgstr "Ungültige IBAN Nummer"
 
-#: app/forms/validators.py:64
+#: app/forms/validators.py:74
 msgid "validate.country-code-not-de"
 msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
 
-#: app/forms/validators.py:79 app/forms/validators.py:89
-#: app/forms/validators.py:92 app/forms/validators.py:95
-#: app/forms/validators.py:98
+#: app/forms/validators.py:89 app/forms/validators.py:99
+#: app/forms/validators.py:102 app/forms/validators.py:105
+#: app/forms/validators.py:108
 msgid "validate.invalid-idnr"
 msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
 
-#: app/forms/validators.py:82
+#: app/forms/validators.py:92
 msgid "validate.idnr-length"
 msgstr ""
 "Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
 "insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
 "entsprechen: 00 000 000 000"
 
-#: app/forms/validators.py:106
+#: app/forms/validators.py:116
 msgid "validate.unlock-code-length"
 msgstr ""
 "Ihr Freischaltcode ist nicht vollständig. Der Freischaltcode muss aus 3 x"
 " 4 Zeichen bestehen."
 
-#: app/forms/validators.py:109
+#: app/forms/validators.py:119
 msgid "validate.invalid-unlock-code"
 msgstr "Der Freischaltcode ist nicht valide."
 
-#: app/forms/validators.py:117 app/forms/validators.py:125
+#: app/forms/validators.py:127 app/forms/validators.py:135
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
 
-#: app/forms/validators.py:137
+#: app/forms/validators.py:147
 msgid "validate.invalid-tax-number-length.shorter-than-ten"
 msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
 
-#: app/forms/validators.py:139
+#: app/forms/validators.py:149
 msgid "validate.invalid-tax-number-length.shorter-than-eleven"
 msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
 
-#: app/forms/validators.py:141
+#: app/forms/validators.py:151
 msgid "validate.invalid-tax-number-length.too-long"
 msgstr "Die Angabe darf höchstens 11 Ziffern umfassen."
 
-#: app/forms/validators.py:150
+#: app/forms/validators.py:160
 msgid "validate.invalid-hessen-tax-number"
 msgstr ""
 "In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
 "Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
 "Stelle eine 0 ein."
 
-#: app/forms/validators.py:158
+#: app/forms/validators.py:168
 msgid "validate.invalid-tax-number"
 msgstr "Die Steuernummer ist nicht valide."
 
@@ -1570,11 +1574,11 @@ msgstr ""
 msgid "form.lotse.step_telephone_number.label"
 msgstr "Telefonnummer für Rückfragen"
 
-#: app/forms/steps/lotse/personal_data.py:310
+#: app/forms/steps/lotse/personal_data.py:311
 msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
 
-#: app/forms/steps/lotse/personal_data.py:335
+#: app/forms/steps/lotse/personal_data.py:336
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93

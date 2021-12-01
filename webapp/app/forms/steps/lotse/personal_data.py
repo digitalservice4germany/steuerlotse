@@ -17,7 +17,7 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.forms.steps.step import SectionLink, FormStep
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
-    ValidIdNr
+    ValidIdNr, MaximumLength
 from app.forms.validators import DecimalOnly, IntegerLength
 from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
@@ -307,6 +307,7 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
 
     class InputForm(SteuerlotseBaseForm):
         telephone_number = SteuerlotseStringField(
+            validators=[MaximumLength(25)],
             render_kw={'data_label': _l('form.lotse.field_telephone_number.data_label')})
 
     @classmethod
