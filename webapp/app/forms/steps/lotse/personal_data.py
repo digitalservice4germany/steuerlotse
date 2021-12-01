@@ -302,7 +302,7 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
     # TODO remove this once the next steps is converted to steuerlotse step
     next_step = StepIban
 
-    label = _l('form.lotse.step_person_b.label')
+    label = _l('form.lotse.step_telephone_number.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):
