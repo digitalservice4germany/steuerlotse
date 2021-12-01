@@ -36,7 +36,7 @@ WithValue.args = {
   ...Default.args,
   fields: {
     telephoneNumber: {
-      value: "25",
+      value: "555-2368-32168",
       errors: [],
     },
   },

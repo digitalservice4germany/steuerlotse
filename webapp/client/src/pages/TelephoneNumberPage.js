@@ -27,7 +27,7 @@ export default function TelephoneNumberPage({
           value={fields.telephoneNumber.value}
           label={{
             text: t("lotse.telephoneNumber.fieldTelephoneNumber.label"),
-            optional: true,
+            showOptionalTag: true,
           }}
           errors={fields.telephoneNumber.errors}
         />
