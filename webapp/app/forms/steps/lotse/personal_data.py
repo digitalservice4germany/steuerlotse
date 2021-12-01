@@ -19,7 +19,7 @@ from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
     ValidIdNr
 from app.forms.validators import DecimalOnly, IntegerLength
-from app.model.components import TaxNumberStepFormProps
+from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
 
@@ -191,7 +191,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     # TODO remove this once the adjacent steps are converted to steuerlotse steps
     prev_step = StepPersonA
-    next_step = StepIban
 
     label = _l('form.lotse.step_person_b.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -289,6 +288,32 @@ class StepPersonB(LotseFormSteuerlotseStep):
                 validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
             else:
                 validators.Optional()(self, field)
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
+
+class StepTelephoneNumber(LotseFormSteuerlotseStep):
+    name = 'telephone_number'
+    title = _l('form.lotse.telephone-number.title')
+    intro = _l('form.lotse.telephone-number.intro')
+    header_title = _l('form.lotse.mandatory_data.header-title')
+    # TODO remove this once the next steps is converted to steuerlotse step
+    next_step = StepIban
+
+    label = _l('form.lotse.step_person_b.label')
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+
+    class InputForm(SteuerlotseBaseForm):
+        def input_required_if_not_same_address(form, field):
+            if form.person_b_same_address.data == 'yes':
+                validators.Optional()(form, field)
+            else:
+                validators.InputRequired()(form, field)
+
+        telephone_number = SteuerlotseStringField(
+            render_kw={'data_label': _l('form.lotse.field_telephone_number.data_label')})
 
     @classmethod
     def get_label(cls, data):
