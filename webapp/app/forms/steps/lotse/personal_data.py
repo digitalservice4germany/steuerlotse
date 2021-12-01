@@ -306,12 +306,6 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):
-        def input_required_if_not_same_address(form, field):
-            if form.person_b_same_address.data == 'yes':
-                validators.Optional()(form, field)
-            else:
-                validators.InputRequired()(form, field)
-
         telephone_number = SteuerlotseStringField(
             render_kw={'data_label': _l('form.lotse.field_telephone_number.data_label')})
 
