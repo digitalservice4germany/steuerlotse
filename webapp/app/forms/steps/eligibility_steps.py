@@ -694,8 +694,8 @@ class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailur
 class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "foreign_country"
     next_step_data_models = [
-        (ForeignCountryMaybeEligibility, 'maybe'),
-        (ForeignCountrySuccessEligibility, 'success')
+        (ForeignCountrySuccessEligibility, 'success'),
+        (ForeignCountryMaybeEligibility, 'maybe')
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
