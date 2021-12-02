@@ -30,8 +30,7 @@ _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmin
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
                  'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
-                 'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
-                 'stmind_bestattung_summe', 'stmind_bestattung_anspruch',
+                 'stmind_beh_aufw_anspruch', 'stmind_bestattung_summe', 'stmind_bestattung_anspruch',
                  'stmind_aussergbela_sonst_summe', 'stmind_aussergbela_sonst_anspruch']
 _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since',
               'familienstand_widowed_lived_separated_since', 'person_a_dob', 'person_b_dob', 'dob']

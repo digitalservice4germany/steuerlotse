@@ -43,8 +43,6 @@ def valid_stmind_data():
             'stmind_pflegekosten_anspruch': Decimal('2022.22'),
             'stmind_beh_aufw_summe': Decimal('3033.31'),
             'stmind_beh_aufw_anspruch': Decimal('3033.32'),
-            'stmind_beh_kfz_summe': Decimal('4044.41'),
-            'stmind_beh_kfz_anspruch': Decimal('4044.42'),
             'stmind_bestattung_summe': Decimal('5055.51'),
             'stmind_bestattung_anspruch': Decimal('5055.52'),
             'stmind_aussergbela_sonst_summe': Decimal('6066.61'),
@@ -346,9 +344,8 @@ class TestFormDataDependencies:
     def test_if_ausserg_bela_not_shown_then_delete_all_fields_dependent_on_ausserg_bela(self, valid_stmind_data):
         dependent_fields = ['stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
                             'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
-                            'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
-                            'stmind_bestattung_summe', 'stmind_bestattung_anspruch', 'stmind_aussergbela_sonst_summe',
-                            'stmind_aussergbela_sonst_anspruch']
+                            'stmind_beh_aufw_anspruch', 'stmind_bestattung_summe', 'stmind_bestattung_anspruch',
+                            'stmind_aussergbela_sonst_summe', 'stmind_aussergbela_sonst_anspruch']
         input_data = valid_stmind_data
         input_data.pop('stmind_select_ausserg_bela')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
