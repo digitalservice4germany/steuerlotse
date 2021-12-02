@@ -41,14 +41,12 @@ _PFLEGE_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161404', 'E0161405'
 _AND_AUFW_PFLEGE = ElsterXmlTreeNode(name='Pflege', sub_elements=[_PFLEGE_SUM])
 _BEH_AUFW_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161504', 'E0161505'])
 _AND_AUFW_BEH_AUFW = ElsterXmlTreeNode(name='Beh_Aufw', sub_elements=[_BEH_AUFW_SUM])
-_BEH_KFZ_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161604', 'E0161605'])
-_AND_AUFW_BEH_KFZ = ElsterXmlTreeNode(name='Beh_Kfz', sub_elements=[_BEH_KFZ_SUM])
 _BESTATT_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161704', 'E0161705'])
 _AND_AUFW_BESTATT = ElsterXmlTreeNode(name='Bestatt', sub_elements=[_BESTATT_SUM])
 _SONST_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161804', 'E0161805'])
 _AND_AUFW_SONST = ElsterXmlTreeNode(name='Sonst', sub_elements=[_SONST_SUM])
 _AGB_AND_AUFW = ElsterXmlTreeNode(name='And_Aufw', sub_elements=[_AND_AUFW_KRANKH, _AND_AUFW_PFLEGE, _AND_AUFW_BEH_AUFW,
-                                                                 _AND_AUFW_BEH_KFZ, _AND_AUFW_BESTATT, _AND_AUFW_SONST])
+                                                                 _AND_AUFW_BESTATT, _AND_AUFW_SONST])
 # Haushaltsnahe Ausgaben
 _HAUSHALT_EINZ = ElsterXmlTreeNode(name='Einz', sub_elements=['E0107206', 'E0107207'])
 _HAUSHALT_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0107208'])

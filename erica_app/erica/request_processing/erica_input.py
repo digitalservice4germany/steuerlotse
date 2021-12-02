@@ -78,8 +78,6 @@ class FormDataEst(BaseModel):
     stmind_pflegekosten_anspruch: Optional[Decimal]
     stmind_beh_aufw_summe: Optional[Decimal]
     stmind_beh_aufw_anspruch: Optional[Decimal]
-    stmind_beh_kfz_summe: Optional[Decimal]
-    stmind_beh_kfz_anspruch: Optional[Decimal]
     stmind_bestattung_summe: Optional[Decimal]
     stmind_bestattung_anspruch: Optional[Decimal]
     stmind_aussergbela_sonst_summe: Optional[Decimal]
