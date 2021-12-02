@@ -925,9 +925,9 @@ msgstr ""
 msgid "form.eligibility.result-note.user_b_elster_account-registration-success"
 msgstr ""
 "Um den Freischaltcode per Post zu erhalten, muss sich die Person "
-"<strong>ohne</strong> Konto bei Mein ELSTER registrieren. Wenn Sie beide "
+"<b>ohne</b> Konto bei Mein ELSTER registrieren. Wenn Sie beide "
 "kein Konto bei Mein ELSTER haben, reicht es ebenfalls aus wenn sich nur "
-"<strong>eine</strong> Person von Ihnen registriert. Wer sich von Ihnen "
+"<b>eine</b> Person von Ihnen registriert. Wer sich von Ihnen "
 "registriert, können Sie entscheiden."
 
 #: app/forms/steps/eligibility_steps.py:750
