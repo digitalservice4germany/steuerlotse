@@ -434,10 +434,10 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
         That's because the ForeignCountry step is the last step of the flow and needs to decide which result page is
         displayed: 'success' or 'maybe'.
     """
+    has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
     user_a_has_elster_account_eligibility: str
     user_b_has_elster_account_eligibility: Optional[str]
-    has_no_other_income: Optional[OtherIncomeEligibilityData]
     
     @validator('user_b_has_elster_account_eligibility', always=True)
     def users_must_not_all_have_elster_accounts(cls,v, values):
@@ -472,10 +472,10 @@ class ForeignCountryMaybeEligibility(RecursiveDataModel):
     That's because the ForeignCountry step is the last step of the flow and needs to decide which result page is
     displayed: 'success' or 'maybe'.
     """
+    has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
     user_a_has_elster_account_eligibility: str
     user_b_has_elster_account_eligibility: Optional[str]
-    has_no_other_income: Optional[OtherIncomeEligibilityData]
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):

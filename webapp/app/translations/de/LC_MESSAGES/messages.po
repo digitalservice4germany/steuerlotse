@@ -1,4 +1,8 @@
-
+# German translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -972,7 +976,7 @@ msgstr ""
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
 #: app/forms/steps/eligibility_steps.py:778
-msgid "form.eligibility.result-note.user_b_elster_account-registration-maybe"
+msgid "form.eligibility.result-note.both_elster_account-registration-maybe"
 msgstr ""
 "Um die Chancen auf den Erhalt eines Freischaltcodes zu erhöhen, empfehlen"
 " wir, dass sich beide Personen beim Steuerlotsen registrieren. Um Ihre "

@@ -3281,15 +3281,14 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
         self.app = app
 
     def test_if_user_b_has_no_elster_account_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.user_b_elster_account-registration-maybe'),
-                                _('form.eligibility.result-note.deadline')]
+        expected_information = ['form.eligibility.result-note.deadline']
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
                         'user_b_has_elster_account_eligibility': 'no',
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no', }
-        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilityMaybeDisplaySteuerlotseStep(
                 endpoint='eligibility',
                 stored_data=session_data,
@@ -3301,8 +3300,8 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.capital_investment'),
-                                _('form.eligibility.result-note.deadline')]
+        expected_information = ['form.eligibility.result-note.capital_investment',
+                                'form.eligibility.result-note.deadline']
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -3311,7 +3310,7 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
-        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilityMaybeDisplaySteuerlotseStep(
                 endpoint='eligibility',
                 stored_data=session_data,
@@ -3323,8 +3322,8 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_has_no_minimal_investment_income_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.capital_investment'),
-                                _('form.eligibility.result-note.deadline')]
+        expected_information = ['form.eligibility.result-note.capital_investment',
+                                'form.eligibility.result-note.deadline']
         
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
@@ -3333,7 +3332,7 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
                         'investment_income_eligibility': 'yes',
                         'minimal_investment_income_eligibility': 'yes',
                         'taxed_investment_income_eligibility': 'yes', }
-        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilityMaybeDisplaySteuerlotseStep(
                 endpoint='eligibility',
                 stored_data=session_data,
@@ -3344,15 +3343,15 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
-    def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.user_b_elster_account-registration-maybe'),
-                                _('form.eligibility.result-note.capital_investment'),
-                                _('form.eligibility.result-note.deadline')]
+    def test_if_both_users_have_elster_account_then_set_correct_info(self):
+        expected_information = ['form.eligibility.result-note.both_elster_account-registration-maybe',
+                                'form.eligibility.result-note.capital_investment',
+                                'form.eligibility.result-note.deadline']
         
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
-                        'user_b_has_elster_account_eligibility': 'no',
+                        'user_b_has_elster_account_eligibility': 'yes',
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no',
                         'pension_eligibility': 'yes',
@@ -3360,7 +3359,7 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
                         'minimal_investment_income_eligibility': 'no',
                         'taxed_investment_income_eligibility': 'yes',
                         'cheaper_check_eligibility': 'no', }
-        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilityMaybeDisplaySteuerlotseStep(
                 endpoint='eligibility',
                 stored_data=session_data,
@@ -3371,21 +3370,21 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
-    def test_if_user_b_has_no_elster_account_and_user_has_minimal_investment_income_check_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.user_b_elster_account-registration-maybe'),
-                                _('form.eligibility.result-note.capital_investment'),
-                                _('form.eligibility.result-note.deadline')]
+    def test_if_both_users_have_elster_account_and_user_has_minimal_investment_income_check_then_set_correct_info(self):
+        expected_information = ['form.eligibility.result-note.both_elster_account-registration-maybe',
+                                'form.eligibility.result-note.capital_investment',
+                                'form.eligibility.result-note.deadline']
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
-                        'user_b_has_elster_account_eligibility': 'no',
+                        'user_b_has_elster_account_eligibility': 'yes',
                         'joint_taxes_eligibility': 'yes',
                         'alimony_eligibility': 'no',
                         'pension_eligibility': 'yes',
                         'investment_income_eligibility': 'yes',
                         'minimal_investment_income_eligibility': 'yes',
                         'taxed_investment_income_eligibility': 'yes', }
-        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilityMaybeDisplaySteuerlotseStep(
                 endpoint='eligibility',
                 stored_data=session_data,
@@ -3398,8 +3397,8 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
         
 
     def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
-        expected_information = [_('form.eligibility.result-note.deadline')]
-        with patch('app.forms.steps.eligibility_steps._', MagicMock(side_effect=lambda text_id: text_id)):
+        expected_information = ['form.eligibility.result-note.deadline']
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
             step = EligibilityMaybeDisplaySteuerlotseStep(
                     endpoint='eligibility',
                     render_info=EligibilityMaybeDisplaySteuerlotseStep.prepare_render_info(
