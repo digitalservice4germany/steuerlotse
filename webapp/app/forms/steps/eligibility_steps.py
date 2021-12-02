@@ -34,7 +34,7 @@ def data_fits_data_model(data_model, stored_data):
     """
     try:
         data_model.parse_obj(stored_data)
-    except ValidationError as e:
+    except ValidationError:
         return False
     return True
 
