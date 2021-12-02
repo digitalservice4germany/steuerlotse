@@ -10,3 +10,6 @@
 # Feedback
 - Which parts of the code would you like feedback on?
 - Questions that are open are also good (e. g. "Do you see any tests missing for class x?")
+
+# How to review this Pull Request
+[Link to Confluence](https://digitalservice4germany.atlassian.net/wiki/spaces/STL/pages/117637157/Development+Process#Approve-or-comment) (internal)
