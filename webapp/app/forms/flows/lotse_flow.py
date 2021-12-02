@@ -23,8 +23,8 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, \
     StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
@@ -246,11 +246,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                 render_info.next_url = self.url_for_step(StepPersonB.name)
             else:
                 render_info.next_url = self.url_for_step(StepIban.name)
-        elif isinstance(step, StepPersonB):
-            if request.method == 'POST' and render_info.form.validate():
-                if stored_data.get('person_b_same_address') == 'yes':
-                    stored_data = self._delete_dependent_data(['person_b_street', 'person_b_address', 'person_b_plz',
-                                                               'person_b_town'], stored_data)
         elif isinstance(step, StepIban):
             if not show_person_b(stored_data):
                 render_info.prev_url = self.url_for_step(StepPersonA.name)

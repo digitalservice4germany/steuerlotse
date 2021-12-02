@@ -50,6 +50,7 @@ def valid_stmind_data():
             'stmind_aussergbela_sonst_summe': Decimal('6066.61'),
             'stmind_aussergbela_sonst_anspruch': Decimal('6066.62')}
 
+
 @pytest.fixture
 def tax_number_page_data():
     return {
@@ -59,6 +60,19 @@ def tax_number_page_data():
         'bufa_nr': '9201',
         'request_new_tax_number': True,
     }
+
+
+@pytest.fixture
+def valid_person_b_data():
+    return {'familienstand': 'married', 'familienstand_date': datetime.date(2000, 1, 31),
+            'familienstand_married_lived_separated': 'no', 'familienstand_confirm_zusammenveranlagung': True,
+            'person_b_same_address': 'no', 'person_b_idnr': '04452397687',
+            'person_b_dob': datetime.date(1980, 3, 1),  'person_b_last_name': "Weasley",
+            'person_b_first_name': 'Ronald Arthur', 'person_b_religion': 'none',
+            'person_b_street': 'The Burrow', 'person_b_street_number': 7,
+            'person_b_street_number_ext': 'c', 'person_b_address_ext': 'Sixth floor',
+            'person_b_plz': '12345', 'person_b_town': 'Devon', 'person_b_beh_grad': 25,
+            'person_b_blind': True, 'person_b_gehbeh': False}
 
 
 class TestShowPersonB:
@@ -275,6 +289,41 @@ class TestMandatoryFormData(unittest.TestCase):
 
 
 class TestFormDataDependencies:
+    def test_if_no_tax_number_exists_then_delete_tax_number(self, tax_number_page_data):
+        input_data = tax_number_page_data
+        input_data['steuernummer_exists'] = "no"
+        expected_data = copy.deepcopy(input_data)
+        expected_data.pop('steuernummer')
+
+        returned_data = FormDataDependencies.parse_obj(tax_number_page_data).dict(exclude_none=True)
+        assert returned_data == expected_data
+
+    def test_if_tax_number_exists_then_delete_bufa_nr_and_request_new_tax_number(self, tax_number_page_data):
+        input_data = tax_number_page_data
+        input_data['steuernummer_exists'] = "yes"
+        expected_data = copy.deepcopy(input_data)
+        expected_data.pop('bufa_nr')
+        expected_data.pop('request_new_tax_number')
+
+        returned_data = FormDataDependencies.parse_obj(tax_number_page_data).dict(exclude_none=True)
+        assert returned_data == expected_data
+
+    def test_if_person_b_not_same_address_then_keep_all_fields(self, valid_person_b_data):
+        expected_data = copy.deepcopy(valid_person_b_data)
+        returned_data = FormDataDependencies.parse_obj(valid_person_b_data).dict(exclude_none=True)
+        assert returned_data == expected_data
+
+    def test_if_person_b_same_address_then_delete_all_fields_dependent_on_same_address(self, valid_person_b_data):
+        dependent_fields = ['person_b_street', 'person_b_street_number', 'person_b_street_number_ext',
+                            'person_b_address_ext', 'person_b_plz', 'person_b_town']
+        input_data = valid_person_b_data
+        input_data['person_b_same_address'] = 'yes'
+        expected_data = copy.deepcopy(input_data)
+        returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
+        for dependent_field in dependent_fields:
+            expected_data.pop(dependent_field)
+        assert returned_data == expected_data
+
     def test_if_valid_stmind_data_then_keep_all_stmind_fields(self, valid_stmind_data):
         returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
         assert returned_data == valid_stmind_data
@@ -364,24 +413,3 @@ class TestFormDataDependencies:
         with patch('app.model.form_data.show_person_b', return_value=False):
             returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
             assert returned_data == valid_stmind_data
-
-    def test_if_no_tax_number_exists_then_delete_tax_number(self, tax_number_page_data):
-        input_data = tax_number_page_data
-        input_data['steuernummer_exists'] = "no"
-        expected_data = copy.deepcopy(input_data)
-        expected_data.pop('steuernummer')
-
-        returned_data = FormDataDependencies.parse_obj(tax_number_page_data).dict(exclude_none=True)
-        assert returned_data == expected_data
-
-    def test_if_tax_number_exists_then_delete_bufa_nr_and_request_new_tax_number(self, tax_number_page_data):
-        input_data = tax_number_page_data
-        input_data['steuernummer_exists'] = "yes"
-        expected_data = copy.deepcopy(input_data)
-        expected_data.pop('bufa_nr')
-        expected_data.pop('request_new_tax_number')
-
-        returned_data = FormDataDependencies.parse_obj(tax_number_page_data).dict(exclude_none=True)
-        assert returned_data == expected_data
-
-
