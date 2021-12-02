@@ -695,7 +695,7 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
     name = "foreign_country"
     next_step_data_models = [
         (ForeignCountrySuccessEligibility, 'success'),
-        (ForeignCountryMaybeEligibility, 'maybe'),
+        (ForeignCountryMaybeEligibility, 'maybe')
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
@@ -740,8 +740,18 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
     def _main_handle(self):
         super()._main_handle()
+        
+        dependent_notes = []
+            
+        if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
+            dependent_notes.append(_l('form.eligibility.result-note.user_b_elster_account-registration-success'))
+        if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
+                self.stored_data):
+            dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))
+        
+        dependent_notes.append((_l('form.eligibility.result-note.deadline')))
                 
-        self.render_info.additional_info['dependent_notes'] = get_dependent_notes(self)
+        self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.next_url = None
 
 
@@ -761,23 +771,20 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
         
     def _main_handle(self):  
         super()._main_handle()
-              
-        self.render_info.additional_info['dependent_notes'] = get_dependent_notes(self)
+        
+        dependent_notes = []
+    
+        if data_fits_data_model(UserBElsterAccountEligibilityData, self.stored_data):
+            dependent_notes.append(_l('form.eligibility.result-note.both_elster_account-registration-maybe'))
+        if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
+                self.stored_data):
+            dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))
+            
+        dependent_notes.append((_l('form.eligibility.result-note.deadline')))
+        
+
+        self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.detail = {'render_kw': {
                 'data-detail': {'title': _l('form.eligibility.result-note.when_unlock_code.title'),
                                 'text': _l('form.eligibility.result-note.when_unlock_code.description')}}
                 }  
-
-
-def get_dependent_notes(self):                 
-    # Add notes depending on certain previous answers
-    dependent_notes = [(_('form.eligibility.result-note.deadline'))]
-    
-    if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
-        dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account'))
-        dependent_notes.append(_('form.eligibility.result-note.user_b_elster_account-registration'))
-    if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
-            self.stored_data):
-        dependent_notes.append(_('form.eligibility.result-note.capital_investment'))
-        
-    return dependent_notes
