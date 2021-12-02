@@ -1,13 +1,9 @@
-# German translations for PROJECT.
-# Copyright (C) 2020 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
-#
+
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-29 10:58+0100\n"
+"POT-Creation-Date: 2021-12-01 16:25+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,109 +14,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:65
+#: app/routes.py:66
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:66
+#: app/routes.py:67
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:67
+#: app/routes.py:68
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:68
+#: app/routes.py:69
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:70
+#: app/routes.py:71
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:72
+#: app/routes.py:73
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:76
+#: app/routes.py:77
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:154
+#: app/routes.py:155
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:155
+#: app/routes.py:156
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:182
+#: app/routes.py:183
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:183
+#: app/routes.py:184
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:196 app/routes.py:304
+#: app/routes.py:197 app/routes.py:305
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:216 app/templates/basis/base.html:37
+#: app/routes.py:217 app/templates/basis/base.html:37
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:223
+#: app/routes.py:224
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:230
+#: app/routes.py:231
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:237
+#: app/routes.py:238
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:244
+#: app/routes.py:245
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:251
+#: app/routes.py:252
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:258
+#: app/routes.py:259
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:270
+#: app/routes.py:271
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:275
+#: app/routes.py:276
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:296
+#: app/routes.py:297
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:300 app/routes.py:308
+#: app/routes.py:301 app/routes.py:309
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:312
+#: app/routes.py:313
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:318
+#: app/routes.py:319
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -159,23 +155,23 @@ msgstr "Jahr"
 msgid "fields.date_field.example_input.text"
 msgstr "z.B. 29.2.1951"
 
-#: app/forms/fields.py:387
+#: app/forms/fields.py:424
 msgid "fields.euro_field.example_input.text"
 msgstr "z.B. 343,20"
 
-#: app/forms/fields.py:419
+#: app/forms/fields.py:456
 msgid "confirmation_field_must_be_set"
 msgstr "Sie müssen dieses Feld auswählen, um weiter zu machen."
 
-#: app/forms/fields.py:438
+#: app/forms/fields.py:475
 msgid "jquery_entries.add"
 msgstr "Weiteren Eintrag hinzufügen"
 
-#: app/forms/fields.py:503
+#: app/forms/fields.py:541
 msgid "switch.yes"
 msgstr "Ja"
 
-#: app/forms/fields.py:503
+#: app/forms/fields.py:541
 msgid "switch.no"
 msgstr "Nein"
 
@@ -319,7 +315,7 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:98
 #: app/forms/steps/eligibility_steps.py:158
 #: app/forms/steps/eligibility_steps.py:736
-#: app/forms/steps/eligibility_steps.py:768
+#: app/forms/steps/eligibility_steps.py:767
 msgid "form.eligibility.header-title"
 msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 
@@ -921,31 +917,17 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:744
-msgid "form.eligibility.result-note.deadline"
-msgstr ""
-"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
-" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
-"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
-"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
-"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
-
 #: app/forms/steps/eligibility_steps.py:747
-msgid "form.eligibility.result-note.user_b_elster_account"
+msgid "form.eligibility.result-note.user_b_elster_account-registration-success"
 msgstr ""
-"Wenn Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss "
-"sich trotzdem nur eine Person registrieren."
+"Um den Freischaltcode per Post zu erhalten, muss sich die Person "
+"<strong>ohne</strong> Konto bei Mein ELSTER registrieren. Wenn Sie beide "
+"kein Konto bei Mein ELSTER haben, reicht es ebenfalls aus wenn sich nur "
+"<strong>eine</strong> Person von Ihnen registriert. Wer sich von Ihnen "
+"registriert, können Sie entscheiden."
 
-#: app/forms/steps/eligibility_steps.py:748
-msgid "form.eligibility.result-note.user_b_elster_account-registration"
-msgstr ""
-"Bitte registrieren Sie sich mit den Angaben der Person, die noch kein "
-"Konto bei Mein ELSTER hat. Für die Überprüfung Ihrer Identität braucht "
-"unser Service einen Freischaltcode. Dieser Freischaltcode wird von ELSTER"
-" erstellt und per Post versendet. Aus technischen Gründen geschieht das "
-"allerdings nur, wenn Sie noch kein Konto bei Mein ELSTER haben."
-
-#: app/forms/steps/eligibility_steps.py:752
+#: app/forms/steps/eligibility_steps.py:750
+#: app/forms/steps/eligibility_steps.py:781
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -956,13 +938,23 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:761
+#: app/forms/steps/eligibility_steps.py:752
+#: app/forms/steps/eligibility_steps.py:783
+msgid "form.eligibility.result-note.deadline"
+msgstr ""
+"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
+" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
+"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
+"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
+"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
+
+#: app/forms/steps/eligibility_steps.py:760
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
 "Steuerlotsen machen."
 
-#: app/forms/steps/eligibility_steps.py:762
+#: app/forms/steps/eligibility_steps.py:761
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
 "Sie können Ihre Steuererklärung mit dem Steuerlotsen machen, wenn Ihnen "
@@ -979,11 +971,19 @@ msgstr ""
 "Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:779
+#: app/forms/steps/eligibility_steps.py:778
+msgid "form.eligibility.result-note.user_b_elster_account-registration-maybe"
+msgstr ""
+"Um die Chancen auf den Erhalt eines Freischaltcodes zu erhöhen, empfehlen"
+" wir, dass sich beide Personen beim Steuerlotsen registrieren. Um Ihre "
+"Steuererklärung gemeinsam als Paar zu machen, reicht allerdings ein "
+"Freischaltcode aus."
+
+#: app/forms/steps/eligibility_steps.py:788
 msgid "form.eligibility.result-note.when_unlock_code.title"
 msgstr "Wann bekomme ich einen Freischaltcode?"
 
-#: app/forms/steps/eligibility_steps.py:780
+#: app/forms/steps/eligibility_steps.py:789
 msgid "form.eligibility.result-note.when_unlock_code.description"
 msgstr ""
 "Sie bekommen einen Freischaltcode, wenn Sie sich bei Mein Elster mit "
@@ -1115,7 +1115,7 @@ msgstr "Steueridentifikationsnummer"
 msgid "unlock-code-revocation.dob"
 msgstr "Geburtsdatum"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:21
+#: app/forms/steps/unlock_code_revocation_steps.py:23
 msgid "validate.day-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
@@ -1211,7 +1211,7 @@ msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:40
-#: app/forms/steps/lotse/personal_data.py:137
+#: app/forms/steps/lotse/personal_data.py:138
 msgid "form.lotse.steuernummer_exists"
 msgid_plural "form.lotse.steuernummer_exists"
 msgstr[0] "Haben Sie bereits eine Steuernummer?"
@@ -1233,11 +1233,11 @@ msgstr ""
 "beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-"
 "Identifikationsnummer zwei verschiedene Nummern sind."
 
-#: app/forms/steps/lotse/personal_data.py:42
+#: app/forms/steps/lotse/personal_data.py:44
 msgid "form.lotse.steuernummer.selection_input_required"
 msgstr "Beantworten Sie die Frage, um fortfahren zu können."
 
-#: app/forms/steps/lotse/personal_data.py:44
+#: app/forms/steps/lotse/personal_data.py:46
 msgid "form.lotse.field_bundesland"
 msgstr "Wählen Sie Ihr Bundesland"
 
@@ -1309,32 +1309,32 @@ msgstr "Thüringen"
 msgid "form.lotse.field_bundesland.data_label"
 msgstr "Auswahl Bundesland"
 
-#: app/forms/steps/lotse/personal_data.py:65
+#: app/forms/steps/lotse/personal_data.py:66
 msgid "form.lotse.steuernummer.input_required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
-#: app/forms/steps/lotse/personal_data.py:68
+#: app/forms/steps/lotse/personal_data.py:69
 msgid "form.lotse.bufa_nr"
 msgstr "Wählen Sie Ihr Finanzamt "
 
-#: app/forms/steps/lotse/personal_data.py:72
+#: app/forms/steps/lotse/personal_data.py:73
 msgid "form.lotse.bufa_nr.data_label"
 msgstr "Auswahl Finanzamt"
 
-#: app/forms/steps/lotse/personal_data.py:74
+#: app/forms/steps/lotse/personal_data.py:75
 msgid "form.lotse.steuernummer"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:76
+#: app/forms/steps/lotse/personal_data.py:77
 msgid "form.lotse.steuernummer.data_label"
 msgstr "Steuernummer"
 
-#: app/forms/steps/lotse/personal_data.py:77
+#: app/forms/steps/lotse/personal_data.py:78
 msgid "form.lotse.steuernummer.example_input"
 msgstr "Muss 10 oder 11 Ziffern haben"
 
-#: app/forms/steps/lotse/personal_data.py:80
-#: app/forms/steps/lotse/personal_data.py:140
+#: app/forms/steps/lotse/personal_data.py:81
+#: app/forms/steps/lotse/personal_data.py:141
 msgid "form.lotse.steuernummer.request_new_tax_number"
 msgid_plural "form.lotse.steuernummer.request_new_tax_number"
 msgstr[0] ""
@@ -1344,11 +1344,11 @@ msgstr[1] ""
 "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem "
 "Finanzamt haben und eine neue Steuernummer beantragen möchten."
 
-#: app/forms/steps/lotse/personal_data.py:81
+#: app/forms/steps/lotse/personal_data.py:82
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:126
+#: app/forms/steps/lotse/personal_data.py:127
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"
@@ -2053,15 +2053,15 @@ msgstr ""
 "übermittelt. Bewahren Sie Ihre Nachweise für Nachfragen gut auf."
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:67
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:84
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:86
 msgid "form.lotse.filing.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:73
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:75
 msgid "form.lotse.filing.failure.header-title"
 msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:80
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:82
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
@@ -2755,7 +2755,7 @@ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/model/form_data.py:347
+#: app/model/form_data.py:359
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2765,11 +2765,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:352
+#: app/model/form_data.py:364
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:358
+#: app/model/form_data.py:370
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
@@ -4911,24 +4911,24 @@ msgstr "Zu Mein ELSTER"
 msgid "maybe_icon"
 msgstr "Fragezeichen Icon auf gelbem Kreis"
 
-#: app/templates/eligibility/display_maybe.html:27
+#: app/templates/eligibility/display_maybe.html:29
 #: app/templates/eligibility/display_success.html:25
 msgid "form.eligibility.success-next-step"
 msgstr "Wie geht es weiter?"
 
-#: app/templates/eligibility/display_maybe.html:28
+#: app/templates/eligibility/display_maybe.html:30
 #: app/templates/eligibility/display_success.html:26
 msgid "form.eligibility.success-next-step-text"
 msgstr ""
 "Als Nächstes können Sie sich registrieren. Dazu brauchen Sie Ihre Steuer-"
 "Identifikationsnummer und Ihr Geburtsdatum."
 
-#: app/templates/eligibility/display_maybe.html:34
+#: app/templates/eligibility/display_maybe.html:36
 #: app/templates/eligibility/display_success.html:32
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_maybe.html:44
+#: app/templates/eligibility/display_maybe.html:46
 #: app/templates/eligibility/display_success.html:42
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
