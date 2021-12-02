@@ -3298,6 +3298,26 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
+        
+    def test_if_both_have_elster_account_then_set_correct_info(self):
+        expected_information = ['form.eligibility.result-note.both_elster_account-registration-maybe',
+                                'form.eligibility.result-note.deadline']
+        session_data = {'marital_status_eligibility': 'married',
+                        'separated_since_last_year_eligibility': 'no',
+                        'user_a_has_elster_account_eligibility': 'yes',
+                        'user_b_has_elster_account_eligibility': 'yes',
+                        'joint_taxes_eligibility': 'yes',
+                        'alimony_eligibility': 'no', }
+        with patch('app.forms.steps.eligibility_steps._l', MagicMock(side_effect=lambda text_id: text_id)):
+            step = EligibilityMaybeDisplaySteuerlotseStep(
+                endpoint='eligibility',
+                stored_data=session_data,
+                render_info=EligibilityMaybeDisplaySteuerlotseStep.prepare_render_info(
+                    {})
+            )
+            step.handle()
+
+        self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_wants_no_cheaper_check_then_set_correct_info(self):
         expected_information = ['form.eligibility.result-note.capital_investment',
@@ -3343,7 +3363,7 @@ class TestEligibilityMaybeDisplaySteuerlotseStep(unittest.TestCase):
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
-    def test_if_both_users_have_elster_account_then_set_correct_info(self):
+    def test_if_both_users_have_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
         expected_information = ['form.eligibility.result-note.both_elster_account-registration-maybe',
                                 'form.eligibility.result-note.capital_investment',
                                 'form.eligibility.result-note.deadline']
