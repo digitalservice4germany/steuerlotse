@@ -25,19 +25,19 @@ describe("FormFieldYesNo", () => {
       userEvent.click(screen.getByText("Ja"));
     });
 
-    it("Activate Ja field", () => {
+    it("Should activate Ja field", () => {
       expect(screen.getByText("Ja")).toHaveClass("active");
     });
 
-    it("Check Ja Field", () => {
+    it("Should check Ja Field", () => {
       expect(screen.getByLabelText("Ja")).toBeChecked();
     });
 
-    it("Do not activate Nein field", () => {
+    it("Should not activate Nein field", () => {
       expect(screen.getByText("Nein")).not.toHaveClass("active");
     });
 
-    it("Call the change handler with yes", () => {
+    it("Should call the change handler with yes", () => {
       expect(onChangeHandler).toHaveBeenCalled();
 
       const changeEvent = onChangeHandler.mock.calls[0][0];
@@ -50,19 +50,19 @@ describe("FormFieldYesNo", () => {
       userEvent.click(screen.getByText("Nein"));
     });
 
-    it("Activate Nein field", () => {
+    it("Should activate Nein field", () => {
       expect(screen.getByText("Nein")).toHaveClass("active");
     });
 
-    it("Check Nein Field", () => {
+    it("Should check Nein Field", () => {
       expect(screen.getByLabelText("Nein")).toBeChecked();
     });
 
-    it("Do not activate Ja field", () => {
+    it("Should not activate Ja field", () => {
       expect(screen.getByText("Ja")).not.toHaveClass("active");
     });
 
-    it("Call the change handler with no", () => {
+    it("Should call the change handler with no", () => {
       expect(onChangeHandler).toHaveBeenCalled();
 
       const changeEvent = onChangeHandler.mock.calls[0][0];
@@ -70,49 +70,46 @@ describe("FormFieldYesNo", () => {
     });
   });
 
-  describe("When pressing tab", () => {
-    beforeEach(() => {
+  describe("When using keyboard input", () => {
+    it("Should set focus on yes field when pressing tab", () => {
       userEvent.tab();
-    });
-
-    it("set focus on yes field", () => {
       expect(screen.getByLabelText("Ja")).toHaveFocus();
     });
 
-    describe("When pressing space", () => {
-      beforeEach(() => {
-        userEvent.keyboard(" ");
-      });
-
-      it("Focus Ja Field", () => {
-        expect(screen.getByLabelText("Ja")).toHaveFocus();
-      });
-
-      it("Activate Ja Field", () => {
-        expect(screen.getByText("Ja")).toHaveClass("active");
-      });
-
-      it("Check Ja Field", () => {
-        expect(screen.getByLabelText("Ja")).toBeChecked();
-      });
+    it("Should keep focus on yes field Focus when pressing tab and then space", () => {
+      userEvent.tab();
+      userEvent.keyboard(" ");
+      expect(screen.getByLabelText("Ja")).toHaveFocus();
     });
 
-    describe("When pressing right arrow key", () => {
-      beforeEach(() => {
-        userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
-      });
+    it("Should activate Ja Field when pressing tab and then space", () => {
+      userEvent.tab();
+      userEvent.keyboard(" ");
+      expect(screen.getByText("Ja")).toHaveClass("active");
+    });
 
-      it("Focus Nein Field", () => {
-        expect(screen.getByLabelText("Nein")).toHaveFocus();
-      });
+    it("Should check Ja Field when pressing tab and then space", () => {
+      userEvent.tab();
+      userEvent.keyboard(" ");
+      expect(screen.getByLabelText("Ja")).toBeChecked();
+    });
 
-      it("Activate Nein Field", () => {
-        expect(screen.getByText("Nein")).toHaveClass("active");
-      });
+    it("Should focus Nein Field when pressing tab and then right arrow key", () => {
+      userEvent.tab();
+      userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
+      expect(screen.getByLabelText("Nein")).toHaveFocus();
+    });
 
-      it("Check Nein Field", () => {
-        expect(screen.getByLabelText("Nein")).toBeChecked();
-      });
+    it("Should activate Nein Field when focussing on Nein field and pressing space", () => {
+      userEvent.tab();
+      userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
+      expect(screen.getByText("Nein")).toHaveClass("active");
+    });
+
+    it("Should check Nein Field when focussing on  Nein field and pressing space", () => {
+      userEvent.tab();
+      userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
+      expect(screen.getByLabelText("Nein")).toBeChecked();
     });
   });
 });

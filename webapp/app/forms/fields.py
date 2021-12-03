@@ -2,8 +2,7 @@ from decimal import Decimal
 
 from flask import request
 from flask.templating import render_template
-from wtforms import RadioField, Field, StringField
-from wtforms.fields.core import BooleanField, DateField, SelectField, IntegerField
+from wtforms import RadioField, Field, StringField, BooleanField, DateField, SelectField, IntegerField
 from wtforms.utils import unset_value
 from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
@@ -541,7 +540,7 @@ class YesNoField(RadioField):
         kwargs['choices'] = [('yes', _('switch.yes')), ('no', _('switch.no'))]
         super().__init__(label, validators, **kwargs)
 
-    def process(self, formdata, data=unset_value):
+    def process(self, formdata, data=unset_value, extra_filters=None):
         # In a POST-request, `formdata` is all data posted by the user (MultiDict).
         # In contrast, `data` is the value previously stored for the field ('yes' or 'no').
         # In case the user does not select yes or no for this specific YesNoField instance (example: yes_no_field),

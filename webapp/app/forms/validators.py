@@ -20,7 +20,7 @@ EURO_FIELD_MAX_LENGTH = 15
 
 class DecimalOnly:
     def __call__(self, form, field):
-        if not field.data.isdecimal():
+        if field.data and not field.data.isdecimal():
             raise ValidationError(_('validate.not-a-decimal'))
 
 
@@ -45,7 +45,7 @@ class IntegerLength:
         if (min != -1 and min < 0) \
                 or (max != -1 and max < 0) \
                 or (max != -1 and max < min):
-            raise ValueError
+            raise ValidationError
         self.min = min
         self.max = max
         if not message:
@@ -65,13 +65,17 @@ class IntegerLength:
 
 class ValidIban:
     def __call__(self, form, field):
+        if field.data:
+            iban = field.data
+        else:
+            iban = ''
         try:
-            iban = IBAN(field.data)
+            iban = IBAN(iban)
         except ValueError:
-            raise ValueError(_('validate.invalid-iban'))
+            raise ValidationError(_('validate.invalid-iban'))
 
         if iban.country_code != 'DE':
-            raise ValueError(_('validate.country-code-not-de'))
+            raise ValidationError(_('validate.country-code-not-de'))
 
 
 class ValidIdNr:
@@ -110,6 +114,9 @@ class ValidIdNr:
 
 class ValidUnlockCode:
     def __call__(self, form, field):
+        if not field.data:
+            raise ValidationError(_('validate.unlock-code-length'))
+
         input_str = str(field.data)
         # must contain 14 digits
         if len(input_str) != 14:
@@ -121,6 +128,8 @@ class ValidUnlockCode:
 
 class ValidElsterCharacterSet:
     def __call__(self, form, field):
+        if not field.data:
+            return
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_ELSTER_CHARACTERS:
@@ -129,6 +138,8 @@ class ValidElsterCharacterSet:
 
 class ValidUnlockCodeCharacterSet:
     def __call__(self, form, field):
+        if not field.data:
+            return
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
