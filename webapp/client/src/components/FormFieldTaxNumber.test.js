@@ -225,6 +225,10 @@ describe("FormFieldTaxNumber is not split", () => {
     render(<FormFieldTaxNumber {...props} />);
   });
 
+  it("Should set no maxLength attribute", () => {
+    expect(screen.getByRole("textbox").hasOwnProperty("maxLength")).toBe(false);
+  });
+
   it("Should only show one input field", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(1);
   });
@@ -240,10 +244,8 @@ describe("FormFieldTaxNumber is not split", () => {
       userEvent.type(screen.getByRole("textbox"), inputCharacters);
     });
 
-    it("Input should contain only first 11 characters", () => {
-      expect(screen.getByRole("textbox")).toHaveValue(
-        inputCharacters.slice(0, 11)
-      );
+    it("Input should contain all 12 characters", () => {
+      expect(screen.getByRole("textbox")).toHaveValue(inputCharacters);
     });
   });
 
@@ -264,9 +266,7 @@ describe("FormFieldTaxNumber is not split", () => {
       });
 
       it("Should enter letters into input field", () => {
-        expect(screen.getByRole("textbox")).toHaveValue(
-          inputCharacters.slice(0, 11)
-        );
+        expect(screen.getByRole("textbox")).toHaveValue(inputCharacters);
       });
     });
   });

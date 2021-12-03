@@ -30,15 +30,15 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepPersonB, \
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, \
     StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockForm, MockFilingStep, MockPersonAStep, MockIbanStep, \
-    MockPersonBStep, MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
+    MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
 
@@ -510,7 +510,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
     def setUp(self):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
-                         MockFamilienstandStep, MockPersonAStep, MockPersonBStep, MockIbanStep,
+                         MockFamilienstandStep, MockPersonAStep, StepPersonB, MockIbanStep,
                          StepSelectStmind,
                          StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
                          StepSummary, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
@@ -602,14 +602,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                     prev_url=self.flow.url_for_step(prev_step.name),
                                                     next_url=self.flow.url_for_step(next_step.name),
                                                     submit_url=self.flow.url_for_step(self.personA_step.name),
-                                                    overview_url="Overview URL")
-
-        prev_step, self.personB_step, next_step = self.flow._generate_steps(MockPersonBStep.name)
-        self.render_info_personB_step = RenderInfo(step_title=self.personB_step.title,
-                                                    step_intro=self.personB_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
-                                                    next_url=self.flow.url_for_step(next_step.name),
-                                                    submit_url=self.flow.url_for_step(self.personB_step.name),
                                                     overview_url="Overview URL")
 
         prev_step, self.iban_step, next_step = self.flow._generate_steps(MockIbanStep.name)
@@ -998,36 +990,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             render_info, _ = self.flow._handle_specifics_for_step(
                 self.personA_step, self.render_info_personA_step, self.data_not_married)
             self.assertEqual(self.IBAN_url, render_info.next_url)
-
-    def test_if_person_b_step_then_delete_person_b_address_correctly(self):
-        correct_person_b_data = {'person_b_idnr': '02293417683', 'person_b_dob': ['25', '2', '1951'],
-                                 'person_b_first_name': 'Gerta', 'person_b_last_name': 'Mustername',
-                                 'person_b_religion': 'rk',
-                                 'person_b_street': 'Steuerweg', 'person_b_street_number': 42, 'person_b_plz': '20354',
-                                 'person_b_town': 'Hamburg', 'person_b_same_address': 'no'}
-        expected_person_b_data = {'person_b_idnr': '02293417683', 'person_b_dob': datetime.date(1951, 2, 25),
-                                  'person_b_first_name': 'Gerta', 'person_b_last_name': 'Mustername',
-                                  'person_b_religion': 'rk', 'person_b_blind': False, 'person_b_gehbeh': False,
-                                  'person_b_street': 'Steuerweg', 'person_b_street_number': 42, 'person_b_plz': '20354',
-                                  'person_b_town': 'Hamburg', 'person_b_same_address': 'no'}
-
-        with self.app.test_request_context(method='POST', data=correct_person_b_data):
-            _, returned_data = self.flow._handle_specifics_for_step(self.personB_step,
-                                                                    self.render_info_personB_step, {})
-            self.assertTrue(
-                all([(field, value) in returned_data.items() for field, value in expected_person_b_data.items()]))
-
-        expected_data_no_address = {'person_b_idnr': '02293417683', 'person_b_dob': datetime.date(1951, 2, 25),
-                                    'person_b_first_name': 'Gerta', 'person_b_last_name': 'Mustername',
-                                    'person_b_religion': 'rk', 'person_b_blind': False, 'person_b_gehbeh': False,
-                                    'person_b_beh_grad': None, 'person_b_same_address': 'yes'}
-
-        correct_person_b_data['person_b_same_address'] = 'yes'
-        with self.app.test_request_context(method='POST', data=correct_person_b_data):
-            correct_person_b_data['person_b_same_address'] = 'yes'
-            _, returned_data = self.flow._handle_specifics_for_step(self.personB_step,
-                                                                    self.render_info_personB_step, {})
-            self.assertEqual(expected_data_no_address, returned_data)
 
     def test_if_iban_step_then_set_prev_url_correct(self):
         with self.app.test_request_context(method='POST'):

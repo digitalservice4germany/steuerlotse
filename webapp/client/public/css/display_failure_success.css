@@ -2,6 +2,10 @@
     margin-bottom: var(--spacing-04);
 }
 
+.spacing-b-06 {
+    margin-bottom: var(--spacing-06);
+}
+
 .spacing-b-09 {
     margin-bottom: var(--spacing-09);
 }
