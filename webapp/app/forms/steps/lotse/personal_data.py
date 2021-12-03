@@ -13,7 +13,7 @@ from app.forms.fields import ConfirmationField, \
     SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban, \
-    get_religion_field, get_number_of_users
+    get_religion_field
 from app.forms.steps.step import SectionLink, FormStep
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
@@ -170,6 +170,12 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                                # TODO: These are still required by base.html to set the page title.
                                form=self.render_info.form,
                                header_title=self.header_title)
+
+
+def get_number_of_users(input_data):
+    if show_person_b(input_data):
+        return 2
+    return 1
 
 
 # TODO Rename to StepPersonA once the old Multistep flow step is gone

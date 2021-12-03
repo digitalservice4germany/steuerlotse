@@ -186,12 +186,6 @@ def get_religion_field():
                    'data_label': _l('form.lotse.field_person_religion.data_label')})
 
 
-def get_number_of_users(input_data):
-    if show_person_b(input_data):
-        return 2
-    return 1
-
-
 class StepIban(FormStep):
     name = 'iban'
     label = _l('form.lotse.step_iban.label')
