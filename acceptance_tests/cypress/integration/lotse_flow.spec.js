@@ -73,10 +73,6 @@ const taxReturnData = {
             summe: '3033.31',
             anspruch: '3033.32',
         },
-        behKfz: {
-            summe: '4044.41',
-            anspruch: '4044.42',
-        },
         bestattung: {
             summe: '5055.51',
             anspruch: '5055.52',
@@ -438,8 +434,6 @@ context('Acceptance tests', () => {
                 cy.get('#stmind_pflegekosten_anspruch').type(taxReturnData.stmind.pflegekosten.anspruch)
                 cy.get('#stmind_beh_aufw_summe').type(taxReturnData.stmind.behAufw.summe)
                 cy.get('#stmind_beh_aufw_anspruch').type(taxReturnData.stmind.behAufw.anspruch)
-                cy.get('#stmind_beh_kfz_summe').type(taxReturnData.stmind.behKfz.summe)
-                cy.get('#stmind_beh_kfz_anspruch').type(taxReturnData.stmind.behKfz.anspruch)
                 cy.get('#stmind_bestattung_summe').type(taxReturnData.stmind.bestattung.summe)
                 cy.get('#stmind_bestattung_anspruch').type(taxReturnData.stmind.bestattung.anspruch)
                 cy.get('#stmind_aussergbela_sonst_summe').type(taxReturnData.stmind.aussergbelaSonst.summe)
