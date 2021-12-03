@@ -1,23 +1,19 @@
 import datetime
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from werkzeug.datastructures import ImmutableMultiDict
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.personal_data import StepSteuernummer
-from app.forms.steps.lotse.steuerminderungen import StepAussergBela, StepVorsorge, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
+from app.forms.steps.lotse.steuerminderungen import StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockMiddleStep
 
 
 # TODO remove this once all steps are converted to steuerlotse steps
-from tests.utils import create_session_form_data
-
-
 class TestDeterminePrevStep:
     def test_if_prev_step_set_in_step_then_return_the_set_step(self):
         returned_prev_step = LotseStepChooser(endpoint="lotse").determine_prev_step(StepSteuernummer.name, {})
@@ -33,12 +29,10 @@ class TestDeterminePrevStep:
 
 # TODO remove this once all steps are converted to steuerlotse steps
 class TestDetermineNextStep:
-    # TODO remove this once all steps are converted to steuerlotse steps
     def test_if_next_step_set_in_step_then_return_the_set_step(self):
-        returned_prev_step = LotseStepChooser(endpoint="lotse").determine_next_step(StepSteuernummer.name, {})
-        assert returned_prev_step == StepPersonA
+        returned_prev_step = LotseStepChooser(endpoint="lotse").determine_next_step(StepSummary.name, {})
+        assert returned_prev_step == StepConfirmation
 
-    # TODO remove this once all steps are converted to steuerlotse steps
     def test_if_next_step_not_set_in_step_then_call_super_method(self):
         step_chooser = LotseStepChooser(endpoint="lotse")
         step_chooser.steps['step_without_set_next_step'] = MockMiddleStep

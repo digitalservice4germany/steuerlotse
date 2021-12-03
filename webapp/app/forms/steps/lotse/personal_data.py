@@ -12,7 +12,7 @@ from app.forms.fields import ConfirmationField, \
     TaxNumberField, YesNoField, LegacyIdNrField, LegacySteuerlotseDateField, SteuerlotseNameStringField, \
     SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban, \
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban, \
     get_religion_field, get_number_of_users
 from app.forms.steps.step import SectionLink, FormStep
 from app.forms.validations.date_validations import ValidDateOfBirth
@@ -31,7 +31,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepFamilienstand
-    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -290,8 +289,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
     title = _l('form.lotse.person-b-title')
     intro = _l('form.lotse.person-b-intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    # TODO remove this once the adjacent steps are converted to steuerlotse steps
-    prev_step = StepPersonA
 
     label = _l('form.lotse.step_person_b.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
