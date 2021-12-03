@@ -2,9 +2,7 @@ from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
-from wtforms.fields.core import BooleanField
 from wtforms.validators import InputRequired
-from wtforms import validators
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
