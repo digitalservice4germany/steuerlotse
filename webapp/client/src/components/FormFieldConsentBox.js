@@ -26,7 +26,7 @@ const ConsentBox = styled.div`
     background-color: var(--focus-color);
   }
 
-  &.checkbox input:checked + label {
+  &.checkbox input:checked ~ label.checkmark {
     background-color: var(--link-color);
     background-image: url(${checkedIcon});
     background-repeat: no-repeat;

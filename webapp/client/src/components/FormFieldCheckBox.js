@@ -4,11 +4,9 @@ import FormFieldScaffolding from "./FormFieldScaffolding";
 import checkedIcon from "../assets/icons/checked.svg";
 
 const CheckBox = styled.div`
-  & {
-    padding: 0;
-    margin-top: var(--spacing-02);
-    flex-wrap: inherit;
-  }
+  padding: 0;
+  margin-top: var(--spacing-02);
+  flex-wrap: inherit;
 
   input {
     width: 30px;
@@ -21,7 +19,7 @@ const CheckBox = styled.div`
     background-color: var(--focus-color);
   }
 
-  input:checked + label {
+  input:checked ~ label.checkmark {
     background-color: var(--link-color);
     background-image: url(${checkedIcon});
     background-repeat: no-repeat;
