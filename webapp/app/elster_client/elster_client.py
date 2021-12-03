@@ -226,7 +226,6 @@ def _generate_est_request_data(form_data, year=2020):
     if not digitally_signed:
         logger.warning('Elster_Client: User without unlock code tries to send tax declaration.')
         # no user should come until that point without an unlock code, but they should certainly not be able to send a tax declaration
-        logout_user()
         raise TaxDeclarationNotDigitallySigned
     
     meta_data = {
