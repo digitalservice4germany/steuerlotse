@@ -250,6 +250,9 @@ def check_and_generate_entries(est_data, year=2019):
     if est_data.get('person_b_idnr'):
         enriched_est_data['zusammen_veranlagung'] = 'X'
 
+    if est_data.get('telephone_number'):
+        enriched_est_data['telephone_number'] = est_data['telephone_number']
+
     # Same address
     if est_data.get('person_b_same_address', None):
         copy_dst_src = [
