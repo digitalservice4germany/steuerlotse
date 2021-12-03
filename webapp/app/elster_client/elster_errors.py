@@ -136,3 +136,8 @@ class EricaIsMissingFieldError(GeneralEricaError):
 
     def __init__(self):
         self.message = _l('form.lotse.input_invalid.MissingFieldsInputValidationError')
+
+class EricaNotAuthenticatedError(GeneralEricaError):
+    """Exception raised when an error occurred in Erica because a required field was not set"""
+    pass
+    
