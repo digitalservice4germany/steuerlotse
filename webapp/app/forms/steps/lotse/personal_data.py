@@ -178,8 +178,7 @@ def get_number_of_users(input_data):
     return 1
 
 
-# TODO Rename to StepPersonA once the old Multistep flow step is gone
-class StepPersonANew(LotseFormSteuerlotseStep):
+class StepPersonA(LotseFormSteuerlotseStep):
     name = 'person_a'
     title = None  # set below
     intro = None  # set below

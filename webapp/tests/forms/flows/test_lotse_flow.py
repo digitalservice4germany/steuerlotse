@@ -30,7 +30,7 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonANew
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
@@ -165,7 +165,7 @@ class TestLotseInit(unittest.TestCase):
 
             StepFamilienstand,
             StepSteuernummer,
-            StepPersonANew,
+            StepPersonA,
             StepPersonB,
             StepTelephoneNumber,
             StepIban,
@@ -510,7 +510,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
     def setUp(self):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
-                         MockFamilienstandStep, StepPersonANew, StepPersonB, MockIbanStep,
+                         MockFamilienstandStep, StepPersonA, StepPersonB, MockIbanStep,
                          StepSelectStmind,
                          StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
                          StepSummary, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
