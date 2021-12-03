@@ -3,11 +3,12 @@ import datetime as dt
 from functools import wraps
 import io
 
-from flask import current_app, render_template, request, send_file, session, make_response
+from flask import current_app, render_template, request, send_file, session, make_response, url_for
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import InternalServerError
+from werkzeug.utils import redirect
 
 from app.config import Config
 from app.data_access.db_model.user import User
@@ -124,88 +125,44 @@ def register_request_handlers(app):
 
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):
-        update_data, form_data = extract_information_from_request()
-        return EligibilityStepChooser(endpoint='eligibility') \
-            .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
-            .handle()
+        return redirect(url_for('index'))
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
     @login_required
     def lotse(step):
-        flow = LotseMultiStepFlow(endpoint='lotse')
-        if step in ["start", StepDeclarationIncomes.name, StepDeclarationEdaten.name, StepSessionNote.name,
-                    StepFamilienstand.name, StepPersonA.name, StepIban.name,
-                    StepConfirmation.name, StepFiling.name,
-                    StepAck.name]:
-            return flow.handle(step_name=step)
-
-        update_data, form_data = extract_information_from_request()
-        return LotseStepChooser(endpoint='lotse') \
-            .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
-            .handle()
+        return redirect(url_for('index'))
 
     @app.route('/unlock_code_request/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_request/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
     def unlock_code_request(step='start'):
-        if current_user.is_authenticated:
-            return render_template('unlock_code/already_logged_in.html',
-                                   title=_('unlock_code_request.logged_in.title'),
-                                   intro=_('unlock_code_request.logged_in.intro'),
-                                   js_needed=False)
-
-        flow = UnlockCodeRequestMultiStepFlow(endpoint='unlock_code_request')
-        return flow.handle(step_name=step)
+        return redirect(url_for('index'))
 
     @app.route('/unlock_code_activation/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_activation/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
     def unlock_code_activation(step='start'):
-        # NOTE: If you want to redirect to the protected page, use the url_param next with validating that it is an
-        # internal site
-        if current_user.is_active:
-            current_app.logger.info('User active, start lotse flow')
-            return lotse('start')
-
-        current_app.logger.info('User inactive, start unlock_code_activation flow')
-        flow = UnlockCodeActivationMultiStepFlow(endpoint='unlock_code_activation')
-        return flow.handle(step_name=step)
+        return redirect(url_for('index'))
 
     @app.route('/unlock_code_revocation/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
     def unlock_code_revocation(step):
-        if current_user.is_authenticated:
-            return render_template('unlock_code/already_logged_in.html',
-                                   title=_('unlock_code_revocation.logged_in.title'),
-                                   intro=_('unlock_code_revocation.logged_in.intro'),
-                                   js_needed=False)
-
-        flow = UnlockCodeRevocationMultiStepFlow(endpoint='unlock_code_revocation')
-        return flow.handle(step_name=step)
+        return redirect(url_for('index'))
 
     @app.route('/download_pdf/print.pdf', methods=['GET'])
     @login_required
     @limiter.limit('15 per minute')
     @limiter.limit('1000 per day')
     def download_pdf():
-        if not current_user.has_completed_tax_return():
-            return render_template('error/pdf_not_found.html',
-                                   header_title=_('404.header-title'),
-                                   js_needed=False), 404
-
-        pdf_file = base64.b64decode(current_user.pdf)
-        return send_file(io.BytesIO(pdf_file), mimetype='application/pdf',
-                         attachment_filename='AngabenSteuererklaerung.pdf',
-                         as_attachment=True)
+        return redirect(url_for('index'))
 
     @app.route('/logout', methods=['GET', 'POST'])
     @login_required
     def logout():
-        flow = LogoutMultiStepFlow(endpoint='logout')
-        return flow.handle(step_name='data_input')
+        return redirect(url_for('index'))
 
     # Content
 

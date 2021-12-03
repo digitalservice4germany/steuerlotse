@@ -1,7 +1,7 @@
 import copy
 
 import pytest
-from flask import Flask
+from flask import Flask, url_for, request
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 
@@ -134,3 +134,43 @@ class TestSetTestingDataRoute:
             app.view_functions.get('set_data')(identifier)
 
             assert get_session_data(identifier) == {}
+
+
+class TestRedirectToIndex:
+
+    def test_if_call_to_eligibility_then_return_redirect_to_front_page(self, app):
+        with app.test_client() as c:
+            response = c.get('/eligibility/step/start')
+            assert response.status_code == 302
+            assert response.location == request.root_url
+
+    def test_if_call_to_lotse_then_return_redirect_to_front_page(self, app):
+        with app.test_client() as c:
+            response = c.get('/lotse/step/start')
+            assert response.status_code == 302
+            assert response.location == request.root_url[:-1] + url_for('unlock_code_activation', next='/lotse/step/start')
+
+    def test_if_call_to_unlock_code_request_then_return_redirect_to_front_page(self, app):
+        with app.test_client() as c:
+            response = c.get('/unlock_code_request/step/start')
+            assert response.status_code == 302
+            assert response.location == request.root_url
+
+    def test_if_call_to_unlock_code_activation_then_return_redirect_to_front_page(self, app):
+        with app.test_client() as c:
+            response = c.get('/unlock_code_activation/step/start')
+            assert response.status_code == 302
+            assert response.location == request.root_url
+
+    def test_if_call_to_unlock_code_revocation_then_return_redirect_to_front_page(self, app):
+        with app.test_client() as c:
+            response = c.get('/unlock_code_revocation/step/start')
+            assert response.status_code == 302
+            assert response.location == request.root_url
+
+    def test_if_call_to_download_pdf_then_return_redirect_to_front_page(self, app):
+        with app.test_client() as c:
+            response = c.get('/download_pdf/print.pdf')
+            assert response.status_code == 302
+            assert response.location == request.root_url[:-1] + url_for('unlock_code_activation', next='/download_pdf/print.pdf')
+
