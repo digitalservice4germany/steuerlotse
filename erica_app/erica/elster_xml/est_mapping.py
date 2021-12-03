@@ -23,6 +23,8 @@ _ALL_FIELDS = {
     'person_a_beh_grad': 'E0109708',
     'person_a_blind': 'E0109706',
     'person_a_gehbeh': 'E0109707',
+    
+    'telephone_number': 'E0100008',
 
     'married_since': 'E0100701',
     'widowed_since': 'E0100702',
