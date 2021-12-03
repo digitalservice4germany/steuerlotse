@@ -25,10 +25,7 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
-    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
-    ElsterRegistrationMethodEligibilityDecisionStep, \
-    ElsterRegistrationMethodEligibilityFailureStep, ElsterAbrufcodeEligibilityDecisionStep, \
-    ElsterAbrufcodeEligibilityFailureStep, EligibilityMaybeDisplaySteuerlotseStep
+    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, EligibilityMaybeDisplaySteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
 
 
@@ -59,9 +56,7 @@ class EligibilityStepChooser(StepChooser):
                 UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
-                ElsterRegistrationMethodEligibilityDecisionStep,
-                ElsterAbrufcodeEligibilityDecisionStep,
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,                
                 PensionDecisionEligibilityInputFormSteuerlotseStep,
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
@@ -77,8 +72,6 @@ class EligibilityStepChooser(StepChooser):
                 MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
                 DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                ElsterRegistrationMethodEligibilityFailureStep,
-                ElsterAbrufcodeEligibilityFailureStep,
                 PensionEligibilityFailureDisplaySteuerlotseStep,
                 TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
                 CheaperCheckEligibilityFailureDisplaySteuerlotseStep,

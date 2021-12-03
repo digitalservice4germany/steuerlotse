@@ -69,26 +69,32 @@ a:visited {
 /* INPUTS */
 .input-width-2 {
   width: var(--input-width-2);
+  max-width: var(--input-width-2);
 }
 
 .input-width-3 {
   width: var(--input-width-3);
+  max-width: var(--input-width-3);
 }
 
 .input-width-4 {
   width: var(--input-width-4);
+  max-width: var(--input-width-4);
 }
 
 .input-width-5 {
   width: var(--input-width-5);
+  max-width: var(--input-width-5);
 }
 
 .input-width-6 {
   width: var(--input-width-6);
+  max-width: var(--input-width-6);
 }
 
 .input-width-10 {
   width: var(--input-width-10);
+  max-width: var(--input-width-10);
 }
 
 .input-width-25 {

@@ -13,8 +13,9 @@ from app.data_access.audit_log_controller import create_audit_log_confirmation_e
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
-from app.forms.fields import SteuerlotseDateField, SteuerlotseSelectField, YesNoField, LegacySteuerlotseDateField, SteuerlotseStringField, \
-    ConfirmationField, EntriesField, EuroField
+from app.forms.fields import SteuerlotseDateField, LegacySteuerlotseSelectField, LegacyYesNoField, \
+    LegacySteuerlotseDateField, SteuerlotseStringField, \
+    ConfirmationField, EntriesField, EuroField, YesNoField
 from wtforms.fields.core import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
@@ -22,8 +23,8 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepPersonB, StepIban, \
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, \
     StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
@@ -144,8 +145,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepAussergBela,
                 StepHaushaltsnaheHandwerker,
                 StepGemeinsamerHaushalt,
-                StepReligion,
                 StepSpenden,
+                StepReligion,
+
 
                 StepSummary,
                 StepConfirmation,
@@ -244,11 +246,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                 render_info.next_url = self.url_for_step(StepPersonB.name)
             else:
                 render_info.next_url = self.url_for_step(StepIban.name)
-        elif isinstance(step, StepPersonB):
-            if request.method == 'POST' and render_info.form.validate():
-                if stored_data.get('person_b_same_address') == 'yes':
-                    stored_data = self._delete_dependent_data(['person_b_street', 'person_b_address', 'person_b_plz',
-                                                               'person_b_town'], stored_data)
         elif isinstance(step, StepIban):
             if not show_person_b(stored_data):
                 render_info.prev_url = self.url_for_step(StepPersonA.name)
@@ -323,13 +320,13 @@ class LotseMultiStepFlow(MultiStepFlow):
             for choice in field.kwargs['choices']:
                 if choice[0] == value:
                     value_representation = choice[1]
-        elif field.field_class == SelectField or field.field_class == SteuerlotseSelectField:
+        elif field.field_class in (SelectField, LegacySteuerlotseSelectField):
             for choice in field.kwargs['choices']:  # choice is a tuple of (value, label)
                 if choice[0] == value:
                     value_representation = choice[
                         1]  # Use label because this is also shown to user when making selections
                     break
-        elif field.field_class == YesNoField:
+        elif field.field_class in (LegacyYesNoField, YesNoField):
             value_representation = "Ja" if value == "yes" else "Nein"
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"

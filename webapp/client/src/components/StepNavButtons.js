@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Row = styled.div`
   margin-top: var(--spacing-09);
@@ -10,7 +10,7 @@ const Row = styled.div`
 `;
 
 // TODO: tidy this up (turn into a proper Button component as per Nadine's designs?)
-const Button = styled.button`
+const sharedButtonLinkStyle = css`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem;
   margin-right: var(--spacing-05);
   font-size: var(--text-base);
@@ -45,6 +45,18 @@ const Button = styled.button`
     box-shadow: none;
     border: 0;
     border-bottom: 4px solid var(--focus-border-color);
+  }
+`;
+
+const Button = styled.button`
+  ${sharedButtonLinkStyle}
+`;
+
+const Link = styled.a`
+  ${sharedButtonLinkStyle}
+
+  &:visited {
+    color: var(--inverse-text-color);
   }
 `;
 
@@ -93,10 +105,12 @@ const ExplanatoryText = styled.small`
   }
 `;
 
-export default function FormNavButtons({
+export default function StepNavButtons({
   explanatoryButtonText,
   showOverviewButton,
   nextButtonLabel,
+  nextUrl,
+  isForm,
 }) {
   const { t } = useTranslation();
 
@@ -115,9 +129,16 @@ export default function FormNavButtons({
         </OutlineButton>
       )}
 
-      <Button type="submit" className="btn btn-primary" name="next_button">
-        {nextLabel}
-      </Button>
+      {isForm && (
+        <Button type="submit" className="btn btn-primary" name="next_button">
+          {nextLabel}
+        </Button>
+      )}
+      {!isForm && nextUrl && (
+        <Link href={nextUrl} className="btn btn-primary" name="next_button">
+          {nextLabel}
+        </Link>
+      )}
 
       {explanatoryButtonText && (
         <ExplanatoryText>{explanatoryButtonText}</ExplanatoryText>
@@ -126,17 +147,21 @@ export default function FormNavButtons({
   );
 }
 
-FormNavButtons.propTypes = {
+StepNavButtons.propTypes = {
   nextButtonLabel: PropTypes.string,
   showOverviewButton: PropTypes.bool,
   explanatoryButtonText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
   ]),
+  nextUrl: PropTypes.string,
+  isForm: PropTypes.bool,
 };
 
-FormNavButtons.defaultProps = {
+StepNavButtons.defaultProps = {
   nextButtonLabel: undefined,
   showOverviewButton: false,
   explanatoryButtonText: undefined,
+  nextUrl: undefined,
+  isForm: true,
 };

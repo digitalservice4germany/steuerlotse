@@ -12,6 +12,9 @@ const translations = {
       ariaLabel: "Schließen",
     },
   },
+  dropDown: {
+    defaultOption: "Bitte auswählen",
+  },
   form: {
     optional: "optional",
     back: "Zurück",
@@ -25,11 +28,16 @@ const translations = {
     },
     declarationIncomes: {
       listItem1:
-        "Renteneinkünfte und / oder Pensionen, die von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet worden sind, und ggf.",
+        "inländische Renteneinkünfte und / oder Pensionen, die von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch gemeldet worden sind, und ggf.",
       listItem2:
         "Kapitaleinkünfte, von denen bereits Abgeltungsteuer an das Finanzamt abgeführt oder für die der Sparer-Pauschbetrag in Anspruch genommen wurde (Freistellungsauftrag), und ggf.",
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
+    },
+    telephoneNumber: {
+      fieldTelephoneNumber: {
+        label: "Telefonnummer",
+      },
     },
     confirmation: {
       fieldRegistrationConfirmDataPrivacy: {
@@ -44,13 +52,6 @@ const translations = {
     },
   },
   unlockCodeActivation: {
-    idnr: {
-      labelText: "Steuer-Identifikationsnummer",
-      help: {
-        title: "Wo finde ich diese Nummer?",
-        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
-      },
-    },
     unlockCode: {
       labelText: "Freischaltcode",
       help: {
@@ -60,9 +61,6 @@ const translations = {
     },
   },
   unlockCodeRequest: {
-    dob: {
-      labelText: "Geburtsdatum",
-    },
     dataPrivacyAndAgb: {
       title: "Datenschutzerklärung und Nutzungsbedingungen",
     },
@@ -86,7 +84,7 @@ const translations = {
       title: "Einverständnis zur automatischen Übernahme vorliegender Daten",
       helpTitle: "Was bedeutet das?",
       helpText:
-        "Daten zu beispielsweise <bold>Renten, Pensionen oder Kranken- und Pflegeversicherungen</bold> erhält die Steuerverwaltung vom jeweiligen Träger elektronisch. Diese Daten werden vom Finanzamt automatisch übernommen und müssen von Ihnen nicht in diese Steuererklärung eingetragen werden. Welche Beträge über Sie übermittelt wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle. Sollten Sie mit der Übernahme nicht einverstanden sein, können Sie die vereinfachte Steuererklärung leider nicht nutzen.",
+        "Daten zu beispielsweise <bold>inländischen Renten, Pensionen oder Kranken- und Pflegeversicherungen</bold> erhält die Steuerverwaltung vom jeweiligen Träger elektronisch. Diese Daten werden vom Finanzamt automatisch übernommen und müssen von Ihnen nicht in diese Steuererklärung eingetragen werden. Welche Beträge über Sie übermittelt wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle. Sollten Sie mit der Übernahme nicht einverstanden sein, können Sie die vereinfachte Steuererklärung leider nicht nutzen.",
     },
     gotFsc:
       "Sie haben Ihren Freischaltcode bereits erhalten? <br><loginLink>Dann können Sie sich anmelden</loginLink>.",
@@ -95,12 +93,55 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, muss sich nur eine Person registrieren.",
     },
   },
+  lotseFlow: {
+    taxNumber: {
+      taxNumberExists: {
+        labelText_one: "Haben Sie bereits eine Steuernummer?",
+        labelText_other: "Haben Sie bereits eine gemeinsame Steuernummer?",
+        help: {
+          title: "Wo finde ich diese Nummer?",
+          text: "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch keine Steuererklärung abgegeben haben, können Sie eine neue Steuernummer beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-Identifikationsnummer zwei verschiedene Nummern sind.",
+        },
+      },
+      bundesland: {
+        labelText: "Wählen Sie Ihr Bundesland",
+      },
+      taxOffices: {
+        labelText: "Wählen Sie Ihr Finanzamt",
+      },
+      taxNumberInput: {
+        label: {
+          labelText: "Steuernummer",
+          exampleInput: "Muss 10 oder 11 Ziffern haben",
+        },
+      },
+      requestNewTaxNumber: {
+        labelText_one:
+          "Hiermit bestätige ich, dass ich noch keine Steuernummer bei meinem Finanzamt habe und eine neue Steuernummer beantragen möchten.",
+        labelText_other:
+          "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem Finanzamt haben und eine neue Steuernummer beantragen möchten.",
+        headline: "Neue Steuernummer beantragen",
+        intro:
+          "Mit der Abgabe der Steuererklärung wird eine neue Steuernummer beim zuständigen Finanzamt beantragt. Die neue Steuernummer wird Ihnen dann mit dem Steuerbescheid mitgeteilt.",
+      },
+    },
+  },
   dateField: {
     day: "Tag",
     month: "Monat",
     year: "Jahr",
   },
   fields: {
+    idnr: {
+      labelText: "Steuer-Identifikationsnummer",
+      help: {
+        title: "Wo finde ich diese Nummer?",
+        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
+      },
+    },
+    dob: {
+      labelText: "Geburtsdatum",
+    },
     dateField: {
       exampleInput: {
         text: "z.B. 29.2.1951",
@@ -111,7 +152,7 @@ const translations = {
     selectVorsorge: {
       label: {
         title: "Vorsorgeaufwendungen",
-        text: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen",
+        text: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
       },
     },
     selectAussergBela: {

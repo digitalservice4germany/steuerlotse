@@ -22,7 +22,6 @@ class ValidDateOf:
         self.message_incorrect = message_incorrect
         self.message_in_the_future = message_in_the_future
         self.message_to_far_in_past = message_to_far_in_past
-        
 
     def __call__(self, form, field):
         raw_input_date = field._value()
@@ -40,6 +39,9 @@ class ValidDateOf:
 
         if not day or not month or not year: 
             raise ValidationError(self.message_incomplete)
+        
+        if len(year) < 4:            
+            raise ValidationError(self.message_incomplete)
             
         try:
             input_date = datetime.date(int(year), int(month), int(day))
@@ -51,6 +53,7 @@ class ValidDateOf:
 
         if input_date < elster_min_date:
             raise ValidationError(self.message_to_far_in_past)
+
 
 class ValidDateOfBirth(ValidDateOf):
     def __init__(self) -> None:
@@ -88,3 +91,13 @@ class ValidDateOfDivorce(ValidDateOf):
             message_incorrect = _l('validate.date-of-incorrect'), 
             message_in_the_future = _l('validate.date-of-in-the-future'), 
             message_to_far_in_past = _l('validate.date-of-to-far-in-past'))
+        
+        
+class ValidDateOfSeparatedSince(ValidDateOf):
+    def __init__(self) -> None:
+        super().__init__(
+            message_missing = _l('validate.date-of-separated-missing'),
+            message_incomplete = _l('validate.date-of-incomplete'), 
+            message_incorrect = _l('validate.date-of-incorrect'), 
+            message_in_the_future = _l('validate.date-of-in-the-future'), 
+            message_to_far_in_past = _l('validate.date-of-too-far-in-past'))

@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Tuple
 
 import humps
 from pydantic import BaseModel, Extra
@@ -31,13 +31,36 @@ class CheckboxFieldProps(ComponentProps):
     errors: List[str]
 
 
-FieldProps = Union[InputFieldProps, CheckboxFieldProps]
+class SelectOption(BaseModel, extra=Extra.forbid):
+    value: str
+    display_name: str
+
+
+class SelectFieldProps(ComponentProps):
+    selected_value: Optional[str]
+    options: List[SelectOption]
+    errors: List[str]
+
+
+class YesNoFieldProps(ComponentProps):
+    value: Optional[str]
+    errors: List[str]
+
+
+FieldProps = Union[SelectFieldProps, InputFieldProps, CheckboxFieldProps, YesNoFieldProps]
 
 
 class StepFormProps(ComponentProps):
     step_header: StepHeaderProps
+    prev_url: Optional[str]
     form: FormProps
     fields: Dict[str, FieldProps]
+
+
+class StepDisplayProps(ComponentProps):
+    step_header: StepHeaderProps
+    prev_url: Optional[str]
+    next_url: Optional[str]
 
 
 class LoginProps(StepFormProps):
@@ -51,12 +74,25 @@ class RegistrationProps(StepFormProps):
     data_privacy_link: str
 
 
+class RevocationProps(StepFormProps):
+    pass
+
+
+class RevocationSuccessProps(StepDisplayProps):
+    pass
+
+
 class DeclarationIncomesProps(StepFormProps):
     pass
 
 
-class SelectStmindProps(StepFormProps):
+class SelectStMindProps(StepFormProps):
     pass
+
+
+class TaxNumberStepFormProps(StepFormProps):
+    tax_office_list: List[Dict]
+    number_of_users: int
 
 
 class ConfirmationProps(StepFormProps):

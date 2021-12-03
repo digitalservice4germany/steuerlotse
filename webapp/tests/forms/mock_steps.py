@@ -4,11 +4,11 @@ from flask import make_response
 from wtforms import Form, validators
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import EuroField, SteuerlotseDateField, YesNoField, SteuerlotseStringField
+from app.forms.fields import EuroField, SteuerlotseDateField, LegacyYesNoField, SteuerlotseStringField
 from app.forms.steps.logout_steps import LogoutInputStep
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepPersonB, StepFamilienstand
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepFamilienstand
 from app.forms.steps.step import Step, FormStep
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
@@ -102,7 +102,7 @@ class MockFormWithInputStep(MockFormStep):
 
 
 class MockYesNoForm(SteuerlotseBaseForm):
-    yes_no_field = YesNoField('Yes/No', validators=[validators.Optional()])
+    yes_no_field = LegacyYesNoField('Yes/No', validators=[validators.Optional()])
 
 
 class MockYesNoStep(FormStep):
@@ -159,14 +159,6 @@ class MockFamilienstandStep(StepFamilienstand):
 class MockPersonAStep(StepPersonA):
     def __init__(self, **kwargs):
         super(MockPersonAStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockPersonBStep(StepPersonB):
-    def __init__(self, **kwargs):
-        super(MockPersonBStep, self).__init__(**kwargs)
 
     def render(self, data, render_info):
         return make_response(json.dumps([data], default=str), 200)

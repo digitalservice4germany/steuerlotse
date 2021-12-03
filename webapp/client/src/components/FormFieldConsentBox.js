@@ -59,7 +59,6 @@ function FormFieldConsentBox({
       {...{
         fieldName,
         errors,
-        cols: "12",
       }}
       hideLabel
       render={() => (
