@@ -30,7 +30,6 @@ WithErrors.args = {
   fieldName: "checkBox",
   labelText: "Merkzeichen G",
   errors: ["Dieses Feld muss ausgewählt werden."],
-  values: [],
 };
 
 export const PreCheckedWithErrors = Template.bind({});

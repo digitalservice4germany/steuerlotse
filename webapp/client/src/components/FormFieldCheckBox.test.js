@@ -20,8 +20,17 @@ describe("When FormFieldCheckBox with default values", () => {
     expect(screen.getByRole("checkbox")).toBeTruthy();
   });
 
+  it("Should show label", () => {
+    expect(screen.getByRole("checkbox")).toBeTruthy();
+  });
+
   it("Should not preselect checkBox", () => {
     expect(screen.getByLabelText("foo")).not.toBeChecked();
+  });
+
+  it("Should select checkBox on click", () => {
+    userEvent.click(screen.getByLabelText("foo"));
+    expect(screen.getByLabelText("foo")).toBeChecked();
   });
 
   it("Should focus checkBox when using tab", () => {
@@ -63,5 +72,24 @@ describe("When preselected FormFieldCheckBox", () => {
 
   it("Should show selected checkBox", () => {
     expect(screen.getByLabelText("foo")).toBeChecked();
+  });
+});
+
+describe("When FormFieldCheckBox with errors", () => {
+  let props;
+
+  beforeEach(() => {
+    props = {
+      fieldName: "fooName",
+      fieldId: "fooId",
+      labelText: "foo",
+      errors: ["fooError1", "fooError2"],
+    };
+    render(<FormFieldCheckBox {...props} />);
+  });
+
+  it("Should show errors", () => {
+    expect(screen.getByText("fooError1")).toBeTruthy();
+    expect(screen.getByText("fooError2")).toBeTruthy();
   });
 });
