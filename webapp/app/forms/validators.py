@@ -55,8 +55,12 @@ class IntegerLength:
 
 class ValidIban:
     def __call__(self, form, field):
+        if field.data:
+            iban = field.data
+        else:
+            iban = ''
         try:
-            iban = IBAN(field.data)
+            iban = IBAN(iban)
         except ValueError:
             raise ValidationError(_('validate.invalid-iban'))
 
@@ -100,6 +104,9 @@ class ValidIdNr:
 
 class ValidUnlockCode:
     def __call__(self, form, field):
+        if not field.data:
+            raise ValidationError(_('validate.unlock-code-length'))
+
         input_str = str(field.data)
         # must contain 14 digits
         if len(input_str) != 14:
@@ -111,6 +118,8 @@ class ValidUnlockCode:
 
 class ValidElsterCharacterSet:
     def __call__(self, form, field):
+        if not field.data:
+            return
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_ELSTER_CHARACTERS:
@@ -119,6 +128,8 @@ class ValidElsterCharacterSet:
 
 class ValidUnlockCodeCharacterSet:
     def __call__(self, form, field):
+        if not field.data:
+            return
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:
