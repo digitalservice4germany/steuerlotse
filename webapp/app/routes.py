@@ -329,5 +329,14 @@ def register_testing_request_handlers(app):
         if session_identifier not in _ALLOWED_IDENTIFIERS:
             return "Not allowed identifier", 200
         data = request.get_json()
-        override_session_data(data, session_identifier)
+
+        def convert_date_fields_to_date(value):
+            import datetime
+            try:
+                return datetime.datetime.strptime(value, "%d.%m.%Y")
+            except (TypeError, ValueError):
+                return value
+
+        data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
+        override_session_data(data_with_dates, session_identifier)
         return data, 200
