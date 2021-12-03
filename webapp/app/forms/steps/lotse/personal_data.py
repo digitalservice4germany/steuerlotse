@@ -34,7 +34,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
-    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label')
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     @classmethod
     def get_label(cls, data):

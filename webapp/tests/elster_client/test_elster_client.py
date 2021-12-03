@@ -11,7 +11,7 @@ from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
     send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data, \
-    validate_tax_number
+    validate_tax_number, TaxDeclarationNotDigitallySigned
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -86,7 +86,8 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 send_est_with_elster(self.invalid_form_data, 'IP', include_elster_responses=False)
                 self.fail("No validation error raised")
         except ElsterGlobalValidationError as e:
@@ -97,8 +98,10 @@ class TestSendEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP', include_elster_responses=False)
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
+                self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP',
+                                  include_elster_responses=False)
         finally:
             MockErica.eric_transfer_error_occurred = False
 
@@ -107,7 +110,8 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
         except ElsterTransferError as e:
             self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
@@ -121,7 +125,8 @@ class TestSendEst(unittest.TestCase):
         MockErica.eric_process_not_successful_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterProcessNotSuccessful, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -141,7 +146,8 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterInvalidBufaNumberError, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -152,7 +158,8 @@ class TestSendEst(unittest.TestCase):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterInvalidTaxNumberError, send_est_with_elster, self.valid_form_data, 'IP',
                                   include_elster_responses=False)
         finally:
@@ -207,7 +214,8 @@ class TestValidateEst(unittest.TestCase):
     def test_if_validation_error_occurred_raise_error(self):
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 validate_est_with_elster(self.invalid_form_data, include_elster_responses=False)
                 self.fail("No validation error occurred.")
         except ElsterGlobalValidationError as e:
@@ -218,7 +226,8 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterTransferError, validate_est_with_elster, self.valid_form_data,
                                   include_elster_responses=False)
         finally:
@@ -228,7 +237,8 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_transfer_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 validate_est_with_elster(self.valid_form_data, include_elster_responses=True)
         except ElsterTransferError as e:
             self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
@@ -242,7 +252,8 @@ class TestValidateEst(unittest.TestCase):
         MockErica.eric_process_not_successful_error_occurred = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
                 self.assertRaises(ElsterProcessNotSuccessful, validate_est_with_elster, self.valid_form_data,
                                   include_elster_responses=False)
         finally:
@@ -701,46 +712,26 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertEqual(result['meta_data']['is_digitally_signed'], True)
 
     def test_unset_year_results_in_2020_year_value(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
             result = _generate_est_request_data({})
 
         self.assertEqual(result['meta_data']['year'], 2020)
 
     def test_activated_user_results_in_correct_attribute_set_true(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
             result = _generate_est_request_data({})
 
         self.assertEqual(True, result['meta_data']['is_digitally_signed'])
 
-    def test_inactive_user_results_in_correct_attribute_set_false(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=True)):
-            result = _generate_est_request_data({})
-
-        self.assertEqual(False, result['meta_data']['is_digitally_signed'])
-        
-    def test_not_authenticated_user_results_in_correct_attribute_set_false(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=False)):
-            result = _generate_est_request_data({})
-
-        self.assertEqual(False, result['meta_data']['is_digitally_signed'])
-
-    def test_if_inactive_user_logout_user_is_called(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=False)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun:
+    def test_if_user_has_no_unlock_code_then_raise_not_digitally_signed_exception(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed=None)), \
+                pytest.raises(TaxDeclarationNotDigitallySigned):
             _generate_est_request_data({})
 
-            logout_fun.assert_called_once()
-            
-    def test_if_not_authenticated_but_active_user_logout_user_is_called(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=False)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun:
-            _generate_est_request_data({})
-
-            logout_fun.assert_called_once()
-            
-    def test_if_authenticated_but_inactive_user_logout_user_is_called(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=False, is_authenticated=True)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun:
+    def test_if_user_has_no_unlock_code_then_logout_user_is_called(self):
+        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed=None)), \
+                patch('app.elster_client.elster_client.logout_user') as logout_fun, \
+                pytest.raises(TaxDeclarationNotDigitallySigned):
             _generate_est_request_data({})
 
             logout_fun.assert_called_once()
@@ -977,7 +968,7 @@ class TestLogAddressData(unittest.TestCase):
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")), \
                 patch('app.elster_client.elster_client.send_to_erica', MagicMock(return_value=self.success_response)), \
                 patch('app.elster_client.elster_client.create_audit_log_address_entry') as audit_log_fun:
             _log_address_data('IP', '04452397687', {'include_elster_responses': False})
@@ -985,7 +976,7 @@ class TestLogAddressData(unittest.TestCase):
 
     def test_if_unsuccessful_case_then_raise_transfer_error_and_do_not_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
+                patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")), \
                 patch('app.elster_client.elster_client.send_to_erica', MagicMock(return_value=self.error_response)), \
                 patch('app.elster_client.elster_client.create_audit_log_address_entry') as audit_log_fun:
             self.assertRaises(ElsterTransferError, _log_address_data, 'IP', '04452397687',

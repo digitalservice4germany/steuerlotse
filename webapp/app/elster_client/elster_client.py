@@ -183,6 +183,11 @@ def _extract_est_response_data(pyeric_response):
     return extracted_data
 
 
+class TaxDeclarationNotDigitallySigned(Exception):
+    """ Raised in case a tax declaration should be send that has not been digitally signed"""
+    pass
+
+
 def _generate_est_request_data(form_data, year=2020):
     """
     Generates the data, which can be send to pyeric with the correct types
@@ -211,15 +216,18 @@ def _generate_est_request_data(form_data, year=2020):
 
     if adapted_form_data.get('steuernummer_exists') == 'no' and adapted_form_data.get('request_new_tax_number'):
         adapted_form_data['submission_without_tax_nr'] = True
-    
-
-    if not current_user.is_authenticated:
-        logger.error('Elster_Client: User is not authenticated')  
-        # no non-active user should come until here, but they should certainly not be able to send a tax        
-        logout_user()
-        raise EricaNotAuthenticatedError()      
         
-    digitally_signed = bool(adapted_form_data.get('unlock_code'))
+    digitally_signed = bool(current_user.unlock_code_hashed is not None)
+
+    if not current_user.is_active:
+        # no non-active user should come until here, but we want to log that as an error
+        logger.error('Elster_Client: Non-active user tries to send tax declaration.')
+
+    if not digitally_signed:
+        logger.warning('Elster_Client: User without unlock code tries to send tax declaration.')
+        # no user should come until that point without an unlock code, but they should certainly not be able to send a tax declaration
+        logout_user()
+        raise TaxDeclarationNotDigitallySigned
     
     meta_data = {
         'year': year,
