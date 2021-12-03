@@ -35,7 +35,7 @@ class IntegerLength:
         if (min != -1 and min < 0) \
                 or (max != -1 and max < 0) \
                 or (max != -1 and max < min):
-            raise ValueError
+            raise ValidationError
         self.min = min
         self.max = max
         if not message:
@@ -58,10 +58,10 @@ class ValidIban:
         try:
             iban = IBAN(field.data)
         except ValueError:
-            raise ValueError(_('validate.invalid-iban'))
+            raise ValidationError(_('validate.invalid-iban'))
 
         if iban.country_code != 'DE':
-            raise ValueError(_('validate.country-code-not-de'))
+            raise ValidationError(_('validate.country-code-not-de'))
 
 
 class ValidIdNr:
