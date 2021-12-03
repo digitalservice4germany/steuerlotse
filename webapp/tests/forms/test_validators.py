@@ -188,10 +188,10 @@ class TestValidIdNr(unittest.TestCase):
             self.fail("ValidIdNr raised ValidationError unexpectedly!")
 
     def test_if_nothing_set_then_return_validation_error(self):
-        invalid_characters = ['']
+        nothing_set_input = ['', []]
 
-        for char in invalid_characters:
-            self.field.data = char
+        for input_value in nothing_set_input:
+            self.field.data = input_value
             with pytest.raises(ValidationError):
                 self.validator.__call__(self.form, self.field)
 
