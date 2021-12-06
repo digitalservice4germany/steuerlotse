@@ -332,6 +332,15 @@ class TestEstMapping(unittest.TestCase):
         results = check_and_generate_entries(form_data)
 
         self.assertEqual("Renovierung Badezimmer", results['E0111217'])
+        
+    def test_telephone_number(self):
+        telephone_number = '01512709'
+        form_data = {'telephone_number': telephone_number}
+
+        results = check_and_generate_entries(form_data)
+
+        self.assertIn('E0100008', results)
+        self.assertEqual(telephone_number, results['E0100008'])
 
     def test_if_beh_filled_out_then_check_and_generate_entries(self):
         form_data = {

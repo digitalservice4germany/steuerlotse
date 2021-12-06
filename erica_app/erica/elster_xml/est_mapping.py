@@ -45,6 +45,8 @@ _ALL_FIELDS = {
     'person_b_blind': 'E0109706',
     'person_b_gehbeh': 'E0109707',
 
+    'telephone_number': 'E0100008',
+    
     'iban': 'E0102102',
     'is_person_a_account_holder': 'E0101601',
     'is_person_b_account_holder': 'E0102402',

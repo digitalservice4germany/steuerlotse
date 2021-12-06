@@ -68,6 +68,7 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_religion='none',
             person_a_blind=False,
             person_a_gehbeh=False,
+            telephone_number='01715151',
 
             person_b_idnr='02293417683',
             person_b_dob=date(1951, 2, 25),
@@ -112,6 +113,7 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_beh_grad=20,
             person_a_blind=False,
             person_a_gehbeh=True,
+            telephone_number='01715151',
         )
 
     return form_data
@@ -137,6 +139,7 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_religion='none',
             person_a_blind=False,
             person_a_gehbeh=False,
+            telephone_number='01715151',
 
             iban='DE35133713370000012345',
             account_holder='person_a',
@@ -163,6 +166,7 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_religion='none',
             person_a_blind=False,
             person_a_gehbeh=False,
+            telephone_number='01715151',
 
             iban='DE35133713370000012345',
 

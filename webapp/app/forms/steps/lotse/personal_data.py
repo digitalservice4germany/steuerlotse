@@ -12,14 +12,14 @@ from app.forms.fields import ConfirmationField, \
     TaxNumberField, YesNoField, LegacyIdNrField, LegacySteuerlotseDateField, SteuerlotseNameStringField, \
     SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban, \
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban, \
     get_religion_field
 from app.forms.steps.step import SectionLink, FormStep
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
-    ValidIdNr
+    ValidIdNr, MaximumLength
 from app.forms.validators import DecimalOnly, IntegerLength
-from app.model.components import TaxNumberStepFormProps
+from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
 
@@ -31,7 +31,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepFamilienstand
-    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -173,6 +172,112 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                                header_title=self.header_title)
 
 
+def get_number_of_users(input_data):
+    if show_person_b(input_data):
+        return 2
+    return 1
+
+
+class StepPersonA(LotseFormSteuerlotseStep):
+    name = 'person_a'
+    title = None  # set below
+    intro = None  # set below
+    header_title = _l('form.lotse.mandatory_data.header-title')
+
+    label = None  # set below
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+
+    template = 'lotse/form_person_a.html'
+
+    class InputForm(SteuerlotseBaseForm):
+        person_a_idnr = LegacyIdNrField(
+            label=_l('form.lotse.field_person_idnr'),
+            validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()],
+            render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
+        person_a_dob = LegacySteuerlotseDateField(
+            label=_l('form.lotse.field_person_dob'),
+            render_kw={'data_label': _l('form.lotse.field_person_dob.data_label')},
+            validators=[InputRequired(message=_l('form.lotse.validation-dob-missing')), ValidDateOfBirth()],
+            prevent_validation_error=True)
+        person_a_first_name = SteuerlotseNameStringField(
+            label=_l('form.lotse.field_person_first_name'),
+            render_kw={'data_label': _l('form.lotse.field_person_first_name.data_label'),
+                       'max_characters': 25},
+            validators=[InputRequired(), validators.length(max=25)])
+        person_a_last_name = SteuerlotseNameStringField(
+            label=_l('form.lotse.field_person_last_name'),
+            render_kw={'data_label': _l('form.lotse.field_person_last_name.data_label'),
+                       'max_characters': 25},
+            validators=[InputRequired(), validators.length(max=25)])
+        person_a_street = SteuerlotseStringField(
+            label=_l('form.lotse.field_person_street'),
+            render_kw={'data_label': _l('form.lotse.field_person_street.data_label'),
+                       'max_characters': 25},
+            validators=[InputRequired(), validators.length(max=25)])
+        person_a_street_number = SteuerlotseHouseNumberIntegerField(
+            label=_l('form.lotse.field_person_street_number'),
+            render_kw={'data_label': _l('form.lotse.field_person_street_number.data_label'),
+                       'max_characters': 4},
+            validators=[InputRequired(), IntegerLength(max=4)])
+        person_a_street_number_ext = SteuerlotseStringField(
+            label=_l('form.lotse.field_person_street_number_ext'),
+            render_kw={'data_label': _l('form.lotse.field_person_street_number_ext.data_label'),
+                       'max_characters': 6},
+            validators=[validators.length(max=6)])
+        person_a_address_ext = SteuerlotseStringField(
+            label=_l('form.lotse.field_person_address_ext'),
+            render_kw={'data_label': _l('form.lotse.field_person_address_ext.data_label'),
+                       'max_characters': 25},
+            validators=[validators.length(max=25)])
+        person_a_plz = SteuerlotseNumericStringField(
+            label=_l('form.lotse.field_person_plz'),
+            render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
+                       'max_characters': 5},
+            validators=[InputRequired(), DecimalOnly(), validators.length(max=5)])
+        person_a_town = SteuerlotseStringField(
+            label=_l('form.lotse.field_person_town'),
+            render_kw={'data_label': _l('form.lotse.field_person_town.data_label'),
+                       'max_characters': 25},
+            validators=[InputRequired(), validators.length(max=20)])
+        person_a_religion = get_religion_field()
+
+        person_a_beh_grad = SteuerlotseIntegerField(
+            label=_l('form.lotse.field_person_beh_grad'),
+            validators=[
+                validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
+            render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
+                       'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
+                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
+                       'max_characters': 3})
+        person_a_blind = BooleanField(
+            label=_l('form.lotse.field_person_blind'),
+            render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
+        person_a_gehbeh = BooleanField(
+            label=_l('form.lotse.field_person_gehbeh'),
+            render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
+
+        def validate_person_a_beh_grad(self, field):
+            if self.person_a_gehbeh.data:
+                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
+            else:
+                validators.Optional()(self, field)
+
+    @classmethod
+    def get_label(cls, data=None):
+        return ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label',
+                        num=get_number_of_users(data))
+
+    def _pre_handle(self):
+        self._set_multiple_texts()
+        super()._pre_handle()
+
+    def _set_multiple_texts(self):
+        number_of_users = get_number_of_users(self.stored_data)
+        self.render_info.step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
+                                               num=number_of_users)
+        self.render_info.step_intro = _('form.lotse.person-a-intro') if number_of_users > 1 else None
+
+
 class ShowPersonBPrecondition(FamilienstandModel):
     _step_to_redirect_to = StepFamilienstand.name
     _message_to_flash = _l('form.lotse.skip_reason.familienstand_single')
@@ -189,9 +294,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
     title = _l('form.lotse.person-b-title')
     intro = _l('form.lotse.person-b-intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    # TODO remove this once the adjacent steps are converted to steuerlotse steps
-    prev_step = StepPersonA
-    next_step = StepIban
 
     label = _l('form.lotse.step_person_b.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -293,3 +395,45 @@ class StepPersonB(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
+
+class StepTelephoneNumber(LotseFormSteuerlotseStep):
+    name = 'telephone_number'
+    title = _l('form.lotse.telephone-number.title')
+    intro = _l('form.lotse.telephone-number.intro')
+    header_title = _l('form.lotse.mandatory_data.header-title')
+    # TODO remove this once the next steps is converted to steuerlotse step
+    next_step = StepIban
+
+    label = _l('form.lotse.step_telephone_number.label')
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+
+    class InputForm(SteuerlotseBaseForm):
+        telephone_number = SteuerlotseStringField(
+            validators=[MaximumLength(25)],
+            render_kw={'data_label': _l('form.lotse.field_telephone_number.data_label')})
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
+    def render(self):
+        props_dict = TelephoneNumberProps(
+            step_header={
+                'title': str(self.title),
+                'intro': str(self.intro),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url,
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='TelephoneNumberPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))

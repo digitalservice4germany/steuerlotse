@@ -1,4 +1,6 @@
 import copy
+import datetime
+import json
 
 import pytest
 from flask import Flask
@@ -7,8 +9,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 
 from app.app import create_app
 from app.config import Config, ProductionConfig, FunctionalTestingConfig
-from app.forms.session_data import get_session_data
-
+from app.forms.session_data import get_session_data, serialize_session_data
 
 from app.routes import extract_information_from_request, register_testing_request_handlers
 
@@ -120,6 +121,34 @@ class TestSetTestingDataRoute:
     def test_if_data_provided_then_set_session_correctly(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
+        with app.test_request_context(method="POST", json=data) as req:
+            req.session = SecureCookieSession({})
+            app.view_functions.get('set_data')(identifier)
+
+            assert get_session_data(identifier) == data
+
+    def test_if_data_provided_with_date_then_set_session_correctly(self, app):
+        identifier = "form_data"
+        data = {'username': 'Frodo', 'date': '02.09.2022'}
+        expected_data = {'username': 'Frodo', 'date': datetime.date(2022, 9, 2)}
+        with app.test_request_context(method="POST", json=data) as req:
+            req.session = SecureCookieSession({})
+            app.view_functions.get('set_data')(identifier)
+
+            assert get_session_data(identifier) == expected_data
+
+    def test_if_data_provided_with_bool_then_set_session_correctly(self, app):
+        identifier = "form_data"
+        data = {'username': 'Frodo', 'bool': True}
+        with app.test_request_context(method="POST", json=data) as req:
+            req.session = SecureCookieSession({})
+            app.view_functions.get('set_data')(identifier)
+
+            assert get_session_data(identifier) == data
+
+    def test_if_data_provided_with_int_then_set_session_correctly(self, app):
+        identifier = "form_data"
+        data = {'username': 'Frodo', 'int': 7531}
         with app.test_request_context(method="POST", json=data) as req:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)

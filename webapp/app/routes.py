@@ -24,7 +24,7 @@ from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepF
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 
 
@@ -134,7 +134,7 @@ def register_request_handlers(app):
     def lotse(step):
         flow = LotseMultiStepFlow(endpoint='lotse')
         if step in ["start", StepDeclarationIncomes.name, StepDeclarationEdaten.name, StepSessionNote.name,
-                    StepFamilienstand.name, StepPersonA.name, StepIban.name,
+                    StepFamilienstand.name, StepIban.name,
                     StepConfirmation.name, StepFiling.name,
                     StepAck.name]:
             return flow.handle(step_name=step)
@@ -329,5 +329,14 @@ def register_testing_request_handlers(app):
         if session_identifier not in _ALLOWED_IDENTIFIERS:
             return "Not allowed identifier", 200
         data = request.get_json()
-        override_session_data(data, session_identifier)
+
+        def convert_date_fields_to_date(value):
+            import datetime
+            try:
+                return datetime.datetime.strptime(value, "%d.%m.%Y")
+            except (TypeError, ValueError):
+                return value
+
+        data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
+        override_session_data(data_with_dates, session_identifier)
         return data, 200

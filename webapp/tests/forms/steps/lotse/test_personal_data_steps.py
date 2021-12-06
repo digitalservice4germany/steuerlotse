@@ -7,7 +7,8 @@ from flask_babel import ngettext, _
 from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, ShowPersonBPrecondition
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
+    StepTelephoneNumber
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -234,6 +235,109 @@ class TestStepSteuernummerValidate:
         mock_flash.assert_not_called()
 
 
+class TestStepPersonATexts:
+    def test_if_multiple_users_then_show_multiple_text(self, app):
+        session_data = {
+            'familienstand': 'married',
+            'familienstand_date': datetime.date(2000, 1, 31),
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+        }
+        expected_number_of_users = 2
+        expected_step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
+                              num=expected_number_of_users)
+        expected_step_intro = _('form.lotse.person-a-intro') if expected_number_of_users > 1 else None
+
+        with app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
+                                                                       ImmutableMultiDict({}))
+            step._pre_handle()
+
+        assert step.render_info.step_title == expected_step_title
+        assert step.render_info.step_intro == expected_step_intro
+
+    def test_if_single_user_then_show_single_text(self, app):
+        session_data = {
+            'familienstand': 'single',
+        }
+
+        expected_number_of_users = 1
+        expected_step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
+                                       num=expected_number_of_users)
+        expected_step_intro = _('form.lotse.person-a-intro') if expected_number_of_users > 1 else None
+
+        with app.test_request_context(method='GET') as req:
+            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
+                                                                       ImmutableMultiDict({}))
+            step._pre_handle()
+
+        assert step.render_info.step_title == expected_step_title
+        assert step.render_info.step_intro == expected_step_intro
+
+
+class TestStepPersonAGetLabel:
+    def test_if_single_user_then_return_single_text(self):
+        session_data = {
+            'familienstand': 'single',
+        }
+        expected_label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=1)
+        returned_label = StepPersonA.get_label(session_data)
+        assert returned_label == expected_label
+
+    def test_if_multiple_users_then_return_multiple_text(self):
+        session_data = {
+            'familienstand': 'married',
+            'familienstand_date': datetime.date(2000, 1, 31),
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+        }
+        expected_label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=2)
+        returned_label = StepPersonA.get_label(session_data)
+        assert returned_label == expected_label
+
+
+def new_person_a_step(form_data):
+    return LotseStepChooser().get_correct_step(StepPersonA.name, True, ImmutableMultiDict(form_data))
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestPersonAValidation:
+    @pytest.fixture()
+    def valid_form_data(self):
+        return {'person_a_idnr': '04452397687', 'person_a_first_name': 'Hermine',
+                'person_a_last_name': 'Granger', 'person_a_dob': ['01', '01', '1985'],
+                'person_a_street': 'Hogwartsstraße', 'person_a_street_number': '7',
+                'person_a_plz': '12345', 'person_a_town': 'Hogsmeade',
+                'person_a_religion': 'none'}
+
+    def test_if_plz_starts_with_zero_then_succ_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, ** {'person_a_plz': '01234'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is True
+
+    def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data):
+        data = MultiDict(valid_form_data)
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is True
+
+    def test_if_gehbeh_yes_and_beh_grad_not_set_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_gehbeh': 'on'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is False
+
+    def test_if_gehbeh_yes_and_beh_grad_set_then_succ_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_gehbeh': 'on', 'person_a_beh_grad': '30'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is True
+
+    def test_if_not_gehbeh_but_beh_grad_set_then_succ_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_beh_grad': '30'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is True
+
+
 def new_person_b_step(form_data):
     return LotseStepChooser().get_correct_step(StepPersonB.name, True, ImmutableMultiDict(form_data))
 
@@ -312,3 +416,19 @@ class TestPersonBValidation:
         with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
+
+
+class TestTelephoneNumberValidation:
+    def test_if_number_max_25_chars_then_succ_validation(self, new_test_request_context):
+        data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit ame'})
+        with new_test_request_context(form_data=data):
+            step = LotseStepChooser().get_correct_step(StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is True
+
+    def test_if_number_over_25_chars_then_succ_validation(self, new_test_request_context):
+        data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit amet'})
+        with new_test_request_context(form_data=data):
+            step = LotseStepChooser().get_correct_step(StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is False

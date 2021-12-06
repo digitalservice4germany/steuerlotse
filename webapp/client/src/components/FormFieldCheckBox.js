@@ -3,30 +3,23 @@ import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import checkedIcon from "../assets/icons/checked.svg";
 
-const ConsentBox = styled.div`
-  &.checkbox {
-    padding: 0;
-    margin-top: var(--spacing-02);
-    flex-wrap: inherit;
-  }
+const CheckBox = styled.div`
+  padding: 0;
+  margin-top: var(--spacing-02);
+  flex-wrap: inherit;
 
-  &.consent-box {
-    background-color: var(--bg-highlight-color);
-    padding: var(--spacing-04);
-  }
-
-  &.checkbox input {
+  input {
     width: 30px;
     height: 30px;
     opacity: 0;
   }
 
-  &.checkbox input:focus + label {
+  input:focus + label {
     box-shadow: 0 0 0 3px var(--focus-color);
     background-color: var(--focus-color);
   }
 
-  &.checkbox input:checked ~ label.checkmark {
+  input:checked ~ label.checkmark {
     background-color: var(--link-color);
     background-image: url(${checkedIcon});
     background-repeat: no-repeat;
@@ -34,7 +27,7 @@ const ConsentBox = styled.div`
     background-position: center;
   }
 
-  & label.checkmark {
+  label.checkmark {
     display: block;
     width: 30px;
     height: 30px;
@@ -45,7 +38,7 @@ const ConsentBox = styled.div`
   }
 `;
 
-function FormFieldConsentBox({
+function FormFieldCheckBox({
   fieldName,
   fieldId,
   checked,
@@ -62,7 +55,7 @@ function FormFieldConsentBox({
       }}
       hideLabel
       render={() => (
-        <ConsentBox className="form-row checkbox consent-box col-lg-10">
+        <CheckBox className="form-row col-lg-10">
           <input
             type="checkbox"
             id={fieldId}
@@ -78,17 +71,17 @@ function FormFieldConsentBox({
           <label htmlFor={fieldId} className="checkmark" />
           <label
             htmlFor={fieldId}
-            className="col-sm-10 col-form-label ml-3 pt-0"
+            className="field-label col-sm-10 col-form-label ml-3 pt-0"
           >
             {labelText}
           </label>
-        </ConsentBox>
+        </CheckBox>
       )}
     />
   );
 }
 
-FormFieldConsentBox.propTypes = {
+FormFieldCheckBox.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   labelText: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
@@ -99,10 +92,10 @@ FormFieldConsentBox.propTypes = {
   autofocus: PropTypes.bool,
 };
 
-FormFieldConsentBox.defaultProps = {
+FormFieldCheckBox.defaultProps = {
   checked: false,
   required: false,
   autofocus: false,
 };
 
-export default FormFieldConsentBox;
+export default FormFieldCheckBox;

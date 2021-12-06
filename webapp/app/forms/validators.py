@@ -20,7 +20,7 @@ EURO_FIELD_MAX_LENGTH = 15
 
 class DecimalOnly:
     def __call__(self, form, field):
-        if not field.data.isdecimal():
+        if field.data and not field.data.isdecimal():
             raise ValidationError(_('validate.not-a-decimal'))
 
 
@@ -30,12 +30,22 @@ class NoZero:
             raise ValidationError(_('validate.must-not-be-zero'))
 
 
+class MaximumLength:
+    def __init__(self, max_length):
+        self.max_length = max_length
+
+    def __call__(self, form, field):
+        field_length = len(str(field.data)) if field.data else 0
+        if field_length > self.max_length:
+            raise ValidationError(_l('validate.length-max-reached', diff=field_length - self.max_length))
+
+
 class IntegerLength:
     def __init__(self, min=-1, max=-1, message=None):
         if (min != -1 and min < 0) \
                 or (max != -1 and max < 0) \
                 or (max != -1 and max < min):
-            raise ValueError
+            raise ValidationError
         self.min = min
         self.max = max
         if not message:
@@ -55,13 +65,17 @@ class IntegerLength:
 
 class ValidIban:
     def __call__(self, form, field):
+        if field.data:
+            iban = field.data
+        else:
+            iban = ''
         try:
-            iban = IBAN(field.data)
+            iban = IBAN(iban)
         except ValueError:
-            raise ValueError(_('validate.invalid-iban'))
+            raise ValidationError(_('validate.invalid-iban'))
 
         if iban.country_code != 'DE':
-            raise ValueError(_('validate.country-code-not-de'))
+            raise ValidationError(_('validate.country-code-not-de'))
 
 
 class ValidIdNr:
@@ -100,6 +114,9 @@ class ValidIdNr:
 
 class ValidUnlockCode:
     def __call__(self, form, field):
+        if not field.data:
+            raise ValidationError(_('validate.unlock-code-length'))
+
         input_str = str(field.data)
         # must contain 14 digits
         if len(input_str) != 14:
@@ -111,6 +128,8 @@ class ValidUnlockCode:
 
 class ValidElsterCharacterSet:
     def __call__(self, form, field):
+        if not field.data:
+            return
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_ELSTER_CHARACTERS:
@@ -119,6 +138,8 @@ class ValidElsterCharacterSet:
 
 class ValidUnlockCodeCharacterSet:
     def __call__(self, form, field):
+        if not field.data:
+            return
         input_str = str(field.data)
         for char in input_str:
             if char not in VALID_UNLOCK_CODE_CHARACTERS:

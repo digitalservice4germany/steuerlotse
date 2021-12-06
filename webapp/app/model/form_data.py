@@ -230,6 +230,8 @@ class FormDataDependencies(BaseModel):
     person_b_blind: Optional[bool]
     person_b_gehbeh: Optional[bool]
 
+    telephone_number: Optional[str]
+
     familienstand: Optional[str]
     familienstand_date: Optional[date]
     familienstand_married_lived_separated: Optional[str]

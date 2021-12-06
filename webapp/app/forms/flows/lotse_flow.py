@@ -6,7 +6,8 @@ from flask import request, flash, url_for
 from flask_babel import _, lazy_gettext as _l
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
-from wtforms.fields.core import UnboundField, SelectField, BooleanField, RadioField
+from wtforms import SelectField, BooleanField, RadioField, IntegerField
+from wtforms.fields.core import UnboundField
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
@@ -16,16 +17,15 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
 from app.forms.fields import SteuerlotseDateField, LegacySteuerlotseSelectField, LegacyYesNoField, \
     LegacySteuerlotseDateField, SteuerlotseStringField, \
     ConfirmationField, EntriesField, EuroField, YesNoField
-from wtforms.fields.core import IntegerField
+from wtforms.fields import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, \
-    StepFamilienstand
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
@@ -136,6 +136,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepSteuernummer,
                 StepPersonA,
                 StepPersonB,
+                StepTelephoneNumber,
                 StepIban,
 
                 StepSelectStmind,
@@ -239,14 +240,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                     stored_data = self._delete_dependent_data(['is_user_account_holder', 'stmind_gem_haushalt'], stored_data)
                 if stored_data['familienstand'] == 'single':
                     stored_data = self._delete_dependent_data(['familienstand_date'], stored_data)
-        elif isinstance(step, StepPersonA):
-            if show_person_b(stored_data):
-                render_info.next_url = self.url_for_step(StepPersonB.name)
-            else:
-                render_info.next_url = self.url_for_step(StepIban.name)
-        elif isinstance(step, StepIban):
-            if not show_person_b(stored_data):
-                render_info.prev_url = self.url_for_step(StepPersonA.name)
         elif isinstance(step, StepHaushaltsnaheHandwerker):
             if show_person_b(stored_data) or \
                     not stored_data.get('stmind_handwerker_summe') and \

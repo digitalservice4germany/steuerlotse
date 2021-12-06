@@ -8,7 +8,7 @@ from app.forms.fields import EuroField, SteuerlotseDateField, LegacyYesNoField, 
 from app.forms.steps.logout_steps import LogoutInputStep
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepFiling, StepConfirmation
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepPersonA, StepIban, StepFamilienstand
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Step, FormStep
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
@@ -151,14 +151,6 @@ class MockDeclarationEdatenStep(StepDeclarationEdaten):
 class MockFamilienstandStep(StepFamilienstand):
     def __init__(self, **kwargs):
         super(MockFamilienstandStep, self).__init__(**kwargs)
-
-    def render(self, data, render_info):
-        return make_response(json.dumps([data], default=str), 200)
-
-
-class MockPersonAStep(StepPersonA):
-    def __init__(self, **kwargs):
-        super(MockPersonAStep, self).__init__(**kwargs)
 
     def render(self, data, render_info):
         return make_response(json.dumps([data], default=str), 200)

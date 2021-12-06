@@ -21,6 +21,8 @@ class FormDataEst(BaseModel):
     bundesland: str
     iban: str
     account_holder: AccountHoler
+    
+    telephone_number: Optional[str]
 
     familienstand: str  # potentially enum
     familienstand_date: Optional[date]
