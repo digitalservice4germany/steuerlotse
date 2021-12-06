@@ -1,6 +1,12 @@
 {% extends 'basis/base.html' %}
+{% import "components.html" as components %}
+
 
 {% block content %}
+        <div class="mt-3">
+            {{ components.backLink(text=_('form.back'),
+                                    url=url_for('index')) }}
+        </div>
         {% block content_content %}
         {% endblock %}
 {% endblock %}
