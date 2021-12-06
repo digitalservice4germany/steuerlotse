@@ -169,7 +169,7 @@ def register_request_handlers(app):
     @app.route('/')
     @add_caching_headers
     def index():
-        return render_template('content/landing_page.html',
+        return render_template('content/temp_landing_page.html',
                                header_title=_('page.title'),
                                js_needed=False)
 
