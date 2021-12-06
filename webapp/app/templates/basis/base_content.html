@@ -2,11 +2,27 @@
 {% import "components.html" as components %}
 
 
-{% block content %}
-        <div class="mt-3">
-            {{ components.backLink(text=_('form.back'),
-                                    url=url_for('index')) }}
-        </div>
-        {% block content_content %}
-        {% endblock %}
+{% block body %}
+    <div id="skip-to-content-div" class="col">
+        <a href="#main" id="skip-to-content-link">{{ _('skip-to-content-link') }}</a>
+    </div>
+    <div class="content-home-temp">
+        <main id="main" class="main-content-home-temp container-fluid hero">
+
+            <div class="main-content">
+                <div class="mt-4">
+                    <div class="col-lg-9 col-md-10 col-xs-12 p-0 mx-auto">
+                        <div class="mt-3">
+                            {{ components.backLink(text=_('form.back'),
+                                                    url=url_for('index')) }}
+                        </div>
+                        {% block content_content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        {% include 'basis/footer_footer.html' %}
+    </div>
+
 {% endblock %}
