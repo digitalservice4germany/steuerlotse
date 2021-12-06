@@ -115,6 +115,12 @@
   }
 }
 
+@media (max-width: 768px) {
+  .main-content-home-temp .hero__inner_headline {
+    margin-top: var(--spacing-08);
+  }
+}
+
 /* Temp Homepage > Texts */
 .hero-temp-title {
   color: var(--link-color);
@@ -132,6 +138,19 @@
   margin-top: var(--spacing-07);
   font-size: var(--text-lg);
   width: 80%;
+}
+
+@media (max-width: 768px) {
+  .hero-temp-title {
+    font-size: var(--text-2xl);
+    width: 100%;
+  }
+  .hero-temp-subtitle {
+    font-size: var(--text-2xl);
+  }
+  .hero-temp-desc {
+    width: 100%;
+  }
 }
 
 /* Temp Homepage > Logo */
@@ -155,9 +174,28 @@
   }
 }
 
+@media (max-width: 768px) {
+  .logo-wrapper-temp-mobile {
+    margin-top: var(--spacing-04);
+  }
+}
+
 /* Temp Homepage > BMF */
 .bmf-info-temp {
   margin-top: var(--spacing-09);
+  margin-bottom: var(--spacing-08);
+}
+
+@media (min-width: 1024px) {
+  .bmf-info-temp {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .bmf-info-temp {
+    margin-top: var(--spacing-07);
+  }
 }
 
 .bmf-info-temp small {
