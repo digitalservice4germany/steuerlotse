@@ -9,11 +9,11 @@ export default {
   component: FormFieldCheckBox,
 };
 
-const Template = (args) => (
+function Template(args) {
   <StepForm {...StepFormDefault.args}>
     <FormFieldCheckBox {...args} />
-  </StepForm>
-);
+  </StepForm>;
+}
 
 export const Default = Template.bind({});
 Default.args = {

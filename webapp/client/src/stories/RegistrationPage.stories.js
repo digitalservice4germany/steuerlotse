@@ -8,7 +8,9 @@ export default {
   component: RegistrationPage,
 };
 
-const Template = (args) => <RegistrationPage {...args} />;
+function Template(args) {
+  <RegistrationPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

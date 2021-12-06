@@ -7,7 +7,9 @@ export default {
   component: FieldLabel,
 };
 
-const Template = (args) => <FieldLabel {...args} />;
+function Template(args) {
+  <FieldLabel {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

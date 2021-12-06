@@ -7,7 +7,9 @@ export default {
   component: StepHeaderButtons,
 };
 
-const Template = (args) => <StepHeaderButtons {...args} />;
+function Template(args) {
+  <StepHeaderButtons {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

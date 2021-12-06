@@ -9,11 +9,11 @@ export default {
   component: FormFieldTaxNumber,
 };
 
-const Template = (args) => (
+function Template(args) {
   <StepForm {...StepFormDefault.args}>
     <FormFieldTaxNumber {...args} />
-  </StepForm>
-);
+  </StepForm>;
+}
 
 export const Default = Template.bind({});
 Default.args = {

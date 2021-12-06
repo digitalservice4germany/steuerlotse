@@ -8,7 +8,9 @@ export default {
   component: TaxNumberPage,
 };
 
-const Template = (args) => <TaxNumberPage {...args} />;
+function Template(args) {
+  <TaxNumberPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

@@ -7,7 +7,9 @@ export default {
   component: FormHeader,
 };
 
-const Template = (args) => <FormHeader {...args} />;
+function Template(args) {
+  <FormHeader {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {
