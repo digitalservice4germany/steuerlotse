@@ -93,6 +93,7 @@
 /* Temp Homepage > Container */
 .main-content-home-temp .hero__inner {
   max-height: none;
+  flex-wrap: wrap-reverse;
 }
 
 .main-content-home-temp.hero {
