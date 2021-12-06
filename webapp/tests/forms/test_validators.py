@@ -4,9 +4,9 @@ import pytest
 from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import UnlockCodeField
+from app.forms.fields import UnlockCodeField, SteuerlotseStringField
 from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
-    ValidUnlockCodeCharacterSet, ValidHessenTaxNumber, ValidIban, NoZero
+    ValidUnlockCodeCharacterSet, ValidHessenTaxNumber, ValidIban, NoZero, MaximumLength
 
 
 @pytest.fixture()
@@ -50,6 +50,39 @@ class TestDecimalOnly(unittest.TestCase):
             self.field.data = '12' + char
             with pytest.raises(ValidationError):
                 validator.__call__(self.form, self.field)
+
+
+class TestMaximumLength:
+    @pytest.fixture()
+    def field(self):
+        return SteuerlotseStringField()
+
+    @pytest.fixture()
+    def form(self):
+        return SteuerlotseBaseForm()
+
+    def test_if_string_shorter_than_max_then_return_no_validation_error(self, field, form):
+        validator = MaximumLength(5)
+        field.data = "1337"
+        try:
+            validator(form, field)
+        except ValidationError:
+            pytest.fail("MaximumLength raised ValidationError unexpectedly!")
+
+    def test_if_string_longer_than_max_then_return_validation_error(self, field, form):
+        validator = MaximumLength(5)
+        field.data = "13371337"
+        with pytest.raises(ValidationError):
+            validator(form, field)
+
+    def test_if_validation_error_thrown_then_set_diff_in_message(self, field, form):
+        input_string = "13371337"
+        validator = MaximumLength(5)
+        field.data = input_string
+        try:
+            validator(form, field)
+        except ValidationError as e:
+            assert e.args[0]._kwargs['diff'] == (len(input_string) - 5)
 
 
 class TestNoZero:

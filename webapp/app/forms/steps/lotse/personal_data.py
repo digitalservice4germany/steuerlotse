@@ -12,14 +12,14 @@ from app.forms.fields import ConfirmationField, \
     TaxNumberField, YesNoField, LegacyIdNrField, LegacySteuerlotseDateField, SteuerlotseNameStringField, \
     SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, StepIban, \
-    get_religion_field, get_number_of_users
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban, \
+    get_religion_field
 from app.forms.steps.step import SectionLink, FormStep
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
-    ValidIdNr
+    ValidIdNr, MaximumLength
 from app.forms.validators import DecimalOnly, IntegerLength
-from app.model.components import TaxNumberStepFormProps
+from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
 
@@ -31,7 +31,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepFamilienstand
-    next_step = StepPersonA
 
     label = _l('form.lotse.step_steuernummer.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -173,8 +172,13 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                                header_title=self.header_title)
 
 
-# TODO Rename to StepPersonA once the old Multistep flow step is gone
-class StepPersonANew(LotseFormSteuerlotseStep):
+def get_number_of_users(input_data):
+    if show_person_b(input_data):
+        return 2
+    return 1
+
+
+class StepPersonA(LotseFormSteuerlotseStep):
     name = 'person_a'
     title = None  # set below
     intro = None  # set below
@@ -290,9 +294,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
     title = _l('form.lotse.person-b-title')
     intro = _l('form.lotse.person-b-intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    # TODO remove this once the adjacent steps are converted to steuerlotse steps
-    prev_step = StepPersonA
-    next_step = StepIban
 
     label = _l('form.lotse.step_person_b.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -394,3 +395,45 @@ class StepPersonB(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
+
+class StepTelephoneNumber(LotseFormSteuerlotseStep):
+    name = 'telephone_number'
+    title = _l('form.lotse.telephone-number.title')
+    intro = _l('form.lotse.telephone-number.intro')
+    header_title = _l('form.lotse.mandatory_data.header-title')
+    # TODO remove this once the next steps is converted to steuerlotse step
+    next_step = StepIban
+
+    label = _l('form.lotse.step_telephone_number.label')
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+
+    class InputForm(SteuerlotseBaseForm):
+        telephone_number = SteuerlotseStringField(
+            validators=[MaximumLength(25)],
+            render_kw={'data_label': _l('form.lotse.field_telephone_number.data_label')})
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
+    def render(self):
+        props_dict = TelephoneNumberProps(
+            step_header={
+                'title': str(self.title),
+                'intro': str(self.intro),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url,
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='TelephoneNumberPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))

@@ -30,6 +30,16 @@ class NoZero:
             raise ValidationError(_('validate.must-not-be-zero'))
 
 
+class MaximumLength:
+    def __init__(self, max_length):
+        self.max_length = max_length
+
+    def __call__(self, form, field):
+        field_length = len(str(field.data)) if field.data else 0
+        if field_length > self.max_length:
+            raise ValidationError(_l('validate.length-max-reached', diff=field_length - self.max_length))
+
+
 class IntegerLength:
     def __init__(self, min=-1, max=-1, message=None):
         if (min != -1 and min < 0) \

@@ -23,6 +23,7 @@ const taxReturnData = {
     marriedDateDay: '01',
     marriedDateMonth: '01',
     marriedDateYear: '1990',
+    telephoneNumber: '089 32168',
     iban: 'DE02500105170137075030',
     personA: {
         idnr1: '04',
@@ -287,6 +288,9 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
+                cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
+                cy.get(submitBtnSelector).click()
+
                 cy.get('label[for=is_user_account_holder]').first().click()
                 cy.get('#iban').type(taxReturnData.iban)
                 cy.get(submitBtnSelector).click()
@@ -335,6 +339,9 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_street_number').type(taxReturnData.personA.streetNumber)
                 cy.get('#person_a_plz').type(taxReturnData.personA.postalCode)
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
+                cy.get(submitBtnSelector).click()
+
+                cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=is_user_account_holder]').first().click()
@@ -416,6 +423,9 @@ context('Acceptance tests', () => {
                 cy.get('#person_b_plz').type(taxReturnData.personB.postalCode)
                 cy.get('#person_b_town').type(taxReturnData.personB.town)
                 cy.get('select[id=person_b_religion]').select('ev')
+                cy.get(submitBtnSelector).click()
+
+                // no telephone number
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=account_holder-0]').first().click()

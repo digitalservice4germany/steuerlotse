@@ -30,14 +30,13 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepPersonA, \
-    StepIban
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
     InputDataInvalidError, IdNrMismatchInputValidationError, MandatoryFormData, show_person_b
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
-    MockForm, MockFilingStep, MockPersonAStep, MockIbanStep, \
+    MockForm, MockFilingStep, MockIbanStep, \
     MockFamilienstandStep, MockConfirmationStep, MockDeclarationEdatenStep, MockDeclarationIncomesStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
@@ -168,6 +167,7 @@ class TestLotseInit(unittest.TestCase):
             StepSteuernummer,
             StepPersonA,
             StepPersonB,
+            StepTelephoneNumber,
             StepIban,
 
             StepSelectStmind,
@@ -510,7 +510,7 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
     def setUp(self):
         testing_steps = [MockStartStep, MockDeclarationIncomesStep, MockDeclarationEdatenStep,
-                         MockFamilienstandStep, MockPersonAStep, StepPersonB, MockIbanStep,
+                         MockFamilienstandStep, StepPersonA, StepPersonB, MockIbanStep,
                          StepSelectStmind,
                          StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, StepReligion,
                          StepSummary, MockConfirmationStep, MockFilingStep, MockMiddleStep, MockFormStep,
@@ -596,14 +596,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                                                 self.familienstand_step.name),
                                                             overview_url="Overview URL")
 
-        prev_step, self.personA_step, next_step = self.flow._generate_steps(MockPersonAStep.name)
-        self.render_info_personA_step = RenderInfo(step_title=self.personA_step.title,
-                                                    step_intro=self.personA_step.intro, form=None,
-                                                    prev_url=self.flow.url_for_step(prev_step.name),
-                                                    next_url=self.flow.url_for_step(next_step.name),
-                                                    submit_url=self.flow.url_for_step(self.personA_step.name),
-                                                    overview_url="Overview URL")
-
         prev_step, self.iban_step, next_step = self.flow._generate_steps(MockIbanStep.name)
         self.render_info_iban_step = RenderInfo(step_title=self.iban_step.title, step_intro=self.iban_step.intro,
                                                 form=None, prev_url=self.flow.url_for_step(prev_step.name),
@@ -615,8 +607,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                                 'familienstand_married_lived_separated': 'no',
                                 'familienstand_confirm_zusammenveranlagung': True}
         self.data_not_married = {'familienstand': 'single'}
-        self.personA_url = '/' + self.endpoint_correct + '/step/' + StepPersonA.name + \
-                            '?link_overview=' + str(self.flow.has_link_overview)
         self.personB_url = '/' + self.endpoint_correct + '/step/' + StepPersonB.name + \
                             '?link_overview=' + str(self.flow.has_link_overview)
         self.IBAN_url = '/' + self.endpoint_correct + '/step/' + StepIban.name + \
@@ -654,13 +644,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         self.req.request.form = ImmutableMultiDict({'overview_button': ''})
         returned_data, _ = self.flow._handle_specifics_for_step(
             self.middle_step, copy.deepcopy(self.render_info_middle_step), self.session_data)
-
-        self.assertEqual(self.summary_url, returned_data.next_url)
-
-    def test_if_step_with_custom_next_url_and_overview_button_set_then_set_next_url_to_overview_url(self):
-        self.req.request.form = ImmutableMultiDict({'overview_button': ''})
-        returned_data, _ = self.flow._handle_specifics_for_step(
-            self.personA_step, copy.deepcopy(self.render_info_personA_step), self.data_married)
 
         self.assertEqual(self.summary_url, returned_data.next_url)
 
@@ -980,26 +963,6 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
                 {'stmind_gem_haushalt_entries': ['Helene Fischer'], 'stmind_gem_haushalt_count': 1})
             self.assertIn('stmind_gem_haushalt_entries', returned_data)
             self.assertIn('stmind_gem_haushalt_count', returned_data)
-
-    def test_if_person_a_step_then_set_next_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.personA_step, self.render_info_personA_step, self.data_married)
-            self.assertEqual(self.personB_url, render_info.next_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.personA_step, self.render_info_personA_step, self.data_not_married)
-            self.assertEqual(self.IBAN_url, render_info.next_url)
-
-    def test_if_iban_step_then_set_prev_url_correct(self):
-        with self.app.test_request_context(method='POST'):
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.iban_step, self.render_info_iban_step, self.data_married)
-            self.assertEqual(self.personB_url, render_info.prev_url)
-
-            render_info, _ = self.flow._handle_specifics_for_step(
-                self.iban_step, self.render_info_iban_step, self.data_not_married)
-            self.assertEqual(self.personA_url, render_info.prev_url)
 
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):

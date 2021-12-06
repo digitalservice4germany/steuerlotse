@@ -7,7 +7,8 @@ from flask_babel import ngettext, _
 from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonANew, StepPersonB, ShowPersonBPrecondition
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
+    StepTelephoneNumber
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -249,7 +250,7 @@ class TestStepPersonATexts:
 
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
-            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonANew.name, False,
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
 
@@ -268,7 +269,7 @@ class TestStepPersonATexts:
 
         with app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
-            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonANew.name, False,
+            step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
 
@@ -282,7 +283,7 @@ class TestStepPersonAGetLabel:
             'familienstand': 'single',
         }
         expected_label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=1)
-        returned_label = StepPersonANew.get_label(session_data)
+        returned_label = StepPersonA.get_label(session_data)
         assert returned_label == expected_label
 
     def test_if_multiple_users_then_return_multiple_text(self):
@@ -293,12 +294,12 @@ class TestStepPersonAGetLabel:
             'familienstand_confirm_zusammenveranlagung': True,
         }
         expected_label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=2)
-        returned_label = StepPersonANew.get_label(session_data)
+        returned_label = StepPersonA.get_label(session_data)
         assert returned_label == expected_label
 
 
 def new_person_a_step(form_data):
-    return LotseStepChooser().get_correct_step(StepPersonANew.name, True, ImmutableMultiDict(form_data))
+    return LotseStepChooser().get_correct_step(StepPersonA.name, True, ImmutableMultiDict(form_data))
 
 
 @pytest.mark.usefixtures('test_request_context')
@@ -415,3 +416,19 @@ class TestPersonBValidation:
         with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
+
+
+class TestTelephoneNumberValidation:
+    def test_if_number_max_25_chars_then_succ_validation(self, new_test_request_context):
+        data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit ame'})
+        with new_test_request_context(form_data=data):
+            step = LotseStepChooser().get_correct_step(StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is True
+
+    def test_if_number_over_25_chars_then_succ_validation(self, new_test_request_context):
+        data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit amet'})
+        with new_test_request_context(form_data=data):
+            step = LotseStepChooser().get_correct_step(StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is False
