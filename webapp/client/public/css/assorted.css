@@ -8,7 +8,7 @@
     max-height: 900px;
   }
 
-  .hero__inner h1 {
+  .hero__inner h1:not(.hero-temp-title) {
     font-size: var( --text-3xl);
   }
 
@@ -65,7 +65,7 @@
     min-height: 80vh;
   }
 
-  .hero__inner h1 {
+  .hero__inner h1:not(.hero-temp-title) {
     font-size: var( --text-3xl);
     margin-top: var(--spacing-08);
   }
@@ -89,6 +89,29 @@
     max-height: 650px;
   }
 }
+
+/* Temp Homepage > Texts */
+.hero-temp-title {
+  color: var(--link-color);
+  font-size: var(--text-4xl);
+  line-height: var(--lineheight-xs);
+  font-weight: var(--font-bold);
+}
+.hero-temp-subtitle {
+  font-size: var(--text-4xl);
+  line-height: var(--lineheight-xs);
+  font-weight: var(--font-bold);
+}
+.hero-temp-desc {
+  font-size: var(--text-lg);
+  width: 80%;
+}
+
+/* Temp Homepage > BMF */
+.bmf-info-temp small {
+  display: block;
+}
+
 
 /* Homepage > Accordion */
 .accordion__home{
