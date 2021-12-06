@@ -3,13 +3,16 @@
 
 {% block body %}
     <main class="main-content-home-temp container-fluid hero">
+        <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}" class="logo-wrapper-temp-mobile row">
+            <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}"
+                 alt="{{ _('overview') }}"/>
+        </a>
         <div class="row hero__inner">
             <div class="hero__inner_headline">
-                 <div class="logo-wrapper-temp">
-                    <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}">
-                        <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}" alt="{{ _('overview') }}"/>
-                    </a>
-                </div>
+                <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}" class="logo-wrapper-temp">
+                    <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}"
+                         alt="{{ _('overview') }}"/>
+                </a>
                 <h1 class="hero-temp-title">{{ _('landing.hero-title-temp') }}</h1>
                 <p class="hero-temp-subtitle">{{ _('landing.hero-title-2-temp') }}</p>
                 <p class="hero-temp-desc">{{ _('landing.hero-desc-temp') }}</p>

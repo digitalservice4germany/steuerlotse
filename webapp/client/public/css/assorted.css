@@ -135,7 +135,23 @@
 
 /* Temp Homepage > Logo */
 .logo-wrapper-temp {
-  margin-bottom: var(--spacing-09);
+  display: none;
+}
+
+.logo-wrapper-temp-mobile {
+  display: block;
+  margin-top: var(--spacing-07);
+}
+
+@media (min-width: 1024px) {
+  .logo-wrapper-temp {
+    display: block;
+    margin-bottom: var(--spacing-09);
+  }
+
+  .logo-wrapper-temp-mobile {
+    display: none;
+  }
 }
 
 /* Temp Homepage > BMF */
