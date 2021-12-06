@@ -728,6 +728,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
             'E0100301': 'Hans',
             'E0100401': '05.05.1955',
             'E0100602': 'Musterort',
+            'E0100008': '01513213213',
             PersonSpecificFieldId(identifier='E0109706', person='PersonA'): '1'
         }
         self.dummy_fields_beh_both = {
@@ -735,6 +736,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
             'E0100301': 'Hans',
             'E0100401': '05.05.1955',
             'E0100602': 'Musterort',
+            'E0100008': '01513213213',
             PersonSpecificFieldId(identifier='E0109706', person='PersonA'): '1',
             PersonSpecificFieldId(identifier='E0109706', person='PersonB'): '1'
         }
@@ -857,6 +859,8 @@ class TestGenerateFullEstXML(unittest.TestCase):
             '<Beh><Person>PersonA</Person><Geh_Steh_Blind_Hilfl><E0109706>1</E0109706></Geh_Steh_Blind_Hilfl></Beh>',
             "".join(xml_string.split()))
 
+        self.assertIn('<E0100008>01513213213</E0100008>', xml_string)
+
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_two_persons_filled_out_beh_then_generate_full_xml(self):
         xml_string = self._call_generate_full_est_xml(self.dummy_fields_beh_both)
@@ -874,6 +878,8 @@ class TestGenerateFullEstXML(unittest.TestCase):
         self.assertIn(
             '<Beh><Person>PersonA</Person><Geh_Steh_Blind_Hilfl><E0109706>1</E0109706></Geh_Steh_Blind_Hilfl></Beh>',
             "".join(xml_string.split()))
+
+        self.assertIn('<E0100008>01513213213</E0100008>', xml_string)
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_ausserg_bela_filled_out_then_generate_full_xml(self):

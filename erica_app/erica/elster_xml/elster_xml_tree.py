@@ -20,11 +20,12 @@ _PERSON_B_FIELDS = ['E0101001', 'E0100901', 'E0100801', 'E0101002', 'E0102105', 
                     'E0101701', 'E0101702']
 
 # Persönliche Daten
+_ALLG_TELE_NUMMER = 'E0100008'
 _ALLG_A = ElsterXmlTreeNode(name='A', sub_elements=_PERSON_A_FIELDS)
 _ALLG_B = ElsterXmlTreeNode(name='B', sub_elements=_PERSON_B_FIELDS)
 _ALLG_BANK_INFORMATION = ElsterXmlTreeNode(name='BV', sub_elements=['E0102102', 'E0101601', 'E0102402'])
 _ALLG_VLG_ART = ElsterXmlTreeNode(name='Vlg_Art', sub_elements=['E0101201'])
-_EST1A_ALLG = ElsterXmlTreeNode(name='Allg', sub_elements=[_ALLG_A, _ALLG_B, _ALLG_VLG_ART, _ALLG_BANK_INFORMATION])
+_EST1A_ALLG = ElsterXmlTreeNode(name='Allg', sub_elements=[_ALLG_TELE_NUMMER, _ALLG_A, _ALLG_B, _ALLG_VLG_ART, _ALLG_BANK_INFORMATION])
 _EST1A_BELEGE = ElsterXmlTreeNode(name='Belege', sub_elements=['E0100012', 'E0100013'])
 _EST1A_ART_ERKL = ElsterXmlTreeNode(name='Art_Erkl', sub_elements=['E0100001'])
 

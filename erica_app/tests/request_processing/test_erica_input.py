@@ -29,6 +29,7 @@ def standard_est_data():
             'person_a_religion': 'none',
             'person_a_blind': False,
             'person_a_gehbeh': False,
+            'telephone_number': '01715151',
 
             'person_b_idnr': '02293417683',
             'person_b_dob': date(1951, 2, 25),
