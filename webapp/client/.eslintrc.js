@@ -25,6 +25,13 @@ module.exports = {
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
     "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "warn",
+    "react/function-component-definition": [
+      2,
+      {
+        namedComponents: "function-declaration",
+        unnamedComponents: "arrow-function",
+      },
+    ],
     "jsx-a11y/no-autofocus": "warn",
     "react/forbid-prop-types": "warn",
   },
