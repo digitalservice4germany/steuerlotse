@@ -182,12 +182,12 @@
         },
         "flask-limiter": {
             "hashes": [
-                "sha256:021279c905a1e24f181377ab3be711be7541734b494f4e6db2b8edeba7601e48",
-                "sha256:055a388a89f4d5768c64025443f1f41e3babcbbbf315c728413c27b4975af239",
-                "sha256:f8a65a7874f48ff8df2ea5e86d5b85b48fcbae065ebeb5271b317fe68fcfa979"
+                "sha256:15983c500f9ab739bb0ef6b91114d2243a9dece7acf2f2a0d627bed66224e0b2",
+                "sha256:5f3c4e70f46e60979665542ca97c35a2b2ff6f5aa27e144bf478800d4a4ad31d",
+                "sha256:7d83bb26510355409fd10f4d8fbc4b4bf6b177063f1a4ee70003f30f3288c430"
             ],
             "index": "pypi",
-            "version": "==1.4"
+            "version": "==2.0.2"
         },
         "flask-login": {
             "hashes": [
