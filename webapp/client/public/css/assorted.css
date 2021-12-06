@@ -96,6 +96,7 @@
   font-size: var(--text-4xl);
   line-height: var(--lineheight-xs);
   font-weight: var(--font-bold);
+  width: 80%;
 }
 .hero-temp-subtitle {
   font-size: var(--text-4xl);
@@ -103,11 +104,16 @@
   font-weight: var(--font-bold);
 }
 .hero-temp-desc {
+  margin-top: var(--spacing-07);
   font-size: var(--text-lg);
   width: 80%;
 }
 
 /* Temp Homepage > BMF */
+.bmf-info-temp {
+  margin-top: var(--spacing-09);
+}
+
 .bmf-info-temp small {
   display: block;
 }
