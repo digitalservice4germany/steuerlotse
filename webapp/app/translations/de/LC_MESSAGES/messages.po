@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-03 16:41+0100\n"
+"POT-Creation-Date: 2021-12-06 14:27+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,109 +18,87 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:65
+#: app/routes.py:66
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:66
+#: app/routes.py:67
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:67
+#: app/routes.py:68
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:68
+#: app/routes.py:69
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:70
+#: app/routes.py:71
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:72
+#: app/routes.py:73
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:76
+#: app/routes.py:77
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:154
-msgid "unlock_code_request.logged_in.title"
-msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
-
-#: app/routes.py:155
-msgid "unlock_code_request.logged_in.intro"
-msgstr ""
-"Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
-" Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
-"registrieren möchten, müssen Sie sich zuerst abmelden."
-
-#: app/routes.py:182
-msgid "unlock_code_revocation.logged_in.title"
-msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
-
-#: app/routes.py:183
-msgid "unlock_code_revocation.logged_in.intro"
-msgstr ""
-"Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
-"wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
-"Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
-
-#: app/routes.py:196 app/routes.py:304
-msgid "404.header-title"
-msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:216 app/templates/basis/base.html:37
+#: app/routes.py:173 app/templates/basis/base.html:37
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:223
+#: app/routes.py:180
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:230
+#: app/routes.py:187
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:237
+#: app/routes.py:194
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:244
+#: app/routes.py:201
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:251
+#: app/routes.py:208
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:258
+#: app/routes.py:215
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:270
+#: app/routes.py:227
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:275
+#: app/routes.py:232
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:296
+#: app/routes.py:253
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:300 app/routes.py:308
+#: app/routes.py:257 app/routes.py:265
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:312
+#: app/routes.py:261
+msgid "404.header-title"
+msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
+
+#: app/routes.py:269
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:318
+#: app/routes.py:275
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -2928,24 +2906,28 @@ msgstr ""
 "entwickeln digitale Lösungen für und mit der Bundesverwaltung. Im Zentrum"
 " stehen die Bedürfnisse der Nutzerinnen und Nutzer."
 
-#: app/templates/basis/footer.html:54
+#: app/templates/basis/footer_footer.html:5
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:55
+#: app/templates/basis/footer_footer.html:6
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:56
+#: app/templates/basis/footer_footer.html:7
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:57
+#: app/templates/basis/footer_footer.html:8
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 
 #: app/templates/basis/mobile_nav.html:5 app/templates/basis/sidebar.html:8
 #: app/templates/basis/sidebar.html:9
+#: app/templates/content/temp_landing_page.html:7
+#: app/templates/content/temp_landing_page.html:9
+#: app/templates/content/temp_landing_page.html:13
+#: app/templates/content/temp_landing_page.html:15
 msgid "overview"
 msgstr "Übersicht"
 
@@ -2958,10 +2940,12 @@ msgid "nav.mobile-toggle-button.text"
 msgstr "Inhalt"
 
 #: app/templates/basis/sidebar.html:21
+#: app/templates/content/temp_landing_page.html:21
 msgid "sidebar.bmf.text"
 msgstr "Im Auftrag des"
 
 #: app/templates/basis/sidebar.html:25
+#: app/templates/content/temp_landing_page.html:24
 msgid "bmf"
 msgstr "Bundesministerium der Finanzen"
 
@@ -4871,31 +4855,27 @@ msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
 #: app/templates/content/landing_page.html:80
-#: app/templates/content/temp_landing_page.html:24
+#: app/templates/content/temp_landing_page.html:37
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
 #: app/templates/content/landing_page.html:90
-#: app/templates/content/temp_landing_page.html:34
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
 #: app/templates/content/landing_page.html:91
-#: app/templates/content/temp_landing_page.html:35
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
 #: app/templates/content/landing_page.html:98
-#: app/templates/content/temp_landing_page.html:42
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
 #: app/templates/content/landing_page.html:99
-#: app/templates/content/temp_landing_page.html:43
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
@@ -4903,12 +4883,10 @@ msgstr ""
 "zugeschickt. "
 
 #: app/templates/content/landing_page.html:106
-#: app/templates/content/temp_landing_page.html:50
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
 #: app/templates/content/landing_page.html:107
-#: app/templates/content/temp_landing_page.html:51
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
@@ -4928,19 +4906,17 @@ msgstr ""
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
-#: app/templates/content/temp_landing_page.html:10
+#: app/templates/content/temp_landing_page.html:17
 msgid "landing.hero-title-temp"
-msgstr ""
-"Das Lotsenteam wünscht ein  "
-"gesundes neues Jahr!"
+msgstr "Das Lotsenteam wünscht ein gesundes&nbsp;neues&nbsp;Jahr!"
 
-#: app/templates/content/temp_landing_page.html:11
+#: app/templates/content/temp_landing_page.html:18
 msgid "landing.hero-title-2-temp"
 msgstr ""
 "Wir stellen auf das neue Steuerjahr 2021 um und sind ab dem 14. Januar "
 "wieder für Sie da."
 
-#: app/templates/content/temp_landing_page.html:12
+#: app/templates/content/temp_landing_page.html:19
 msgid "landing.hero-desc-temp"
 msgstr ""
 "Um diese Umstellung durchzuführen, ist der Steuerlotse für eine kurze "
