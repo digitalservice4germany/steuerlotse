@@ -751,12 +751,10 @@ class TestGenerateFullEstXML(unittest.TestCase):
             'E0161405': '104',
             'E0161504': '105',
             'E0161505': '105',
-            'E0161604': '106',
-            'E0161605': '107',
-            'E0161704': '108',
-            'E0161705': '109',
-            'E0161804': '110',
-            'E0161805': '111',
+            'E0161704': '106',
+            'E0161705': '107',
+            'E0161804': '108',
+            'E0161805': '109',
         }
 
         self.dummy_fields_sonderausgaben = {
@@ -891,11 +889,9 @@ class TestGenerateFullEstXML(unittest.TestCase):
                       "".join(xml_string.split()))
         self.assertIn('<Beh_Aufw><Sum><E0161504>105</E0161504><E0161505>105</E0161505></Sum></Beh_Aufw>',
                       "".join(xml_string.split()))
-        self.assertIn('<Beh_Kfz><Sum><E0161604>106</E0161604><E0161605>107</E0161605></Sum></Beh_Kfz>',
+        self.assertIn('<Bestatt><Sum><E0161704>106</E0161704><E0161705>107</E0161705></Sum></Bestatt>',
                       "".join(xml_string.split()))
-        self.assertIn('<Bestatt><Sum><E0161704>108</E0161704><E0161705>109</E0161705></Sum></Bestatt>',
-                      "".join(xml_string.split()))
-        self.assertIn('<Sonst><Sum><E0161804>110</E0161804><E0161805>111</E0161805></Sum></Sonst>',
+        self.assertIn('<Sonst><Sum><E0161804>108</E0161804><E0161805>109</E0161805></Sum></Sonst>',
                       "".join(xml_string.split()))
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")

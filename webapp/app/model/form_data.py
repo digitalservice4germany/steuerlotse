@@ -270,8 +270,6 @@ class FormDataDependencies(BaseModel):
     stmind_pflegekosten_anspruch: Optional[Decimal]
     stmind_beh_aufw_summe: Optional[Decimal]
     stmind_beh_aufw_anspruch: Optional[Decimal]
-    stmind_beh_kfz_summe: Optional[Decimal]
-    stmind_beh_kfz_anspruch: Optional[Decimal]
     stmind_bestattung_summe: Optional[Decimal]
     stmind_bestattung_anspruch: Optional[Decimal]
     stmind_aussergbela_sonst_summe: Optional[Decimal]
@@ -308,9 +306,8 @@ class FormDataDependencies(BaseModel):
 
     @validator('stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch',
                'stmind_pflegekosten_summe', 'stmind_pflegekosten_anspruch', 'stmind_beh_aufw_summe',
-               'stmind_beh_aufw_anspruch', 'stmind_beh_kfz_summe', 'stmind_beh_kfz_anspruch',
-               'stmind_bestattung_summe', 'stmind_bestattung_anspruch', 'stmind_aussergbela_sonst_summe',
-               'stmind_aussergbela_sonst_anspruch')
+               'stmind_beh_aufw_anspruch', 'stmind_bestattung_summe', 'stmind_bestattung_anspruch',
+               'stmind_aussergbela_sonst_summe', 'stmind_aussergbela_sonst_anspruch')
     def delete_if_ausserg_bela_not_shown(cls, v, values):
         if not values.get('stmind_select_ausserg_bela'):
             return None
