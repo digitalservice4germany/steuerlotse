@@ -206,6 +206,7 @@
 
 .bmf-info-temp small {
   display: block;
+  color: var(--secondary-text-color);
 }
 
 /* Temp Homepage > Footer-Footer */
