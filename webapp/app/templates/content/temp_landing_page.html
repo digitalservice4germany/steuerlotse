@@ -2,43 +2,45 @@
 {% import "components.html" as components %}
 
 {% block body %}
-    <main class="main-content-home-temp container-fluid hero">
-        <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}" class="logo-wrapper-temp-mobile row">
-            <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}"
-                 alt="{{ _('overview') }}"/>
-        </a>
-        <div class="row hero__inner">
-            <div class="hero__inner_headline">
-                <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}" class="logo-wrapper-temp">
-                    <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}"
-                         alt="{{ _('overview') }}"/>
-                </a>
-                <h1 class="hero-temp-title">{{ _('landing.hero-title-temp') }}</h1>
-                <p class="hero-temp-subtitle">{{ _('landing.hero-title-2-temp') }}</p>
-                <p class="hero-temp-desc">{{ _('landing.hero-desc-temp') }}</p>
-                <div class="bmf-info-temp">
-                    <small>{{ _("sidebar.bmf.text") }}</small>
-                    <a href="https://www.bundesfinanzministerium.de">
-                        <img src="{{ static_url_for('static', filename='images/logo_bmf_alpha.svg') }}"
-                             alt="{{ _('bmf') }}" class="bmf-img"/>
+    <div class="content-home-temp">
+        <main class="main-content-home-temp container-fluid hero">
+            <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}" class="logo-wrapper-temp-mobile row">
+                <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}"
+                     alt="{{ _('overview') }}"/>
+            </a>
+            <div class="row hero__inner">
+                <div class="hero__inner_headline">
+                    <a href="{{ url_for('index') }}" aria-label="{{ _('overview') }}" class="logo-wrapper-temp">
+                        <img src="{{ static_url_for('static', filename='images/logo_steuerlotse.svg') }}"
+                             alt="{{ _('overview') }}"/>
                     </a>
+                    <h1 class="hero-temp-title">{{ _('landing.hero-title-temp') }}</h1>
+                    <p class="hero-temp-subtitle">{{ _('landing.hero-title-2-temp') }}</p>
+                    <p class="hero-temp-desc">{{ _('landing.hero-desc-temp') }}</p>
+                    <div class="bmf-info-temp">
+                        <small>{{ _("sidebar.bmf.text") }}</small>
+                        <a href="https://www.bundesfinanzministerium.de">
+                            <img src="{{ static_url_for('static', filename='images/logo_bmf_alpha.svg') }}"
+                                 alt="{{ _('bmf') }}" class="bmf-img"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero__inner_image">
+                    <picture>
+                        <source
+                                media="(min-width: 1024px)"
+                                srcset="{{ static_url_for('static', filename='/images/hero-image-big.png') }}">
+                        <source
+                                media="(min-width: 320px)"
+                                srcset="{{ static_url_for('static', filename='/images/hero-image-small.png') }}">
+                        <img
+                                alt="{{ _('landing.hero-image.alt-text') }}">
+                    </picture>
                 </div>
             </div>
-            <div class="hero__inner_image">
-                <picture>
-                    <source
-                            media="(min-width: 1024px)"
-                            srcset="{{ static_url_for('static', filename='/images/hero-image-big.png') }}">
-                    <source
-                            media="(min-width: 320px)"
-                            srcset="{{ static_url_for('static', filename='/images/hero-image-small.png') }}">
-                    <img
-                            alt="{{ _('landing.hero-image.alt-text') }}">
-                </picture>
-            </div>
+        </main>
+        <div class="footer-footer-temp">
+            {% include 'basis/footer_footer.html' %}
         </div>
-    </main>
-    <div class="footer-footer-temp">
-        {% include 'basis/footer_footer.html' %}
     </div>
 {% endblock %}

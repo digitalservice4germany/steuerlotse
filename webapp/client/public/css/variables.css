@@ -87,4 +87,5 @@
   --main-max-width: 1000px;
   --back-link-size: 1.8em;
   --header-navigation-height: var(--spacing-09);
+  --footer-footer-height: 54px;
 }
