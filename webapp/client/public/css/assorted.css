@@ -90,6 +90,30 @@
   }
 }
 
+/* Temp Homepage > Container */
+.main-content-home-temp .hero__inner {
+  max-height: none;
+}
+
+.main-content-home-temp.hero {
+  max-height: none;
+}
+
+.main-content-home-temp .hero__inner_image {
+  max-height: 690px;
+  margin-bottom: 0;
+}
+
+.main-content-home-temp .hero__inner_image img{
+  max-height: 690px;
+}
+
+@media (min-width: 1024px) {
+  .main-content-home-temp .hero__inner_headline {
+    margin-top: var(--spacing-07);
+  }
+}
+
 /* Temp Homepage > Texts */
 .hero-temp-title {
   color: var(--link-color);
@@ -107,6 +131,11 @@
   margin-top: var(--spacing-07);
   font-size: var(--text-lg);
   width: 80%;
+}
+
+/* Temp Homepage > Logo */
+.logo-wrapper-temp {
+  margin-bottom: var(--spacing-09);
 }
 
 /* Temp Homepage > BMF */
