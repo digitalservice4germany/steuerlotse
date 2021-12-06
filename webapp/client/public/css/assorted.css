@@ -210,6 +210,12 @@
 }
 
 /* Temp Homepage > Footer-Footer */
+.footer-footer-temp .footer-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
 .footer-footer-temp .footer-footer a {
   text-decoration: none;
 }
