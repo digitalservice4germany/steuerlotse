@@ -23,8 +23,6 @@ _ALL_FIELDS = {
     'person_a_beh_grad': 'E0109708',
     'person_a_blind': 'E0109706',
     'person_a_gehbeh': 'E0109707',
-    
-    'telephone_number': 'E0100008',
 
     'married_since': 'E0100701',
     'widowed_since': 'E0100702',
@@ -47,6 +45,8 @@ _ALL_FIELDS = {
     'person_b_blind': 'E0109706',
     'person_b_gehbeh': 'E0109707',
 
+    'telephone_number': 'E0100008',
+    
     'iban': 'E0102102',
     'is_person_a_account_holder': 'E0101601',
     'is_person_b_account_holder': 'E0102402',
@@ -249,9 +249,6 @@ def check_and_generate_entries(est_data, year=2019):
     # we are checking in the webapp that person b is set in case of zusammenveranlagung
     if est_data.get('person_b_idnr'):
         enriched_est_data['zusammen_veranlagung'] = 'X'
-
-    if est_data.get('telephone_number'):
-        enriched_est_data['telephone_number'] = est_data['telephone_number']
 
     # Same address
     if est_data.get('person_b_same_address', None):
