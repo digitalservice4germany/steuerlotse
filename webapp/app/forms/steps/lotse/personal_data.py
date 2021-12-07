@@ -233,7 +233,8 @@ class StepPersonA(LotseFormSteuerlotseStep):
             label=_l('form.lotse.field_person_plz'),
             render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
                        'max_characters': 5},
-            validators=[InputRequired(), DecimalOnly(), validators.length(max=5)])
+            validators=[InputRequired(), DecimalOnly(),
+                        validators.length(min=5, max=5, message=_l('validator-length-exactly', minmax=5))])
         person_a_town = SteuerlotseStringField(
             label=_l('form.lotse.field_person_town'),
             render_kw={'data_label': _l('form.lotse.field_person_town.data_label'),
@@ -363,7 +364,8 @@ class StepPersonB(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.field_person_plz.data_label'),
                        'max_characters': 5,
                        'required_if_shown': True},
-            validators=[input_required_if_not_same_address, DecimalOnly(), validators.length(max=5)])
+            validators=[input_required_if_not_same_address, DecimalOnly(),
+                        validators.length(min=5, max=5, message=_l('validator-length-exactly', minmax=5))])
         person_b_town = SteuerlotseStringField(
             label=_l('form.lotse.field_person_town'),
             render_kw={'data_label': _l('form.lotse.field_person_town.data_label'),
