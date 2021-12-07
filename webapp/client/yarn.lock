@@ -2720,10 +2720,10 @@
     npmlog "^4.1.2"
     pretty-hrtime "^1.0.3"
 
-"@storybook/node-logger@^6.4.4":
-  version "6.4.4"
-  resolved "https://registry.yarnpkg.com/@storybook/node-logger/-/node-logger-6.4.4.tgz#c3b0e0b0ac5ac71d9f8f6ba1b46dd979eb91fa21"
-  integrity sha512-Xuokx+PtvJn4FUTYlBE5jf7HR3a5leGxKtqzf6qi79YBQHK4sfy421vrlAlYWjy/EpmgznZiDvslvYmY2a3wkg==
+"@storybook/node-logger@^6.4.8":
+  version "6.4.8"
+  resolved "https://registry.yarnpkg.com/@storybook/node-logger/-/node-logger-6.4.8.tgz#403a21abf2335d8daf88f2f17ceda2ad6719a691"
+  integrity sha512-1gma7KvRXt/wsHzajf1h49r9vfV0TAnv/0OkryvV+sqtK48JV7A6kbVpBK0BtZBRqrQDfYTpCauX4VHfi7yBrQ==
   dependencies:
     "@types/npmlog" "^4.1.2"
     chalk "^4.1.0"
@@ -3081,10 +3081,10 @@
     lz-string "^1.4.4"
     pretty-format "^27.0.2"
 
-"@testing-library/jest-dom@^5.16.0":
-  version "5.16.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.16.0.tgz#de1a7c5fedfeb80eb2be9fc81f61473973b302b3"
-  integrity sha512-ECygvCL6ufPfHna4fsk7o24+3PVNhRbioDpFbfSVEZaglT6EjuRP+w8I5tzigFz1fobpvCrVRoKyR4qx2QUCxw==
+"@testing-library/jest-dom@^5.16.1":
+  version "5.16.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/jest-dom/-/jest-dom-5.16.1.tgz#3db7df5ae97596264a7da9696fe14695ba02e51f"
+  integrity sha512-ajUJdfDIuTCadB79ukO+0l8O+QwN0LiSxDaYUTI4LndbbUsGi6rWU1SCexXzBA2NSjlVB9/vbkasQIL3tmPBjw==
   dependencies:
     "@babel/runtime" "^7.9.2"
     "@types/testing-library__jest-dom" "^5.9.1"
