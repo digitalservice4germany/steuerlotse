@@ -1,4 +1,5 @@
 import copy
+import datetime
 import unittest
 from unittest.mock import patch, MagicMock, call
 from xml.etree.ElementTree import XML, ParseError, Element, SubElement, tostring
@@ -23,6 +24,9 @@ from erica.pyeric.eric import get_eric_wrapper
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.elster_xml.transfer_header_fields import TransferHeaderFields
 from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false
+
+_VERANLAGUNGSJAHR = 2021
+_BEANTRAGUNGSJAHR = _VERANLAGUNGSJAHR+ 1
 
 
 class TestGenerateVorsatzWithTaxNumber(unittest.TestCase):
@@ -976,12 +980,13 @@ class TestVastRequest(unittest.TestCase):
     @freeze_time("2021-06-24")
     def test_add_vast_antrag_nutzdaten(self):
         xml_top = Element('top')
-        _add_vast_request_xml_nutzdaten(xml_top, self.valid_user_data)
+        with patch('erica.elster_xml.elster_xml_generator.dt.date.today', MagicMock(return_value=datetime.date(_BEANTRAGUNGSJAHR, 1, 1))):
+            _add_vast_request_xml_nutzdaten(xml_top, self.valid_user_data)
         xml_string = _pretty(xml_top)
 
         self.assertEqual('false', xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Unbeschraenkt').text)
-        self.assertEqual('2020', xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
-        self.assertEqual('2021-12-31', xml_top.find('.//SpezRechtAntrag/GueltigBis').text)
+        self.assertEqual(str(_VERANLAGUNGSJAHR), xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
+        self.assertEqual('2022-12-31', xml_top.find('.//SpezRechtAntrag/GueltigBis').text)
         self.assertIn('<SpezRechtAntrag version="' + self.expected_antrag_version + '">', xml_string)
         self.assertIn(
             '<DateninhaberIdNr>04452397687</DateninhaberIdNr><DateninhaberGeburtstag>1985-01-01</DateninhaberGeburtstag>',
@@ -1158,7 +1163,7 @@ class TestVastBelegIdsRequest(unittest.TestCase):
         xml_string = _pretty(xml_top)
 
         self.assertIn('idnr="' + self.idnr + '"', xml_string)
-        self.assertIn('veranlagungsjahr="2020"', xml_string)
+        self.assertIn(f'veranlagungsjahr="{_VERANLAGUNGSJAHR}"', xml_string)
 
     def test_that_add_vast_beleg_ids_request_xml_nutzdaten_adds_correct_year(self):
         xml_top = Element('top')
@@ -1288,7 +1293,7 @@ class TestVastBelegRequest(unittest.TestCase):
         _add_vast_beleg_request_xml_nutzdaten(xml_top, self.valid_user_data, self.beleg_id_1)
 
         self.assertEqual(1, len(xml_top.findall('Nutzdaten/Datenabholung/Abholung')))
-        self.assertEqual('2020', xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
+        self.assertEqual(str(_VERANLAGUNGSJAHR), xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_request_xml_generates_transfer_header(self):
