@@ -9,11 +9,11 @@ export default {
   component: FormFieldUnlockCode,
 };
 
-const Template = (args) => (
+function Template(args) {
   <StepForm {...StepFormStories.Default.args}>
     <FormFieldUnlockCode {...args} />
-  </StepForm>
-);
+  </StepForm>;
+}
 
 export const Default = Template.bind({});
 Default.args = {
