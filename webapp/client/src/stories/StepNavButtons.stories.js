@@ -8,7 +8,7 @@ export default {
 };
 
 function Template(args) {
-  <StepNavButtons {...args} />;
+  return <StepNavButtons {...args} />;
 }
 
 export const Default = Template.bind({});

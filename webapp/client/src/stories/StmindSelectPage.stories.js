@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <StmindSelectionPage {...args} />;
+  return <StmindSelectionPage {...args} />;
 }
 
 export const Default = Template.bind({});

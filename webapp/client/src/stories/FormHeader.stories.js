@@ -8,7 +8,7 @@ export default {
 };
 
 function Template(args) {
-  <FormHeader {...args} />;
+  return <FormHeader {...args} />;
 }
 
 export const Default = Template.bind({});

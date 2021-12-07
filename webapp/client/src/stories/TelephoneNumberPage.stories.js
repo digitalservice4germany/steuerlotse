@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <TelephoneNumberPage {...args} />;
+  return <TelephoneNumberPage {...args} />;
 }
 
 export const Default = Template.bind({});

@@ -10,9 +10,11 @@ export default {
 };
 
 function Template(args) {
-  <StepForm {...StepFormStories.Default.args}>
-    <FormFieldUnlockCode {...args} />
-  </StepForm>;
+  return (
+    <StepForm {...StepFormStories.Default.args}>
+      <FormFieldUnlockCode {...args} />
+    </StepForm>
+  );
 }
 
 export const Default = Template.bind({});

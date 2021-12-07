@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <ConfirmationPage {...args} />;
+  return <ConfirmationPage {...args} />;
 }
 
 export const Default = Template.bind({});

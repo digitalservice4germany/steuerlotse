@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <RegistrationPage {...args} />;
+  return <RegistrationPage {...args} />;
 }
 
 export const Default = Template.bind({});
@@ -62,11 +62,11 @@ WithErrors.args = {
       errors: ["Geben Sie ein gültiges Datum an."],
     },
     registrationConfirmDataPrivacy: {
-      value: false,
+      checked: false,
       errors: [],
     },
     registrationConfirmTermsOfService: {
-      value: false,
+      checked: false,
       errors: [],
     },
   },

@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <DeclarationIncomesPage {...args} />;
+  return <DeclarationIncomesPage {...args} />;
 }
 
 export const Default = Template.bind({});

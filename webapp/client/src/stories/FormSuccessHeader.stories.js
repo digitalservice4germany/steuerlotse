@@ -8,7 +8,7 @@ export default {
 };
 
 function Template(args) {
-  <FormSuccessHeader {...args} />;
+  return <FormSuccessHeader {...args} />;
 }
 
 export const Default = Template.bind({});

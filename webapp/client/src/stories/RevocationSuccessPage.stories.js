@@ -7,7 +7,7 @@ export default {
 };
 
 function Template(args) {
-  <RevocationSuccessPage {...args} />;
+  return <RevocationSuccessPage {...args} />;
 }
 
 export const Default = Template.bind({});

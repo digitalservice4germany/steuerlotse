@@ -8,7 +8,7 @@ export default {
 };
 
 function Template(args) {
-  <StepHeaderButtons {...args} />;
+  return <StepHeaderButtons {...args} />;
 }
 
 export const Default = Template.bind({});

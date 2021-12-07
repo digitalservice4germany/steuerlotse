@@ -8,7 +8,7 @@ export default {
 };
 
 function Template(args) {
-  <StepForm {...args}>&lt;Form fields will go here&gt;</StepForm>;
+  return <StepForm {...args}>&lt;Form fields will go here&gt;</StepForm>;
 }
 
 export const Default = Template.bind({});

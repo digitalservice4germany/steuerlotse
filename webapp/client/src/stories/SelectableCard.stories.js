@@ -11,9 +11,11 @@ export default {
 };
 
 function Template(args) {
-  <StepForm {...StepFormDefault.args}>
-    <SelectableCard {...args} />
-  </StepForm>;
+  return (
+    <StepForm {...StepFormDefault.args}>
+      <SelectableCard {...args} />
+    </StepForm>
+  );
 }
 
 export const Default = Template.bind({});

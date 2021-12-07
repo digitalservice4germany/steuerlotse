@@ -24,3 +24,5 @@ updates:
     directory: "/webapp/client"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "@storybook/*"

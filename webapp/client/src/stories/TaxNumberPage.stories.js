@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <TaxNumberPage {...args} />;
+  return <TaxNumberPage {...args} />;
 }
 
 export const Default = Template.bind({});

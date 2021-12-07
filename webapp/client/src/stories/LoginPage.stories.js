@@ -9,7 +9,7 @@ export default {
 };
 
 function Template(args) {
-  <LoginPage {...args} />;
+  return <LoginPage {...args} />;
 }
 
 export const Default = Template.bind({});

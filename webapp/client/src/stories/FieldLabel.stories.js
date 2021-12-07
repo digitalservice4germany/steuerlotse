@@ -8,7 +8,7 @@ export default {
 };
 
 function Template(args) {
-  <FieldLabel {...args} />;
+  return <FieldLabel {...args} />;
 }
 
 export const Default = Template.bind({});
