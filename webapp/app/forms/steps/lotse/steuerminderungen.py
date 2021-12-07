@@ -225,15 +225,6 @@ class StepAussergBela(LotseFormSteuerlotseStep):
             label=_l('form.lotse.field_beh_aufw_anspruch'),
             render_kw={'data_label': _l('form.lotse.field_beh_aufw_anspruch.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
-        stmind_beh_kfz_summe = EuroField(
-            label=_l('form.lotse.field_beh_kfz_summe'),
-            render_kw={'help': _l('form.lotse.field_beh_kfz-help'),
-                       'data_label': _l('form.lotse.field_beh_kfz_summe.data_label')},
-            validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
-        stmind_beh_kfz_anspruch = EuroField(
-            label=_l('form.lotse.field_beh_kfz_anspruch'),
-            render_kw={'data_label': _l('form.lotse.field_beh_kfz_anspruch.data_label')},
-            validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_bestattung_summe = EuroField(
             label=_l('form.lotse.bestattung_summe'),
             render_kw={'help': _l('form.lotse.bestattung-help'),

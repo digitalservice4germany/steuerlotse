@@ -21,6 +21,7 @@ export const Default = Template.bind({});
 export const WithValue = Template.bind({});
 export const WithErrors = Template.bind({});
 export const WithDetails = Template.bind({});
+export const WithAllLabelExtras = Template.bind({});
 export const WithMaxWidth = Template.bind({});
 export const WithMaxLength = Template.bind({});
 export const WithMaxLengthAndWidth = Template.bind({});
@@ -50,6 +51,16 @@ WithDetails.args = {
   details: {
     title: "Wann bekomme ich einen Freischaltcode?",
     text: "Sie bekommen einen Freischaltcode, wenn Sie sich bei Mein Elster mit einer Zertifikatsdatei identifiziert und keinen Abrufcode beantragt haben. Wenn Sie sich z.B. mit Ihrem Personalausweis, einer Karte oder einem Stick bei Mein Elster identifiziert oder einen Abrufcode beantragt haben, bekommen Sie den Brief mit dem Freischaltcode nicht.",
+  },
+};
+
+WithAllLabelExtras.args = {
+  ...WithDetails.args,
+  label: {
+    text: "Text",
+    showOptionalTag: true,
+    help: "Das ist ein Hilfetext. Hilft er dir?",
+    exampleInput: "Beispiel",
   },
 };
 

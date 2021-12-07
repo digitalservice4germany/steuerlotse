@@ -108,8 +108,6 @@ class LotseMultiStepFlow(MultiStepFlow):
             'stmind_pflegekosten_anspruch': Decimal('2022.22'),
             'stmind_beh_aufw_summe': Decimal('3033.31'),
             'stmind_beh_aufw_anspruch': Decimal('3033.32'),
-            'stmind_beh_kfz_summe': Decimal('4044.41'),
-            'stmind_beh_kfz_anspruch': Decimal('4044.42'),
             'stmind_bestattung_summe': Decimal('5055.51'),
             'stmind_bestattung_anspruch': Decimal('5055.52'),
             'stmind_aussergbela_sonst_summe': Decimal('6066.61'),
