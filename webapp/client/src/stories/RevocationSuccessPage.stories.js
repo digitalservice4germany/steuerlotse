@@ -6,7 +6,9 @@ export default {
   component: RevocationSuccessPage,
 };
 
-const Template = (args) => <RevocationSuccessPage {...args} />;
+function Template(args) {
+  return <RevocationSuccessPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

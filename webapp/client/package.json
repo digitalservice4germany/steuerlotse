@@ -32,12 +32,12 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.4.4",
-    "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.4.7",
-    "@storybook/node-logger": "^6.4.4",
+    "@storybook/addon-actions": "^6.4.8",
+    "@storybook/addon-essentials": "^6.4.8",
+    "@storybook/addon-links": "^6.4.8",
+    "@storybook/node-logger": "^6.4.8",
     "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.3.12",
+    "@storybook/react": "^6.4.8",
     "husky": "^7.0.2",
     "lint-staged": "^12.1.2",
     "prettier": "2.5.1"

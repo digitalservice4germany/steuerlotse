@@ -8,7 +8,9 @@ export default {
   component: StmindSelectionPage,
 };
 
-const Template = (args) => <StmindSelectionPage {...args} />;
+function Template(args) {
+  return <StmindSelectionPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

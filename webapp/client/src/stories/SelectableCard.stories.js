@@ -10,11 +10,13 @@ export default {
   component: SelectableCard,
 };
 
-const Template = (args) => (
-  <StepForm {...StepFormDefault.args}>
-    <SelectableCard {...args} />
-  </StepForm>
-);
+function Template(args) {
+  return (
+    <StepForm {...StepFormDefault.args}>
+      <SelectableCard {...args} />
+    </StepForm>
+  );
+}
 
 export const Default = Template.bind({});
 Default.args = {

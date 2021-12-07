@@ -9,11 +9,13 @@ export default {
   component: FormFieldConsentBox,
 };
 
-const Template = (args) => (
-  <StepForm {...StepFormDefault.args}>
-    <FormFieldConsentBox {...args} />
-  </StepForm>
-);
+function Template(args) {
+  return (
+    <StepForm {...StepFormDefault.args}>
+      <FormFieldConsentBox {...args} />
+    </StepForm>
+  );
+}
 
 export const Default = Template.bind({});
 Default.args = {

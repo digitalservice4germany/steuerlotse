@@ -8,7 +8,9 @@ export default {
   component: RegistrationPage,
 };
 
-const Template = (args) => <RegistrationPage {...args} />;
+function Template(args) {
+  return <RegistrationPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {
@@ -60,11 +62,11 @@ WithErrors.args = {
       errors: ["Geben Sie ein gültiges Datum an."],
     },
     registrationConfirmDataPrivacy: {
-      value: false,
+      checked: false,
       errors: [],
     },
     registrationConfirmTermsOfService: {
-      value: false,
+      checked: false,
       errors: [],
     },
   },

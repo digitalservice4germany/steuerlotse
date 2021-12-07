@@ -8,7 +8,9 @@ export default {
   component: LoginPage,
 };
 
-const Template = (args) => <LoginPage {...args} />;
+function Template(args) {
+  return <LoginPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

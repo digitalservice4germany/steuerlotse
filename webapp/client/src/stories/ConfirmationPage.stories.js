@@ -8,7 +8,9 @@ export default {
   component: ConfirmationPage,
 };
 
-const Template = (args) => <ConfirmationPage {...args} />;
+function Template(args) {
+  return <ConfirmationPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

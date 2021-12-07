@@ -9,11 +9,13 @@ export default {
   component: FormFieldTextInput,
 };
 
-const Template = (args) => (
-  <StepForm {...StepFormDefault.args}>
-    <FormFieldTextInput {...args} />
-  </StepForm>
-);
+function Template(args) {
+  return (
+    <StepForm {...StepFormDefault.args}>
+      <FormFieldTextInput {...args} />
+    </StepForm>
+  );
+}
 
 export const Default = Template.bind({});
 export const WithValue = Template.bind({});

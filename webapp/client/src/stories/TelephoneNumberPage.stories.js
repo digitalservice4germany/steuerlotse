@@ -8,7 +8,9 @@ export default {
   component: TelephoneNumberPage,
 };
 
-const Template = (args) => <TelephoneNumberPage {...args} />;
+function Template(args) {
+  return <TelephoneNumberPage {...args} />;
+}
 
 export const Default = Template.bind({});
 export const WithValue = Template.bind({});

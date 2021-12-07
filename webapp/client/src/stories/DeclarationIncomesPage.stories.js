@@ -8,7 +8,9 @@ export default {
   component: DeclarationIncomesPage,
 };
 
-const Template = (args) => <DeclarationIncomesPage {...args} />;
+function Template(args) {
+  return <DeclarationIncomesPage {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {
