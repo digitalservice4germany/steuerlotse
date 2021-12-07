@@ -60,9 +60,8 @@ def list_buckets(s3client=None):
 def upload_file(bucket_name, object_name, file_name, s3client=None):
     if not s3client:
         s3client = get_connected_client()
-
-    with open(file_name, "rb") as f:
-        s3client.upload_fileobj(f, bucket_name, object_name)
+        
+    s3client.upload_file(file_name, bucket_name, object_name)
 
 
 @cli.command()
