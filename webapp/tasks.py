@@ -76,7 +76,7 @@ def test_functional(c):
         c.run("rm ./app/functional-testing.db")
 
 
-@task(test_pytest, test_client_unit, test_functional)
+@task(test_pytest, test_client_unit)
 def test(c):
     """This no-op task triggers all test suites as dependencies."""
     pass

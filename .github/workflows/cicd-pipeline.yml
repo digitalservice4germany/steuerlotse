@@ -82,20 +82,6 @@ jobs:
         name: webapp-test-report.log
         path: webapp-test-report.log
 
-    - name: Archive test screenshots
-      uses: actions/upload-artifact@v1
-      with:
-        name: webapp-functional-screenshots
-        path: webapp/client/cypress/screenshots
-      if: ${{ failure() }}
-
-    - name: Archive test videos
-      uses: actions/upload-artifact@v1
-      with:
-        name: webapp-functional-videos
-        path: webapp/client/cypress/videos
-      if: ${{ failure() }}ts
-
   test-erica:
     runs-on: ubuntu-latest
 
