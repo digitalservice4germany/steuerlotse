@@ -245,7 +245,7 @@ class StepPersonA(LotseFormSteuerlotseStep):
         person_a_beh_grad = SteuerlotseIntegerField(
             label=_l('form.lotse.field_person_beh_grad'),
             validators=[
-                validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
+                validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
                        'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
@@ -376,7 +376,7 @@ class StepPersonB(LotseFormSteuerlotseStep):
 
         person_b_beh_grad = SteuerlotseIntegerField(
             label=_l('form.lotse.field_person_beh_grad'),
-            validators=[validators.any_of([25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
+            validators=[validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
                        'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
