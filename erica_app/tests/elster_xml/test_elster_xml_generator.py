@@ -986,7 +986,7 @@ class TestVastRequest(unittest.TestCase):
 
         self.assertEqual('false', xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Unbeschraenkt').text)
         self.assertEqual(str(VERANLAGUNGSJAHR), xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
-        self.assertEqual('2022-12-31', xml_top.find('.//SpezRechtAntrag/GueltigBis').text)
+        self.assertEqual(f'{_BEANTRAGUNGSJAHR}-12-31', xml_top.find('.//SpezRechtAntrag/GueltigBis').text)
         self.assertIn('<SpezRechtAntrag version="' + self.expected_antrag_version + '">', xml_string)
         self.assertIn(
             '<DateninhaberIdNr>04452397687</DateninhaberIdNr><DateninhaberGeburtstag>1985-01-01</DateninhaberGeburtstag>',
