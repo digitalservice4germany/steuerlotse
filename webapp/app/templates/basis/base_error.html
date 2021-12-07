@@ -1,7 +1,12 @@
 {% extends 'basis/base.html' %}
 
-{% block content %}
-            {% block error_content %}
-            {% endblock %}
+{% block body %}
+    <div class="main-content">
+        {% block error_content %}
+        {% endblock %}
+    </div>
+    <div class="footer-footer-temp">
+        {% include 'basis/footer_footer.html' %}
+    </div>
 {% endblock %}
 
