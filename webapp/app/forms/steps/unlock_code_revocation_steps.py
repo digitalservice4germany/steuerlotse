@@ -51,7 +51,6 @@ class UnlockCodeRevocationInputStep(FormStep):
                                header_title=_('form.unlock-code-revocation.header-title'))
 
 
-
 class UnlockCodeRevocationSuccessStep(DisplayStep):
     name = 'unlock_code_success'
 

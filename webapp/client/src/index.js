@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 // loaded in the jinja template that includes these React components.
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
+import LoginFailurePage from "./pages/LoginFailurePage";
 import RegistrationPage from "./pages/RegistrationPage";
 import RevocationPage from "./pages/RevocationPage";
 import RevocationSuccessPage from "./pages/RevocationSuccessPage";
@@ -14,8 +15,9 @@ import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 
 const allowedComponents = {
-  LoginPage,
   RegistrationPage,
+  LoginPage,
+  LoginFailurePage,
   RevocationPage,
   RevocationSuccessPage,
   DeclarationIncomesPage,
