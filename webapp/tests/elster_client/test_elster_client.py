@@ -20,6 +20,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterRequestAlreadyRevoked, ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
 from app.elster_client.elster_client import send_unlock_code_request_with_elster, \
     check_pyeric_response_for_errors
+from app.utils import VERANLAGUNGSJAHR
 from tests.elster_client.json_responses.sample_responses import get_json_response
 from tests.elster_client.mock_erica import MockErica, MockResponse
 
@@ -711,11 +712,11 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertEqual(result['meta_data']['year'], 2010)
         self.assertEqual(result['meta_data']['is_digitally_signed'], True)
 
-    def test_unset_year_results_in_2020_year_value(self):
+    def test_unset_year_results_in_veranlagungsjahr_year_value(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
             result = _generate_est_request_data({})
 
-        self.assertEqual(result['meta_data']['year'], 2020)
+        self.assertEqual(result['meta_data']['year'], VERANLAGUNGSJAHR)
 
     def test_activated_user_results_in_correct_attribute_set_true(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):

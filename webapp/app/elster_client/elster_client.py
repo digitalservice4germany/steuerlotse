@@ -14,7 +14,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
     ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError, EricaNotAuthenticatedError
-from app.utils import lru_cached
+from app.utils import lru_cached, VERANLAGUNGSJAHR
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ def request_from_erica(*args, **kwargs):
     return response
 
 
-def send_est_with_elster(form_data, ip_address, year=2020, include_elster_responses=True):
+def send_est_with_elster(form_data, ip_address, year=VERANLAGUNGSJAHR, include_elster_responses=True):
     """The overarching method that is being called from the web backend. It
     will send the form data for an ESt to the PyERiC server and then extract information from the response.
     """
@@ -77,7 +77,7 @@ def send_est_with_elster(form_data, ip_address, year=2020, include_elster_respon
     return _extract_est_response_data(pyeric_response)
 
 
-def validate_est_with_elster(form_data, year=2020, include_elster_responses=True):
+def validate_est_with_elster(form_data, year=VERANLAGUNGSJAHR, include_elster_responses=True):
     """The overarching method that is being called from the web backend. It
     will send the form data for an ESt to the PyERiC server and then extract information from the response.
     """
@@ -187,7 +187,7 @@ class TaxDeclarationNotDigitallySigned(Exception):
     pass
 
 
-def _generate_est_request_data(form_data, year=2020):
+def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
     """
     Generates the data, which can be send to pyeric with the correct types
 

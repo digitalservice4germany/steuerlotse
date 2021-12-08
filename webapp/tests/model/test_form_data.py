@@ -8,6 +8,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 from pydantic import ValidationError, MissingError
 
+from app.utils import VERANLAGUNGSJAHR
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.model.form_data import FamilienstandModel, MandatoryFormData, FormDataDependencies, JointTaxesModel
 
@@ -93,14 +94,14 @@ class TestShowPersonB:
     def test_skipped_if_married_and_separated_longer(self):
         data = {'familienstand': 'married',
                 'familienstand_married_lived_separated': 'yes',
-                'familienstand_married_lived_separated_since': dt.date(2020, 1, 1)}
+                'familienstand_married_lived_separated_since': dt.date(VERANLAGUNGSJAHR, 1, 1)}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
 
     def test_skipped_if_married_and_separated_recently_and_zusammenveranlagung_no(self):
         data = {'familienstand': 'married',
                 'familienstand_married_lived_separated': 'yes',
-                'familienstand_married_lived_separated_since': dt.date(2020, 1, 2),
+                'familienstand_married_lived_separated_since': dt.date(VERANLAGUNGSJAHR, 1, 2),
                 'familienstand_zusammenveranlagung': 'no'}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
@@ -108,56 +109,56 @@ class TestShowPersonB:
     def test_shown_if_married_and_separated_recently_and_zusammenveranlagung_yes(self):
         data = {'familienstand': 'married',
                 'familienstand_married_lived_separated': 'yes',
-                'familienstand_married_lived_separated_since': dt.date(2020, 1, 2),
+                'familienstand_married_lived_separated_since': dt.date(VERANLAGUNGSJAHR, 1, 2),
                 'familienstand_zusammenveranlagung': 'yes'}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is True
 
     def test_skipped_if_familienstand_divorced(self):
         data = {'familienstand': 'divorced',
-                'familienstand_date': dt.date(2020, 1, 2)}
+                'familienstand_date': dt.date(VERANLAGUNGSJAHR, 1, 2)}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
 
         data = {'familienstand': 'divorced',
-                'familienstand_date': dt.date(2019, 12, 31)}
+                'familienstand_date': dt.date(VERANLAGUNGSJAHR - 1, 12, 31)}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
 
     def test_skipped_if_widowed_longer(self):
-        data = {'familienstand': 'widowed', 'familienstand_date': dt.date(2019, 12, 31)}
+        data = {'familienstand': 'widowed', 'familienstand_date': dt.date(VERANLAGUNGSJAHR - 1, 12, 31)}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
 
     def test_shown_if_widowed_recently_and_not_lived_separated(self):
         data = {'familienstand': 'widowed',
-                'familienstand_date': dt.date(2020, 1, 1),
+                'familienstand_date': dt.date(VERANLAGUNGSJAHR, 1, 1),
                 'familienstand_widowed_lived_separated': 'no'}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is True
 
     def test_skipped_if_widowed_recently_and_lived_separated_longer(self):
         data = {'familienstand': 'widowed',
-                'familienstand_date': dt.date(2020, 3, 1),
+                'familienstand_date': dt.date(VERANLAGUNGSJAHR, 3, 1),
                 'familienstand_widowed_lived_separated': 'yes',
-                'familienstand_widowed_lived_separated_since': dt.date(2020, 1, 1)}
+                'familienstand_widowed_lived_separated_since': dt.date(VERANLAGUNGSJAHR, 1, 1)}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
 
     def test_skipped_if_widowed_recently_and_lived_separated_recently_and_zusammenveranlagung_no(self):
         data = {'familienstand': 'widowed',
-                'familienstand_date': dt.date(2020, 3, 1),
+                'familienstand_date': dt.date(VERANLAGUNGSJAHR, 3, 1),
                 'familienstand_widowed_lived_separated': 'yes',
-                'familienstand_widowed_lived_separated_since': dt.date(2020, 1, 2),
+                'familienstand_widowed_lived_separated_since': dt.date(VERANLAGUNGSJAHR, 1, 2),
                 'familienstand_zusammenveranlagung': 'no'}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is False
 
     def test_shown_if_widowed_recently_and_lived_separated_recently_and_zusammenveranlagung_no(self):
         data = {'familienstand': 'widowed',
-                'familienstand_date': dt.date(2020, 3, 1),
+                'familienstand_date': dt.date(VERANLAGUNGSJAHR, 3, 1),
                 'familienstand_widowed_lived_separated': 'yes',
-                'familienstand_widowed_lived_separated_since': dt.date(2020, 1, 2),
+                'familienstand_widowed_lived_separated_since': dt.date(VERANLAGUNGSJAHR, 1, 2),
                 'familienstand_zusammenveranlagung': 'yes'}
         is_shown = JointTaxesModel.show_person_b(data)
         assert is_shown is True
