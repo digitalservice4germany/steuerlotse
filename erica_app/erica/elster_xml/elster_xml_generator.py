@@ -17,7 +17,7 @@ from erica.pyeric.eric import get_eric_wrapper
 # TODO: Refactor how the xml is generated.
 #       The current structure does not have an easy entrypoint and we currently have quite similar functions
 
-VERANLAGUNGSJAHR = 2020
+VERANLAGUNGSJAHR = 2021
 
 Vorsatz = namedtuple(
     'Vorsatz',
@@ -303,7 +303,7 @@ def _add_vast_list_xml_nutzdaten(xml_top, version='7'):
     list_xml.set('version', version)
 
 
-def _add_vast_beleg_ids_request_nutzdaten(xml_top, user_data, year='2020'):
+def _add_vast_beleg_ids_request_nutzdaten(xml_top, user_data, year='2021'):
     """ Generates <Nutzdaten> with the given user_data and adds it to given xml_top. """
     nutzdaten_xml = SubElement(xml_top, 'Nutzdaten')
     datenabholung_xml = SubElement(nutzdaten_xml, 'Datenabholung')
@@ -321,7 +321,7 @@ def _add_abrufcode_request_nutzdaten(xml_top):
     SubElement(antrag_xml, 'EMail').text = get_settings().testing_email_address
 
 
-def _add_vast_beleg_request_xml_nutzdaten(xml_top, user_data, beleg_id, year='2020'):
+def _add_vast_beleg_request_xml_nutzdaten(xml_top, user_data, beleg_id, year='2021'):
     """ Generates <Nutzdaten> with the given user_data and adds it to given xml_top. """
     nutzdaten_xml = SubElement(xml_top, 'Nutzdaten')
     datenabholung_xml = SubElement(nutzdaten_xml, 'Datenabholung')

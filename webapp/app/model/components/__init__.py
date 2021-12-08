@@ -67,6 +67,11 @@ class LoginProps(StepFormProps):
     pass
 
 
+class LoginFailureProps(StepDisplayProps):
+    registration_link: str
+    revocation_link: str
+
+
 class RegistrationProps(StepFormProps):
     login_link: str
     eligibility_link: str

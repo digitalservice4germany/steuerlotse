@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-07 14:40+0100\n"
+"POT-Creation-Date: 2021-12-08 09:30+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1044,7 +1044,7 @@ msgstr ""
 " können Sie mit Ihrer Steuererklärung 2020 beginnen."
 
 #: app/forms/steps/unlock_code_activation_steps.py:28
-#: app/forms/steps/unlock_code_activation_steps.py:63
+#: app/forms/steps/unlock_code_activation_steps.py:75
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
@@ -1138,26 +1138,26 @@ msgstr ""
 "einen neuen beantragen wollen, können Sie den alten hier stornieren."
 
 #: app/forms/steps/unlock_code_revocation_steps.py:51
-#: app/forms/steps/unlock_code_revocation_steps.py:78
-#: app/forms/steps/unlock_code_revocation_steps.py:91
+#: app/forms/steps/unlock_code_revocation_steps.py:77
+#: app/forms/steps/unlock_code_revocation_steps.py:90
 msgid "form.unlock-code-revocation.header-title"
 msgstr "Stornieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:60
+#: app/forms/steps/unlock_code_revocation_steps.py:59
 msgid "form.unlock-code-revocation.success-title"
 msgstr "Stornierung erfolgreich"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:61
+#: app/forms/steps/unlock_code_revocation_steps.py:60
 msgid "form.unlock-code-revocation.success-intro"
 msgstr ""
 "Ihr Freischaltcode wurde storniert. Wenn Sie einen Neuen beantragen "
 "wollen, fahren Sie mit dem nächsten Formular fort."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:86
+#: app/forms/steps/unlock_code_revocation_steps.py:85
 msgid "form.unlock-code-revocation.failure-title"
 msgstr "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:87
+#: app/forms/steps/unlock_code_revocation_steps.py:86
 msgid "form.unlock-code-revocation.failure-intro"
 msgstr ""
 "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können"
@@ -5215,35 +5215,6 @@ msgstr ""
 #: app/templates/lotse/form_person_b.html:72
 msgid "form.lotse.person-merkzeichen.title"
 msgstr "Angaben zum Merkzeichen"
-
-#: app/templates/unlock_code/activation_failure.html:20
-msgid "form.unlock-code-activation.failure.reasons-title"
-msgstr "Mögliche Ursachen:"
-
-#: app/templates/unlock_code/activation_failure.html:22
-msgid "form.unlock-code-activation.failure.reasons-1"
-msgstr ""
-"Ihr Freischaltcode ist nicht korrekt. Eine Ursache kann die Verwechslung "
-"von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 "
-"schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer "
-"8 verwechselt werden. Prüfen Sie Ihre Angabe."
-
-#: app/templates/unlock_code/activation_failure.html:23
-msgid "form.unlock-code-activation.failure.reasons-2"
-msgstr ""
-"Haben Sie sich vor 90 Tagen registriert? In diesem Fall können Sie sich "
-"mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <a "
-"href=%(registration_link)s>Registrieren</a> Sie sich bitte erneut. Sie "
-"erhalten dann einen Brief mit einem neuen Freischaltcode."
-
-#: app/templates/unlock_code/activation_failure.html:24
-msgid "form.unlock-code-activation.failure.reasons-3"
-msgstr ""
-"Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen. Dann ist Ihr "
-"Freischaltcode nicht mehr gültig. Bitte <a "
-"href=%(revocation_link)s>stornieren</a> Sie Ihren Freischaltcode und <a "
-"href=%(registration_link)s>registrieren</a> sich erneut. Sie erhalten "
-"dann einen Brief mit einem neuen Freischaltcode."
 
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"

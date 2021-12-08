@@ -1,5 +1,5 @@
 from app.model.components.helpers import form_fields_dict
-from flask import render_template
+from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
@@ -9,7 +9,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.fields import UnlockCodeField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validators import ValidIdNr, ValidUnlockCode
-from app.model.components import LoginProps
+from app.model.components import LoginProps, LoginFailureProps
 
 
 class UnlockCodeActivationInputStep(FormStep):
@@ -55,9 +55,22 @@ class UnlockCodeActivationFailureStep(DisplayStep):
     name = 'unlock_code_failure'
 
     def __init__(self, **kwargs):
-        super(UnlockCodeActivationFailureStep, self).__init__(
+        super().__init__(
             title=_('form.unlock-code-activation.failure-title'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('unlock_code/activation_failure.html', render_info=render_info,
-                               header_title=_('form.unlock-code-activation.header-title'))
+        props_model = LoginFailureProps(
+            step_header={
+                'title': self.title,
+            },
+            prev_url=render_info.prev_url,
+            registration_link=url_for('unlock_code_request', step='start'),
+            revocation_link=url_for('unlock_code_revocation', step='start'),
+        )
+
+        return render_template(
+            'react_component.html',
+            component='LoginFailurePage',
+            props=props_model.camelized_dict(),
+            header_title=_('form.unlock-code-activation.header-title')
+        )
