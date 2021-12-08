@@ -317,6 +317,21 @@ class TestPersonAValidation:
         form = new_person_a_step(form_data=data).render_info.form
         assert form.validate() is True
 
+    def test_if_plz_has_5_digits_then_succ_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_plz': '12345'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is True
+
+    def test_if_plz_has_too_little_digits_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_plz': '1234'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is False
+
+    def test_if_plz_has_too_many_digits_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_plz': '123456'}})
+        form = new_person_a_step(form_data=data).render_info.form
+        assert form.validate() is False
+
     def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data):
         data = MultiDict(valid_form_data)
         form = new_person_a_step(form_data=data).render_info.form
@@ -372,6 +387,24 @@ class TestPersonBValidation:
         with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
+
+    def test_if_plz_has_5_digits_then_succ_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_plz': '12345'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_plz_has_too_little_digits_then_fail_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_plz': '1234'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is False
+
+    def test_if_plz_has_too_many_digits_then_fail_validation(self, valid_form_data, new_test_request_context):
+        data = MultiDict({**valid_form_data, **{'person_b_plz': '123456'}})
+        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+            form = new_person_b_step(form_data=data).render_info.form
+            assert form.validate() is False
 
     def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data, new_test_request_context):
         data = MultiDict(valid_form_data)
