@@ -14,7 +14,7 @@ from erica.pyeric.pyeric_controller import PyericProcessController, EstPyericPro
     AbrufcodeRequestPyericProcessController, \
     UnlockCodeRevocationPyericProcessController, BelegIdRequestPyericProcessController, DecryptBelegePyericController, \
     BelegRequestPyericProcessController, GetTaxOfficesPyericController, CheckTaxNumberPyericController
-from tests.utils import missing_cert, missing_pyeric_lib
+from tests.utils import missing_cert, missing_pyeric_lib, TEST_EST_VERANLAGUNGSJAHR
 
 
 class TestPyericControllerInit(unittest.TestCase):
@@ -69,7 +69,7 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
         expected_eric_response = b'ERIC was here'
         expected_server_response = b'How can I help you?'
         expected_response = EricResponse(0, expected_eric_response, expected_server_response)
-        pyeric_controller = EstPyericProcessController(self.correct_input_xml, 2020)
+        pyeric_controller = EstPyericProcessController(self.correct_input_xml, TEST_EST_VERANLAGUNGSJAHR)
 
         with patch("erica.pyeric.eric.EricWrapper.process", MagicMock(return_value=expected_response)):
             result = pyeric_controller.get_eric_response()
@@ -80,7 +80,7 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
     @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_xml_then_responses_filled_accordingly(self):
-        pyeric_controller = EstPyericProcessController(self.problematic_input_xml, 2020)
+        pyeric_controller = EstPyericProcessController(self.problematic_input_xml, TEST_EST_VERANLAGUNGSJAHR)
         try:
             pyeric_controller.get_eric_response()
             self.fail("Get eric response should raise an exception")
@@ -92,7 +92,7 @@ class TestEstPyericControllerGetEricResponse(unittest.TestCase):
     @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_incorrect_xml_then_raise_error(self):
-        pyeric_controller = EstPyericProcessController(self.incorrect_input_xml, 2020)
+        pyeric_controller = EstPyericProcessController(self.incorrect_input_xml, TEST_EST_VERANLAGUNGSJAHR)
         self.assertRaises(EricIOError, pyeric_controller.get_eric_response)
 
 
@@ -100,7 +100,7 @@ class TestEstPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_and_send_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        year = 2020
+        year = TEST_EST_VERANLAGUNGSJAHR
         pyeric_controller = EstPyericProcessController(xml, year)
         mock_eric_wrapper = MagicMock()
 
@@ -113,7 +113,7 @@ class TestEstValidationPyericControllerRunPyEric(unittest.TestCase):
 
     def test_if_pyeric_initialised_then_call_process_verfahren_with_correct_verfahren(self):
         xml = "<xml></xml>"
-        year = 2020
+        year = TEST_EST_VERANLAGUNGSJAHR
         pyeric_controller = EstValidationPyericProcessController(xml, year)
         mock_eric_wrapper = MagicMock()
 

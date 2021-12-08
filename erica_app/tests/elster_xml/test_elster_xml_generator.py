@@ -23,8 +23,7 @@ from erica.elster_xml.est_mapping import PersonSpecificFieldId
 from erica.pyeric.eric import get_eric_wrapper
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.elster_xml.transfer_header_fields import TransferHeaderFields
-from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false
-
+from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false, TEST_EST_VERANLAGUNGSJAHR
 
 _BEANTRAGUNGSJAHR = VERANLAGUNGSJAHR + 1
 
@@ -606,7 +605,7 @@ class TestElsterXml(unittest.TestCase):
             ordNrArt='S',
             vorgang='01',
             StNr='9198011310010',
-            Zeitraum='2020',
+            Zeitraum=str(TEST_EST_VERANLAGUNGSJAHR),
             IDPersonA='04452397687',
             IDPersonB=None,
             AbsName='Testfall ERiC',
@@ -622,7 +621,7 @@ class TestElsterXml(unittest.TestCase):
             ordNrArt='S',
             vorgang='01',
             StNr='9198011310010',
-            Zeitraum='2020',
+            Zeitraum=str(TEST_EST_VERANLAGUNGSJAHR),
             IDPersonA='04452397687',
             IDPersonB='02293417683',
             AbsName='Testfall ERiC',
@@ -638,7 +637,7 @@ class TestElsterXml(unittest.TestCase):
             ordNrArt='O',
             vorgang='01',
             StNr=None,
-            Zeitraum='2020',
+            Zeitraum=str(TEST_EST_VERANLAGUNGSJAHR),
             IDPersonA='04452397687',
             IDPersonB='02293417683',
             AbsName='Testfall ERiC',
@@ -654,7 +653,7 @@ class TestElsterXml(unittest.TestCase):
         xml_string = tostring(xml_top).decode()
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn(f"<Zeitraum>{str(TEST_EST_VERANLAGUNGSJAHR)}</Zeitraum>", xml_string)
         self.assertIn("<ID>04452397687</ID>", xml_string)
         self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
@@ -670,7 +669,7 @@ class TestElsterXml(unittest.TestCase):
         xml_string = tostring(xml_top).decode()
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn(f"<Zeitraum>{str(TEST_EST_VERANLAGUNGSJAHR)}</Zeitraum>", xml_string)
         self.assertIn("<ID>04452397687</ID>", xml_string)
         self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
         self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
@@ -687,7 +686,7 @@ class TestElsterXml(unittest.TestCase):
 
         self.assertNotIn("<StNr>", xml_string)
         self.assertIn("<OrdNrArt>O</OrdNrArt>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn(f"<Zeitraum>{TEST_EST_VERANLAGUNGSJAHR}</Zeitraum>", xml_string)
         self.assertIn("<ID>04452397687</ID>", xml_string)
         self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
         self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
@@ -707,7 +706,7 @@ class TestElsterXml(unittest.TestCase):
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_add_nutzdaten(self):
         xml_top = Element('main')
-        _add_est_xml_nutzdaten(xml_top, self.dummy_fields, self._dummy_vorsatz_single(), '2020')
+        _add_est_xml_nutzdaten(xml_top, self.dummy_fields, self._dummy_vorsatz_single(), str(TEST_EST_VERANLAGUNGSJAHR))
         xml_string = tostring(xml_top).decode()
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
@@ -799,19 +798,19 @@ class TestGenerateFullEstXML(unittest.TestCase):
     def _call_generate_full_est_xml(self, form_data, use_testmerker=False, submission_without_tax_nr=False):
         if submission_without_tax_nr:
             vorsatz = generate_vorsatz_without_tax_number(
-                year='2020',
+                year=str(TEST_EST_VERANLAGUNGSJAHR),
                 person_a_idnr='04452397687', person_b_idnr=None, first_name='Manfred',
                 last_name='Mustername',
                 street='Musterstraße', street_nr='42', plz='12345',
                 town='Hamburg')
         else:
             vorsatz = generate_vorsatz_with_tax_number(
-                steuernummer='9198011310010', year='2020',
+                steuernummer='9198011310010', year=str(TEST_EST_VERANLAGUNGSJAHR),
                 person_a_idnr='04452397687', person_b_idnr=None,  first_name='Manfred', last_name='Mustername',
                 street='Musterstraße', street_nr='42', plz='12345', town='Hamburg')
         return generate_full_est_xml(form_data=form_data,
                                      vorsatz=vorsatz,
-                                     year='2020',
+                                     year=str(TEST_EST_VERANLAGUNGSJAHR),
                                      empfaenger='9198', nutzdaten_ticket='nutzdatenTicket123',
                                      use_testmerker=use_testmerker)
 
