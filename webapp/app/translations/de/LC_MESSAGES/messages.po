@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-09 22:54+0100\n"
+"POT-Creation-Date: 2021-12-09 22:56+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -4171,8 +4171,8 @@ msgstr ""
 #: app/templates/content/landing_page.html:19
 msgid "info-stl.card-who.p3-content"
 msgstr ""
-"Sie können <a href=%(link)s>mit unserem Fragebogen</a> prüfen, ob Sie alle"
-" Voraussetzungen für den Steuerlotsen erfüllen."
+"Sie können <a href=%(link)s>mit unserem Fragebogen</a> prüfen, ob Sie "
+"alle Voraussetzungen für den Steuerlotsen erfüllen."
 
 #: app/templates/content/howitworks.html:20
 #: app/templates/content/landing_page.html:24
