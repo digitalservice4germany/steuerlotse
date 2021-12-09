@@ -199,7 +199,8 @@ class StepAussergBela(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_krankheitskosten_anspruch = EuroField(
             label=_l('form.lotse.field_krankheitskosten_anspruch'),
-            render_kw={'data_label': _l('form.lotse.field_krankheitskosten_anspruch.data_label')},
+            render_kw={'help': _l('form.lotse.field_krankheitskosten-anspruch-help'),
+                       'data_label': _l('form.lotse.field_krankheitskosten_anspruch.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_pflegekosten_summe = EuroField(
             label=_l('form.lotse.field_pflegekosten_summe'),
