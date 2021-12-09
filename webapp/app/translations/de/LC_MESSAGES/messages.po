@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-09 22:56+0100\n"
+"POT-Creation-Date: 2021-12-09 22:57+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -333,16 +333,14 @@ msgstr "Zur vorherigen Frage"
 
 #: app/forms/steps/eligibility_steps.py:152
 msgid "form.eligibility.start-title"
-msgstr "Finden Sie heraus, ob Sie den Steuerlotsen nutzen können"
+msgstr "Sie möchten wissen, ob Sie den Steuerlotsen nutzen können?"
 
 #: app/forms/steps/eligibility_steps.py:153
 msgid "form.eligibility.start-intro"
 msgstr ""
-"Der Steuerlotse bietet Rentner:innen und Pensionär:innen eine "
-"vereinfachte Steuererklärung an. Der Service ist daher zurzeit nur auf "
-"eine bestimmte Gruppe von Rentner:innen und Pensionär:innen "
-"zugeschnitten. Durch die Beantwortung weniger Fragen finden Sie heraus, "
-"ob Sie alle Voraussetzungen erfüllen."
+"Der Steuerlotse ist auf Renten- oder Pensionsbeziehende ohne "
+"Zusatzeinkünfte zugeschnitten. Beantworten Sie paar einfache Fragen und "
+"wir sagen Ihnen, ob Sie den Steuerlotsen nutzen können."
 
 #: app/forms/steps/eligibility_steps.py:169
 #: app/templates/eligibility/display_start.html:6
