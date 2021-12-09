@@ -176,12 +176,6 @@ class StepVorsorge(LotseFormSteuerlotseStep):
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
         return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
-                               post_list_text=_('form.lotse.vorsorge.post-list-text'),
-                               list_items=[
-                                        _('form.lotse.vorsorge-list-item-1'),
-                                        _('form.lotse.vorsorge-list-item-2'),
-                                        _('form.lotse.vorsorge-list-item-3'),
-                                    ],
                                header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
