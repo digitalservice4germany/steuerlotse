@@ -25,7 +25,7 @@ _REQUEST_TIMEOUT = 20
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
               'person_a_blind', 'person_a_gehbeh',
               'person_b_same_address', 'person_b_blind', 'person_b_gehbeh',
-              'is_digitally_signed', 'request_new_tax_number']
+              'request_new_tax_number']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -215,8 +215,6 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
 
     if adapted_form_data.get('steuernummer_exists') == 'no' and adapted_form_data.get('request_new_tax_number'):
         adapted_form_data['submission_without_tax_nr'] = True
-        
-    digitally_signed = bool(current_user.unlock_code_hashed is not None)
 
     if not current_user.is_active:
         # no non-active user should come until here, but we want to log that as an error
@@ -228,14 +226,13 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
         logger.error('Elster_Client: Non-authenticated user tried to send tax declaration.')
         raise TaxDeclarationNotDigitallySigned
 
-    if not digitally_signed:
+    if current_user.unlock_code_hashed is None:
         # no user should come until that point without an unlock code, but they should certainly not be able to send a tax declaration
         logger.warning('Elster_Client: User without unlock code tried to send tax declaration.')
         raise TaxDeclarationNotDigitallySigned
     
     meta_data = {
         'year': year,
-        'is_digitally_signed': digitally_signed
     }
 
     return {'est_data': adapted_form_data, 'meta_data': meta_data}

@@ -710,19 +710,12 @@ class TestGenerateEStRequestData(unittest.TestCase):
             result = _generate_est_request_data({}, 2010)
 
         self.assertEqual(result['meta_data']['year'], 2010)
-        self.assertEqual(result['meta_data']['is_digitally_signed'], True)
 
     def test_unset_year_results_in_veranlagungsjahr_year_value(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
             result = _generate_est_request_data({})
 
         self.assertEqual(result['meta_data']['year'], VERANLAGUNGSJAHR)
-
-    def test_activated_user_results_in_correct_attribute_set_true(self):
-        with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed="UNLO-CKCO-DE01")):
-            result = _generate_est_request_data({})
-
-        self.assertEqual(True, result['meta_data']['is_digitally_signed'])
 
     def test_if_user_has_no_unlock_code_then_raise_not_digitally_signed_exception(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed=None)), \
@@ -899,7 +892,7 @@ class TestCheckPyericResponseForErrors(unittest.TestCase):
                 self.fail('check_pyeric_response_for_errors returned unexpected error message.')
 
     def test_422_value_error_returns_general_erica_error(self):
-        error_json = {'detail': [{'msg': 'is_digitally_signed must be true.'}]}
+        error_json = {'detail': [{'msg': 'An error occurred'}]}
         expected_error_message = str(error_json)
         response_500 = MockResponse(error_json, 422)
         try:
