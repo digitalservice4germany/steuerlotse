@@ -901,7 +901,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
     def test_if_person_b_account_holder_then_generate_full_xml(self):
         input_data = {**self.dummy_fields, **{'E0102402': 'X'}}
         xml_string = self._call_generate_full_est_xml(input_data)
-        self.assertIn('<BV><E0102402>X</E0102402></BV>', "".join(xml_string.split()))
+        self.assertIn('<BV><Kto_Inh><E0102402>X</E0102402></Kto_Inh></BV>', "".join(xml_string.split()))
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_sonderausgaben_filled_out_then_generate_full_xml(self):
