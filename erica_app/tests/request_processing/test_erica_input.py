@@ -218,27 +218,3 @@ class TestFormDataEstFamilienstand:
             FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
             pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
-
-
-class TestMetaDataEstDigitallySigned:
-
-    def test_if_not_digitally_signed_raise_exception(self):
-        meta_data = {
-            'year': '1964',
-            'is_digitally_signed': False
-        }
-
-        with pytest.raises(ValidationError):
-            MetaDataEst.parse_obj(meta_data)
-
-    def test_if_digitally_signed_raise_no_exception(self):
-        meta_data = {
-            'year': '1964',
-            'is_digitally_signed': True
-        }
-
-        try:
-            MetaDataEst.parse_obj(meta_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
-

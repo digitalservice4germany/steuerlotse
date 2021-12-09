@@ -180,9 +180,9 @@ def create_form_data_single(correct=True, with_tax_number=True):
 
 def create_meta_data(correct=True):
     if correct:
-        meta_data = MetaDataEst(year=TEST_EST_VERANLAGUNGSJAHR, is_digitally_signed=True)
+        meta_data = MetaDataEst(year=TEST_EST_VERANLAGUNGSJAHR)
     else:
-        meta_data = MetaDataEst(year=2225, is_digitally_signed=False)
+        meta_data = MetaDataEst(year=2225)
 
     return meta_data
 

@@ -125,13 +125,6 @@ class FormDataEst(BaseModel):
 
 class MetaDataEst(BaseModel):
     year: int
-    is_digitally_signed: bool
-
-    @validator('is_digitally_signed')
-    def must_be_true(cls, v):
-        if not v:
-            raise ValueError('must be set true')
-        return v
 
 
 class EstData(BaseModel):
