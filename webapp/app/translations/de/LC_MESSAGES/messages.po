@@ -946,16 +946,6 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:752
-#: app/forms/steps/eligibility_steps.py:783
-msgid "form.eligibility.result-note.deadline"
-msgstr ""
-"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
-" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
-"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
-"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
-"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
-
 #: app/forms/steps/eligibility_steps.py:760
 msgid "form.eligibility.success.maybe.title"
 msgstr ""

@@ -736,7 +736,6 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
                                    header_title=_('form.eligibility.header-title'),
                                    *args,
                                    **kwargs)
-        
 
     def _main_handle(self):
         super()._main_handle()
@@ -748,8 +747,6 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
         if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))
-        
-        dependent_notes.append((_l('form.eligibility.result-note.deadline')))
                 
         self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.next_url = None
@@ -767,8 +764,7 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
                                    header_title=_('form.eligibility.header-title'),
                                    *args,
                                    **kwargs)
-        
-        
+
     def _main_handle(self):  
         super()._main_handle()
         
@@ -779,9 +775,6 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
         if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))
-            
-        dependent_notes.append((_l('form.eligibility.result-note.deadline')))
-        
 
         self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.detail = {'render_kw': {
