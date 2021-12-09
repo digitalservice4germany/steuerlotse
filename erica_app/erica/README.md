@@ -15,7 +15,7 @@ Erica uses Pyeric, which is a wrapper around ERiC. For this to work you will nee
 library and place the required library files in a `lib` folder.
 
  - Set the environment variable `ERICA_ENV` to `testing`, `development` or similar.
- - Download `ERiC-32.2.4.0-Linux-x86_64.jar` (or a newer version) from the [ELSTER developer portal](https://www.elster.de/elsterweb/infoseite/entwickler).
+ - Download `ERiC-35.2.8.0-Linux-x86_64.jar` (or a newer version) from the [ELSTER developer portal](https://www.elster.de/elsterweb/infoseite/entwickler).
  - Place the following files into a `lib` folder in _this directory_ such that it matches the given structure:
 
 ```bash
