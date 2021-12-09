@@ -4211,7 +4211,7 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
-"Einkommensteuererklärung bis zum 31. Juli beim Finanzamt sein."
+"Einkommensteuererklärung bis zum <strong>31. Juli</strong> beim Finanzamt sein."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:39
