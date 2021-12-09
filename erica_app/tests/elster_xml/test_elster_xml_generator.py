@@ -612,7 +612,7 @@ class TestElsterXml(unittest.TestCase):
             AbsStr='Teststrasse 42',
             AbsPlz='12345',
             AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+            Copyright='(C) 2009 ELSTER, (C) 2021 T4G',
         )
 
     def _dummy_vorsatz_married(self):
@@ -628,7 +628,7 @@ class TestElsterXml(unittest.TestCase):
             AbsStr='Teststrasse 42',
             AbsPlz='12345',
             AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+            Copyright='(C) 2009 ELSTER, (C) 2021 T4G',
         )
 
     def _dummy_vorsatz_submission_without_tax_nr(self):
@@ -644,7 +644,7 @@ class TestElsterXml(unittest.TestCase):
             AbsStr='Teststrasse 42',
             AbsPlz='12345',
             AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+            Copyright='(C) 2009 ELSTER, (C) 2021 T4G',
         )
 
     def test_add_vorsatz_single(self):
@@ -659,7 +659,7 @@ class TestElsterXml(unittest.TestCase):
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
         self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
         self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2021 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
         self.assertNotIn("IDEhefrau", xml_string)
 
@@ -676,7 +676,7 @@ class TestElsterXml(unittest.TestCase):
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
         self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
         self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2021 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
 
     def test_add_vorsatz_submission_without_tax_nr(self):
@@ -693,7 +693,7 @@ class TestElsterXml(unittest.TestCase):
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
         self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
         self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2021 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
 
     def test_add_fields(self):

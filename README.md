@@ -4,7 +4,7 @@
 You can use this code under the terms of the provided license.
 The _Steuerlotse_ is available at: https://steuerlotse-rente.de
 
-With the _Steuerlotse_, taxable pensioners can submit their tax returns online from the tax year 2020 onwards. 
+With the _Steuerlotse_, taxable pensioners can submit their tax returns online from the tax year 2021 onwards. 
 The _Steuerlotse_ was specially developed for the tax return of pensioners without additional income.
 
 As early as 2019, four federal states (Brandenburg, Bremen, Mecklenburg-Western Pomerania and Saxony) developed 
@@ -16,7 +16,7 @@ a simplified tax return in paper form for pensioners. Based on the paper form a
 Du kannst den Code unter den Bedingungen der angegeben Lizenz nutzen.
 Der _Steuerlotse_ ist verfügbar unter: https://steuerlotse-rente.de
 
-Mit dem _Steuerlotsen_ können steuerpflichtige Rentner:innen und Pensionär:innen ab dem Veranlagungsjahr 2020 ihre 
+Mit dem _Steuerlotsen_ können steuerpflichtige Rentner:innen und Pensionär:innen ab dem Veranlagungsjahr 2021 ihre 
 Steuererklärung online einreichen. Der _Steuerlotse_ wurde extra für die Steuererklärung von Rentner:innen und 
 Pensionär:innen ohne Zusatzeinkünfte entwickelt. 
 
