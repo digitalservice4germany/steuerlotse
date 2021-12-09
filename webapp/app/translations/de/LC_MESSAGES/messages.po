@@ -4209,26 +4209,13 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 #: app/templates/content/landing_page.html:38
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
-"Das hängt davon ab, ob Sie zur Abgabe einer Steuererklärung verpflichtet "
-"sind oder Ihre Steuererklärung freiwillig machen."
+"Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum 31. Juli beim Finanzamt sein."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:39
 msgid "info-stl.card-submission.p2-content"
 msgstr ""
-"Für Personen, die verpflichtet sind, eine Einkommensteuererklärung "
-"einzureichen, endete die Steuerabgabefrist am 31. Oktober."
-
-#: app/templates/content/howitworks.html:36
-#: app/templates/content/landing_page.html:40
-msgid "info-stl.card-submission.p3-content"
-msgstr ""
-"Sollten Sie den Abgabetermin verpasst haben, können Sie Ihre "
-"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
-"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
-"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen. Wenn "
-"Sie Ihre Steuererklärung freiwillig einreichen, haben Sie bis zu vier "
-"Jahre Zeit."
+"Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen. "
 
 #: app/templates/content/howitworks.html:41
 #: app/templates/content/landing_page.html:45
