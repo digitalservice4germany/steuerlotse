@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-09 19:54+0100\n"
+"POT-Creation-Date: 2021-12-09 20:04+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1631,10 +1631,10 @@ msgstr ""
 #: app/forms/steps/lotse/steuerminderungen.py:251
 #: app/forms/steps/lotse/steuerminderungen.py:325
 #: app/forms/steps/lotse/steuerminderungen.py:353
-#: app/forms/steps/lotse/steuerminderungen.py:396
-#: app/forms/steps/lotse/steuerminderungen.py:403
-#: app/forms/steps/lotse/steuerminderungen.py:430
-#: app/forms/steps/lotse/steuerminderungen.py:437
+#: app/forms/steps/lotse/steuerminderungen.py:393
+#: app/forms/steps/lotse/steuerminderungen.py:400
+#: app/forms/steps/lotse/steuerminderungen.py:427
+#: app/forms/steps/lotse/steuerminderungen.py:434
 msgid "form.lotse.steuerminderungen.header-title"
 msgstr ""
 "Steuerformular - Steuermindernde Aufwendungen - Der Steuerlotse für Rente"
@@ -1649,8 +1649,8 @@ msgstr "Ihre Ausgaben"
 #: app/forms/steps/lotse/steuerminderungen.py:192
 #: app/forms/steps/lotse/steuerminderungen.py:257
 #: app/forms/steps/lotse/steuerminderungen.py:359
-#: app/forms/steps/lotse/steuerminderungen.py:409
-#: app/forms/steps/lotse/steuerminderungen.py:442
+#: app/forms/steps/lotse/steuerminderungen.py:406
+#: app/forms/steps/lotse/steuerminderungen.py:439
 msgid "form.lotse.section_steuerminderung.label"
 msgstr "Steuermindernde Aufwendungen"
 
@@ -2078,20 +2078,20 @@ msgstr ""
 
 #: app/forms/steps/lotse/steuerminderungen.py:351
 msgid "form.lotse.gem-haushalt-title"
-msgstr "Gemeinsamer Haushalt"
+msgstr "Zusätzliche Angaben zum Haushalt bei Alleinstehenden"
 
 #: app/forms/steps/lotse/steuerminderungen.py:352
 msgid "form.lotse.gem-haushalt-intro"
 msgstr ""
-"Haben Sie in 2020 mit weiteren Personen zusammengewohnt? Bei "
-"Haushaltsgemeinschaften werden die Höchstbeträge für Haushaltsnahe "
-"Dienstleistungen und Handwerkerleistungen insgesamt nur einmal gewährt. "
-"Dann geben Sie die weiteren Personen Ihres Haushalts bitte an. Sie müssen"
-" diese Angaben nur machen, wenn Sie"
+"Steuerermäßigungen wie Haushaltsnahe Dienstleistungen werden nur "
+"<strong>einmal pro Haushalt</strong> gewährt. Haben Sie letztes Jahr mit "
+"einer anderen Person zusammengelebt, stehen Ihnen die Höchstbeträge nur "
+"anteilig zu. Geben Sie in diesem Fall die weiteren Personen Ihres "
+"Haushalts an."
 
 #: app/forms/steps/lotse/steuerminderungen.py:357
 msgid "form.lotse.step_gem_haushalt.label"
-msgstr "Gemeinsamer Haushalt"
+msgstr "Zusätzliche Angaben zum Haushalt bei Alleinstehenden"
 
 #: app/forms/steps/lotse/steuerminderungen.py:363
 msgid "form.lotse.field_gem_haushalt_count"
@@ -2131,69 +2131,55 @@ msgstr ""
 "Sie haben angegeben, dass weitere Personen im Haushalt leben. Bitte geben"
 " Sie hier die die Daten der Personen ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:394
-msgid "form.lotse.gem_haushalt-list-item-1"
-msgstr "alleinstehend sind"
-
-#: app/forms/steps/lotse/steuerminderungen.py:395
-msgid "form.lotse.gem_haushalt-list-item-2"
-msgstr ""
-"haushaltsnahe Dienstleistungen und/oder Handwerkerleistungen angegeben "
-"haben"
-
-#: app/forms/steps/lotse/steuerminderungen.py:401
+#: app/forms/steps/lotse/steuerminderungen.py:398
 msgid "form.lotse.religion-title"
 msgstr "Steuern für Ihre Religionsgemeinschaft"
 
-#: app/forms/steps/lotse/steuerminderungen.py:402
+#: app/forms/steps/lotse/steuerminderungen.py:399
 msgid "form.lotse.religion-intro"
 msgstr ""
-"Wenn Sie Mitglied einer Religionsgemeinschaft sind, die als Körperschaft "
-"des öffentlichen Rechts anerkannt ist und Kirchensteuer erhebt, zahlen "
-"Sie Kirchensteuer. Diese Steuern (inklusive des ggf. gezahlten "
-"Kirchgeldes bzw. der Ortskirchensteuer) können Sie hier geltend machen. "
-"Hierzu gehört jedoch nicht die Kirchensteuer, die als Zuschlag zur "
-"Abgeltungsteuer einbehalten oder gezahlt worden ist. Tragen Sie hier die "
-"Kirchensteuer (ohne Kirchensteuer auf Abgeltungsteuer) ein, die Sie 2020 "
-"gezahlt haben bzw. die Ihnen 2020 erstattet wurde."
+"Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese hier "
+"als Sonderausgabe absetzen. Dazu zählt auch gezahltes Kirchgeld oder "
+"Ortskirchensteuer.</p><p><strong>Wichtig:</strong> Sollten Sie "
+"Kirchensteuer als Zuschlag auf die Abgeltungssteuer bei Kapitalerträgen "
+"zahlen, ist diese <strong>nicht absetzbar</strong>."
 
-#: app/forms/steps/lotse/steuerminderungen.py:407
+#: app/forms/steps/lotse/steuerminderungen.py:404
 msgid "form.lotse.step_religion.label"
 msgstr "Steuern für Ihre Religionsgemeinschaft"
 
-#: app/forms/steps/lotse/steuerminderungen.py:413
+#: app/forms/steps/lotse/steuerminderungen.py:410
 msgid "form.lotse.field_religion_paid_summe"
-msgstr "Gezahlt"
+msgstr "Geleistete Zahlungen"
+
+#: app/forms/steps/lotse/steuerminderungen.py:412
+msgid "form.lotse.field_religion_paid_summe-help"
+msgstr "Tragen Sie die Summe Ihrer letztes Jahr gezahlten Kirchensteuer ein."
+
+#: app/forms/steps/lotse/steuerminderungen.py:413
+msgid "form.lotse.field_religion_paid_summe.data_label"
+msgstr "Geleistete Zahlungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:415
-msgid "form.lotse.field_religion_paid_summe-help"
-msgstr "Tragen Sie dafür die Summe Ihrer 2020 gezahlten Kirchensteuer ein."
+msgid "form.lotse.field_religion_reimbursed_summe"
+msgstr "Erhaltene Erstattungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:416
-msgid "form.lotse.field_religion_paid_summe.data_label"
-msgstr "Gezahlt"
-
-#: app/forms/steps/lotse/steuerminderungen.py:418
-msgid "form.lotse.field_religion_reimbursed_summe"
-msgstr "Erstattet"
-
-#: app/forms/steps/lotse/steuerminderungen.py:419
 msgid "form.lotse.field_religion_reimbursed-help"
 msgstr ""
-"Wenn Sie letztes Jahr eine Steuererklärung gemacht haben und Ihnen zu "
-"viel gezahlte Kirchensteuer erstattet wurde, geben Sie das hier an. Die "
-"Summe der erstatteten Kirchensteuer finden Sie beispielsweise auf dem "
-"Steuerbescheid des Vorjahres."
+"Haben Sie im letzten Jahr zu viel gezahlte Kirchensteuer erstattet "
+"bekommen, geben Sie das hier an. Die Summe der erstatteten Kirchensteuer "
+"finden Sie z.B. auf dem Steuerbescheid des Vorjahres."
 
-#: app/forms/steps/lotse/steuerminderungen.py:420
+#: app/forms/steps/lotse/steuerminderungen.py:417
 msgid "form.lotse.field_religion_reimbursed_summe.data_label"
-msgstr "Erstattet"
+msgstr "Erhaltene Erstattungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:435
+#: app/forms/steps/lotse/steuerminderungen.py:432
 msgid "form.lotse.spenden-inland-title"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:436
+#: app/forms/steps/lotse/steuerminderungen.py:433
 msgid "form.lotse.spenden-inland-intro"
 msgstr ""
 "Für einen Spendenabzug benötigen Sie grundsätzlich eine "
@@ -2202,17 +2188,17 @@ msgstr ""
 "<strong>bis 300 Euro</strong> reicht den meisten Finanzämtern eine Kopie "
 "der Abbuchung vom Kontoauszug aus."
 
-#: app/forms/steps/lotse/steuerminderungen.py:441
+#: app/forms/steps/lotse/steuerminderungen.py:438
 msgid "form.lotse.step_spenden.label"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:446
+#: app/forms/steps/lotse/steuerminderungen.py:443
 msgid "form.lotse.spenden-inland"
 msgstr ""
 "Spenden und Mitgliedsbeiträge zur Förderung steuerbegünstigter Zwecke an "
 "Empfänger im Inland"
 
-#: app/forms/steps/lotse/steuerminderungen.py:448
+#: app/forms/steps/lotse/steuerminderungen.py:445
 msgid "form.lotse.spenden-help"
 msgstr ""
 "Spenden zählen nur, wenn sie an steuerbegünstigte Organisationen fließen."
@@ -2224,15 +2210,15 @@ msgstr ""
 "Freizeitvereinen wie Sportklubs, Gesangsvereine und Vereine für "
 "Heimatpflege, Tierzucht und Kleingartenverein.</p><p>"
 
-#: app/forms/steps/lotse/steuerminderungen.py:449
+#: app/forms/steps/lotse/steuerminderungen.py:446
 msgid "form.lotse.spenden-inland.data_label"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:451
+#: app/forms/steps/lotse/steuerminderungen.py:448
 msgid "form.lotse.spenden-inland-parteien"
 msgstr "Spenden und Mitgliedsbeiträge an inländische politische Parteien"
 
-#: app/forms/steps/lotse/steuerminderungen.py:452
+#: app/forms/steps/lotse/steuerminderungen.py:449
 msgid "form.lotse.spenden-inland-parteien-help"
 msgstr ""
 "Spenden und Mitgliedsbeiträge an inländische politische Parteien und "
@@ -2242,7 +2228,7 @@ msgstr ""
 "möglich, sollte die politische Partei von der staatlichen "
 "Parteienfinan­zierung ausgeschlossen ist."
 
-#: app/forms/steps/lotse/steuerminderungen.py:453
+#: app/forms/steps/lotse/steuerminderungen.py:450
 msgid "form.lotse.spenden-inland-parteien.data_label}"
 msgstr "an inländische politische Parteien"
 

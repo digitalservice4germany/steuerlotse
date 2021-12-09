@@ -390,10 +390,7 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
 
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
-        return render_template(self.template, form=self.render_info.form, render_info=self.render_info, list_items=[
-            _('form.lotse.gem_haushalt-list-item-1'),
-            _('form.lotse.gem_haushalt-list-item-2')
-        ], header_title=_('form.lotse.steuerminderungen.header-title'))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info,  header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
 class StepReligion(LotseFormSteuerlotseStep):
