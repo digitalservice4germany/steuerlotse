@@ -9,13 +9,13 @@ from app.forms import SteuerlotseBaseForm
 
 class DateForm(SteuerlotseBaseForm):
     date_field = SteuerlotseDateField()
-    
+
+
 class TestValidDateOfBirth(unittest.TestCase):
     def setUp(self):
         self.form = DateForm()
         self.validator = ValidDateOfBirth()
-        
-    
+
     def test_date_of_birth_is_valid(self):
         """
         GIVEN a valid date 1.1.2020
@@ -38,8 +38,7 @@ class TestValidDateOfBirth(unittest.TestCase):
             
         # Assert
         self.assertTrue(self.is_valid, f'Error raised:{self.validation_error}') 
-        
-    
+
     def test_date_of_birth_to_far_in_past_throws_ValueError(self):
         """
         GIVEN a date before 1.1.1900
@@ -62,8 +61,7 @@ class TestValidDateOfBirth(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-to-far-in-past'))
-        
-    
+
     def test_date_of_birth_in_the_future_throws_ValueError(self):
         """
         GIVEN a date in the future 9.9.9999
@@ -86,8 +84,7 @@ class TestValidDateOfBirth(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-in-the-future'))
-        
-    
+
     def test_invalid_date_of_birth_throws_ValueError(self):
         """
         GIVEN a invalid date 99.99.2020
