@@ -22,7 +22,7 @@ export const Default = Template.bind({});
 Default.args = {
   fieldId: "card",
   fieldName: "card",
-  body: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen",
+  body: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
   title: "Vorsorgeaufwendungen",
   icon: vorsorgeIcon,
   errors: [],
