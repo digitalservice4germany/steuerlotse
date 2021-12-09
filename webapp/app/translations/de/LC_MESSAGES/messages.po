@@ -1088,11 +1088,7 @@ msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
 "können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren "
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern bis Sie "
-"Ihren Brief erhalten. </p><p>Sollten Sie die Steuerabgabefrist am 31. "
-"Oktober verpasst haben, können Sie Ihre Steuererklärung auch nach der "
-"Frist noch einreichen. Warten Sie jedoch lieber nicht allzu lange. Es "
-"kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, "
-"wenn Sie sich zu viel Zeit lassen."
+"Ihren Brief erhalten."
 
 #: app/forms/steps/unlock_code_request_steps.py:85
 msgid "form.unlock-code-request.failure-title"
