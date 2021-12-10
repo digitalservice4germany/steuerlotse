@@ -19,7 +19,7 @@ class TestIsInvalidBufa(unittest.TestCase):
             self.assertTrue(result)
 
     def test_if_valid_test_bufa_then_return_true(self):
-        valid_test_bufas = ['1096', '1140', '2138', '2375', '2497', '2653', '2749', '2866', '3093', '3196', '3246',
+        valid_test_bufas = ['1096', '1194', '2138', '2375', '2497', '2653', '2749', '2866', '3093', '3196', '3246',
                             '4088', '4196', '5192', '9172']
 
         for valid_test_bufa in valid_test_bufas:
