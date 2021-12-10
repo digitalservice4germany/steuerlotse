@@ -24,7 +24,7 @@ const translations = {
   lotse: {
     fieldDeclarationIncomes: {
       fieldConfirmIncomes:
-        "Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2020 keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten Einkünfte.",
+        "Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2021 keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten Einkünfte.",
     },
     declarationIncomes: {
       listItem1:
@@ -187,7 +187,7 @@ const translations = {
     selectReligion: {
       label: {
         title: "Steuern für Ihre Religionsgemeinschaft",
-        text: "Im Jahr 2020 geleistete Steuern für eine Religionsgemeinschaft – nach Abzug der vom Finanzamt erstatteten Beträge – können Sie als Sonderausgaben angeben.",
+        text: "Im Jahr 2021 geleistete Steuern für eine Religionsgemeinschaft – nach Abzug der vom Finanzamt erstatteten Beträge – können Sie als Sonderausgaben angeben.",
       },
     },
   },
