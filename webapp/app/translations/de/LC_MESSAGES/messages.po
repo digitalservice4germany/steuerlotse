@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-08 09:30+0100\n"
+"POT-Creation-Date: 2021-12-10 12:12+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1199,7 +1199,7 @@ msgstr ""
 #: app/forms/steps/lotse/personal_data.py:31
 #: app/forms/steps/lotse/personal_data.py:185
 #: app/forms/steps/lotse/personal_data.py:297
-#: app/forms/steps/lotse/personal_data.py:405
+#: app/forms/steps/lotse/personal_data.py:406
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
 msgid "form.lotse.mandatory_data.header-title"
@@ -1212,7 +1212,7 @@ msgstr "Steuernummer"
 #: app/forms/steps/lotse/personal_data.py:36
 #: app/forms/steps/lotse/personal_data.py:188
 #: app/forms/steps/lotse/personal_data.py:300
-#: app/forms/steps/lotse/personal_data.py:410
+#: app/forms/steps/lotse/personal_data.py:411
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
@@ -1465,26 +1465,27 @@ msgid "form.lotse.field_person_plz.data_label"
 msgstr "Postleitzahl"
 
 #: app/forms/steps/lotse/personal_data.py:237
+#: app/forms/steps/lotse/personal_data.py:368
 msgid "validator-length-exactly"
 msgstr "Das Feld darf muss genau %(minmax)s Ziffern lang sein."
 
 #: app/forms/steps/lotse/personal_data.py:239
-#: app/forms/steps/lotse/personal_data.py:369
+#: app/forms/steps/lotse/personal_data.py:370
 msgid "form.lotse.field_person_town"
 msgstr "Wohnort"
 
 #: app/forms/steps/lotse/personal_data.py:240
-#: app/forms/steps/lotse/personal_data.py:370
+#: app/forms/steps/lotse/personal_data.py:371
 msgid "form.lotse.field_person_town.data_label"
 msgstr "Wohnort"
 
 #: app/forms/steps/lotse/personal_data.py:246
-#: app/forms/steps/lotse/personal_data.py:377
+#: app/forms/steps/lotse/personal_data.py:378
 msgid "form.lotse.field_person_beh_grad"
 msgstr "Grad der Behinderung"
 
 #: app/forms/steps/lotse/personal_data.py:249
-#: app/forms/steps/lotse/personal_data.py:379
+#: app/forms/steps/lotse/personal_data.py:380
 msgid "form.lotse.field_person_beh_grad-help"
 msgstr ""
 "Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
@@ -1499,37 +1500,37 @@ msgstr ""
 "typischen Berufskrankheit beruht.</li><ul>"
 
 #: app/forms/steps/lotse/personal_data.py:250
-#: app/forms/steps/lotse/personal_data.py:380
+#: app/forms/steps/lotse/personal_data.py:381
 msgid "form.lotse.field_person_beh_grad.data_label"
 msgstr "Grad der Behinderung"
 
 #: app/forms/steps/lotse/personal_data.py:251
-#: app/forms/steps/lotse/personal_data.py:381
+#: app/forms/steps/lotse/personal_data.py:382
 msgid "form.lotse.field_person_beh_grad.example_input"
 msgstr "z.B. 25, 30, 35 etc. "
 
 #: app/forms/steps/lotse/personal_data.py:254
-#: app/forms/steps/lotse/personal_data.py:384
+#: app/forms/steps/lotse/personal_data.py:385
 msgid "form.lotse.field_person_blind"
 msgstr "blind / ständig hilflos oder Pflegegrad 4 oder 5"
 
 #: app/forms/steps/lotse/personal_data.py:255
-#: app/forms/steps/lotse/personal_data.py:385
+#: app/forms/steps/lotse/personal_data.py:386
 msgid "form.lotse.field_person_blind.data_label"
 msgstr "blind / ständig hilflos oder Pflegegrad 4 oder 5"
 
 #: app/forms/steps/lotse/personal_data.py:257
-#: app/forms/steps/lotse/personal_data.py:387
+#: app/forms/steps/lotse/personal_data.py:388
 msgid "form.lotse.field_person_gehbeh"
 msgstr "geh- und stehbehindert"
 
 #: app/forms/steps/lotse/personal_data.py:258
-#: app/forms/steps/lotse/personal_data.py:388
+#: app/forms/steps/lotse/personal_data.py:389
 msgid "form.lotse.field_person_gehbeh.data_label"
 msgstr "geh- und stehbehindert"
 
 #: app/forms/steps/lotse/personal_data.py:262
-#: app/forms/steps/lotse/personal_data.py:392
+#: app/forms/steps/lotse/personal_data.py:393
 msgid "form.lotse.validation-person-beh-grad"
 msgstr ""
 "Sie haben eine Geh- oder Stehbehinderung angegeben. Bitte geben Sie hier "
@@ -1587,25 +1588,25 @@ msgstr ""
 "Mein Partner / Meine Partnerin und ich wohnen nicht zusammen. Er / Sie "
 "ist wohnhaft in:"
 
-#: app/forms/steps/lotse/personal_data.py:403
+#: app/forms/steps/lotse/personal_data.py:404
 msgid "form.lotse.telephone-number.title"
 msgstr "Telefonnummer für Rückfragen"
 
-#: app/forms/steps/lotse/personal_data.py:404
+#: app/forms/steps/lotse/personal_data.py:405
 msgid "form.lotse.telephone-number.intro"
 msgstr ""
 "Geben Sie eine Telefonnummer an, wenn Sie wünschen, dass Ihr Finanzamt "
 "Sie bei eventuellen Rückfragen kontaktieren kann."
 
-#: app/forms/steps/lotse/personal_data.py:409
+#: app/forms/steps/lotse/personal_data.py:410
 msgid "form.lotse.step_telephone_number.label"
 msgstr "Telefonnummer für Rückfragen"
 
-#: app/forms/steps/lotse/personal_data.py:415
+#: app/forms/steps/lotse/personal_data.py:416
 msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
 
-#: app/forms/steps/lotse/personal_data.py:440
+#: app/forms/steps/lotse/personal_data.py:441
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
@@ -2418,7 +2419,7 @@ msgstr "seit dem"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:43
 msgid "form.lotse.familienstand_married_lived_separated"
-msgstr "Haben Sie als Paar vor dem 01.01.2021 dauernd getrennt gelebt?"
+msgstr "Haben Sie als Paar vor dem 01.01.2022 dauernd getrennt gelebt?"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:44
 msgid "form.lotse.familienstand_married_lived_separated.example_input"
@@ -2428,7 +2429,7 @@ msgstr ""
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:45
 msgid "form.lotse.familienstand_married_lived_separated.data_label"
-msgstr "Vor dem 01.01.2021 dauernd getrennt gelebt"
+msgstr "Vor dem 01.01.2022 dauernd getrennt gelebt"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:47
 msgid "form.lotse.familienstand_married_lived_separated_since"
