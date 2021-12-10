@@ -39,7 +39,7 @@ class TestValidDateOfBirth(unittest.TestCase):
         # Assert
         self.assertTrue(self.is_valid, f'Error raised:{self.validation_error}') 
 
-    def test_date_of_birth_to_far_in_past_throws_ValueError(self):
+    def test_date_of_birth_too_far_in_past_throws_ValueError(self):
         """
         GIVEN a date before 1.1.1900
         WHEN validation executed
@@ -130,13 +130,13 @@ class TestValidDateOfBirth(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-birth-incomplete'))
-    
+
+
 class TestValidDateOfMarriage(unittest.TestCase):
     def setUp(self):
         self.form = DateForm()
         self.validator = ValidDateOfMarriage()
-        
-    
+
     def test_date_of_marriage_is_valid(self):
         """
         GIVEN a valid date 1.1.2020
@@ -159,9 +159,8 @@ class TestValidDateOfMarriage(unittest.TestCase):
             
         # Assert
         self.assertTrue(self.is_valid, f'Error raised:{self.validation_error}') 
-        
-    
-    def test_date_of_marriage_to_far_in_past_throws_ValueError(self):
+
+    def test_date_of_marriage_too_far_in_past_throws_ValueError(self):
         """
         GIVEN a date before 1.1.1900
         WHEN validation executed
@@ -183,8 +182,7 @@ class TestValidDateOfMarriage(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-to-far-in-past'))
-        
-    
+
     def test_date_of_marriage_in_the_future_throws_ValueError(self):
         """
         GIVEN a date in the future 9.9.9999
@@ -207,8 +205,7 @@ class TestValidDateOfMarriage(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-in-the-future'))
-        
-    
+
     def test_invalid_date_of_marriage_throws_ValueError(self):
         """
         GIVEN a invalid date 99.99.2020
@@ -255,12 +252,12 @@ class TestValidDateOfMarriage(unittest.TestCase):
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-marriage-incomplete'))
     
+
 class TestValidDateOfDivorce(unittest.TestCase):
     def setUp(self):
         self.form = DateForm()
         self.validator = ValidDateOfDivorce()
-        
-    
+
     def test_date_of_divorce_is_valid(self):
         """
         GIVEN a valid date 1.1.2020
@@ -283,9 +280,8 @@ class TestValidDateOfDivorce(unittest.TestCase):
             
         # Assert
         self.assertTrue(self.is_valid, f'Error raised:{self.validation_error}') 
-        
-    
-    def test_date_of_divorce_to_far_in_past_throws_ValueError(self):
+
+    def test_date_of_divorce_too_far_in_past_throws_ValueError(self):
         """
         GIVEN a date before 1.1.1900
         WHEN validation executed
@@ -307,8 +303,7 @@ class TestValidDateOfDivorce(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-to-far-in-past'))
-        
-    
+
     def test_date_of_divorce_in_the_future_throws_ValueError(self):
         """
         GIVEN a date in the future 9.9.9999
@@ -331,8 +326,7 @@ class TestValidDateOfDivorce(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-in-the-future'))
-        
-    
+
     def test_invalid_date_of_divorce_throws_ValueError(self):
         """
         GIVEN a invalid date 99.99.2020
@@ -378,12 +372,12 @@ class TestValidDateOfDivorce(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-incomplete'))
-    
+
+
 class TestValidDateOfDeath(unittest.TestCase):    
     def setUp(self):
         self.form = DateForm()
         self.validator = ValidDateOfDeath()
-        
     
     def test_date_of_death_is_valid(self):
         """
@@ -407,9 +401,8 @@ class TestValidDateOfDeath(unittest.TestCase):
             
         # Assert
         self.assertTrue(self.is_valid, f'Error raised:{self.validation_error}') 
-        
-    
-    def test_date_of_death_to_far_in_past_throws_ValueError(self):
+
+    def test_date_of_death_too_far_in_past_throws_ValueError(self):
         """
         GIVEN a date before 1.1.1900
         WHEN validation executed
@@ -431,8 +424,7 @@ class TestValidDateOfDeath(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-to-far-in-past'))
-        
-    
+
     def test_date_of_death_in_the_future_throws_ValueError(self):
         """
         GIVEN a date in the future 9.9.9999
@@ -455,8 +447,7 @@ class TestValidDateOfDeath(unittest.TestCase):
         # Assert        
         self.assertFalse(self.is_valid, 'ValueError expected')
         self.assertEqual(self.validation_error, _('validate.date-of-in-the-future'))
-        
-    
+
     def test_invalid_date_of_death_throws_ValueError(self):
         """
         GIVEN a invalid date 99.99.2020
