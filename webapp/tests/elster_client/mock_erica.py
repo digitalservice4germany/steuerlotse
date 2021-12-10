@@ -3,6 +3,7 @@ from typing import List, Tuple
 from flask import json
 
 from app.config import Config
+from app.utils import VERANLAGUNGSJAHR
 from tests.elster_client.json_responses.sample_responses import get_json_response
 from tests.utils import gen_random_key
 
@@ -97,6 +98,10 @@ class MockErica:
                  not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITHOUT_STEUERNUMMER)) or \
                 (not all(key in input_data['meta_data'] for key in _METADATA_KEYS)):
             raise UnexpectedInputDataError()
+
+        # Invalid year
+        if input_data['meta_data']['year'] != VERANLAGUNGSJAHR:
+            return get_json_response('validation_invalid_year')
 
         # ValidationError
         if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID:
