@@ -8,8 +8,10 @@ from xml.etree import ElementTree as ET
 from erica.config import get_settings
 from erica.request_processing.erica_input import EstData, FormDataEst, MetaDataEst, UnlockCodeRequestData, \
     UnlockCodeActivationData, UnlockCodeRevocationData
+    
+from erica.elster_xml.elster_xml_generator import VERANLAGUNGSJAHR
 
-TEST_EST_VERANLAGUNGSJAHR = 2021
+TEST_EST_VERANLAGUNGSJAHR = VERANLAGUNGSJAHR
 
 def create_unlock_request(correct=True):
     if correct:

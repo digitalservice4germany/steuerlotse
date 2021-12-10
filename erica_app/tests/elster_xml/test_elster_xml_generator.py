@@ -16,7 +16,7 @@ from erica.elster_xml.elster_xml_generator import _pretty, _add_xml_nutzdaten_he
     _add_vast_beleg_ids_request_nutzdaten, generate_full_vast_beleg_ids_request_xml, \
     _add_abrufcode_request_nutzdaten, generate_full_abrufcode_request_xml, _add_vast_beleg_request_xml_nutzdaten, \
     generate_full_vast_beleg_request_xml, _add_vast_revocation_xml_nutzdaten, generate_full_vast_revocation_xml, \
-    generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number, VERANLAGUNGSJAHR
+    generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number
 from erica.elster_xml.xml_parsing.erica_xml_parsing import remove_declaration_and_namespace
 from erica.elster_xml.elster_xml_tree import ElsterXmlTreeNode
 from erica.elster_xml.est_mapping import PersonSpecificFieldId
@@ -25,7 +25,7 @@ from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.elster_xml.transfer_header_fields import TransferHeaderFields
 from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false, TEST_EST_VERANLAGUNGSJAHR
 
-_BEANTRAGUNGSJAHR = VERANLAGUNGSJAHR + 1
+_BEANTRAGUNGSJAHR = TEST_EST_VERANLAGUNGSJAHR + 1
 
 
 class TestGenerateVorsatzWithTaxNumber(unittest.TestCase):
@@ -984,7 +984,7 @@ class TestVastRequest(unittest.TestCase):
         xml_string = _pretty(xml_top)
 
         self.assertEqual('false', xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Unbeschraenkt').text)
-        self.assertEqual(str(VERANLAGUNGSJAHR), xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
+        self.assertEqual(str(TEST_EST_VERANLAGUNGSJAHR), xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
         self.assertEqual(f'{_BEANTRAGUNGSJAHR}-12-31', xml_top.find('.//SpezRechtAntrag/GueltigBis').text)
         self.assertIn('<SpezRechtAntrag version="' + self.expected_antrag_version + '">', xml_string)
         self.assertIn(
@@ -1162,7 +1162,7 @@ class TestVastBelegIdsRequest(unittest.TestCase):
         xml_string = _pretty(xml_top)
 
         self.assertIn('idnr="' + self.idnr + '"', xml_string)
-        self.assertIn(f'veranlagungsjahr="{VERANLAGUNGSJAHR}"', xml_string)
+        self.assertIn(f'veranlagungsjahr="{TEST_EST_VERANLAGUNGSJAHR}"', xml_string)
 
     def test_that_add_vast_beleg_ids_request_xml_nutzdaten_adds_correct_year(self):
         xml_top = Element('top')
@@ -1292,7 +1292,7 @@ class TestVastBelegRequest(unittest.TestCase):
         _add_vast_beleg_request_xml_nutzdaten(xml_top, self.valid_user_data, self.beleg_id_1)
 
         self.assertEqual(1, len(xml_top.findall('Nutzdaten/Datenabholung/Abholung')))
-        self.assertEqual(str(VERANLAGUNGSJAHR), xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
+        self.assertEqual(str(TEST_EST_VERANLAGUNGSJAHR), xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_request_xml_generates_transfer_header(self):
