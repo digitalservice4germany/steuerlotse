@@ -8,6 +8,7 @@ from pydantic import ValidationError
 
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.request_processing.erica_input import FormDataEst, MetaDataEst
+from tests.utils import TEST_EST_VERANLAGUNGSJAHR
 
 
 @pytest.fixture
@@ -218,3 +219,13 @@ class TestFormDataEstFamilienstand:
             FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
             pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+
+
+class TestMetaDataYear:
+    def test_if_valid_year_provided_return_correct_data(self):
+        returned_object = MetaDataEst.parse_obj({'year': TEST_EST_VERANLAGUNGSJAHR})
+        assert returned_object.year == TEST_EST_VERANLAGUNGSJAHR
+
+    def test_if_invalid_year_provided_raise_value_error(self):
+        with pytest.raises(ValueError):
+            MetaDataEst.parse_obj({'year': 2020})

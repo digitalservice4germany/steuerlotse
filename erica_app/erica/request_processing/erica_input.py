@@ -126,6 +126,12 @@ class FormDataEst(BaseModel):
 class MetaDataEst(BaseModel):
     year: int
 
+    @validator('year')
+    def year_must_be_supported(cls, v):
+        if not v == 2021:
+            raise ValueError("must be a supported year")
+        return v
+
 
 class EstData(BaseModel):
     est_data: FormDataEst
