@@ -1,0 +1,14 @@
+{% extends 'basis/form_standard.html' %}
+{% import "macros.html" as macros %}
+{% import "components.html" as components %}
+
+{% block step_intro %}
+    {{ macros.form_header(render_info) }}
+    {{ components.details(input_details_title, [input_details_text], list_items=details_list_items ,details_id="ausserg_bela-details") }}
+
+    <ul class="mb-4">
+        {% for item in list_items -%}
+            <li class="mt-2">{{ item }}</li>
+        {% endfor -%}
+    </ul>
+{% endblock %}

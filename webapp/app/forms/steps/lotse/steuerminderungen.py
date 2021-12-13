@@ -184,7 +184,7 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     title = _l('form.lotse.ausserg_bela-title')
     intro = _l('form.lotse.ausserg_bela-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
-    template = 'lotse/form_aufwendungen_with_list.html'
+    template = 'lotse/form_krankheitskosten.html'
     preconditions = [ShowAussergBelaPrecondition]
 
     label = _l('form.lotse.step_ausserg_bela.label')
@@ -242,6 +242,16 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
+    def render(self):
+        self.render_info.form.first_field = next(iter(self.render_info.form))
+        return render_template(
+            template_name_or_list=self.template,
+            form=self.render_info.form,
+            render_info=self.render_info,
+            input_details_title=_('form.lotse.ausserg_bela.details-title'),
+            input_details_text=_('form.lotse.ausserg_bela.details-text'),
+        )
 
 
 class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
