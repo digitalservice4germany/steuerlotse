@@ -71,6 +71,20 @@ def get_json_response(keyword, idnr=None, elster_request_id=None):
                         'description': 'There has been an error communicating with Elster.',
                     }
                 }
+    if keyword == 'validation_invalid_year':
+        return {
+                    "detail": [
+                        {
+                            "loc": [
+                                "body",
+                                "meta_data",
+                                "year"
+                            ],
+                            "msg": "must be a supported year",
+                            "type": "value_error"
+                        }
+                    ]
+                }
     if keyword == 'validation_error_with_resp':
         return {
                     'detail': {

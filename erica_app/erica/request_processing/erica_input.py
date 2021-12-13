@@ -5,6 +5,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel, validator
 
+from erica.elster_xml.elster_xml_generator import VERANLAGUNGSJAHR
 from erica.elster_xml.est_validation import is_valid_bufa
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 
@@ -125,12 +126,11 @@ class FormDataEst(BaseModel):
 
 class MetaDataEst(BaseModel):
     year: int
-    is_digitally_signed: bool
 
-    @validator('is_digitally_signed')
-    def must_be_true(cls, v):
-        if not v:
-            raise ValueError('must be set true')
+    @validator('year')
+    def year_must_be_supported(cls, v):
+        if not v == VERANLAGUNGSJAHR:
+            raise ValueError("must be a supported year")
         return v
 
 

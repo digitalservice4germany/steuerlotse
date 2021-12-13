@@ -88,7 +88,7 @@ class EstValidationRequestController(TransferTicketRequestController):
 
     def process(self):
         # Translate our form data structure into the fields from
-        # the Elster specification (see `Jahresdokumentation_10_2020.xml`)
+        # the Elster specification (see `Jahresdokumentation_10_2021.xml`)
         fields = est_mapping.check_and_generate_entries(self.input_data.est_data.__dict__)
 
         common_vorsatz_args = (
