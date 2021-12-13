@@ -262,4 +262,7 @@ class TestGetTaxOffices(unittest.TestCase):
         response = get_tax_offices()
         with open(response.path, "r") as response_file:
             response_content = json.load(response_file)
-        self.assertEqual(GetTaxOfficesPyericController().get_eric_response(), response_content)
+            
+        erica_response = GetTaxOfficesPyericController().get_eric_response()
+        
+        self.assertEqual(erica_response, response_content)

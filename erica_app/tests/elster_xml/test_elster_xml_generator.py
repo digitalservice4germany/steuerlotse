@@ -16,17 +16,16 @@ from erica.elster_xml.elster_xml_generator import _pretty, _add_xml_nutzdaten_he
     _add_vast_beleg_ids_request_nutzdaten, generate_full_vast_beleg_ids_request_xml, \
     _add_abrufcode_request_nutzdaten, generate_full_abrufcode_request_xml, _add_vast_beleg_request_xml_nutzdaten, \
     generate_full_vast_beleg_request_xml, _add_vast_revocation_xml_nutzdaten, generate_full_vast_revocation_xml, \
-    generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number, VERANLAGUNGSJAHR
+    generate_vorsatz_with_tax_number, _compute_valid_until_date, generate_vorsatz_without_tax_number
 from erica.elster_xml.xml_parsing.erica_xml_parsing import remove_declaration_and_namespace
 from erica.elster_xml.elster_xml_tree import ElsterXmlTreeNode
 from erica.elster_xml.est_mapping import PersonSpecificFieldId
 from erica.pyeric.eric import get_eric_wrapper
 from erica.pyeric.eric_errors import EricProcessNotSuccessful
 from erica.elster_xml.transfer_header_fields import TransferHeaderFields
-from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false
+from tests.utils import missing_cert, missing_pyeric_lib, use_testmerker_env_set_false, TEST_EST_VERANLAGUNGSJAHR
 
-
-_BEANTRAGUNGSJAHR = VERANLAGUNGSJAHR + 1
+_BEANTRAGUNGSJAHR = TEST_EST_VERANLAGUNGSJAHR + 1
 
 
 class TestGenerateVorsatzWithTaxNumber(unittest.TestCase):
@@ -606,14 +605,14 @@ class TestElsterXml(unittest.TestCase):
             ordNrArt='S',
             vorgang='01',
             StNr='9198011310010',
-            Zeitraum='2020',
+            Zeitraum=str(TEST_EST_VERANLAGUNGSJAHR),
             IDPersonA='04452397687',
             IDPersonB=None,
             AbsName='Testfall ERiC',
             AbsStr='Teststrasse 42',
             AbsPlz='12345',
             AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+            Copyright='(C) 2009 ELSTER, (C) 2021 T4G',
         )
 
     def _dummy_vorsatz_married(self):
@@ -622,14 +621,14 @@ class TestElsterXml(unittest.TestCase):
             ordNrArt='S',
             vorgang='01',
             StNr='9198011310010',
-            Zeitraum='2020',
+            Zeitraum=str(TEST_EST_VERANLAGUNGSJAHR),
             IDPersonA='04452397687',
             IDPersonB='02293417683',
             AbsName='Testfall ERiC',
             AbsStr='Teststrasse 42',
             AbsPlz='12345',
             AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+            Copyright='(C) 2009 ELSTER, (C) 2021 T4G',
         )
 
     def _dummy_vorsatz_submission_without_tax_nr(self):
@@ -638,14 +637,14 @@ class TestElsterXml(unittest.TestCase):
             ordNrArt='O',
             vorgang='01',
             StNr=None,
-            Zeitraum='2020',
+            Zeitraum=str(TEST_EST_VERANLAGUNGSJAHR),
             IDPersonA='04452397687',
             IDPersonB='02293417683',
             AbsName='Testfall ERiC',
             AbsStr='Teststrasse 42',
             AbsPlz='12345',
             AbsOrt='Berlin',
-            Copyright='(C) 2009 ELSTER, (C) 2020 T4G',
+            Copyright='(C) 2009 ELSTER, (C) 2021 T4G',
         )
 
     def test_add_vorsatz_single(self):
@@ -654,13 +653,13 @@ class TestElsterXml(unittest.TestCase):
         xml_string = tostring(xml_top).decode()
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn(f"<Zeitraum>{str(TEST_EST_VERANLAGUNGSJAHR)}</Zeitraum>", xml_string)
         self.assertIn("<ID>04452397687</ID>", xml_string)
         self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
         self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
         self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2021 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
         self.assertNotIn("IDEhefrau", xml_string)
 
@@ -670,14 +669,14 @@ class TestElsterXml(unittest.TestCase):
         xml_string = tostring(xml_top).decode()
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn(f"<Zeitraum>{str(TEST_EST_VERANLAGUNGSJAHR)}</Zeitraum>", xml_string)
         self.assertIn("<ID>04452397687</ID>", xml_string)
         self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
         self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
         self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
         self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2021 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
 
     def test_add_vorsatz_submission_without_tax_nr(self):
@@ -687,14 +686,14 @@ class TestElsterXml(unittest.TestCase):
 
         self.assertNotIn("<StNr>", xml_string)
         self.assertIn("<OrdNrArt>O</OrdNrArt>", xml_string)
-        self.assertIn("<Zeitraum>2020</Zeitraum>", xml_string)
+        self.assertIn(f"<Zeitraum>{TEST_EST_VERANLAGUNGSJAHR}</Zeitraum>", xml_string)
         self.assertIn("<ID>04452397687</ID>", xml_string)
         self.assertIn("<IDEhefrau>02293417683</IDEhefrau>", xml_string)
         self.assertIn("<AbsName>Testfall ERiC</AbsName>", xml_string)
         self.assertIn("<AbsStr>Teststrasse 42</AbsStr>", xml_string)
         self.assertIn("<AbsPlz>12345</AbsPlz>", xml_string)
         self.assertIn("<AbsOrt>Berlin</AbsOrt>", xml_string)
-        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2020 T4G</Copyright>", xml_string)
+        self.assertIn("<Copyright>(C) 2009 ELSTER, (C) 2021 T4G</Copyright>", xml_string)
         self.assertIn('<Rueckuebermittlung>', xml_string)
 
     def test_add_fields(self):
@@ -707,7 +706,7 @@ class TestElsterXml(unittest.TestCase):
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_add_nutzdaten(self):
         xml_top = Element('main')
-        _add_est_xml_nutzdaten(xml_top, self.dummy_fields, self._dummy_vorsatz_single(), '2020')
+        _add_est_xml_nutzdaten(xml_top, self.dummy_fields, self._dummy_vorsatz_single(), str(TEST_EST_VERANLAGUNGSJAHR))
         xml_string = tostring(xml_top).decode()
 
         self.assertIn("<StNr>9198011310010</StNr>", xml_string)
@@ -799,19 +798,19 @@ class TestGenerateFullEstXML(unittest.TestCase):
     def _call_generate_full_est_xml(self, form_data, use_testmerker=False, submission_without_tax_nr=False):
         if submission_without_tax_nr:
             vorsatz = generate_vorsatz_without_tax_number(
-                year='2020',
+                year=str(TEST_EST_VERANLAGUNGSJAHR),
                 person_a_idnr='04452397687', person_b_idnr=None, first_name='Manfred',
                 last_name='Mustername',
                 street='Musterstraße', street_nr='42', plz='12345',
                 town='Hamburg')
         else:
             vorsatz = generate_vorsatz_with_tax_number(
-                steuernummer='9198011310010', year='2020',
+                steuernummer='9198011310010', year=str(TEST_EST_VERANLAGUNGSJAHR),
                 person_a_idnr='04452397687', person_b_idnr=None,  first_name='Manfred', last_name='Mustername',
                 street='Musterstraße', street_nr='42', plz='12345', town='Hamburg')
         return generate_full_est_xml(form_data=form_data,
                                      vorsatz=vorsatz,
-                                     year='2020',
+                                     year=str(TEST_EST_VERANLAGUNGSJAHR),
                                      empfaenger='9198', nutzdaten_ticket='nutzdatenTicket123',
                                      use_testmerker=use_testmerker)
 
@@ -902,7 +901,7 @@ class TestGenerateFullEstXML(unittest.TestCase):
     def test_if_person_b_account_holder_then_generate_full_xml(self):
         input_data = {**self.dummy_fields, **{'E0102402': 'X'}}
         xml_string = self._call_generate_full_est_xml(input_data)
-        self.assertIn('<BV><E0102402>X</E0102402></BV>', "".join(xml_string.split()))
+        self.assertIn('<BV><Kto_Inh><E0102402>X</E0102402></Kto_Inh></BV>', "".join(xml_string.split()))
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_if_sonderausgaben_filled_out_then_generate_full_xml(self):
@@ -985,7 +984,7 @@ class TestVastRequest(unittest.TestCase):
         xml_string = _pretty(xml_top)
 
         self.assertEqual('false', xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Unbeschraenkt').text)
-        self.assertEqual(str(VERANLAGUNGSJAHR), xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
+        self.assertEqual(str(TEST_EST_VERANLAGUNGSJAHR), xml_top.find('.//SpezRechtAntrag/Veranlagungszeitraum/Veranlagungsjahre/Jahr').text)
         self.assertEqual(f'{_BEANTRAGUNGSJAHR}-12-31', xml_top.find('.//SpezRechtAntrag/GueltigBis').text)
         self.assertIn('<SpezRechtAntrag version="' + self.expected_antrag_version + '">', xml_string)
         self.assertIn(
@@ -1163,7 +1162,7 @@ class TestVastBelegIdsRequest(unittest.TestCase):
         xml_string = _pretty(xml_top)
 
         self.assertIn('idnr="' + self.idnr + '"', xml_string)
-        self.assertIn(f'veranlagungsjahr="{VERANLAGUNGSJAHR}"', xml_string)
+        self.assertIn(f'veranlagungsjahr="{TEST_EST_VERANLAGUNGSJAHR}"', xml_string)
 
     def test_that_add_vast_beleg_ids_request_xml_nutzdaten_adds_correct_year(self):
         xml_top = Element('top')
@@ -1293,7 +1292,7 @@ class TestVastBelegRequest(unittest.TestCase):
         _add_vast_beleg_request_xml_nutzdaten(xml_top, self.valid_user_data, self.beleg_id_1)
 
         self.assertEqual(1, len(xml_top.findall('Nutzdaten/Datenabholung/Abholung')))
-        self.assertEqual(str(VERANLAGUNGSJAHR), xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
+        self.assertEqual(str(TEST_EST_VERANLAGUNGSJAHR), xml_top.findall('Nutzdaten/Datenabholung/Abholung')[0].get('veranlagungsjahr'))
 
     @pytest.mark.skipif(missing_pyeric_lib(), reason="skipped because of missing eric lib; see pyeric/README.md")
     def test_that_generate_full_vast_beleg_request_xml_generates_transfer_header(self):

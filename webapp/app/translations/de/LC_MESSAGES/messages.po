@@ -323,7 +323,7 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:98
 #: app/forms/steps/eligibility_steps.py:158
 #: app/forms/steps/eligibility_steps.py:736
-#: app/forms/steps/eligibility_steps.py:767
+#: app/forms/steps/eligibility_steps.py:764
 msgid "form.eligibility.header-title"
 msgstr "Nutzung Prüfen - Der Steuerlotse für Rente und Pension"
 
@@ -923,7 +923,7 @@ msgstr ""
 "die Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:747
+#: app/forms/steps/eligibility_steps.py:746
 msgid "form.eligibility.result-note.user_b_elster_account-registration-success"
 msgstr ""
 "Um den Freischaltcode per Post zu erhalten, muss sich die Person "
@@ -932,8 +932,8 @@ msgstr ""
 " Person von Ihnen registriert. Wer sich von Ihnen registriert, können Sie"
 " entscheiden."
 
-#: app/forms/steps/eligibility_steps.py:750
-#: app/forms/steps/eligibility_steps.py:781
+#: app/forms/steps/eligibility_steps.py:749
+#: app/forms/steps/eligibility_steps.py:777
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -944,23 +944,13 @@ msgstr ""
 "Änderung der Steuerbelastung beantragen. Der Steuerlotse bietet Ihnen "
 "dafür allerdings derzeit keine Möglichkeiten."
 
-#: app/forms/steps/eligibility_steps.py:752
-#: app/forms/steps/eligibility_steps.py:783
-msgid "form.eligibility.result-note.deadline"
-msgstr ""
-"Wenn Sie verpflichtet sind eine Einkommensteuererklärung einzureichen und"
-" die Steuerabgabefrist am 31. Oktober verpasst haben, können Sie Ihre "
-"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
-"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
-"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen."
-
-#: app/forms/steps/eligibility_steps.py:760
+#: app/forms/steps/eligibility_steps.py:757
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
 "Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
 "Steuerlotsen machen."
 
-#: app/forms/steps/eligibility_steps.py:761
+#: app/forms/steps/eligibility_steps.py:758
 msgid "form.eligibility.success.maybe.intro"
 msgstr ""
 "Sie können Ihre Steuererklärung mit dem Steuerlotsen machen, wenn Ihnen "
@@ -977,7 +967,7 @@ msgstr ""
 "Finanzverwaltung übermitteln. Außerdem haben Sie keine weiteren "
 "Einkünfte, die Sie in Ihrer Steuererklärung geltend machen müssen."
 
-#: app/forms/steps/eligibility_steps.py:778
+#: app/forms/steps/eligibility_steps.py:774
 msgid "form.eligibility.result-note.both_elster_account-registration-maybe"
 msgstr ""
 "Um die Chancen auf den Erhalt eines Freischaltcodes zu erhöhen, empfehlen"
@@ -985,11 +975,11 @@ msgstr ""
 "Steuererklärung gemeinsam als Paar zu machen, reicht allerdings ein "
 "Freischaltcode aus."
 
-#: app/forms/steps/eligibility_steps.py:788
+#: app/forms/steps/eligibility_steps.py:781
 msgid "form.eligibility.result-note.when_unlock_code.title"
 msgstr "Wann bekomme ich einen Freischaltcode?"
 
-#: app/forms/steps/eligibility_steps.py:789
+#: app/forms/steps/eligibility_steps.py:782
 msgid "form.eligibility.result-note.when_unlock_code.description"
 msgstr ""
 "Sie bekommen einen Freischaltcode, wenn Sie sich bei Mein Elster mit "
@@ -1096,11 +1086,7 @@ msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
 "können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren "
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern bis Sie "
-"Ihren Brief erhalten. </p><p>Sollten Sie die Steuerabgabefrist am 31. "
-"Oktober verpasst haben, können Sie Ihre Steuererklärung auch nach der "
-"Frist noch einreichen. Warten Sie jedoch lieber nicht allzu lange. Es "
-"kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, "
-"wenn Sie sich zu viel Zeit lassen."
+"Ihren Brief erhalten."
 
 #: app/forms/steps/unlock_code_request_steps.py:85
 msgid "form.unlock-code-request.failure-title"
@@ -4268,34 +4254,25 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 #: app/templates/content/landing_page.html:38
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
-"Das hängt davon ab, ob Sie zur Abgabe einer Steuererklärung verpflichtet "
-"sind oder Ihre Steuererklärung freiwillig machen."
+"Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
+"Einkommensteuererklärung bis zum <strong>31. Juli</strong> beim Finanzamt sein."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:39
 msgid "info-stl.card-submission.p2-content"
 msgstr ""
-"Für Personen, die verpflichtet sind, eine Einkommensteuererklärung "
-"einzureichen, endete die Steuerabgabefrist am 31. Oktober."
+"Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. "
+"Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr "
+"Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel "
+"Zeit lassen. "
 
-#: app/templates/content/howitworks.html:36
-#: app/templates/content/landing_page.html:40
-msgid "info-stl.card-submission.p3-content"
-msgstr ""
-"Sollten Sie den Abgabetermin verpasst haben, können Sie Ihre "
-"Steuererklärung auch nach der Frist noch einreichen. Warten Sie jedoch "
-"lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen "
-"Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen. Wenn "
-"Sie Ihre Steuererklärung freiwillig einreichen, haben Sie bis zu vier "
-"Jahre Zeit."
-
-#: app/templates/content/howitworks.html:41
-#: app/templates/content/landing_page.html:45
+#: app/templates/content/howitworks.html:40
+#: app/templates/content/landing_page.html:44
 msgid "info-stl.card-steuerminderung.heading"
 msgstr "Kann ich Angaben machen, die meine Steuerlast reduzieren?"
 
-#: app/templates/content/howitworks.html:43
-#: app/templates/content/landing_page.html:47
+#: app/templates/content/howitworks.html:42
+#: app/templates/content/landing_page.html:46
 msgid "info-stl.card-steuerminderung.p1-content"
 msgstr ""
 "Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und "
@@ -4306,8 +4283,8 @@ msgstr ""
 "Dienstleistungen</li><li>Handwerkerleistungen</li><li>Gezahlte "
 "Kirchensteuer</li></ul>"
 
-#: app/templates/content/howitworks.html:44
-#: app/templates/content/landing_page.html:48
+#: app/templates/content/howitworks.html:43
+#: app/templates/content/landing_page.html:47
 msgid "info-stl.card-steuerminderung.p2-content"
 msgstr ""
 "Die <strong>haushaltsnahen Dienstleistungen</strong> und "
@@ -4316,19 +4293,19 @@ msgstr ""
 "Arbeitnehmer einstellen, können Sie dies im Steuerlotsen nicht steuerlich"
 " absetzen."
 
-#: app/templates/content/howitworks.html:45
-#: app/templates/content/landing_page.html:49
+#: app/templates/content/howitworks.html:44
+#: app/templates/content/landing_page.html:48
 msgid "info-stl.card-steuerminderung.p3-content"
 msgstr ""
 "Eine detaillierte Übersicht, welche Angaben zu den Bereichen gehören, "
 "finden Sie in unserer Vorbereitungshilfe.</p><p><a "
 "href=%(link)s>Vorbereitungshilfe speichern</a>"
 
-#: app/templates/content/howitworks.html:50
+#: app/templates/content/howitworks.html:49
 msgid "info-stl.card-partner.heading"
 msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
 
-#: app/templates/content/howitworks.html:52
+#: app/templates/content/howitworks.html:51
 msgid "info-stl.card-partner.p1-content"
 msgstr ""
 "Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft "
@@ -4336,34 +4313,34 @@ msgstr ""
 "Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss sich "
 "trotzdem nur eine Person registrieren."
 
-#: app/templates/content/howitworks.html:57
+#: app/templates/content/howitworks.html:56
 msgid "info-stl.elster.heading"
 msgstr "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?"
 
-#: app/templates/content/howitworks.html:59
+#: app/templates/content/howitworks.html:58
 msgid "info-stl.elster.p1-content"
 msgstr ""
 "Nein. In der aktuellen Version können Sie den Steuerlotsen nicht nutzen, "
 "wenn Sie ein Konto bei ELSTER haben."
 
-#: app/templates/content/howitworks.html:60
+#: app/templates/content/howitworks.html:59
 msgid "info-stl.elster.p2-content"
 msgstr ""
 "Für die Überprüfung Ihrer Identität braucht unser Service einen "
 "Freischaltcode. Diesen erhalten Sie nur, wenn Sie noch kein Konto bei "
 "ELSTER haben."
 
-#: app/templates/content/howitworks.html:61
+#: app/templates/content/howitworks.html:60
 msgid "info-stl.elster.p3-content"
 msgstr ""
 "ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
 "Plattform der deutschen Finanzverwaltung. "
 
-#: app/templates/content/howitworks.html:69
+#: app/templates/content/howitworks.html:68
 msgid "info.heading-prepare"
 msgstr "Vorbereitung"
 
-#: app/templates/content/howitworks.html:70
+#: app/templates/content/howitworks.html:69
 msgid "info.intro-prepare"
 msgstr ""
 "Wir möchten Sie während des gesamten Prozesses bis zu Ihrer fertigen "
@@ -4372,11 +4349,11 @@ msgstr ""
 "aller notwendigen Unterlagen für das Ausfüllen Ihrer Steuererklärung. So "
 "können Sie sich bestens vorbereiten."
 
-#: app/templates/content/howitworks.html:73
+#: app/templates/content/howitworks.html:72
 msgid "info-prep.card-mandatory.heading"
 msgstr "Welche Angaben müssen im Steuerlotsen gemacht werden?"
 
-#: app/templates/content/howitworks.html:75
+#: app/templates/content/howitworks.html:74
 msgid "info-prep.card-mandatory.p1-content"
 msgstr ""
 "Folgende Angaben müssen Sie beim Steuerlotsen machen:<ul><li>Name, "
@@ -4831,79 +4808,79 @@ msgstr "<a href=\"mailto:kontakt@steuerlotse-rente.de\">Schreiben Sie uns!</a>"
 msgid "info.heading-accordeon-home"
 msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 
-#: app/templates/content/landing_page.html:63
+#: app/templates/content/landing_page.html:62
 msgid "landing.hero-title"
 msgstr ""
 "Mit dem Steuerlotsen können Rentner:innen und Pensionär:innen ihre "
 "Steuererklärung online machen!"
 
-#: app/templates/content/landing_page.html:64
+#: app/templates/content/landing_page.html:63
 msgid "landing.hero-desc"
 msgstr ""
 "Der Steuerlotse bietet Rentner:innen und Pensionär:innen ohne weitere "
 "Einkünfte die Möglichkeit, ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen zu machen."
 
-#: app/templates/content/landing_page.html:66
+#: app/templates/content/landing_page.html:65
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:67
+#: app/templates/content/landing_page.html:66
 msgid "landing.hero-list-item-2"
 msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
 
-#: app/templates/content/landing_page.html:68
+#: app/templates/content/landing_page.html:67
 msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
-#: app/templates/content/landing_page.html:80
+#: app/templates/content/landing_page.html:79
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:90
+#: app/templates/content/landing_page.html:89
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:91
+#: app/templates/content/landing_page.html:90
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:98
+#: app/templates/content/landing_page.html:97
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:99
+#: app/templates/content/landing_page.html:98
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:106
+#: app/templates/content/landing_page.html:105
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:107
+#: app/templates/content/landing_page.html:106
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2020 beginnen."
 
-#: app/templates/content/landing_page.html:123
+#: app/templates/content/landing_page.html:122
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:124
+#: app/templates/content/landing_page.html:123
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:125
+#: app/templates/content/landing_page.html:124
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 

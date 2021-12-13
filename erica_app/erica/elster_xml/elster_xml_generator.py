@@ -68,7 +68,7 @@ def generate_vorsatz_without_tax_number(year, person_a_idnr, person_b_idnr, firs
 
 
 _ELSTER_NAMESPACE = "http://www.elster.de/elsterxml/schema/v11"
-_E10_NAMESPACE = "http://finkonsens.de/elster/elstererklaerung/est/e10/v2020"
+_E10_NAMESPACE = "http://finkonsens.de/elster/elstererklaerung/est/e10/v2021"
 _VAST_RBM_NAMESPACE = "http://finkonsens.de/elster/elstervast/vastrbm/v202001"
 _VAST_BELEGE_NAMESPACE = "http://www.elster.de/2002/XMLSchema"
 _BASE_XML = """<Elster xmlns="{}"></Elster>
