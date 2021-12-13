@@ -279,7 +279,8 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_handwerker_lohn_etc_summe = EuroField(
             label=_l('form.lotse.field_handwerker_lohn_etc_summe'),
-            render_kw={'data_label': _l('form.lotse.field_handwerker_lohn_etc_summe.data_label')},
+            render_kw={'help': _l('form.lotse.field_handwerker_lohn_etc_summe-help'),
+                       'data_label': _l('form.lotse.field_handwerker_lohn_etc_summe.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
         def validate_stmind_haushaltsnahe_summe(self, field):

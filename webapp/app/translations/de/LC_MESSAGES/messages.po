@@ -1747,19 +1747,18 @@ msgstr "Krankheitskosten Summe"
 #: app/forms/steps/lotse/steuerminderungen.py:197
 msgid "form.lotse.field_krankheitskosten-help"
 msgstr ""
-"Hier können alle Kosten eingetragen werden, die im Zusammenhang mit "
-"Krankheiten entstanden sind. Einige Beispiele:<ul><li>Arztkosten z.B. vom"
-" Zahnarzt, Logopäden, Physiotherapeuten, Heilpraktiker oder "
-"Psychotherapeuten</li><li>Rezeptgebühren, wenn Belege "
-"vorliegen</li><li>Notwendige Hilfsmittel wie Brillen, Hörgeräte oder "
-"spezielle Schuheinlagen</li><li>Verschriebene Heilkuren, Massagen, Bäder "
-"und Einläufe müssen mit einem amtsärztlichen Attest nachgewiesen werden. "
+"Hier können Kosten eingetragen werden, die im Zusammenhang mit "
+"Krankheiten entstanden sind. Einige Beispiele:<ul><li><strong>Arztkosten</strong> zum Beispiel vom Zahnarzt, Logopäden, Physiotherapeuten, Heilpraktiker oder Psychotherapeuten"
+"</li><li><strong>Rezeptgebühren</strong>, wenn Belege "
+"vorliegen</li><li><strong>Notwendige Hilfsmittel</strong> wie Brillen, Hörgeräte oder "
+"spezielle Schuheinlagen</li><li><strong>Verschriebene Heilkuren, Massagen, Bäder "
+"und Einläufe</strong> müssen mit einem amtsärztlichen Attest nachgewiesen werden. "
 "Das Attest muss vor Behandlungsbeginn ausgestellt worden "
-"sein</li><li>Eigenanteil bei Zahnersatz</li><li>Fahrtkosten zum "
-"Arzt</li></ul></p><p><strong>Nachweise</strong><br>Für Krankheitskosten "
+"sein</li><li><strong>Eigenanteil bei Zahnersatz</strong></li><li><strong>Fahrtkosten zum "
+"Arzt</strong></li></ul></p><p><strong>Nachweise</strong><br>Für Krankheitskosten "
 "brauchen Sie eine <strong>ärztliche Verordnung, ein Rezept oder ein "
 "amtsärztliches Gutachten</strong> als Nachweis für eine medizinische "
-"Indikation der Behandlung. Bei einer andauernden Erkrankung mit "
+"Indikation der Behandlung.<br>Bei einer andauernden Erkrankung mit "
 "anhaltendem Verbrauch bestimmter Medikamente, reicht die einmalige "
 "Vorlage einer solchen Verordnung "
 "aus.</p><p><strong>Kurkosten</strong><br>Möchten Sie Kurkosten geltend "
@@ -1782,11 +1781,7 @@ msgstr "Krankheitskosten Anspruch auf Erstattung"
 #: app/forms/steps/lotse/steuerminderungen.py:202
 msgid "form.lotse.field_krankheitskosten-anspruch-help"
 msgstr ""
-"<strong>Minderung der Kosten um Erstattungen</strong><br>Erwarten Sie "
-"Erstattungen oder haben Sie diese bereits erhalten, müssen Sie diese hier"
-" angeben. Das können zum Beispiel Versicherungsleistungen von Ihrer "
-"Krankenkasse bzw. Krankenversicherung, Beihilfen oder andere "
-"Unterstützungen sein. "
+"<strong>Minderung der Kosten um Erstattungen</strong><br>Wurden Ihre angegebenen Kosten erstattet – anteilig oder komplett? Oder erwarten Sie Erstattungen? Geben Sie diese hier an. Das können zum Beispiel Versicherungsleistungen von Ihrer Krankenkasse bzw. Krankenversicherung, Beihilfen oder andere Unterstützungen sein. "
 
 #: app/forms/steps/lotse/steuerminderungen.py:203
 msgid "form.lotse.field_krankheitskosten_anspruch.data_label"
@@ -1799,16 +1794,8 @@ msgstr "Pflegekosten Summe"
 #: app/forms/steps/lotse/steuerminderungen.py:207
 msgid "form.lotse.field_pflegekosten-help"
 msgstr ""
-"Zu den Pflegekosten zählen zum Beispiel Kosten zur Beschäftigung einer "
-"ambulanten Pflegekraft oder Kosten, die durch Unterbringung in einem "
-"Pflegeheim oder in einem Altenpflegeheim entstehen. Die Pflegekosten "
-"können steuerlich nur berücksichtigt werden, wenn sie wegen Krankheit "
-"oder Behinderung entstanden sind.</p><p><strong>Wichtig:</strong> "
-"Pflegekosten können Sie hier <strong>nur eintragen</strong>, wenn Sie den"
-" <strong>Pauschbetrag für Menschen mit Behinderung nicht "
-"beantragt</strong> haben. Andernfalls sind Aufwendungen für Hilfe bei den"
-" gewöhnlichen und regelmäßig wiederkehrenden Verrichtungen des täglichen "
-"Lebens abgegolten."
+"Zu den Pflegekosten zählen Kosten, die wegen Krankheit oder Behinderung entstanden sind. Dazu zählen zum Beispiel <strong>Unterbringung in einem Pflegeheim</strong> oder  <strong>Kosten zur Beschäftigung einer ambulanten Pflegekraft</strong>.</p><p><strong>Wichtig:</strong> Haben Sie den den <strong>Pauschbetrag für Menschen mit Behinderung beantragt</strong>, sind Aufwendungen im Zusammenhang mit einer Behinderung des täglichen Lebens <strong>bereits abgegolten</strong>. Dies kann zum Beispiel eine Hilfe bei den gewöhnlichen und regelmäßig wiederkehrenden Verrichtungen des täglichen Lebens sein.</p><p><strong>Nachweise</strong></br>Die Pflegebedürftigkeit muss nachgewiesen werden. Dies kann mit der Bescheinigung der Pflegekasse oder einer privaten Pflegeversicherung gemacht werden. Auch der Schwerbehindertenausweis dient als Nachweis, wenn die Merkzeichen Bl oder H vorliegen.
+"
 
 #: app/forms/steps/lotse/steuerminderungen.py:208
 msgid "form.lotse.field_pflegekosten_summe.data_label"
@@ -1829,13 +1816,7 @@ msgstr "Behinderungsbedingte Aufwendungen Summe"
 #: app/forms/steps/lotse/steuerminderungen.py:216
 msgid "form.lotse.field_beh_aufw-help"
 msgstr ""
-"Zu den Behinderungsbedingten Aufwendungen zählen zum Beispiel "
-"Aufwendungen, die Menschen mit Behinderung erfahrungsgemäß durch ihre "
-"Krankheit oder Behinderung entstehen. Hierzu gehören zum Beispiel auch "
-"Aufwendungen für den behindertengerechten Umbau oder Neubau einer Wohnung"
-" oder eines Hauses. Bitte beachten Sie, dass Sie behinderungsbedingte "
-"Aufwendungen des täglichen Lebens hier nur eintragen können, wenn sie den"
-" Pauschbetrag für Menschen mit Behinderung nicht beantragt haben."
+"Hier können alle Aufwendungen eingetragen werden, die Menschen mit Behinderung erfahrungsgemäß <strong>durch ihre Krankheit oder Behinderung entstehen</strong>. Das können Aufwendungen für die Unterstützung und – teilweise – Übernahme für folgende Beispiele sein:<ul><li><strong>Körperpflege</strong> wie Waschen, Zahnpflege, Kämmen, Rasieren</li><li><strong>Mobilität</strong> wie An- und Auskleiden, Aufstehen und Zubettgehen</li><li><strong>Nahrungsaufnahme</strong> wie mundgerechte Zubereitung</li><li><strong>hauswirtschaftliche Versorgung</strong> wie Einkaufen, Kochen, Reinigen der Wohnung, Spülen oder Wäschepflege</li></ul>Hierzu gehören auch Aufwendungen für den behindertengerechten Umbau oder Neubau einer Wohnung oder eines Hauses."
 
 #: app/forms/steps/lotse/steuerminderungen.py:217
 msgid "form.lotse.field_beh_aufw_summe.data_label"
@@ -1910,11 +1891,7 @@ msgstr "Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:250
 msgid "form.lotse.handwerker-haushaltsnahe-intro"
-msgstr ""
-"Handwerkerleistungen sind Renovierungs-, Erhaltungs- und "
-"Modernisierungsmaßnahmen, die von Fachkräften durchgeführt werden. "
-"Streicht ein:e Maler:in die Wohnung oder engagieren Sie eine:n "
-"Gärtner:in, liegen Handwerkerleistungen vor."
+msgstr "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen können zu Steuerermäßigungen führen. Die Arbeiten müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt werden."
 
 #: app/forms/steps/lotse/steuerminderungen.py:255
 msgid "form.lotse.step_haushaltsnahe_handwerker.label"
@@ -1972,11 +1949,7 @@ msgstr "Aufwendungen"
 #: app/forms/steps/lotse/steuerminderungen.py:273
 msgid "form.lotse.field_handwerker_entries-help"
 msgstr ""
-"Handwerkerleistungen sind zum Beispiel: <ul><li>Reparatur, Streichen, "
-"Lackieren von Fenstern und Türen</li><li>Reparatur oder Austausch von "
-"Bodenbelägen</li><li>Modernisierung des Badezimmers oder der "
-"Einbauküche.</li></ul> Die Arbeitsleistung muss im eigenen Haushalt "
-"erbracht worden sein."
+"Hier können Arbeiten eingetragen werden, die Sie beauftragt haben, aber auch von einer im Haushalt lebenden Person erbracht worden sein können. Einige Beispiele:<ul><li><strong>Reparatur, Streichen oder Lackieren</strong> von Fenstern und Türen</li><li>Reinigung von <strong>Abflussrohren</strong></li><li>Reparatur oder Austausch von <strong>Bodenbelägen</strong></li><li><strong>Modernisierung</strong> des Badezimmers oder der Einbauküche</li><li>Reparatur, Wartung oder Austausch von <strong>Heizungsanlagen</strong>, Elektro-, Gas- und Wasserinstallationen</li><li>Schornsteinfegerleistungen</li><li>Arbeiten an <strong>Innen- und Außenwänden</strong></li><li>Reinigung von <strong>Dachrinnen</strong></li><li>Maßnahmen der <strong>Gartengestaltung</strong></li></ul>Die Arbeitsleistung muss im eigenen Haushalt erbracht worden sein.</p><p><strong>Wichtig:</strong> Es muss eine <strong>Rechnung vorliegen</strong>, die zum Beispiel per <strong>Überweisung oder EC-Kartenzahlung</strong> beglichen worden ist. Barzahlungen können nicht geltend gemacht werden.<br>Abgesetzt werden können Kosten, die Sie <strong>im letzten Jahr bezahlt haben</strong>. Relevant ist der Zeitpunkt der Bezahlung, nicht der Rechnungsstellung.</p><p><strong>Hinweis</strong><br>Bei Handwerkerleistungen ist nur der Arbeitslohn inklusive anfallender Umsatzsteuer abzugsfähig. Materialkosten werden nicht berücksichtigt. Prüfen Sie, ob die Rechnungen entsprechend aufgeschlüsselt sind Wenn in der Rechnung der Arbeitslohn nicht extra ausgewiesen ist, können Sie den Dienstleister bitten, eine neue, detailliertere Rechnung auszustellen."
 
 #: app/forms/steps/lotse/steuerminderungen.py:274
 msgid "form.lotse.field_handwerker_entries.data_label"
@@ -1997,6 +1970,10 @@ msgstr "Summe der Rechnungsbeträge (Handwerker)"
 #: app/forms/steps/lotse/steuerminderungen.py:281
 msgid "form.lotse.field_handwerker_lohn_etc_summe"
 msgstr "Betrag der Lohn-, Maschinen- und Fahrtkosten, inkl. USt"
+
+#: app/forms/steps/lotse/steuerminderungen.py:281
+msgid "form.lotse.field_handwerker_lohn_etc_summe-help"
+msgstr "Bei Handwerkerleistungen ist nur der Arbeitslohn inklusive anfallender Umsatzsteuer abzugsfähig. Materialkosten werden nicht berücksichtigt. Prüfen Sie, ob die Rechnungen entsprechend aufgeschlüsselt sind Wenn in der Rechnung der Arbeitslohn nicht extra ausgewiesen ist, können Sie du den Dienstleister bitten, eine neue, detailliertere Rechnung auszustellen."
 
 #: app/forms/steps/lotse/steuerminderungen.py:282
 msgid "form.lotse.field_handwerker_lohn_etc_summe.data_label"
@@ -2040,23 +2017,19 @@ msgstr "Was muss ich beachten?"
 #: app/forms/steps/lotse/steuerminderungen.py:327
 msgid "form.lotse.steuerminderungen.details-text"
 msgstr ""
-"Falls Sie in einer Mietwohnung wohnen und neben den Leistungen aus der "
-"Nebenkostenabrechnung selbständig Leistungen in Auftrag gegeben haben "
-"(Zum Beispiel eine Reinigungskraft), können diese hier angegeben werden. "
-"Sie haben dabei die Möglichkeit mehrere Antworten auszuwählen. Bitte "
-"beachten Sie:"
+"Falls Sie in einer Mietwohnung wohnen und neben den Leistungen aus der Nebenkostenabrechnung selbständig Leistungen in Auftrag gegeben haben, können diese hier angegeben werden.</p><p><strong>Wichtige Hinweise</strong>"
 
 #: app/forms/steps/lotse/steuerminderungen.py:329
 msgid "form.lotse.steuerminderungen.details-list-item-1"
 msgstr ""
-"Es muss eine Rechnung vorliegen, die zum Beispiel per Überweisung oder "
-"EC-Kartenzahlung beglichen worden ist. Barzahlungen können nicht geltend "
+"Es muss eine <strong>Rechnung vorliegen</strong>, die zum Beispiel per <strong>Überweisung oder "
+"EC-Kartenzahlung</strong> beglichen worden ist. Barzahlungen können nicht geltend "
 "gemacht werden."
 
 #: app/forms/steps/lotse/steuerminderungen.py:330
 msgid "form.lotse.steuerminderungen.details-list-item-2"
 msgstr ""
-"Abgesetzt werden können Kosten, die Sie im Besteuerungsjahr bezahlt "
+"Abgesetzt werden können Kosten, die Sie im letzen Jahr bezahlt "
 "haben. Relevant ist der Zeitpunkt der Bezahlung, nicht der "
 "Rechnungsstellung."
 
@@ -2204,8 +2177,8 @@ msgstr ""
 "oder Vereine. Ob eine Organisation steuerbegünstigt ist, stellt das "
 "Finanzamt fest.</p><p>Mitgliedsbeiträge für die Förderung der Kunst und "
 "Kultur, z.B. für kulturelle Fördervereine, sind auch steuerlich "
-"absetzbar.</p><p>Nicht absetzbar sind Mitgliedsbeiträge in "
-"Freizeitvereinen wie Sportklubs, Gesangsvereine und Vereine für "
+"absetzbar.</p><p><strong>Nicht absetzbar sind Mitgliedsbeiträge in "
+"Freizeitvereinen</strong> wie Sportklubs, Gesangsvereine und Vereine für "
 "Heimatpflege, Tierzucht und Kleingartenverein.</p><p>"
 
 #: app/forms/steps/lotse/steuerminderungen.py:446
@@ -2220,11 +2193,11 @@ msgstr "Spenden und Mitgliedsbeiträge an inländische politische Parteien"
 msgid "form.lotse.spenden-inland-parteien-help"
 msgstr ""
 "Spenden und Mitgliedsbeiträge an inländische politische Parteien und "
-"unabhängige Wählerver­einigungen können Sie zu 50 % von der Steuer "
+"unabhängige Wählervereinigungen können Sie zu 50 % von der Steuer "
 "absetzen. Allerdings bis maximal 825 Euro pro Person bei Ausgaben in Höhe"
 " von 1.650 Euro.</p><p><strong>Wichtig:</strong> Der Abzug ist nicht "
 "möglich, sollte die politische Partei von der staatlichen "
-"Parteienfinan­zierung ausgeschlossen ist."
+"Parteienfinanzierung ausgeschlossen ist."
 
 #: app/forms/steps/lotse/steuerminderungen.py:450
 msgid "form.lotse.spenden-inland-parteien.data_label}"

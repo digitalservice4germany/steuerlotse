@@ -163,7 +163,7 @@ const translations = {
     selectVorsorge: {
       label: {
         title: "Vorsorgeaufwendungen",
-        text: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
+        text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Hierzu zählen z.B. Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
       },
     },
     selectAussergBela: {
@@ -187,7 +187,7 @@ const translations = {
     selectReligion: {
       label: {
         title: "Steuern für Ihre Religionsgemeinschaft",
-        text: "Letztes Jahr gezahlte Steuern für Ihre Religionsgemeinschaft können Sie hier angeben.",
+        text: "Letztes Jahr gezahlte Steuern für Ihre Religionsgemeinschaft können Sie als sogenannte Sonderausgaben angeben.",
       },
     },
   },
