@@ -2082,7 +2082,7 @@ msgstr ""
 #: app/forms/steps/lotse/steuerminderungen.py:340
 msgid "form.lotse.steuerminderungen.details-list-item-1"
 msgstr ""
-"Es muss eine <strong>Rechnung vorliegen</strong>, die zum Beispiel per "
+"<strong>Wichtig:</strong> Es muss eine <strong>Rechnung vorliegen</strong>, die zum Beispiel per "
 "<strong>Überweisung oder EC-Kartenzahlung</strong> beglichen worden ist. "
 "Barzahlungen können nicht geltend gemacht werden."
 
