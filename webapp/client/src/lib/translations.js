@@ -24,7 +24,7 @@ const translations = {
   lotse: {
     fieldDeclarationIncomes: {
       fieldConfirmIncomes:
-        "Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2020 keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten Einkünfte.",
+        "Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2021 keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten Einkünfte.",
     },
     declarationIncomes: {
       listItem1:

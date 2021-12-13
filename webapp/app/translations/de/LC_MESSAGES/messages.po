@@ -349,7 +349,7 @@ msgstr "Fragebogen starten"
 
 #: app/forms/steps/eligibility_steps.py:174
 msgid "form.eligibility.marital_status-title"
-msgstr "Was war Ihr letzter Familienstand im Jahr 2020?"
+msgstr "Was war Ihr letzter Familienstand im Jahr 2021?"
 
 #: app/forms/steps/eligibility_steps.py:187
 msgid "form.eligibility.marital_status.married"
@@ -377,7 +377,7 @@ msgstr "Zurück zum Start"
 
 #: app/forms/steps/eligibility_steps.py:205
 msgid "form.eligibility.separated_since_last_year-title"
-msgstr "Haben Sie im Jahr 2020 als Paar dauernd getrennt gelebt?"
+msgstr "Haben Sie im Jahr 2021 als Paar dauernd getrennt gelebt?"
 
 #: app/forms/steps/eligibility_steps.py:211
 msgid "form.eligibility.separated_since_last_year.detail.title"
@@ -402,19 +402,19 @@ msgstr "Nein, wir haben nicht dauernd getrennt gelebt."
 
 #: app/forms/steps/eligibility_steps.py:225
 msgid "form.eligibility.separated_lived_together-title"
-msgstr "Haben Sie an mindestens einem Tag im Jahr 2020 zusammengelebt?"
+msgstr "Haben Sie an mindestens einem Tag im Jahr 2021 zusammengelebt?"
 
 #: app/forms/steps/eligibility_steps.py:231
 msgid "form.eligibility.separated_lived_together.yes"
-msgstr "Ja, wir haben im Jahr 2020 auch zusammengelebt."
+msgstr "Ja, wir haben im Jahr 2021 auch zusammengelebt."
 
 #: app/forms/steps/eligibility_steps.py:232
 msgid "form.eligibility.separated_lived_together.no"
-msgstr "Nein, wir haben das gesamte Jahr 2020 über getrennt gelebt."
+msgstr "Nein, wir haben das gesamte Jahr 2021 über getrennt gelebt."
 
 #: app/forms/steps/eligibility_steps.py:243
 msgid "form.eligibility.separated_joint_taxes-title"
-msgstr "Möchten Sie die Steuererklärung 2020 gemeinsam als Paar machen?"
+msgstr "Möchten Sie die Steuererklärung 2021 gemeinsam als Paar machen?"
 
 #: app/forms/steps/eligibility_steps.py:249
 msgid "form.eligibility.separated_joint_taxes.detail.title"
@@ -445,7 +445,7 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:269
 #: app/forms/steps/eligibility_steps.py:369
 msgid "form.eligibility.joint_taxes-title"
-msgstr "Möchten Sie die Steuererklärung 2020 gemeinsam als Paar machen?"
+msgstr "Möchten Sie die Steuererklärung 2021 gemeinsam als Paar machen?"
 
 #: app/forms/steps/eligibility_steps.py:275
 #: app/forms/steps/eligibility_steps.py:375
@@ -911,7 +911,7 @@ msgstr[1] "Nein, wir leben dauerhaft in Deutschland."
 #: app/forms/steps/eligibility_steps.py:729
 msgid "form.eligibility.result-title"
 msgstr ""
-"Sie können Ihre Steuererklärung für das Jahr 2020 mit dem Steuerlotsen "
+"Sie können Ihre Steuererklärung für das Jahr 2021 mit dem Steuerlotsen "
 "machen."
 
 #: app/forms/steps/eligibility_steps.py:730
@@ -947,7 +947,7 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:757
 msgid "form.eligibility.success.maybe.title"
 msgstr ""
-"Sie können Ihre Steuererklärung für das Jahr 2020 vielleicht mit dem "
+"Sie können Ihre Steuererklärung für das Jahr 2021 vielleicht mit dem "
 "Steuerlotsen machen."
 
 #: app/forms/steps/eligibility_steps.py:758
@@ -1029,7 +1029,7 @@ msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann"
-" können Sie mit Ihrer Steuererklärung 2020 beginnen."
+" können Sie mit Ihrer Steuererklärung 2021 beginnen."
 
 #: app/forms/steps/unlock_code_activation_steps.py:28
 #: app/forms/steps/unlock_code_activation_steps.py:75
@@ -1574,7 +1574,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/personal_data.py:404
 msgid "form.lotse.telephone-number.title"
-msgstr "Telefonnummer für Rückfragen"
+msgstr "Telefonnummer für Rückfragen"
 
 #: app/forms/steps/lotse/personal_data.py:405
 msgid "form.lotse.telephone-number.intro"
@@ -2318,7 +2318,7 @@ msgstr "Angabe zu weiteren Einkünften"
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:24
 msgid "form.lotse.field_declaration_incomes.field-confirm-incomes"
 msgstr ""
-"Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2020 "
+"Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2021 "
 "keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten "
 "Einkünfte."
 
@@ -2412,11 +2412,11 @@ msgstr "Familienstand"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:26
 msgid "form.lotse.field_familienstand"
-msgstr "Was war Ihr letzter Familienstand im Jahr 2020?"
+msgstr "Was war Ihr letzter Familienstand im Jahr 2021?"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:27
 msgid "form.lotse.field_familienstand.data_label"
-msgstr "Familienstand 2020"
+msgstr "Familienstand 2021"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:29
 msgid "form.lotse.familienstand-single"
@@ -2444,7 +2444,7 @@ msgstr "seit dem"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:43
 msgid "form.lotse.familienstand_married_lived_separated"
-msgstr "Haben Sie als Paar vor dem 01.01.2021 dauernd getrennt gelebt?"
+msgstr "Haben Sie als Paar vor dem 01.01.2022 dauernd getrennt gelebt?"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:44
 msgid "form.lotse.familienstand_married_lived_separated.example_input"
@@ -2454,7 +2454,7 @@ msgstr ""
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:45
 msgid "form.lotse.familienstand_married_lived_separated.data_label"
-msgstr "Vor dem 01.01.2021 dauernd getrennt gelebt"
+msgstr "Vor dem 01.01.2022 dauernd getrennt gelebt"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:47
 msgid "form.lotse.familienstand_married_lived_separated_since"
@@ -2978,7 +2978,7 @@ msgstr "Über den Steuerlotsen"
 msgid "about_steuerlotse.intro"
 msgstr ""
 "Mit dem Steuerlotsen können steuerpflichtige Rentner:innen und "
-"Pensionär:innen ab dem Veranlagungsjahr 2020 ihre Steuererklärung online "
+"Pensionär:innen ihre Steuererklärung online "
 "einreichen. Der Steuerlotse wurde extra für die Steuererklärung von "
 "Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte entwickelt. Er ist"
 " ein web-basierter Service, der keine Installation benötigt und passgenau"
@@ -4167,7 +4167,7 @@ msgid "info.intro-steuerlotse"
 msgstr ""
 "Der Steuerlotse bietet Renten- und Pensionsbeziehenden ohne weitere "
 "Einkünfte eine einfache Lösung an, um ihre Steuererklärung für das Jahr "
-"2020 online zu erstellen und abzugeben. Der Service wurde gemeinsam mit "
+"2021 online zu erstellen und abzugeben. Der Service wurde gemeinsam mit "
 "der Zielgruppe erstellt und ist speziell auf ihre Bedürfnisse "
 "zugeschnitten."
 
@@ -4861,7 +4861,7 @@ msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
-" Sie mit Ihrer Steuererklärung 2020 beginnen."
+" Sie mit Ihrer Steuererklärung 2021 beginnen."
 
 #: app/templates/content/landing_page.html:122
 msgid "landing.interviews-headline"
@@ -4932,7 +4932,7 @@ msgstr "Registrieren"
 #: app/templates/eligibility/form_marital_status_input.html:7
 msgid "eligibility.marital_status.widowed_note"
 msgstr ""
-"Wenn Sie seit 2020 verwitwet sind und zusammen gelebt haben, bietet Ihnen"
+"Wenn Sie seit 2021 verwitwet sind und zusammen gelebt haben, bietet Ihnen"
 " der Steuerlotse nur die Möglichkeit, eine gemeinsame Steuererklärung für"
 " Sie beide zu machen (Zusammenveranlagung). Ihre Antworten müssen sich im"
 " Folgenden daher auf Sie beide beziehen."
