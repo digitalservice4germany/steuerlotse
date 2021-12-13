@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-09 10:49+0100\n"
+"POT-Creation-Date: 2021-12-10 12:12+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2405,7 +2405,7 @@ msgstr "seit dem"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:43
 msgid "form.lotse.familienstand_married_lived_separated"
-msgstr "Haben Sie als Paar vor dem 01.01.2021 dauernd getrennt gelebt?"
+msgstr "Haben Sie als Paar vor dem 01.01.2022 dauernd getrennt gelebt?"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:44
 msgid "form.lotse.familienstand_married_lived_separated.example_input"
@@ -2415,7 +2415,7 @@ msgstr ""
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:45
 msgid "form.lotse.familienstand_married_lived_separated.data_label"
-msgstr "Vor dem 01.01.2021 dauernd getrennt gelebt"
+msgstr "Vor dem 01.01.2022 dauernd getrennt gelebt"
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:47
 msgid "form.lotse.familienstand_married_lived_separated_since"
