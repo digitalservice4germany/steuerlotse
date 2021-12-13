@@ -5,6 +5,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel, validator
 
+from erica.elster_xml.elster_xml_generator import VERANLAGUNGSJAHR
 from erica.elster_xml.est_validation import is_valid_bufa
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 
@@ -128,7 +129,7 @@ class MetaDataEst(BaseModel):
 
     @validator('year')
     def year_must_be_supported(cls, v):
-        if not v == 2021:
+        if not v == VERANLAGUNGSJAHR:
             raise ValueError("must be a supported year")
         return v
 
