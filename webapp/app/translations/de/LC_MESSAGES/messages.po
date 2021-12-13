@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-10 12:12+0100\n"
+"POT-Creation-Date: 2021-12-13 18:15+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -333,16 +333,14 @@ msgstr "Zur vorherigen Frage"
 
 #: app/forms/steps/eligibility_steps.py:152
 msgid "form.eligibility.start-title"
-msgstr "Finden Sie heraus, ob Sie den Steuerlotsen nutzen können"
+msgstr "Sie möchten wissen, ob Sie den Steuerlotsen nutzen können?"
 
 #: app/forms/steps/eligibility_steps.py:153
 msgid "form.eligibility.start-intro"
 msgstr ""
-"Der Steuerlotse bietet Rentner:innen und Pensionär:innen eine "
-"vereinfachte Steuererklärung an. Der Service ist daher zurzeit nur auf "
-"eine bestimmte Gruppe von Rentner:innen und Pensionär:innen "
-"zugeschnitten. Durch die Beantwortung weniger Fragen finden Sie heraus, "
-"ob Sie alle Voraussetzungen erfüllen."
+"Der Steuerlotse ist auf Renten- oder Pensionsbeziehende ohne "
+"Zusatzeinkünfte zugeschnitten. Beantworten Sie paar einfache Fragen und "
+"wir sagen Ihnen, ob Sie den Steuerlotsen nutzen können."
 
 #: app/forms/steps/eligibility_steps.py:169
 #: app/templates/eligibility/display_start.html:6
@@ -1576,7 +1574,7 @@ msgstr ""
 
 #: app/forms/steps/lotse/personal_data.py:404
 msgid "form.lotse.telephone-number.title"
-msgstr "Telefonnummer für Rückfragen"
+msgstr "Telefonnummer für Rückfragen"
 
 #: app/forms/steps/lotse/personal_data.py:405
 msgid "form.lotse.telephone-number.intro"
@@ -1607,20 +1605,20 @@ msgstr "Ihre Ausgaben"
 msgid "form.lotse.select_stmind-intro"
 msgstr ""
 "Sie können eine Vielzahl an Ausgaben in Ihrer Steuererklärung angeben und"
-" somit Ihre Steuerlast reduzieren. Wählen Sie die Bereiche aus, in denen "
-"Sie im Besteuerungsjahr Ausgaben hatten."
+" somit Ihre Belastung durch Steuern reduzieren. Wählen Sie die Bereiche, "
+"in denen Sie Angaben machen möchten."
 
 #: app/forms/steps/lotse/steuerminderungen.py:27
 #: app/forms/steps/lotse/steuerminderungen.py:156
-#: app/forms/steps/lotse/steuerminderungen.py:185
-#: app/forms/steps/lotse/steuerminderungen.py:192
-#: app/forms/steps/lotse/steuerminderungen.py:256
-#: app/forms/steps/lotse/steuerminderungen.py:330
-#: app/forms/steps/lotse/steuerminderungen.py:358
-#: app/forms/steps/lotse/steuerminderungen.py:401
-#: app/forms/steps/lotse/steuerminderungen.py:408
-#: app/forms/steps/lotse/steuerminderungen.py:435
-#: app/forms/steps/lotse/steuerminderungen.py:442
+#: app/forms/steps/lotse/steuerminderungen.py:179
+#: app/forms/steps/lotse/steuerminderungen.py:186
+#: app/forms/steps/lotse/steuerminderungen.py:261
+#: app/forms/steps/lotse/steuerminderungen.py:336
+#: app/forms/steps/lotse/steuerminderungen.py:364
+#: app/forms/steps/lotse/steuerminderungen.py:404
+#: app/forms/steps/lotse/steuerminderungen.py:411
+#: app/forms/steps/lotse/steuerminderungen.py:438
+#: app/forms/steps/lotse/steuerminderungen.py:445
 msgid "form.lotse.steuerminderungen.header-title"
 msgstr ""
 "Steuerformular - Steuermindernde Aufwendungen - Der Steuerlotse für Rente"
@@ -1632,11 +1630,11 @@ msgstr "Ihre Ausgaben"
 
 #: app/forms/steps/lotse/steuerminderungen.py:35
 #: app/forms/steps/lotse/steuerminderungen.py:163
-#: app/forms/steps/lotse/steuerminderungen.py:198
-#: app/forms/steps/lotse/steuerminderungen.py:262
-#: app/forms/steps/lotse/steuerminderungen.py:364
-#: app/forms/steps/lotse/steuerminderungen.py:414
-#: app/forms/steps/lotse/steuerminderungen.py:447
+#: app/forms/steps/lotse/steuerminderungen.py:192
+#: app/forms/steps/lotse/steuerminderungen.py:267
+#: app/forms/steps/lotse/steuerminderungen.py:370
+#: app/forms/steps/lotse/steuerminderungen.py:417
+#: app/forms/steps/lotse/steuerminderungen.py:450
 msgid "form.lotse.section_steuerminderung.label"
 msgstr "Steuermindernde Aufwendungen"
 
@@ -1683,9 +1681,10 @@ msgstr "Vorsorgeaufwendungen"
 #: app/forms/steps/lotse/steuerminderungen.py:155
 msgid "form.lotse.vorsorge-intro"
 msgstr ""
-"Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft "
-"vorsorgen, sind Vorsorgeaufwendungen. Sie können Beiträge zu folgenden "
-"Versicherungen geltend machen:"
+"Zu den Vorsorgeaufwendungen zählen Versicherungen wie z.B. "
+"<b>Unfallversicherungen, Haftpflichtversicherungen und bestimmte "
+"Risikolebensversicherungen</b>.</p><p>Beiträge zu Kasko-, Hausrat-, "
+"Gebäude- und Rechtsschutzversicherungen können Sie nicht absetzen."
 
 #: app/forms/steps/lotse/steuerminderungen.py:160
 msgid "form.lotse.step_vorsorge.label"
@@ -1698,522 +1697,562 @@ msgstr "Summe der Rechnungsbeträge"
 #: app/forms/steps/lotse/steuerminderungen.py:169
 msgid "form.lotse.field_vorsorge_summe-help"
 msgstr ""
-"Die Summe der Beiträge wirkt sich steuerlich nur aus, wenn der "
-"Höchstbetrag (typischerweise 1.900,- Euro) nicht bereits durch Beiträge "
-"zu Basiskranken- und gesetzlichen Pflegeversicherungen ausgeschöpft "
-"wurde."
+"Die Summe Ihrer Beiträge <b>wirkt sich steuerlich nur aus,</b> wenn die "
+"Aufwendungen für Basisbeiträge zu Ihrer Kranken- und Pflegeversicherung "
+"die Grenze von typischerweise <b>1.900 Euro nicht bereits "
+"überschreitet</b>. Bei Zusammenveranlagung verdoppelt sich der "
+"Höchstbetrag auf 3.800 Euro. "
 
 #: app/forms/steps/lotse/steuerminderungen.py:170
 msgid "form.lotse.field_vorsorge_summe.data_label"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:179
-msgid "form.lotse.vorsorge.post-list-text"
-msgstr ""
-"Nicht abzugsfähig sind Beiträge zu Kasko-, Hausrat-, Gebäude- und "
-"Rechtsschutzversicherungen."
-
-#: app/forms/steps/lotse/steuerminderungen.py:181
-msgid "form.lotse.vorsorge-list-item-1"
-msgstr "Unfallversicherungen"
-
-#: app/forms/steps/lotse/steuerminderungen.py:182
-msgid "form.lotse.vorsorge-list-item-2"
-msgstr "Haftpflichtversicherungen"
-
-#: app/forms/steps/lotse/steuerminderungen.py:183
-msgid "form.lotse.vorsorge-list-item-3"
-msgstr ""
-"Risikolebensversicherungen, die nur für den Todesfall eine Leistung "
-"vorsehen"
-
-#: app/forms/steps/lotse/steuerminderungen.py:190
+#: app/forms/steps/lotse/steuerminderungen.py:184
 msgid "form.lotse.ausserg_bela-title"
 msgstr "Krankheitskosten und weitere außergewöhnliche Belastungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:191
+#: app/forms/steps/lotse/steuerminderungen.py:185
 msgid "form.lotse.ausserg_bela-intro"
 msgstr ""
-"Außergewöhnliche Belastungen sind Ausgaben, die aufgrund besonderer "
-"Umstände zwangsläufig anfallen, zum Beispiel Ausgaben, die durch "
-"Krankheit, Behinderung oder Bestattung eines Angehörigen entstehen. "
-"Tragen Sie für jede Kategorie die Summe Ihrer Aufwendungen ein. Wenn Sie "
-"Erstattungen erhalten haben oder Erstattungen erwarten, sind diese "
-"separat anzugeben. Die entsprechenden Angaben finden sich zum Beispiel in"
-" den Unterlagen der Krankenversicherung.</p> <p class=\"mt-2\">Beachten "
-"Sie: Die Gesamtausgaben sind nicht in voller Höhe absetzbar. Nur der "
-"Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich "
-"steuermindernd aus. Die zumutbare Belastung hängt von der Höhe Ihres "
-"Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet."
+"Hatten Sie höhere Ausgaben als die Mehrzahl der Steuerzahler, die "
+"aufgrund besonderer Umstände zwangsläufig angefallen sind? Dann können "
+"Sie diese hier angeben."
 
-#: app/forms/steps/lotse/steuerminderungen.py:196
+#: app/forms/steps/lotse/steuerminderungen.py:190
 msgid "form.lotse.step_ausserg_bela.label"
 msgstr "Krankheitskosten und weitere außergewöhnliche Belastungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:202
+#: app/forms/steps/lotse/steuerminderungen.py:196
 msgid "form.lotse.field_krankheitskosten_summe"
 msgstr "Krankheitskosten Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:203
+#: app/forms/steps/lotse/steuerminderungen.py:197
 msgid "form.lotse.field_krankheitskosten-help"
 msgstr ""
-"Zu den Krankheitskosten zählen zum Beispiel Arznei-, Heil- und "
-"Hilfsmittel oder Kuren. Sie können Aufwendungen für Arznei-, Heil- und "
-"Hilfsmittel jedoch nur geltend machen, wenn die Behandlung von einem Arzt"
-" oder einer Ärztin verordnet wurde. Dies gilt auch für nicht "
-"verschreibungspflichtige Medikamente. Bei einer andauernden Erkrankung "
-"mit anhaltendem Verbrauch bestimmter Medikamente reicht die einmalige "
-"Vorlage einer solchen Verordnung aus. <br/><br/>Möchten Sie Kurkosten "
-"geltend machen, müssen Sie die Notwendigkeit der Kur durch Vorlage eines "
-"vor Kurbeginn ausgestellten amtsärztlichen Gutachtens nachweisen können, "
-"sofern sich die Notwendigkeit nicht schon aus anderen Unterlagen (zum "
-"Beispiel bei Pflichtversicherten aus einer Bescheinigung der zuständigen "
-"Krankenkasse) ergibt. <br/>Der Zuschuss einer Krankenversicherung zu "
-"Arzt-, Arznei- und Kurmittelkosten reicht als Nachweis der Notwendigkeit "
-"der Kur nicht aus."
+"Hier können Kosten eingetragen werden, die im Zusammenhang mit "
+"Krankheiten entstanden sind. Einige Beispiele:<ul><li><b>Arztkosten</b> "
+"zum Beispiel vom Zahnarzt, Logopäden, Physiotherapeuten, Heilpraktiker "
+"oder Psychotherapeuten</li><li><b>Rezeptgebühren</b>, wenn Belege "
+"vorliegen</li><li><b>Notwendige Hilfsmittel</b> wie Brillen, Hörgeräte "
+"oder spezielle Schuheinlagen</li><li><b>Verschriebene Heilkuren, "
+"Massagen, Bäder und Einläufe</b> müssen mit einem amtsärztlichen Attest "
+"nachgewiesen werden. Das Attest muss vor Behandlungsbeginn ausgestellt "
+"worden sein</li><li><b>Eigenanteil bei "
+"Zahnersatz</b></li><li><b>Fahrtkosten zum "
+"Arzt</b></li></ul></p><p><b>Nachweise</b><br>Für Krankheitskosten "
+"brauchen Sie eine <b>ärztliche Verordnung, ein Rezept oder ein "
+"amtsärztliches Gutachten</b> als Nachweis für eine medizinische "
+"Indikation der Behandlung.<br>Bei einer andauernden Erkrankung mit "
+"anhaltendem Verbrauch bestimmter Medikamente, reicht die einmalige "
+"Vorlage einer solchen Verordnung aus.</p><p><b>Kurkosten</b><br>Möchten "
+"Sie Kurkosten geltend machen, müssen Sie die Notwendigkeit der Kur durch "
+"Vorlage eines vor Kurbeginn ausgestellten amtsärztlichen Gutachtens "
+"nachweisen können.<br>Ergibt sich die Notwendigkeit aus anderen "
+"Unterlagen (z.B. bei Pflichtversicherten aus einer Bescheinigung der "
+"zuständigen Krankenkasse) reicht dies aus.<br>Der Zuschuss einer "
+"Krankenversicherung zu Arzt-, Arznei- und Kurmittelkosten reicht als "
+"Nachweis der Notwendigkeit der Kur nicht aus."
 
-#: app/forms/steps/lotse/steuerminderungen.py:204
+#: app/forms/steps/lotse/steuerminderungen.py:198
 msgid "form.lotse.field_krankheitskosten_summe.data_label"
 msgstr "Krankheitskosten Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:207
+#: app/forms/steps/lotse/steuerminderungen.py:201
 msgid "form.lotse.field_krankheitskosten_anspruch"
 msgstr "Krankheitskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:208
+#: app/forms/steps/lotse/steuerminderungen.py:202
+msgid "form.lotse.field_krankheitskosten-anspruch-help"
+msgstr ""
+"<b>Minderung der Kosten um Erstattungen</b><br>Wurden Ihre angegebenen "
+"Kosten erstattet – anteilig oder komplett? Oder erwarten Sie "
+"Erstattungen? Geben Sie diese hier an. Das können zum Beispiel "
+"Versicherungsleistungen von Ihrer Krankenkasse bzw. Krankenversicherung, "
+"Beihilfen oder andere Unterstützungen sein. "
+
+#: app/forms/steps/lotse/steuerminderungen.py:203
 msgid "form.lotse.field_krankheitskosten_anspruch.data_label"
 msgstr "Krankheitskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:211
+#: app/forms/steps/lotse/steuerminderungen.py:206
 msgid "form.lotse.field_pflegekosten_summe"
 msgstr "Pflegekosten Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:212
+#: app/forms/steps/lotse/steuerminderungen.py:207
 msgid "form.lotse.field_pflegekosten-help"
 msgstr ""
-"Zu den Pflegekosten zählen zum Beispiel Kosten zur Beschäftigung einer "
-"ambulanten Pflegekraft oder Kosten, die durch Unterbringung in einem "
-"Pflegeheim oder in einem Altenpflegeheim entstehen. Die Pflegekosten "
-"können steuerlich nur berücksichtigt werden, wenn sie wegen Krankheit "
-"oder Behinderung entstanden sind. Bitte beachten Sie, dass Sie "
-"Pflegekosten hier nur eintragen können, wenn Sie den Behinderten-"
-"Pauschbetrag nicht beantragt haben."
+"Zu den Pflegekosten zählen Kosten, die wegen Krankheit oder Behinderung "
+"entstanden sind. Dazu zählen zum Beispiel <b>Unterbringung in einem "
+"Pflegeheim</b> oder  <b>Kosten zur Beschäftigung einer ambulanten "
+"Pflegekraft</b>.</p><p><b>Wichtig:</b> Haben Sie den den <b>Pauschbetrag "
+"für Menschen mit Behinderung beantragt</b>, sind Aufwendungen im "
+"Zusammenhang mit einer Behinderung des täglichen Lebens <b>bereits "
+"abgegolten</b>. Dies kann zum Beispiel eine Hilfe bei den gewöhnlichen "
+"und regelmäßig wiederkehrenden Verrichtungen des täglichen Lebens "
+"sein.</p><p><b>Nachweise</b></br>Die Pflegebedürftigkeit muss "
+"nachgewiesen werden. Dies kann mit der Bescheinigung der Pflegekasse oder"
+" einer privaten Pflegeversicherung gemacht werden. Auch der "
+"Schwerbehindertenausweis dient als Nachweis, wenn die Merkzeichen Bl oder"
+" H vorliegen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:213
+#: app/forms/steps/lotse/steuerminderungen.py:208
 msgid "form.lotse.field_pflegekosten_summe.data_label"
 msgstr "Pflegekosten Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:216
+#: app/forms/steps/lotse/steuerminderungen.py:211
 msgid "form.lotse.field_pflegekosten_anspruch"
 msgstr "Pflegekosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:217
+#: app/forms/steps/lotse/steuerminderungen.py:212
 msgid "form.lotse.field_pflegekosten_anspruch.data_label"
 msgstr "Pflegekosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:220
+#: app/forms/steps/lotse/steuerminderungen.py:215
 msgid "form.lotse.field_beh_aufw_summe"
 msgstr "Behinderungsbedingte Aufwendungen Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:221
+#: app/forms/steps/lotse/steuerminderungen.py:216
 msgid "form.lotse.field_beh_aufw-help"
 msgstr ""
-"Zu den Behinderungsbedingten Aufwendungen zählen zum Beispiel "
-"Aufwendungen, die Menschen mit Behinderung erfahrungsgemäß durch ihre "
-"Krankheit oder Behinderung entstehen. Hierzu gehören zum Beispiel auch "
-"Aufwendungen für den behindertengerechten Umbau oder Neubau einer Wohnung"
-" oder eines Hauses. Bitte beachten Sie, dass Sie behinderungsbedingte "
-"Aufwendungen des täglichen Lebens hier nur eintragen können, wenn sie den"
-" Behinderten-Pauschbetrag nicht beantragt haben."
+"Hier können alle Aufwendungen eingetragen werden, die Menschen mit "
+"Behinderung erfahrungsgemäß <b>durch ihre Krankheit oder Behinderung "
+"entstehen</b>. Das können Aufwendungen für die Unterstützung und – "
+"teilweise – Übernahme für folgende Beispiele "
+"sein:<ul><li><b>Körperpflege</b> wie Waschen, Zahnpflege, Kämmen, "
+"Rasieren</li><li><b>Mobilität</b> wie An- und Auskleiden, Aufstehen und "
+"Zubettgehen</li><li><b>Nahrungsaufnahme</b> wie mundgerechte "
+"Zubereitung</li><li><b>hauswirtschaftliche Versorgung</b> wie Einkaufen, "
+"Kochen, Reinigen der Wohnung, Spülen oder Wäschepflege</li></ul>Hierzu "
+"gehören auch Aufwendungen für den behindertengerechten Umbau oder Neubau "
+"einer Wohnung oder eines Hauses."
 
-#: app/forms/steps/lotse/steuerminderungen.py:222
+#: app/forms/steps/lotse/steuerminderungen.py:217
 msgid "form.lotse.field_beh_aufw_summe.data_label"
 msgstr "Behinderungsbedingte Aufwendungen Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:225
+#: app/forms/steps/lotse/steuerminderungen.py:220
 msgid "form.lotse.field_beh_aufw_anspruch"
 msgstr "Behinderungsbedingte Aufwendungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:226
+#: app/forms/steps/lotse/steuerminderungen.py:221
 msgid "form.lotse.field_beh_aufw_anspruch.data_label"
 msgstr "Behinderungsbedingte Aufwendungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:229
+#: app/forms/steps/lotse/steuerminderungen.py:224
 msgid "form.lotse.bestattung_summe"
 msgstr "Bestattungskosten Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:230
+#: app/forms/steps/lotse/steuerminderungen.py:225
 msgid "form.lotse.bestattung-help"
 msgstr ""
-" Unter den Bestattungskosten können Sie Kosten, die unmittelbar mit der "
-"Bestattung von Angehörigen zusammenhängen, geltend machen. Voraussetzung "
-"für die Berücksichtigung ist, dass diese den Nachlass und etwaige "
-"Ersatzleistungen übersteigen.<br/><br/>Zu den Kosten, die geltend gemacht"
-" werden können, zählen zum Beispiel die Kosten für Grabstätte, Sarg, "
-"Blumen, Kränze oder eine Todesanzeige. Kosten für Trauerkleidung und "
-"Bewirtung der Trauergäste sowie Reisekosten anlässlich der Bestattung "
-"werden nicht anerkannt."
+"Hier können alle Kosten eingetragen werden, die unmittelbar mit der "
+"Bestattung von Angehörigen zusammenhängen. Dazu zählen zum Beispiel "
+"Kosten "
+"für:<ul><li>Grabstätte</li><li>Sarg</li><li>Blumen</li><li>Kränze</li><li>eine"
+" Todesanzeige</li></ul>Die Kosten können allerdings nur anteilig "
+"abgesetzt werden, wenn diese das Erbe übersteigen.</p><p><b>Folgende "
+"Angaben werden nicht anerkannt</b><br>Kosten für Trauerkleidung und "
+"Bewirtung der Trauergäste, Reisekosten anlässlich der Bestattung sowie "
+"Kosten für die laufende Grabpflege."
 
-#: app/forms/steps/lotse/steuerminderungen.py:231
+#: app/forms/steps/lotse/steuerminderungen.py:226
 msgid "form.lotse.bestattung_summe.data_label"
 msgstr "Bestattungskosten Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:234
+#: app/forms/steps/lotse/steuerminderungen.py:229
 msgid "form.lotse.bestattung_anspruch"
 msgstr "Bestattungskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:235
+#: app/forms/steps/lotse/steuerminderungen.py:230
 msgid "form.lotse.bestattung_anspruch.data_label"
 msgstr "Bestattungskosten Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:238
+#: app/forms/steps/lotse/steuerminderungen.py:233
 msgid "form.lotse.aussergbela_sonst_summe"
 msgstr "Sonstige Außergewöhnliche Belastungen Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:239
+#: app/forms/steps/lotse/steuerminderungen.py:234
 msgid "form.lotse.aussergbela_sonst-help"
 msgstr ""
-"Zu den sonstigen außergewöhnliche Belastungen zählen zum Beispiel Kosten "
-"für Hausrat und Kleidung, die durch ein unabwendbares Ereignis, zum "
-"Beispiel bei Brand oder Hochwasser, verloren wurden, wenn keine allgemein"
-" zugängliche und übliche Versicherung möglich war. Dies gilt auch für die"
-" notwendigen und angemessenen Kosten der Schadensbeseitigung."
+"Zu den sonstigen außergewöhnlichen Belastungen zählen zum Beispiel Kosten"
+" für Hausrat und Kleidung, die durch ein unabwendbares Ereignis (zum "
+"Beispiel Brand oder Hochwasser) verloren wurden. Vorausgesetzt ist "
+"jedoch, das keine allgemein zugängliche und übliche Versicherung möglich "
+"war. In den außergewöhnlichen Belastungen sind auch die notwendigen und "
+"angemessenen Kosten der Schadensbeseitigung enthalten."
 
-#: app/forms/steps/lotse/steuerminderungen.py:240
+#: app/forms/steps/lotse/steuerminderungen.py:235
 msgid "form.lotse.aussergbela_sonst_summe.data_label"
 msgstr "Sonstige Außergewöhnliche Belastungen Summe"
 
-#: app/forms/steps/lotse/steuerminderungen.py:243
+#: app/forms/steps/lotse/steuerminderungen.py:238
 msgid "form.lotse.aussergbela_sonst_anspruch"
 msgstr "Sonstige Außergewöhnliche Belastungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:244
+#: app/forms/steps/lotse/steuerminderungen.py:239
 msgid "form.lotse.aussergbela_sonst_anspruch.data_label"
 msgstr "Sonstige Außergewöhnliche Belastungen Anspruch auf Erstattung"
 
-#: app/forms/steps/lotse/steuerminderungen.py:254
+#: app/forms/steps/lotse/steuerminderungen.py:252
+msgid "form.lotse.ausserg_bela.details-title"
+msgstr "Hinweis zur zumutbaren Belastung"
+
+#: app/forms/steps/lotse/steuerminderungen.py:253
+msgid "form.lotse.ausserg_bela.details-text"
+msgstr ""
+"Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich "
+"steuermindernd aus. Die zumutbare Belastung hängt unter anderem von der "
+"Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch "
+"berechnet."
+
+#: app/forms/steps/lotse/steuerminderungen.py:259
 msgid "form.lotse.haushaltsnahe-handwerker-title"
 msgstr "Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:255
+#: app/forms/steps/lotse/steuerminderungen.py:260
 msgid "form.lotse.handwerker-haushaltsnahe-intro"
 msgstr ""
-"Geben Sie hier an, welche haushaltsnahen Dienstleistungen und Tätigkeiten"
-" oder Handwerkerleistungen Sie in Auftrag gegeben haben. Die Arbeiten "
+"Auch Kosten für Dienstleistungen im eigenen Haushalt oder "
+"Handwerkerleistungen können zu Steuerermäßigungen führen. Die Arbeiten "
 "müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt "
 "werden."
 
-#: app/forms/steps/lotse/steuerminderungen.py:260
+#: app/forms/steps/lotse/steuerminderungen.py:265
 msgid "form.lotse.step_haushaltsnahe_handwerker.label"
 msgstr "Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:266
+#: app/forms/steps/lotse/steuerminderungen.py:271
 msgid "form.lotse.field_haushaltsnahe_entries"
 msgstr "Aufwendungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:268
+#: app/forms/steps/lotse/steuerminderungen.py:273
 msgid "form.lotse.field_haushaltsnahe_entries-help"
 msgstr ""
-"<p class='mt-2'>Haushaltsnahe Tätigkeiten und Dienstleistungen sind zum "
-"Beispiel <ul> <li>Reinigung der Wohnung</li> <li>Gartenpflege</li> "
-"<li>Winterdienst auf oder vor dem eigenen "
-"Grundstück</li></li><li>Zubereitung von Mahlzeiten im "
-"Haushalt</li><li>Fütterung und Pflege von Haustieren im "
-"Haushalt</li><li>Pflege, Versorgung und Betreuung von kranken, alten und "
-"pflegebedürftigen Personen, auch wenn die Pflege- und "
+"<p class='mt-2'>Hier können Arbeiten eingetragen werden, die Sie "
+"beauftragt haben, aber auch von einer im Haushalt lebenden Person "
+"erbracht worden sein können. Einige Beispiele:<ul><li><b>Reinigung der "
+"Wohnung</b></li><li><b>Kochen, Waschen, Bügeln</b> durch eine "
+"Haushaltshilfe</li><li><b>Gartenpflege</b> wie Rasenmähen, Unkraut "
+"entfernen</li><li><b>Winterdienst</b> auf oder vor dem eigenen "
+"Grundstück</li><li>Zubereitung von <b>Mahlzeiten </b>im "
+"Haushalt</li><li>Fütterung und <b>Pflege von Haustieren</b> im "
+"Haushalt</li><li><b>Pflege, Versorgung und Betreuung</b> von kranken, "
+"alten und pflegebedürftigen Personen, auch wenn die Pflege- und "
 "Betreuungsleistungen im Haushalt der gepflegten / betreuten Person "
-"ausgeübt werden</li><li>das Hausnotrufsystem innerhalb des betreuten "
-"Wohnens</li></ul></p><p class=\"mt-2\">Zu den haushaltsnahen "
-"Dienstleistungen zählt auch die einer Hilfe im Haushalt vergleichbare "
-"Tätigkeit bei Unterbringung in einem Heim.</p><p class=\"mt-2\">Bitte "
-"beachten Sie, dass Sie Ihre Pflegeaufwendungen weder als außergewöhnliche"
-" Belastungen noch als haushaltsnahe Pflegeleistung geltend machen können,"
-" wenn Sie den Behinderten-Pauschbetrag beantragt haben.</p>"
+"ausgeübt werden</li><li>das <b>Hausnotrufsystem</b> innerhalb des "
+"betreuten Wohnens</li></ul>Wenn Sie in einem Heim wohnen, zählen als "
+"haushaltsnahe Dienstleistungen auch Tätigkeiten, die mit denen einer "
+"Haushaltshilfe vergleichbar sind. Dazu gehören zum Beispiel Reinigung des"
+" Zimmers, Zubereitung von Mahlzeiten oder "
+"Wäscheservice.</p><p><b>Wichtig:</b> Pflegeaufwendungen können Sie weder "
+"als außergewöhnliche Belastungen noch als haushaltsnahe Pflegeleistung "
+"eintragen, wenn Sie den <b>Pauschbetrag für Menschen mit Behinderung</b> "
+"beantragt haben."
 
-#: app/forms/steps/lotse/steuerminderungen.py:269
+#: app/forms/steps/lotse/steuerminderungen.py:274
 msgid "form.lotse.field_haushaltsnahe_entries.data_label"
 msgstr "Haushaltsnahe Aufwendungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:271
+#: app/forms/steps/lotse/steuerminderungen.py:276
 msgid "form.lotse.field_haushaltsnahe_summe"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:272
+#: app/forms/steps/lotse/steuerminderungen.py:277
 msgid "form.lotse.field_haushaltsnahe_summe-help"
 msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:273
+#: app/forms/steps/lotse/steuerminderungen.py:278
 msgid "form.lotse.field_haushaltsnahe_summe.data_label"
 msgstr "Summe der Rechnungsbeträge (Haushalt)"
 
-#: app/forms/steps/lotse/steuerminderungen.py:276
+#: app/forms/steps/lotse/steuerminderungen.py:281
 msgid "form.lotse.field_handwerker_entries"
 msgstr "Aufwendungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:278
+#: app/forms/steps/lotse/steuerminderungen.py:283
 msgid "form.lotse.field_handwerker_entries-help"
 msgstr ""
-"Handwerkerleistungen sind zum Beispiel: <ul><li>Reparatur, Streichen, "
-"Lackieren von Fenstern und Türen</li><li>Reparatur oder Austausch von "
-"Bodenbelägen</li><li>Modernisierung des Badezimmers oder der "
-"Einbauküche.</li></ul> Die Arbeitsleistung muss im eigenen Haushalt "
-"erbracht worden sein."
+"Hier können Arbeiten eingetragen werden, die Sie beauftragt haben, aber "
+"auch von einer im Haushalt lebenden Person erbracht worden sein können. "
+"Einige Beispiele:<ul><li><b>Reparatur, Streichen oder Lackieren</b> von "
+"Fenstern und Türen</li><li>Reinigung von "
+"<b>Abflussrohren</b></li><li>Reparatur oder Austausch von "
+"<b>Bodenbelägen</b></li><li><b>Modernisierung</b> des Badezimmers oder "
+"der Einbauküche</li><li>Reparatur, Wartung oder Austausch von "
+"<b>Heizungsanlagen</b>, Elektro-, Gas- und "
+"Wasserinstallationen</li><li>Schornsteinfegerleistungen</li><li>Arbeiten "
+"an <b>Innen- und Außenwänden</b></li><li>Reinigung von "
+"<b>Dachrinnen</b></li><li>Maßnahmen der "
+"<b>Gartengestaltung</b></li></ul>Die Arbeitsleistung muss im eigenen "
+"Haushalt erbracht worden sein.</p><p><b>Wichtig:</b> Es muss eine "
+"<b>Rechnung vorliegen</b>, die zum Beispiel per <b>Überweisung oder EC-"
+"Kartenzahlung</b> beglichen worden ist. Barzahlungen können nicht geltend"
+" gemacht werden.<br>Abgesetzt werden können Kosten, die Sie <b>im letzten"
+" Jahr bezahlt haben</b>. Relevant ist der Zeitpunkt der Bezahlung, nicht "
+"der Rechnungsstellung.</p><p><b>Hinweis</b><br>Bei Handwerkerleistungen "
+"ist nur der Arbeitslohn inklusive anfallender Umsatzsteuer abzugsfähig. "
+"Materialkosten werden nicht berücksichtigt. Prüfen Sie, ob die Rechnungen"
+" entsprechend aufgeschlüsselt sind Wenn in der Rechnung der Arbeitslohn "
+"nicht extra ausgewiesen ist, können Sie den Dienstleister bitten, eine "
+"neue, detailliertere Rechnung auszustellen."
 
-#: app/forms/steps/lotse/steuerminderungen.py:279
+#: app/forms/steps/lotse/steuerminderungen.py:284
 msgid "form.lotse.field_handwerker_entries.data_label"
 msgstr "Handwerker Aufwendungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:281
+#: app/forms/steps/lotse/steuerminderungen.py:286
 msgid "form.lotse.field_handwerker_summe"
 msgstr "Summe der Rechnungsbeträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:282
+#: app/forms/steps/lotse/steuerminderungen.py:287
 msgid "form.lotse.field_handwerker_summe-help"
 msgstr "Tragen Sie hier die Summe Ihrer angegebenen Aufwendungen ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:283
+#: app/forms/steps/lotse/steuerminderungen.py:288
 msgid "form.lotse.field_handwerker_summe.data_label"
 msgstr "Summe der Rechnungsbeträge (Handwerker)"
 
-#: app/forms/steps/lotse/steuerminderungen.py:286
+#: app/forms/steps/lotse/steuerminderungen.py:291
 msgid "form.lotse.field_handwerker_lohn_etc_summe"
-msgstr "darin enthaltene Lohnanteile, Maschinen- und Fahrtkosten, inkl. USt"
-
-#: app/forms/steps/lotse/steuerminderungen.py:287
-msgid "form.lotse.field_handwerker_lohn_etc_summe.data_label"
-msgstr "darin enthaltene Lohnanteile, Maschinen- und Fahrtkosten, inkl. USt"
+msgstr "Betrag der Lohn-, Maschinen- und Fahrtkosten, inkl. USt"
 
 #: app/forms/steps/lotse/steuerminderungen.py:292
+msgid "form.lotse.field_handwerker_lohn_etc_summe-help"
+msgstr ""
+"Bei Handwerkerleistungen ist nur der Arbeitslohn inklusive anfallender "
+"Umsatzsteuer abzugsfähig. Materialkosten werden nicht berücksichtigt. "
+"Prüfen Sie, ob die Rechnungen entsprechend aufgeschlüsselt sind Wenn in "
+"der Rechnung der Arbeitslohn nicht extra ausgewiesen ist, können Sie du "
+"den Dienstleister bitten, eine neue, detailliertere Rechnung "
+"auszustellen."
+
+#: app/forms/steps/lotse/steuerminderungen.py:293
+msgid "form.lotse.field_handwerker_lohn_etc_summe.data_label"
+msgstr "Betrag der Lohn-, Maschinen- und Fahrtkosten, inkl. USt"
+
+#: app/forms/steps/lotse/steuerminderungen.py:298
 msgid "form.lotse.validation-haushaltsnahe-summe"
 msgstr ""
 "Sie haben angegeben, dass es haushaltsnahe Dienstleistungen gab. Bitte "
 "geben Sie hier deren Summe ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:299
+#: app/forms/steps/lotse/steuerminderungen.py:305
 msgid "form.lotse.validation-haushaltsnahe-entries"
 msgstr ""
 "Sie haben angegeben, dass es haushaltsnahe Dienstleistungen gab. Bitte "
 "geben Sie hier deren Art ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:305
+#: app/forms/steps/lotse/steuerminderungen.py:311
 msgid "form.lotse.validation-handwerker-summe"
 msgstr ""
 "Sie haben angegeben, dass es Handwerkerleistungen gab. Bitte geben Sie "
 "hier deren Summe ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:312
+#: app/forms/steps/lotse/steuerminderungen.py:318
 msgid "form.lotse.validation-handwerker-entries"
 msgstr ""
 "Sie haben angegeben, dass es Handwerkerleistungen gab. Bitte geben Sie "
 "hier deren Art ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:318
+#: app/forms/steps/lotse/steuerminderungen.py:324
 msgid "form.lotse.validation-handwerker-lohn-etc-summe"
 msgstr ""
 "Sie haben angegeben, dass es Handwerkerleistungen gab. Bitte geben Sie "
 "hier die Summe der Lohnanteile, Maschinen- und Fahrtkosten inklusive "
 "Umsatzsteuer ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:331
+#: app/forms/steps/lotse/steuerminderungen.py:337
 msgid "form.lotse.steuerminderungen.details-title"
 msgstr "Was muss ich beachten?"
 
-#: app/forms/steps/lotse/steuerminderungen.py:332
+#: app/forms/steps/lotse/steuerminderungen.py:338
 msgid "form.lotse.steuerminderungen.details-text"
 msgstr ""
 "Falls Sie in einer Mietwohnung wohnen und neben den Leistungen aus der "
-"Nebenkostenabrechnung selbständig Leistungen in Auftrag gegeben (bspw. "
-"eine Reinigungskraft) haben, können diese hier angegeben werden. Sie "
-"haben dabei die Möglichkeit mehrere Antworten auszuwählen. Bitte beachten"
-" Sie:"
+"Nebenkostenabrechnung selbständig Leistungen in Auftrag gegeben haben, "
+"können diese hier angegeben werden.</p><p><b>Wichtige Hinweise</b>"
 
-#: app/forms/steps/lotse/steuerminderungen.py:334
+#: app/forms/steps/lotse/steuerminderungen.py:340
 msgid "form.lotse.steuerminderungen.details-list-item-1"
 msgstr ""
-"Es <strong>muss eine Rechnung</strong> vorliegen, die zum Beispiel per "
-"Überweisung oder EC-Kartenzahlung beglichen worden ist. "
-"<strong>Barzahlungen können nicht</strong> geltend gemacht werden."
+"<b>Wichtig:</b> Es muss eine <b>Rechnung vorliegen</b>, die zum Beispiel "
+"per <b>Überweisung oder EC-Kartenzahlung</b> beglichen worden ist. "
+"Barzahlungen können nicht geltend gemacht werden."
 
-#: app/forms/steps/lotse/steuerminderungen.py:335
+#: app/forms/steps/lotse/steuerminderungen.py:341
 msgid "form.lotse.steuerminderungen.details-list-item-2"
 msgstr ""
-"Abgesetzt werden können Kosten, die Sie <strong>im Besteuerungsjahr "
-"bezahlt</strong> haben. Relevant ist der Zeitpunkt der Bezahlung, nicht "
-"der Rechnungsstellung."
-
-#: app/forms/steps/lotse/steuerminderungen.py:336
-msgid "form.lotse.steuerminderungen.details-list-item-3"
-msgstr ""
-"Wenn Sie sich als <strong>Arbeitgeber betätigen und "
-"Haushaltshilfen</strong> als Arbeitnehmer einstellen, können Sie dies im "
-"Steuerlotsen <strong>nicht steuerlich absetzen</strong>."
+"Abgesetzt werden können Kosten, die Sie <b>im letzen Jahr bezahlt "
+"haben.</b>Relevant ist der Zeitpunkt der Bezahlung, nicht der "
+"Rechnungsstellung."
 
 #: app/forms/steps/lotse/steuerminderungen.py:342
+msgid "form.lotse.steuerminderungen.details-list-item-3"
+msgstr ""
+"Wenn Sie sich als Arbeitgeber betätigen und Haushaltshilfen als "
+"Arbeitnehmer einstellen, können Sie dies im Steuerlotsen nicht steuerlich"
+" absetzen."
+
+#: app/forms/steps/lotse/steuerminderungen.py:348
 msgid "form.lotse.skip_reason.stmind_gem_haushalt.no_handwerker_haushaltsnahe"
 msgstr ""
 "Bitte überspringen Sie diese Angaben. Die Angabe zum gemeinsamen Haushalt"
 " ist nur relevant, wenn Sie Angaben zu haushaltsnaheh Tätigkeiten und "
 "Dienstleistungen und/oder Handwerkerleistungen machen."
 
-#: app/forms/steps/lotse/steuerminderungen.py:356
+#: app/forms/steps/lotse/steuerminderungen.py:362
 msgid "form.lotse.gem-haushalt-title"
-msgstr "Gemeinsamer Haushalt"
+msgstr "Zusätzliche Angaben zum Haushalt bei Alleinstehenden"
 
-#: app/forms/steps/lotse/steuerminderungen.py:357
+#: app/forms/steps/lotse/steuerminderungen.py:363
 msgid "form.lotse.gem-haushalt-intro"
 msgstr ""
-"Haben Sie in 2021 mit weiteren Personen zusammengewohnt? Bei "
-"Haushaltsgemeinschaften werden die Höchstbeträge für Haushaltsnahe "
-"Dienstleistungen und Handwerkerleistungen insgesamt nur einmal gewährt. "
-"Dann geben Sie die weiteren Personen Ihres Haushalts bitte an. Sie müssen"
-" diese Angaben nur machen, wenn Sie"
-
-#: app/forms/steps/lotse/steuerminderungen.py:362
-msgid "form.lotse.step_gem_haushalt.label"
-msgstr "Gemeinsamer Haushalt"
+"Steuerermäßigungen wie Haushaltsnahe Dienstleistungen werden nur "
+"<b>einmal pro Haushalt</b> gewährt. Haben Sie letztes Jahr mit einer "
+"anderen Person zusammengelebt, stehen Ihnen die Höchstbeträge nur "
+"anteilig zu. Geben Sie in diesem Fall die weiteren Personen Ihres "
+"Haushalts an."
 
 #: app/forms/steps/lotse/steuerminderungen.py:368
+msgid "form.lotse.step_gem_haushalt.label"
+msgstr "Zusätzliche Angaben zum Haushalt bei Alleinstehenden"
+
+#: app/forms/steps/lotse/steuerminderungen.py:374
 msgid "form.lotse.field_gem_haushalt_count"
 msgstr "Anzahl der weiteren Personen im Haushalt"
 
-#: app/forms/steps/lotse/steuerminderungen.py:369
+#: app/forms/steps/lotse/steuerminderungen.py:375
 msgid "form.lotse.field_gem_haushalt_count.data_label"
 msgstr "Anzahl der weiteren Personen im Haushalt"
 
-#: app/forms/steps/lotse/steuerminderungen.py:373
+#: app/forms/steps/lotse/steuerminderungen.py:379
 msgid "form.lotse.field_gem_haushalt_entries"
 msgstr ""
 "Name, Vorname, Geburtsdatum der weiteren alleinstehenden Personen im "
 "Haushalt"
 
-#: app/forms/steps/lotse/steuerminderungen.py:374
+#: app/forms/steps/lotse/steuerminderungen.py:380
 msgid "form.lotse.field_gem_haushalt_entries-help"
 msgstr ""
 "Alleinstehend sind Personen, die weder verheiratet noch verpartnert nach "
 "dem Lebenspartnerschaftsgesetz sind. "
 
-#: app/forms/steps/lotse/steuerminderungen.py:375
+#: app/forms/steps/lotse/steuerminderungen.py:381
 msgid "form.lotse.field_gem_haushalt_entries.data_label"
 msgstr ""
 "Name, Vorname, Geburtsdatum der weiteren alleinstehenden Personen im "
 "Haushalt"
 
-#: app/forms/steps/lotse/steuerminderungen.py:381
+#: app/forms/steps/lotse/steuerminderungen.py:387
 msgid "form.lotse.validation-gem-haushalt-count"
 msgstr ""
 "Sie haben weitere Personen angegeben. Bitte geben Sie hier die "
 "entsprechende Anzahl der Personen ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:388
+#: app/forms/steps/lotse/steuerminderungen.py:394
 msgid "form.lotse.validation-gem-haushalt-entries"
 msgstr ""
 "Sie haben angegeben, dass weitere Personen im Haushalt leben. Bitte geben"
 " Sie hier die die Daten der Personen ein."
 
-#: app/forms/steps/lotse/steuerminderungen.py:399
-msgid "form.lotse.gem_haushalt-list-item-1"
-msgstr "alleinstehend sind"
-
-#: app/forms/steps/lotse/steuerminderungen.py:400
-msgid "form.lotse.gem_haushalt-list-item-2"
-msgstr ""
-"haushaltsnahe Dienstleistungen und/oder Handwerkerleistungen angegeben "
-"haben"
-
-#: app/forms/steps/lotse/steuerminderungen.py:406
+#: app/forms/steps/lotse/steuerminderungen.py:409
 msgid "form.lotse.religion-title"
 msgstr "Steuern für Ihre Religionsgemeinschaft"
 
-#: app/forms/steps/lotse/steuerminderungen.py:407
+#: app/forms/steps/lotse/steuerminderungen.py:410
 msgid "form.lotse.religion-intro"
 msgstr ""
-"Wenn Sie Mitglied einer Religionsgemeinschaft sind, die als Körperschaft "
-"des öffentlichen Rechts anerkannt ist und Kirchensteuer erhebt, zahlen "
-"Sie Kirchensteuer. Diese Steuern (inklusive des ggf. gezahlten "
-"Kirchgeldes bzw. der Ortskirchensteuer) können Sie hier geltend machen. "
-"Hierzu gehört jedoch nicht die Kirchensteuer, die als Zuschlag zur "
-"Abgeltungsteuer einbehalten oder gezahlt worden ist. Tragen Sie hier die "
-"Kirchensteuer (ohne Kirchensteuer auf Abgeltungsteuer) ein, die Sie 2021 "
-"gezahlt haben bzw. die Ihnen 2021 erstattet wurde."
+"Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese hier "
+"als Sonderausgabe absetzen. Dazu zählt auch gezahltes Kirchgeld oder "
+"Ortskirchensteuer.</p><p><b>Wichtig:</b> Sollten Sie Kirchensteuer als "
+"Zuschlag auf die Abgeltungssteuer bei Kapitalerträgen zahlen, ist diese "
+"<b>nicht absetzbar</b>."
 
-#: app/forms/steps/lotse/steuerminderungen.py:412
+#: app/forms/steps/lotse/steuerminderungen.py:415
 msgid "form.lotse.step_religion.label"
 msgstr "Steuern für Ihre Religionsgemeinschaft"
 
-#: app/forms/steps/lotse/steuerminderungen.py:418
-msgid "form.lotse.field_religion_paid_summe"
-msgstr "Gezahlt"
-
-#: app/forms/steps/lotse/steuerminderungen.py:420
-msgid "form.lotse.field_religion_paid_summe-help"
-msgstr "Tragen Sie dafür die Summe Ihrer 2021 gezahlten Kirchensteuer ein."
-
 #: app/forms/steps/lotse/steuerminderungen.py:421
-msgid "form.lotse.field_religion_paid_summe.data_label"
-msgstr "Gezahlt"
+msgid "form.lotse.field_religion_paid_summe"
+msgstr "Geleistete Zahlungen"
 
 #: app/forms/steps/lotse/steuerminderungen.py:423
-msgid "form.lotse.field_religion_reimbursed_summe"
-msgstr "Erstattet"
+msgid "form.lotse.field_religion_paid_summe-help"
+msgstr "Tragen Sie die Summe Ihrer letztes Jahr gezahlten Kirchensteuer ein."
 
 #: app/forms/steps/lotse/steuerminderungen.py:424
+msgid "form.lotse.field_religion_paid_summe.data_label"
+msgstr "Geleistete Zahlungen"
+
+#: app/forms/steps/lotse/steuerminderungen.py:426
+msgid "form.lotse.field_religion_reimbursed_summe"
+msgstr "Erhaltene Erstattungen"
+
+#: app/forms/steps/lotse/steuerminderungen.py:427
 msgid "form.lotse.field_religion_reimbursed-help"
 msgstr ""
-"Wenn Sie letztes Jahr eine Steuererklärung gemacht haben und Ihnen zu "
-"viel gezahlte Kirchensteuer erstattet wurde, geben Sie das hier an. Die "
-"Summe der erstatteten Kirchensteuer finden Sie beispielsweise auf dem "
-"Steuerbescheid des Vorjahres."
+"Haben Sie im letzten Jahr zu viel gezahlte Kirchensteuer erstattet "
+"bekommen, geben Sie das hier an. Die Summe der erstatteten Kirchensteuer "
+"finden Sie z.B. auf dem Steuerbescheid des Vorjahres."
 
-#: app/forms/steps/lotse/steuerminderungen.py:425
+#: app/forms/steps/lotse/steuerminderungen.py:428
 msgid "form.lotse.field_religion_reimbursed_summe.data_label"
-msgstr "Erstattet"
+msgstr "Erhaltene Erstattungen"
 
-#: app/forms/steps/lotse/steuerminderungen.py:440
+#: app/forms/steps/lotse/steuerminderungen.py:443
 msgid "form.lotse.spenden-inland-title"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:441
+#: app/forms/steps/lotse/steuerminderungen.py:444
 msgid "form.lotse.spenden-inland-intro"
 msgstr ""
-"Tragen Sie hier die Summe Ihrer Spenden und Mitgliedsbeiträge ein. Alle "
-"Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke sind nur auf "
-"Anforderung des Finanzamts durch eine Bestätigung nachzuweisen. "
+"Für einen Spendenabzug benötigen Sie grundsätzlich eine "
+"<b>Spendenbescheinigung</b> im Original. Diese sind aber nur auf "
+"Anforderung des Finanzamts nachzuweisen.</p><p>Bei Spenden <b>bis 300 "
+"Euro</b> reicht den meisten Finanzämtern eine Kopie der Abbuchung vom "
+"Kontoauszug aus."
 
-#: app/forms/steps/lotse/steuerminderungen.py:446
+#: app/forms/steps/lotse/steuerminderungen.py:449
 msgid "form.lotse.step_spenden.label"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:451
+#: app/forms/steps/lotse/steuerminderungen.py:454
 msgid "form.lotse.spenden-inland"
 msgstr ""
 "Spenden und Mitgliedsbeiträge zur Förderung steuerbegünstigter Zwecke an "
 "Empfänger im Inland"
 
-#: app/forms/steps/lotse/steuerminderungen.py:453
+#: app/forms/steps/lotse/steuerminderungen.py:456
 msgid "form.lotse.spenden-help"
 msgstr ""
-"Alle Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke sind "
-"<strong>nur auf Anforderung</strong> des Finanzamts durch eine "
-"Bestätigung nachzuweisen. <br/><br/>Nicht abziehen können Sie "
-"Mitgliedsbeiträge, wenn der Empfänger z.B. den Sport, kulturelle "
-"Betätigungen, die in erster Linie der Freizeitgestaltung dienen, oder die"
-" Heimatpflege und Heimatkunde fördert."
+"Spenden zählen nur, wenn sie an steuerbegünstigte Organisationen fließen."
+" Dazu zählen z.B. Kirchen, Stiftungen, staatliche Museen, Universitäten "
+"oder Vereine. Ob eine Organisation steuerbegünstigt ist, stellt das "
+"Finanzamt fest.</p><p>Mitgliedsbeiträge für die Förderung der Kunst und "
+"Kultur, z.B. für kulturelle Fördervereine, sind auch steuerlich "
+"absetzbar.</p><p><b>Nicht absetzbar sind Mitgliedsbeiträge in "
+"Freizeitvereinen</b> wie Sportklubs, Gesangsvereine und Vereine für "
+"Heimatpflege, Tierzucht und Kleingartenverein.</p><p>"
 
-#: app/forms/steps/lotse/steuerminderungen.py:454
+#: app/forms/steps/lotse/steuerminderungen.py:457
 msgid "form.lotse.spenden-inland.data_label"
 msgstr "Spenden und Mitgliedsbeiträge"
 
-#: app/forms/steps/lotse/steuerminderungen.py:456
+#: app/forms/steps/lotse/steuerminderungen.py:459
 msgid "form.lotse.spenden-inland-parteien"
 msgstr "Spenden und Mitgliedsbeiträge an inländische politische Parteien"
 
-#: app/forms/steps/lotse/steuerminderungen.py:457
+#: app/forms/steps/lotse/steuerminderungen.py:460
 msgid "form.lotse.spenden-inland-parteien-help"
 msgstr ""
-"Der Abzug ist nicht möglich, sofern die politische Partei von der "
-"staatlichen Parteienfinan­zierung ausgeschlossen ist."
+"Spenden und Mitgliedsbeiträge an inländische politische Parteien und "
+"unabhängige Wählervereinigungen können Sie zu 50 % von der Steuer "
+"absetzen. Allerdings bis maximal 825 Euro pro Person bei Ausgaben in Höhe"
+" von 1.650 Euro.</p><p><b>Wichtig:</b> Der Abzug ist nicht möglich, "
+"sollte die politische Partei von der staatlichen Parteienfinanzierung "
+"ausgeschlossen ist."
 
-#: app/forms/steps/lotse/steuerminderungen.py:458
+#: app/forms/steps/lotse/steuerminderungen.py:461
 msgid "form.lotse.spenden-inland-parteien.data_label}"
 msgstr "an inländische politische Parteien"
 
@@ -2352,16 +2391,16 @@ msgstr ""
 msgid "form.lotse.session-note.list-item-2"
 msgstr ""
 "Aus diesem Grund werden Ihre Angaben derzeit nicht zwischengespeichert. "
-"Sie müssen Ihre Steuererklärung daher <strong>in einer Sitzung "
-"abschließen.</strong>"
+"Sie müssen Ihre Steuererklärung daher <b>in einer Sitzung "
+"abschließen.</b>"
 
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:91
 msgid "form.lotse.session-note.list-item-3"
 msgstr ""
 "Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer "
-"Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings "
-"<strong>länger als 3 Stunden</strong> nichts mehr auf dieser Webseite "
-"machen, werden Sie aus Sicherheitsgründen automatisch abgemeldet."
+"Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <b>länger "
+"als 3 Stunden</b> nichts mehr auf dieser Webseite machen, werden Sie aus "
+"Sicherheitsgründen automatisch abgemeldet."
 
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:92
 msgid "form.lotse.session-note.list-item-4"
@@ -4141,24 +4180,23 @@ msgstr "Wer kann den Steuerlotsen nutzen?"
 #: app/templates/content/landing_page.html:17
 msgid "info-stl.card-who.p1-content"
 msgstr ""
-"Der Steuerlotse richtet sich derzeit an Rentner:innen und Pensionär:innen"
-" mit ausschließlich klassischen Alterseinkünften."
+"Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und "
+"Pension beziehen und keine Zusatzeinkünfte haben."
 
 #: app/templates/content/howitworks.html:14
 #: app/templates/content/landing_page.html:18
 msgid "info-stl.card-who.p2-content"
 msgstr ""
 "Sie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus "
-"Vermietung oder aus einer selbständigen Tätigkeit? Sie leben dauerhaft im"
-" Ausland? Dann können Sie den Steuerlotsen in der derzeitigen Version "
-"nicht nutzen."
+"Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den "
+"Steuerlotsen derzeit nicht nutzen."
 
 #: app/templates/content/howitworks.html:15
 #: app/templates/content/landing_page.html:19
 msgid "info-stl.card-who.p3-content"
 msgstr ""
-"Jedoch können Sie <a href=%(link)s>mit unserem Fragebogen</a> prüfen, ob "
-"Sie alle Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
+"Sie können <a href=%(link)s>mit unserem Fragebogen</a> prüfen, ob Sie "
+"alle Voraussetzungen für den Steuerlotsen erfüllen."
 
 #: app/templates/content/howitworks.html:20
 #: app/templates/content/landing_page.html:24
@@ -4211,7 +4249,7 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
-"Einkommensteuererklärung bis zum <strong>31. Juli</strong> beim Finanzamt sein."
+"Einkommensteuererklärung bis zum <b>31. Juli</b> beim Finanzamt sein."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:39
@@ -4225,35 +4263,36 @@ msgstr ""
 #: app/templates/content/howitworks.html:40
 #: app/templates/content/landing_page.html:44
 msgid "info-stl.card-steuerminderung.heading"
-msgstr "Kann ich Angaben machen, die gegebenenfalls meine Steuerlast mindern?"
+msgstr "Kann ich Angaben machen, die meine Steuerlast reduzieren?"
 
 #: app/templates/content/howitworks.html:42
 #: app/templates/content/landing_page.html:46
 msgid "info-stl.card-steuerminderung.p1-content"
 msgstr ""
-"Ja. Spenden und Mitgliedsbeiträge, Krankheits- und Pflegekosten sowie "
-"weitere außergewöhnliche Belastungen, haushaltsnahe Dienstleistungen, "
-"Handwerkerleistungen und gezahlte Kirchensteuer können Sie angeben. Die "
-"haushaltsnahen Dienstleistungen und Handwerkerleistungen umfassen im "
-"Steuerlotsen jedoch keine Arbeitsverhältnisse. Sollten Sie "
-"Haushaltshilfen als Arbeitnehmer einstellen, können Sie dies im "
-"Steuerlotsen nicht steuerlich absetzen."
+"Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und "
+"somit Ihre Steuerlast reduzieren. Zu folgenden Bereichen können Sie "
+"Angaben machen:<ul><li>Vorsorgeaufwendungen</li><li>Spenden und "
+"Mitgliedsbeiträge</li><li>Krankheits- und weitere außergewöhnliche "
+"Belastungen</li><li>Haushaltsnahe "
+"Dienstleistungen</li><li>Handwerkerleistungen</li><li>Gezahlte "
+"Kirchensteuer</li></ul>"
 
 #: app/templates/content/howitworks.html:43
 #: app/templates/content/landing_page.html:47
 msgid "info-stl.card-steuerminderung.p2-content"
 msgstr ""
-"Wenn Sie weitere Aufwendungen geltend machen möchten, müssen Sie zurzeit "
-"auf die vollumfänglichen Steuererklärungsvordrucke zurückgreifen oder "
-"ELSTER verwenden."
+"Die <b>haushaltsnahen Dienstleistungen</b> und Handwerkerleistungen "
+"umfassen im Steuerlotsen <b>keine Arbeitsverhältnisse</b>. Sollten Sie "
+"Haushaltshilfen als Arbeitnehmer einstellen, können Sie dies im "
+"Steuerlotsen nicht steuerlich absetzen."
 
 #: app/templates/content/howitworks.html:44
 #: app/templates/content/landing_page.html:48
 msgid "info-stl.card-steuerminderung.p3-content"
 msgstr ""
-"Eine Übersicht, die Auskunft darüber gibt, welche Unterlagen beispielhaft"
-" zu den steuermindernden Angaben gehören, finden Sie in unserer <a "
-"href=%(link)s>Vorbereitungshilfe</a>."
+"Eine detaillierte Übersicht, welche Angaben zu den Bereichen gehören, "
+"finden Sie in unserer Vorbereitungshilfe.</p><p><a "
+"href=%(link)s>Vorbereitungshilfe speichern</a>"
 
 #: app/templates/content/howitworks.html:49
 msgid "info-stl.card-partner.heading"
@@ -4305,43 +4344,24 @@ msgstr ""
 
 #: app/templates/content/howitworks.html:72
 msgid "info-prep.card-mandatory.heading"
-msgstr "Welche Angaben muss ich auf jeden Fall machen?"
+msgstr "Welche Angaben müssen im Steuerlotsen gemacht werden?"
 
 #: app/templates/content/howitworks.html:74
 msgid "info-prep.card-mandatory.p1-content"
 msgstr ""
-"Folgende Angaben müssen Sie in Ihrer Steuererklärung auf jeden Fall "
-"machen:"
-
-#: app/templates/content/howitworks.html:77
-msgid "info-prep.card-mandatory.list-item-1"
-msgstr "Name, Geburtsdatum und Adresse"
-
-#: app/templates/content/howitworks.html:78
-msgid "info-prep.card-mandatory.list-item-2"
-msgstr "Steuer-Identifikationsnummer"
+"Folgende Angaben müssen Sie beim Steuerlotsen machen:<ul><li>Name, "
+"Geburtsdatum und Adresse</li><li>Steuer-"
+"Identifikationsnummer</li><li>Religionszugehörigkeit</li><li>Angaben zum "
+"Familienstand</li><li>gültige "
+"Bankverbindung</li><li>Steuernummer</li></ul></p><p>Sollten Sie noch "
+"keine Steuernummer haben, können Sie im Steuerlotsen mit der Abgabe Ihrer"
+" Steuererklärung eine neue Steuernummer beantragen."
 
 #: app/templates/content/howitworks.html:79
-msgid "info-prep.card-mandatory.list-item-3"
-msgstr "Steuernummer"
-
-#: app/templates/content/howitworks.html:80
-msgid "info-prep.card-mandatory.list-item-4"
-msgstr "Religionszugehörigkeit"
-
-#: app/templates/content/howitworks.html:81
-msgid "info-prep.card-mandatory.list-item-5"
-msgstr "Familienstand"
-
-#: app/templates/content/howitworks.html:82
-msgid "info-prep.card-mandatory.list-item-6"
-msgstr "gültige Bankverbindung"
-
-#: app/templates/content/howitworks.html:86
 msgid "info-prep.card-otional.heading"
 msgstr "Welche Angaben kann ich optional machen?"
 
-#: app/templates/content/howitworks.html:88
+#: app/templates/content/howitworks.html:81
 msgid "info-prep.card-optional.p1-content"
 msgstr ""
 "Neben den Pflichtangaben können Sie Spenden und Mitgliedsbeiträge, "
@@ -4353,11 +4373,11 @@ msgstr ""
 "beispielhaft zu den steuermindernden Angaben gehören, finden Sie in "
 "unserer <a href=%(link)s>Vorbereitungshilfe.</a>"
 
-#: app/templates/content/howitworks.html:93
+#: app/templates/content/howitworks.html:86
 msgid "info-prep.card-receipts.heading"
 msgstr "Was mache ich mit Belegen und Nachweisen?"
 
-#: app/templates/content/howitworks.html:95
+#: app/templates/content/howitworks.html:88
 msgid "info-prep.card-receipts.p1-content"
 msgstr ""
 "Belege müssen Sie nur einreichen, wenn das Finanzamt Sie schriftlich dazu"
@@ -4366,22 +4386,22 @@ msgstr ""
 "Beispiel Spendenbescheinigungen, der Nachweis von Pflegekosten, einer "
 "Behinderung oder Rechnungen von Handwerkern sein."
 
-#: app/templates/content/howitworks.html:103
+#: app/templates/content/howitworks.html:96
 msgid "info.heading-fsc"
 msgstr "Informationen zum Freischaltcode"
 
-#: app/templates/content/howitworks.html:104
+#: app/templates/content/howitworks.html:97
 msgid "info.intro-fsc"
 msgstr ""
 "Mit Ihrer Registrierung beim Steuerlotsen beantragen Sie automatisch "
 "einen Freischaltcode bei Ihrer Finanzverwaltung. Diesen erhalten Sie nach"
 " erfolgreicher Beantragung innerhalb weniger Tage."
 
-#: app/templates/content/howitworks.html:107
+#: app/templates/content/howitworks.html:100
 msgid "info-fsc.card-how.heading"
 msgstr "Wie bekomme ich den Freischaltcode?"
 
-#: app/templates/content/howitworks.html:109
+#: app/templates/content/howitworks.html:102
 msgid "info-fsc.card-how.p1-content"
 msgstr ""
 "Ihren persönlichen Freischaltcode beantragen Sie automatisch mit Ihrer "
@@ -4389,13 +4409,13 @@ msgstr ""
 "Sie Ihren Freischaltcode mit der Post innerhalb weniger Tage von Ihrer "
 "Finanzverwaltung."
 
-#: app/templates/content/howitworks.html:114
+#: app/templates/content/howitworks.html:107
 msgid "info-fsc.card-other.heading"
 msgstr ""
 "Ich habe bereits einen Freischaltcode für einen anderen Service. Kann ich"
 " diesen auch für den Steuerlotsen verwenden?"
 
-#: app/templates/content/howitworks.html:116
+#: app/templates/content/howitworks.html:109
 msgid "info-fsc.card-other.p1-content"
 msgstr ""
 "Nein. Der Freischaltcode gilt jeweils für einen Anbieter. Wenn Sie den "
@@ -4403,11 +4423,11 @@ msgstr ""
 " Ihrer Registrierung beantragen Sie automatisch einen Freischaltcode für "
 "die Nutzung des Steuerlotsen."
 
-#: app/templates/content/howitworks.html:121
+#: app/templates/content/howitworks.html:114
 msgid "info-fsc.received.heading"
 msgstr "Was mache ich, wenn ich den Freischaltcode nicht erhalten habe?"
 
-#: app/templates/content/howitworks.html:123
+#: app/templates/content/howitworks.html:116
 msgid "info-fsc.card-received.p1-content"
 msgstr ""
 "Wenn Sie sich beim Steuerlotsen registriert und damit erfolgreich einen "
@@ -4417,7 +4437,7 @@ msgstr ""
 " Steuerlotsen leider nicht nutzen und werden daher keinen Freischaltcode "
 "erhalten."
 
-#: app/templates/content/howitworks.html:124
+#: app/templates/content/howitworks.html:117
 msgid "info-fsc.card-received.p2-content"
 msgstr ""
 "Sie sind nicht bei ELSTER angemeldet, warten aber bereits seit über 2 "
@@ -4425,33 +4445,33 @@ msgstr ""
 "href=%(link)s>Freischaltcode stornieren</a> Ihren alten Freischaltcode "
 "zunächst stornieren und im Anschluss einen neuen beantragen."
 
-#: app/templates/content/howitworks.html:129
+#: app/templates/content/howitworks.html:122
 msgid "info-fsc.lost.heading"
 msgstr "Was mache ich, wenn ich meinen Freischaltcode verloren habe?"
 
-#: app/templates/content/howitworks.html:131
+#: app/templates/content/howitworks.html:124
 msgid "info-fsc.card-lost.p1-content"
 msgstr ""
 "Wenn Sie Ihren Freischaltcode nicht mehr finden, können Sie unter <a "
 "href=%(link)s>Freischaltcode stornieren</a> Ihren alten Freischaltcode "
 "zunächst stornieren und im Anschluss einen neuen beantragen."
 
-#: app/templates/content/howitworks.html:137
+#: app/templates/content/howitworks.html:130
 msgid "info-fsc.validity.heading"
 msgstr "Wieso muss ich nächstes Jahr einen neuen Freischaltcode beantragen?"
 
-#: app/templates/content/howitworks.html:139
+#: app/templates/content/howitworks.html:132
 msgid "info-fsc.validity.p1-content"
 msgstr ""
 "Wir haben unseren Dienst so datensparsam wie möglich entwickelt. Ihr "
 "Freischaltcode verliert daher seine Gültigkeit, wenn Sie Ihre "
 "Steuererklärung verschickt und sich abgemeldet haben."
 
-#: app/templates/content/howitworks.html:147
+#: app/templates/content/howitworks.html:140
 msgid "info.heading-edaten"
 msgstr "Informationen zur Übernahme vorliegender Daten"
 
-#: app/templates/content/howitworks.html:148
+#: app/templates/content/howitworks.html:141
 msgid "info.intro-edaten"
 msgstr ""
 "Da Ihrer Finanzverwaltung bereits viele Informationen über Sie vorliegen,"
@@ -4459,100 +4479,100 @@ msgstr ""
 "vereinfacht Ihnen die Erstellung Ihrer Steuererklärung, weil Sie viele "
 "Felder nicht mehr ausfüllen müssen."
 
-#: app/templates/content/howitworks.html:151
+#: app/templates/content/howitworks.html:144
 msgid "info.card-takeover.heading"
 msgstr "Welche Daten werden automatisch in meine Steuererklärung übernommen?"
 
-#: app/templates/content/howitworks.html:153
+#: app/templates/content/howitworks.html:146
 msgid "info.card-takeover.p1-content"
 msgstr ""
 "Daten zu inländischen Renten, Pensionen sowie zu Kranken- und "
 "Pflegeversicherungen erhält die Finanzverwaltung von der jeweiligen "
 "Stelle elektronisch."
 
-#: app/templates/content/howitworks.html:154
+#: app/templates/content/howitworks.html:147
 msgid "info.card-takeover.p2-content"
 msgstr ""
 "Welche Daten für Sie übermittelt wurden, können Sie den Unterlagen "
 "entnehmen, die Sie von der jeweiligen Stelle erhalten. Das Finanzamt "
 "erhält die Daten aus derselben Quelle wie Sie Ihre Belege."
 
-#: app/templates/content/howitworks.html:155
+#: app/templates/content/howitworks.html:148
 msgid "info.card-takeover.p3-content"
 msgstr ""
 "Kontrollieren Sie dennoch aufmerksam Ihren Steuerbescheid. Diesen "
 "erhalten Sie automatisch mit der Post, sobald Ihr Finanzamt Ihre "
 "Steuererklärung bearbeitet hat."
 
-#: app/templates/content/howitworks.html:160
+#: app/templates/content/howitworks.html:153
 msgid "info.card-advantage.heading"
 msgstr "Was sind die Vorteile der automatischen Übernahme vorliegender Daten?"
 
-#: app/templates/content/howitworks.html:162
+#: app/templates/content/howitworks.html:155
 msgid "info.card-advantage.p1-content"
 msgstr ""
 "Sie ersparen sich das mühsame Übertragen Ihrer Daten aus Ihren Unterlagen"
 " in das Steuerformular."
 
-#: app/templates/content/howitworks.html:163
+#: app/templates/content/howitworks.html:156
 msgid "info.card-advantage.p2-content"
 msgstr ""
 "Sie können sich außerdem nicht aus Versehen bei der Dateneingabe "
 "vertippen. Die Daten, die das Finanzamt hat und die in Ihren Unterlagen "
 "stehen, stammen sogar aus denselben Quellen."
 
-#: app/templates/content/howitworks.html:164
+#: app/templates/content/howitworks.html:157
 msgid "info.card-advantage.p3-content"
 msgstr ""
 "Sie haben weniger Stress. Das Finanzamt muss Ihre Angaben nicht mehr "
 "prüfen, weil sie diesem bereits vorliegen. Daher kommt es zu weniger "
 "Rückfragen."
 
-#: app/templates/content/howitworks.html:169
+#: app/templates/content/howitworks.html:162
 msgid "info.edaten.control.heading"
 msgstr "Wie kann ich die übernommenen Daten kontrollieren?"
 
-#: app/templates/content/howitworks.html:171
+#: app/templates/content/howitworks.html:164
 msgid "info.edaten.control-content1"
 msgstr ""
 "Welche Daten für Sie übermittelt wurden, können Sie den Unterlagen "
 "entnehmen, die Sie von der jeweiligen Stelle erhalten haben. Das "
 "Finanzamt erhält die Daten aus derselben Quelle wie Sie Ihre Belege."
 
-#: app/templates/content/howitworks.html:172
+#: app/templates/content/howitworks.html:165
 msgid "info.edaten.control-content2"
 msgstr ""
 "Kontrollieren Sie dennoch aufmerksam Ihren Steuerbescheid. Diesen "
 "erhalten Sie automatisch mit der Post, sobald Ihr Finanzamt Ihre "
 "Steuererklärung bearbeitet hat."
 
-#: app/templates/content/howitworks.html:181
+#: app/templates/content/howitworks.html:174
 msgid "info.heading-data-protection"
 msgstr "Datenschutz und Sicherheit"
 
-#: app/templates/content/howitworks.html:182
+#: app/templates/content/howitworks.html:175
 msgid "info.intro-data-protection"
 msgstr ""
 "Der Schutz Ihrer Daten ist uns sehr wichtig. Wir haben unseren Service "
 "bewusst datensparsam entwickelt. Ihre Daten werden ausschließlich "
 "verschlüsselt gespeichert und übertragen."
 
-#: app/templates/content/howitworks.html:185
+#: app/templates/content/howitworks.html:178
 msgid "info-security.transfer.heading"
 msgstr "Wie wird meine Steuererklärung an das Finanzamt geschickt?"
 
-#: app/templates/content/howitworks.html:187
+#: app/templates/content/howitworks.html:180
 msgid "info-security.transfer.p1-content"
 msgstr ""
 "Ihre Steuererklärung wird über die offizielle ELSTER-Schnittstelle "
 "digital übermittelt. ELSTER steht für »Elektronische Steuererklärung« und"
 " ist die offizielle Plattform der deutschen Finanzverwaltung."
 
-#: app/templates/content/howitworks.html:192
+#: app/templates/content/howitworks.html:185
 msgid "info-security.card-processing.heading"
 msgstr "Wie verarbeiten Sie meine Daten?"
 
-#: app/templates/content/howitworks.html:194
+#: app/templates/content/howitworks.html:187
 msgid "info-security.card-processing.p1-content"
 msgstr ""
 "Der Steuerlotse fragt nur und erst dann Daten ab, wenn sie wirklich "
@@ -4562,11 +4582,11 @@ msgstr ""
 "Finanzverwaltung. Personenbezogene Daten werden von uns nur "
 "weitergeleitet – nicht zu anderen Zwecken verarbeitet."
 
-#: app/templates/content/howitworks.html:203
+#: app/templates/content/howitworks.html:196
 msgid "info.heading"
 msgstr "Informieren"
 
-#: app/templates/content/howitworks.html:204
+#: app/templates/content/howitworks.html:197
 msgid "info.intro"
 msgstr ""
 "Die Abgabe der Steuererklärung ist vor allem für Renten- und "
@@ -4577,25 +4597,25 @@ msgstr ""
 "wurde im Auftrag des Bundesministeriums der Finanzen von "
 "DigitalService4Germany entwickelt."
 
-#: app/templates/content/howitworks.html:206
+#: app/templates/content/howitworks.html:199
 msgid "info.heading-content"
 msgstr "Inhalte auf dieser Seite"
 
-#: app/templates/content/howitworks.html:224
+#: app/templates/content/howitworks.html:217
 msgid "info.teaser.eligibility.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/howitworks.html:225
+#: app/templates/content/howitworks.html:218
 msgid "info.teaser.eligibility.description"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/howitworks.html:229
+#: app/templates/content/howitworks.html:222
 msgid "info.teaser.register.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/howitworks.html:230
+#: app/templates/content/howitworks.html:223
 msgid "info.teaser.register.description"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
@@ -5205,8 +5225,8 @@ msgstr "So geht es weiter"
 #: app/templates/unlock_code/registration_success.html:6
 msgid "register.success.next-steps.step-1"
 msgstr ""
-"Sie bekommen von Ihrem Finanzamt den <strong>Brief mit Ihrem persönlichen"
-" Freischaltcode</strong> zugeschickt."
+"Sie bekommen von Ihrem Finanzamt den <b>Brief mit Ihrem persönlichen "
+"Freischaltcode</b> zugeschickt."
 
 #: app/templates/unlock_code/registration_success.html:7
 msgid "register.success.next-steps.step-2"

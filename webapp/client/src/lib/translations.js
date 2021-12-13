@@ -163,31 +163,31 @@ const translations = {
     selectVorsorge: {
       label: {
         title: "Vorsorgeaufwendungen",
-        text: "Beiträge zu bestimmten Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, sind Vorsorgeaufwendungen. Hierzu zählen Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
+        text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Hierzu zählen z.B. Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
       },
     },
     selectAussergBela: {
       label: {
         title: "Krankheitskosten und weitere außergewöhnliche Belastungen",
-        text: "Hierzu zählen beispielsweise Kosten, die durch Krankheit, Unwetter oder Naturkatastrophen entstanden sind.",
+        text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit und Kur, einer Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
       },
     },
     selectHandwerker: {
       label: {
         title: "Haushaltsnahe Dienstleistungen und Handwerkerleistungen",
-        text: "Hierzu zählen beispielsweise Aufwendungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
+        text: "Zu den Kosten für Dienstleistungen im Haushalt und Handwerker zählen z.B. Leistungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
       },
     },
     selectSpenden: {
       label: {
         title: "Spenden und Mitgliedsbeiträge",
-        text: "Wählen Sie diesen Punkt aus, wenn Sie einen gemeinnützigen Verein, eine Stiftung, Partei oder Wählervereinigungen unterstützt haben.",
+        text: "An dieser Stellen können Sie Spenden und Mitgliedsbeiträge angeben, die zum Teil von der Steuer absetzbar sind. Hierzu zählen z.B. Zahlungen an Vereine, Stiftungen und inländische Parteien.",
       },
     },
     selectReligion: {
       label: {
         title: "Steuern für Ihre Religionsgemeinschaft",
-        text: "Im Jahr 2021 geleistete Steuern für eine Religionsgemeinschaft – nach Abzug der vom Finanzamt erstatteten Beträge – können Sie als Sonderausgaben angeben.",
+        text: "Letztes Jahr gezahlte Steuern für Ihre Religionsgemeinschaft können Sie als sogenannte Sonderausgaben angeben.",
       },
     },
   },

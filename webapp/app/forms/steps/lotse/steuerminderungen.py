@@ -176,12 +176,6 @@ class StepVorsorge(LotseFormSteuerlotseStep):
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
         return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
-                               post_list_text=_('form.lotse.vorsorge.post-list-text'),
-                               list_items=[
-                                        _('form.lotse.vorsorge-list-item-1'),
-                                        _('form.lotse.vorsorge-list-item-2'),
-                                        _('form.lotse.vorsorge-list-item-3'),
-                                    ],
                                header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
@@ -190,7 +184,7 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     title = _l('form.lotse.ausserg_bela-title')
     intro = _l('form.lotse.ausserg_bela-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
-    template = 'lotse/form_aufwendungen_with_list.html'
+    template = 'lotse/form_krankheitskosten.html'
     preconditions = [ShowAussergBelaPrecondition]
 
     label = _l('form.lotse.step_ausserg_bela.label')
@@ -205,7 +199,8 @@ class StepAussergBela(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_krankheitskosten_anspruch = EuroField(
             label=_l('form.lotse.field_krankheitskosten_anspruch'),
-            render_kw={'data_label': _l('form.lotse.field_krankheitskosten_anspruch.data_label')},
+            render_kw={'help': _l('form.lotse.field_krankheitskosten-anspruch-help'),
+                       'data_label': _l('form.lotse.field_krankheitskosten_anspruch.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_pflegekosten_summe = EuroField(
             label=_l('form.lotse.field_pflegekosten_summe'),
@@ -248,6 +243,16 @@ class StepAussergBela(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
+    def render(self):
+        self.render_info.form.first_field = next(iter(self.render_info.form))
+        return render_template(
+            template_name_or_list=self.template,
+            form=self.render_info.form,
+            render_info=self.render_info,
+            input_details_title=_('form.lotse.ausserg_bela.details-title'),
+            input_details_text=_('form.lotse.ausserg_bela.details-text'),
+        )
+
 
 class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
     name = 'haushaltsnahe_handwerker'
@@ -284,7 +289,8 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
         stmind_handwerker_lohn_etc_summe = EuroField(
             label=_l('form.lotse.field_handwerker_lohn_etc_summe'),
-            render_kw={'data_label': _l('form.lotse.field_handwerker_lohn_etc_summe.data_label')},
+            render_kw={'help': _l('form.lotse.field_handwerker_lohn_etc_summe-help'),
+                       'data_label': _l('form.lotse.field_handwerker_lohn_etc_summe.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
         def validate_stmind_haushaltsnahe_summe(self, field):
@@ -395,10 +401,7 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
 
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
-        return render_template(self.template, form=self.render_info.form, render_info=self.render_info, list_items=[
-            _('form.lotse.gem_haushalt-list-item-1'),
-            _('form.lotse.gem_haushalt-list-item-2')
-        ], header_title=_('form.lotse.steuerminderungen.header-title'))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info,  header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
 class StepReligion(LotseFormSteuerlotseStep):
