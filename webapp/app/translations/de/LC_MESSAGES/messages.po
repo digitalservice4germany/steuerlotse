@@ -2089,7 +2089,7 @@ msgstr ""
 #: app/forms/steps/lotse/steuerminderungen.py:341
 msgid "form.lotse.steuerminderungen.details-list-item-2"
 msgstr ""
-"Abgesetzt werden können Kosten, die Sie im letzen Jahr bezahlt haben. "
+"Abgesetzt werden können Kosten, die Sie <strong>im letzen Jahr bezahlt haben.</strong>"
 "Relevant ist der Zeitpunkt der Bezahlung, nicht der Rechnungsstellung."
 
 #: app/forms/steps/lotse/steuerminderungen.py:342
