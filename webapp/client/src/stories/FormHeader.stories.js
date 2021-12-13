@@ -15,5 +15,5 @@ export const Default = Template.bind({});
 Default.args = {
   title: "Melden Sie sich mit Ihrem Freischaltcode an",
   intro:
-    "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann können Sie mit Ihrer Steuererklärung 2020 beginnen.",
+    "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
 };
