@@ -34,7 +34,7 @@ class TestGenerateVorsatzWithTaxNumber(unittest.TestCase):
         steuernummer = '123456789'
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
-        year = 2019
+        year = TEST_EST_VERANLAGUNGSJAHR
         first_name = 'Herbert'
         last_name = 'Müller'
         street = 'Schlossallee'
@@ -67,7 +67,7 @@ class TestGenerateVorsatzWithoutTaxNumber(unittest.TestCase):
     def test_if_no_steuernummer_given_then_fields_set_correctly(self):
         person_a_idnr = '04452397687'
         person_b_idnr = '02293417683'
-        year = 2019
+        year = TEST_EST_VERANLAGUNGSJAHR
         first_name = 'Herbert'
         last_name = 'Müller'
         street = 'Schlossallee'

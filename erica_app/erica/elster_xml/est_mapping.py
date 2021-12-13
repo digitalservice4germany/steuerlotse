@@ -215,7 +215,7 @@ def _convert_to_elster_identifiers(form_data):
     return result
 
 
-def check_and_generate_entries(est_data, year=2019):
+def check_and_generate_entries(est_data):
     # Add mandatory fields for digital submission
     enriched_est_data = est_data
     enriched_est_data['is_einkommensteuererklaerung'] = 'X'
