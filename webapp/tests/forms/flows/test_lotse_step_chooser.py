@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 from werkzeug.datastructures import ImmutableMultiDict
 
+from app.utils import VERANLAGUNGSJAHR
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.personal_data import StepSteuernummer
@@ -122,7 +123,7 @@ class TestStepGemeinsamerHaushalt:
     def test_do_not_skip_if_widowed_longer_than_veranlagungszeitraum(self, new_test_request_context):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
-                          'familienstand_date': datetime.date(datetime.date.today().year - 2, 12, 31)}
+                          'familienstand_date': datetime.date(VERANLAGUNGSJAHR - 1, 12, 31)}
         with new_test_request_context(stored_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, StepGemeinsamerHaushalt)
@@ -130,7 +131,7 @@ class TestStepGemeinsamerHaushalt:
     def test_skip_if_widowed_recently_zusammenveranlagung(self, new_test_request_context):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
-                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_date': datetime.date(VERANLAGUNGSJAHR, 1, 2),
                           'familienstand_widowed_lived_separated': 'no',
                           'familienstand_confirm_zusammenveranlagung': True}
         with new_test_request_context(stored_data=separated_data):
@@ -142,9 +143,9 @@ class TestStepGemeinsamerHaushalt:
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           # set to first day of the veranlagungszeitraum
-                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_date': datetime.date(VERANLAGUNGSJAHR, 1, 2),
                           'familienstand_widowed_lived_separated': 'yes',
-                          'familienstand_widowed_lived_separated_since': datetime.date(datetime.date.today().year - 2, 12, 31),
+                          'familienstand_widowed_lived_separated_since': datetime.date(VERANLAGUNGSJAHR - 1, 12, 31),
                           'familienstand_zusammenveranlagung': 'no'}
         with new_test_request_context(stored_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
@@ -153,9 +154,9 @@ class TestStepGemeinsamerHaushalt:
     def test_skip_if_widowed_recently_and_separated_and_zusammenveranlagung(self, new_test_request_context):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
-                          'familienstand_date': datetime.date(datetime.date.today().year - 1, 1, 10),
+                          'familienstand_date': datetime.date(VERANLAGUNGSJAHR, 1, 10),
                           'familienstand_widowed_lived_separated': 'yes',
-                          'familienstand_widowed_lived_separated_since': datetime.date(datetime.date.today().year - 1, 1, 2),
+                          'familienstand_widowed_lived_separated_since': datetime.date(VERANLAGUNGSJAHR, 1, 2),
                           'familienstand_zusammenveranlagung': 'yes'}
         with new_test_request_context(stored_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))

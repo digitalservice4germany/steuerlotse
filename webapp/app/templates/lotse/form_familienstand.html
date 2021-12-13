@@ -37,6 +37,7 @@
     {{ super() }}
     <script src="{{ url_for('static', filename='js/field_utils.js') }}" type=text/javascript></script>
     <script>
+        // TODO when implementing this in react, hand VERANLAGUNGSJAHR as a prop
         const FIRST_DAY_OF_TAX_PERIOD = new Date(2021, 0, 1)
 
         document.addEventListener('DOMContentLoaded', () => {

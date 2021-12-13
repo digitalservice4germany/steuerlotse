@@ -100,6 +100,16 @@ a:visited {
   max-width: var(--input-width-25);
 }
 
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 input.form-control {
   border: 2px solid var(--border-color);
   border-radius: 0;

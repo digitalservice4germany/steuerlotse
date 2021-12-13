@@ -13,7 +13,7 @@ from erica.request_processing.requests_controller import UnlockCodeRequestContro
     UnlockCodeRevocationRequestController, SPECIAL_TESTMERKER_IDNR, GetAddressRequestController, \
     GetBelegeRequestController, CheckTaxNumberRequestController
 from tests.utils import create_est, missing_cert, missing_pyeric_lib, replace_text_in_xml, \
-    replace_subtree_in_xml
+    replace_subtree_in_xml, TEST_EST_VERANLAGUNGSJAHR
 
 
 class TestEstValidationRequestProcess(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestEstValidationRequestProcess(unittest.TestCase):
                       'generate_full_est_xml', MagicMock(return_value=xml)):
             est_validation_request.process()
 
-            pyeric_controller_init.assert_called_with(xml, 2020)
+            pyeric_controller_init.assert_called_with(xml, TEST_EST_VERANLAGUNGSJAHR)
 
     def test_pyeric_get_eric_response_is_called(self):
         est_validation_request = EstValidationRequestController(create_est(correct_form_data=True))
@@ -93,7 +93,7 @@ class TestEstRequestProcess(unittest.TestCase):
                       'generate_full_est_xml', MagicMock(return_value=xml)):
             est_request.process()
 
-            pyeric_controller_init.assert_called_with(xml, 2020)
+            pyeric_controller_init.assert_called_with(xml, TEST_EST_VERANLAGUNGSJAHR)
 
     def test_pyeric_get_eric_response_is_called(self):
         est_request = EstRequestController(create_est(correct_form_data=True))

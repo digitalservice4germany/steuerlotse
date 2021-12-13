@@ -5,11 +5,11 @@ name = "pypi"
 
 [packages]
 click = "==8.0.3"
-fastapi = "~=0.70.0"
+fastapi = "~=0.70.1"
 freezegun = "*"
 pydantic = "~=1.8.2"
 pytest = "==6.2.5"
-uvicorn = "~=0.15.0"
+uvicorn = "~=0.16.0"
 babel = "*"
 python-dotenv = "*"
 prometheus-fastapi-instrumentator = "*"

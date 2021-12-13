@@ -202,12 +202,11 @@ class TestEstMapping(unittest.TestCase):
         self.assertEqual('DE1019210920', results['E0102102'])
         self.assertEqual('wonderwall', results['E0102105'])  # copied over to PersonB
 
-    def test_mandatory_fields_present(self):
+    def test_mandatory_field_present(self):
         form_data = {}
         results = check_and_generate_entries(form_data)
 
         self.assertEqual('X', results['E0100001'])
-        self.assertEqual('X', results['E0100013'])
 
     def test_familienstand_single(self):
         form_data = {'familienstand': 'single'}
