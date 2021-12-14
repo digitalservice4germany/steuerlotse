@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Example = styled.div`
   &.example-input {
     color: var(--secondary-text-color);
-    margin-bottom: var(--spacing-02);
+    margin-bottom: var(--spacing-01);
   }
 `;
 function ExampleFieldInput({ exampleInput, fieldId }) {

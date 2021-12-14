@@ -9,7 +9,7 @@ const Legend = styled.legend`
   }
 
   &.field-label-example {
-    margin-bottom: 0;
+    margin-bottom: var(--spacing-01);
   }
 `;
 
