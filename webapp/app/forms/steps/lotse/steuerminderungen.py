@@ -335,7 +335,7 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
         return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
                                header_title=_('form.lotse.steuerminderungen.header-title'),
                                input_details_title=_('form.lotse.steuerminderungen.details-title'),
-                               input_details_text=_('form.lotse.steuerminderungen.details-text'),
+                               input_details_text=_l('form.lotse.steuerminderungen.details-text'),
                                details_list_items=[
                                    _l('form.lotse.steuerminderungen.details-list-item-1'),
                                    _l('form.lotse.steuerminderungen.details-list-item-2'),
