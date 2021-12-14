@@ -25,4 +25,8 @@ updates:
     schedule:
       interval: "daily"
     ignore:
+      # For storybook, ignore all updates. We update storybook manually
       - dependency-name: "@storybook/*"
+      # For boto3, ignore all patch updates
+      - dependency-name: "boto3"
+        update-types: ["version-update:semver-patch"]
