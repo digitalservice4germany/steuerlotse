@@ -34,6 +34,37 @@ const translations = {
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
     },
+    merkzeichen: {
+      hasCareDegree: {
+        label: "Wurde ein Pflegegrad 4 oder 5 festgestellt?",
+      },
+      disabilityDegree: {
+        label: "Grad der Behinderung",
+        example: "ab 20",
+      },
+      marks: {
+        label: "Merkzeichen",
+        details: {
+          title: "Infos zu den Merkzeichen",
+          text: "TODO",
+        },
+      },
+      markH: {
+        label: "Merkzeichen H",
+      },
+      markG: {
+        label: "Merkzeichen G",
+      },
+      markBl: {
+        label: "Merkzeichen Bl",
+      },
+      markTbl: {
+        label: "Merkzeichen TBl",
+      },
+      markAg: {
+        label: "Merkzeichen aG",
+      },
+    },
     telephoneNumber: {
       fieldTelephoneNumber: {
         label: "Telefonnummer",
