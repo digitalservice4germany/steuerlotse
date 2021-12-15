@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
+import { optionsPropType } from "../lib/propTypes";
 
 const Radio = styled.div`
   input[type="radio"] {
@@ -96,7 +97,7 @@ function FormFieldRadio({
                   htmlFor={fieldId + option.value}
                   key={`${fieldId}-label-${option.value}`}
                 >
-                  {option.label}
+                  {option.displayName}
                 </label>,
               ])}
             </div>
@@ -110,7 +111,7 @@ function FormFieldRadio({
 FormFieldRadio.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
-  options: PropTypes.any.isRequired,
+  options: optionsPropType.isRequired,
   value: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   details: FieldLabelForSeparatedFields.propTypes.details,

@@ -22,8 +22,11 @@ Default.args = {
   fieldId: "radio",
   fieldName: "radio",
   options: [
-    { label: "Ja, ich zahle oder beziehe Unterhalt.", value: "yes" },
-    { label: "Nein, weder zahle, noch beziehe ich Unterhalt.", value: "no" },
+    { value: "yes", displayName: "Ja, ich zahle oder beziehe Unterhalt." },
+    {
+      value: "no",
+      displayName: "Nein, weder zahle, noch beziehe ich Unterhalt.",
+    },
   ],
   label: {
     text: "Zahlen oder beziehen Sie Unterhalt?",
