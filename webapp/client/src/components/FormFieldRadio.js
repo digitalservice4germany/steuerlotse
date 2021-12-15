@@ -79,22 +79,26 @@ function FormFieldRadio({
           <fieldset id={fieldId} name={fieldId}>
             <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
             <div className="radio-button-list">
-              {options.map((option, i) => (
-                <>
-                  <input
-                    type="radio"
-                    id={fieldId + i}
-                    name={fieldId}
-                    required={required}
-                    autoFocus={autofocus}
-                    value={option.value}
-                    defaultChecked={selectedValue === option.value}
-                    onClick={toggleRadioButton}
-                    onChange={onChangeHandler}
-                  />
-                  <label htmlFor={fieldId + i}>{option.label}</label>
-                </>
-              ))}
+              {options.map((option) => [
+                <input
+                  type="radio"
+                  id={fieldId + option.value}
+                  key={`${fieldId}-${option.value}`}
+                  name={fieldId}
+                  required={required}
+                  autoFocus={autofocus}
+                  value={option.value}
+                  defaultChecked={selectedValue === option.value}
+                  onClick={toggleRadioButton}
+                  onChange={onChangeHandler}
+                />,
+                <label
+                  htmlFor={fieldId + option.value}
+                  key={`${fieldId}-label-${option.value}`}
+                >
+                  {option.label}
+                </label>,
+              ])}
             </div>
           </fieldset>
         </Radio>
