@@ -37,13 +37,6 @@ class TestCalculatePauschbetrag:
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
             assert calculated_pauschbetrag == expected_result
 
-    def test_if_incorrect_disability_degree_then_raise_value_error(self):
-        incorrect_disability_degrees = [-10, 18, 101]
-
-        for incorrect_disability_degree in incorrect_disability_degrees:
-            with pytest.raises(ValueError):
-                calculate_pauschbetrag(disability_degree=incorrect_disability_degree)
-
     def test_if_merkzeichen_ag_and_no_pflegegrad_set_then_return_correct_value_for_disability_degree(self):
         input_output_pairs = [
             (20, 384),
