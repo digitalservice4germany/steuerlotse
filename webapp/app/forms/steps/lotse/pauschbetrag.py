@@ -1,24 +1,34 @@
-def calculate_pauschbetrag(pflegegrad=False, beh_grad=None, merkzeichen_bl=False, merkzeichen_tbl=False, merkzeichen_h=False,
-                           merkzeichen_ag=False, merkzeichen_g=False):
-    if pflegegrad:
-        return 7400
-    if merkzeichen_bl:
-        return 7400
-    if merkzeichen_tbl:
-        return 7400
-    if merkzeichen_h:
+def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
+    """
+    Calculates the pauschbetrag given some information about the user.
+
+    :param has_pflegegrad: A boolean indicating whether the user has a "Pflegegrad" of 4 or 5
+    :param disability_degree: An integer indicating the disability degree of the user. Must be between 20 and 100
+    :param has_merkzeichen_bl: A boolean indicating whether the user has the Merkzeichen Bl
+    :param has_merkzeichen_tbl: A boolean indicating whether the user has the Merkzeichen TBl
+    :param has_merkzeichen_h: A boolean indicating whether the user has the Merkzeichen H
+    """
+    if has_pflegegrad or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_h:
         return 7400
 
-    beh_grad_to_pauschal_betrag_mapping = {
-        20: 384,
-        30: 620,
-        40: 860,
-        50: 1140,
-        60: 1440,
-        70: 1780,
-        80: 2120,
-        90: 2460,
-        100: 2840,
-    }
+    if disability_degree > 100 or disability_degree < 20:
+        raise ValueError(f"Disability degree has incorrect value of {disability_degree}. Accept only values between 20 and 100.")
 
-    return beh_grad_to_pauschal_betrag_mapping[beh_grad]
+    if disability_degree == 100:
+        return 2840
+    elif disability_degree >= 90:
+        return 2460
+    elif disability_degree >= 80:
+        return 2120
+    elif disability_degree >= 70:
+        return 1780
+    elif disability_degree >= 60:
+        return 1440
+    elif disability_degree >= 50:
+        return 1140
+    elif disability_degree >= 40:
+        return 860
+    elif disability_degree >= 30:
+        return 620
+    elif disability_degree >= 20:
+        return 384
