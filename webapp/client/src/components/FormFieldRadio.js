@@ -80,14 +80,14 @@ function FormFieldRadio({
           <fieldset id={fieldId} name={fieldId}>
             <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
             <div className="radio-button-list">
-              {options.map((option) => [
+              {options.map((option, i) => [
                 <input
                   type="radio"
                   id={fieldId + option.value}
                   key={`${fieldId}-${option.value}`}
                   name={fieldId}
                   required={required}
-                  autoFocus={autofocus}
+                  autoFocus={autofocus && i === 0}
                   value={option.value}
                   defaultChecked={selectedValue === option.value}
                   onClick={toggleRadioButton}
