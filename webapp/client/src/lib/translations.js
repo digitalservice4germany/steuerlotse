@@ -46,7 +46,7 @@ const translations = {
         label: "Merkzeichen",
         details: {
           title: "Infos zu den Merkzeichen",
-          text: "TODO",
+          text: "Im Schwerbehindertenausweis, den man ab einem Grad der Behinderung von 50 und mehr erhalten kann, werden spezifische Behinderungen und bestimmte gesundheitliche Einschränkungen durch Merkzeichen kenntlich gemacht. Viele Nachteilsausgleiche für schwerbehinderte Menschen sind an bestimmte Merkzeichen gekoppelt. Sollten Sie kein Merkzeichen haben, lassen Sie das Feld frei.",
         },
       },
       markH: {
