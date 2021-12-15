@@ -34,9 +34,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree, expected_result in input_output_pairs:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == expected_result
 
     def test_if_incorrect_disability_degree_then_raise_value_error(self):
@@ -67,9 +65,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree, expected_result in input_output_pairs:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == expected_result
 
         input_output_pairs = [
@@ -92,9 +88,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree, expected_result in input_output_pairs:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == expected_result
 
     def test_if_pflegegrad_set_and_no_merkzeichen_then_return_7400_for_all_disability_degree(self):
@@ -108,9 +102,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
 
     def test_if_pflegegrad_set_and_merkzeichen_bl_then_return_7400_for_all_disability_degree(self):
@@ -124,9 +116,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
 
     def test_if_pflegegrad_set_and_merkzeichen_tbl_then_return_7400_for_all_disability_degree(self):
@@ -140,9 +130,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
 
     def test_if_pflegegrad_set_and_merkzeichen_h_then_return_7400_for_all_disability_degree(self):
@@ -156,9 +144,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
 
     def test_if_merkzeichen_bl_and_no_pflegegrad_set_then_return_7400_for_all_disability_degree(self):
@@ -172,9 +158,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
 
     def test_if_merkzeichen_tbl_and_no_pflegegrad_set_then_return_7400_for_all_disability_degree(self):
@@ -188,9 +172,7 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
 
     def test_if_merkzeichen_h_and_no_pflegegrad_set_then_return_7400_for_all_disability_degree(self):
@@ -204,7 +186,5 @@ class TestCalculatePauschbetrag:
         }
 
         for disability_degree in disability_degree_values:
-
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
-
             assert calculated_pauschbetrag == 7400
