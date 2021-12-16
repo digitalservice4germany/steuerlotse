@@ -98,6 +98,8 @@ class MandatoryFormData(BaseModel):
     person_b_religion: Optional[str]
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
+    
+    has_disability: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -240,6 +242,8 @@ class FormDataDependencies(BaseModel):
     familienstand_widowed_lived_separated_since: Optional[date]
     familienstand_zusammenveranlagung: Optional[str]
     familienstand_confirm_zusammenveranlagung: Optional[bool]
+    
+    has_disability: Optional[str]
 
     stmind_select_vorsorge: Optional[bool]
     stmind_select_ausserg_bela: Optional[bool]

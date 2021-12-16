@@ -13,7 +13,7 @@ import TaxNumberPage from "./pages/TaxNumberPage";
 import TelephoneNumberPage from "./pages/TelephoneNumberPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
-import DisabilityQuestionPage from "./pages/DisabilityQuestionPage";
+import HasDisabilityPage from "./pages/HasDisabilityPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -26,7 +26,7 @@ const allowedComponents = {
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
-  DisabilityQuestionPage,
+  HasDisabilityPage,
 };
 
 function mountComponent(element) {

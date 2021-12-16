@@ -62,6 +62,10 @@ class StepDisplayProps(ComponentProps):
     prev_url: Optional[str]
     next_url: Optional[str]
 
+class StepBasicFormProps(ComponentProps):
+    prev_url: Optional[str]
+    form: FormProps
+    fields: Dict[str, FieldProps]
 
 class LoginProps(StepFormProps):
     pass
@@ -107,3 +111,6 @@ class TaxNumberStepFormProps(StepFormProps):
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str
+
+class HasDisabilityProps(StepBasicFormProps):
+    pass

@@ -1,15 +1,15 @@
 import React from "react";
 
-import DisabilityQuestionPage from "../pages/DisabilityQuestionPage";
+import HasDisabilityPage from "../pages/HasDisabilityPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Pages/DisabilityQuestionPage",
-  component: DisabilityQuestionPage,
+  title: "Pages/HasDisabilityPage",
+  component: HasDisabilityPage,
 };
 
 function Template(args) {
-  return <DisabilityQuestionPage {...args} />;
+  return <HasDisabilityPage {...args} />;
 }
 
 export const Default = Template.bind({});
@@ -18,7 +18,7 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    disabilityExists: "Yes",
+    hasDisability: "Yes",
   },
   errors: [],
   prevUrl: "test",

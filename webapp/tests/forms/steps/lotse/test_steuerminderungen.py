@@ -7,7 +7,7 @@ from werkzeug.datastructures import MultiDict
 from app.forms.steps.lotse.steuerminderungen import StepHaushaltsnaheHandwerker, StepGemeinsamerHaushalt, \
     StepSelectStmind, ShowHandwerkerPrecondition, NotShowPersonBPrecondition, HandwerkerHaushaltsnaheSetPrecondition, \
     StepVorsorge, StepAussergBela, StepReligion, StepSpenden, ShowReligionPrecondition, ShowSpendenPrecondition, \
-    ShowVorsorgePrecondition, ShowAussergBelaPrecondition
+    ShowVorsorgePrecondition, ShowAussergBelaPrecondition, StepHasDisability
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 
 

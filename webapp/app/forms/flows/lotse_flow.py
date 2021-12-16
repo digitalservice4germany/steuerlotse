@@ -21,7 +21,7 @@ from wtforms.fields import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind, StepHasDisability
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
@@ -139,6 +139,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepTelephoneNumber,
                 StepIban,
 
+                StepHasDisability,
                 StepSelectStmind,
                 StepVorsorge,
                 StepAussergBela,

@@ -50,7 +50,7 @@ const translations = {
       },
       finish: "Steuererklärung abgeben",
     },
-    disabilityQuestion: {
+    HasDisability: {
       title:
         "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen?",
       intro:

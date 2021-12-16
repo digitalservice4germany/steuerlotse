@@ -7,7 +7,7 @@ from pydantic import BaseModel, validator, ValidationError, root_validator
 from wtforms import validators, BooleanField
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField
+from app.forms.fields import EuroField, EntriesField, SteuerlotseIntegerField, SteuerlotseStringField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
 from flask_babel import lazy_gettext as _l, _
@@ -15,7 +15,7 @@ from flask_babel import lazy_gettext as _l, _
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
-from app.model.components import SelectStMindProps
+from app.model.components import SelectStMindProps, HasDisabilityProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import FamilienstandModel, JointTaxesModel
 
@@ -464,3 +464,34 @@ class StepSpenden(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
+class StepHasDisability(LotseFormSteuerlotseStep):
+    name = 'has_disability'
+    # TODO: Sanny
+    label = _l('form.lotse.has_disability.label')
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
+
+    class InputForm(SteuerlotseBaseForm):
+        has_disability = SteuerlotseStringField(
+            render_kw={'data_label': _l('form.lotse.has-disability.data_label}')})
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
+    def render(self):
+        props_dict = HasDisabilityProps(
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url,
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='HasDisabilityPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))

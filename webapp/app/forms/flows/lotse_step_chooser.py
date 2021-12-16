@@ -6,7 +6,7 @@ from flask_babel import _
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
-    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
+    StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind, StepHasDisability
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber
 
 _LOTSE_DATA_KEY = 'form_data'
@@ -56,6 +56,8 @@ class LotseStepChooser(StepChooser):
         # 'is_user_account_holder': 'yes', use for single user
         'account_holder': 'person_a',
         'iban': 'DE35133713370000012345',
+        
+        'has_disability': 'no',
 
         'stmind_select_vorsorge': True,
         'stmind_select_ausserg_bela': True,
@@ -104,6 +106,7 @@ class LotseStepChooser(StepChooser):
                 StepPersonA,
                 StepPersonB,
                 StepTelephoneNumber,
+                StepHasDisability,
                 StepSelectStmind,
                 StepVorsorge,
                 StepAussergBela,

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-14 14:46+0100\n"
+"POT-Creation-Date: 2021-12-16 09:43+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -278,20 +278,20 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:101
+#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:103
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:185
+#: app/forms/flows/lotse_flow.py:186
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:307
+#: app/forms/flows/lotse_flow.py:308
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:359
+#: app/forms/flows/lotse_flow.py:360
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -1591,6 +1591,7 @@ msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
 
 #: app/forms/steps/lotse/personal_data.py:441
+#: app/forms/steps/lotse/steuerminderungen.py:498
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
@@ -1635,6 +1636,7 @@ msgstr "Ihre Ausgaben"
 #: app/forms/steps/lotse/steuerminderungen.py:370
 #: app/forms/steps/lotse/steuerminderungen.py:417
 #: app/forms/steps/lotse/steuerminderungen.py:450
+#: app/forms/steps/lotse/steuerminderungen.py:473
 msgid "form.lotse.section_steuerminderung.label"
 msgstr "Steuermindernde Aufwendungen"
 
@@ -2251,6 +2253,16 @@ msgstr ""
 msgid "form.lotse.spenden-inland-parteien.data_label}"
 msgstr "an inländische politische Parteien"
 
+#: app/forms/steps/lotse/steuerminderungen.py:472
+#, fuzzy
+msgid "form.lotse.has_disability.label"
+msgstr "Frage Behinderung"
+
+#: app/forms/steps/lotse/steuerminderungen.py:477
+#, fuzzy
+msgid "form.lotse.has-disability.data_label}"
+msgstr "Frage Behinderung"
+
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:20
 msgid "form.lotse.confirm_data_privacy.required"
 msgstr ""
@@ -2774,7 +2786,7 @@ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/model/form_data.py:365
+#: app/model/form_data.py:369
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2784,11 +2796,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:370
+#: app/model/form_data.py:374
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:376
+#: app/model/form_data.py:380
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
