@@ -19,6 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
+    # TODO: This uses the outdated MultiStepFlow. We do not need a multi step procedure for unlock code request.
+    #  If you adapt the unlock code request, please consider if you can get rid of the MultiStepFlow.
 
     _DEBUG_DATA = (
         UnlockCodeRequestInputStep,

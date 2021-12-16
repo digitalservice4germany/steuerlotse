@@ -53,6 +53,9 @@ FlowNavItem = namedtuple(
 
 
 class MultiStepFlow:
+    # TODO: The MultiStepFlow is outdated and will only be used for unlock code request/activation/revocation and logout
+    #  We do want to change that. If you adapt any of the mentioned flows, consider if you can remove the MultiStepFlow.
+
     """A MultiStepFlow represents a form with individual screens. The current
     context is maintained through a `session` URL parameter that is passed along.
     This allows it to gracefully handle forced refreshs and back/forward navigation
