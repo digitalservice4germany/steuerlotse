@@ -50,6 +50,12 @@ const translations = {
       },
       finish: "Steuererklärung abgeben",
     },
+    disabilityQuestion: {
+      details: {
+        title: "Infos zu den steuerlichen Vergünstigungen",
+        text: "Bei einer Behinderung besteht in der Regel Anspruch auf den <bold>Pauschbetrag für Menschen mit Behinderung.</bold> Die Höhe des Pauschbetrags ist vom Grad der Behinderung abhängig. Menschen mit Behinderung können unter bestimmten Voraussetzungen außerdem eine <bold>Pauschale für Fahrtkosten</bold> beantragen. Wählen Sie hier aus, ob Sie Angaben zu einer Behinderung machen möchten.",
+      },
+    },
   },
   unlockCodeActivation: {
     unlockCode: {
@@ -157,6 +163,10 @@ const translations = {
       exampleInput: {
         text: "z.B. 29.2.1951",
       },
+    },
+    switch: {
+      Yes: "Ja",
+      No: "Nein",
     },
   },
   stmindSelection: {
