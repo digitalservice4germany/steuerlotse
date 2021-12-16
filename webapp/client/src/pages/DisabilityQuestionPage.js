@@ -8,7 +8,6 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import Details from "../components/Details";
 
 export default function DisabilityQuestionPage({
-  stepHeader,
   form,
   fields,
   prevUrl,
@@ -19,7 +18,10 @@ export default function DisabilityQuestionPage({
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <FormHeader {...stepHeader} />
+      <FormHeader
+        title={t("lotse.disabilityQuestion.title")}
+        intro={t("lotse.disabilityQuestion.intro")}
+      />
       <StepForm {...form}>
         <Details
           title={t("lotse.disabilityQuestion.details.title")}
@@ -52,10 +54,6 @@ export default function DisabilityQuestionPage({
 }
 
 DisabilityQuestionPage.propTypes = {
-  stepHeader: PropTypes.exact({
-    title: PropTypes.string,
-    intro: PropTypes.string,
-  }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
     csrfToken: PropTypes.string,

@@ -51,6 +51,10 @@ const translations = {
       finish: "Steuererklärung abgeben",
     },
     disabilityQuestion: {
+      title:
+        "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen?",
+      intro:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
       details: {
         title: "Infos zu den steuerlichen Vergünstigungen",
         text: "Bei einer Behinderung besteht in der Regel Anspruch auf den <bold>Pauschbetrag für Menschen mit Behinderung.</bold> Die Höhe des Pauschbetrags ist vom Grad der Behinderung abhängig. Menschen mit Behinderung können unter bestimmten Voraussetzungen außerdem eine <bold>Pauschale für Fahrtkosten</bold> beantragen. Wählen Sie hier aus, ob Sie Angaben zu einer Behinderung machen möchten.",

@@ -8,10 +8,6 @@ describe("DisabilityQuestionPage", () => {
 
   beforeEach(() => {
     props = {
-      stepHeader: {
-        title: "stepHeader.title",
-        intro: "stepHeader.intro",
-      },
       form: {
         ...StepFormDefault.args,
       },
@@ -23,21 +19,14 @@ describe("DisabilityQuestionPage", () => {
     };
   });
 
-  it("should render step header texts", () => {
-    render(<DisabilityQuestionPage {...props} />);
-
-    expect(screen.queryByText("stepHeader.title")).toBeInTheDocument();
-    expect(screen.queryByText("stepHeader.intro")).toBeInTheDocument();
-  });
-
-  it("should render step yes value", () => {
+  it("should render selected value yes", () => {
     render(<DisabilityQuestionPage {...props} />);
 
     expect(screen.queryAllByRole("radio")[0].checked).toBe(true);
     expect(screen.queryAllByRole("radio")[1].checked).toBe(false);
   });
 
-  it("should render step no value", () => {
+  it("should render selected value no", () => {
     props.fields.disabilityExists = "No";
 
     render(<DisabilityQuestionPage {...props} />);
@@ -46,14 +35,14 @@ describe("DisabilityQuestionPage", () => {
     expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
   });
 
-  it("should render yes no input", () => {
+  it("should render yes and no input", () => {
     render(<DisabilityQuestionPage {...props} />);
 
     expect(screen.getByText("Ja")).toBeInTheDocument();
     expect(screen.getByText("Nein")).toBeInTheDocument();
   });
 
-  it("should render yes no input", () => {
+  it("should render prev url link", () => {
     render(<DisabilityQuestionPage {...props} />);
 
     expect(screen.queryAllByRole("link")[0]).toBeInTheDocument();

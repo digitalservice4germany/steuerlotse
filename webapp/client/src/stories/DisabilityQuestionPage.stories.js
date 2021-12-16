@@ -14,12 +14,6 @@ function Template(args) {
 
 export const Default = Template.bind({});
 Default.args = {
-  stepHeader: {
-    title:
-      "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen?",
-    intro:
-      "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
-  },
   form: {
     ...StepFormDefault.args,
   },
