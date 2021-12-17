@@ -19,8 +19,6 @@ export const WithErrors = Template.bind({});
 Default.args = {
   stepHeader: {
     title: "Pauschbetrag für Menschen mit Behinderung",
-    intro:
-      "Auf Basis Ihrer Angaben haben Sie Anspruch auf den Pauschbetrag für Menschen mit Behinderung.  Alternativ können die tatsächlichen Kosten, die in Zusammenhang mit Ihrer Behinderung entstanden sind, einzeln angegeben werden. Wählen Sie aus, ob Sie den Pauschbetrag in Anspruch nehmen möchten.",
   },
   form: {
     ...StepFormDefault.args,

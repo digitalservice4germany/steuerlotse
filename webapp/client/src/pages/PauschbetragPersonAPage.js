@@ -24,7 +24,18 @@ export default function PauschbetragPagePersonA({
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <FormHeader {...stepHeader} />
+      <FormHeader
+        title={stepHeader.title}
+        intro={
+          <Trans
+            t={t}
+            i18nKey="lotse.pauschbetragPersonA.intro"
+            components={{
+              bold: <b />,
+            }}
+          />
+        }
+      />
       <DetailsDiv>
         <Details
           title={t("lotse.pauschbetragPersonA.details.title")}
