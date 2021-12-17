@@ -23,9 +23,9 @@ _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _REQUEST_TIMEOUT = 20
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
-              'person_a_blind', 'person_a_gehbeh',
-              'person_b_same_address', 'person_b_blind', 'person_b_gehbeh',
-              'request_new_tax_number']
+              'person_b_same_address', 'request_new_tax_number', 'person_b_disability_degree',
+              'person_a_has_merkzeichen_bl', 'person_b_has_merkzeichen_bl', 'person_b_has_merkzeichen_g',
+              'person_b_has_merkzeichen_g']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -230,12 +230,33 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
         # no user should come until that point without an unlock code, but they should certainly not be able to send a tax declaration
         logger.warning('Elster_Client: User without unlock code tried to send tax declaration.')
         raise TaxDeclarationNotDigitallySigned
+
+    adapted_form_data = _set_names_for_merkzeichen(adapted_form_data)
     
     meta_data = {
         'year': year,
     }
 
     return {'est_data': adapted_form_data, 'meta_data': meta_data}
+
+
+def _set_names_for_merkzeichen(adapted_form_data):
+
+    if person_a_disability_degree := adapted_form_data.pop('person_a_beh_grad', None):
+        adapted_form_data['person_a_disability_degree'] = person_a_disability_degree
+
+    if person_b_disability_degree := adapted_form_data.pop('person_b_beh_grad', None):
+        adapted_form_data['person_b_disability_degree'] = person_b_disability_degree
+
+    adapted_form_data['person_a_has_merkzeichen_bl'] = adapted_form_data.pop('person_a_blind', None)
+
+    adapted_form_data['person_b_has_merkzeichen_bl'] = adapted_form_data.pop('person_b_blind', None)
+
+    adapted_form_data['person_a_has_merkzeichen_g'] = adapted_form_data.pop('person_a_gehbeh', None)
+
+    adapted_form_data['person_b_has_merkzeichen_g'] = adapted_form_data.pop('person_b_gehbeh', None)
+
+    return adapted_form_data
 
 
 def check_pyeric_response_for_errors(pyeric_response):

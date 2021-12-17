@@ -28,8 +28,6 @@ def standard_est_data():
             'person_a_plz': 20354,
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
-            'person_a_blind': False,
-            'person_a_gehbeh': False,
             'telephone_number': '01715151',
 
             'person_b_idnr': '02293417683',
@@ -38,8 +36,6 @@ def standard_est_data():
             'person_b_last_name': 'Mustername',
             'person_b_same_address': True,
             'person_b_religion': 'rk',
-            'person_b_blind': False,
-            'person_b_gehbeh': False,
 
             'iban': 'DE35133713370000012345',
             'account_holder': 'person_a',
@@ -219,6 +215,240 @@ class TestFormDataEstFamilienstand:
             FormDataEst.parse_obj(standard_est_data)
         except ValidationError as e:
             pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+
+
+class TestFormDataPersonAMerkzeichen:
+
+    def test_if_person_a_has_merkzeichen_bl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_bl'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_merkzeichen_tbl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_tbl'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_merkzeichen_h_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_h'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_merkzeichen_ag_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_ag'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_pflegegrad_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_pflegegrad'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_merkzeichen_bl_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_bl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_bl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_tbl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_tbl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_merkzeichen_h_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_h'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_h'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_pflegegrad_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_pflegegrad'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_pflegegrad'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_merkzeichen_g_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_g'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is True
+
+    def test_if_person_a_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_g'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is None
+
+    def test_if_person_a_has_merkzeichen_ag_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_ag'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is True
+
+    def test_if_person_a_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_ag'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is None
+
+
+class TestFormDataPersonBMerkzeichen:
+
+    def test_if_person_b_has_merkzeichen_bl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_bl'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_merkzeichen_tbl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_tbl'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_merkzeichen_h_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_h'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_merkzeichen_ag_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_ag'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_pflegegrad_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_pflegegrad'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_merkzeichen_bl_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_bl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_bl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_tbl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_tbl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_has_merkzeichen_h_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_h'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_h'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_has_pflegegrad_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_pflegegrad'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_pflegegrad'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_has_merkzeichen_g_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_g'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is True
+
+    def test_if_person_b_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_g'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is None
+
+    def test_if_person_b_has_merkzeichen_ag_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_ag'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is True
+
+    def test_if_person_b_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_ag'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
 
 class TestMetaDataYear:
