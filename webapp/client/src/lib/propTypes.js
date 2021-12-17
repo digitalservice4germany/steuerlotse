@@ -13,7 +13,7 @@ export const fieldPropType = PropTypes.exact({
 export const optionsPropType = PropTypes.arrayOf(
   PropTypes.exact({
     value: PropTypes.string,
-    displayName: PropTypes.string,
+    displayName: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   })
 );
 

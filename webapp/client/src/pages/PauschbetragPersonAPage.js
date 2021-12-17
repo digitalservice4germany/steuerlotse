@@ -13,6 +13,22 @@ const DetailsDiv = styled.div`
   margin-bottom: var(--spacing-04);
 `;
 
+function boldifyChoices(oldChoices) {
+  const boldChoices = oldChoices.map((choice) => ({
+    value: choice.value,
+    displayName: (
+      <Trans
+        components={{
+          bold: <b />,
+        }}
+      >
+        {choice.displayName}
+      </Trans>
+    ),
+  }));
+  return boldChoices;
+}
+
 export default function PauschbetragPagePersonA({
   stepHeader,
   form,
@@ -20,6 +36,7 @@ export default function PauschbetragPagePersonA({
   prevUrl,
 }) {
   const { t } = useTranslation();
+  const boldChoices = boldifyChoices(fields.personAWantsPauschbetrag.options);
 
   return (
     <>
@@ -69,8 +86,7 @@ export default function PauschbetragPagePersonA({
           fieldName="person_a_wants_pauschbetrag"
           fieldId="person_a_wants_pauschbetrag"
           label={{ text: "" }}
-          // TODO set text here, not in server
-          options={fields.personAWantsPauschbetrag.options}
+          options={boldChoices}
           value={fields.personAWantsPauschbetrag.selectedValue}
           errors={fields.personAWantsPauschbetrag.errors}
         />

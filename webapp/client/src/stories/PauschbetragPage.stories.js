@@ -29,7 +29,8 @@ Default.args = {
       options: [
         {
           value: "yes",
-          displayName: "Pauschbetrag in Höhe von <b>860</b> Euro beantragen",
+          displayName:
+            "Pauschbetrag in Höhe von <bold>860</bold> Euro beantragen",
         },
         {
           value: "no",

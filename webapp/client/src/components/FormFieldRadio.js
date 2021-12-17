@@ -16,6 +16,7 @@ const Radio = styled.div`
     padding-left: 0;
     padding-top: 0;
     font-size: var(--text-medium);
+    white-space: pre;
   }
 
   input[type="radio"] + label::before {
