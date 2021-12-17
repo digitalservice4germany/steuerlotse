@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { IMaskInput } from "react-imask";
 import classNames from "classnames";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
@@ -25,7 +26,9 @@ function FormFieldTextInput({
       }}
       labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
-        <input
+        <IMaskInput
+          mask={Number}
+          scale={0}
           type="text"
           id={fieldId}
           name={fieldName}
