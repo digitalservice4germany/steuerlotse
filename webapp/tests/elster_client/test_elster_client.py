@@ -596,7 +596,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
                 self.assertIn(key, result['est_data'])
 
     def test_yes_str_for_bool_keys_result_in_true(self):
-        bool_strs = {}
+        bool_strs = {'person_a_blind': 'yes', 'person_b_blind': 'yes', 'person_a_gehbeh': 'yes', 'person_b_gehbeh': 'yes'}
         for key in _BOOL_KEYS:
             bool_strs[key] = 'yes'
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
@@ -714,7 +714,8 @@ class TestGenerateEStRequestData(unittest.TestCase):
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(unknown_keys)
 
-        self.assertEqual(unknown_keys, result['est_data'])
+        for unknown_key in unknown_keys:
+            assert result['est_data'][unknown_key] == unknown_keys[unknown_key]
 
     def test_set_year_results_in_correct_year_in_result(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):

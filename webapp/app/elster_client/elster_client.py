@@ -23,9 +23,8 @@ _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _REQUEST_TIMEOUT = 20
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
-              'person_b_same_address', 'request_new_tax_number', 'person_b_disability_degree',
-              'person_a_has_merkzeichen_bl', 'person_b_has_merkzeichen_bl', 'person_b_has_merkzeichen_g',
-              'person_b_has_merkzeichen_g']
+              'person_b_same_address', 'request_new_tax_number', 'person_a_has_merkzeichen_bl',
+              'person_b_has_merkzeichen_bl', 'person_a_has_merkzeichen_g', 'person_b_has_merkzeichen_g']
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -199,6 +198,8 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
     if adapted_form_data.pop('is_user_account_holder', None):
         adapted_form_data['account_holder'] = 'person_a'
 
+    adapted_form_data = _set_names_for_merkzeichen(adapted_form_data)
+
     for key in list(set(_BOOL_KEYS) & set(adapted_form_data.keys())):
         if isinstance(adapted_form_data[key], str):
             adapted_form_data[key] = adapted_form_data[key] == 'yes'
@@ -231,8 +232,6 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
         logger.warning('Elster_Client: User without unlock code tried to send tax declaration.')
         raise TaxDeclarationNotDigitallySigned
 
-    adapted_form_data = _set_names_for_merkzeichen(adapted_form_data)
-    
     meta_data = {
         'year': year,
     }
