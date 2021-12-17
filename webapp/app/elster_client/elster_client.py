@@ -240,6 +240,7 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
 
 
 def _set_names_for_merkzeichen(adapted_form_data):
+    # TODO Remove this once we have transformed all the merkzeichen
 
     if person_a_disability_degree := adapted_form_data.pop('person_a_beh_grad', None):
         adapted_form_data['person_a_disability_degree'] = person_a_disability_degree
