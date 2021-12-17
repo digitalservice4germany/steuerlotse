@@ -10,13 +10,15 @@ export const fieldPropType = PropTypes.exact({
   errors: PropTypes.arrayOf(PropTypes.string),
 });
 
+export const optionsPropType = PropTypes.arrayOf(
+  PropTypes.exact({
+    value: PropTypes.string,
+    displayName: PropTypes.string,
+  })
+);
+
 export const selectionFieldPropType = PropTypes.exact({
   selectedValue: PropTypes.any,
-  options: PropTypes.arrayOf(
-    PropTypes.exact({
-      value: PropTypes.string,
-      displayName: PropTypes.string,
-    })
-  ),
+  options: optionsPropType,
   errors: PropTypes.arrayOf(PropTypes.string),
 });

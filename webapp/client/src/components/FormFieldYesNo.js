@@ -103,8 +103,8 @@ function FormFieldYesNo({
       hideLabel
       render={() => (
         <YesNo>
-          <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
           <fieldset id={fieldId} name={fieldId}>
+            <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
             <label htmlFor={yesFieldId} className={switchYesClassNames}>
               <input
                 type="radio"
