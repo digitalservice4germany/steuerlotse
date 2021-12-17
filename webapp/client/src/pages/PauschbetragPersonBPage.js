@@ -29,14 +29,14 @@ function boldifyChoices(oldChoices) {
   return boldChoices;
 }
 
-export default function PauschbetragPagePersonA({
+export default function PauschbetragPagePersonB({
   stepHeader,
   form,
   fields,
   prevUrl,
 }) {
   const { t } = useTranslation();
-  const boldChoices = boldifyChoices(fields.personAWantsPauschbetrag.options);
+  const boldChoices = boldifyChoices(fields.personBWantsPauschbetrag.options);
 
   return (
     <>
@@ -87,15 +87,15 @@ export default function PauschbetragPagePersonA({
           fieldId="person_a_wants_pauschbetrag"
           label={{ text: "" }}
           options={boldChoices}
-          value={fields.personAWantsPauschbetrag.selectedValue}
-          errors={fields.personAWantsPauschbetrag.errors}
+          value={fields.personBWantsPauschbetrag.selectedValue}
+          errors={fields.personBWantsPauschbetrag.errors}
         />
       </StepForm>
     </>
   );
 }
 
-PauschbetragPagePersonA.propTypes = {
+PauschbetragPagePersonB.propTypes = {
   stepHeader: PropTypes.exact({
     title: PropTypes.string,
     intro: PropTypes.string,
@@ -107,7 +107,7 @@ PauschbetragPagePersonA.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    personAWantsPauschbetrag: selectionFieldPropType,
+    personBWantsPauschbetrag: selectionFieldPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
 };
