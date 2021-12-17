@@ -26,11 +26,12 @@ function FormFieldTextInput({
       labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
         <input
-          type="number"
+          type="text"
           id={fieldId}
           name={fieldName}
           defaultValue={value}
           inputMode="numeric"
+          pattern="[0-9]*"
           maxLength={maxLength}
           // TODO: autofocus is under review.
           // eslint-disable-next-line
