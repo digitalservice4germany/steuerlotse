@@ -6,28 +6,12 @@ import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { selectionFieldPropType } from "../lib/propTypes";
-import FormFieldRadio from "../components/FormFieldRadio";
+import FormFieldRadio, { boldifyChoices } from "../components/FormFieldRadio";
 import Details from "../components/Details";
 
 const DetailsDiv = styled.div`
   margin-bottom: var(--spacing-04);
 `;
-
-function boldifyChoices(oldChoices) {
-  const boldChoices = oldChoices.map((choice) => ({
-    value: choice.value,
-    displayName: (
-      <Trans
-        components={{
-          bold: <b />,
-        }}
-      >
-        {choice.displayName}
-      </Trans>
-    ),
-  }));
-  return boldChoices;
-}
 
 export default function PauschbetragPagePersonA({
   stepHeader,

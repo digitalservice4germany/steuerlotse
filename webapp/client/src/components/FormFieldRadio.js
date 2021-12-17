@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { Trans } from "react-i18next";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
 import { optionsPropType } from "../lib/propTypes";
@@ -131,3 +132,19 @@ FormFieldRadio.defaultProps = {
 };
 
 export default FormFieldRadio;
+
+export function boldifyChoices(oldChoices) {
+  const boldChoices = oldChoices.map((choice) => ({
+    value: choice.value,
+    displayName: (
+      <Trans
+        components={{
+          bold: <b />,
+        }}
+      >
+        {choice.displayName}
+      </Trans>
+    ),
+  }));
+  return boldChoices;
+}
