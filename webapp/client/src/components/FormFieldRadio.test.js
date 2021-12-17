@@ -95,4 +95,19 @@ describe("FormFieldRadio", () => {
     );
     expect(screen.getByRole("radio", { name: "Earth" }).checked).toBe(true);
   });
+
+  it("When pressing tab and arrow right two times and arrow left it should check second radio button", () => {
+    userEvent.tab();
+    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
+    userEvent.type(
+      screen.getByRole("radio", { name: "Terra" }),
+      "{arrowright}"
+    );
+    userEvent.type(
+      screen.getByRole("radio", { name: "Earth" }),
+      "{arrowright}"
+    );
+    userEvent.type(screen.getByRole("radio", { name: "Terra" }), "{arrowleft}");
+    expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
+  });
 });
