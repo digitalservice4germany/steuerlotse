@@ -43,3 +43,47 @@ Default.args = {
   },
   prevUrl: "/previous/step",
 };
+
+WithValue.args = {
+  ...Default.args,
+  fields: {
+    personBWantsPauschbetrag: {
+      selectedValue: "yes",
+      options: [
+        {
+          value: "yes",
+          displayName:
+            "Pauschbetrag in Höhe von <bold>860</bold> Euro beantragen",
+        },
+        {
+          value: "no",
+          displayName:
+            "Kosten einzeln angeben und Pauschbetrag nicht beantragen",
+        },
+      ],
+      errors: [],
+    },
+  },
+};
+
+WithErrors.args = {
+  ...Default.args,
+  fields: {
+    personBWantsPauschbetrag: {
+      selectedValue: undefined,
+      options: [
+        {
+          value: "yes",
+          displayName:
+            "Pauschbetrag in Höhe von <bold>860</bold> Euro beantragen",
+        },
+        {
+          value: "no",
+          displayName:
+            "Kosten einzeln angeben und Pauschbetrag nicht beantragen",
+        },
+      ],
+      errors: ["Bitte füllen Sie dieses Feld aus um weiterzumachen."],
+    },
+  },
+};
