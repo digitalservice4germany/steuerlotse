@@ -112,14 +112,14 @@ class FormDataEst(BaseModel):
         return values
 
     @root_validator(pre=True)
-    def set_person_a_merkzeichen_bl_tbl_h_pflegegrad_set(cls, values):
+    def set_person_a_merkzeichen_bl_tbl_h_pflegegrad(cls, values):
         merkzeichen_values = [
            values.get('person_a_has_pflegegrad'),
            values.get('person_a_has_merkzeichen_bl'),
            values.get('person_a_has_merkzeichen_tbl'),
            values.get('person_a_has_merkzeichen_h')
         ]
-        if any([merkzeichen_value is True for merkzeichen_value in merkzeichen_values]):
+        if any(merkzeichen_values):
             values['person_a_has_merkzeichen_bl_tbl_h_pflegegrad'] = True
         return values
 
@@ -129,19 +129,19 @@ class FormDataEst(BaseModel):
            values.get('person_a_has_merkzeichen_g'),
            values.get('person_a_has_merkzeichen_ag')
         ]
-        if any([merkzeichen_value is True for merkzeichen_value in merkzeichen_values]):
+        if any(merkzeichen_values):
             values['person_a_has_merkzeichen_g_ag'] = True
         return values
 
     @root_validator(pre=True)
-    def set_person_b_merkzeichen_bl_tbl_h_pflegegrad_set(cls, values):
+    def set_person_b_merkzeichen_bl_tbl_h_pflegegrad(cls, values):
         merkzeichen_values = [
            values.get('person_b_has_pflegegrad'),
            values.get('person_b_has_merkzeichen_bl'),
            values.get('person_b_has_merkzeichen_tbl'),
            values.get('person_b_has_merkzeichen_h')
         ]
-        if any([merkzeichen_value is True for merkzeichen_value in merkzeichen_values]):
+        if any(merkzeichen_values):
             values['person_b_has_merkzeichen_bl_tbl_h_pflegegrad'] = True
         return values
 
@@ -151,7 +151,7 @@ class FormDataEst(BaseModel):
            values.get('person_b_has_merkzeichen_g'),
            values.get('person_b_has_merkzeichen_ag')
         ]
-        if any([merkzeichen_value is True for merkzeichen_value in merkzeichen_values]):
+        if any(merkzeichen_values):
             values['person_b_has_merkzeichen_g_ag'] = True
         return values
 
