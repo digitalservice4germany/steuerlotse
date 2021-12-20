@@ -51,7 +51,7 @@ const Radio = styled.div`
   }
 `;
 
-function FormFieldRadioGroupGroup({
+function FormFieldRadioGroup({
   fieldName,
   fieldId,
   radioButtons,
@@ -118,7 +118,7 @@ function FormFieldRadioGroupGroup({
   );
 }
 
-FormFieldRadioGroupGroup.propTypes = {
+FormFieldRadioGroup.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   radioButtons: optionsPropType.isRequired,
@@ -131,7 +131,7 @@ FormFieldRadioGroupGroup.propTypes = {
   onChangeHandler: PropTypes.func,
 };
 
-FormFieldRadioGroupGroup.defaultProps = {
+FormFieldRadioGroup.defaultProps = {
   value: undefined,
   required: false,
   autofocus: false,
@@ -139,4 +139,4 @@ FormFieldRadioGroupGroup.defaultProps = {
   onChangeHandler: undefined,
 };
 
-export default FormFieldRadioGroupGroup;
+export default FormFieldRadioGroup;
