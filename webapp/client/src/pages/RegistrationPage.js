@@ -149,7 +149,7 @@ export default function RegistrationPage({
           title={t("unlockCodeRequest.eData.helpTitle")}
           detailsId="registration_confirm_e_data"
         >
-          <p key={0}>
+          <p>
             <Trans
               t={t}
               i18nKey="unlockCodeRequest.eData.helpText"
