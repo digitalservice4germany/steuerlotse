@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { within } from "@testing-library/dom";
 import FormFieldRadioGroup from "./FormFieldRadioGroup";
 
 describe("FormFieldRadioGroup", () => {
@@ -106,5 +107,37 @@ describe("FormFieldRadioGroup", () => {
     );
     userEvent.type(screen.getByRole("radio", { name: "Terra" }), "{arrowleft}");
     expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
+  });
+});
+
+describe("FormFieldRadioGroup with errors", () => {
+  let props;
+  const onChangeHandler = jest.fn();
+
+  beforeEach(() => {
+    props = {
+      fieldName: "fooName",
+      fieldId: "fooId",
+      label: {
+        text: "foo",
+      },
+      errors: ["Error!"],
+      radioButtons: [
+        { value: "A", displayName: "Vulcan" },
+        { value: "B", displayName: "Terra" },
+        { value: "C", displayName: "Earth" },
+      ],
+      onChangeHandler: onChangeHandler,
+    };
+    render(<FormFieldRadioGroup {...props} />);
+  });
+
+  it("Should show error inside of fieldset", () => {
+    const fieldset = screen.getByRole("group");
+    expect(within(fieldset).getByText("Error!")).toBeTruthy();
+  });
+
+  it("Should have autofocus on first radio button", () => {
+    expect(screen.getByRole("radio", { name: "Vulcan" })).toHaveFocus();
   });
 });

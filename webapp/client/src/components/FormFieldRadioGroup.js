@@ -64,7 +64,7 @@ function FormFieldRadioGroupGroup({
   onChangeHandler,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
-  const groupShouldHaveAutofocus = autofocus || errors;
+  const groupShouldHaveAutofocus = autofocus || (errors && errors.length !== 0);
 
   const toggleRadioButton = (event) => {
     setSelectedValue(event.target.value);
