@@ -18,6 +18,7 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
+export const WithError = Template.bind({});
 export const WithAutofocus = Template.bind({});
 export const WithPreselectedValue = Template.bind({});
 export const WithDetails = Template.bind({});
@@ -37,6 +38,11 @@ Default.args = {
     text: "Zahlen oder beziehen Sie Unterhalt?",
   },
   errors: [],
+};
+
+WithError.args = {
+  ...Default.args,
+  errors: ["Bitte wählen Sie eine Option aus um fortfahren zu können."],
 };
 
 WithAutofocus.args = {

@@ -25,38 +25,28 @@ describe("FormFieldRadio", () => {
     render(<FormFieldRadio {...props} />);
   });
 
-  describe("When label is clicked", () => {
-    beforeEach(() => {
-      userEvent.click(screen.getByText("Vulcan"));
-    });
+  it("When label is clicked, correct input is selected ", () => {
+    userEvent.click(screen.getByText("Vulcan"));
 
-    it("Correct input is selected ", () => {
-      expect(screen.getByLabelText("Vulcan").checked).toEqual(true);
-    });
-
-    it("Other inputs are not selected ", () => {
-      expect(screen.getByLabelText("Terra").checked).toEqual(false);
-      expect(screen.getByLabelText("Earth").checked).toEqual(false);
-    });
+    expect(screen.getByLabelText("Vulcan").checked).toEqual(true);
+    expect(screen.getByLabelText("Terra").checked).toEqual(false);
+    expect(screen.getByLabelText("Earth").checked).toEqual(false);
   });
 
-  describe("When second option has been selected", () => {
-    beforeEach(() => {
-      userEvent.click(screen.getByLabelText("Terra"));
-    });
+  it("When second option has been selected, only second option should be selected", () => {
+    userEvent.click(screen.getByLabelText("Terra"));
 
-    it("Only second option should be selected", () => {
-      expect(screen.getByRole("radio", { name: "Vulcan" }).checked).toBe(false);
-      expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
-      expect(screen.getByRole("radio", { name: "Earth" }).checked).toBe(false);
-    });
+    expect(screen.getByRole("radio", { name: "Vulcan" }).checked).toBe(false);
+    expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
+    expect(screen.getByRole("radio", { name: "Earth" }).checked).toBe(false);
+  });
 
-    it("Should call the change handler with B", () => {
-      expect(onChangeHandler).toHaveBeenCalled();
+  it("When second option has been selected, should call the change handler with B", () => {
+    userEvent.click(screen.getByLabelText("Terra"));
 
-      const changeEvent = onChangeHandler.mock.calls[0][0];
-      expect(changeEvent.target.value).toEqual("B");
-    });
+    expect(onChangeHandler).toHaveBeenCalled();
+    const changeEvent = onChangeHandler.mock.calls[0][0];
+    expect(changeEvent.target.value).toEqual("B");
   });
 
   it("When pressing tab it should set focus on first radio button", () => {
@@ -104,5 +94,20 @@ describe("FormFieldRadio", () => {
       "{arrowright}"
     );
     expect(screen.getByRole("radio", { name: "Earth" }).checked).toBe(true);
+  });
+
+  it("When pressing tab and arrow right two times and arrow left it should check second radio button", () => {
+    userEvent.tab();
+    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
+    userEvent.type(
+      screen.getByRole("radio", { name: "Terra" }),
+      "{arrowright}"
+    );
+    userEvent.type(
+      screen.getByRole("radio", { name: "Earth" }),
+      "{arrowright}"
+    );
+    userEvent.type(screen.getByRole("radio", { name: "Terra" }), "{arrowleft}");
+    expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
   });
 });

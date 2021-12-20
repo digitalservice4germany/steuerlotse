@@ -9,7 +9,6 @@ describe("Steuernummer", () => {
 
     it("displays correct single text for tax number exists question", () => {
       cy.get("#steuernummer_exists")
-        .siblings()
         .find("legend")
         .contains(/^Haben Sie bereits eine Steuernummer/);
     });
@@ -75,7 +74,6 @@ describe("Steuernummer", () => {
 
     it("displays correct multiple text for tax number exists question", () => {
       cy.get("#steuernummer_exists")
-        .siblings()
         .find("legend")
         .contains(/^Haben Sie bereits eine gemeinsame Steuernummer/);
     });
