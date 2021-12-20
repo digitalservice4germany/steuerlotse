@@ -6,7 +6,7 @@ import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
 import FormFieldSeparatedField from "./FormFieldSeparatedField";
 
-function FormFieldTextInput({
+function FormFieldIntegerInput({
   fieldName,
   fieldId,
   value,
@@ -47,7 +47,7 @@ function FormFieldTextInput({
   );
 }
 
-FormFieldTextInput.propTypes = {
+FormFieldIntegerInput.propTypes = {
   fieldId: PropTypes.string.isRequired,
   fieldName: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -61,7 +61,7 @@ FormFieldTextInput.propTypes = {
   details: FieldLabel.propTypes.details,
 };
 
-FormFieldTextInput.defaultProps = {
+FormFieldIntegerInput.defaultProps = {
   autofocus: FormFieldSeparatedField.defaultProps.autofocus,
   required: FormFieldSeparatedField.defaultProps.required,
   setMask: false,
@@ -71,4 +71,4 @@ FormFieldTextInput.defaultProps = {
   details: FieldLabel.defaultProps.details,
 };
 
-export default FormFieldTextInput;
+export default FormFieldIntegerInput;
