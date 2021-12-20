@@ -15,7 +15,7 @@ describe("FormFieldRadioGroup", () => {
         text: "foo",
       },
       errors: [],
-      options: [
+      radioButtons: [
         { value: "A", displayName: "Vulcan" },
         { value: "B", displayName: "Terra" },
         { value: "C", displayName: "Earth" },

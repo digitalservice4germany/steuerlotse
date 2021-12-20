@@ -22,12 +22,12 @@ export const WithError = Template.bind({});
 export const WithAutofocus = Template.bind({});
 export const WithPreselectedValue = Template.bind({});
 export const WithDetails = Template.bind({});
-export const WithMoreOptions = Template.bind({});
+export const WithMoreRadioButtons = Template.bind({});
 
 Default.args = {
   fieldId: "radio",
   fieldName: "radio",
-  options: [
+  radioButtons: [
     { value: "yes", displayName: "Ja, ich zahle oder beziehe Unterhalt." },
     {
       value: "no",
@@ -63,9 +63,9 @@ WithDetails.args = {
   },
 };
 
-WithMoreOptions.args = {
+WithMoreRadioButtons.args = {
   ...Default.args,
-  options: [
+  radioButtons: [
     { value: "yes", displayName: "Ja, ich zahle oder beziehe Unterhalt." },
     {
       value: "no",
