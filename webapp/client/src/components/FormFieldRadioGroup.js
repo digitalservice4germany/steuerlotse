@@ -64,6 +64,7 @@ function FormFieldRadioGroupGroup({
   onChangeHandler,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
+  const groupShouldHaveAutofocus = autofocus || errors;
 
   const toggleRadioButton = (event) => {
     setSelectedValue(event.target.value);
@@ -89,7 +90,7 @@ function FormFieldRadioGroupGroup({
                   key={`${fieldId}-${option.value}`}
                   name={fieldId}
                   required={required}
-                  autoFocus={autofocus && i === 0}
+                  autoFocus={groupShouldHaveAutofocus && i === 0}
                   value={option.value}
                   defaultChecked={selectedValue === option.value}
                   onClick={toggleRadioButton}
