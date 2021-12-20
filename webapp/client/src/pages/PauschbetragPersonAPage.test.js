@@ -48,10 +48,6 @@ describe("With default props", () => {
     expect(screen.getByLabelText("Nein")).toBeInTheDocument();
   });
 
-  it("should show details", () => {
-    //expect(screen.getElementsByClassName('details-card').length).toBe(1);
-  });
-
   it("should link to the previous page", () => {
     expect(screen.getByText("Zurück").closest("a")).toHaveAttribute(
       "href",

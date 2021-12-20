@@ -25,8 +25,8 @@ describe("Details with content paragraphs and list items", () => {
     render(
       <Details title="title" detailsId="some-id">
         {[
-          <p>content paragraph</p>,
-          <ul>
+          <p key={0}>content paragraph</p>,
+          <ul key={1}>
             <li>list item</li>
           </ul>,
         ]}
