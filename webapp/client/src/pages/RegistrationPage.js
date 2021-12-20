@@ -149,15 +149,13 @@ export default function RegistrationPage({
           title={t("unlockCodeRequest.eData.helpTitle")}
           detailsId="registration_confirm_e_data"
         >
-          {{
-            paragraphs: [
-              <Trans
-                t={t}
-                i18nKey="unlockCodeRequest.eData.helpText"
-                components={{ bold: <strong /> }}
-              />,
-            ],
-          }}
+          <p key={0}>
+            <Trans
+              t={t}
+              i18nKey="unlockCodeRequest.eData.helpText"
+              components={{ bold: <strong /> }}
+            />
+          </p>
         </Details>
         <FormFieldConsentBox
           required

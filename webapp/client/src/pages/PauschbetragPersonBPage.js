@@ -42,8 +42,8 @@ export default function PauschbetragPagePersonB({
           title={t("lotse.pauschbetrag.details.title")}
           detailsId="pauschbetrag_person_a_details"
         >
-          {{
-            paragraphs: [
+          {[
+            <p key={0}>
               <Trans
                 t={t}
                 i18nKey="lotse.pauschbetrag.details.p1"
@@ -51,18 +51,20 @@ export default function PauschbetragPagePersonB({
                   list: <ul />,
                   listItem: <li />,
                 }}
-              />,
-              t("lotse.pauschbetrag.details.p2"),
+              />
+            </p>,
+            <p key={1}>{t("lotse.pauschbetrag.details.p2")}</p>,
+            <p key={2}>
               <Trans
                 t={t}
                 i18nKey="lotse.pauschbetrag.details.p3"
                 components={{
                   bold: <b />,
                 }}
-              />,
-              t("lotse.pauschbetrag.details.p4"),
-            ],
-          }}
+              />
+            </p>,
+            <p key={3}>{t("lotse.pauschbetrag.details.p4")}</p>,
+          ]}
         </Details>
       </DetailsDiv>
       <StepForm {...form}>

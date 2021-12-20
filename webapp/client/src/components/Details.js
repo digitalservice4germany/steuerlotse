@@ -146,24 +146,7 @@ function Details({ children, title, detailsId }) {
           >
             <div className="row details-row">
               <div className="block-quote-line" />
-              <div className="details-content">
-                {children.paragraphs.map((paragraph, index) => (
-                  // There is no natural key and the list is completely static, so using the index is fine.
-                  // eslint-disable-next-line
-                  <p key={index}>{paragraph}</p>
-                ))}
-                {children.listItems && (
-                  <ul>
-                    {children.listItems.map((listItem, index) => (
-                      // There is no natural key and the list is completely static, so using the index is fine.
-                      // eslint-disable-next-line
-                      <li key={index} className="mb-2">
-                        {listItem}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <div className="details-content">{children}</div>
             </div>
           </div>
         </Collapse>
@@ -173,10 +156,10 @@ function Details({ children, title, detailsId }) {
 }
 
 Details.propTypes = {
-  children: PropTypes.exact({
-    paragraphs: PropTypes.arrayOf(PropTypes.node),
-    listItems: PropTypes.arrayOf(PropTypes.node),
-  }).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   title: PropTypes.string.isRequired,
   detailsId: PropTypes.string.isRequired,
 };
