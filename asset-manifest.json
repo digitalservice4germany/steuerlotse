@@ -10,9 +10,9 @@
     "main.css.map": "./static/css/main.607261a2.chunk.css.map",
     "runtime~main.js": "./runtime~main.02284f4a.iframe.bundle.js",
     "vendors~main.css": "./static/css/vendors~main.ee3effd0.chunk.css",
-    "vendors~main.js": "./vendors~main.83e0f47a.iframe.bundle.js",
+    "vendors~main.js": "./vendors~main.3476b8ce.iframe.bundle.js",
     "vendors~main.css.map": "./static/css/vendors~main.ee3effd0.chunk.css.map",
-    "vendors~main.js.map": "./vendors~main.83e0f47a.iframe.bundle.js.map",
+    "vendors~main.js.map": "./vendors~main.3476b8ce.iframe.bundle.js.map",
     "7.55291208.iframe.bundle.js": "./7.55291208.iframe.bundle.js",
     "8.275a7306.iframe.bundle.js": "./8.275a7306.iframe.bundle.js",
     "8.275a7306.iframe.bundle.js.map": "./8.275a7306.iframe.bundle.js.map",
@@ -33,12 +33,12 @@
     "static/media/spenden_icon.77faf624.svg": "./static/media/spenden_icon.77faf624.svg",
     "static/media/vorsorge_icon.svg": "./static/media/vorsorge_icon.aa6043b0.svg",
     "static/media/warning.2d85ceba.svg": "./static/media/warning.2d85ceba.svg",
-    "vendors~main.83e0f47a.iframe.bundle.js.LICENSE.txt": "./vendors~main.83e0f47a.iframe.bundle.js.LICENSE.txt"
+    "vendors~main.3476b8ce.iframe.bundle.js.LICENSE.txt": "./vendors~main.3476b8ce.iframe.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
     "runtime~main.02284f4a.iframe.bundle.js",
     "static/css/vendors~main.ee3effd0.chunk.css",
-    "vendors~main.83e0f47a.iframe.bundle.js",
+    "vendors~main.3476b8ce.iframe.bundle.js",
     "static/css/main.607261a2.chunk.css",
     "main.fe4fb61a.iframe.bundle.js"
   ]
