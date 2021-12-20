@@ -13,7 +13,7 @@ const DetailsDiv = styled.div`
   margin-bottom: var(--spacing-04);
 `;
 
-export default function PauschbetragPagePersonB({
+export default function PauschbetragPersonBPage({
   stepHeader,
   form,
   fields,
@@ -77,7 +77,7 @@ export default function PauschbetragPagePersonB({
   );
 }
 
-PauschbetragPagePersonB.propTypes = {
+PauschbetragPersonBPage.propTypes = {
   stepHeader: PropTypes.exact({
     title: PropTypes.string,
     intro: PropTypes.string,

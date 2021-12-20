@@ -1,15 +1,15 @@
 import React from "react";
 
-import PauschbetragPagePersonB from "../pages/PauschbetragPersonBPage";
+import PauschbetragPersonBPage from "../pages/PauschbetragPersonBPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
   title: "Pages/PauschbetragPersonB",
-  component: PauschbetragPagePersonB,
+  component: PauschbetragPersonBPage,
 };
 
 function Template(args) {
-  return <PauschbetragPagePersonB {...args} />;
+  return <PauschbetragPersonBPage {...args} />;
 }
 
 export const Default = Template.bind({});
