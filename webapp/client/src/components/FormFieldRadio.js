@@ -134,7 +134,7 @@ FormFieldRadio.defaultProps = {
 export default FormFieldRadio;
 
 export function boldifyChoices(oldChoices) {
-  const boldChoices = oldChoices.map((choice) => ({
+  return oldChoices.map((choice) => ({
     value: choice.value,
     displayName: (
       <Trans
@@ -146,5 +146,4 @@ export function boldifyChoices(oldChoices) {
       </Trans>
     ),
   }));
-  return boldChoices;
 }
