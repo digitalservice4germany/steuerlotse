@@ -43,18 +43,14 @@ export default function PauschbetragPagePersonB({
           detailsId="pauschbetrag_person_a_details"
         >
           {[
-            <p key={0}>
-              <Trans
-                t={t}
-                i18nKey="lotse.pauschbetrag.details.p1"
-                components={{
-                  list: <ul />,
-                  listItem: <li />,
-                }}
-              />
-            </p>,
-            <p key={1}>{t("lotse.pauschbetrag.details.p2")}</p>,
-            <p key={2}>
+            <p key={0}>{t("lotse.pauschbetrag.details.p1")}</p>,
+            <ul key={1}>
+              <li key={0}>{t("lotse.pauschbetrag.details.list.listItem1")}</li>
+              <li key={1}>{t("lotse.pauschbetrag.details.list.listItem2")}</li>
+              <li key={2}>{t("lotse.pauschbetrag.details.list.listItem3")}</li>
+            </ul>,
+            <p key={2}>{t("lotse.pauschbetrag.details.p2")}</p>,
+            <p key={3}>
               <Trans
                 t={t}
                 i18nKey="lotse.pauschbetrag.details.p3"
@@ -63,7 +59,7 @@ export default function PauschbetragPagePersonB({
                 }}
               />
             </p>,
-            <p key={3}>{t("lotse.pauschbetrag.details.p4")}</p>,
+            <p key={4}>{t("lotse.pauschbetrag.details.p4")}</p>,
           ]}
         </Details>
       </DetailsDiv>
