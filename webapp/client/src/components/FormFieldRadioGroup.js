@@ -4,6 +4,7 @@ import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
 import { optionsPropType } from "../lib/propTypes";
+import FieldError from "./FieldError";
 
 const Radio = styled.div`
   input[type="radio"] {
@@ -75,6 +76,7 @@ function FormFieldRadioGroupGroup({
         errors,
       }}
       hideLabel
+      hideErrors
       render={() => (
         <Radio>
           <fieldset id={fieldId} name={fieldId}>
@@ -101,6 +103,13 @@ function FormFieldRadioGroupGroup({
                 </label>,
               ])}
             </div>
+            {errors.map((error, index) => (
+              // There is no natural key and the list is completely static, so using the index is fine.
+              // eslint-disable-next-line
+              <FieldError key={index} fieldName={fieldName}>
+                {error}
+              </FieldError>
+            ))}
           </fieldset>
         </Radio>
       )}
