@@ -30,16 +30,6 @@ function TemplateLong(args) {
 }
 
 export const Default = Template.bind({});
-export const WithValue = Template.bind({});
-export const WithErrors = Template.bind({});
-export const WithDetails = Template.bind({});
-export const WithAllLabelExtras = Template.bind({});
-export const WithMaxWidth = Template.bind({});
-export const WithMaxLength = Template.bind({});
-export const WithMaxLengthAndWidth = Template.bind({});
-
-export const OnALongPage = TemplateLong.bind({});
-
 Default.args = {
   fieldId: "number-input",
   fieldName: "number-input",
@@ -50,16 +40,19 @@ Default.args = {
   value: "",
 };
 
+export const WithValue = Template.bind({});
 WithValue.args = {
   ...Default.args,
   value: "20",
 };
 
+export const WithErrors = Template.bind({});
 WithErrors.args = {
   ...Default.args,
   errors: ["Dieses Feld wird benötigt"],
 };
 
+export const WithDetails = Template.bind({});
 WithDetails.args = {
   ...Default.args,
   details: {
@@ -68,6 +61,7 @@ WithDetails.args = {
   },
 };
 
+export const WithAllLabelExtras = Template.bind({});
 WithAllLabelExtras.args = {
   ...WithDetails.args,
   label: {
@@ -78,22 +72,26 @@ WithAllLabelExtras.args = {
   },
 };
 
+export const WithMaxWidth = Template.bind({});
 WithMaxWidth.args = {
   ...Default.args,
   maxWidth: 4,
 };
 
+export const WithMaxLength = Template.bind({});
 WithMaxLength.args = {
   ...Default.args,
   maxLength: 4,
 };
 
+export const WithMaxLengthAndWidth = Template.bind({});
 WithMaxLengthAndWidth.args = {
   ...Default.args,
   maxLength: 4,
   maxWidth: 4,
 };
 
+export const OnALongPage = TemplateLong.bind({});
 OnALongPage.args = {
   ...Default.args,
 };
