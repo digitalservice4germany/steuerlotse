@@ -38,7 +38,7 @@ describe("FormFieldTextInput", () => {
     });
   });
 
-  describe("When maxWidth given", () => {
+  describe("When fieldWidth given", () => {
     beforeEach(() => {
       props = {
         fieldId: "text-input",
@@ -48,7 +48,7 @@ describe("FormFieldTextInput", () => {
         },
         errors: [],
         value: "",
-        maxWidth: 5,
+        fieldWidth: 5,
       };
       render(<FormFieldTextInput {...props} />);
     });

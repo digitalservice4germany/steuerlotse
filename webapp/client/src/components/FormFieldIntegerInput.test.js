@@ -48,7 +48,7 @@ describe("FormFieldIntegerInput", () => {
     });
   });
 
-  describe("When maxWidth given", () => {
+  describe("When fieldWidth given", () => {
     beforeEach(() => {
       props = {
         fieldId: "integer-input",
@@ -58,7 +58,7 @@ describe("FormFieldIntegerInput", () => {
         },
         errors: [],
         value: "",
-        maxWidth: 5,
+        fieldWidth: 5,
       };
       render(<FormFieldIntegerInput {...props} />);
     });

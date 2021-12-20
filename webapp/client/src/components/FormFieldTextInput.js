@@ -12,7 +12,7 @@ function FormFieldTextInput({
   required,
   autofocus,
   label,
-  maxWidth,
+  fieldWidth,
   maxLength,
   details,
   errors,
@@ -35,7 +35,7 @@ function FormFieldTextInput({
           // eslint-disable-next-line
           autoFocus={autofocus || Boolean(errors.length)}
           required={required}
-          className={classNames("form-control", `input-width-${maxWidth}`)}
+          className={classNames("form-control", `input-width-${fieldWidth}`)}
         />
       )}
     />
@@ -50,7 +50,7 @@ FormFieldTextInput.propTypes = {
   required: PropTypes.bool,
   value: PropTypes.string.isRequired,
   label: FieldLabel.propTypes.label,
-  maxWidth: PropTypes.number,
+  fieldWidth: PropTypes.number,
   maxLength: PropTypes.number,
   details: FieldLabel.propTypes.details,
 };
@@ -59,7 +59,7 @@ FormFieldTextInput.defaultProps = {
   autofocus: FormFieldSeparatedField.defaultProps.autofocus,
   required: FormFieldSeparatedField.defaultProps.required,
   label: FieldLabel.defaultProps.label,
-  maxWidth: 25,
+  fieldWidth: 25,
   maxLength: undefined,
   details: FieldLabel.defaultProps.details,
 };

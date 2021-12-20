@@ -72,10 +72,10 @@ WithAllLabelExtras.args = {
   },
 };
 
-export const WithMaxWidth = Template.bind({});
-WithMaxWidth.args = {
+export const WithFieldWidth = Template.bind({});
+WithFieldWidth.args = {
   ...Default.args,
-  maxWidth: 4,
+  fieldWidth: 4,
 };
 
 export const WithMaxLength = Template.bind({});
@@ -88,7 +88,7 @@ export const WithMaxLengthAndWidth = Template.bind({});
 WithMaxLengthAndWidth.args = {
   ...Default.args,
   maxLength: 4,
-  maxWidth: 4,
+  fieldWidth: 4,
 };
 
 export const OnALongPage = TemplateLong.bind({});

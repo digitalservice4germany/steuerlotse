@@ -13,7 +13,7 @@ function FormFieldIntegerInput({
   required,
   autofocus,
   label,
-  maxWidth,
+  fieldWidth,
   maxLength,
   details,
   errors,
@@ -40,7 +40,7 @@ function FormFieldIntegerInput({
           // eslint-disable-next-line
           autoFocus={autofocus || Boolean(errors.length)}
           required={required}
-          className={classNames("form-control", `input-width-${maxWidth}`)}
+          className={classNames("form-control", `input-width-${fieldWidth}`)}
         />
       )}
     />
@@ -56,7 +56,7 @@ FormFieldIntegerInput.propTypes = {
   setMask: PropTypes.bool,
   value: PropTypes.string.isRequired,
   label: FieldLabel.propTypes.label,
-  maxWidth: PropTypes.number,
+  fieldWidth: PropTypes.number,
   maxLength: PropTypes.number,
   details: FieldLabel.propTypes.details,
 };
@@ -66,7 +66,7 @@ FormFieldIntegerInput.defaultProps = {
   required: FormFieldSeparatedField.defaultProps.required,
   setMask: false,
   label: FieldLabel.defaultProps.label,
-  maxWidth: 25,
+  fieldWidth: 25,
   maxLength: undefined,
   details: FieldLabel.defaultProps.details,
 };
