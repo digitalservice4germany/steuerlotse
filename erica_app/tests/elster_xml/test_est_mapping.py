@@ -129,7 +129,7 @@ class TestConvertToElsterIdentifiers(unittest.TestCase):
 
     def test_converts_person_specific_form_ids_to_elster_ids(self):
         form_data = {
-            'person_a_blind': True
+            'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': True
         }
         expected_result = {
             PersonSpecificFieldId('E0109706', 'PersonA'): '1'
@@ -343,10 +343,10 @@ class TestEstMapping(unittest.TestCase):
 
     def test_if_beh_filled_out_then_check_and_generate_entries(self):
         form_data = {
-            'person_a_blind': True,
-            'person_a_gehbeh': True,
-            'person_b_blind': True,
-            'person_b_gehbeh': True,
+            'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': True,
+            'person_a_has_merkzeichen_g_ag': True,
+            'person_b_has_merkzeichen_bl_tbl_h_pflegegrad': True,
+            'person_b_has_merkzeichen_g_ag': True,
         }
         results = check_and_generate_entries(form_data)
 
@@ -356,10 +356,10 @@ class TestEstMapping(unittest.TestCase):
         self.assertEqual('1', results[PersonSpecificFieldId('E0109707', 'PersonB')])
 
         form_data = {
-            'person_a_blind': True,
-            'person_a_gehbeh': False,
-            'person_b_blind': False,
-            'person_b_gehbeh': True,
+            'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': True,
+            'person_a_has_merkzeichen_g_ag': False,
+            'person_b_has_merkzeichen_bl_tbl_h_pflegegrad': False,
+            'person_b_has_merkzeichen_g_ag': True,
         }
         results = check_and_generate_entries(form_data)
 
