@@ -10,7 +10,7 @@ describe("TelephoneNumber", () => {
 
     it("Should link back to person a page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/person_a");
+      cy.url().should("include", "/lotse/step/person_b_has_disability");
     });
 
     it("Should link forward to iban page", () => {
@@ -29,7 +29,7 @@ describe("TelephoneNumber", () => {
 
     it("Should link back to person a page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/person_a");
+      cy.url().should("include", "/lotse/step/person_b_has_disability");
     });
   });
 
