@@ -13,9 +13,6 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
-export const WithValue = Template.bind({});
-export const WithErrors = Template.bind({});
-
 Default.args = {
   stepHeader: {
     title: "Pauschbetrag für Menschen mit Behinderung",
@@ -44,6 +41,7 @@ Default.args = {
   prevUrl: "/previous/step",
 };
 
+export const WithValue = Template.bind({});
 WithValue.args = {
   ...Default.args,
   fields: {
@@ -66,6 +64,7 @@ WithValue.args = {
   },
 };
 
+export const WithErrors = Template.bind({});
 WithErrors.args = {
   ...Default.args,
   fields: {
