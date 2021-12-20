@@ -97,7 +97,7 @@ describe("FormFieldIntegerInput", () => {
       expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
     });
 
-    it("Should enter keyboard input into input after pressing tab", () => {
+    it("Should limit input of values when using keyboard", () => {
       userEvent.tab();
       userEvent.keyboard("123456");
       expect(screen.getByLabelText("Label")).toHaveValue("12345");
