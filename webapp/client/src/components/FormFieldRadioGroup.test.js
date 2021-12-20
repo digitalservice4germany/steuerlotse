@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import FormFieldRadio from "./FormFieldRadio";
+import FormFieldRadioGroup from "./FormFieldRadioGroup";
 
-describe("FormFieldRadio", () => {
+describe("FormFieldRadioGroup", () => {
   let props;
   const onChangeHandler = jest.fn();
 
@@ -22,7 +22,7 @@ describe("FormFieldRadio", () => {
       ],
       onChangeHandler: onChangeHandler,
     };
-    render(<FormFieldRadio {...props} />);
+    render(<FormFieldRadioGroup {...props} />);
   });
 
   it("When label is clicked, correct input is selected ", () => {

@@ -1,18 +1,18 @@
 import React from "react";
 
-import FormFieldRadio from "../components/FormFieldRadio";
+import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Form Fields/Radio",
-  component: FormFieldRadio,
+  title: "Form Fields/RadioGroup",
+  component: FormFieldRadioGroup,
 };
 
 function Template(args) {
   return (
     <StepForm {...StepFormDefault.args}>
-      <FormFieldRadio {...args} />
+      <FormFieldRadioGroup {...args} />
     </StepForm>
   );
 }
