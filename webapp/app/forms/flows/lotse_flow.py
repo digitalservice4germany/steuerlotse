@@ -140,7 +140,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepPersonBHasDisability,
                 StepTelephoneNumber,
                 StepIban,
-                
+
                 StepSelectStmind,
                 StepVorsorge,
                 StepAussergBela,

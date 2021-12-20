@@ -58,7 +58,6 @@ class LotseStepChooser(StepChooser):
         # 'is_user_account_holder': 'yes', use for single user
         'account_holder': 'person_a',
         'iban': 'DE35133713370000012345',
-        
 
         'stmind_select_vorsorge': True,
         'stmind_select_ausserg_bela': True,

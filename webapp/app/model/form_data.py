@@ -244,7 +244,7 @@ class FormDataDependencies(BaseModel):
     familienstand_widowed_lived_separated_since: Optional[date]
     familienstand_zusammenveranlagung: Optional[str]
     familienstand_confirm_zusammenveranlagung: Optional[bool]
-    
+
     stmind_select_vorsorge: Optional[bool]
     stmind_select_ausserg_bela: Optional[bool]
     stmind_select_handwerker: Optional[bool]
