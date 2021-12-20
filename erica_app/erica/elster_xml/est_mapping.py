@@ -203,15 +203,15 @@ def _convert_to_elster_identifiers(form_data):
     result = {}
     for field, value in form_data.items():
         person = _PERSON_SPECIFIC_FIELDS[field] if field in _PERSON_SPECIFIC_FIELDS else None
-        for form_id, elster_id in _ALL_FIELDS.items():
-            if form_id == field and _elsterify(field, value):
-                if person:
-                    result[PersonSpecificFieldId(elster_id, person)] = _elsterify(field, value)
-                elif isinstance(elster_id, tuple):
-                    for e_id in elster_id:
-                        result[e_id] = _elsterify(field, value)
-                else:
-                    result[elster_id] = _elsterify(field, value)
+        if field in _ALL_FIELDS and _elsterify(field, value):
+            elster_id = _ALL_FIELDS[field]
+            if person:
+                result[PersonSpecificFieldId(elster_id, person)] = _elsterify(field, value)
+            elif isinstance(elster_id, tuple):
+                for e_id in elster_id:
+                    result[e_id] = _elsterify(field, value)
+            else:
+                result[elster_id] = _elsterify(field, value)
     return result
 
 
