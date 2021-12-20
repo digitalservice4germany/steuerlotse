@@ -7,7 +7,7 @@ from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepHasDisability
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -43,6 +43,7 @@ class LotseStepChooser(StepChooser):
         'person_a_beh_grad': 25,
         'person_a_blind': True,
         'person_a_gehbeh': True,
+        'person_a_has_disability': 'no',
 
         'person_b_idnr': '02293417683',
         'person_b_dob': datetime.date(1951, 2, 25),
@@ -52,12 +53,12 @@ class LotseStepChooser(StepChooser):
         'person_b_religion': 'rk',
         'person_b_blind': False,
         'person_b_gehbeh': False,
+        'person_b_has_disability': 'no',
 
         # 'is_user_account_holder': 'yes', use for single user
         'account_holder': 'person_a',
         'iban': 'DE35133713370000012345',
         
-        'has_disability': 'no',
 
         'stmind_select_vorsorge': True,
         'stmind_select_ausserg_bela': True,
@@ -104,9 +105,10 @@ class LotseStepChooser(StepChooser):
             steps=[
                 StepSteuernummer,
                 StepPersonA,
+                StepPersonAHasDisability,
                 StepPersonB,
+                StepPersonBHasDisability,
                 StepTelephoneNumber,
-                StepHasDisability,
                 StepSelectStmind,
                 StepVorsorge,
                 StepAussergBela,

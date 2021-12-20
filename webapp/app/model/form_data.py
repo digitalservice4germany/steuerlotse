@@ -89,6 +89,7 @@ class MandatoryFormData(BaseModel):
     person_a_town: str
     person_a_blind: bool
     person_a_gehbeh: bool
+    person_a_has_disability: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -98,8 +99,7 @@ class MandatoryFormData(BaseModel):
     person_b_religion: Optional[str]
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
-    
-    has_disability: Optional[str]
+    person_b_has_disability: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -215,6 +215,7 @@ class FormDataDependencies(BaseModel):
     person_a_beh_grad: Optional[int]
     person_a_blind: Optional[bool]
     person_a_gehbeh: Optional[bool]
+    person_a_has_disability: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -231,6 +232,7 @@ class FormDataDependencies(BaseModel):
     person_b_beh_grad: Optional[int]
     person_b_blind: Optional[bool]
     person_b_gehbeh: Optional[bool]
+    person_b_has_disability: Optional[str]
 
     telephone_number: Optional[str]
 
@@ -243,8 +245,6 @@ class FormDataDependencies(BaseModel):
     familienstand_zusammenveranlagung: Optional[str]
     familienstand_confirm_zusammenveranlagung: Optional[bool]
     
-    has_disability: Optional[str]
-
     stmind_select_vorsorge: Optional[bool]
     stmind_select_ausserg_bela: Optional[bool]
     stmind_select_handwerker: Optional[bool]
