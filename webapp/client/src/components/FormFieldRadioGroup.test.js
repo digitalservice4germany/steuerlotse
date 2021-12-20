@@ -74,7 +74,6 @@ describe("FormFieldRadioGroup", () => {
 
   it("When pressing tab and arrow right it should check second radio button", () => {
     userEvent.tab();
-    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
     userEvent.type(
       screen.getByRole("radio", { name: "Terra" }),
       "{arrowright}"
@@ -84,7 +83,6 @@ describe("FormFieldRadioGroup", () => {
 
   it("When pressing tab and arrow right two times it should check third radio button", () => {
     userEvent.tab();
-    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
     userEvent.type(
       screen.getByRole("radio", { name: "Terra" }),
       "{arrowright}"
@@ -98,7 +96,6 @@ describe("FormFieldRadioGroup", () => {
 
   it("When pressing tab and arrow right two times and arrow left it should check second radio button", () => {
     userEvent.tab();
-    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
     userEvent.type(
       screen.getByRole("radio", { name: "Terra" }),
       "{arrowright}"
