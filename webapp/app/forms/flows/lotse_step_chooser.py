@@ -51,7 +51,7 @@ class LotseStepChooser(StepChooser):
         'person_b_last_name': 'Mustername',
         'person_b_same_address': 'yes',
         'person_b_religion': 'rk',
-        'person_b_merkzeichen_h': True,
+        'person_b_has_merkzeichen_h': True,
 
         # 'is_user_account_holder': 'yes', use for single user
         'account_holder': 'person_a',
