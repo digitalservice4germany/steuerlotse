@@ -4,11 +4,15 @@ import styled from "styled-components";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
 
 const Legend = styled.legend`
-  &.field-label {
+  & > span {
+    display: block;
+  }
+
+  & > span.field-label {
     margin-bottom: var(--spacing-01);
   }
 
-  &.field-label-example {
+  & > span.field-label-example {
     margin-bottom: var(--spacing-01);
   }
 `;
@@ -19,7 +23,10 @@ export default function FieldLabelForSeparatedFields(props) {
     <FieldLabelScaffolding
       {...props}
       render={(innerContent, className) => (
-        <Legend className={className}>{innerContent}</Legend>
+        <Legend>
+          {" "}
+          <span className={className}>{innerContent} </span>
+        </Legend>
       )}
     />
   );
