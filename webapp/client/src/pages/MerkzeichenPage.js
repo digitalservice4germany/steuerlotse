@@ -6,7 +6,7 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { checkboxPropType, fieldPropType } from "../lib/propTypes";
 import FormFieldYesNo from "../components/FormFieldYesNo";
-import FormFieldTextInput from "../components/FormFieldTextInput";
+import FormFieldIntegerInput from "../components/FormFieldIntegerInput";
 import FormFieldCheckBox from "../components/FormFieldCheckBox";
 import FieldLabelForSeparatedFields from "../components/FieldLabelForSeparatedFields";
 
@@ -27,7 +27,7 @@ export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
           }}
           errors={fields.hasCareDegree.errors}
         />
-        <FormFieldTextInput
+        <FormFieldIntegerInput
           fieldName="disability_degree"
           fieldId="disability_degree"
           value={fields.disabilityDegree.value}
@@ -35,7 +35,7 @@ export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
             text: t("lotse.merkzeichen.disabilityDegree.label"),
             exampleInput: t("lotse.merkzeichen.disabilityDegree.example"),
           }}
-          maxWidth={3}
+          fieldWidth={3}
           errors={fields.disabilityDegree.errors}
         />
         <fieldset id="marks">
