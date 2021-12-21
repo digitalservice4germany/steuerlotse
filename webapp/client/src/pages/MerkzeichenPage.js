@@ -19,68 +19,70 @@ export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
       <FormHeader {...stepHeader} />
       <StepForm {...form}>
         <FormFieldYesNo
-          fieldName="has_care_degree"
-          fieldId="has_care_degree"
-          value={fields.hasCareDegree.value}
+          fieldName="person_a_has_pflegegrad"
+          fieldId="person_a_has_pflegegrad"
+          value={fields.personAHasPflegegrad.value}
           label={{
-            text: t("lotse.merkzeichen.hasCareDegree.label"),
+            text: t("lotse.merkzeichen.personAHasPflegegrad.label"),
           }}
-          errors={fields.hasCareDegree.errors}
+          errors={fields.personAHasPflegegrad.errors}
         />
         <FormFieldIntegerInput
-          fieldName="disability_degree"
-          fieldId="disability_degree"
-          value={fields.disabilityDegree.value}
+          fieldName="person_a_disability_degree"
+          fieldId="person_a_disability_degree"
+          value={fields.personADisabilityDegree.value}
           label={{
-            text: t("lotse.merkzeichen.disabilityDegree.label"),
-            exampleInput: t("lotse.merkzeichen.disabilityDegree.example"),
+            text: t("lotse.merkzeichen.personADisabilityDegree.label"),
+            exampleInput: t(
+              "lotse.merkzeichen.personADisabilityDegree.example"
+            ),
           }}
           fieldWidth={3}
-          errors={fields.disabilityDegree.errors}
+          errors={fields.personADisabilityDegree.errors}
         />
-        <fieldset id="marks">
+        <fieldset id="merkzeichen">
           <FieldLabelForSeparatedFields
-            fieldId="marks"
-            label={{ text: t("lotse.merkzeichen.marks.label") }}
+            fieldId="merkzeichen"
+            label={{ text: t("lotse.merkzeichen.merkzeichen.label") }}
             details={{
-              title: t("lotse.merkzeichen.marks.details.title"),
-              text: t("lotse.merkzeichen.marks.details.text"),
+              title: t("lotse.merkzeichen.merkzeichen.details.title"),
+              text: t("lotse.merkzeichen.merkzeichen.details.text"),
             }}
           />
           <FormFieldCheckBox
-            fieldName="mark_g"
-            fieldId="mark_g"
-            checked={fields.markG.checked}
-            labelText={t("lotse.merkzeichen.markG.label")}
-            errors={fields.markG.errors}
+            fieldName="person_a_has_merkzeichen_g"
+            fieldId="person_a_has_merkzeichen_g"
+            checked={fields.personAHasMerkzeichenG.checked}
+            labelText={t("lotse.merkzeichen.personAHasMerkzeichenG.label")}
+            errors={fields.personAHasMerkzeichenG.errors}
           />
           <FormFieldCheckBox
-            fieldName="mark_ag"
-            fieldId="mark_ag"
-            checked={fields.markAg.checked}
-            labelText={t("lotse.merkzeichen.markAg.label")}
-            errors={fields.markAg.errors}
+            fieldName="person_a_has_merkzeichen_ag"
+            fieldId="person_a_has_merkzeichen_ag"
+            checked={fields.personAHasMerkzeichenAg.checked}
+            labelText={t("lotse.merkzeichen.personAHasMerkzeichenAg.label")}
+            errors={fields.personAHasMerkzeichenAg.errors}
           />
           <FormFieldCheckBox
-            fieldName="mark_bl"
-            fieldId="mark_bl"
-            checked={fields.markBl.checked}
-            labelText={t("lotse.merkzeichen.markBl.label")}
-            errors={fields.markBl.errors}
+            fieldName="person_a_has_merkzeichen_bl"
+            fieldId="person_a_has_merkzeichen_bl"
+            checked={fields.personAHasMerkzeichenBl.checked}
+            labelText={t("lotse.merkzeichen.personAHasMerkzeichenBl.label")}
+            errors={fields.personAHasMerkzeichenBl.errors}
           />
           <FormFieldCheckBox
-            fieldName="mark_tbl"
-            fieldId="mark_tbl"
-            checked={fields.markTbl.checked}
-            labelText={t("lotse.merkzeichen.markTbl.label")}
-            errors={fields.markTbl.errors}
+            fieldName="person_a_has_merkzeichen_tbl"
+            fieldId="person_a_has_merkzeichen_tbl"
+            checked={fields.personAHasMerkzeichenTbl.checked}
+            labelText={t("lotse.merkzeichen.personAHasMerkzeichenTbl.label")}
+            errors={fields.personAHasMerkzeichenTbl.errors}
           />
           <FormFieldCheckBox
-            fieldName="mark_h"
-            fieldId="mark_h"
-            checked={fields.markH.checked}
-            labelText={t("lotse.merkzeichen.markH.label")}
-            errors={fields.markH.errors}
+            fieldName="person_a_has_merkzeichen_h"
+            fieldId="person_a_has_merkzeichen_h"
+            checked={fields.personAHasMerkzeichenH.checked}
+            labelText={t("lotse.merkzeichen.personAHasMerkzeichenH.label")}
+            errors={fields.personAHasMerkzeichenH.errors}
           />
         </fieldset>
       </StepForm>
@@ -100,13 +102,13 @@ MerkzeichenPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    hasCareDegree: fieldPropType,
-    disabilityDegree: fieldPropType,
-    markH: checkboxPropType,
-    markG: checkboxPropType,
-    markBl: checkboxPropType,
-    markTbl: checkboxPropType,
-    markAg: checkboxPropType,
+    personAHasPflegegrad: fieldPropType,
+    personADisabilityDegree: fieldPropType,
+    personAHasMerkzeichenH: checkboxPropType,
+    personAHasMerkzeichenG: checkboxPropType,
+    personAHasMerkzeichenBl: checkboxPropType,
+    personAHasMerkzeichenTbl: checkboxPropType,
+    personAHasMerkzeichenAg: checkboxPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

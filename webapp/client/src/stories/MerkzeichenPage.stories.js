@@ -23,31 +23,31 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    hasCareDegree: {
+    personAHasPflegegrad: {
       value: "",
       errors: [],
     },
-    disabilityDegree: {
+    personADisabilityDegree: {
       value: "",
       errors: [],
     },
-    markH: {
+    personAHasMerkzeichenH: {
       checked: false,
       errors: [],
     },
-    markG: {
+    personAHasMerkzeichenG: {
       checked: false,
       errors: [],
     },
-    markBl: {
+    personAHasMerkzeichenBl: {
       checked: false,
       errors: [],
     },
-    markTbl: {
+    personAHasMerkzeichenTbl: {
       checked: false,
       errors: [],
     },
-    markAg: {
+    personAHasMerkzeichenAg: {
       checked: false,
       errors: [],
     },
@@ -59,31 +59,31 @@ export const WithValues = Template.bind({});
 WithValues.args = {
   ...Default.args,
   fields: {
-    hasCareDegree: {
+    personAHasPflegegrad: {
       value: "yes",
       errors: [],
     },
-    disabilityDegree: {
+    personADisabilityDegree: {
       value: "30",
       errors: [],
     },
-    markH: {
+    personAHasMerkzeichenH: {
       checked: true,
       errors: [],
     },
-    markG: {
+    personAHasMerkzeichenG: {
       checked: true,
       errors: [],
     },
-    markBl: {
+    personAHasMerkzeichenBl: {
       checked: true,
       errors: [],
     },
-    markTbl: {
+    personAHasMerkzeichenTbl: {
       checked: true,
       errors: [],
     },
-    markAg: {
+    personAHasMerkzeichenAg: {
       checked: true,
       errors: [],
     },
@@ -94,33 +94,33 @@ export const WithErrors = Template.bind({});
 WithErrors.args = {
   ...Default.args,
   fields: {
-    hasCareDegree: {
+    personAHasPflegegrad: {
       value: "",
       errors: ["Wählen Sie eine Option aus um fortfahren zu können."],
     },
-    disabilityDegree: {
+    personADisabilityDegree: {
       value: "",
       errors: [
         "Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der Behinderung von 20. Lassen Sie das Feld leer, falls der Wert unter 20 liegt.",
       ],
     },
-    markH: {
+    personAHasMerkzeichenH: {
       checked: false,
       errors: ["Ungültige Auswahl"],
     },
-    markG: {
+    personAHasMerkzeichenG: {
       checked: false,
       errors: ["Ungültige Auswahl"],
     },
-    markBl: {
+    personAHasMerkzeichenBl: {
       checked: false,
       errors: ["Ungültige Auswahl"],
     },
-    markTbl: {
+    personAHasMerkzeichenTbl: {
       checked: false,
       errors: ["Ungültige Auswahl"],
     },
-    markAg: {
+    personAHasMerkzeichenAg: {
       checked: false,
       errors: ["Ungültige Auswahl"],
     },
