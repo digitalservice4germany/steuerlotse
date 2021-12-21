@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { IMaskInput } from "react-imask";
 import classNames from "classnames";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
 import FormFieldSeparatedField from "./FormFieldSeparatedField";
 
-function FormFieldTextInput({
+function FormFieldIntegerInput({
   fieldName,
   fieldId,
   value,
@@ -25,11 +26,15 @@ function FormFieldTextInput({
       }}
       labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
-        <input
+        <IMaskInput
+          mask={Number}
+          scale={0}
           type="text"
           id={fieldId}
           name={fieldName}
           defaultValue={value}
+          inputMode="numeric"
+          pattern="[0-9]*"
           maxLength={maxLength}
           // TODO: autofocus is under review.
           // eslint-disable-next-line
@@ -42,12 +47,13 @@ function FormFieldTextInput({
   );
 }
 
-FormFieldTextInput.propTypes = {
+FormFieldIntegerInput.propTypes = {
   fieldId: PropTypes.string.isRequired,
   fieldName: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   autofocus: PropTypes.bool,
   required: PropTypes.bool,
+  setMask: PropTypes.bool,
   value: PropTypes.string.isRequired,
   label: FieldLabel.propTypes.label,
   fieldWidth: PropTypes.number,
@@ -55,13 +61,14 @@ FormFieldTextInput.propTypes = {
   details: FieldLabel.propTypes.details,
 };
 
-FormFieldTextInput.defaultProps = {
+FormFieldIntegerInput.defaultProps = {
   autofocus: FormFieldSeparatedField.defaultProps.autofocus,
   required: FormFieldSeparatedField.defaultProps.required,
+  setMask: false,
   label: FieldLabel.defaultProps.label,
   fieldWidth: 25,
   maxLength: undefined,
   details: FieldLabel.defaultProps.details,
 };
 
-export default FormFieldTextInput;
+export default FormFieldIntegerInput;
