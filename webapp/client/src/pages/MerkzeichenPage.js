@@ -48,18 +48,18 @@ export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
             }}
           />
           <FormFieldCheckBox
-            fieldName="mark_h"
-            fieldId="mark_h"
-            checked={fields.markH.checked}
-            labelText={t("lotse.merkzeichen.markH.label")}
-            errors={fields.markH.errors}
-          />
-          <FormFieldCheckBox
             fieldName="mark_g"
             fieldId="mark_g"
             checked={fields.markG.checked}
             labelText={t("lotse.merkzeichen.markG.label")}
             errors={fields.markG.errors}
+          />
+          <FormFieldCheckBox
+            fieldName="mark_ag"
+            fieldId="mark_ag"
+            checked={fields.markAg.checked}
+            labelText={t("lotse.merkzeichen.markAg.label")}
+            errors={fields.markAg.errors}
           />
           <FormFieldCheckBox
             fieldName="mark_bl"
@@ -76,11 +76,11 @@ export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
             errors={fields.markTbl.errors}
           />
           <FormFieldCheckBox
-            fieldName="mark_ag"
-            fieldId="mark_ag"
-            checked={fields.markAg.checked}
-            labelText={t("lotse.merkzeichen.markAg.label")}
-            errors={fields.markAg.errors}
+            fieldName="mark_h"
+            fieldId="mark_h"
+            checked={fields.markH.checked}
+            labelText={t("lotse.merkzeichen.markH.label")}
+            errors={fields.markH.errors}
           />
         </fieldset>
       </StepForm>
