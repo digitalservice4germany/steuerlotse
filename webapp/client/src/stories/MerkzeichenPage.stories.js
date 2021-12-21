@@ -13,9 +13,6 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
-export const WithValue = Template.bind({});
-export const WithErrors = Template.bind({});
-
 Default.args = {
   stepHeader: {
     title: "Angaben zu Ihrer Behinderung oder Pflegebedürftigkeit",
@@ -56,4 +53,76 @@ Default.args = {
     },
   },
   prevUrl: "/previous/step",
+};
+
+export const WithValues = Template.bind({});
+WithValues.args = {
+  ...Default.args,
+  fields: {
+    hasCareDegree: {
+      value: "yes",
+      errors: [],
+    },
+    disabilityDegree: {
+      value: "30",
+      errors: [],
+    },
+    markH: {
+      checked: true,
+      errors: [],
+    },
+    markG: {
+      checked: true,
+      errors: [],
+    },
+    markBl: {
+      checked: true,
+      errors: [],
+    },
+    markTbl: {
+      checked: true,
+      errors: [],
+    },
+    markAg: {
+      checked: true,
+      errors: [],
+    },
+  },
+};
+
+export const WithErrors = Template.bind({});
+WithErrors.args = {
+  ...Default.args,
+  fields: {
+    hasCareDegree: {
+      value: "",
+      errors: ["Wählen Sie eine Option aus um fortfahren zu können."],
+    },
+    disabilityDegree: {
+      value: "",
+      errors: [
+        "Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der Behinderung von 20. Lassen Sie das Feld leer, falls der Wert unter 20 liegt.",
+      ],
+    },
+    markH: {
+      checked: false,
+      errors: ["Ungültige Auswahl"],
+    },
+    markG: {
+      checked: false,
+      errors: ["Ungültige Auswahl"],
+    },
+    markBl: {
+      checked: false,
+      errors: ["Ungültige Auswahl"],
+    },
+    markTbl: {
+      checked: false,
+      errors: ["Ungültige Auswahl"],
+    },
+    markAg: {
+      checked: false,
+      errors: ["Ungültige Auswahl"],
+    },
+  },
 };
