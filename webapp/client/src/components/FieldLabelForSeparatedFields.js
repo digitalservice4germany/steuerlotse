@@ -19,9 +19,7 @@ export default function FieldLabelForSeparatedFields(props) {
     <FieldLabelScaffolding
       {...props}
       render={(innerContent, className) => (
-        <span>
-          <Legend className={className}>{innerContent}</Legend>
-        </span>
+        <Legend className={className}>{innerContent}</Legend>
       )}
     />
   );
