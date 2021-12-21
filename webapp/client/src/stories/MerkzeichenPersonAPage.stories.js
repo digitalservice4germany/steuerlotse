@@ -1,15 +1,15 @@
 import React from "react";
 
-import MerkzeichenPage from "../pages/MerkzeichenPage";
+import MerkzeichenPersonAPage from "../pages/MerkzeichenPersonAPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
   title: "Pages/Merkzeichen",
-  component: MerkzeichenPage,
+  component: MerkzeichenPersonAPage,
 };
 
 function Template(args) {
-  return <MerkzeichenPage {...args} />;
+  return <MerkzeichenPersonAPage {...args} />;
 }
 
 export const Default = Template.bind({});

@@ -10,7 +10,12 @@ import FormFieldIntegerInput from "../components/FormFieldIntegerInput";
 import FormFieldCheckBox from "../components/FormFieldCheckBox";
 import FieldLabelForSeparatedFields from "../components/FieldLabelForSeparatedFields";
 
-export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
+export default function MerkzeichenPersonAPage({
+  stepHeader,
+  form,
+  fields,
+  prevUrl,
+}) {
   const { t } = useTranslation();
 
   return (
@@ -90,7 +95,7 @@ export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
   );
 }
 
-MerkzeichenPage.propTypes = {
+MerkzeichenPersonAPage.propTypes = {
   stepHeader: PropTypes.exact({
     title: PropTypes.string,
     intro: PropTypes.string,
