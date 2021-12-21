@@ -40,48 +40,25 @@ Default.args = {
   value: "",
 };
 
-export const WithValue = Template.bind({});
-WithValue.args = {
-  ...Default.args,
-  value: "20",
-};
-
 export const WithErrors = Template.bind({});
 WithErrors.args = {
   ...Default.args,
   errors: ["Dieses Feld wird benötigt"],
 };
 
-export const WithDetails = Template.bind({});
-WithDetails.args = {
-  ...Default.args,
-  details: {
-    title: "Was bedeutet das?",
-    text: "Erklärungs-Platzhalter",
-  },
-};
-
 export const WithAllLabelExtras = Template.bind({});
 WithAllLabelExtras.args = {
-  ...WithDetails.args,
+  ...Default.args,
   label: {
     text: "Grad der Behinderung",
     showOptionalTag: true,
     help: "Das ist ein Hilfetext. Hilft er dir?",
     exampleInput: "ab 20",
   },
-};
-
-export const WithFieldWidth = Template.bind({});
-WithFieldWidth.args = {
-  ...Default.args,
-  fieldWidth: 4,
-};
-
-export const WithMaxLength = Template.bind({});
-WithMaxLength.args = {
-  ...Default.args,
-  maxLength: 4,
+  details: {
+    title: "Was bedeutet das?",
+    text: "Erklärungs-Platzhalter",
+  },
 };
 
 export const WithMaxLengthAndWidth = Template.bind({});
@@ -91,6 +68,7 @@ WithMaxLengthAndWidth.args = {
   fieldWidth: 4,
 };
 
+// We add this story because the Integer field previously had differing behaviour on short and long pages.
 export const OnALongPage = TemplateLong.bind({});
 OnALongPage.args = {
   ...Default.args,
