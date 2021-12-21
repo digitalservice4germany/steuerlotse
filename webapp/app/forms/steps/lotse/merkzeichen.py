@@ -9,6 +9,7 @@ from app.forms.fields import YesNoField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import SectionLink
+from app.forms.validations.validators import ValidDisabilityDegree
 from app.model.components import MerkzeichenProps
 from app.model.components.helpers import form_fields_dict
 
@@ -27,8 +28,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             validators=[InputRequired(_('form.lotse.merkzeichen.person_a_has_pflegegrad.required'))],
             render_kw={'data_label': _l('form.lotse.merkzeichen.person_a_has_pflegegrad.data_label')})
         person_a_disability_degree = SteuerlotseIntegerField(
-            validators=[
-                validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
+            validators=[ValidDisabilityDegree()],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.person_a_disability_degree')})
         person_a_has_merkzeichen_g = BooleanField(
@@ -43,7 +43,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             render_kw={'data_label': _l('form.lotse.merkzeichen.person_a_has_merkzeichen_h.data_label')})
 
         def validate_person_a_disability_degree(self, field):
-            if self.person_a_disability_degree.data:
+            if self.person_a_has_merkzeichen_g.data or self.person_a_has_merkzeichen_ag.data:
                 validators.InputRequired(_l('form.lotse.validation-disability_degree'))(self, field)
             else:
                 validators.Optional()(self, field)

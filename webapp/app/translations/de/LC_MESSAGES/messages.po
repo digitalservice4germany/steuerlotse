@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-21 11:25+0100\n"
+"POT-Creation-Date: 2021-12-21 13:20+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -178,88 +178,6 @@ msgstr "Ja"
 #: app/forms/fields.py:540
 msgid "switch.no"
 msgstr "Nein"
-
-#: app/forms/validators.py:24
-msgid "validate.not-a-decimal"
-msgstr "Der Wert darf nur Ziffern beinhalten."
-
-#: app/forms/validators.py:30
-msgid "validate.must-not-be-zero"
-msgstr "Dieses Feld darf nicht 0 sein."
-
-#: app/forms/validators.py:40
-msgid "validate.length-max-reached"
-msgstr "Die Angabe ist %(diff)s Zeichen zu lang."
-
-#: app/forms/validators.py:53
-msgid "validate.integer-length-max"
-msgstr "Das Feld darf maximal %(max)s Ziffern lang sein."
-
-#: app/forms/validators.py:55
-msgid "validate.integer-length-min"
-msgstr "Das Feld muss mindestens %(min)s Ziffern lang sein."
-
-#: app/forms/validators.py:57
-msgid "validate.integer-length-between"
-msgstr "Das Feld muss zwischen %(min)s und %(max)s Ziffern lang sein."
-
-#: app/forms/validators.py:75
-msgid "validate.invalid-iban"
-msgstr "Ungültige IBAN Nummer"
-
-#: app/forms/validators.py:78
-msgid "validate.country-code-not-de"
-msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
-
-#: app/forms/validators.py:93 app/forms/validators.py:103
-#: app/forms/validators.py:106 app/forms/validators.py:109
-#: app/forms/validators.py:112
-msgid "validate.invalid-idnr"
-msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
-
-#: app/forms/validators.py:96
-msgid "validate.idnr-length"
-msgstr ""
-"Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
-"insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
-"entsprechen: 00 000 000 000"
-
-#: app/forms/validators.py:118 app/forms/validators.py:123
-msgid "validate.unlock-code-length"
-msgstr ""
-"Ihr Freischaltcode ist nicht vollständig. Der Freischaltcode muss aus 3 x"
-" 4 Zeichen bestehen."
-
-#: app/forms/validators.py:126
-msgid "validate.invalid-unlock-code"
-msgstr "Der Freischaltcode ist nicht valide."
-
-#: app/forms/validators.py:136 app/forms/validators.py:146
-msgid "validate.invalid-character"
-msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
-
-#: app/forms/validators.py:158
-msgid "validate.invalid-tax-number-length.shorter-than-ten"
-msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
-
-#: app/forms/validators.py:160
-msgid "validate.invalid-tax-number-length.shorter-than-eleven"
-msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
-
-#: app/forms/validators.py:162
-msgid "validate.invalid-tax-number-length.too-long"
-msgstr "Die Angabe darf höchstens 11 Ziffern umfassen."
-
-#: app/forms/validators.py:171
-msgid "validate.invalid-hessen-tax-number"
-msgstr ""
-"In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
-"Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
-"Stelle eine 0 ein."
-
-#: app/forms/validators.py:179
-msgid "validate.invalid-tax-number"
-msgstr "Die Steuernummer ist nicht valide."
 
 #: app/forms/flows/eligibility_step_chooser.py:46
 msgid "form.eligibility.title"
@@ -1167,48 +1085,52 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse/merkzeichen.py:18
+#: app/forms/steps/lotse/merkzeichen.py:19
 msgid "form.lotse.merkzeichen.title"
 msgstr "Angaben zu Behinderung oder Pflegebedürftigkeit von Person A"
 
-#: app/forms/steps/lotse/merkzeichen.py:19
+#: app/forms/steps/lotse/merkzeichen.py:20
 msgid "form.lotse.merkzeichen.intro"
 msgstr ""
 "Bei einer Behinderung besteht in der Regel Anspruch auf steuerliche "
 "Vergünstigungen in Form von Pauschbeträgen. Ob und in welcher Höhe Sie "
 "Anspruch auf die Pauschbeträge haben, ist von Ihren Angaben abhängig."
 
-#: app/forms/steps/lotse/merkzeichen.py:20
+#: app/forms/steps/lotse/merkzeichen.py:21
 #: app/forms/steps/lotse/personal_data.py:31
 #: app/forms/steps/lotse/personal_data.py:185
 #: app/forms/steps/lotse/personal_data.py:297
 #: app/forms/steps/lotse/personal_data.py:406
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:148
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:224
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/merkzeichen.py:22
+#: app/forms/steps/lotse/merkzeichen.py:23
 msgid "form.lotse.merkzeichen.label"
 msgstr "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit"
 
-#: app/forms/steps/lotse/merkzeichen.py:23
+#: app/forms/steps/lotse/merkzeichen.py:24
 #: app/forms/steps/lotse/personal_data.py:36
 #: app/forms/steps/lotse/personal_data.py:188
 #: app/forms/steps/lotse/personal_data.py:300
 #: app/forms/steps/lotse/personal_data.py:411
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:21
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:189
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/merkzeichen.py:28
+msgid "form.lotse.merkzeichen.person_a_has_pflegegrad.required"
+msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
+
+#: app/forms/steps/lotse/merkzeichen.py:29
 msgid "form.lotse.merkzeichen.person_a_has_pflegegrad.data_label"
 msgstr "Wurde ein Pflegegrad von 4 oder 5 festgestellt? "
 
-#: app/forms/steps/lotse/merkzeichen.py:34
+#: app/forms/steps/lotse/merkzeichen.py:32
 #: app/forms/steps/lotse/personal_data.py:249
 #: app/forms/steps/lotse/personal_data.py:380
 msgid "form.lotse.field_person_beh_grad-help"
@@ -1224,31 +1146,37 @@ msgstr ""
 "Einbuße der körperlichen Beweglichkeit geführt hat oder auf einer "
 "typischen Berufskrankheit beruht.</li><ul>"
 
-#: app/forms/steps/lotse/merkzeichen.py:35
+#: app/forms/steps/lotse/merkzeichen.py:33
 msgid "form.lotse.merkzeichen.person_a_disability_degree"
 msgstr "Grad der Behinderung"
 
-#: app/forms/steps/lotse/merkzeichen.py:39
+#: app/forms/steps/lotse/merkzeichen.py:35
 msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_g.data_label"
 msgstr "Merkzeichen G"
 
-#: app/forms/steps/lotse/merkzeichen.py:42
+#: app/forms/steps/lotse/merkzeichen.py:37
 msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_ag.data_label"
 msgstr "Merkzeichen aG"
 
-#: app/forms/steps/lotse/merkzeichen.py:45
+#: app/forms/steps/lotse/merkzeichen.py:39
 msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_bl.data_label"
 msgstr "Merkzeichen Bl"
 
-#: app/forms/steps/lotse/merkzeichen.py:48
+#: app/forms/steps/lotse/merkzeichen.py:41
 msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_tbl.data_label"
 msgstr "Merkzeichen TBl"
 
-#: app/forms/steps/lotse/merkzeichen.py:51
+#: app/forms/steps/lotse/merkzeichen.py:43
 msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_h.data_label"
 msgstr "Merkzeichen H"
 
-#: app/forms/steps/lotse/merkzeichen.py:86
+#: app/forms/steps/lotse/merkzeichen.py:47
+msgid "form.lotse.validation-disability_degree"
+msgstr ""
+"Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
+"Merkzeichen G oder aG auswählen."
+
+#: app/forms/steps/lotse/merkzeichen.py:83
 #: app/forms/steps/lotse/personal_data.py:441
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
@@ -2448,252 +2376,252 @@ msgstr ""
 msgid "form.lotse.session-note.list-item-4"
 msgstr "Sie können alle Angaben vor Versand noch einmal kontrollieren."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:21
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:20
 msgid "form.lotse.step_familienstand.label"
 msgstr "Familienstand"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:26
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:25
 msgid "form.lotse.field_familienstand"
 msgstr "Was war Ihr letzter Familienstand im Jahr 2021?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:27
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:26
 msgid "form.lotse.field_familienstand.data_label"
 msgstr "Familienstand 2021"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:29
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:28
 msgid "form.lotse.familienstand-single"
 msgstr "ledig"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:30
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:29
 msgid "form.lotse.familienstand-married"
 msgstr "verheiratet / in eingetragener Lebenspartnerschaft"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:31
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:30
 msgid "form.lotse.familienstand-widowed"
 msgstr "verwitwet"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:32
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:31
 msgid "form.lotse.familienstand-divorced"
 msgstr "geschieden / Lebenspartnerschaft aufgehoben"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:38
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:37
 msgid "form.lotse.familienstand_date"
 msgstr "seit dem"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:39
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:38
 msgid "form.lotse.familienstand_date.data_label"
 msgstr "seit dem"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:43
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:42
 msgid "form.lotse.familienstand_married_lived_separated"
 msgstr "Haben Sie als Paar vor dem 01.01.2022 dauernd getrennt gelebt?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:44
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:43
 msgid "form.lotse.familienstand_married_lived_separated.example_input"
 msgstr ""
 "Das bedeutet Sie hatten keinen gemeinsamen Lebensmittelpunkt und haben "
 "getrennt gewirtschaftet."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:45
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:44
 msgid "form.lotse.familienstand_married_lived_separated.data_label"
 msgstr "Vor dem 01.01.2022 dauernd getrennt gelebt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:47
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:46
 msgid "form.lotse.familienstand_married_lived_separated_since"
 msgstr "seit dem"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:48
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:47
 msgid "form.lotse.familienstand_married_lived_separated_since.data_label"
 msgstr "seit dem"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:51
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:50
 msgid "form.lotse.familienstand_widowed_lived_separated"
 msgstr ""
 "Haben Sie vor dem Tod Ihres Partners/Ihrer Partnerin dauernd getrennt "
 "gelebt?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:52
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:51
 msgid "form.lotse.familienstand_widowed_lived_separated.example_input"
 msgstr ""
 "Das bedeutet Sie hatten keinen gemeinsamen Lebensmittelpunkt und haben "
 "getrennt gewirtschaftet."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:53
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:52
 msgid "form.lotse.familienstand_widowed_lived_separated.data_label"
 msgstr "Vor dem Tod dauernd getrennt gelebt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:55
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:54
 msgid "form.lotse.familienstand_widowed_lived_separated_since"
 msgstr "seit dem"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:56
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:55
 msgid "form.lotse.familienstand_widowed_lived_separated_since.data_label"
 msgstr "seit dem"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:59
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:58
 msgid "form.lotse.field_familienstand_zusammenveranlagung"
 msgstr "Möchten Sie zusammen veranlagt werden?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:60
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:59
 msgid "form.lotse.familienstand_zusammenveranlagung.data_label"
 msgstr "Zusammenveranlagung wenn geschieden oder getrennt"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:63
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:62
 msgid "form.lotse.familienstand_confirm_zusammenveranlagung"
 msgstr ""
 "Ich bin damit einverstanden, dass wir unsere Steuererklärung gemeinsam "
 "als Paar machen und die Zusammenveranlagung nutzen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:64
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:63
 msgid "form.lotse.familienstand_confirm_zusammenveranlagung.data_label"
 msgstr "Einverständnis Zusammenveranlagung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:70
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:69
 #: app/forms/validations/date_validations.py:79
 msgid "validate.date-of-marriage-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:73
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:100
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:72
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:99
 #: app/forms/validations/date_validations.py:70
 msgid "validate.date-of-death-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:76
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:88
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:75
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:87
 #: app/forms/validations/date_validations.py:89
 msgid "validate.date-of-divorce-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:81
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:80
 msgid "form.lotse.validation-familienstand-married-lived-separated"
 msgstr "Wählen Sie “Ja” oder “Nein” aus."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:94
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:93
 msgid "form.lotse.validation.married-after-separated"
 msgstr "Dieses Datum darf nicht vor Ihrem Hochzeitsdatum liegen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:106
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:105
 msgid "form.lotse.validation-familienstand-widowed-lived-separated-since"
 msgstr "Geben Sie ein Datum an."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:113
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:112
 msgid "form.lotse.validation.widowed-before-separated"
 msgstr ""
 "Dieses Datum darf nicht nach dem Todestag Ihres Partners/Ihrer Partnerin "
 "liegen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:126
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:125
 msgid "form.lotse.validation-familienstand-zusammenveranlagung"
 msgstr "Geben Sie an ob die eine Zusammenveranlagung wünschen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:139
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:138
 msgid "form.lotse.validation-familienstand-confirm-zusammenveranlagung"
 msgstr ""
 "Aufgrund Ihres Familienstandes müssen Sie gemeinsam veranlagen. Bitte "
 "bestätigen Sie dies."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:146
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:145
 msgid "form.lotse.familienstand-title"
 msgstr "Familienstand"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:156
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:155
 msgid "form.lotse.field_person_religion"
 msgstr "Religionszugehörigkeit"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:158
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:157
 msgid "form.lotse.field_person_religion.none"
 msgstr "nicht kirchensteuerpflichtig"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:159
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:158
 msgid "form.lotse.field_person_religion.ak"
 msgstr "Altkatholisch"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:160
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:159
 msgid "form.lotse.field_person_religion.ev"
 msgstr "Evangelisch"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:161
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:160
 msgid "form.lotse.field_person_religion.er"
 msgstr "Evangelisch-reformiert"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:162
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:161
 msgid "form.lotse.field_person_religion.erb"
 msgstr "Evangelisch-reformierte Kirche Bückeburg"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:163
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:162
 msgid "form.lotse.field_person_religion.ers"
 msgstr "Evangelisch-reformierte Kirche Stadthagen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:164
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:163
 msgid "form.lotse.field_person_religion.fr"
 msgstr "Französisch-reformiert"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:165
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:164
 msgid "form.lotse.field_person_religion.fra"
 msgstr "Freie Religionsgemeinschaft Alzey"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:166
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:165
 msgid "form.lotse.field_person_religion.fgm"
 msgstr "Freireligiöse Gemeinde Mainz"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:167
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:166
 msgid "form.lotse.field_person_religion.fgo"
 msgstr "Freireligiöse Gemeinde Offenbach"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:168
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:167
 msgid "form.lotse.field_person_religion.flb"
 msgstr "Freireligiöse Landesgemeinde Baden"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:169
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:168
 msgid "form.lotse.field_person_religion.flp"
 msgstr "Freireligiöse Landesgemeinde Pfalz"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:170
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:169
 msgid "form.lotse.field_person_religion.is"
 msgstr "Israelitisch (Saarland)"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:171
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:170
 msgid "form.lotse.field_person_religion.irb"
 msgstr "Israelitische Religionsgemeinschaft Baden"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:172
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:171
 msgid "form.lotse.field_person_religion.iw"
 msgstr "Israelitische Religionsgemeinschaft Württemberg"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:173
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:172
 msgid "form.lotse.field_person_religion.ikb"
 msgstr "Landesverband der israelitischen Kultusgemeinden in Bayern"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:174
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:173
 msgid "form.lotse.field_person_religion.inw"
 msgstr "Nordrhein-Westfalen: Israelitisch (jüdisch)"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:175
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:174
 msgid "form.lotse.field_person_religion.jgf"
 msgstr "Jüdische Gemeinde Frankfurt (Hessen)"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:176
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:175
 msgid "form.lotse.field_person_religion.jh"
 msgstr "Jüdische Gemeinde Hamburg"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:177
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:176
 msgid "form.lotse.field_person_religion.jgh"
 msgstr "Jüdische Gemeinden im Landesverband Hessen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:178
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:177
 msgid "form.lotse.field_person_religion.jkk"
 msgstr "Jüdische Kultusgemeinden Bad Kreuznach und Koblenz"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:179
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:178
 msgid "form.lotse.field_person_religion.rk"
 msgstr "Römisch-katholisch"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:180
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:179
 msgid "form.lotse.field_person_religion.other"
 msgstr "Sonstige"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:183
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:182
 msgid "form.lotse.field_person_religion-help"
 msgstr ""
 "Wenn Sie keiner Religionsgemeinschaft angehören, wählen Sie »nicht "
@@ -2701,58 +2629,58 @@ msgstr ""
 "kirchensteuerhebeberechtigten Religionsgemeinschaft an, wählen Sie "
 "»Sonstige« aus."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:184
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:183
 msgid "form.lotse.field_person_religion.data_label"
 msgstr "Religionszugehörigkeit"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:189
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:188
 msgid "form.lotse.step_iban.label"
 msgstr "Bankverbindung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:194
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:193
 msgid "form.lotse.iban.account-holder"
 msgstr "Wer ist Kontoinhaber:in?"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:195
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:194
 msgid "form.lotse.iban.account-holder.data_label"
 msgstr "Kontoinhaber:in"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:196
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:195
 msgid "form.lotse.iban.account-holder-person-a"
 msgstr "Person A"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:197
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:196
 msgid "form.lotse.iban.account-holder-person-b"
 msgstr "Person B"
 
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:199
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:211
+msgid "form.lotse.field_iban"
+msgstr "IBAN "
+
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:200
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:212
-msgid "form.lotse.field_iban"
+msgid "form.lotse.field_iban.data_label"
 msgstr "IBAN "
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:201
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:213
-msgid "form.lotse.field_iban.data_label"
-msgstr "IBAN "
-
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:202
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:214
 msgid "form.lotse.field_iban.example_input"
 msgstr "inländisches Geldinstitut"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:209
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:208
 msgid "form.lotse.field_is_user_account_holder"
 msgstr "Ja, ich bin Kontoinhaber:in."
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:210
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:209
 msgid "form.lotse.field_is_user_account_holder.data_label"
 msgstr "Das angegebene Konto gehört Ihnen"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:221
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:220
 msgid "form.lotse.iban-title"
 msgstr "Bankverbindung"
 
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:222
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:221
 msgid "form.lotse.iban-intro"
 msgstr ""
 "Falls Sie Vorauszahlungen getätigt haben, werden eventuelle Erstattungen "
@@ -2820,6 +2748,99 @@ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 #: app/forms/validations/date_validations.py:103
 msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
+
+#: app/forms/validations/validators.py:24
+#: app/forms/validations/validators.py:189
+msgid "validate.not-a-decimal"
+msgstr "Der Wert darf nur Ziffern beinhalten."
+
+#: app/forms/validations/validators.py:30
+msgid "validate.must-not-be-zero"
+msgstr "Dieses Feld darf nicht 0 sein."
+
+#: app/forms/validations/validators.py:40
+msgid "validate.length-max-reached"
+msgstr "Die Angabe ist %(diff)s Zeichen zu lang."
+
+#: app/forms/validations/validators.py:53
+msgid "validate.integer-length-max"
+msgstr "Das Feld darf maximal %(max)s Ziffern lang sein."
+
+#: app/forms/validations/validators.py:55
+msgid "validate.integer-length-min"
+msgstr "Das Feld muss mindestens %(min)s Ziffern lang sein."
+
+#: app/forms/validations/validators.py:57
+msgid "validate.integer-length-between"
+msgstr "Das Feld muss zwischen %(min)s und %(max)s Ziffern lang sein."
+
+#: app/forms/validations/validators.py:75
+msgid "validate.invalid-iban"
+msgstr "Ungültige IBAN Nummer"
+
+#: app/forms/validations/validators.py:78
+msgid "validate.country-code-not-de"
+msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
+
+#: app/forms/validations/validators.py:93
+#: app/forms/validations/validators.py:103
+#: app/forms/validations/validators.py:106
+#: app/forms/validations/validators.py:109
+#: app/forms/validations/validators.py:112
+msgid "validate.invalid-idnr"
+msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
+
+#: app/forms/validations/validators.py:96
+msgid "validate.idnr-length"
+msgstr ""
+"Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
+"insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
+"entsprechen: 00 000 000 000"
+
+#: app/forms/validations/validators.py:118
+#: app/forms/validations/validators.py:123
+msgid "validate.unlock-code-length"
+msgstr ""
+"Ihr Freischaltcode ist nicht vollständig. Der Freischaltcode muss aus 3 x"
+" 4 Zeichen bestehen."
+
+#: app/forms/validations/validators.py:126
+msgid "validate.invalid-unlock-code"
+msgstr "Der Freischaltcode ist nicht valide."
+
+#: app/forms/validations/validators.py:136
+#: app/forms/validations/validators.py:146
+msgid "validate.invalid-character"
+msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
+
+#: app/forms/validations/validators.py:158
+msgid "validate.invalid-tax-number-length.shorter-than-ten"
+msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
+
+#: app/forms/validations/validators.py:160
+msgid "validate.invalid-tax-number-length.shorter-than-eleven"
+msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
+
+#: app/forms/validations/validators.py:162
+msgid "validate.invalid-tax-number-length.too-long"
+msgstr "Die Angabe darf höchstens 11 Ziffern umfassen."
+
+#: app/forms/validations/validators.py:171
+msgid "validate.invalid-hessen-tax-number"
+msgstr ""
+"In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
+"Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
+"Stelle eine 0 ein."
+
+#: app/forms/validations/validators.py:179
+msgid "validate.invalid-tax-number"
+msgstr "Die Steuernummer ist nicht valide."
+
+#: app/forms/validations/validators.py:196
+msgid "validate.disability_degree.invalid_number"
+msgstr ""
+"Keine gültige Angabe. Mögliche Werte: 20, 25, 30, 35, 40, 45, 50, 55, 60,"
+" 65, 70, 75, 80, 85, 90, 95, 100."
 
 #: app/model/form_data.py:365
 msgid "form.lotse.input_invalid.mandatory_field_missing"
