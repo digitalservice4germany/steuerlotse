@@ -14,11 +14,11 @@ from app.forms.fields import ConfirmationField, \
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban, \
     get_religion_field
-from app.forms.steps.step import SectionLink, FormStep
+from app.forms.steps.step import SectionLink
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
+from app.forms.validations.validators import ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
     ValidIdNr, MaximumLength
-from app.forms.validators import DecimalOnly, IntegerLength
+from app.forms.validations.validators import DecimalOnly, IntegerLength
 from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel

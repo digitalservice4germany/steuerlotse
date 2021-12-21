@@ -5,7 +5,7 @@ from werkzeug.datastructures import MultiDict
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import IdNrField, SteuerlotseDateField, UnlockCodeField, _add_classes_to_kwargs
-from app.forms.validators import ValidIdNr
+from app.forms.validations.validators import ValidIdNr
 
 
 class TestAddClassesToKwargs(unittest.TestCase):

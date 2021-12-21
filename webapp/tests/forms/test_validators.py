@@ -5,7 +5,7 @@ from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import UnlockCodeField, SteuerlotseStringField
-from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
+from app.forms.validations.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
     ValidUnlockCodeCharacterSet, ValidHessenTaxNumber, ValidIban, NoZero, MaximumLength
 
 
