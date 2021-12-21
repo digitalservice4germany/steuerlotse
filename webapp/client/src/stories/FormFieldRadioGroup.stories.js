@@ -27,7 +27,7 @@ export const WithMoreRadioButtons = Template.bind({});
 Default.args = {
   fieldId: "radio",
   fieldName: "radio",
-  radioButtons: [
+  options: [
     { value: "yes", displayName: "Ja, ich zahle oder beziehe Unterhalt." },
     {
       value: "no",
@@ -65,7 +65,7 @@ WithDetails.args = {
 
 WithMoreRadioButtons.args = {
   ...Default.args,
-  radioButtons: [
+  options: [
     { value: "yes", displayName: "Ja, ich zahle oder beziehe Unterhalt." },
     {
       value: "no",

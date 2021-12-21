@@ -54,7 +54,7 @@ const Radio = styled.div`
 function FormFieldRadioGroup({
   fieldName,
   fieldId,
-  radioButtons,
+  options,
   value,
   required,
   autofocus,
@@ -83,7 +83,7 @@ function FormFieldRadioGroup({
           <fieldset id={fieldId} name={fieldId}>
             <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
             <div className="radio-button-list">
-              {radioButtons.map((option, i) => [
+              {options.map((option, i) => [
                 <input
                   type="radio"
                   id={fieldId + option.value}
@@ -121,7 +121,7 @@ function FormFieldRadioGroup({
 FormFieldRadioGroup.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
-  radioButtons: optionsPropType.isRequired,
+  options: optionsPropType.isRequired,
   value: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   details: FieldLabelForSeparatedFields.propTypes.details,
