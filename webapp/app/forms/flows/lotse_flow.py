@@ -20,6 +20,7 @@ from app.forms.fields import SteuerlotseDateField, LegacySteuerlotseSelectField,
 from wtforms.fields import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
+from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
@@ -133,7 +134,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepFamilienstand,
                 StepSteuernummer,
                 StepPersonA,
+                StepMerkzeichenPersonA,
                 StepPersonB,
+                StepMerkzeichenPersonB,
                 StepTelephoneNumber,
                 StepIban,
 
@@ -317,6 +320,11 @@ class LotseMultiStepFlow(MultiStepFlow):
                     break
         elif field.field_class in (LegacyYesNoField, YesNoField):
             value_representation = "Ja" if value == "yes" else "Nein"
+        elif field.field_class == BooleanField and field.name:
+            if 'merkzeichen' in field.name:
+                value_representation = "Ja" if value else None
+            else:
+                value_representation = "Ja" if value else "Nein"
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"
         elif field.field_class in (SteuerlotseDateField, LegacySteuerlotseDateField):
