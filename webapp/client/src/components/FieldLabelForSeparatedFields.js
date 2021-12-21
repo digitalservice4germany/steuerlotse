@@ -9,7 +9,7 @@ const Legend = styled.legend`
   }
 
   &.field-label-example {
-    margin-bottom: 0;
+    margin-bottom: var(--spacing-01);
   }
 `;
 
@@ -19,9 +19,7 @@ export default function FieldLabelForSeparatedFields(props) {
     <FieldLabelScaffolding
       {...props}
       render={(innerContent, className) => (
-        <span>
-          <Legend className={className}>{innerContent}</Legend>
-        </span>
+        <Legend className={className}>{innerContent}</Legend>
       )}
     />
   );

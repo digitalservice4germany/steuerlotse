@@ -34,6 +34,37 @@ const translations = {
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
     },
+    merkzeichen: {
+      hasPflegegrad: {
+        label: "Wurde ein Pflegegrad 4 oder 5 festgestellt?",
+      },
+      disabilityDegree: {
+        label: "Grad der Behinderung",
+        example: "ab 20",
+      },
+      merkzeichen: {
+        label: "Merkzeichen",
+        details: {
+          title: "Infos zu den Merkzeichen",
+          text: "Im Schwerbehindertenausweis, den man ab einem Grad der Behinderung von 50 und mehr erhalten kann, werden spezifische Behinderungen und bestimmte gesundheitliche Einschränkungen durch Merkzeichen kenntlich gemacht. Viele Nachteilsausgleiche für schwerbehinderte Menschen sind an bestimmte Merkzeichen gekoppelt. Sollten Sie kein Merkzeichen haben, lassen Sie das Feld frei.",
+        },
+      },
+      hasMerkzeichenH: {
+        label: "Merkzeichen H",
+      },
+      hasMerkzeichenG: {
+        label: "Merkzeichen G",
+      },
+      hasMerkzeichenBl: {
+        label: "Merkzeichen Bl",
+      },
+      hasMerkzeichenTbl: {
+        label: "Merkzeichen TBl",
+      },
+      hasMerkzeichenAg: {
+        label: "Merkzeichen aG",
+      },
+    },
     telephoneNumber: {
       fieldTelephoneNumber: {
         label: "Telefonnummer",
