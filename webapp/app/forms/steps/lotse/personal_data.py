@@ -242,27 +242,6 @@ class StepPersonA(LotseFormSteuerlotseStep):
             validators=[InputRequired(), validators.length(max=20)])
         person_a_religion = get_religion_field()
 
-        person_a_beh_grad = SteuerlotseIntegerField(
-            label=_l('form.lotse.field_person_beh_grad'),
-            validators=[
-                validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
-            render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
-                       'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
-                       'max_characters': 3})
-        person_a_blind = BooleanField(
-            label=_l('form.lotse.field_person_blind'),
-            render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
-        person_a_gehbeh = BooleanField(
-            label=_l('form.lotse.field_person_gehbeh'),
-            render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
-
-        def validate_person_a_beh_grad(self, field):
-            if self.person_a_gehbeh.data:
-                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
-            else:
-                validators.Optional()(self, field)
-
     @classmethod
     def get_label(cls, data=None):
         return ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label',

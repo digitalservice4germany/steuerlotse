@@ -332,38 +332,6 @@ class TestPersonAValidation:
         form = new_person_a_step(form_data=data).render_info.form
         assert form.validate() is False
 
-    def test_if_gehbeh_has_allowed_value_then_succ_validation(self, valid_form_data):
-        for allowed_value in [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]:
-            data = MultiDict({**valid_form_data, **{'person_a_beh_grad': allowed_value}})
-            form = new_person_a_step(form_data=data).render_info.form
-            assert form.validate() is True
-
-    def test_if_gehbeh_has_unallowed_value_then_fail_validation(self, valid_form_data):
-        for allowed_value in [0, 15, 21, 110]:
-            data = MultiDict({**valid_form_data, **{'person_a_beh_grad': allowed_value}})
-            form = new_person_a_step(form_data=data).render_info.form
-            assert form.validate() is False
-
-    def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data):
-        data = MultiDict(valid_form_data)
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is True
-
-    def test_if_gehbeh_yes_and_beh_grad_not_set_then_fail_validation(self, valid_form_data):
-        data = MultiDict({**valid_form_data, **{'person_a_gehbeh': 'on'}})
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is False
-
-    def test_if_gehbeh_yes_and_beh_grad_set_then_succ_validation(self, valid_form_data):
-        data = MultiDict({**valid_form_data, **{'person_a_gehbeh': 'on', 'person_a_beh_grad': '30'}})
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is True
-
-    def test_if_not_gehbeh_but_beh_grad_set_then_succ_validation(self, valid_form_data):
-        data = MultiDict({**valid_form_data, **{'person_a_beh_grad': '30'}})
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is True
-
 
 def new_person_b_step(form_data):
     return LotseStepChooser().get_correct_step(StepPersonB.name, True, ImmutableMultiDict(form_data))

@@ -87,8 +87,7 @@ class MandatoryFormData(BaseModel):
     person_a_street_number: str
     person_a_plz: str
     person_a_town: str
-    person_a_blind: bool
-    person_a_gehbeh: bool
+    # TODO add pflegegrad?
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -210,9 +209,7 @@ class FormDataDependencies(BaseModel):
     person_a_address_ext: Optional[str]
     person_a_plz: Optional[str]
     person_a_town: Optional[str]
-    person_a_beh_grad: Optional[int]
-    person_a_blind: Optional[bool]
-    person_a_gehbeh: Optional[bool]
+    # TODO add all merkzeichen fields
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]

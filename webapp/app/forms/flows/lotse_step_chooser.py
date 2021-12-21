@@ -41,9 +41,9 @@ class LotseStepChooser(StepChooser):
         'person_a_plz': '20354',
         'person_a_town': 'Hamburg',
         'person_a_religion': 'none',
-        'person_a_beh_grad': 25,
-        'person_a_blind': True,
-        'person_a_gehbeh': True,
+        'person_a_disability_degree': 25,
+        'person_a_has_merkzeichen_bl': True,
+        'person_a_has_merkzeichen_g': True,
 
         'person_b_idnr': '02293417683',
         'person_b_dob': datetime.date(1951, 2, 25),
