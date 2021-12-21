@@ -1,4 +1,7 @@
+import datetime
+
 import pytest
+from flask_babel import ngettext
 from werkzeug.datastructures import ImmutableMultiDict, MultiDict
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
@@ -67,6 +70,37 @@ class TestStepMerkzeichenPersonAValidation:
         data = MultiDict({**valid_form_data, **{'person_a_disability_degree': 20}})
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
         assert form.validate() is True
+        
+        
+class TestStepMerkzeichenPersonATexts:
+    def test_if_multiple_users_then_show_multiple_title(self, new_test_request_context):
+        expected_step_title = ngettext('form.lotse.merkzeichen_person_a.title', 'form.lotse.merkzeichen_person_a.title',
+                                       num=2)
+        session_data = {
+            'familienstand': 'married',
+            'familienstand_date': datetime.date(2000, 1, 31),
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+        }
+
+        with new_test_request_context(stored_data=session_data):
+            step = new_merkzeichen_person_a_step({})
+            step._pre_handle()
+
+        assert step.render_info.step_title == expected_step_title
+
+    def test_if_single_user_then_show_single_title(self, new_test_request_context):
+        expected_step_title = ngettext('form.lotse.merkzeichen_person_a.title', 'form.lotse.merkzeichen_person_a.title',
+                                       num=1)
+        session_data = {
+            'familienstand': 'single',
+        }
+
+        with new_test_request_context(stored_data=session_data):
+            step = new_merkzeichen_person_a_step({})
+            step._pre_handle()
+
+        assert step.render_info.step_title == expected_step_title
 
 
 def new_merkzeichen_person_b_step(form_data):
