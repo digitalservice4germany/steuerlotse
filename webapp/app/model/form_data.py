@@ -209,7 +209,13 @@ class FormDataDependencies(BaseModel):
     person_a_address_ext: Optional[str]
     person_a_plz: Optional[str]
     person_a_town: Optional[str]
-    # TODO add all merkzeichen fields
+    person_a_has_pflegegrad: Optional[str]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_g: Optional[bool]
+    person_a_has_merkzeichen_ag: Optional[bool]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
