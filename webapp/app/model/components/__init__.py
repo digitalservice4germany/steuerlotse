@@ -91,6 +91,10 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 
+class MerkzeichenProps(StepFormProps):
+    pass
+
+
 class TelephoneNumberProps(StepFormProps):
     pass
 

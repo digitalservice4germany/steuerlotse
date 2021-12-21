@@ -11,6 +11,8 @@ import RevocationSuccessPage from "./pages/RevocationSuccessPage";
 import DeclarationIncomesPage from "./pages/DeclarationIncomesPage";
 import TaxNumberPage from "./pages/TaxNumberPage";
 import TelephoneNumberPage from "./pages/TelephoneNumberPage";
+import MerkzeichenPersonAPage from "./pages/MerkzeichenPersonAPage";
+import MerkzeichenPersonBPage from "./pages/MerkzeichenPersonBPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 
@@ -21,6 +23,8 @@ const allowedComponents = {
   RevocationPage,
   RevocationSuccessPage,
   DeclarationIncomesPage,
+  MerkzeichenPersonAPage,
+  MerkzeichenPersonBPage,
   TaxNumberPage,
   TelephoneNumberPage,
   StmindSelectionPage,

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-14 14:46+0100\n"
+"POT-Creation-Date: 2021-12-21 11:25+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -265,20 +265,20 @@ msgstr "Die Steuernummer ist nicht valide."
 msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
-#: app/forms/flows/logout_flow.py:18
-#: app/forms/flows/unlock_code_request_flow.py:37
+#: app/forms/flows/logout_flow.py:20
+#: app/forms/flows/unlock_code_request_flow.py:39
 msgid "form.auth-request.title"
 msgstr "Anforderung des Freischaltcodes"
 
-#: app/forms/flows/logout_flow.py:30
+#: app/forms/flows/logout_flow.py:32
 msgid "form.logout.logout-anyway-button"
 msgstr "Abmelden"
 
-#: app/forms/flows/logout_flow.py:45
+#: app/forms/flows/logout_flow.py:47
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:101
+#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:102
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
@@ -295,16 +295,16 @@ msgstr "Keine Angabe"
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
-#: app/forms/flows/unlock_code_activation_flow.py:31
+#: app/forms/flows/unlock_code_activation_flow.py:33
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
-#: app/forms/flows/unlock_code_request_flow.py:51
+#: app/forms/flows/unlock_code_request_flow.py:53
 #: app/forms/steps/unlock_code_request_steps.py:46
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:35
+#: app/forms/flows/unlock_code_revocation_flow.py:37
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
@@ -1167,6 +1167,95 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
+#: app/forms/steps/lotse/merkzeichen.py:18
+msgid "form.lotse.merkzeichen.title"
+msgstr "Angaben zu Behinderung oder Pflegebedürftigkeit von Person A"
+
+#: app/forms/steps/lotse/merkzeichen.py:19
+msgid "form.lotse.merkzeichen.intro"
+msgstr ""
+"Bei einer Behinderung besteht in der Regel Anspruch auf steuerliche "
+"Vergünstigungen in Form von Pauschbeträgen. Ob und in welcher Höhe Sie "
+"Anspruch auf die Pauschbeträge haben, ist von Ihren Angaben abhängig."
+
+#: app/forms/steps/lotse/merkzeichen.py:20
+#: app/forms/steps/lotse/personal_data.py:31
+#: app/forms/steps/lotse/personal_data.py:185
+#: app/forms/steps/lotse/personal_data.py:297
+#: app/forms/steps/lotse/personal_data.py:406
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
+msgid "form.lotse.mandatory_data.header-title"
+msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
+
+#: app/forms/steps/lotse/merkzeichen.py:22
+msgid "form.lotse.merkzeichen.label"
+msgstr "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit"
+
+#: app/forms/steps/lotse/merkzeichen.py:23
+#: app/forms/steps/lotse/personal_data.py:36
+#: app/forms/steps/lotse/personal_data.py:188
+#: app/forms/steps/lotse/personal_data.py:300
+#: app/forms/steps/lotse/personal_data.py:411
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
+msgid "form.lotse.mandatory_data.label"
+msgstr "Pflichtangaben"
+
+#: app/forms/steps/lotse/merkzeichen.py:28
+msgid "form.lotse.merkzeichen.person_a_has_pflegegrad.data_label"
+msgstr "Wurde ein Pflegegrad von 4 oder 5 festgestellt? "
+
+#: app/forms/steps/lotse/merkzeichen.py:34
+#: app/forms/steps/lotse/personal_data.py:249
+#: app/forms/steps/lotse/personal_data.py:380
+msgid "form.lotse.field_person_beh_grad-help"
+msgstr ""
+"Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
+"Behinderung, abgekürzt GdB, wird mit einem ärztlichen Gutachten "
+"individuell festgelegt. Er steht ebenfalls auf dem "
+"Behindertenausweis.<br/><br/>Menschen mit Behinderung und einem Grad der "
+"Behinderung von mindestens 25 aber weniger als 50 steht der entsprechende"
+" Pauschbetrag jedoch nur zu <ul><li>wenn wegen der Behinderung ein "
+"gesetzlicher Anspruch auf Rente (z.B. Unfallrente) oder auf andere "
+"laufende Bezüge besteht</li><li>wenn die Behinderung zu einer dauernden "
+"Einbuße der körperlichen Beweglichkeit geführt hat oder auf einer "
+"typischen Berufskrankheit beruht.</li><ul>"
+
+#: app/forms/steps/lotse/merkzeichen.py:35
+msgid "form.lotse.merkzeichen.person_a_disability_degree"
+msgstr "Grad der Behinderung"
+
+#: app/forms/steps/lotse/merkzeichen.py:39
+msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_g.data_label"
+msgstr "Merkzeichen G"
+
+#: app/forms/steps/lotse/merkzeichen.py:42
+msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_ag.data_label"
+msgstr "Merkzeichen aG"
+
+#: app/forms/steps/lotse/merkzeichen.py:45
+msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_bl.data_label"
+msgstr "Merkzeichen Bl"
+
+#: app/forms/steps/lotse/merkzeichen.py:48
+msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_tbl.data_label"
+msgstr "Merkzeichen TBl"
+
+#: app/forms/steps/lotse/merkzeichen.py:51
+msgid "form.lotse.merkzeichen.person_a_has_merkzeichen_h.data_label"
+msgstr "Merkzeichen H"
+
+#: app/forms/steps/lotse/merkzeichen.py:86
+#: app/forms/steps/lotse/personal_data.py:441
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
+msgid "form.lotse.header-title"
+msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
+
 #: app/forms/steps/lotse/personal_data.py:29
 msgid "form.lotse.steuernummer-title"
 msgstr "Steuernummer"
@@ -1180,29 +1269,9 @@ msgstr ""
 "beispielsweise ein Umzug, eine Heirat oder die Änderung der "
 "Veranlagungsart sein."
 
-#: app/forms/steps/lotse/personal_data.py:31
-#: app/forms/steps/lotse/personal_data.py:185
-#: app/forms/steps/lotse/personal_data.py:297
-#: app/forms/steps/lotse/personal_data.py:406
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
-msgid "form.lotse.mandatory_data.header-title"
-msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
-
 #: app/forms/steps/lotse/personal_data.py:35
 msgid "form.lotse.step_steuernummer.label"
 msgstr "Steuernummer"
-
-#: app/forms/steps/lotse/personal_data.py:36
-#: app/forms/steps/lotse/personal_data.py:188
-#: app/forms/steps/lotse/personal_data.py:300
-#: app/forms/steps/lotse/personal_data.py:411
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
-msgid "form.lotse.mandatory_data.label"
-msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:44
 #: app/forms/steps/lotse/personal_data.py:142
@@ -1468,21 +1537,6 @@ msgstr "Wohnort"
 msgid "form.lotse.field_person_beh_grad"
 msgstr "Grad der Behinderung"
 
-#: app/forms/steps/lotse/personal_data.py:249
-#: app/forms/steps/lotse/personal_data.py:380
-msgid "form.lotse.field_person_beh_grad-help"
-msgstr ""
-"Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
-"Behinderung, abgekürzt GdB, wird mit einem ärztlichen Gutachten "
-"individuell festgelegt. Er steht ebenfalls auf dem "
-"Behindertenausweis.<br/><br/>Menschen mit Behinderung und einem Grad der "
-"Behinderung von mindestens 25 aber weniger als 50 steht der entsprechende"
-" Pauschbetrag jedoch nur zu <ul><li>wenn wegen der Behinderung ein "
-"gesetzlicher Anspruch auf Rente (z.B. Unfallrente) oder auf andere "
-"laufende Bezüge besteht</li><li>wenn die Behinderung zu einer dauernden "
-"Einbuße der körperlichen Beweglichkeit geführt hat oder auf einer "
-"typischen Berufskrankheit beruht.</li><ul>"
-
 #: app/forms/steps/lotse/personal_data.py:250
 #: app/forms/steps/lotse/personal_data.py:381
 msgid "form.lotse.field_person_beh_grad.data_label"
@@ -1589,13 +1643,6 @@ msgstr "Telefonnummer für Rückfragen"
 #: app/forms/steps/lotse/personal_data.py:416
 msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
-
-#: app/forms/steps/lotse/personal_data.py:441
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
-msgid "form.lotse.header-title"
-msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/steuerminderungen.py:25
 msgid "form.lotse.select_stmind-title"
