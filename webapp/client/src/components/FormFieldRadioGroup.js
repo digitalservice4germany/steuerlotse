@@ -4,6 +4,7 @@ import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
 import { optionsPropType } from "../lib/propTypes";
+import FieldError from "./FieldError";
 
 const Radio = styled.div`
   input[type="radio"] {
@@ -50,7 +51,7 @@ const Radio = styled.div`
   }
 `;
 
-function FormFieldRadio({
+function FormFieldRadioGroup({
   fieldName,
   fieldId,
   options,
@@ -63,6 +64,7 @@ function FormFieldRadio({
   onChangeHandler,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
+  const groupShouldHaveAutofocus = autofocus || (errors && errors.length !== 0);
 
   const toggleRadioButton = (event) => {
     setSelectedValue(event.target.value);
@@ -75,6 +77,7 @@ function FormFieldRadio({
         errors,
       }}
       hideLabel
+      hideErrors
       render={() => (
         <Radio>
           <fieldset id={fieldId} name={fieldId}>
@@ -87,7 +90,7 @@ function FormFieldRadio({
                   key={`${fieldId}-${option.value}`}
                   name={fieldId}
                   required={required}
-                  autoFocus={autofocus && i === 0}
+                  autoFocus={groupShouldHaveAutofocus && i === 0}
                   value={option.value}
                   defaultChecked={selectedValue === option.value}
                   onClick={toggleRadioButton}
@@ -101,6 +104,13 @@ function FormFieldRadio({
                 </label>,
               ])}
             </div>
+            {errors.map((error, index) => (
+              // There is no natural key and the list is completely static, so using the index is fine.
+              // eslint-disable-next-line
+              <FieldError key={index} fieldName={fieldName}>
+                {error}
+              </FieldError>
+            ))}
           </fieldset>
         </Radio>
       )}
@@ -108,7 +118,7 @@ function FormFieldRadio({
   );
 }
 
-FormFieldRadio.propTypes = {
+FormFieldRadioGroup.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   options: optionsPropType.isRequired,
@@ -121,7 +131,7 @@ FormFieldRadio.propTypes = {
   onChangeHandler: PropTypes.func,
 };
 
-FormFieldRadio.defaultProps = {
+FormFieldRadioGroup.defaultProps = {
   value: undefined,
   required: false,
   autofocus: false,
@@ -129,4 +139,4 @@ FormFieldRadio.defaultProps = {
   onChangeHandler: undefined,
 };
 
-export default FormFieldRadio;
+export default FormFieldRadioGroup;

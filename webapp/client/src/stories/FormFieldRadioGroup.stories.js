@@ -1,18 +1,18 @@
 import React from "react";
 
-import FormFieldRadio from "../components/FormFieldRadio";
+import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Form Fields/Radio",
-  component: FormFieldRadio,
+  title: "Form Fields/RadioGroup",
+  component: FormFieldRadioGroup,
 };
 
 function Template(args) {
   return (
     <StepForm {...StepFormDefault.args}>
-      <FormFieldRadio {...args} />
+      <FormFieldRadioGroup {...args} />
     </StepForm>
   );
 }
@@ -22,7 +22,7 @@ export const WithError = Template.bind({});
 export const WithAutofocus = Template.bind({});
 export const WithPreselectedValue = Template.bind({});
 export const WithDetails = Template.bind({});
-export const WithMoreOptions = Template.bind({});
+export const WithMoreRadioButtons = Template.bind({});
 
 Default.args = {
   fieldId: "radio",
@@ -63,7 +63,7 @@ WithDetails.args = {
   },
 };
 
-WithMoreOptions.args = {
+WithMoreRadioButtons.args = {
   ...Default.args,
   options: [
     { value: "yes", displayName: "Ja, ich zahle oder beziehe Unterhalt." },

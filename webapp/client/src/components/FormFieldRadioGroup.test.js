@@ -1,9 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import FormFieldRadio from "./FormFieldRadio";
+import { within } from "@testing-library/dom";
+import FormFieldRadioGroup from "./FormFieldRadioGroup";
 
-describe("FormFieldRadio", () => {
+describe("FormFieldRadioGroup", () => {
   let props;
   const onChangeHandler = jest.fn();
 
@@ -22,7 +23,7 @@ describe("FormFieldRadio", () => {
       ],
       onChangeHandler: onChangeHandler,
     };
-    render(<FormFieldRadio {...props} />);
+    render(<FormFieldRadioGroup {...props} />);
   });
 
   it("When label is clicked, correct input is selected ", () => {
@@ -74,7 +75,6 @@ describe("FormFieldRadio", () => {
 
   it("When pressing tab and arrow right it should check second radio button", () => {
     userEvent.tab();
-    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
     userEvent.type(
       screen.getByRole("radio", { name: "Terra" }),
       "{arrowright}"
@@ -84,7 +84,6 @@ describe("FormFieldRadio", () => {
 
   it("When pressing tab and arrow right two times it should check third radio button", () => {
     userEvent.tab();
-    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
     userEvent.type(
       screen.getByRole("radio", { name: "Terra" }),
       "{arrowright}"
@@ -98,7 +97,6 @@ describe("FormFieldRadio", () => {
 
   it("When pressing tab and arrow right two times and arrow left it should check second radio button", () => {
     userEvent.tab();
-    // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
     userEvent.type(
       screen.getByRole("radio", { name: "Terra" }),
       "{arrowright}"
@@ -109,5 +107,37 @@ describe("FormFieldRadio", () => {
     );
     userEvent.type(screen.getByRole("radio", { name: "Terra" }), "{arrowleft}");
     expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
+  });
+});
+
+describe("FormFieldRadioGroup with errors", () => {
+  let props;
+  const onChangeHandler = jest.fn();
+
+  beforeEach(() => {
+    props = {
+      fieldName: "fooName",
+      fieldId: "fooId",
+      label: {
+        text: "foo",
+      },
+      errors: ["Error!"],
+      options: [
+        { value: "A", displayName: "Vulcan" },
+        { value: "B", displayName: "Terra" },
+        { value: "C", displayName: "Earth" },
+      ],
+      onChangeHandler: onChangeHandler,
+    };
+    render(<FormFieldRadioGroup {...props} />);
+  });
+
+  it("Should show error inside of fieldset", () => {
+    const fieldset = screen.getByRole("group");
+    expect(within(fieldset).getByText("Error!")).toBeTruthy();
+  });
+
+  it("Should have autofocus on first radio button", () => {
+    expect(screen.getByRole("radio", { name: "Vulcan" })).toHaveFocus();
   });
 });
