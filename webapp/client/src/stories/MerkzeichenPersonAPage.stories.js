@@ -4,7 +4,7 @@ import MerkzeichenPersonAPage from "../pages/MerkzeichenPersonAPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Pages/Merkzeichen",
+  title: "Pages/MerkzeichenPersonA",
   component: MerkzeichenPersonAPage,
 };
 
