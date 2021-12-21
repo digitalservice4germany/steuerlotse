@@ -21,6 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
+    # TODO: This uses the outdated MultiStepFlow. We do not need a multi step procedure for unlock code revocation.
+    #  If you adapt the unlock code revocation, please consider if you can get rid of the MultiStepFlow.
 
     _DEBUG_DATA = (
         UnlockCodeRevocationInputStep,

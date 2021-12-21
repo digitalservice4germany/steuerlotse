@@ -96,18 +96,21 @@ describe("FormFieldYesNo", () => {
 
     it("Should focus Nein Field when pressing tab and then right arrow key", () => {
       userEvent.tab();
+      // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
       userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
       expect(screen.getByLabelText("Nein")).toHaveFocus();
     });
 
     it("Should activate Nein Field when focussing on Nein field and pressing space", () => {
       userEvent.tab();
+      // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
       userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
       expect(screen.getByText("Nein")).toHaveClass("active");
     });
 
     it("Should check Nein Field when focussing on  Nein field and pressing space", () => {
       userEvent.tab();
+      // This is currently the only way to trigger an arrow event. userEvent.keyboard('{ArrowRight}'); is not supported yet.
       userEvent.type(screen.getByLabelText("Nein"), "{arrowright}");
       expect(screen.getByLabelText("Nein")).toBeChecked();
     });

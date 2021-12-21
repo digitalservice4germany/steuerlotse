@@ -22,7 +22,7 @@ export const WithValue = Template.bind({});
 export const WithErrors = Template.bind({});
 export const WithDetails = Template.bind({});
 export const WithAllLabelExtras = Template.bind({});
-export const WithMaxWidth = Template.bind({});
+export const WithFieldWidth = Template.bind({});
 export const WithMaxLength = Template.bind({});
 export const WithMaxLengthAndWidth = Template.bind({});
 
@@ -64,9 +64,9 @@ WithAllLabelExtras.args = {
   },
 };
 
-WithMaxWidth.args = {
+WithFieldWidth.args = {
   ...Default.args,
-  maxWidth: 4,
+  fieldWidth: 4,
 };
 
 WithMaxLength.args = {
@@ -77,5 +77,5 @@ WithMaxLength.args = {
 WithMaxLengthAndWidth.args = {
   ...Default.args,
   maxLength: 4,
-  maxWidth: 4,
+  fieldWidth: 4,
 };
