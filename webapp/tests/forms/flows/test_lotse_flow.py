@@ -862,8 +862,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         person_b_fields = ['person_b_same_address', 'person_b_dob', 'person_b_last_name', 'person_b_first_name',
                            'person_b_religion', 'person_b_street', 'person_b_street_number', 'person_b_idnr',
                            'person_b_street_number_ext', 'person_b_address_ext', 'person_b_plz',
-                           'person_b_town', 'person_b_beh_grad', 'person_b_blind', 'person_b_gehbeh',
-                           'account_holder']
+                           'person_b_town', 'person_b_has_pflegegrad', 'person_b_disability_degree',
+                           'person_b_has_merkzeichen_g', 'person_b_has_merkzeichen_ag', 'person_b_has_merkzeichen_bl',
+                           'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'account_holder']
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
                                                  'familienstand_date': ['1', '1', '1985'],
@@ -1273,8 +1274,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_last_name': 'Mustername',
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
-            'person_b_blind': False,
-            'person_b_gehbeh': False,
+            'person_b_has_merkzeichen_h': True,
 
             'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',}

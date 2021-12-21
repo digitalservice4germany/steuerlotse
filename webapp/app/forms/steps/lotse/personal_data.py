@@ -353,26 +353,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
             validators=[input_required_if_not_same_address, validators.length(max=20)])
         person_b_religion = get_religion_field()
 
-        person_b_beh_grad = SteuerlotseIntegerField(
-            label=_l('form.lotse.field_person_beh_grad'),
-            validators=[validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
-            render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
-                       'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
-                       'max_characters': 3})
-        person_b_blind = BooleanField(
-            label=_l('form.lotse.field_person_blind'),
-            render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
-        person_b_gehbeh = BooleanField(
-            label=_l('form.lotse.field_person_gehbeh'),
-            render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
-
-        def validate_person_b_beh_grad(self, field):
-            if self.person_b_gehbeh.data:
-                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
-            else:
-                validators.Optional()(self, field)
-
     @classmethod
     def get_label(cls, data):
         return cls.label

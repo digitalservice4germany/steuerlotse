@@ -70,8 +70,7 @@ def valid_person_b_data():
             'person_b_first_name': 'Ronald Arthur', 'person_b_religion': 'none',
             'person_b_street': 'The Burrow', 'person_b_street_number': 7,
             'person_b_street_number_ext': 'c', 'person_b_address_ext': 'Sixth floor',
-            'person_b_plz': '12345', 'person_b_town': 'Devon', 'person_b_beh_grad': 25,
-            'person_b_blind': True, 'person_b_gehbeh': False}
+            'person_b_plz': '12345', 'person_b_town': 'Devon'}
 
 
 class TestShowPersonB:
@@ -197,8 +196,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_b_last_name': 'Mustername',
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
-            'person_b_blind': False,
-            'person_b_gehbeh': False,
+            'person_b_has_merkzeichen_h': True,
             'account_holder': 'person_a'
         }
 
@@ -275,7 +273,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_show_person_b_true_then_raise_error_if_person_b_fields_missing(self):
         expected_missing_fields = ['person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
-                                   'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh', 'account_holder']
+                                   'person_b_first_name', 'person_b_religion', 'account_holder']
         with patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=True)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer, **self.married_familienstand})

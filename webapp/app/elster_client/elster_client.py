@@ -198,8 +198,6 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
     if adapted_form_data.pop('is_user_account_holder', None):
         adapted_form_data['account_holder'] = 'person_a'
 
-    adapted_form_data = _set_names_for_merkzeichen(adapted_form_data)
-
     for key in list(set(_BOOL_KEYS) & set(adapted_form_data.keys())):
         if isinstance(adapted_form_data[key], str):
             adapted_form_data[key] = adapted_form_data[key] == 'yes'
@@ -237,19 +235,6 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
     }
 
     return {'est_data': adapted_form_data, 'meta_data': meta_data}
-
-
-def _set_names_for_merkzeichen(adapted_form_data):
-    # TODO Remove this once we have transformed all the merkzeichen
-
-    if person_b_disability_degree := adapted_form_data.pop('person_b_beh_grad', None):
-        adapted_form_data['person_b_disability_degree'] = person_b_disability_degree
-
-    adapted_form_data['person_b_has_merkzeichen_bl'] = adapted_form_data.pop('person_b_blind', None)
-
-    adapted_form_data['person_b_has_merkzeichen_g'] = adapted_form_data.pop('person_b_gehbeh', None)
-
-    return adapted_form_data
 
 
 def check_pyeric_response_for_errors(pyeric_response):
