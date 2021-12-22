@@ -42,33 +42,33 @@ describe("PersonBHasDisabilityPage", () => {
       expect.stringContaining(props.prevUrl)
     );
   });
+});
 
-  describe("PersonBHasDisabilityPage no disability", () => {
-    let props;
+describe("PersonBHasDisabilityPage with no disability", () => {
+  let props;
 
-    beforeEach(() => {
-      props = {
-        stepHeader: {
-          title: "title",
+  beforeEach(() => {
+    props = {
+      stepHeader: {
+        title: "title",
+      },
+      form: {
+        ...StepFormDefault.args,
+      },
+      fields: {
+        personBHasDisability: {
+          value: "no",
+          errors: [],
         },
-        form: {
-          ...StepFormDefault.args,
-        },
-        fields: {
-          personBHasDisability: {
-            value: "no",
-            errors: [],
-          },
-        },
-        prevUrl: "prevUrl",
-      };
+      },
+      prevUrl: "prevUrl",
+    };
 
-      render(<PersonBHasDisabilityPage {...props} />);
-    });
+    render(<PersonBHasDisabilityPage {...props} />);
+  });
 
-    it("should render selected value no", () => {
-      expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
-      expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
-    });
+  it("should render selected value no", () => {
+    expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
+    expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
   });
 });
