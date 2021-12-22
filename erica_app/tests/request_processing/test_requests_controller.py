@@ -6,7 +6,7 @@ import pytest
 
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.pyeric.pyeric_response import PyericResponse
-from erica.request_processing.eric_mapper import EstEricMapping
+from erica.request_processing.eric_mapper import EstEricMapping, UnlockCodeRequestEricMapper
 from erica.request_processing.erica_input import UnlockCodeRequestData, UnlockCodeActivationData, \
     UnlockCodeRevocationData, GetAddressData
 from erica.request_processing.requests_controller import UnlockCodeRequestController, \
@@ -240,13 +240,6 @@ class TestEstRequestGenerateJson(unittest.TestCase):
 
 class TestUnlockCodeRequestInit(unittest.TestCase):
 
-    def test_if_dob_date_given_then_set_as_string_with_correct_format(self):
-        correct_format_dob = "1969-07-20"
-
-        created_request = UnlockCodeRequestController(UnlockCodeRequestData(idnr="09952417688", dob=date(1969, 7, 20)))
-
-        self.assertEqual(correct_format_dob, created_request.input_data.dob)
-
     def test_if_idnr_given_then_set_idnr_as_attribute_correctly(self):
         expected_idnr = "09952417688"
         created_request = UnlockCodeRequestController(UnlockCodeRequestData(idnr=expected_idnr, dob=date(1969, 7, 20)))
@@ -324,6 +317,19 @@ class TestUnlockCodeRequestProcess(unittest.TestCase):
             self.unlock_request_with_valid_input.process()
 
             self.assertFalse(generate_xml_fun.call_args.kwargs['use_testmerker'])
+
+
+class TestUnlockCodeRequestGenerateFullXml(unittest.TestCase):
+
+    def test_if_dob_date_given_then_call_generate_full_xml_with_unlock_code_eric_mapping(self):
+        unlock_code_eric_mapping = UnlockCodeRequestEricMapper(idnr="09952417688", dob=date(1969, 7, 20))
+
+        created_request = UnlockCodeRequestController(UnlockCodeRequestData(idnr="09952417688", dob=date(1969, 7, 20)))
+
+        with patch('erica.request_processing.requests_controller.elster_xml_generator.generate_full_vast_request_xml') as generate_full_xml:
+            created_request.generate_full_xml(use_testmerker=True)
+
+        assert generate_full_xml.mock_calls == [call(unlock_code_eric_mapping.__dict__, use_testmerker=True)]
 
 
 class TestUnlockCodeRequestGenerateJson(unittest.TestCase):

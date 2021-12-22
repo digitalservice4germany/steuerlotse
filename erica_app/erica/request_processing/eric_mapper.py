@@ -19,14 +19,14 @@ class EstEricMapping(BaseModel):
     telephone_number: Optional[str]
 
     familienstand: str  # potentially enum
-    familienstand_date: Optional[date]
+    familienstand_date: Optional[str]
     familienstand_married_lived_separated: Optional[bool]
     familienstand_married_lived_separated_since: Optional[date]
     familienstand_widowed_lived_separated: Optional[bool]
     familienstand_widowed_lived_separated_since: Optional[date]
 
     person_a_idnr: str
-    person_a_dob: date
+    person_a_dob: str
     person_a_last_name: str
     person_a_first_name: str
     person_a_religion: str
@@ -45,7 +45,7 @@ class EstEricMapping(BaseModel):
 
     person_b_same_address: Optional[bool]
     person_b_idnr: Optional[str]
-    person_b_dob: Optional[date]
+    person_b_dob: Optional[str]
     person_b_last_name: Optional[str]
     person_b_first_name: Optional[str]
     person_b_religion: Optional[str]
@@ -173,7 +173,7 @@ class EstEricMapping(BaseModel):
                 values['person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80'] = True
         return values
 
-    @validator('person_a_dob', 'person_b_dob', 'familienstand_date')
+    @validator('person_a_dob', 'person_b_dob', 'familienstand_date', pre=True)
     def convert_datetime_to_d_m_y(cls, v):
         if v:
             return v.strftime('%d.%m.%Y')
@@ -184,3 +184,14 @@ class EstEricMapping(BaseModel):
         if v and v < 20:
             return None
         return v
+
+
+class UnlockCodeRequestEricMapper(BaseModel):
+    idnr: str
+    dob: str
+
+    @validator('dob', pre=True)
+    def convert_datetime_to_y_m_d(cls, v):
+        if v:
+            return v.strftime('%Y-%m-%d')
+        return None
