@@ -1,13 +1,31 @@
 import PropTypes from "prop-types";
+import FieldLabelScaffolding from "../components/FieldLabelScaffolding";
+
+// Used if the field is handed to a more abstract component.
+// e.g. MerkzeichenPersonAPage -> MerkzeichenPage
+const abstractedFieldPropType = PropTypes.exact({
+  name: PropTypes.string.isRequired,
+  label: FieldLabelScaffolding.propTypes.label,
+});
 
 export const checkboxPropType = PropTypes.exact({
   errors: PropTypes.arrayOf(PropTypes.string),
   checked: PropTypes.bool,
 });
 
+export const extendedCheckboxPropType = PropTypes.exact({
+  ...checkboxPropType,
+  ...abstractedFieldPropType,
+});
+
 export const fieldPropType = PropTypes.exact({
   value: PropTypes.any,
   errors: PropTypes.arrayOf(PropTypes.string),
+});
+
+export const extendedFieldPropType = PropTypes.exact({
+  ...fieldPropType,
+  ...abstractedFieldPropType,
 });
 
 export const optionsPropType = PropTypes.arrayOf(
