@@ -22,7 +22,7 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personA_hasDisability: {
+    personAHasDisability: {
       value: null,
     },
   },
@@ -40,7 +40,7 @@ WithError.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personA_hasDisability: {
+    personAHasDisability: {
       value: "yes",
       errors: ["Falsche Eingabe"],
     },
@@ -59,7 +59,7 @@ JointTaxes.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personA_hasDisability: {
+    personAHasDisability: {
       value: "yes",
     },
   },

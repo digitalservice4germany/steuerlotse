@@ -22,8 +22,8 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personB_hasDisability: {
-      value: "yes",
+    personBHasDisability: {
+      value: null,
     },
   },
   prevUrl: "test",
@@ -39,7 +39,7 @@ WithError.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personB_hasDisability: {
+    personBHasDisability: {
       value: "yes",
       errors: ["Falsche Eingabe"],
     },
