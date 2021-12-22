@@ -269,7 +269,7 @@ def _set_names_for_merkzeichen(adapted_form_data):
     ]
 
     adapted_form_data['person_a_requests_pauschbetrag'] = any(merkzeichen_person_a)
-    adapted_form_data['person_a_requests_pauschbetrag'] = any(merkzeichen_person_b)
+    adapted_form_data['person_b_requests_pauschbetrag'] = any(merkzeichen_person_b)
 
     return adapted_form_data
 
