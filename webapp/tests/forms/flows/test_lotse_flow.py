@@ -26,6 +26,7 @@ from app.forms.fields import LegacyYesNoField, SteuerlotseStringField, Steuerlot
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse.confirmation import StepSummary
+from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
@@ -166,7 +167,9 @@ class TestLotseInit(unittest.TestCase):
             StepFamilienstand,
             StepSteuernummer,
             StepPersonA,
+            StepMerkzeichenPersonA,
             StepPersonB,
+            StepMerkzeichenPersonB,
             StepTelephoneNumber,
             StepIban,
 
