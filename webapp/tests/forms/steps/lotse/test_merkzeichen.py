@@ -70,6 +70,16 @@ class TestStepMerkzeichenPersonAValidation:
         data = MultiDict({**valid_form_data, **{'person_a_disability_degree': 20}})
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
         assert form.validate() is True
+
+    def test_if_merkzeichen_g_set_and_disability_degree_under_20_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_has_merkzeichen_g': 'on', 'person_a_disability_degree': 15}})
+        form = new_merkzeichen_person_a_step(form_data=data).render_info.form
+        assert form.validate() is False
+
+    def test_if_merkzeichen_ag_set_and_disability_degree_under_20_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_a_has_merkzeichen_ag': 'on', 'person_a_disability_degree': 15}})
+        form = new_merkzeichen_person_a_step(form_data=data).render_info.form
+        assert form.validate() is False
         
         
 class TestStepMerkzeichenPersonATexts:
@@ -165,3 +175,13 @@ class TestStepMerkzeichenPersonBValidation:
         data = MultiDict({**valid_form_data, **{'person_b_disability_degree': 20}})
         form = new_merkzeichen_person_b_step(form_data=data).render_info.form
         assert form.validate() is True
+    
+    def test_if_merkzeichen_g_set_and_disability_degree_under_20_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_b_has_merkzeichen_g': 'on', 'person_b_disability_degree': 15}})
+        form = new_merkzeichen_person_b_step(form_data=data).render_info.form
+        assert form.validate() is False
+
+    def test_if_merkzeichen_ag_set_and_disability_degree_under_20_then_fail_validation(self, valid_form_data):
+        data = MultiDict({**valid_form_data, **{'person_b_has_merkzeichen_ag': 'on', 'person_b_disability_degree': 15}})
+        form = new_merkzeichen_person_b_step(form_data=data).render_info.form
+        assert form.validate() is False

@@ -2,7 +2,7 @@ from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
 from wtforms import validators, BooleanField
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, ValidationError
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import YesNoField, SteuerlotseIntegerField
@@ -50,7 +50,9 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
         def validate_person_a_disability_degree(self, field):
             if self.person_a_has_merkzeichen_g.data or self.person_a_has_merkzeichen_ag.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-disability_degree.required'))(self, field)
+                if field.data and field.data < 20:
+                    raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
             else:
                 validators.Optional()(self, field)
 
@@ -134,7 +136,9 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
 
         def validate_person_b_disability_degree(self, field):
             if self.person_b_has_merkzeichen_g.data or self.person_b_has_merkzeichen_ag.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-disability_degree.required'))(self, field)
+                if field.data and field.data < 20:
+                    raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
             else:
                 validators.Optional()(self, field)
 
