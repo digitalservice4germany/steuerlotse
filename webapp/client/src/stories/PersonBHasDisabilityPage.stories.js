@@ -41,7 +41,7 @@ WithError.args = {
   fields: {
     personB_hasDisability: {
       value: "yes",
-      errors: ["Wrong input"],
+      errors: ["Falsche Eingabe"],
     },
   },
   prevUrl: "test",

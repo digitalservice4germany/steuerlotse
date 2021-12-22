@@ -13,18 +13,18 @@ export default function PersonAHasDisabilityPage({
   fields,
   prevUrl,
   stepHeader,
-  numOfUsers,
+  numUsers,
 }) {
   const { t } = useTranslation();
 
-  const tbold = function (key) {
+  const translationBold = function translationBold(key) {
     return <Trans t={t} i18nKey={key} components={{ bold: <b /> }} />;
   };
 
-  let headerIntro = tbold("lotse.hasDisability.intro_1");
+  let headerIntro = translationBold("lotse.hasDisability.intro_single");
 
-  if (numOfUsers > 1) {
-    headerIntro = tbold("lotse.hasDisability.intro_2");
+  if (numUsers > 1) {
+    headerIntro = translationBold("lotse.hasDisability.intro_person_a");
   }
 
   return (
@@ -37,7 +37,7 @@ export default function PersonAHasDisabilityPage({
           detailsId="person_a_has_disability"
         >
           {{
-            paragraphs: [tbold("lotse.hasDisability.details.text")],
+            paragraphs: [translationBold("lotse.hasDisability.details.text")],
           }}
         </Details>
         <FormFieldRadio
@@ -46,15 +46,15 @@ export default function PersonAHasDisabilityPage({
           options={[
             {
               value: "yes",
-              displayName: t("fields.switch.Yes"),
+              displayName: t("fields.yesNoSwitch.Yes"),
             },
             {
               value: "no",
-              displayName: t("fields.switch.No"),
+              displayName: t("fields.yesNoSwitch.No"),
             },
           ]}
-          value={fields.personA_hasDisability.value}
-          errors={fields.personA_hasDisability.errors}
+          value={fields.personAHasDisability.value}
+          errors={fields.personAHasDisability.errors}
           required
         />
       </StepForm>
@@ -73,8 +73,8 @@ PersonAHasDisabilityPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    personA_hasDisability: fieldPropType,
+    personAHasDisability: fieldPropType,
   }).isRequired,
-  numOfUsers: PropTypes.number.isRequired,
+  numUsers: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

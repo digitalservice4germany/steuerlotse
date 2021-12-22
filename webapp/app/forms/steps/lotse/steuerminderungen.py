@@ -12,7 +12,7 @@ from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
 from flask_babel import lazy_gettext as _l, _
 
-from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import SectionLink
 from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
 from app.model.components import SelectStMindProps
@@ -26,7 +26,9 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
     intro = _l('form.lotse.select_stmind-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
     template = 'react_component.html'
-
+    # TODO remove this once all steps are converted to steuerlotse steps
+    prev_step = StepIban
+    
     label = _l('form.lotse.step_select_stmind.label')
     section_link = SectionLink('section_steuerminderung',
                                name,

@@ -51,11 +51,11 @@ const translations = {
       finish: "Steuererklärung abgeben",
     },
     hasDisability: {
-      intro_1:
+      intro_single:
         "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> in Anspruch nehmen.",
-      intro_2:
+      intro_person_a:
         "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person A in Anspruch nehmen.",
-      intro_3:
+      intro_person_b:
         "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person B in Anspruch nehmen.",
       details: {
         title: "Infos zu den steuerlichen Vergünstigungen",
@@ -170,7 +170,7 @@ const translations = {
         text: "z.B. 29.2.1951",
       },
     },
-    switch: {
+    yesNoSwitch: {
       Yes: "Ja",
       No: "Nein",
     },

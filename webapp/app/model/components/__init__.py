@@ -108,7 +108,7 @@ class ConfirmationProps(StepFormProps):
     data_privacy_link: str
 
 class PersonAHasDisabilityProps(StepFormProps):
-    numOfUsers: int
+    num_users: int
     pass
 
 class PersonBHasDisabilityProps(StepFormProps):

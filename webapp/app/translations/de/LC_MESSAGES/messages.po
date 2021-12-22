@@ -1627,14 +1627,6 @@ msgstr ""
 "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit für "
 "Person B machen?"
 
-#: app/forms/steps/lotse/personal_data.py:499
-msgid "form.lotse.person_b.has_disability.intro"
-msgstr ""
-"Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten"
-" für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht "
-"zu sehr belasten, können Sie steuerliche Vergünstigungen für Person B in "
-"Anspruch nehmen."
-
 #: app/forms/steps/lotse/steuerminderungen.py:25
 msgid "form.lotse.select_stmind-title"
 msgstr "Ihre Ausgaben"

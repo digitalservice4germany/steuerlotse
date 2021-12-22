@@ -16,7 +16,7 @@ export default function PersonBHasDisabilityPage({
 }) {
   const { t } = useTranslation();
 
-  const tbold = function (key) {
+  const translationBold = function translationBold(key) {
     return <Trans t={t} i18nKey={key} components={{ bold: <b /> }} />;
   };
 
@@ -25,7 +25,7 @@ export default function PersonBHasDisabilityPage({
       <StepHeaderButtons url={prevUrl} />
       <FormHeader
         title={stepHeader.title}
-        intro={tbold("lotse.hasDisability.intro_3")}
+        intro={translationBold("lotse.hasDisability.intro_person_b")}
       />
       <StepForm {...form}>
         <Details
@@ -33,7 +33,7 @@ export default function PersonBHasDisabilityPage({
           detailsId="person_b_has_disability"
         >
           {{
-            paragraphs: [tbold("lotse.hasDisability.details.text")],
+            paragraphs: [translationBold("lotse.hasDisability.details.text")],
           }}
         </Details>
         <FormFieldRadio
@@ -42,15 +42,15 @@ export default function PersonBHasDisabilityPage({
           options={[
             {
               value: "yes",
-              displayName: t("fields.switch.Yes"),
+              displayName: t("fields.yesNoSwitch.Yes"),
             },
             {
               value: "no",
-              displayName: t("fields.switch.No"),
+              displayName: t("fields.yesNoSwitch.No"),
             },
           ]}
-          value={fields.personB_hasDisability.value}
-          errors={fields.personB_hasDisability.errors}
+          value={fields.personBHasDisability.value}
+          errors={fields.personBHasDisability.errors}
           required
         />
       </StepForm>
@@ -69,7 +69,7 @@ PersonBHasDisabilityPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    personB_hasDisability: fieldPropType,
+    personBHasDisability: fieldPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

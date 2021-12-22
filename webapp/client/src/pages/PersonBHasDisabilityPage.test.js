@@ -15,44 +15,60 @@ describe("PersonBHasDisabilityPage", () => {
         ...StepFormDefault.args,
       },
       fields: {
-        personB_hasDisability: {
+        personBHasDisability: {
           value: "yes",
           errors: [],
         },
       },
       prevUrl: "prevUrl",
     };
+
+    render(<PersonBHasDisabilityPage {...props} />);
   });
 
   it("should render selected value yes", () => {
-    render(<PersonBHasDisabilityPage {...props} />);
-
     expect(screen.queryAllByRole("radio")[0].checked).toBe(true);
     expect(screen.queryAllByRole("radio")[1].checked).toBe(false);
   });
 
-  it("should render selected value no", () => {
-    props.fields.personB_hasDisability.value = "no";
-
-    render(<PersonBHasDisabilityPage {...props} />);
-
-    expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
-    expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
-  });
-
   it("should render yes and no input", () => {
-    render(<PersonBHasDisabilityPage {...props} />);
-
     expect(screen.getByText("Ja")).toBeInTheDocument();
     expect(screen.getByText("Nein")).toBeInTheDocument();
   });
 
   it("should render prev url link", () => {
-    render(<PersonBHasDisabilityPage {...props} />);
-
     expect(screen.queryAllByRole("link")[0]).toBeInTheDocument();
     expect(screen.queryAllByRole("link")[0].href).toEqual(
       expect.stringContaining(props.prevUrl)
     );
+  });
+});
+
+describe("PersonBHasDisabilityPage no disability", () => {
+  let props;
+
+  beforeEach(() => {
+    props = {
+      stepHeader: {
+        title: "title",
+      },
+      form: {
+        ...StepFormDefault.args,
+      },
+      fields: {
+        personBHasDisability: {
+          value: "no",
+          errors: [],
+        },
+      },
+      prevUrl: "prevUrl",
+    };
+
+    render(<PersonBHasDisabilityPage {...props} />);
+  });
+
+  it("should render selected value no", () => {
+    expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
+    expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
   });
 });

@@ -466,10 +466,16 @@ class StepPersonAHasDisability(LotseFormSteuerlotseStep):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(self.render_info.overview_url),
             },
-            numOfUsers=get_number_of_users(self.stored_data),
+            num_users=get_number_of_users(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
+        
+        
+        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
+        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
+        props_dict['fields']['personAHasDisability'] = props_dict['fields'].pop('personA_hasDisability')
+        
 
         return render_template('react_component.html',
                                component='PersonAHasDisabilityPage',
@@ -496,7 +502,6 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
         props_dict = PersonBHasDisabilityProps(            
             step_header={
                 'title': _('form.lotse.person_b.has_disability.title'),
-                'intro': _('form.lotse.person_b.has_disability.intro')
             },
             form={
                 'action': self.render_info.submit_url,
@@ -506,6 +511,10 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
+        
+        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
+        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
+        props_dict['fields']['personBHasDisability'] = props_dict['fields'].pop('personB_hasDisability')
 
         return render_template('react_component.html',
                                component='PersonBHasDisabilityPage',

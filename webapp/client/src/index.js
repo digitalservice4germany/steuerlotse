@@ -24,11 +24,11 @@ const allowedComponents = {
   RevocationSuccessPage,
   DeclarationIncomesPage,
   TaxNumberPage,
+  PersonAHasDisabilityPage,
+  PersonBHasDisabilityPage,
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
-  PersonAHasDisabilityPage,
-  PersonBHasDisabilityPage,
 };
 
 function mountComponent(element) {

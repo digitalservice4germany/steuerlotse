@@ -23,11 +23,11 @@ Default.args = {
   },
   fields: {
     personA_hasDisability: {
-      value: "yes",
+      value: null,
     },
   },
   prevUrl: "test",
-  numOfUsers: 1,
+  numUsers: 1,
 };
 
 export const WithError = Template.bind({});
@@ -42,15 +42,15 @@ WithError.args = {
   fields: {
     personA_hasDisability: {
       value: "yes",
-      errors: ["Wrong input"],
+      errors: ["Falsche Eingabe"],
     },
   },
   prevUrl: "test",
-  numOfUsers: 1,
+  numUsers: 1,
 };
 
-export const PersonA = Template.bind({});
-PersonA.args = {
+export const JointTaxes = Template.bind({});
+JointTaxes.args = {
   stepHeader: {
     title:
       "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen zu Person A?",
@@ -64,5 +64,5 @@ PersonA.args = {
     },
   },
   prevUrl: "test",
-  numOfUsers: 2,
+  numUsers: 2,
 };
