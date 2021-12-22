@@ -458,7 +458,7 @@ class StepSpenden(LotseFormSteuerlotseStep):
         stmind_spenden_inland_parteien = EuroField(
             label=_l('form.lotse.spenden-inland-parteien'),
             render_kw={'help': _l('form.lotse.spenden-inland-parteien-help'),
-                       'data_label': _l('form.lotse.spenden-inland-parteien.data_label}')},
+                       'data_label': _l('form.lotse.spenden-inland-parteien.data_label')},
             validators=[IntegerLength(max=EURO_FIELD_MAX_LENGTH)])
 
     @classmethod

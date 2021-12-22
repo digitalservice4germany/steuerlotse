@@ -109,7 +109,6 @@ class ConfirmationProps(StepFormProps):
 
 class PersonAHasDisabilityProps(StepFormProps):
     num_users: int
-    pass
 
 class PersonBHasDisabilityProps(StepFormProps):
     pass

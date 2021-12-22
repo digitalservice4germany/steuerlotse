@@ -443,17 +443,17 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
 
 class StepPersonAHasDisability(LotseFormSteuerlotseStep):
     name = 'person_a_has_disability'
-    label = _l('form.lotse.has_disability.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):
         person_a_has_disability = YesNoField(
-            render_kw={'data_label': _l('form.lotse.has_disability.data_label')},         
+            render_kw={'data_label':  _l('form.lotse.has_disability.data_label')},         
             validators=[InputRequired(_l('validate.input-required'))])
 
     @classmethod
-    def get_label(cls, data):
-        return cls.label
+    def get_label(cls, data=None):
+        return ngettext('form.lotse.has_disability.label_person_a', 'form.lotse.has_disability.label_person_a',
+                        num=get_number_of_users(data))
 
     def render(self):
         props_dict = PersonAHasDisabilityProps(            
@@ -486,8 +486,10 @@ class StepPersonAHasDisability(LotseFormSteuerlotseStep):
         
 class StepPersonBHasDisability(LotseFormSteuerlotseStep):
     name = 'person_b_has_disability'
-    label = _l('form.lotse.has_disability.label')
+    label = _l('form.lotse.has_disability.label_person_b')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+    
+    preconditions = [ShowPersonBPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_b_has_disability = YesNoField(

@@ -34,7 +34,7 @@ export default function PersonAHasDisabilityPage({
       <StepForm {...form}>
         <Details
           title={t("lotse.hasDisability.details.title")}
-          detailsId="person_a_has_disability"
+          detailsId="person_a_has_disability_detail"
         >
           {{
             paragraphs: [translationBold("lotse.hasDisability.details.text")],
