@@ -15,6 +15,7 @@ from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValida
     UnlockCodeRevocationPyericProcessController, \
     DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
     BelegRequestPyericProcessController, CheckTaxNumberPyericController
+from erica.request_processing.eric_mapper import EstEricMapping
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
@@ -79,9 +80,6 @@ class EstValidationRequestController(TransferTicketRequestController):
 
     def __init__(self, input_data: EstData, include_elster_responses: bool = False):
         super().__init__(input_data, include_elster_responses)
-        self.input_data.est_data.person_a_dob = self._reformat_date(self.input_data.est_data.person_a_dob)
-        self.input_data.est_data.person_b_dob = self._reformat_date(self.input_data.est_data.person_b_dob)
-        self.input_data.est_data.familienstand_date = self._reformat_date(self.input_data.est_data.familienstand_date)
 
     def _is_testmerker_used(self):
         return self.input_data.est_data.person_a_idnr == SPECIAL_TESTMERKER_IDNR
@@ -89,7 +87,8 @@ class EstValidationRequestController(TransferTicketRequestController):
     def process(self):
         # Translate our form data structure into the fields from
         # the Elster specification (see `Jahresdokumentation_10_2021.xml`)
-        fields = est_mapping.check_and_generate_entries(self.input_data.est_data.__dict__)
+        est_with_eric_mapping = EstEricMapping.parse_obj(self.input_data.est_data)
+        fields = est_mapping.check_and_generate_entries(est_with_eric_mapping.__dict__)
 
         common_vorsatz_args = (
                 self.input_data.meta_data.year,

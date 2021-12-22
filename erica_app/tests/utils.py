@@ -75,6 +75,8 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_h=False,
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=False,
+            person_a_requests_pauschbetrag=False,
+            person_a_requests_fahrkostenpauschale=False,
             telephone_number='01715151',
 
             person_b_idnr='02293417683',
@@ -83,8 +85,14 @@ def create_form_data(correct=True, with_tax_number=True):
             person_b_last_name='Mustername',
             person_b_same_address=True,
             person_b_religion='rk',
-            person_b_blind=False,
-            person_b_gehbeh=False,
+            person_b_has_pflegegrad=False,
+            person_b_has_merkzeichen_bl=False,
+            person_b_has_merkzeichen_tbl=False,
+            person_b_has_merkzeichen_h=False,
+            person_b_has_merkzeichen_ag=False,
+            person_b_has_merkzeichen_g=False,
+            person_b_requests_pauschbetrag=False,
+            person_b_requests_fahrkostenpauschale=False,
 
             iban='DE35133713370000012345',
             account_holder='person_a',
@@ -124,6 +132,8 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_h=False,
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=True,
+            person_a_requests_pauschbetrag=True,
+            person_a_requests_fahrkostenpauschale=False,
             telephone_number='01715151',
         )
 
@@ -154,6 +164,8 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_h=False,
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=False,
+            person_a_requests_pauschbetrag=False,
+            person_a_requests_fahrkostenpauschale=False,
             telephone_number='01715151',
 
             iban='DE35133713370000012345',
@@ -185,6 +197,8 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_h=False,
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=False,
+            person_a_requests_pauschbetrag=False,
+            person_a_requests_fahrkostenpauschale=False,
             telephone_number='01715151',
 
             iban='DE35133713370000012345',
