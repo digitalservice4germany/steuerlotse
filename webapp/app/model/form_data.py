@@ -89,7 +89,7 @@ class MandatoryFormData(BaseModel):
     person_a_town: str
     person_a_blind: bool
     person_a_gehbeh: bool
-    person_a_has_disability: Optional[str]
+    person_a_has_disability: str
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -139,7 +139,7 @@ class MandatoryFormData(BaseModel):
 
     @validator('person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
                'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh',
-               'account_holder',
+               'person_b_has_disability', 'account_holder',
                always=True)
     def person_b_required_if_shown(cls, v, values, **kwargs):
         if show_person_b(values.get('familienstandStruct', {})) and not v:
