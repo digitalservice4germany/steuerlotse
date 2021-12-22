@@ -87,7 +87,7 @@ class TestStepMerkzeichenPersonATexts:
             step = new_merkzeichen_person_a_step({})
             step._pre_handle()
 
-        assert step.render_info.step_title == expected_step_title
+        assert step.title == expected_step_title
 
     def test_if_single_user_then_show_single_title(self, new_test_request_context):
         expected_step_title = ngettext('form.lotse.merkzeichen_person_a.title', 'form.lotse.merkzeichen_person_a.title',
@@ -100,7 +100,7 @@ class TestStepMerkzeichenPersonATexts:
             step = new_merkzeichen_person_a_step({})
             step._pre_handle()
 
-        assert step.render_info.step_title == expected_step_title
+        assert step.title == expected_step_title
 
 
 def new_merkzeichen_person_b_step(form_data):

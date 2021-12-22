@@ -64,7 +64,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
     def _set_multiple_texts(self):
         number_of_users = get_number_of_users(self.stored_data)
-        self.render_info.step_title = ngettext('form.lotse.merkzeichen_person_a.title',
+        self.title = ngettext('form.lotse.merkzeichen_person_a.title',
                                                'form.lotse.merkzeichen_person_a.title',
                                                num=number_of_users)
 
