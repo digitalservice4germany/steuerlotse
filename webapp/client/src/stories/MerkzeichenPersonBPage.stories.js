@@ -15,7 +15,7 @@ function Template(args) {
 export const Default = Template.bind({});
 Default.args = {
   stepHeader: {
-    title: "Angaben zu Ihrer Behinderung oder Pflegebedürftigkeit",
+    title: "Angaben zu Behinderung oder Pflegebedürftigkeit von Person B",
     intro:
       "Bei einer Behinderung besteht in der Regel Anspruch auf steuerliche Vergünstigungen in Form von Pauschbeträgen. Ob und in welcher Höhe Sie Anspruch auf die Pauschbeträge haben, ist von Ihren Angaben abhängig.",
   },
