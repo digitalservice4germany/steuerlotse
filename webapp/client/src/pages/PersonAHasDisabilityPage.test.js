@@ -47,35 +47,36 @@ describe("PersonAHasDisabilityPage for single person", () => {
   it("should render intro_single when numOfUser is 1", () => {
     expect(screen.queryByText(/Person A/)).not.toBeInTheDocument();
   });
+});
 
-  describe("PersonAHasDisabilityPage no disability", () => {
-    let props;
+describe("PersonAHasDisabilityPage no disability", () => {
+  let props;
 
-    beforeEach(() => {
-      props = {
-        stepHeader: {
-          title: "title",
+  beforeEach(() => {
+    props = {
+      stepHeader: {
+        title: "title",
+      },
+      form: {
+        ...StepFormDefault.args,
+      },
+      fields: {
+        personAHasDisability: {
+          value: "no",
+          errors: [],
         },
-        form: {
-          ...StepFormDefault.args,
-        },
-        fields: {
-          personAHasDisability: {
-            value: "no",
-            errors: [],
-          },
-        },
-        prevUrl: "prevUrl",
-        numUsers: 1,
-      };
+      },
+      prevUrl: "prevUrl",
+      numUsers: 1,
+    };
 
-      render(<PersonAHasDisabilityPage {...props} />);
-    });
+    render(<PersonAHasDisabilityPage {...props} />);
+  });
 
-    it("should render selected value no", () => {
-      expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
-      expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
-    });
+  it("should render selected value no", () => {
+    console.log(screen.queryAllByRole("radio")[1]);
+    expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
+    expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
   });
 });
 
