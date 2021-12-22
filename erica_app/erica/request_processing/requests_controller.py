@@ -27,7 +27,6 @@ class EricaRequestController(object):
     performing the needed procedures and generating the response. Any request should inherit from this function.
     """
 
-    standard_date_format = "%d.%m.%Y"
     _PYERIC_CONTROLLER = None
 
     def __init__(self, input_data, include_elster_responses: bool = False):
@@ -48,12 +47,6 @@ class EricaRequestController(object):
 
     def generate_full_xml(self, use_testmerker):
         raise NotImplementedError
-
-    def _reformat_date(self, date_attribute):
-        if date_attribute:
-            return date_attribute.strftime(self.standard_date_format)
-        else:
-            return None
 
     def _is_testmerker_used(self):
         return self.input_data.idnr == SPECIAL_TESTMERKER_IDNR
