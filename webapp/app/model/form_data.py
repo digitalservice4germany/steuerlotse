@@ -89,7 +89,7 @@ class MandatoryFormData(BaseModel):
     person_a_town: str
     person_a_blind: bool
     person_a_gehbeh: bool
-    person_a_has_disability: str
+    person_a_has_disability: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -215,7 +215,7 @@ class FormDataDependencies(BaseModel):
     person_a_beh_grad: Optional[int]
     person_a_blind: Optional[bool]
     person_a_gehbeh: Optional[bool]
-    person_a_has_disability: str
+    person_a_has_disability: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
