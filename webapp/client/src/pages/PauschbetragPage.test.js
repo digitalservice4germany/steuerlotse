@@ -70,3 +70,63 @@ describe("With default props", () => {
     );
   });
 });
+
+describe("With yes preselected", () => {
+  beforeEach(() => {
+    let yesProps = {
+      ...props,
+      fields: {
+        requestsPauschbetrag: {
+          selectedValue: "yes",
+          options: [
+            {
+              value: "yes",
+              displayName: "Ja",
+            },
+            {
+              value: "no",
+              displayName: "Nein",
+            },
+          ],
+          errors: [],
+          name: "requests_pauschbretrag",
+        },
+      },
+    };
+    render(<PauschbetragPage {...yesProps} />);
+  });
+  it("should render selected value yes", () => {
+    expect(screen.getByDisplayValue("yes").checked).toBe(true);
+    expect(screen.getByDisplayValue("no").checked).toBe(false);
+  });
+});
+
+describe("With no preselected", () => {
+  beforeEach(() => {
+    let noProps = {
+      ...props,
+      fields: {
+        requestsPauschbetrag: {
+          selectedValue: "no",
+          options: [
+            {
+              value: "yes",
+              displayName: "Ja",
+            },
+            {
+              value: "no",
+              displayName: "Nein",
+            },
+          ],
+          errors: [],
+          name: "requests_pauschbretrag",
+        },
+      },
+    };
+    render(<PauschbetragPage {...noProps} />);
+  });
+  it("should render selected value yes", () => {
+    expect(screen.getByDisplayValue("yes").checked).toBe(false);
+    expect(screen.getByDisplayValue("no").checked).toBe(true);
+  });
+});
