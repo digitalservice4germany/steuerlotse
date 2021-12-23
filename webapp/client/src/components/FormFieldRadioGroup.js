@@ -52,7 +52,7 @@ const Radio = styled.div`
   }
 `;
 
-function FormFieldRadio({
+function FormFieldRadioGroup({
   fieldName,
   fieldId,
   options,
@@ -110,7 +110,7 @@ function FormFieldRadio({
   );
 }
 
-FormFieldRadio.propTypes = {
+FormFieldRadioGroup.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   options: optionsPropType.isRequired,
@@ -123,7 +123,7 @@ FormFieldRadio.propTypes = {
   onChangeHandler: PropTypes.func,
 };
 
-FormFieldRadio.defaultProps = {
+FormFieldRadioGroup.defaultProps = {
   value: undefined,
   label: undefined,
   required: false,
@@ -132,7 +132,7 @@ FormFieldRadio.defaultProps = {
   onChangeHandler: undefined,
 };
 
-export default FormFieldRadio;
+export default FormFieldRadioGroup;
 
 export function boldifyChoices(oldChoices) {
   return oldChoices.map((choice) => ({

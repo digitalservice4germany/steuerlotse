@@ -5,7 +5,7 @@ import styled from "styled-components";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import FormFieldRadio from "../components/FormFieldRadio";
+import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import Details from "../components/Details";
 import { extendedSelectionFieldPropType } from "../lib/propTypes";
 
@@ -64,7 +64,7 @@ export default function PauschbetragPage({
         </Details>
       </DetailsDiv>
       <StepForm {...form}>
-        <FormFieldRadio
+        <FormFieldRadioGroup
           fieldName={fields.requestsPauschbetrag.name}
           fieldId={fields.requestsPauschbetrag.name}
           options={[
