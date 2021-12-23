@@ -153,7 +153,7 @@ export default function RegistrationPage({
             <Trans
               t={t}
               i18nKey="unlockCodeRequest.eData.helpText"
-              components={{ bold: <strong /> }}
+              components={{ bold: <b /> }}
             />
           </p>
         </Details>
