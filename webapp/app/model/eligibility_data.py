@@ -5,6 +5,7 @@ from pydantic.fields import ModelField
 
 from app.model.recursive_data import RecursiveDataModel, PotentialDataModelKeysMixin
 
+
 class InvalidEligiblityError(ValueError):
     """Exception thrown in case the eligibility check failed."""
     pass

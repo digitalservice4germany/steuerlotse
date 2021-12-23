@@ -7,6 +7,8 @@ from app.forms.steps.logout_steps import LogoutInputStep
 
 
 class LogoutMultiStepFlow(MultiStepFlow):
+    # TODO: This uses the outdated MultiStepFlow. We do not need a multi step procedure for logout.
+    #  If you adapt the logout, please consider if you can get rid of the MultiStepFlow.
 
     _DEBUG_DATA = (
         LogoutInputStep,

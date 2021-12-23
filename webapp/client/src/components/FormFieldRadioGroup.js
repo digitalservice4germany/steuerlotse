@@ -1,10 +1,16 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Trans } from "react-i18next";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
 import { optionsPropType } from "../lib/propTypes";
+import FieldError from "./FieldError";
+import radioButtonCheckedFocus from "../assets/icons/radio_button_checked_focus.svg";
+import radioButtonCheckedHover from "../assets/icons/radio_button_checked_hover.svg";
+import radioButtonChecked from "../assets/icons/radio_button_checked.svg";
+import radioButtonDefault from "../assets/icons/radio_button_default.svg";
+import radioButtonFocus from "../assets/icons/radio_button_focus.svg";
+import radioButtonHover from "../assets/icons/radio_button_hover.svg";
 
 const Radio = styled.div`
   input[type="radio"] {
@@ -17,7 +23,6 @@ const Radio = styled.div`
     padding-left: 0;
     padding-top: 0;
     font-size: var(--text-medium);
-    white-space: pre;
   }
 
   input[type="radio"] + label::before {
@@ -28,23 +33,27 @@ const Radio = styled.div`
     height: 30px;
     min-width: 30px;
     margin-right: 12px;
-    background: url("/icons/radio_button_default.svg") no-repeat center;
+    background: url(${radioButtonDefault}) no-repeat center;
   }
 
   input[type="radio"]:checked + label::before {
-    background: url("/icons/radio_button_checked.svg") no-repeat center;
+    background: url(${radioButtonChecked}) no-repeat center;
   }
 
   input[type="radio"]:checked + label:hover::before {
-    background: url("/icons/radio_button_checked_hover.svg") no-repeat center;
+    background: url(${radioButtonCheckedHover}) no-repeat center;
   }
 
   input[type="radio"]:not(:checked):focus + label::before {
-    background: url("/icons/radio_button_focus.svg") no-repeat center;
+    background: url(${radioButtonFocus}) no-repeat center;
+  }
+
+  input[type="radio"]:not(:checked):hover + label::before {
+    background: url(${radioButtonHover}) no-repeat center;
   }
 
   input[type="radio"]:checked:focus + label::before {
-    background: url("/icons/radio_button_checked_focus.svg") no-repeat center;
+    background: url(${radioButtonCheckedFocus}) no-repeat center;
   }
 
   .radio-button-list {
@@ -65,6 +74,7 @@ function FormFieldRadioGroup({
   onChangeHandler,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
+  const groupShouldHaveAutofocus = autofocus || (errors && errors.length !== 0);
 
   const toggleRadioButton = (event) => {
     setSelectedValue(event.target.value);
@@ -77,6 +87,7 @@ function FormFieldRadioGroup({
         errors,
       }}
       hideLabel
+      hideErrors
       render={() => (
         <Radio>
           <fieldset id={fieldId} name={fieldId}>
@@ -89,7 +100,7 @@ function FormFieldRadioGroup({
                   key={`${fieldId}-${option.value}`}
                   name={fieldId}
                   required={required}
-                  autoFocus={autofocus && i === 0}
+                  autoFocus={groupShouldHaveAutofocus && i === 0}
                   value={option.value}
                   defaultChecked={selectedValue === option.value}
                   onClick={toggleRadioButton}
@@ -103,6 +114,13 @@ function FormFieldRadioGroup({
                 </label>,
               ])}
             </div>
+            {errors.map((error, index) => (
+              // There is no natural key and the list is completely static, so using the index is fine.
+              // eslint-disable-next-line
+              <FieldError key={index} fieldName={fieldName}>
+                {error}
+              </FieldError>
+            ))}
           </fieldset>
         </Radio>
       )}
@@ -133,18 +151,3 @@ FormFieldRadioGroup.defaultProps = {
 };
 
 export default FormFieldRadioGroup;
-
-export function boldifyChoices(oldChoices) {
-  return oldChoices.map((choice) => ({
-    value: choice.value,
-    displayName: (
-      <Trans
-        components={{
-          bold: <b />,
-        }}
-      >
-        {choice.displayName}
-      </Trans>
-    ),
-  }));
-}
