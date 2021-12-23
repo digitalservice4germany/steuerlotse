@@ -368,6 +368,34 @@ class TestEstMapping(unittest.TestCase):
         self.assertNotIn(PersonSpecificFieldId('E0109706', 'PersonB'), results.keys())
         self.assertEqual('1', results[PersonSpecificFieldId('E0109707', 'PersonB')])
 
+    def test_if_fahrkostenpauschale_requested_then_check_and_generate_entries(self):
+        form_data = {
+            'person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': True,
+            'person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': True,
+            'person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': True,
+            'person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': True,
+        }
+        results = check_and_generate_entries(form_data)
+
+        self.assertEqual('1', results[PersonSpecificFieldId('E0161706', 'PersonA')])
+        self.assertEqual('1', results[PersonSpecificFieldId('E0161806', 'PersonA')])
+        self.assertEqual('1', results[PersonSpecificFieldId('E0161706', 'PersonB')])
+        self.assertEqual('1', results[PersonSpecificFieldId('E0161806', 'PersonB')])
+
+    def test_if_fahrkostenpauschale_partially_requested_then_check_and_generate_entries(self):
+        form_data = {
+            'person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': True,
+            'person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': False,
+            'person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': False,
+            'person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': True,
+        }
+        results = check_and_generate_entries(form_data)
+
+        self.assertEqual('1', results[PersonSpecificFieldId('E0161806', 'PersonA')])
+        self.assertNotIn(PersonSpecificFieldId('E0161706', 'PersonA'), results.keys())
+        self.assertEqual('1', results[PersonSpecificFieldId('E0161706', 'PersonB')])
+        self.assertNotIn(PersonSpecificFieldId('E0161806', 'PersonB'), results.keys())
+
     def test_if_empty_fields_then_not_in_result(self):
         form_data = {
             'stmind_krankheitskosten_summe': None,
