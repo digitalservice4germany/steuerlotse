@@ -5,6 +5,12 @@ describe("PersonBHasDisability", () => {
 
   context("with no data", () => {
     beforeEach(() => {
+      // precondition of person_b_has_disability
+      cy.request("POST", "/testing/set_data/form_data", {
+        familienstand: "married",
+        familienstand_married_lived_separated: "no",
+        familienstand_confirm_zusammenveranlagung: true,
+      });
       cy.visit("/lotse/step/person_b_has_disability");
     });
 
@@ -12,16 +18,14 @@ describe("PersonBHasDisability", () => {
       cy.get("a").contains("Zurück").click();
       cy.url().should("include", "/lotse/step/person_b");
     });
-
-    it("Should link forward to telephone number page", () => {
-      cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
-    });
   });
 
   context("with person_b_has_disability yes", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
+        familienstand: "married",
+        familienstand_married_lived_separated: "no",
+        familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
       });
       cy.visit("/lotse/step/person_b_has_disability");
@@ -34,11 +38,19 @@ describe("PersonBHasDisability", () => {
     it("Should not check radio button for label no", () => {
       cy.get("#person_b_has_disabilityno").should("not.be.checked");
     });
+
+    it("Should link forward to telephone number page", () => {
+      cy.get("button[type=submit]").click();
+      cy.url().should("include", "/lotse/step/telephone_number");
+    });
   });
 
   context("with person_b_has_disability no", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
+        familienstand: "married",
+        familienstand_married_lived_separated: "no",
+        familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "no",
       });
       cy.visit("/lotse/step/person_b_has_disability");
