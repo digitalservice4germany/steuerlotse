@@ -7,16 +7,15 @@ export default function PauschbetragPersonAPage({
   stepHeader,
   form,
   fields,
+  pauschbetrag,
   prevUrl,
 }) {
   return (
     <PauschbetragPage
-      {...{ stepHeader, form, prevUrl }}
+      {...{ stepHeader, form, pauschbetrag, prevUrl }}
       fields={{
         wantsPauschbetrag: {
-          selectedValue: fields.personAWantsPauschbetrag.selectedValue,
-          errors: fields.personAWantsPauschbetrag.errors,
-          options: fields.personAWantsPauschbetrag.options,
+          ...fields.personAWantsPauschbetrag,
           name: "person_a_wants_pauschbetrag",
         },
       }}
@@ -38,5 +37,6 @@ PauschbetragPersonAPage.propTypes = {
   fields: PropTypes.exact({
     personAWantsPauschbetrag: selectionFieldPropType,
   }).isRequired,
+  pauschbetrag: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

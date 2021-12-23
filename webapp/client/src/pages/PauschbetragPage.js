@@ -5,7 +5,7 @@ import styled from "styled-components";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import FormFieldRadio, { boldifyChoices } from "../components/FormFieldRadio";
+import FormFieldRadio from "../components/FormFieldRadio";
 import Details from "../components/Details";
 import { extendedSelectionFieldPropType } from "../lib/propTypes";
 
@@ -17,10 +17,10 @@ export default function PauschbetragPage({
   stepHeader,
   form,
   fields,
+  pauschbetrag,
   prevUrl,
 }) {
   const { t } = useTranslation();
-  const boldChoices = boldifyChoices(fields.wantsPauschbetrag.options);
 
   return (
     <>
@@ -67,7 +67,25 @@ export default function PauschbetragPage({
         <FormFieldRadio
           fieldName={fields.wantsPauschbetrag.name}
           fieldId={fields.wantsPauschbetrag.name}
-          options={boldChoices}
+          options={[
+            {
+              value: "yes",
+              displayName: (
+                <Trans
+                  t={t}
+                  i18nKey="lotse.pauschbetrag.requestPauschbetrag.yes"
+                  components={{
+                    bold: <b />,
+                  }}
+                  values={{ pauschbetrag }}
+                />
+              ),
+            },
+            {
+              value: "no",
+              displayName: t("lotse.pauschbetrag.requestPauschbetrag.no"),
+            },
+          ]}
           value={fields.wantsPauschbetrag.selectedValue}
           errors={fields.wantsPauschbetrag.errors}
         />
@@ -90,5 +108,6 @@ PauschbetragPage.propTypes = {
   fields: PropTypes.exact({
     wantsPauschbetrag: extendedSelectionFieldPropType,
   }).isRequired,
+  pauschbetrag: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

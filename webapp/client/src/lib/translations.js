@@ -50,6 +50,10 @@ const translations = {
           listItem3: "einen erhöhten Wäschebedarf.",
         },
       },
+      requestPauschbetrag: {
+        yes: "Pauschbetrag in Höhe von <bold>{{pauschbetrag}} Euro</bold> beantragen",
+        no: "Pauschbetrag nicht beantragen",
+      },
     },
     telephoneNumber: {
       fieldTelephoneNumber: {
