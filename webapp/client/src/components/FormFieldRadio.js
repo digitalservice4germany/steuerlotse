@@ -125,7 +125,7 @@ FormFieldRadio.propTypes = {
 
 FormFieldRadio.defaultProps = {
   value: undefined,
-  label: "",
+  label: undefined,
   required: false,
   autofocus: false,
   details: FieldLabelForSeparatedFields.defaultProps.details,
