@@ -695,10 +695,7 @@ class TestFormDataEstPersonBFahrkostenpauschale:
         standard_est_data['person_b_has_merkzeichen_g'] = None
         standard_est_data['person_b_has_merkzeichen_ag'] = True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+        FormDataEst.parse_obj(standard_est_data)
 
 
 class TestMetaDataYear:

@@ -6,6 +6,8 @@ from pydantic import BaseModel, root_validator, validator
 
 from erica.request_processing.erica_input import AccountHolder, MetaDataEst
 
+STANDARD_DATE_FORMAT = '%d.%m.%Y'
+
 
 class EstEricMapping(BaseModel):
 
@@ -90,8 +92,9 @@ class EstEricMapping(BaseModel):
 
     @root_validator(pre=True)
     def set_pauschbetrag_disability_degrees(cls, values):
-        values['person_a_pauschbetrag_disability_degree'] = values.get('person_a_disability_degree')
-        values['person_b_pauschbetrag_disability_degree'] = values.get('person_b_disability_degree')
+        if values.get('person_a_requests_pauschbetrag'):
+            values['person_a_pauschbetrag_disability_degree'] = values.get('person_a_disability_degree')
+            values['person_b_pauschbetrag_disability_degree'] = values.get('person_b_disability_degree')
 
         return values
 
@@ -103,7 +106,7 @@ class EstEricMapping(BaseModel):
            values.get('person_a_has_merkzeichen_tbl'),
            values.get('person_a_has_merkzeichen_h')
         ]
-        if any(merkzeichen_values):
+        if any(merkzeichen_values) and values.get('person_a_requests_pauschbetrag'):
             values['person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad'] = True
         return values
 
@@ -113,7 +116,7 @@ class EstEricMapping(BaseModel):
            values.get('person_a_has_merkzeichen_g'),
            values.get('person_a_has_merkzeichen_ag')
         ]
-        if any(merkzeichen_values):
+        if any(merkzeichen_values) and values.get('person_a_requests_pauschbetrag'):
             values['person_a_pauschbetrag_has_merkzeichen_g_ag'] = True
         return values
 
@@ -142,7 +145,7 @@ class EstEricMapping(BaseModel):
            values.get('person_b_has_merkzeichen_tbl'),
            values.get('person_b_has_merkzeichen_h')
         ]
-        if any(merkzeichen_values):
+        if any(merkzeichen_values) and values.get('person_b_requests_pauschbetrag'):
             values['person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad'] = True
         return values
 
@@ -152,7 +155,7 @@ class EstEricMapping(BaseModel):
            values.get('person_b_has_merkzeichen_g'),
            values.get('person_b_has_merkzeichen_ag')
         ]
-        if any(merkzeichen_values):
+        if any(merkzeichen_values) and values.get('person_b_requests_pauschbetrag'):
             values['person_b_pauschbetrag_has_merkzeichen_g_ag'] = True
         return values
 
@@ -175,15 +178,11 @@ class EstEricMapping(BaseModel):
 
     @validator('person_a_dob', 'person_b_dob', 'familienstand_date', pre=True)
     def convert_datetime_to_d_m_y(cls, v):
-        if v:
-            return v.strftime('%d.%m.%Y')
-        return None
+        return v.strftime(STANDARD_DATE_FORMAT) if v else None
 
     @validator('person_a_pauschbetrag_disability_degree', 'person_b_pauschbetrag_disability_degree')
     def set_disability_degree_only_if_above_20(cls, v):
-        if v and v < 20:
-            return None
-        return v
+        return None if v and v < 20 else v
 
 
 class UnlockCodeRequestEricMapper(BaseModel):
@@ -192,6 +191,4 @@ class UnlockCodeRequestEricMapper(BaseModel):
 
     @validator('dob', pre=True)
     def convert_datetime_to_y_m_d(cls, v):
-        if v:
-            return v.strftime('%Y-%m-%d')
-        return None
+        return v.strftime('%Y-%m-%d') if v else None

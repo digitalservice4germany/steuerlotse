@@ -9,29 +9,6 @@ from erica.request_processing.eric_mapper import EstEricMapping
 from erica.request_processing.erica_input import FormDataEst
 
 
-class DummyInput(BaseModel):
-
-    person_a_disability_degree: Optional[int]
-    person_a_has_pflegegrad: Optional[bool]
-    person_a_has_merkzeichen_bl: Optional[bool]
-    person_a_has_merkzeichen_tbl: Optional[bool]
-    person_a_has_merkzeichen_h: Optional[bool]
-    person_a_has_merkzeichen_g: Optional[bool]
-    person_a_has_merkzeichen_ag: Optional[bool]
-    person_a_requests_pauschbetrag: Optional[bool]
-    person_a_requests_fahrkostenpauschale: Optional[bool]
-
-    person_b_disability_degree: Optional[int]
-    person_b_has_pflegegrad: Optional[bool]
-    person_b_has_merkzeichen_bl: Optional[bool]
-    person_b_has_merkzeichen_tbl: Optional[bool]
-    person_b_has_merkzeichen_h: Optional[bool]
-    person_b_has_merkzeichen_g: Optional[bool]
-    person_b_has_merkzeichen_ag: Optional[bool]
-    person_b_requests_pauschbetrag: Optional[bool]
-    person_b_requests_fahrkostenpauschale: Optional[bool]
-
-
 @pytest.fixture
 def standard_est_input_data():
 
@@ -271,64 +248,114 @@ class TestEstDataPersonAFahrkostenPauschale:
 
 class TestEstDataPersonAPauschbetrag:
 
-    def test_if_person_a_has_merkzeichen_bl_then_set_correct_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_merkzeichen_bl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_a_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_merkzeichen_bl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_a_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_merkzeichen_tbl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_a_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_merkzeichen_tbl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_a_has_merkzeichen_h_then_set_correct_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_merkzeichen_h = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_a_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_merkzeichen_h = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_a_has_pflegegrad_then_set_correct_field(self, standard_est_input_data):
+    def test_if_person_a_does_not_request_pauschbetrag_and_has_all_merkzeichen_then_do_not_set_pauschbetrag_fields(self, standard_est_input_data):
+        standard_est_input_data.person_a_requests_pauschbetrag = False
         standard_est_input_data.person_a_has_pflegegrad = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_a_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_a_has_pflegegrad = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_a_has_merkzeichen_g_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_bl = True
+        standard_est_input_data.person_a_has_merkzeichen_tbl = True
+        standard_est_input_data.person_a_has_merkzeichen_h = True
         standard_est_input_data.person_a_has_merkzeichen_g = True
+        standard_est_input_data.person_a_has_merkzeichen_ag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_bl_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_bl = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_bl = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_tbl = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_tbl = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_h_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_h = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_h = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_requests_pauschbetrag_and_has_pflegegrad_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_pflegegrad = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_requests_pauschbetrag_and_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_pflegegrad = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_g_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_a_has_merkzeichen_g = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is True
 
-    def test_if_person_a_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
         standard_est_input_data.person_a_has_merkzeichen_g = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
-    def test_if_person_a_has_merkzeichen_ag_then_set_correct_field(self, standard_est_input_data):
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_ag_then_set_correct_field(self, standard_est_input_data):
         standard_est_input_data.person_a_has_merkzeichen_ag = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_g_ag is True
 
-    def test_if_person_a_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
         standard_est_input_data.person_a_has_merkzeichen_ag = True
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
 
@@ -414,207 +441,285 @@ class TestEstDataPersonBFahrkostenPauschale:
 
     def test_if_person_b_has_merkzeichen_h_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-        standard_est_input_data.person_a_has_merkzeichen_h = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_has_merkzeichen_h = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
 
         for disability_degree in disability_degrees:
-            standard_est_input_data.person_a_disability_degree = disability_degree
+            standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_h_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_h_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-        standard_est_input_data.person_a_has_merkzeichen_h = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_has_merkzeichen_h = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
 
         for disability_degree in disability_degrees:
-            standard_est_input_data.person_a_disability_degree = disability_degree
+            standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_ag_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_ag_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-        standard_est_input_data.person_a_has_merkzeichen_ag = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_has_merkzeichen_ag = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
 
         for disability_degree in disability_degrees:
-            standard_est_input_data.person_a_disability_degree = disability_degree
+            standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_ag_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_ag_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-        standard_est_input_data.person_a_has_merkzeichen_ag = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_has_merkzeichen_ag = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
 
         for disability_degree in disability_degrees:
-            standard_est_input_data.person_a_disability_degree = disability_degree
+            standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_g_and_disability_degree_70_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_g_and_disability_degree_70_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
         disability_degree = 70
-        standard_est_input_data.person_a_has_merkzeichen_g = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_has_merkzeichen_g = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
 
-        standard_est_input_data.person_a_disability_degree = disability_degree
+        standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
 
-    def test_if_person_a_has_merkzeichen_g_and_disability_degree_70_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_g_and_disability_degree_70_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
         disability_degree = 70
-        standard_est_input_data.person_a_has_merkzeichen_g = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_has_merkzeichen_g = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
 
-        standard_est_input_data.person_a_disability_degree = disability_degree
+        standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_g_and_disability_degree_below_70_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_g_and_disability_degree_below_70_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
         disability_degree = 65
-        standard_est_input_data.person_a_has_merkzeichen_g = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_has_merkzeichen_g = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
 
-        standard_est_input_data.person_a_disability_degree = disability_degree
+        standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
     def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
         disability_degree = 80
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
 
-        standard_est_input_data.person_a_disability_degree = disability_degree
+        standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
 
     def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
         disability_degree = 80
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
 
-        standard_est_input_data.person_a_disability_degree = disability_degree
+        standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
     def test_if_a_has_no_merkzeichen_and_disability_degree_below_80_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
         disability_degree = 75
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
 
-        standard_est_input_data.person_a_disability_degree = disability_degree
+        standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
 
 class TestEstDataPersonBPauschbetrag:
 
-    def test_if_person_b_has_merkzeichen_bl_then_set_correct_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_merkzeichen_bl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_b_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_merkzeichen_bl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_b_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_merkzeichen_tbl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_b_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_merkzeichen_tbl = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_b_has_merkzeichen_h_then_set_correct_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_merkzeichen_h = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_b_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_merkzeichen_h = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_b_has_pflegegrad_then_set_correct_field(self, standard_est_input_data):
+    def test_if_person_b_does_not_request_pauschbetrag_and_has_all_merkzeichen_then_do_not_set_pauschbetrag_fields(self, standard_est_input_data):
+        standard_est_input_data.person_b_requests_pauschbetrag = False
         standard_est_input_data.person_b_has_pflegegrad = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
-
-    def test_if_person_b_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
-        standard_est_input_data.person_b_has_pflegegrad = True
-        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
-        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
-
-    def test_if_person_b_has_merkzeichen_g_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_bl = True
+        standard_est_input_data.person_b_has_merkzeichen_tbl = True
+        standard_est_input_data.person_b_has_merkzeichen_h = True
         standard_est_input_data.person_b_has_merkzeichen_g = True
+        standard_est_input_data.person_b_has_merkzeichen_ag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_bl_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_bl = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_bl = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_tbl = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_tbl = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_h_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_h = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_h = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_requests_pauschbetrag_and_has_pflegegrad_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_pflegegrad = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_requests_pauschbetrag_and_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_pflegegrad = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_g_then_set_correct_field(self, standard_est_input_data):
+        standard_est_input_data.person_b_has_merkzeichen_g = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is True
 
-    def test_if_person_b_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
         standard_est_input_data.person_b_has_merkzeichen_g = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
-    def test_if_person_b_has_merkzeichen_ag_then_set_correct_field(self, standard_est_input_data):
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_ag_then_set_correct_field(self, standard_est_input_data):
         standard_est_input_data.person_b_has_merkzeichen_ag = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_g_ag is True
 
-    def test_if_person_b_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
+    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_input_data):
         standard_est_input_data.person_b_has_merkzeichen_ag = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
 
 class TestEstDataDisabilityDegree:
 
+    def test_if_person_a_does_not_request_pauschbetrag_and_has_disability_degree_then_do_not_set_disability_degree(self, standard_est_input_data):
+        standard_est_input_data.person_a_requests_pauschbetrag = False
+        standard_est_input_data.person_a_disability_degree = 80
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_a_pauschbetrag_disability_degree is None
+
+    def test_if_person_b_does_not_request_pauschbetrag_and_has_disability_degree_then_do_not_set_disability_degree(self, standard_est_input_data):
+        standard_est_input_data.person_b_requests_pauschbetrag = False
+        standard_est_input_data.person_b_disability_degree = 80
+
+        resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
+        assert resulting_input_data.person_b_pauschbetrag_disability_degree is None
+
     def test_if_person_a_disability_degree_below_20_then_do_not_set_disability_degree(self, standard_est_input_data):
         standard_est_input_data.person_a_disability_degree = 15
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_a_pauschbetrag_disability_degree is None
 
     def test_if_person_b_disability_degree_below_20_then_do_not_set_disability_degree(self, standard_est_input_data):
         standard_est_input_data.person_b_disability_degree = 15
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_b_pauschbetrag_disability_degree is None
 
     def test_if_person_a_disability_degree_20_then_set_disability_degree(self, standard_est_input_data):
         standard_est_input_data.person_a_disability_degree = 20
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_a_pauschbetrag_disability_degree == 20
 
     def test_if_person_b_disability_degree_20_then_set_disability_degree(self, standard_est_input_data):
         standard_est_input_data.person_b_disability_degree = 20
+        standard_est_input_data.person_a_requests_pauschbetrag = True
+
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
+
         assert resulting_input_data.person_b_pauschbetrag_disability_degree == 20
