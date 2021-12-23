@@ -12,7 +12,7 @@ let props = {
     ...StepFormDefault.args,
   },
   fields: {
-    wantsPauschbetrag: {
+    requestsPauschbetrag: {
       selectedValue: undefined,
       options: [
         {
@@ -25,7 +25,7 @@ let props = {
         },
       ],
       errors: [],
-      name: "wants_pauschbretrag",
+      name: "requests_pauschbretrag",
     },
   },
   pauschbetrag: 2400,

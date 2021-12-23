@@ -65,8 +65,8 @@ export default function PauschbetragPage({
       </DetailsDiv>
       <StepForm {...form}>
         <FormFieldRadio
-          fieldName={fields.wantsPauschbetrag.name}
-          fieldId={fields.wantsPauschbetrag.name}
+          fieldName={fields.requestsPauschbetrag.name}
+          fieldId={fields.requestsPauschbetrag.name}
           options={[
             {
               value: "yes",
@@ -86,8 +86,8 @@ export default function PauschbetragPage({
               displayName: t("lotse.pauschbetrag.requestPauschbetrag.no"),
             },
           ]}
-          value={fields.wantsPauschbetrag.selectedValue}
-          errors={fields.wantsPauschbetrag.errors}
+          value={fields.requestsPauschbetrag.selectedValue}
+          errors={fields.requestsPauschbetrag.errors}
         />
       </StepForm>
     </>
@@ -106,7 +106,7 @@ PauschbetragPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    wantsPauschbetrag: extendedSelectionFieldPropType,
+    requestsPauschbetrag: extendedSelectionFieldPropType,
   }).isRequired,
   pauschbetrag: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,

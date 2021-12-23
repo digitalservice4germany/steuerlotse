@@ -21,7 +21,7 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personBWantsPauschbetrag: {
+    personBRequestsPauschbetrag: {
       selectedValue: undefined,
       options: [
         {
@@ -46,7 +46,7 @@ export const WithValue = Template.bind({});
 WithValue.args = {
   ...Default.args,
   fields: {
-    personBWantsPauschbetrag: {
+    personBRequestsPauschbetrag: {
       selectedValue: "yes",
       options: [
         {
@@ -69,7 +69,7 @@ export const WithErrors = Template.bind({});
 WithErrors.args = {
   ...Default.args,
   fields: {
-    personBWantsPauschbetrag: {
+    personBRequestsPauschbetrag: {
       selectedValue: undefined,
       options: [
         {

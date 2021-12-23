@@ -14,11 +14,11 @@ export default function PauschbetragPersonBPage({
     <PauschbetragPage
       {...{ stepHeader, form, pauschbetrag, prevUrl }}
       fields={{
-        wantsPauschbetrag: {
-          selectedValue: fields.personBWantsPauschbetrag.selectedValue,
-          errors: fields.personBWantsPauschbetrag.errors,
-          options: fields.personBWantsPauschbetrag.options,
-          name: "person_b_wants_pauschbetrag",
+        requestsPauschbetrag: {
+          selectedValue: fields.personBRequestsPauschbetrag.selectedValue,
+          errors: fields.personBRequestsPauschbetrag.errors,
+          options: fields.personBRequestsPauschbetrag.options,
+          name: "person_b_requests_pauschbetrag",
         },
       }}
     />
@@ -37,7 +37,7 @@ PauschbetragPersonBPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    personBWantsPauschbetrag: selectionFieldPropType,
+    personBRequestsPauschbetrag: selectionFieldPropType,
   }).isRequired,
   pauschbetrag: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
