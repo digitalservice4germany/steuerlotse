@@ -45,9 +45,22 @@ describe("With default props", () => {
     expect(screen.queryByText("Intro")).not.toBeInTheDocument();
   });
 
-  it("should render field", () => {
-    expect(screen.getByLabelText("Ja")).toBeInTheDocument();
-    expect(screen.getByLabelText("Nein")).toBeInTheDocument();
+  it("should ignore field option texts", () => {
+    expect(screen.queryByLabelText("Ja")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Nein")).not.toBeInTheDocument();
+  });
+
+  it("should render fields", () => {
+    expect(screen.getByDisplayValue("yes")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("no")).toBeInTheDocument();
+  });
+
+  it("should show pauschbetrag value in option yes text", () => {
+    expect(
+      screen.getByLabelText(
+        `Pauschbetrag in Höhe von ${props.pauschbetrag} Euro beantragen`
+      )
+    ).toHaveAttribute("value", "yes");
   });
 
   it("should link to the previous page", () => {
