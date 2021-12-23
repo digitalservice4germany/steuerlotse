@@ -4,6 +4,13 @@ import styled from "styled-components";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabelForSeparatedFields from "./FieldLabelForSeparatedFields";
 import { optionsPropType } from "../lib/propTypes";
+import FieldError from "./FieldError";
+import radioButtonCheckedFocus from "../assets/icons/radio_button_checked_focus.svg";
+import radioButtonCheckedHover from "../assets/icons/radio_button_checked_hover.svg";
+import radioButtonChecked from "../assets/icons/radio_button_checked.svg";
+import radioButtonDefault from "../assets/icons/radio_button_default.svg";
+import radioButtonFocus from "../assets/icons/radio_button_focus.svg";
+import radioButtonHover from "../assets/icons/radio_button_hover.svg";
 
 const Radio = styled.div`
   input[type="radio"] {
@@ -26,23 +33,27 @@ const Radio = styled.div`
     height: 30px;
     min-width: 30px;
     margin-right: 12px;
-    background: url("/icons/radio_button_default.svg") no-repeat center;
+    background: url(${radioButtonDefault}) no-repeat center;
   }
 
   input[type="radio"]:checked + label::before {
-    background: url("/icons/radio_button_checked.svg") no-repeat center;
+    background: url(${radioButtonChecked}) no-repeat center;
   }
 
   input[type="radio"]:checked + label:hover::before {
-    background: url("/icons/radio_button_checked_hover.svg") no-repeat center;
+    background: url(${radioButtonCheckedHover}) no-repeat center;
   }
 
   input[type="radio"]:not(:checked):focus + label::before {
-    background: url("/icons/radio_button_focus.svg") no-repeat center;
+    background: url(${radioButtonFocus}) no-repeat center;
+  }
+
+  input[type="radio"]:not(:checked):hover + label::before {
+    background: url(${radioButtonHover}) no-repeat center;
   }
 
   input[type="radio"]:checked:focus + label::before {
-    background: url("/icons/radio_button_checked_focus.svg") no-repeat center;
+    background: url(${radioButtonCheckedFocus}) no-repeat center;
   }
 
   .radio-button-list {
@@ -50,7 +61,7 @@ const Radio = styled.div`
   }
 `;
 
-function FormFieldRadio({
+function FormFieldRadioGroup({
   fieldName,
   fieldId,
   options,
@@ -63,6 +74,7 @@ function FormFieldRadio({
   onChangeHandler,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
+  const groupShouldHaveAutofocus = autofocus || (errors && errors.length !== 0);
 
   const toggleRadioButton = (event) => {
     setSelectedValue(event.target.value);
@@ -75,6 +87,7 @@ function FormFieldRadio({
         errors,
       }}
       hideLabel
+      hideErrors
       render={() => (
         <Radio>
           <fieldset id={fieldId} name={fieldId}>
@@ -87,7 +100,7 @@ function FormFieldRadio({
                   key={`${fieldId}-${option.value}`}
                   name={fieldId}
                   required={required}
-                  autoFocus={autofocus && i === 0}
+                  autoFocus={groupShouldHaveAutofocus && i === 0}
                   value={option.value}
                   defaultChecked={selectedValue === option.value}
                   onClick={toggleRadioButton}
@@ -101,6 +114,13 @@ function FormFieldRadio({
                 </label>,
               ])}
             </div>
+            {errors.map((error, index) => (
+              // There is no natural key and the list is completely static, so using the index is fine.
+              // eslint-disable-next-line
+              <FieldError key={index} fieldName={fieldName}>
+                {error}
+              </FieldError>
+            ))}
           </fieldset>
         </Radio>
       )}
@@ -108,7 +128,7 @@ function FormFieldRadio({
   );
 }
 
-FormFieldRadio.propTypes = {
+FormFieldRadioGroup.propTypes = {
   fieldName: PropTypes.string.isRequired,
   fieldId: PropTypes.string.isRequired,
   options: optionsPropType.isRequired,
@@ -121,7 +141,7 @@ FormFieldRadio.propTypes = {
   onChangeHandler: PropTypes.func,
 };
 
-FormFieldRadio.defaultProps = {
+FormFieldRadioGroup.defaultProps = {
   value: undefined,
   label: undefined,
   required: false,
@@ -130,4 +150,4 @@ FormFieldRadio.defaultProps = {
   onChangeHandler: undefined,
 };
 
-export default FormFieldRadio;
+export default FormFieldRadioGroup;

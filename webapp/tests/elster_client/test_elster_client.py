@@ -576,16 +576,27 @@ class TestGenerateEStRequestData(unittest.TestCase):
         self.assertIn('est_data', result)
         self.assertIn('meta_data', result)
 
-    def test_set_form_data_dict_results_in_est_data_dict_with_same_keys(self):
+    def test_set_form_data_dict_results_in_est_data_dict_with_same_keys_and_adapted_merkzeichen_keys(self):
+        _MERKZEICHEN_KEYS = {
+            'person_a_beh_grad': 'person_a_disability_degree',
+            'person_a_blind': 'person_a_has_merkzeichen_bl',
+            'person_a_gehbeh': 'person_a_has_merkzeichen_g',
+            'person_b_beh_grad': 'person_b_disability_degree',
+            'person_b_blind': 'person_b_has_merkzeichen_bl',
+            'person_b_gehbeh': 'person_b_has_merkzeichen_g'
+        }
         form_data = LotseMultiStepFlow(None)._DEBUG_DATA[1]
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(form_data)
 
         for key in form_data.keys():
-            self.assertIn(key, result['est_data'])
+            if key in _MERKZEICHEN_KEYS:
+                self.assertIn(_MERKZEICHEN_KEYS[key], result['est_data'])
+            else:
+                self.assertIn(key, result['est_data'])
 
     def test_yes_str_for_bool_keys_result_in_true(self):
-        bool_strs = {}
+        bool_strs = {'person_a_blind': 'yes', 'person_b_blind': 'yes', 'person_a_gehbeh': 'yes', 'person_b_gehbeh': 'yes'}
         for key in _BOOL_KEYS:
             bool_strs[key] = 'yes'
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
@@ -703,7 +714,8 @@ class TestGenerateEStRequestData(unittest.TestCase):
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):
             result = _generate_est_request_data(unknown_keys)
 
-        self.assertEqual(unknown_keys, result['est_data'])
+        for unknown_key in unknown_keys:
+            assert result['est_data'][unknown_key] == unknown_keys[unknown_key]
 
     def test_set_year_results_in_correct_year_in_result(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)):

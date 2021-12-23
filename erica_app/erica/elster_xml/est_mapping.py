@@ -20,9 +20,9 @@ _ALL_FIELDS = {
     'person_a_address_ext': 'E0101301',
     'person_a_plz': 'E0100601',
     'person_a_town': 'E0100602',
-    'person_a_beh_grad': 'E0109708',
-    'person_a_blind': 'E0109706',
-    'person_a_gehbeh': 'E0109707',
+    'person_a_disability_degree': 'E0109708',
+    'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': 'E0109706',
+    'person_a_has_merkzeichen_g_ag': 'E0109707',
 
     'married_since': 'E0100701',
     'widowed_since': 'E0100702',
@@ -41,9 +41,9 @@ _ALL_FIELDS = {
     'person_b_address_ext': 'E0102301',
     'person_b_plz': 'E0101701',
     'person_b_town': 'E0101702',
-    'person_b_beh_grad': 'E0109708',
-    'person_b_blind': 'E0109706',
-    'person_b_gehbeh': 'E0109707',
+    'person_b_disability_degree': 'E0109708',
+    'person_b_has_merkzeichen_bl_tbl_h_pflegegrad': 'E0109706',
+    'person_b_has_merkzeichen_g_ag': 'E0109707',
 
     'telephone_number': 'E0100008',
     
@@ -135,12 +135,12 @@ _FULL_EURO_FIELDS = [
 ]
 
 _PERSON_SPECIFIC_FIELDS = {
-    'person_a_blind': 'PersonA',
-    'person_a_gehbeh': 'PersonA',
-    'person_b_blind': 'PersonB',
-    'person_b_gehbeh': 'PersonB',
-    'person_a_beh_grad': 'PersonA',
-    'person_b_beh_grad': 'PersonB',
+    'person_a_disability_degree': 'PersonA',
+    'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': 'PersonA',
+    'person_a_has_merkzeichen_g_ag': 'PersonA',
+    'person_b_disability_degree': 'PersonB',
+    'person_b_has_merkzeichen_bl_tbl_h_pflegegrad': 'PersonB',
+    'person_b_has_merkzeichen_g_ag': 'PersonB',
 }
 
 BUNDESLAND_BUFANR_MAPPING = {
@@ -203,15 +203,15 @@ def _convert_to_elster_identifiers(form_data):
     result = {}
     for field, value in form_data.items():
         person = _PERSON_SPECIFIC_FIELDS[field] if field in _PERSON_SPECIFIC_FIELDS else None
-        for form_id, elster_id in _ALL_FIELDS.items():
-            if form_id == field and _elsterify(field, value):
-                if person:
-                    result[PersonSpecificFieldId(elster_id, person)] = _elsterify(field, value)
-                elif isinstance(elster_id, tuple):
-                    for e_id in elster_id:
-                        result[e_id] = _elsterify(field, value)
-                else:
-                    result[elster_id] = _elsterify(field, value)
+        if field in _ALL_FIELDS and _elsterify(field, value):
+            elster_id = _ALL_FIELDS[field]
+            if person:
+                result[PersonSpecificFieldId(elster_id, person)] = _elsterify(field, value)
+            elif isinstance(elster_id, tuple):
+                for e_id in elster_id:
+                    result[e_id] = _elsterify(field, value)
+            else:
+                result[elster_id] = _elsterify(field, value)
     return result
 
 

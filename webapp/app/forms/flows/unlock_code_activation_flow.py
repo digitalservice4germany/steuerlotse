@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
+    # TODO: This uses the outdated MultiStepFlow. We do not need a multi step procedure for unlock code activation.
+    #  If you adapt the unlock code activation, please consider if you can get rid of the MultiStepFlow.
 
     _DEBUG_DATA = (
         UnlockCodeActivationInputStep,
