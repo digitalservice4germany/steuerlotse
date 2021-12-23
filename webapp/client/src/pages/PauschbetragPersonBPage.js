@@ -7,11 +7,12 @@ export default function PauschbetragPersonBPage({
   stepHeader,
   form,
   fields,
+  pauschbetrag,
   prevUrl,
 }) {
   return (
     <PauschbetragPage
-      {...{ stepHeader, form, prevUrl }}
+      {...{ stepHeader, form, pauschbetrag, prevUrl }}
       fields={{
         wantsPauschbetrag: {
           selectedValue: fields.personBWantsPauschbetrag.selectedValue,
@@ -38,5 +39,6 @@ PauschbetragPersonBPage.propTypes = {
   fields: PropTypes.exact({
     personBWantsPauschbetrag: selectionFieldPropType,
   }).isRequired,
+  pauschbetrag: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

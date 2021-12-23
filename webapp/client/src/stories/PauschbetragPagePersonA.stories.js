@@ -38,7 +38,7 @@ Default.args = {
       errors: [],
     },
   },
-  pauschbetrag: 30,
+  pauschbetrag: 2400,
   prevUrl: "/previous/step",
 };
 
