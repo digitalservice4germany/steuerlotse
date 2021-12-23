@@ -32,9 +32,7 @@ export default function PersonBHasDisabilityPage({
           title={t("lotse.hasDisability.details.title")}
           detailsId="person_b_has_disability"
         >
-          {{
-            paragraphs: [translationBold("lotse.hasDisability.details.text")],
-          }}
+          {translationBold("lotse.hasDisability.details.text")}
         </Details>
         <FormFieldRadioGroup
           fieldId="person_b_has_disability"
