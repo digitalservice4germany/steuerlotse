@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { within } from "@testing-library/dom";
-import MerkzeichenPersonAPage from "./MerkzeichenPersonAPage";
+import MerkzeichenPage from "./MerkzeichenPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
-describe("MerkzeichenPersonAPage default", () => {
-  let props = {
+describe("MerkzeichenPage default", () => {
+  const props = {
     stepHeader: {
       title: "Title",
       intro: "Intro",
@@ -14,40 +14,47 @@ describe("MerkzeichenPersonAPage default", () => {
       ...StepFormDefault.args,
     },
     fields: {
-      personAHasPflegegrad: {
+      hasPflegegrad: {
         value: "",
         errors: [],
+        name: "has_pflegegrad",
       },
-      personADisabilityDegree: {
+      disabilityDegree: {
         value: "",
         errors: [],
+        name: "disability_degree",
       },
-      personAHasMerkzeichenH: {
+      hasMerkzeichenH: {
         checked: false,
         errors: [],
+        name: "has_merkzeichen_h",
       },
-      personAHasMerkzeichenG: {
+      hasMerkzeichenG: {
         checked: false,
         errors: [],
+        name: "has_merkzeichen_g",
       },
-      personAHasMerkzeichenBl: {
+      hasMerkzeichenBl: {
         checked: false,
         errors: [],
+        name: "has_merkzeichen_bl",
       },
-      personAHasMerkzeichenTbl: {
+      hasMerkzeichenTbl: {
         checked: false,
         errors: [],
+        name: "has_merkzeichen_tbl",
       },
-      personAHasMerkzeichenAg: {
+      hasMerkzeichenAg: {
         checked: false,
         errors: [],
+        name: "has_merkzeichen_ag",
       },
     },
     prevUrl: "/some/prev/path",
   };
 
   beforeEach(() => {
-    render(<MerkzeichenPersonAPage {...props} />);
+    render(<MerkzeichenPage {...props} />);
   });
 
   it("should render step header texts", () => {
