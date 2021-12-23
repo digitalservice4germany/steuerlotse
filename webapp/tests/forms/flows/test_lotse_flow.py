@@ -30,7 +30,7 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, StepPersonAHasDisability, StepPersonBHasDisability
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
@@ -166,7 +166,9 @@ class TestLotseInit(unittest.TestCase):
             StepFamilienstand,
             StepSteuernummer,
             StepPersonA,
+            StepPersonAHasDisability,
             StepPersonB,
+            StepPersonBHasDisability,
             StepTelephoneNumber,
             StepIban,
 
@@ -1238,6 +1240,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_plz': '20354',
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
+            'person_a_has_disability': 'yes',
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
@@ -1264,6 +1267,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_plz': '20354',
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
+            'person_a_has_disability': 'yes',
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
@@ -1273,6 +1277,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_last_name': 'Mustername',
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
+            'person_b_has_disability': 'no',
             'person_b_blind': False,
             'person_b_gehbeh': False,
 
@@ -1420,7 +1425,7 @@ class TestLotseValidateInput(unittest.TestCase):
         expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'iban', 'is_user_account_holder', ]
+                                   'person_a_gehbeh', 'person_a_has_disability', 'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,

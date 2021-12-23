@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 const authPassword = Cypress.env('STAGING_AUTH_PASSWORD')
-Cypress.config('baseUrl', `https://lotse:${authPassword}@www-staging.stl.ds4g.dev`)
+Cypress.config('baseUrl', `http://localhost:3000`)
 
 const unlockCodeData = {
     idnr1: '09',
@@ -284,6 +284,9 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
+                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get(submitBtnSelector).click()
+
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
                 cy.get(submitBtnSelector).click()
 
@@ -335,6 +338,9 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_street_number').type(taxReturnData.personA.streetNumber)
                 cy.get('#person_a_plz').type(taxReturnData.personA.postalCode)
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_has_disabilityno]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -404,6 +410,10 @@ context('Acceptance tests', () => {
                 cy.get('label[for=person_a_blind]').first().click()
                 cy.get('label[for=person_a_gehbeh]').first().click()
                 cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get(submitBtnSelector).click()
+
                 cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)
                 cy.get('#person_b_idnr_2').type(taxReturnData.personB.idnr2)
                 cy.get('#person_b_idnr_3').type(taxReturnData.personB.idnr3)
@@ -419,6 +429,9 @@ context('Acceptance tests', () => {
                 cy.get('#person_b_plz').type(taxReturnData.personB.postalCode)
                 cy.get('#person_b_town').type(taxReturnData.personB.town)
                 cy.get('select[id=person_b_religion]').select('ev')
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_b_has_disabilityno]').click()
                 cy.get(submitBtnSelector).click()
 
                 // no telephone number
@@ -510,18 +523,13 @@ context('Acceptance tests', () => {
             // No relationship set
             // Redirect person_b
             cy.visit('/lotse/step/person_b?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/familienstand');
-            });
 
             // Set relationship single -> Redirect person_b
+            // This make no sense at all because of the precondition of person b
             cy.visit('/lotse/step/familienstand')
             cy.get('label[for=familienstand-0]').click()
             cy.get(submitBtnSelector).click()
-            cy.visit('/lotse/step/person_b?link_overview=True')
-            cy.location().should((loc) => {
-                expect(loc.pathname.toString()).to.contain('/lotse/step/familienstand');
-            });
+            cy.visit('/lotse/step/person_a?link_overview=True')
 
             // Set relationship widowed older -> Redirect person_b
             cy.visit('/lotse/step/familienstand')

@@ -133,7 +133,7 @@ FormFieldRadioGroup.propTypes = {
   fieldId: PropTypes.string.isRequired,
   options: optionsPropType.isRequired,
   value: PropTypes.string,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   details: FieldLabelForSeparatedFields.propTypes.details,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
@@ -143,6 +143,7 @@ FormFieldRadioGroup.propTypes = {
 
 FormFieldRadioGroup.defaultProps = {
   value: undefined,
+  label: undefined,
   required: false,
   autofocus: false,
   details: FieldLabelForSeparatedFields.defaultProps.details,
