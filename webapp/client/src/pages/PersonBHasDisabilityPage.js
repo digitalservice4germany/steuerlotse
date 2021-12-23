@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FormHeader from "../components/FormHeader";
-import FormFieldRadio from "../components/FormFieldRadio";
+import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import Details from "../components/Details";
@@ -36,7 +36,7 @@ export default function PersonBHasDisabilityPage({
             paragraphs: [translationBold("lotse.hasDisability.details.text")],
           }}
         </Details>
-        <FormFieldRadio
+        <FormFieldRadioGroup
           fieldId="person_b_has_disability"
           fieldName="person_b_has_disability"
           options={[
