@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import PauschbetragPersonBPage from "./PauschbetragPersonBPage";
+import PauschbetragPersonAPage from "./PauschbetragPersonAPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
 let props = {
@@ -12,7 +12,7 @@ let props = {
     ...StepFormDefault.args,
   },
   fields: {
-    personBWantsPauschbetrag: {
+    personAWantsPauschbetrag: {
       selectedValue: undefined,
       options: [
         {
@@ -25,6 +25,7 @@ let props = {
         },
       ],
       errors: [],
+      name: "wants_pauschbretrag",
     },
   },
   prevUrl: "/some/prev/path",
@@ -32,7 +33,7 @@ let props = {
 
 describe("With default props", () => {
   beforeEach(() => {
-    render(<PauschbetragPersonBPage {...props} />);
+    render(<PauschbetragPersonAPage {...props} />);
   });
 
   it("should render step title text", () => {
