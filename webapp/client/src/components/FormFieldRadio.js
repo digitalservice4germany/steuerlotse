@@ -115,7 +115,7 @@ FormFieldRadio.propTypes = {
   fieldId: PropTypes.string.isRequired,
   options: optionsPropType.isRequired,
   value: PropTypes.string,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   details: FieldLabelForSeparatedFields.propTypes.details,
   errors: PropTypes.arrayOf(PropTypes.string).isRequired,
   required: PropTypes.bool,
@@ -125,6 +125,7 @@ FormFieldRadio.propTypes = {
 
 FormFieldRadio.defaultProps = {
   value: undefined,
+  label: "",
   required: false,
   autofocus: false,
   details: FieldLabelForSeparatedFields.defaultProps.details,
