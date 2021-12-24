@@ -24,6 +24,7 @@ Default.args = {
   fields: {
     personAHasDisability: {
       value: null,
+      errors: [],
     },
   },
   prevUrl: "test",
@@ -32,37 +33,17 @@ Default.args = {
 
 export const WithError = Template.bind({});
 WithError.args = {
-  stepHeader: {
-    title:
-      "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen?",
-  },
-  form: {
-    ...StepFormDefault.args,
-  },
+  ...Default.args,
   fields: {
     personAHasDisability: {
       value: "yes",
       errors: ["Falsche Eingabe"],
     },
   },
-  prevUrl: "test",
-  numUsers: 1,
 };
 
 export const JointTaxes = Template.bind({});
 JointTaxes.args = {
-  stepHeader: {
-    title:
-      "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen zu Person A?",
-  },
-  form: {
-    ...StepFormDefault.args,
-  },
-  fields: {
-    personAHasDisability: {
-      value: "yes",
-    },
-  },
-  prevUrl: "test",
+  ...Default.args,
   numUsers: 2,
 };
