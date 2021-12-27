@@ -544,7 +544,20 @@ class PersonBHasDisabilityPrecondition(DisabilityModel):
             raise ValidationError
         return values
     
-class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
+class StepPauschbetrag(LotseFormSteuerlotseStep):        
+    def get_overview_value_representation(self, value):
+        result = ''
+        
+        if value == 'yes':
+            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
+            
+        return result
+
+    def get_pauschbetrag(self):
+        # TODO: Replace with backend logic
+        return "1"
+
+class StepPauschbetragPersonA(StepPauschbetrag):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -561,14 +574,7 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     def get_label(cls, data=None):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label', 'form.lotse.person_a.request_pauschbetrag.label',
                         num=get_number_of_users(data))        
-    
-    def get_overview_value_representation(self, value):
-        result = ''
-        
-        if value == 'yes':
-            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
-            
-        return result
+
     
     def render(self):
         props_dict = PauschbetragPersonProps(            
@@ -598,11 +604,8 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
         
-    def get_pauschbetrag(self):
-        # TODO: Replace with backend logic
-        return "1"
         
-class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
+class StepPauschbetragPersonB(StepPauschbetrag):
     name = 'person_b_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -652,7 +655,3 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
                             props=props_dict,
                             form=self.render_info.form,
                             header_title=_('form.lotse.header-title'))
-        
-    def get_pauschbetrag(self):
-        # TODO: Replace with backend logic
-        return "2"

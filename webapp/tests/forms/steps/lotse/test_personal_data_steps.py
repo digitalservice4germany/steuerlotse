@@ -591,18 +591,14 @@ class TestPauschBetragPersonAValidation:
 
     def test_if_required_precondition_person_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({})
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+        with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'person_a_has_disability'
             
     def test_if_required_precondition_person_a_has_disability_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
-        data = MultiDict({'person_a_has_disability':'no', 'person_a_requests_pauschbetrag': 'no'})
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+        data = MultiDict({'person_a_has_disability':'no'})
+        with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'person_a_has_disability'
@@ -647,9 +643,7 @@ class TestPauschBetragPersonBValidation:
             'person_b_has_disability': 'yes',
             'person_b_requests_pauschbetrag': 'yes'
         })
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+        with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'familienstand' 
