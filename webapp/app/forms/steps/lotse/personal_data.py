@@ -398,3 +398,87 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+
+
+class StepPersonAHasDisability(LotseFormSteuerlotseStep):
+    name = 'person_a_has_disability'
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+
+    class InputForm(SteuerlotseBaseForm):
+        person_a_has_disability = YesNoField(
+            render_kw={'data_label':  _l('form.lotse.has_disability.data_label')},
+            validators=[InputRequired(_l('validate.input-required'))])
+
+    @classmethod
+    def get_label(cls, data=None):
+        return ngettext('form.lotse.has_disability.label_person_a', 'form.lotse.has_disability.label_person_a',
+                        num=get_number_of_users(data))
+
+    def render(self):
+        props_dict = PersonAHasDisabilityProps(
+            step_header={
+                'title': ngettext('form.lotse.has_disability.title', 'form.lotse.has_disability.title',
+                        num=get_number_of_users(self.stored_data))
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            num_users=get_number_of_users(self.stored_data),
+            fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url
+        ).camelized_dict()
+
+
+        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
+        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
+        props_dict['fields']['personAHasDisability'] = props_dict['fields'].pop('personA_hasDisability')
+
+
+        return render_template('react_component.html',
+                               component='PersonAHasDisabilityPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))
+
+
+class StepPersonBHasDisability(LotseFormSteuerlotseStep):
+    name = 'person_b_has_disability'
+    label = _l('form.lotse.has_disability.label_person_b')
+    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
+
+    preconditions = [ShowPersonBPrecondition]
+
+    class InputForm(SteuerlotseBaseForm):
+        person_b_has_disability = YesNoField(
+            render_kw={'data_label': _l('form.lotse.has_disability.data_label')},
+            validators=[InputRequired(_l('validate.input-required'))])
+
+    @classmethod
+    def get_label(cls, data):
+        return cls.label
+
+    def render(self):
+        props_dict = PersonBHasDisabilityProps(
+            step_header={
+                'title': _('form.lotse.person_b.has_disability.title'),
+            },
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields=form_fields_dict(self.render_info.form),
+            prev_url=self.render_info.prev_url
+        ).camelized_dict()
+
+        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
+        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
+        props_dict['fields']['personBHasDisability'] = props_dict['fields'].pop('personB_hasDisability')
+
+        return render_template('react_component.html',
+                               component='PersonBHasDisabilityPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))

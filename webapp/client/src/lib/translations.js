@@ -65,6 +65,27 @@ const translations = {
         label: "Merkzeichen aG",
       },
     },
+    pauschbetrag: {
+      intro:
+        "Auf Basis Ihrer Angaben haben Sie Anspruch auf den Pauschbetrag für Menschen mit Behinderung. <bold>Alternativ können die tatsächlichen Kosten</bold>, die in Zusammenhang mit Ihrer Behinderung entstanden sind, einzeln angegeben werden. Wählen Sie aus, ob Sie den Pauschbetrag in Anspruch nehmen möchten.",
+      details: {
+        title: "Welche Kosten sind damit abgegolten?",
+        p1: "Den Pauschbetrag erhalten Sie für die Mehraufwendungen, die erfahrungsgemäß durch ihre Krankheit bzw. Behinderung entstehen. Hierzu zählen Aufwendungen für",
+        p2: "Sind Ihre tatsächlichen Kosten, die auf Grund der Behinderung entstanden sind, höher als der Behinderten-Pauschbetrag, ist es sinnvoll die tatsächlichen Kosten anzugeben. Das können Sie im Bereich „Krankheitskosten und weitere außergewöhnliche Belastungen” machen.",
+        p3: "<bold>Wichtig</bold>: In diesem Fall werden die tatsächlichen Aufwendungen um die zumutbare Belastung gekürzt.",
+        p4: "Außerordentliche Kosten sind auch neben dem Pauschbetrag gesondert zu berücksichtigen, wenn sie zwar mit der Körperbehinderung zusammenhängen, sich jedoch in Folge ihrer Einmaligkeit der Typisierung des §  33b Abs. 3 EStG entziehen.",
+        list: {
+          listItem1:
+            "die Hilfe bei den gewöhnlichen und regelmäßig wiederkehrenden Verrichtungen des täglichen Lebens",
+          listItem2: "die eigene Pflege und",
+          listItem3: "einen erhöhten Wäschebedarf.",
+        },
+      },
+      requestPauschbetrag: {
+        yes: "Pauschbetrag in Höhe von <bold>{{pauschbetrag}} Euro</bold> beantragen",
+        no: "Pauschbetrag nicht beantragen",
+      },
+    },
     telephoneNumber: {
       fieldTelephoneNumber: {
         label: "Telefonnummer",
@@ -80,6 +101,18 @@ const translations = {
           "Ich habe die <termsOfServiceLink>Nutzungsbedingungen</termsOfServiceLink> gelesen und stimme ihnen zu.",
       },
       finish: "Steuererklärung abgeben",
+    },
+    hasDisability: {
+      intro_single:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> in Anspruch nehmen.",
+      intro_person_a:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person A in Anspruch nehmen.",
+      intro_person_b:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person B in Anspruch nehmen.",
+      details: {
+        title: "Infos zu den steuerlichen Vergünstigungen",
+        text: "Bei einer Behinderung besteht in der Regel Anspruch auf den <bold>Pauschbetrag für Menschen mit Behinderung.</bold> Die Höhe des Pauschbetrags ist vom Grad der Behinderung abhängig. Menschen mit Behinderung können unter bestimmten Voraussetzungen außerdem eine <bold>Pauschale für Fahrtkosten</bold> beantragen. Wählen Sie hier aus, ob Sie Angaben zu einer Behinderung machen möchten.",
+      },
     },
   },
   unlockCodeActivation: {
@@ -188,6 +221,10 @@ const translations = {
       exampleInput: {
         text: "z.B. 29.2.1951",
       },
+    },
+    yesNoSwitch: {
+      Yes: "Ja",
+      No: "Nein",
     },
   },
   stmindSelection: {

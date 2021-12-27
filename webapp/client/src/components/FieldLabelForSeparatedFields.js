@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
+import { labelPropType } from "../lib/propTypes";
 
 const Legend = styled.legend`
   & > span {
@@ -9,6 +10,8 @@ const Legend = styled.legend`
   }
 
   & > span.field-label {
+    -webkit-margin-top-collapse: separate; // Added because Safari won't display the margin inside of a legend
+    -webkit-margin-bottom-collapse: separate; // Added because Safari won't display the margin inside of a legend
     margin-bottom: var(--spacing-01);
   }
 
@@ -34,7 +37,7 @@ export default function FieldLabelForSeparatedFields(props) {
 
 FieldLabelForSeparatedFields.propTypes = {
   fieldId: PropTypes.string.isRequired,
-  label: FieldLabelScaffolding.propTypes.label,
+  label: labelPropType,
   details: FieldLabelScaffolding.propTypes.details,
 };
 

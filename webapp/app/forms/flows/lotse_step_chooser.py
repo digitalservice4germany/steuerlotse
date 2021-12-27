@@ -8,7 +8,7 @@ from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -41,6 +41,7 @@ class LotseStepChooser(StepChooser):
         'person_a_plz': '20354',
         'person_a_town': 'Hamburg',
         'person_a_religion': 'none',
+        'person_a_has_disability': 'yes',
         'person_a_disability_degree': 25,
         'person_a_has_merkzeichen_bl': True,
         'person_a_has_merkzeichen_g': True,
@@ -51,6 +52,7 @@ class LotseStepChooser(StepChooser):
         'person_b_last_name': 'Mustername',
         'person_b_same_address': 'yes',
         'person_b_religion': 'rk',
+        'person_b_has_disability': 'yes',
         'person_b_has_merkzeichen_h': True,
 
         # 'is_user_account_holder': 'yes', use for single user
@@ -102,8 +104,10 @@ class LotseStepChooser(StepChooser):
             steps=[
                 StepSteuernummer,
                 StepPersonA,
+                StepPersonAHasDisability,
                 StepMerkzeichenPersonA,
                 StepPersonB,
+                StepPersonBHasDisability,
                 StepMerkzeichenPersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,

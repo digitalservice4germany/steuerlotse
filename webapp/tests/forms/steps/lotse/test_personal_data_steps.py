@@ -8,7 +8,7 @@ from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
-    StepTelephoneNumber
+    StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -19,7 +19,8 @@ class SummaryStep:
 
 
 def new_step_with_bufa_choices(form_data):
-    step = LotseStepChooser().get_correct_step(StepSteuernummer.name, True, ImmutableMultiDict(form_data))
+    step = LotseStepChooser().get_correct_step(
+        StepSteuernummer.name, True, ImmutableMultiDict(form_data))
     return step
 
 
@@ -101,7 +102,8 @@ class TestStepSteuernummer:
                                                          'form.lotse.steuernummer.request_new_tax_number',
                                                          num=expected_number_of_users)
         with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(session_data)})
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -121,7 +123,8 @@ class TestStepSteuernummer:
                                                          'form.lotse.steuernummer.request_new_tax_number',
                                                          num=expected_number_of_users)
         with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(session_data)})
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -179,25 +182,30 @@ class TestStepSteuernummerValidate:
         MockErica.tax_number_is_invalid = True
         bundesland_abbreviation = 'BY'
         steuernummer = '19811310010'
-        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         try:
             with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-                StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+                StepSteuernummer.prepare_render_info(
+                    stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         finally:
             MockErica.tax_number_is_invalid = False
 
-        mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
+        mock_flash.assert_called_once_with(
+            _('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
 
     @pytest.mark.usefixtures("test_request_context")
     def test_if_valid_number_given_then_flash_no_error(self, app):
         bundesland_abbreviation = 'BY'
         steuernummer = '19811310010'
-        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+            StepSteuernummer.prepare_render_info(
+                stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_not_called()
 
@@ -205,21 +213,26 @@ class TestStepSteuernummerValidate:
     def test_if_invalid_number_given_then_flash_error(self, app):
         bundesland_abbreviation = 'BY'
         steuernummer = '11111111111'
-        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+            StepSteuernummer.prepare_render_info(
+                stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
-        mock_flash.assert_called_once_with(_('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
+        mock_flash.assert_called_once_with(
+            _('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
 
     @pytest.mark.usefixtures("test_request_context")
     def test_if_no_number_given_then_flash_no_error(self, app):
         bundesland_abbreviation = 'BY'
         steuernummer = ''
-        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+            StepSteuernummer.prepare_render_info(
+                stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_not_called()
 
@@ -227,10 +240,12 @@ class TestStepSteuernummerValidate:
     def test_if_no_bundesland_given_then_flash_no_error(self, app):
         bundesland_abbreviation = ''
         steuernummer = '11111111111'
-        input_data = {'steuernummer_exists': 'yes', 'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
 
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
-            StepSteuernummer.prepare_render_info(stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+            StepSteuernummer.prepare_render_info(
+                stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_not_called()
 
@@ -245,11 +260,13 @@ class TestStepPersonATexts:
         }
         expected_number_of_users = 2
         expected_step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
-                              num=expected_number_of_users)
-        expected_step_intro = _('form.lotse.person-a-intro') if expected_number_of_users > 1 else None
+                                       num=expected_number_of_users)
+        expected_step_intro = _(
+            'form.lotse.person-a-intro') if expected_number_of_users > 1 else None
 
         with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(session_data)})
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -265,10 +282,12 @@ class TestStepPersonATexts:
         expected_number_of_users = 1
         expected_step_title = ngettext('form.lotse.person-a-title', 'form.lotse.person-a-title',
                                        num=expected_number_of_users)
-        expected_step_intro = _('form.lotse.person-a-intro') if expected_number_of_users > 1 else None
+        expected_step_intro = _(
+            'form.lotse.person-a-intro') if expected_number_of_users > 1 else None
 
         with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(session_data)})
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -282,7 +301,8 @@ class TestStepPersonAGetLabel:
         session_data = {
             'familienstand': 'single',
         }
-        expected_label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=1)
+        expected_label = ngettext(
+            'form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=1)
         returned_label = StepPersonA.get_label(session_data)
         assert returned_label == expected_label
 
@@ -293,7 +313,8 @@ class TestStepPersonAGetLabel:
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
         }
-        expected_label = ngettext('form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=2)
+        expected_label = ngettext(
+            'form.lotse.step_person_a.label', 'form.lotse.step_person_a.label', num=2)
         returned_label = StepPersonA.get_label(session_data)
         assert returned_label == expected_label
 
@@ -387,13 +408,15 @@ class TestPersonBValidation:
             assert form.validate() is False
 
     def test_if_same_address_yes_then_validation_succ_without_address(self, valid_form_data, new_test_request_context):
-        data = MultiDict({**valid_form_data, **{'person_b_same_address': 'yes'}})
+        data = MultiDict(
+            {**valid_form_data, **{'person_b_same_address': 'yes'}})
         with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
 
     def test_if_same_address_no_and_no_address_set_then_fail_validation(self, valid_form_data, new_test_request_context):
-        data = MultiDict({**valid_form_data, **{'person_b_same_address': 'no'}})
+        data = MultiDict(
+            {**valid_form_data, **{'person_b_same_address': 'no'}})
         with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is False
@@ -411,13 +434,66 @@ class TestTelephoneNumberValidation:
     def test_if_number_max_25_chars_then_succ_validation(self, new_test_request_context):
         data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit ame'})
         with new_test_request_context(form_data=data):
-            step = LotseStepChooser().get_correct_step(StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            step = LotseStepChooser().get_correct_step(
+                StepTelephoneNumber.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
 
     def test_if_number_over_25_chars_then_succ_validation(self, new_test_request_context):
         data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit amet'})
         with new_test_request_context(form_data=data):
-            step = LotseStepChooser().get_correct_step(StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            step = LotseStepChooser().get_correct_step(
+                StepTelephoneNumber.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is False
+
+
+class TestPersonAHasDisabilityValidation:
+    def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
+        data = MultiDict({'person_a_has_disability': 'yes'})
+        with new_test_request_context(form_data=data):
+            step = LotseStepChooser().get_correct_step(
+                StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is True
+
+    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
+        data = MultiDict()
+        with new_test_request_context(form_data=data):
+            step = LotseStepChooser().get_correct_step(
+                StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is False
+
+
+class TestPersonBHasDisabilityValidation:
+    def test_if_required_value_is_give_validation_should_be_success(self, new_test_request_context):
+        data = MultiDict({
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_b_has_disability': 'no'
+        })
+
+        with new_test_request_context(form_data=data) as req:
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+            step = LotseStepChooser().get_correct_step(
+                StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is True
+
+    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
+        data = MultiDict({
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True
+        })
+
+        with new_test_request_context(form_data=data) as req:
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+            step = LotseStepChooser().get_correct_step(
+                StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is False

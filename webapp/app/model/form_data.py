@@ -87,6 +87,7 @@ class MandatoryFormData(BaseModel):
     person_a_street_number: str
     person_a_plz: str
     person_a_town: str
+    person_a_has_disability: str
     # TODO add pflegegrad?
 
     person_b_same_address: Optional[str]
@@ -95,6 +96,7 @@ class MandatoryFormData(BaseModel):
     person_b_last_name: Optional[str]
     person_b_first_name: Optional[str]
     person_b_religion: Optional[str]
+    person_b_has_disability: Optional[str]
     # TODO add pflegegrad?
 
     iban: str
@@ -134,6 +136,7 @@ class MandatoryFormData(BaseModel):
         return v
 
     @validator('person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
+               'person_b_first_name', 'person_b_religion', 'person_b_has_disability', 'account_holder',
                'person_b_first_name', 'person_b_religion', 'account_holder', always=True)
     def person_b_required_if_shown(cls, v, values, **kwargs):
         if show_person_b(values.get('familienstandStruct', {})) and not v:
@@ -206,6 +209,7 @@ class FormDataDependencies(BaseModel):
     person_a_address_ext: Optional[str]
     person_a_plz: Optional[str]
     person_a_town: Optional[str]
+    person_a_has_disability: Optional[str]
     person_a_has_pflegegrad: Optional[str]
     person_a_disability_degree: Optional[int]
     person_a_has_merkzeichen_g: Optional[bool]
@@ -226,6 +230,7 @@ class FormDataDependencies(BaseModel):
     person_b_address_ext: Optional[str]
     person_b_plz: Optional[str]
     person_b_town: Optional[str]
+    person_b_has_disability: Optional[str]
     person_b_has_pflegegrad: Optional[str]
     person_b_disability_degree: Optional[int]
     person_b_has_merkzeichen_g: Optional[bool]

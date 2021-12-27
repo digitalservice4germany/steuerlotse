@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-22 08:42+0100\n"
+"POT-Creation-Date: 2021-12-22 14:28+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -286,6 +286,8 @@ msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
 #: app/forms/steps/eligibility_steps.py:192
+#: app/forms/steps/lotse/personal_data.py:451
+#: app/forms/steps/lotse/personal_data.py:497
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1227,6 +1229,19 @@ msgstr ""
 #: app/forms/steps/lotse/personal_data.py:35
 msgid "form.lotse.step_steuernummer.label"
 msgstr "Steuernummer"
+
+#: app/forms/steps/lotse/personal_data.py:36
+#: app/forms/steps/lotse/personal_data.py:188
+#: app/forms/steps/lotse/personal_data.py:300
+#: app/forms/steps/lotse/personal_data.py:411
+#: app/forms/steps/lotse/personal_data.py:446
+#: app/forms/steps/lotse/personal_data.py:490
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
+msgid "form.lotse.mandatory_data.label"
+msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:44
 #: app/forms/steps/lotse/personal_data.py:142
@@ -2208,7 +2223,7 @@ msgstr ""
 "ausgeschlossen ist."
 
 #: app/forms/steps/lotse/steuerminderungen.py:461
-msgid "form.lotse.spenden-inland-parteien.data_label}"
+msgid "form.lotse.spenden-inland-parteien.data_label"
 msgstr "an inländische politische Parteien"
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:20

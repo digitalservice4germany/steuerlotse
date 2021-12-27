@@ -185,6 +185,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_plz': '20354',
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
+            'person_a_has_disability': 'no',
 
             'iban': 'DE35133713370000012345',
         }
@@ -196,6 +197,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_b_last_name': 'Mustername',
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
+            'person_b_has_disability': 'no',
             'person_b_has_merkzeichen_h': True,
             'account_holder': 'person_a'
         }
@@ -273,7 +275,8 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_show_person_b_true_then_raise_error_if_person_b_fields_missing(self):
         expected_missing_fields = ['person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
-                                   'person_b_first_name', 'person_b_religion', 'account_holder']
+                                   'person_b_first_name', 'person_b_religion', 'person_b_has_disability',
+                                   'account_holder']
         with patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=True)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer, **self.married_familienstand})
