@@ -31,9 +31,9 @@ describe("PersonAHasDisability", () => {
       cy.get("#person_a_has_disabilityno").should("not.be.checked");
     });
 
-    it("Should link forward to telephone number page", () => {
+    it("Should link forward to pauschbetrag for person a", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
     });
   });
 
@@ -51,6 +51,11 @@ describe("PersonAHasDisability", () => {
 
     it("Should not check radio button for label yes", () => {
       cy.get("#person_a_has_disabilityyes").should("not.be.checked");
+    });
+
+    it("Should link forward to telephone number page", () => {
+      cy.get("button[type=submit]").click();
+      cy.url().should("include", "/lotse/step/telephone_number");
     });
   });
 
@@ -72,7 +77,7 @@ describe("PersonAHasDisability", () => {
 
     it("Should link forward to person b page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_b");
+      cy.url().should("include", "/lotse/step/person_a_has_disability");
     });
   });
 });
