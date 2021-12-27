@@ -7,6 +7,10 @@ const Label = styled.label`
   &.field-label {
     margin-bottom: var(--spacing-01);
   }
+
+  &.field-label-example {
+    margin-bottom: var(--spacing-01);
+  }
 `;
 
 export default function FieldLabel(props) {

@@ -4,12 +4,18 @@ import styled from "styled-components";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
 
 const Legend = styled.legend`
-  &.field-label {
+  & > span {
+    display: block;
+  }
+
+  & > span.field-label {
+    -webkit-margin-top-collapse: separate; // Added because Safari won't display the margin inside of a legend
+    -webkit-margin-bottom-collapse: separate; // Added because Safari won't display the margin inside of a legend
     margin-bottom: var(--spacing-01);
   }
 
-  &.field-label-example {
-    margin-bottom: 0;
+  & > span.field-label-example {
+    margin-bottom: var(--spacing-01);
   }
 `;
 
@@ -19,9 +25,10 @@ export default function FieldLabelForSeparatedFields(props) {
     <FieldLabelScaffolding
       {...props}
       render={(innerContent, className) => (
-        <span>
-          <Legend className={className}>{innerContent}</Legend>
-        </span>
+        <Legend>
+          {" "}
+          <span className={className}>{innerContent} </span>
+        </Legend>
       )}
     />
   );

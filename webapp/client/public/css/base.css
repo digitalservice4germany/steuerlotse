@@ -191,7 +191,7 @@ img.invalid-feedback {
 
 .example-input {
   color: var(--secondary-text-color);
-  margin-bottom: var(--spacing-02);
+  margin-bottom: var(--spacing-01);
 }
 
 .error-found-line {
