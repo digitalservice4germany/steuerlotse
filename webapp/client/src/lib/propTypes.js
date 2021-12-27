@@ -1,15 +1,22 @@
 import PropTypes from "prop-types";
 
+export const checkboxPropType = PropTypes.exact({
+  errors: PropTypes.arrayOf(PropTypes.string),
+  checked: PropTypes.bool,
+});
+
+export const labelPropType = PropTypes.exact({
+  text: PropTypes.string,
+  showOptionalTag: PropTypes.bool,
+  help: PropTypes.string, // field.render_kw['help']
+  exampleInput: PropTypes.string, // field.render_kw["example_input"]
+});
+
 // Used if the field is handed to a more abstract component.
 // e.g. MerkzeichenPersonAPage -> MerkzeichenPage
 const abstractedFieldPropType = PropTypes.exact({
   name: PropTypes.string.isRequired,
-  label: FieldLabelScaffolding.propTypes.label,
-});
-
-export const checkboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
+  label: labelPropType,
 });
 
 export const extendedCheckboxPropType = PropTypes.exact({
@@ -38,13 +45,6 @@ export const selectionFieldPropType = PropTypes.exact({
   selectedValue: PropTypes.any,
   options: optionsPropType,
   errors: PropTypes.arrayOf(PropTypes.string),
-});
-
-export const labelPropType = PropTypes.exact({
-  text: PropTypes.string,
-  showOptionalTag: PropTypes.bool,
-  help: PropTypes.string, // field.render_kw['help']
-  exampleInput: PropTypes.string, // field.render_kw["example_input"]
 });
 
 export const extendedSelectionFieldPropType = PropTypes.exact({
