@@ -74,7 +74,6 @@ describe("PersonAHasDisabilityPage no disability", () => {
   });
 
   it("should render selected value no", () => {
-    console.log(screen.queryAllByRole("radio")[1]);
     expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
     expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
   });
