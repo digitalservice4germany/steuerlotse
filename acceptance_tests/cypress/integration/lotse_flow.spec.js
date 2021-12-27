@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 const authPassword = Cypress.env('STAGING_AUTH_PASSWORD')
-Cypress.config('baseUrl', `http://localhost:3000`)
+Cypress.config('baseUrl', `https://lotse:${authPassword}@www-staging.stl.ds4g.dev`)
 
 const unlockCodeData = {
     idnr1: '09',
