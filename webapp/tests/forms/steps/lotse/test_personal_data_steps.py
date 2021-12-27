@@ -596,7 +596,7 @@ class TestPauschBetragPersonAValidation:
                 {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name is 'person_a_has_disability'
+            assert step.redirection_step_name == 'person_a_has_disability'
             
     def test_if_required_precondition_person_a_has_disability_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({'person_a_has_disability':'no', 'person_a_requests_pauschbetrag': 'no'})
@@ -605,7 +605,7 @@ class TestPauschBetragPersonAValidation:
                 {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name is 'person_a_has_disability'
+            assert step.redirection_step_name == 'person_a_has_disability'
             
 class TestPauschBetragPersonBValidation:
     def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
@@ -623,7 +623,7 @@ class TestPauschBetragPersonBValidation:
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
-            assert form.validate() is True
+            assert form.validate() == True
 
     def test_if_required_precondition_person_b_has_disability_is_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({
@@ -639,7 +639,7 @@ class TestPauschBetragPersonBValidation:
                 {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name is 'person_b_has_disability'
+            assert step.redirection_step_name == 'person_b_has_disability'
             
     
     def test_if_required_precondition_show_person_b_is_not_satisfied_return_should_be_a_redirect_to_familienstand(self, new_test_request_context):
@@ -652,4 +652,4 @@ class TestPauschBetragPersonBValidation:
                 {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name is 'familienstand' 
+            assert step.redirection_step_name == 'familienstand' 
