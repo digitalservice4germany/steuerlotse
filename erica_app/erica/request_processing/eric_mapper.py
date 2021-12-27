@@ -94,6 +94,8 @@ class EstEricMapping(BaseModel):
     def set_pauschbetrag_disability_degrees(cls, values):
         if values.get('person_a_requests_pauschbetrag'):
             values['person_a_pauschbetrag_disability_degree'] = values.get('person_a_disability_degree')
+
+        if values.get('person_b_requests_pauschbetrag'):
             values['person_b_pauschbetrag_disability_degree'] = values.get('person_b_disability_degree')
 
         return values
