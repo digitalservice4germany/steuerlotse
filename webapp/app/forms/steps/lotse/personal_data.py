@@ -565,7 +565,7 @@ class StepPauschbetragPersonA(StepPauschbetrag):
     
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
-            # TODO: This is because of key mapping - the text is within the react component
+            # TODO: The empty strings are because of key mapping - the text is within the react component
             choices=[('yes', 'yes'),('no', '')],
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
             validators=[InputRequired(_l('validate.input-required'))])
