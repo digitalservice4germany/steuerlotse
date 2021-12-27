@@ -85,6 +85,11 @@ class SteuerlotseStep(object):
     def _handle_redirects(self):
         if self.render_info.redirect_url:
             return redirect(self.render_info.redirect_url)
+    
+    # Override this function, to manipulate the overview value
+    @classmethod
+    def _get_value_representation(cls, value):
+        return value
 
     @classmethod
     def number_of_users(cls, *args, **kwargs):

@@ -54,6 +54,11 @@ class Step(object):
 
         return None, None
 
+    # Override this function, to manipulate the overview value    
+    @classmethod
+    def _get_value_representation(cls, value):
+        return value
+
 
 class FormStep(Step):
     """A FormStep owns a wtform and knows how to create and render it. The template
