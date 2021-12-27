@@ -75,9 +75,9 @@ describe("PersonAHasDisability", () => {
       cy.url().should("include", "/lotse/step/person_a");
     });
 
-    it("Should link forward to person b page", () => {
+    it("Should link forward to person a pauschbetrag page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_a_has_disability");
+      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
     });
   });
 });
