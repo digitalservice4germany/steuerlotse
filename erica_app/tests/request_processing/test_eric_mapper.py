@@ -702,7 +702,7 @@ class TestEstDataDisabilityDegree:
 
     def test_if_person_b_disability_degree_below_20_then_do_not_set_disability_degree(self, standard_est_input_data):
         standard_est_input_data.person_b_disability_degree = 15
-        standard_est_input_data.person_a_requests_pauschbetrag = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
@@ -718,7 +718,7 @@ class TestEstDataDisabilityDegree:
 
     def test_if_person_b_disability_degree_20_then_set_disability_degree(self, standard_est_input_data):
         standard_est_input_data.person_b_disability_degree = 20
-        standard_est_input_data.person_a_requests_pauschbetrag = True
+        standard_est_input_data.person_b_requests_pauschbetrag = True
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
