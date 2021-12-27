@@ -9,6 +9,8 @@ const Legend = styled.legend`
   }
 
   & > span.field-label {
+    -webkit-margin-top-collapse: separate; // Added because Safari won't display the margin inside of a legend
+    -webkit-margin-bottom-collapse: separate; // Added because Safari won't display the margin inside of a legend
     margin-bottom: var(--spacing-01);
   }
 
