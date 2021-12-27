@@ -125,7 +125,7 @@ describe("With no preselected", () => {
     };
     render(<PauschbetragPage {...noProps} />);
   });
-  it("should render selected value yes", () => {
+  it("should render selected value no", () => {
     expect(screen.getByDisplayValue("yes").checked).toBe(false);
     expect(screen.getByDisplayValue("no").checked).toBe(true);
   });
