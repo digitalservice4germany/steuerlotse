@@ -284,7 +284,10 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get('label[for=person_a_has_disabilityyes]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_requests_pauschbetragyes]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -340,7 +343,10 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get('label[for=person_a_has_disabilityyes]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_requests_pauschbetragyes]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -411,7 +417,10 @@ context('Acceptance tests', () => {
                 cy.get('label[for=person_a_gehbeh]').first().click()
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get('label[for=person_a_has_disabilityyes]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_requests_pauschbetragyes]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)
@@ -431,7 +440,10 @@ context('Acceptance tests', () => {
                 cy.get('select[id=person_b_religion]').select('ev')
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_b_has_disabilityno]').click()
+                cy.get('label[for=person_b_has_disabilityyes]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_b_requests_pauschbetragyes]').click()
                 cy.get(submitBtnSelector).click()
 
                 // no telephone number
