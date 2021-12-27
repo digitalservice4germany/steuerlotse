@@ -2,9 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import FieldLabelScaffolding from "./FieldLabelScaffolding";
+import { labelPropType } from "../lib/propTypes";
 
 const Label = styled.label`
   &.field-label {
+    margin-bottom: var(--spacing-01);
+  }
+
+  &.field-label-example {
     margin-bottom: var(--spacing-01);
   }
 `;
@@ -25,7 +30,7 @@ export default function FieldLabel(props) {
 
 FieldLabel.propTypes = {
   fieldId: PropTypes.string.isRequired,
-  label: FieldLabelScaffolding.propTypes.label,
+  label: labelPropType,
   details: FieldLabelScaffolding.propTypes.details,
 };
 
