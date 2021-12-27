@@ -62,7 +62,6 @@ class StepDisplayProps(ComponentProps):
     prev_url: Optional[str]
     next_url: Optional[str]
 
-
 class LoginProps(StepFormProps):
     pass
 
@@ -107,3 +106,9 @@ class TaxNumberStepFormProps(StepFormProps):
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str
+
+class PersonAHasDisabilityProps(StepFormProps):
+    num_users: int
+
+class PersonBHasDisabilityProps(StepFormProps):
+    pass

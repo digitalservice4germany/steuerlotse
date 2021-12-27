@@ -139,9 +139,7 @@ function FormFieldSeparatedField({
       </SeparatedField>
       {details && details.positionAfterField && (
         <Details title={details.title} detailsId={fieldId}>
-          {{
-            paragraphs: [details.text],
-          }}
+          <p>{details.text}</p>
         </Details>
       )}
       {errors.map((error, index) => (

@@ -31,7 +31,7 @@ export const extendedFieldPropType = PropTypes.exact({
 export const optionsPropType = PropTypes.arrayOf(
   PropTypes.exact({
     value: PropTypes.string,
-    displayName: PropTypes.string,
+    displayName: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   })
 );
 
@@ -39,4 +39,12 @@ export const selectionFieldPropType = PropTypes.exact({
   selectedValue: PropTypes.any,
   options: optionsPropType,
   errors: PropTypes.arrayOf(PropTypes.string),
+});
+
+export const extendedSelectionFieldPropType = PropTypes.exact({
+  selectedValue: PropTypes.any,
+  options: optionsPropType,
+  errors: PropTypes.arrayOf(PropTypes.string),
+  name: PropTypes.string.isRequired,
+  label: FieldLabelScaffolding.propTypes.label,
 });

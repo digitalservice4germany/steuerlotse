@@ -2,13 +2,11 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import Details from "./Details";
 
-describe("Details with content paragraphs", () => {
+describe("Details with single paragraph", () => {
   beforeEach(() => {
     render(
       <Details title="title" detailsId="my-id">
-        {{
-          paragraphs: ["content paragraph"],
-        }}
+        <p>content paragraph</p>
       </Details>
     );
   });
@@ -26,10 +24,12 @@ describe("Details with content paragraphs and list items", () => {
   beforeEach(() => {
     render(
       <Details title="title" detailsId="some-id">
-        {{
-          paragraphs: ["content paragraph"],
-          listItems: ["list item"],
-        }}
+        {[
+          <p key={0}>content paragraph</p>,
+          <ul key={1}>
+            <li>list item</li>
+          </ul>,
+        ]}
       </Details>
     );
   });

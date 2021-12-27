@@ -38,9 +38,7 @@ export default function FieldLabelScaffolding({
       )}
       {details && !details.positionAfterField && (
         <Details title={details.title} detailsId={fieldId}>
-          {{
-            paragraphs: [details.text],
-          }}
+          <p>{details.text}</p>
         </Details>
       )}
     </>
