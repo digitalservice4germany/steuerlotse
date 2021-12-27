@@ -20,13 +20,6 @@ export const labelPropType = PropTypes.exact({
   exampleInput: PropTypes.string, // field.render_kw["example_input"]
 });
 
-// Used if the field is handed to a more abstract component.
-// e.g. MerkzeichenPersonAPage -> MerkzeichenPage
-const abstractedFieldPropType = PropTypes.exact({
-  name: PropTypes.string.isRequired,
-  label: labelPropType,
-});
-
 export const extendedCheckboxPropType = PropTypes.exact({
   ...checkboxPropType,
   ...abstractedFieldPropType,
