@@ -88,7 +88,7 @@ class SteuerlotseStep(object):
     
     # Override this function, to manipulate the overview value
     @classmethod
-    def _get_value_representation(cls, value):
+    def get_overview_value_representation(cls, value):
         return value
 
     @classmethod

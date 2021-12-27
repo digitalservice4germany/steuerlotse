@@ -358,7 +358,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 field = getattr(step.form, attr)
                 label, value = self._generate_value_representation(field, form_data[attr])
                 if value:
-                    step_data[label] = step._get_value_representation(value)
+                    step_data[label] = step.get_overview_value_representation(value)
             elif missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']

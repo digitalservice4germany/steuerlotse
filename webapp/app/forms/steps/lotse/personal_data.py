@@ -562,7 +562,7 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label', 'form.lotse.person_a.request_pauschbetrag.label',
                         num=get_number_of_users(data))        
     
-    def _get_value_representation(self, value):
+    def get_overview_value_representation(self, value):
         result = ''
         
         if value == 'yes':
@@ -620,7 +620,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
     
-    def _get_value_representation(self, value):
+    def get_overview_value_representation(self, value):
         if value == 'yes':
             return self.get_pauschbetrag() + ' ' + _('currency.euro')
             
