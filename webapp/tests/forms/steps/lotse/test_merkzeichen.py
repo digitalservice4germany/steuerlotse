@@ -33,6 +33,30 @@ class TestStepMerkzeichenPersonAValidation:
             data = MultiDict({'person_a_has_pflegegrad': 'no', 'person_a_disability_degree': allowed_value})
             form = new_merkzeichen_person_a_step(form_data=data).render_info.form
             assert form.validate() is True
+
+    def test_if_disability_degree_has_not_allowed_value_then_fail_validation(self):
+        for not_allowed_value in [21, 105]:
+            data = MultiDict({'person_a_has_pflegegrad': 'no',
+                              'person_a_disability_degree': not_allowed_value})
+            form = new_merkzeichen_person_a_step(form_data=data).render_info.form
+            assert form.validate() is False
+
+    def test_if_disability_degree_below_20_and_has_no_merkzeichen_g_or_ag_then_succ_validation(self):
+        for not_allowed_value in [0, 14]:
+            data = MultiDict({'person_a_has_pflegegrad': 'no',
+                              'person_a_disability_degree': not_allowed_value,
+                              'person_a_has_merkzeichen_g': False,
+                              'person_a_has_merkzeichen_ag': False})
+            form = new_merkzeichen_person_a_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_disability_degree_below_20_and_has_merkzeichen_g_then_fail_validation(self):
+        for not_allowed_value in [0, 14]:
+            data = MultiDict({'person_a_has_pflegegrad': 'no',
+                              'person_a_disability_degree': not_allowed_value,
+                              'person_a_has_merkzeichen_g': True})
+            form = new_merkzeichen_person_a_step(form_data=data).render_info.form
+            assert form.validate() is False
     
     def test_if_merkzeichen_g_and_ag_and_disability_degree_not_set_then_succ_validation(self, valid_form_data):
         data = MultiDict(valid_form_data)
@@ -138,6 +162,30 @@ class TestStepMerkzeichenPersonBValidation:
             data = MultiDict({'person_b_has_pflegegrad': 'no', 'person_b_disability_degree': allowed_value})
             form = new_merkzeichen_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
+
+    def test_if_disability_degree_has_not_allowed_value_then_fail_validation(self):
+        for not_allowed_value in [21, 105]:
+            data = MultiDict({'person_b_has_pflegegrad': 'no',
+                              'person_b_disability_degree': not_allowed_value})
+            form = new_merkzeichen_person_b_step(form_data=data).render_info.form
+            assert form.validate() is False
+
+    def test_if_disability_degree_below_20_and_has_no_merkzeichen_g_or_ag_then_succ_validation(self):
+        for not_allowed_value in [0, 14]:
+            data = MultiDict({'person_b_has_pflegegrad': 'no',
+                              'person_b_disability_degree': not_allowed_value,
+                              'person_b_has_merkzeichen_g': False,
+                              'person_b_has_merkzeichen_ag': False})
+            form = new_merkzeichen_person_b_step(form_data=data).render_info.form
+            assert form.validate() is True
+
+    def test_if_disability_degree_below_20_and_has_merkzeichen_g_then_fail_validation(self):
+        for not_allowed_value in [0, 14]:
+            data = MultiDict({'person_b_has_pflegegrad': 'no',
+                              'person_b_disability_degree': not_allowed_value,
+                              'person_b_has_merkzeichen_g': True})
+            form = new_merkzeichen_person_b_step(form_data=data).render_info.form
+            assert form.validate() is False
 
     def test_if_merkzeichen_g_and_ag_and_disability_degree_not_set_then_succ_validation(self, valid_form_data):
         data = MultiDict(valid_form_data)
