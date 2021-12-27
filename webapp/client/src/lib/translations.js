@@ -34,6 +34,60 @@ const translations = {
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
     },
+    confirmation: {
+      fieldRegistrationConfirmDataPrivacy: {
+        labelText:
+          "Ich habe die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> inklusive der <taxGdprLink>Allgemeinen Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung</taxGdprLink> zur Kenntnis genommen und akzeptiere diese.",
+      },
+      fieldRegistrationConfirmTermsOfService: {
+        labelText:
+          "Ich habe die <termsOfServiceLink>Nutzungsbedingungen</termsOfServiceLink> gelesen und stimme ihnen zu.",
+      },
+      finish: "Steuererklärung abgeben",
+    },
+    taxNumber: {
+      taxNumberExists: {
+        labelText_one: "Haben Sie bereits eine Steuernummer?",
+        labelText_other: "Haben Sie bereits eine gemeinsame Steuernummer?",
+        help: {
+          title: "Wo finde ich diese Nummer?",
+          text: "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch keine Steuererklärung abgegeben haben, können Sie eine neue Steuernummer beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-Identifikationsnummer zwei verschiedene Nummern sind.",
+        },
+      },
+      bundesland: {
+        labelText: "Wählen Sie Ihr Bundesland",
+      },
+      taxOffices: {
+        labelText: "Wählen Sie Ihr Finanzamt",
+      },
+      taxNumberInput: {
+        label: {
+          labelText: "Steuernummer",
+          exampleInput: "Muss 10 oder 11 Ziffern haben",
+        },
+      },
+      requestNewTaxNumber: {
+        labelText_one:
+          "Hiermit bestätige ich, dass ich noch keine Steuernummer bei meinem Finanzamt habe und eine neue Steuernummer beantragen möchten.",
+        labelText_other:
+          "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem Finanzamt haben und eine neue Steuernummer beantragen möchten.",
+        headline: "Neue Steuernummer beantragen",
+        intro:
+          "Mit der Abgabe der Steuererklärung wird eine neue Steuernummer beim zuständigen Finanzamt beantragt. Die neue Steuernummer wird Ihnen dann mit dem Steuerbescheid mitgeteilt.",
+      },
+    },
+    hasDisability: {
+      intro_single:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> in Anspruch nehmen.",
+      intro_person_a:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person A in Anspruch nehmen.",
+      intro_person_b:
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person B in Anspruch nehmen.",
+      details: {
+        title: "Infos zu den steuerlichen Vergünstigungen",
+        text: "Bei einer Behinderung besteht in der Regel Anspruch auf den <bold>Pauschbetrag für Menschen mit Behinderung.</bold> Die Höhe des Pauschbetrags ist vom Grad der Behinderung abhängig. Menschen mit Behinderung können unter bestimmten Voraussetzungen außerdem eine <bold>Pauschale für Fahrtkosten</bold> beantragen. Wählen Sie hier aus, ob Sie Angaben zu einer Behinderung machen möchten.",
+      },
+    },
     merkzeichen: {
       hasPflegegrad: {
         label: "Wurde ein Pflegegrad 4 oder 5 festgestellt?",
@@ -86,32 +140,52 @@ const translations = {
         no: "Pauschbetrag nicht beantragen",
       },
     },
+    fahrkostenpauschale: {
+      introText:
+        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}}</bold> Euro abzüglich der zumutbaren Belastung. Einzelne Fahrten können Sie nicht mehr geltend machen.",
+      requestsFahrkostenpauschale: {
+        yesLabel: "Pauschale beantragen",
+        noLabel: "Pauschale nicht beantragen",
+      },
+      helpTitle: "Hinweis zur zumutbaren Belastung",
+      helpText:
+        "Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus. Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
     telephoneNumber: {
       fieldTelephoneNumber: {
         label: "Telefonnummer",
       },
     },
-    confirmation: {
-      fieldRegistrationConfirmDataPrivacy: {
-        labelText:
-          "Ich habe die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> inklusive der <taxGdprLink>Allgemeinen Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung</taxGdprLink> zur Kenntnis genommen und akzeptiere diese.",
+    stmindSelection: {
+      selectVorsorge: {
+        label: {
+          title: "Vorsorgeaufwendungen",
+          text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Hierzu zählen z.B. Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
+        },
       },
-      fieldRegistrationConfirmTermsOfService: {
-        labelText:
-          "Ich habe die <termsOfServiceLink>Nutzungsbedingungen</termsOfServiceLink> gelesen und stimme ihnen zu.",
+      selectAussergBela: {
+        label: {
+          title: "Krankheitskosten und weitere außergewöhnliche Belastungen",
+          text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit und Kur, einer Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
+        },
       },
-      finish: "Steuererklärung abgeben",
-    },
-    hasDisability: {
-      intro_single:
-        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> in Anspruch nehmen.",
-      intro_person_a:
-        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person A in Anspruch nehmen.",
-      intro_person_b:
-        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person B in Anspruch nehmen.",
-      details: {
-        title: "Infos zu den steuerlichen Vergünstigungen",
-        text: "Bei einer Behinderung besteht in der Regel Anspruch auf den <bold>Pauschbetrag für Menschen mit Behinderung.</bold> Die Höhe des Pauschbetrags ist vom Grad der Behinderung abhängig. Menschen mit Behinderung können unter bestimmten Voraussetzungen außerdem eine <bold>Pauschale für Fahrtkosten</bold> beantragen. Wählen Sie hier aus, ob Sie Angaben zu einer Behinderung machen möchten.",
+      selectHandwerker: {
+        label: {
+          title: "Haushaltsnahe Dienstleistungen und Handwerkerleistungen",
+          text: "Zu den Kosten für Dienstleistungen im Haushalt und Handwerker zählen z.B. Leistungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
+        },
+      },
+      selectSpenden: {
+        label: {
+          title: "Spenden und Mitgliedsbeiträge",
+          text: "An dieser Stellen können Sie Spenden und Mitgliedsbeiträge angeben, die zum Teil von der Steuer absetzbar sind. Hierzu zählen z.B. Zahlungen an Vereine, Stiftungen und inländische Parteien.",
+        },
+      },
+      selectReligion: {
+        label: {
+          title: "Steuern für Ihre Religionsgemeinschaft",
+          text: "Letztes Jahr gezahlte Steuern für Ihre Religionsgemeinschaft können Sie als sogenannte Sonderausgaben angeben.",
+        },
       },
     },
   },
@@ -168,39 +242,6 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, muss sich nur eine Person registrieren.",
     },
   },
-  lotseFlow: {
-    taxNumber: {
-      taxNumberExists: {
-        labelText_one: "Haben Sie bereits eine Steuernummer?",
-        labelText_other: "Haben Sie bereits eine gemeinsame Steuernummer?",
-        help: {
-          title: "Wo finde ich diese Nummer?",
-          text: "Sie finden Ihre Steuernummer auf jedem Steuerbescheid. Sollten Sie noch keine Steuererklärung abgegeben haben, können Sie eine neue Steuernummer beantragen. Bitte beachten Sie, dass die Steuernummer und die Steuer-Identifikationsnummer zwei verschiedene Nummern sind.",
-        },
-      },
-      bundesland: {
-        labelText: "Wählen Sie Ihr Bundesland",
-      },
-      taxOffices: {
-        labelText: "Wählen Sie Ihr Finanzamt",
-      },
-      taxNumberInput: {
-        label: {
-          labelText: "Steuernummer",
-          exampleInput: "Muss 10 oder 11 Ziffern haben",
-        },
-      },
-      requestNewTaxNumber: {
-        labelText_one:
-          "Hiermit bestätige ich, dass ich noch keine Steuernummer bei meinem Finanzamt habe und eine neue Steuernummer beantragen möchten.",
-        labelText_other:
-          "Hiermit bestätigen wir, dass wir noch keine Steuernummer bei unserem Finanzamt haben und eine neue Steuernummer beantragen möchten.",
-        headline: "Neue Steuernummer beantragen",
-        intro:
-          "Mit der Abgabe der Steuererklärung wird eine neue Steuernummer beim zuständigen Finanzamt beantragt. Die neue Steuernummer wird Ihnen dann mit dem Steuerbescheid mitgeteilt.",
-      },
-    },
-  },
   dateField: {
     day: "Tag",
     month: "Monat",
@@ -227,35 +268,13 @@ const translations = {
       No: "Nein",
     },
   },
-  stmindSelection: {
-    selectVorsorge: {
-      label: {
-        title: "Vorsorgeaufwendungen",
-        text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Hierzu zählen z.B. Unfallversicherungen, Haftpflichtversicherungen und bestimmte Risikolebensversicherungen.",
-      },
-    },
-    selectAussergBela: {
-      label: {
-        title: "Krankheitskosten und weitere außergewöhnliche Belastungen",
-        text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit und Kur, einer Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
-      },
-    },
-    selectHandwerker: {
-      label: {
-        title: "Haushaltsnahe Dienstleistungen und Handwerkerleistungen",
-        text: "Zu den Kosten für Dienstleistungen im Haushalt und Handwerker zählen z.B. Leistungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
-      },
-    },
-    selectSpenden: {
-      label: {
-        title: "Spenden und Mitgliedsbeiträge",
-        text: "An dieser Stellen können Sie Spenden und Mitgliedsbeiträge angeben, die zum Teil von der Steuer absetzbar sind. Hierzu zählen z.B. Zahlungen an Vereine, Stiftungen und inländische Parteien.",
-      },
-    },
-    selectReligion: {
-      label: {
-        title: "Steuern für Ihre Religionsgemeinschaft",
-        text: "Letztes Jahr gezahlte Steuern für Ihre Religionsgemeinschaft können Sie als sogenannte Sonderausgaben angeben.",
+  stories: {
+    fahrkostenpauschale: {
+      introText:
+        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}}</bold> Euro abzüglich der zumutbaren Belastung. Einzelne Fahrten können Sie nicht mehr geltend machen.",
+      requestsFahrkostenpauschale: {
+        yesLabel: "Pauschale beantragen",
+        noLabel: "Pauschale nicht beantragen",
       },
     },
   },
