@@ -29,11 +29,6 @@ class FamilienstandModel(BaseModel):
     familienstand_confirm_zusammenveranlagung: Optional[bool]
 
 
-class DisabilityModel(BaseModel):
-    person_a_has_disability: str
-    person_b_has_disability: Optional[str]
-    
-
 class JointTaxesModel(FamilienstandModel):
     @root_validator
     def check_that_joint_taxes(cls, values):
