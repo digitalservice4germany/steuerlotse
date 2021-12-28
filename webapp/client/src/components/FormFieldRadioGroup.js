@@ -110,7 +110,7 @@ function FormFieldRadioGroup({
                   htmlFor={fieldId + option.value}
                   key={`${fieldId}-label-${option.value}`}
                 >
-                  {option.displayName}
+                  <span>{option.displayName}</span>
                 </label>,
               ])}
             </div>
