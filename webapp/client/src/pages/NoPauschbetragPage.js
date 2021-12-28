@@ -15,7 +15,8 @@ export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
         title={stepHeader.title}
         intro={
           <>
-            <p>{t("lotse.noPauschbetrag.intro.p1")}</p>
+            {t("lotse.noPauschbetrag.intro.p1")}
+            <br />
             <Trans
               t={t}
               i18nKey="lotse.noPauschbetrag.intro.p2"
@@ -32,9 +33,8 @@ export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
 }
 
 NoPauschbetragPage.propTypes = {
-  stepHeader: PropTypes.exact({
+  stepHeader: PropTypes.shape({
     title: PropTypes.string,
-    intro: PropTypes.string,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
   nextUrl: PropTypes.string.isRequired,
