@@ -46,9 +46,7 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
     
     return 0
     
-class StepPauschbetrag(LotseFormSteuerlotseStep):
-    pauschbetrag_prefix = 'person_a'
-        
+class StepPauschbetrag(LotseFormSteuerlotseStep):        
     def get_overview_value_representation(self, value):
         result = ''
         
@@ -56,15 +54,6 @@ class StepPauschbetrag(LotseFormSteuerlotseStep):
             result = self.get_pauschbetrag() + ' ' + _('currency.euro')
             
         return result
-
-    def get_pauschbetrag(self):
-        return str(calculate_pauschbetrag(
-            has_pflegegrad=self.stored_data.get(self.pauschbetrag_prefix + '_has_pflegegrad', False),            
-            disability_degree=int(self.stored_data.get(self.pauschbetrag_prefix + '_disability_degree', 0)),   
-            has_merkzeichen_bl=self.stored_data.get(self.pauschbetrag_prefix + '_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=self.stored_data.get(self.pauschbetrag_prefix + '_has_merkzeichen_tbl', False),
-            has_merkzeichen_h=self.stored_data.get(self.pauschbetrag_prefix + '_has_merkzeichen_h', False)
-        ))
 
 class StepPauschbetragPersonA(StepPauschbetrag):
     name = 'person_a_requests_pauschbetrag'
@@ -111,6 +100,16 @@ class StepPauschbetragPersonA(StepPauschbetrag):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+        
+    
+    def get_pauschbetrag(self):
+        return str(calculate_pauschbetrag(
+            has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', False),            
+            disability_degree=int(self.stored_data.get('person_a_disability_degree', 0)),   
+            has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False)
+        ))
         
         
 class StepPauschbetragPersonB(StepPauschbetrag):
@@ -162,3 +161,12 @@ class StepPauschbetragPersonB(StepPauschbetrag):
                             props=props_dict,
                             form=self.render_info.form,
                             header_title=_('form.lotse.header-title'))
+
+    def get_pauschbetrag(self):
+        return str(calculate_pauschbetrag(
+            has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', False),            
+            disability_degree=int(self.stored_data.get('person_b_disability_degree', 0)),   
+            has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False)
+        ))
