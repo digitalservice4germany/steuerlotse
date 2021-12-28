@@ -2,7 +2,7 @@ import datetime
 
 import pytest
 from flask.sessions import SecureCookieSession
-from flask_babel import ngettext
+from flask_babel import ngettext, lazy_gettext as _l
 from werkzeug.datastructures import ImmutableMultiDict, MultiDict
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
@@ -106,20 +106,22 @@ class TestStepMerkzeichenPersonAValidation:
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
         assert form.validate() is True
 
-    def test_if_merkzeichen_g_set_and_disability_degree_not_set_then_fail_validation(self, valid_form_data):
+    def test_if_merkzeichen_g_set_and_disability_degree_not_set_then_fail_validation_with_correct_message(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_a_has_merkzeichen_g': 'on'}})
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
         assert form.validate() is False
+        assert form.errors['person_a_disability_degree'] == [_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required')]
 
     def test_if_merkzeichen_g_set_and_disability_degree_set_then_succ_validation(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_a_has_merkzeichen_g': 'on', 'person_a_disability_degree': 20}})
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
         assert form.validate() is True
 
-    def test_if_merkzeichen_ag_set_and_disability_degree_not_set_then_fail_validation(self, valid_form_data):
+    def test_if_merkzeichen_ag_set_and_disability_degree_not_set_then_fail_validation_with_correct_message(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_a_has_merkzeichen_ag': 'on'}})
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
         assert form.validate() is False
+        assert form.errors['person_a_disability_degree'] == [_l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')]
 
     def test_if_merkzeichen_ag_set_and_disability_degree_set_then_succ_validation(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_a_has_merkzeichen_ag': 'on', 'person_a_disability_degree': 20}})
@@ -268,20 +270,22 @@ class TestStepMerkzeichenPersonBValidation:
         form = new_merkzeichen_person_b_step(form_data=data).render_info.form
         assert form.validate() is True
 
-    def test_if_merkzeichen_g_set_and_disability_degree_not_set_then_fail_validation(self, valid_form_data):
+    def test_if_merkzeichen_g_set_and_disability_degree_not_set_then_fail_validation_with_correct_message(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_b_has_merkzeichen_g': 'on'}})
         form = new_merkzeichen_person_b_step(form_data=data).render_info.form
         assert form.validate() is False
+        assert form.errors['person_b_disability_degree'] == [_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required')]
 
     def test_if_merkzeichen_g_set_and_disability_degree_set_then_succ_validation(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_b_has_merkzeichen_g': 'on', 'person_b_disability_degree': 20}})
         form = new_merkzeichen_person_b_step(form_data=data).render_info.form
         assert form.validate() is True
 
-    def test_if_merkzeichen_ag_set_and_disability_degree_not_set_then_fail_validation(self, valid_form_data):
+    def test_if_merkzeichen_ag_set_and_disability_degree_not_set_then_fail_validation_with_correct_message(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_b_has_merkzeichen_ag': 'on'}})
         form = new_merkzeichen_person_b_step(form_data=data).render_info.form
         assert form.validate() is False
+        assert form.errors['person_b_disability_degree'] == [_l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')]
 
     def test_if_merkzeichen_ag_set_and_disability_degree_set_then_succ_validation(self, valid_form_data):
         data = MultiDict({**valid_form_data, **{'person_b_has_merkzeichen_ag': 'on', 'person_b_disability_degree': 20}})

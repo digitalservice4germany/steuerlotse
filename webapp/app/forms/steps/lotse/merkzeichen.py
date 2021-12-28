@@ -65,7 +65,8 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
         def validate_person_a_disability_degree(self, field):
             if self.person_a_has_merkzeichen_g.data or self.person_a_has_merkzeichen_ag.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree.required'))(self, field)
+                input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required') if self.person_a_has_merkzeichen_g.data else _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
+                validators.InputRequired(input_required_message)(self, field)
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
             else:
@@ -165,7 +166,8 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
 
         def validate_person_b_disability_degree(self, field):
             if self.person_b_has_merkzeichen_g.data or self.person_b_has_merkzeichen_ag.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree.required'))(self, field)
+                input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required') if self.person_b_has_merkzeichen_g.data else _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
+                validators.InputRequired(input_required_message)(self, field)
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
             else:

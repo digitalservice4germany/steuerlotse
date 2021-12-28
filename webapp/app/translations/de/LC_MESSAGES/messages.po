@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-22 14:28+0100\n"
+"POT-Creation-Date: 2021-12-28 12:34+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -196,20 +196,20 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:127 app/forms/flows/lotse_step_chooser.py:101
+#: app/forms/flows/lotse_flow.py:127 app/forms/flows/lotse_step_chooser.py:103
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:186
+#: app/forms/flows/lotse_flow.py:188
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:308
+#: app/forms/flows/lotse_flow.py:310
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:365
+#: app/forms/flows/lotse_flow.py:367
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -286,8 +286,8 @@ msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
 #: app/forms/steps/eligibility_steps.py:192
-#: app/forms/steps/lotse/personal_data.py:451
-#: app/forms/steps/lotse/personal_data.py:497
+#: app/forms/steps/lotse/personal_data.py:410
+#: app/forms/steps/lotse/personal_data.py:456
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1087,23 +1087,32 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse/merkzeichen.py:20
-#: app/forms/steps/lotse/merkzeichen.py:69
+#: app/forms/steps/lotse/merkzeichen.py:21
+#: app/forms/steps/lotse/merkzeichen.py:122
+msgid "form.lotse.skip_reason.has_no_disability"
+msgstr ""
+"Sie haben angegeben, dass Sie keine Angaben zu einer Behinderung oder "
+"Pflegebedürftigkeit machen möchten. Ändern Sie die Antwort der Frage, "
+"wenn sie doch Angaben zu einer Behinderung oder Pflegebedürftigkeit "
+"machen möchten."
+
+#: app/forms/steps/lotse/merkzeichen.py:34
+#: app/forms/steps/lotse/merkzeichen.py:85
 msgid "form.lotse.merkzeichen_person_a.title"
 msgid_plural "form.lotse.merkzeichen_person_a.title"
 msgstr[0] "Angaben zu Ihrer Behinderung oder Pflegebedürftigkeit"
 msgstr[1] "Angaben zu Behinderung oder Pflegebedürftigkeit von Person A"
 
-#: app/forms/steps/lotse/merkzeichen.py:21
-#: app/forms/steps/lotse/merkzeichen.py:107
+#: app/forms/steps/lotse/merkzeichen.py:35
+#: app/forms/steps/lotse/merkzeichen.py:136
 msgid "form.lotse.merkzeichen.intro"
 msgstr ""
 "Bei einer Behinderung besteht in der Regel Anspruch auf steuerliche "
 "Vergünstigungen in Form von Pauschbeträgen. Ob und in welcher Höhe Sie "
 "Anspruch auf die Pauschbeträge haben, ist von Ihren Angaben abhängig."
 
-#: app/forms/steps/lotse/merkzeichen.py:22
-#: app/forms/steps/lotse/merkzeichen.py:108
+#: app/forms/steps/lotse/merkzeichen.py:36
+#: app/forms/steps/lotse/merkzeichen.py:137
 #: app/forms/steps/lotse/personal_data.py:31
 #: app/forms/steps/lotse/personal_data.py:185
 #: app/forms/steps/lotse/personal_data.py:276
@@ -1113,17 +1122,19 @@ msgstr ""
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/merkzeichen.py:24
-#: app/forms/steps/lotse/merkzeichen.py:110
+#: app/forms/steps/lotse/merkzeichen.py:39
+#: app/forms/steps/lotse/merkzeichen.py:140
 msgid "form.lotse.merkzeichen.label"
 msgstr "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit"
 
-#: app/forms/steps/lotse/merkzeichen.py:25
-#: app/forms/steps/lotse/merkzeichen.py:111
+#: app/forms/steps/lotse/merkzeichen.py:40
+#: app/forms/steps/lotse/merkzeichen.py:141
 #: app/forms/steps/lotse/personal_data.py:36
 #: app/forms/steps/lotse/personal_data.py:188
 #: app/forms/steps/lotse/personal_data.py:279
 #: app/forms/steps/lotse/personal_data.py:370
+#: app/forms/steps/lotse/personal_data.py:405
+#: app/forms/steps/lotse/personal_data.py:449
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:21
@@ -1131,18 +1142,18 @@ msgstr "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit"
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
-#: app/forms/steps/lotse/merkzeichen.py:29
-#: app/forms/steps/lotse/merkzeichen.py:115
+#: app/forms/steps/lotse/merkzeichen.py:44
+#: app/forms/steps/lotse/merkzeichen.py:145
 msgid "form.lotse.merkzeichen.has_pflegegrad.required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
-#: app/forms/steps/lotse/merkzeichen.py:30
-#: app/forms/steps/lotse/merkzeichen.py:116
+#: app/forms/steps/lotse/merkzeichen.py:45
+#: app/forms/steps/lotse/merkzeichen.py:146
 msgid "form.lotse.merkzeichen.has_pflegegrad.data_label"
 msgstr "Wurde ein Pflegegrad von 4 oder 5 festgestellt? "
 
-#: app/forms/steps/lotse/merkzeichen.py:33
-#: app/forms/steps/lotse/merkzeichen.py:119
+#: app/forms/steps/lotse/merkzeichen.py:48
+#: app/forms/steps/lotse/merkzeichen.py:149
 msgid "form.lotse.field_person_beh_grad-help"
 msgstr ""
 "Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
@@ -1156,62 +1167,78 @@ msgstr ""
 "Einbuße der körperlichen Beweglichkeit geführt hat oder auf einer "
 "typischen Berufskrankheit beruht.</li><ul>"
 
-#: app/forms/steps/lotse/merkzeichen.py:34
-#: app/forms/steps/lotse/merkzeichen.py:120
+#: app/forms/steps/lotse/merkzeichen.py:49
+#: app/forms/steps/lotse/merkzeichen.py:150
 msgid "form.lotse.merkzeichen.disability_degree"
 msgstr "Grad der Behinderung"
 
-#: app/forms/steps/lotse/merkzeichen.py:36
-#: app/forms/steps/lotse/merkzeichen.py:122
+#: app/forms/steps/lotse/merkzeichen.py:51
+#: app/forms/steps/lotse/merkzeichen.py:152
 msgid "form.lotse.merkzeichen.has_merkzeichen_g.data_label"
 msgstr "Merkzeichen G"
 
-#: app/forms/steps/lotse/merkzeichen.py:39
-#: app/forms/steps/lotse/merkzeichen.py:125
+#: app/forms/steps/lotse/merkzeichen.py:54
+#: app/forms/steps/lotse/merkzeichen.py:155
 msgid "form.lotse.merkzeichen.has_merkzeichen_ag.data_label"
 msgstr "Merkzeichen aG"
 
-#: app/forms/steps/lotse/merkzeichen.py:42
-#: app/forms/steps/lotse/merkzeichen.py:128
+#: app/forms/steps/lotse/merkzeichen.py:57
+#: app/forms/steps/lotse/merkzeichen.py:158
 msgid "form.lotse.merkzeichen.has_merkzeichen_bl.data_label"
 msgstr "Merkzeichen Bl"
 
-#: app/forms/steps/lotse/merkzeichen.py:45
-#: app/forms/steps/lotse/merkzeichen.py:131
+#: app/forms/steps/lotse/merkzeichen.py:60
+#: app/forms/steps/lotse/merkzeichen.py:161
 msgid "form.lotse.merkzeichen.has_merkzeichen_tbl.data_label"
 msgstr "Merkzeichen TBl"
 
-#: app/forms/steps/lotse/merkzeichen.py:48
-#: app/forms/steps/lotse/merkzeichen.py:134
+#: app/forms/steps/lotse/merkzeichen.py:63
+#: app/forms/steps/lotse/merkzeichen.py:164
 msgid "form.lotse.merkzeichen.has_merkzeichen_h.data_label"
 msgstr "Merkzeichen H"
 
-#: app/forms/steps/lotse/merkzeichen.py:53
-#: app/forms/steps/lotse/merkzeichen.py:139
-msgid "form.lotse.validation-disability_degree.required"
+#: app/forms/steps/lotse/merkzeichen.py:68
+msgid "form.lotse.validation-disability_degree.merkzeichen_g_selected.required"
 msgstr ""
 "Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
-"Merkzeichen G oder aG auswählen."
+"Merkzeichen G auswählen."
 
-#: app/forms/steps/lotse/merkzeichen.py:55
-#: app/forms/steps/lotse/merkzeichen.py:141
+#: app/forms/steps/lotse/merkzeichen.py:68
+msgid "form.lotse.validation-disability_degree.merkzeichen_ag_selected.required"
+msgstr ""
+"Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
+"Merkzeichen aG auswählen."
+
+#: app/forms/steps/lotse/merkzeichen.py:71
+#: app/forms/steps/lotse/merkzeichen.py:171
 msgid "form.lotse.validation-disability_degree.min20"
 msgstr ""
-"Wenn das Merkzeichen G oder aG vorliegt, muss ein Grad der Behinderung "
-"von mindestens 20 angegeben werden."
+"Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der "
+"Behinderung von 20. Lassen Sie das Feld leer, falls der Wert unter 20 "
+"liegt."
 
-#: app/forms/steps/lotse/merkzeichen.py:101
-#: app/forms/steps/lotse/merkzeichen.py:177
+#: app/forms/steps/lotse/merkzeichen.py:117
+#: app/forms/steps/lotse/merkzeichen.py:207
 #: app/forms/steps/lotse/personal_data.py:400
+#: app/forms/steps/lotse/personal_data.py:443
+#: app/forms/steps/lotse/personal_data.py:484
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/merkzeichen.py:106
+#: app/forms/steps/lotse/merkzeichen.py:135
 msgid "form.lotse.merkzeichen_person_b.title"
 msgstr "Angaben zu Behinderung oder Pflegebedürftigkeit von Person B"
+
+#: app/forms/steps/lotse/merkzeichen.py:169
+#, fuzzy
+msgid "form.lotse.validation-disability_degree.required"
+msgstr ""
+"Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der "
+"Behinderung von 20. Lassen Sie das Feld leer, falls der Wert unter 20 "
+"liegt."
 
 #: app/forms/steps/lotse/personal_data.py:29
 msgid "form.lotse.steuernummer-title"
@@ -1229,19 +1256,6 @@ msgstr ""
 #: app/forms/steps/lotse/personal_data.py:35
 msgid "form.lotse.step_steuernummer.label"
 msgstr "Steuernummer"
-
-#: app/forms/steps/lotse/personal_data.py:36
-#: app/forms/steps/lotse/personal_data.py:188
-#: app/forms/steps/lotse/personal_data.py:300
-#: app/forms/steps/lotse/personal_data.py:411
-#: app/forms/steps/lotse/personal_data.py:446
-#: app/forms/steps/lotse/personal_data.py:490
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:190
-msgid "form.lotse.mandatory_data.label"
-msgstr "Pflichtangaben"
 
 #: app/forms/steps/lotse/personal_data.py:44
 #: app/forms/steps/lotse/personal_data.py:142
@@ -1571,6 +1585,35 @@ msgstr "Telefonnummer für Rückfragen"
 #: app/forms/steps/lotse/personal_data.py:375
 msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
+
+#: app/forms/steps/lotse/personal_data.py:409
+#: app/forms/steps/lotse/personal_data.py:455
+msgid "form.lotse.has_disability.data_label"
+msgstr "Liegt eine Behinderung oder Pflegebedürftigkeit vor?"
+
+#: app/forms/steps/lotse/personal_data.py:415
+msgid "form.lotse.has_disability.label_person_a"
+msgid_plural "form.lotse.has_disability.label_person_a"
+msgstr[0] "Behinderung oder Pflegebedürftigkeit"
+msgstr[1] "Behinderung oder Pflegebedürftigkeit für Person A"
+
+#: app/forms/steps/lotse/personal_data.py:421
+msgid "form.lotse.has_disability.title"
+msgid_plural "form.lotse.has_disability.title"
+msgstr[0] "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen?"
+msgstr[1] ""
+"Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit für "
+"Person A machen?"
+
+#: app/forms/steps/lotse/personal_data.py:448
+msgid "form.lotse.has_disability.label_person_b"
+msgstr "Behinderung oder Pflegebedürftigkeit für Person B"
+
+#: app/forms/steps/lotse/personal_data.py:465
+msgid "form.lotse.person_b.has_disability.title"
+msgstr ""
+"Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit für "
+"Person B machen?"
 
 #: app/forms/steps/lotse/steuerminderungen.py:25
 msgid "form.lotse.select_stmind-title"
@@ -2842,7 +2885,7 @@ msgstr ""
 "Keine gültige Angabe. Mögliche Werte: 20, 25, 30, 35, 40, 45, 50, 55, 60,"
 " 65, 70, 75, 80, 85, 90, 95, 100."
 
-#: app/model/form_data.py:369
+#: app/model/form_data.py:374
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2852,11 +2895,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:374
+#: app/model/form_data.py:379
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:380
+#: app/model/form_data.py:385
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
