@@ -95,9 +95,8 @@ export default function PauschbetragPage({
 }
 
 PauschbetragPage.propTypes = {
-  stepHeader: PropTypes.exact({
+  stepHeader: PropTypes.shape({
     title: PropTypes.string,
-    intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,

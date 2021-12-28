@@ -15,6 +15,8 @@ import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import PersonAHasDisabilityPage from "./pages/PersonAHasDisabilityPage";
 import PersonBHasDisabilityPage from "./pages/PersonBHasDisabilityPage";
+import PauschbetragPersonAPage from "./pages/PauschbetragPersonAPage";
+import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 import NoPauschbetragPage from "./pages/NoPauschbetragPage";
 
 const allowedComponents = {
@@ -26,7 +28,9 @@ const allowedComponents = {
   DeclarationIncomesPage,
   TaxNumberPage,
   PersonAHasDisabilityPage,
+  PauschbetragPersonAPage,
   PersonBHasDisabilityPage,
+  PauschbetragPersonBPage,
   NoPauschbetragPage,
   TelephoneNumberPage,
   StmindSelectionPage,

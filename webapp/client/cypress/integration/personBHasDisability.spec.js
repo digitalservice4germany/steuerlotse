@@ -39,9 +39,9 @@ describe("PersonBHasDisability", () => {
       cy.get("#person_b_has_disabilityno").should("not.be.checked");
     });
 
-    it("Should link forward to telephone number page", () => {
+    it("Should link forward to person b pauschbetrag page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should("include", "person_b_requests_pauschbetrag");
     });
   });
 

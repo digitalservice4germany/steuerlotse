@@ -9,6 +9,7 @@ from app.forms.steps.lotse.pauschbetrag import StepNoPauschbetragPersonA, StepNo
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -106,9 +107,11 @@ class LotseStepChooser(StepChooser):
                 StepSteuernummer,
                 StepPersonA,
                 StepPersonAHasDisability,
+                StepPauschbetragPersonA,
                 StepNoPauschbetragPersonA,
                 StepPersonB,
                 StepPersonBHasDisability,
+                StepPauschbetragPersonB,
                 StepNoPauschbetragPersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,
