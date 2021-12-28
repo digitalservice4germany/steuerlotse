@@ -158,14 +158,14 @@ class MandatoryFormData(BaseModel):
         return v
 
     @validator('person_a_requests_pauschbetrag', always=True)
-    def person_a_required_has_disability(cls, v, values):
-        if not values.get('person_a_has_disability') == 'yes' and not v:
+    def required_if_person_a_has_disability(cls, v, values):
+        if values.get('person_a_has_disability') == 'yes' and not v:
             raise MissingError
         return v
     
     @validator('person_b_requests_pauschbetrag', always=True)
-    def person_b_required_has_disability(cls, v, values):
-        if show_person_b(values.get('familienstandStruct', {})) and not values.get('person_b_has_disability') == 'yes' and not v:
+    def required_if_person_b_has_disability(cls, v, values):
+        if values.get('person_b_has_disability') == 'yes' and not v:
             raise MissingError
         return v
 

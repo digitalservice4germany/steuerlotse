@@ -543,11 +543,12 @@ class TestPersonAHasDisabilityValidation:
 
 
 class TestPersonBHasDisabilityValidation:
-    def test_if_required_value_is_give_validation_should_be_success(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_given_validation_should_be_true(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
             'person_b_has_disability': 'no'
         })
 
@@ -557,7 +558,7 @@ class TestPersonBHasDisabilityValidation:
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_not_given_then_validate_should_be_true(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
@@ -568,7 +569,7 @@ class TestPersonBHasDisabilityValidation:
             step = LotseStepChooser().get_correct_step(
                 StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
-            assert form.validate() is False
+            assert form.validate() is True
             
 
 class TestPersonAHasDisabilityPrecondition:
