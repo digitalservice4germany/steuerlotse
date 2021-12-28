@@ -536,7 +536,8 @@ class PersonAHasDisabilityPrecondition(BaseModel):
         if value != 'yes':
             raise ValidationError
         return value
-        
+
+
 class PersonBHasDisabilityPrecondition(BaseModel):
     _step_to_redirect_to = StepPersonBHasDisability.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')

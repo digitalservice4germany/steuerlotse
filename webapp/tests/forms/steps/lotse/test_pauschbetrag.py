@@ -1,6 +1,11 @@
-import pytest
+from unittest.mock import patch, MagicMock
 
-from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag
+import pytest
+from pydantic import ValidationError
+
+from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, PersonAHasPauschbetragClaimPrecondition, \
+    PersonBHasPauschbetragClaimPrecondition, PersonAHasNoPauschbetragClaimPrecondition, \
+    PersonBHasNoPauschbetragClaimPrecondition
 
 
 class TestCalculatePauschbetrag:
@@ -189,3 +194,47 @@ class TestCalculatePauschbetrag:
     def test_if_disability_degree_under_20_then_zero_should_be_return(self):        
         calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
         assert calculated_pauschbetrag == 0
+
+
+class TestPersonAHasPauschbetragClaimPrecondition:
+    def test_if_calculate_pauschbetrag_returns_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
+            with pytest.raises(ValidationError):
+                PersonAHasPauschbetragClaimPrecondition.parse_obj({})
+
+    def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_no_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
+            PersonAHasPauschbetragClaimPrecondition.parse_obj({})
+
+
+class TestPersonBHasPauschbetragClaimPrecondition:
+    def test_if_calculate_pauschbetrag_returns_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
+            with pytest.raises(ValidationError):
+                PersonBHasPauschbetragClaimPrecondition.parse_obj({})
+
+    def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_no_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
+            PersonBHasPauschbetragClaimPrecondition.parse_obj({})
+
+
+class TestPersonAHasNoPauschbetragClaimPrecondition:
+    def test_if_calculate_pauschbetrag_returns_zero_then_raise_no_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
+            PersonAHasNoPauschbetragClaimPrecondition.parse_obj({})
+
+    def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
+            with pytest.raises(ValidationError):
+                PersonAHasNoPauschbetragClaimPrecondition.parse_obj({})
+
+
+class TestPersonBHasNoPauschbetragClaimPrecondition:
+    def test_if_calculate_pauschbetrag_returns_zero_then_raise_no_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
+            PersonBHasNoPauschbetragClaimPrecondition.parse_obj({})
+
+    def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
+            with pytest.raises(ValidationError):
+                PersonBHasNoPauschbetragClaimPrecondition.parse_obj({})

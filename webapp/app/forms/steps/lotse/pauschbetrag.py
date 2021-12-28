@@ -1,5 +1,6 @@
 from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
+from pydantic import BaseModel, root_validator, ValidationError
 from wtforms.validators import InputRequired
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
@@ -14,6 +15,8 @@ from app.forms.steps.lotse.personal_data import PersonAHasDisabilityPrecondition
 
 from app.forms.steps.lotse.personal_data import get_number_of_users
 from app.model.components import NoPauschbetragProps
+
+
 def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
     Calculates the pauschbetrag given some information about the user.
@@ -51,6 +54,82 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
     return 0
 
 
+class PersonAHasPauschbetragClaimPrecondition(BaseModel):
+    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
+
+    @root_validator(skip_on_failure=True)
+    def has_to_have_pauschbetrag_not_0(cls, values):
+        pauschbetrag_claim = calculate_pauschbetrag(
+            has_pflegegrad=values.get('person_a_has_pflegegrad', False),            
+            disability_degree=values.get('person_a_disability_degree', None),   
+            has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False)
+        )
+
+        if pauschbetrag_claim == 0:
+            raise ValidationError
+        return values
+
+
+class PersonBHasPauschbetragClaimPrecondition(BaseModel):
+    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
+
+    @root_validator(skip_on_failure=True)
+    def has_to_have_pauschbetrag_not_0(cls, values):
+        pauschbetrag_claim = calculate_pauschbetrag(
+            has_pflegegrad=values.get('person_b_has_pflegegrad', False),            
+            disability_degree=values.get('person_b_disability_degree', None),   
+            has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
+        )
+
+        if pauschbetrag_claim == 0:
+            raise ValidationError
+        return values
+
+
+class PersonAHasNoPauschbetragClaimPrecondition(BaseModel):
+    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
+
+    @root_validator(skip_on_failure=True)
+    def has_to_have_pauschbetrag_not_0(cls, values):
+        pauschbetrag_claim = calculate_pauschbetrag(
+            has_pflegegrad=values.get('person_a_has_pflegegrad', False),            
+            disability_degree=values.get('person_a_disability_degree', None),   
+            has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False)
+        )
+
+        if pauschbetrag_claim != 0:
+            raise ValidationError
+        return values
+
+
+class PersonBHasNoPauschbetragClaimPrecondition(BaseModel):
+    _step_to_redirect_to = StepFamilienstand  # TODO: StepPersonBMerkzeichen.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
+
+    @root_validator(skip_on_failure=True)
+    def has_to_have_pauschbetrag_not_0(cls, values):
+        pauschbetrag_claim = calculate_pauschbetrag(
+            has_pflegegrad=values.get('person_b_has_pflegegrad', False),            
+            disability_degree=values.get('person_b_disability_degree', None),   
+            has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
+        )
+
+        if pauschbetrag_claim != 0:
+            raise ValidationError
+        return values
+        
+
 class StepPauschbetrag(LotseFormSteuerlotseStep):
     
     def get_overview_value_representation(self, value):
@@ -65,7 +144,7 @@ class StepPauschbetrag(LotseFormSteuerlotseStep):
 class StepPauschbetragPersonA(StepPauschbetrag):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-    preconditions = [PersonAHasDisabilityPrecondition]
+    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasPauschbetragClaimPrecondition]
     
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
@@ -108,7 +187,7 @@ class StepPauschbetragPersonA(StepPauschbetrag):
     def get_pauschbetrag(self):
         return str(calculate_pauschbetrag(
             has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', False),            
-            disability_degree=int(self.stored_data.get('person_a_disability_degree', 0)),   
+            disability_degree=self.stored_data.get('person_a_disability_degree', None),   
             has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False)
@@ -120,7 +199,7 @@ class StepPauschbetragPersonB(StepPauschbetrag):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
-    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition]
+    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition, PersonBHasPauschbetragClaimPrecondition]
         
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
@@ -161,7 +240,7 @@ class StepPauschbetragPersonB(StepPauschbetrag):
     def get_pauschbetrag(self):
         return str(calculate_pauschbetrag(
             has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', False),            
-            disability_degree=int(self.stored_data.get('person_b_disability_degree', 0)),   
+            disability_degree=self.stored_data.get('person_b_disability_degree', None),   
             has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False)
@@ -172,6 +251,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
+    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasNoPauschbetragClaimPrecondition]
 
     def _pre_handle(self):
         self._set_multiple_texts()
@@ -203,6 +283,8 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
+    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition,
+                     PersonBHasNoPauschbetragClaimPrecondition]
 
     def render(self):
         props_dict = NoPauschbetragProps(
