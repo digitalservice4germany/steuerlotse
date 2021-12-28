@@ -90,7 +90,7 @@ class MandatoryFormData(BaseModel):
     person_a_blind: bool
     person_a_gehbeh: bool
     person_a_has_disability: str
-    person_a_requests_pauschbetrag: str
+    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
