@@ -1641,7 +1641,7 @@ msgstr ""
 #: app/forms/steps/lotse/personal_data.py:528
 #: app/forms/steps/lotse/personal_data.py:538
 msgid "form.lotse.skip_reason.has_no_disability"
-msgstr "Sie haben angegeben, dass keine Behinderung vorliegt"
+msgstr "Sie haben angegeben, dass Sie keine Angaben zu einer Behinderung oder Pflegebedürftigkeit machen möchten. Ändern Sie die Antwort der Frage, wenn sie doch Angaben zu einer Behinderung oder Pflegebedürftigkeit machen möchten."
 
 #: app/forms/steps/lotse/personal_data.py:556
 #: app/forms/steps/lotse/personal_data.py:616
