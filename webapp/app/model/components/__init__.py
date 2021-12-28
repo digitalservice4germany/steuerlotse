@@ -111,8 +111,10 @@ class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str
 
-class PersonAHasDisabilityProps(StepFormProps):
+
+class HasDisabilityPersonAProps(StepFormProps):
     num_users: int
 
-class PersonBHasDisabilityProps(StepFormProps):
+
+class HasDisabilityPersonBProps(StepFormProps):
     pass

@@ -11,7 +11,7 @@ describe("PersonBHasDisability", () => {
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
       });
-      cy.visit("/lotse/step/person_b_has_disability");
+      cy.visit("/lotse/step/has_disability_person_b");
     });
 
     it("Should link back to person b page", () => {
@@ -28,7 +28,7 @@ describe("PersonBHasDisability", () => {
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
       });
-      cy.visit("/lotse/step/person_b_has_disability");
+      cy.visit("/lotse/step/has_disability_person_b");
     });
 
     it("Should check radio button for label yes", () => {
@@ -53,7 +53,7 @@ describe("PersonBHasDisability", () => {
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "no",
       });
-      cy.visit("/lotse/step/person_b_has_disability");
+      cy.visit("/lotse/step/has_disability_person_b");
     });
 
     it("Should check radio button for label no", () => {

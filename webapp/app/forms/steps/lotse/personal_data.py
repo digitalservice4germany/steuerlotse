@@ -19,7 +19,7 @@ from app.forms.validations.date_validations import ValidDateOfBirth
 from app.forms.validations.validators import ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
     ValidIdNr, MaximumLength
 from app.forms.validations.validators import DecimalOnly, IntegerLength
-from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps, PersonAHasDisabilityProps, PersonBHasDisabilityProps
+from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps, HasDisabilityPersonAProps, HasDisabilityPersonBProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
 
@@ -400,8 +400,8 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
 
-class StepPersonAHasDisability(LotseFormSteuerlotseStep):
-    name = 'person_a_has_disability'
+class StepDisabilityPersonA(LotseFormSteuerlotseStep):
+    name = 'has_disability_person_a'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):
@@ -415,7 +415,7 @@ class StepPersonAHasDisability(LotseFormSteuerlotseStep):
                         num=get_number_of_users(data))
 
     def render(self):
-        props_dict = PersonAHasDisabilityProps(
+        props_dict = HasDisabilityPersonAProps(
             step_header={
                 'title': ngettext('form.lotse.has_disability.title', 'form.lotse.has_disability.title',
                         num=get_number_of_users(self.stored_data))
@@ -437,14 +437,14 @@ class StepPersonAHasDisability(LotseFormSteuerlotseStep):
 
 
         return render_template('react_component.html',
-                               component='PersonAHasDisabilityPage',
+                               component='HasDisabilityPersonAPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
 
 
-class StepPersonBHasDisability(LotseFormSteuerlotseStep):
-    name = 'person_b_has_disability'
+class StepDisabilityPersonB(LotseFormSteuerlotseStep):
+    name = 'has_disability_person_b'
     label = _l('form.lotse.has_disability.label_person_b')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -460,7 +460,7 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
         return cls.label
 
     def render(self):
-        props_dict = PersonBHasDisabilityProps(
+        props_dict = HasDisabilityPersonBProps(
             step_header={
                 'title': _('form.lotse.person_b.has_disability.title'),
             },
@@ -478,7 +478,7 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
         props_dict['fields']['personBHasDisability'] = props_dict['fields'].pop('personB_hasDisability')
 
         return render_template('react_component.html',
-                               component='PersonBHasDisabilityPage',
+                               component='HasDisabilityPersonBPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))

@@ -8,7 +8,7 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import Details from "../components/Details";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function PersonBHasDisabilityPage({
+export default function HasDisabilityPersonBPage({
   form,
   fields,
   prevUrl,
@@ -56,7 +56,7 @@ export default function PersonBHasDisabilityPage({
   );
 }
 
-PersonBHasDisabilityPage.propTypes = {
+HasDisabilityPersonBPage.propTypes = {
   stepHeader: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,

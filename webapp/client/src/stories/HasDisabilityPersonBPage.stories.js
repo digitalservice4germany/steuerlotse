@@ -1,15 +1,15 @@
 import React from "react";
 
-import PersonBHasDisabilityPage from "../pages/PersonBHasDisabilityPage";
+import HasDisabilityPersonBPage from "../pages/HasDisabilityPersonBPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Pages/PersonBHasDisabilityPage",
-  component: PersonBHasDisabilityPage,
+  title: "Pages/HasDisabilityPersonBPage",
+  component: HasDisabilityPersonBPage,
 };
 
 function Template(args) {
-  return <PersonBHasDisabilityPage {...args} />;
+  return <HasDisabilityPersonBPage {...args} />;
 }
 
 export const Default = Template.bind({});

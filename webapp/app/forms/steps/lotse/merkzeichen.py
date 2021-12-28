@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired, ValidationError
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import YesNoField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import get_number_of_users, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.personal_data import get_number_of_users, StepDisabilityPersonA, StepDisabilityPersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import SectionLink
 from app.forms.validations.validators import ValidDisabilityDegree
@@ -17,7 +17,7 @@ from app.model.components.helpers import form_fields_dict
 
 
 class ShowMerkzeichenPersonA(BaseModel):
-    _step_to_redirect_to = StepPersonAHasDisability.name
+    _step_to_redirect_to = StepDisabilityPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
     person_a_has_disability: bool
@@ -118,7 +118,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
 
 class ShowMerkzeichenPersonB(BaseModel):
-    _step_to_redirect_to = StepPersonBHasDisability.name
+    _step_to_redirect_to = StepDisabilityPersonB.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
     person_b_has_disability: bool

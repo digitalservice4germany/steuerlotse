@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import PersonAHasDisabilityPage from "./PersonAHasDisabilityPage";
+import HasDisabilityPersonBPage from "./HasDisabilityPersonBPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
-describe("PersonAHasDisabilityPage for single person", () => {
+describe("HasDisabilityPersonBPage", () => {
   let props;
 
   beforeEach(() => {
@@ -15,16 +15,15 @@ describe("PersonAHasDisabilityPage for single person", () => {
         ...StepFormDefault.args,
       },
       fields: {
-        personAHasDisability: {
+        personBHasDisability: {
           value: "yes",
           errors: [],
         },
       },
       prevUrl: "prevUrl",
-      numUsers: 1,
     };
 
-    render(<PersonAHasDisabilityPage {...props} />);
+    render(<HasDisabilityPersonBPage {...props} />);
   });
 
   it("should render selected value yes", () => {
@@ -43,13 +42,9 @@ describe("PersonAHasDisabilityPage for single person", () => {
       expect.stringContaining(props.prevUrl)
     );
   });
-
-  it("should render intro_single when numOfUser is 1", () => {
-    expect(screen.queryByText(/Person A/)).not.toBeInTheDocument();
-  });
 });
 
-describe("PersonAHasDisabilityPage no disability", () => {
+describe("HasDisabilityPersonBPage with no disability", () => {
   let props;
 
   beforeEach(() => {
@@ -61,50 +56,19 @@ describe("PersonAHasDisabilityPage no disability", () => {
         ...StepFormDefault.args,
       },
       fields: {
-        personAHasDisability: {
+        personBHasDisability: {
           value: "no",
           errors: [],
         },
       },
       prevUrl: "prevUrl",
-      numUsers: 1,
     };
 
-    render(<PersonAHasDisabilityPage {...props} />);
+    render(<HasDisabilityPersonBPage {...props} />);
   });
 
   it("should render selected value no", () => {
-    console.log(screen.queryAllByRole("radio")[1]);
     expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
     expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
-  });
-});
-
-describe("PersonAHasDisabilityPage for joint taxes", () => {
-  let props;
-
-  beforeEach(() => {
-    props = {
-      stepHeader: {
-        title: "title",
-      },
-      form: {
-        ...StepFormDefault.args,
-      },
-      fields: {
-        personAHasDisability: {
-          value: "yes",
-          errors: [],
-        },
-      },
-      prevUrl: "prevUrl",
-      numUsers: 2,
-    };
-
-    render(<PersonAHasDisabilityPage {...props} />);
-  });
-
-  it("should render intro_person_a when numUsers is 2", () => {
-    expect(screen.queryByText(/Person A/)).toBeInTheDocument();
   });
 });

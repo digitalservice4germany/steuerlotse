@@ -31,7 +31,7 @@ class TestStepMerkzeichenPersonASkip:
                                                                   True,
                                                                   ImmutableMultiDict({}))
 
-            assert redirected_step.redirection_step_name == "person_a_has_disability"
+            assert redirected_step.redirection_step_name == "has_disability_person_a"
 
     def test_if_person_a_has_disability_then_do_not_redirect(self, app):
         with app.test_request_context(method="POST") as req:
@@ -206,7 +206,7 @@ class TestStepMerkzeichenPersonBSkip:
                                                                   True,
                                                                   ImmutableMultiDict({}))
 
-            assert redirected_step.redirection_step_name == "person_b_has_disability"
+            assert redirected_step.redirection_step_name == "has_disability_person_b"
 
     def test_if_person_b_has_disability_then_do_not_redirect(self, app):
         with app.test_request_context(method="POST") as req:
