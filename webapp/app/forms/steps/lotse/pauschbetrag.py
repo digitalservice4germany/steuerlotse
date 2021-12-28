@@ -48,7 +48,8 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
     
     return 0
     
-class StepPauschbetrag(LotseFormSteuerlotseStep):        
+class StepPauschbetrag(LotseFormSteuerlotseStep):
+    
     def get_overview_value_representation(self, value):
         result = ''
         
@@ -64,7 +65,8 @@ class StepPauschbetragPersonA(StepPauschbetrag):
     
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
-            choices=[('yes', 'yes'),('no', '')],
+            # This mapping is for _generate_value_representation & get_overview_value_representation
+            choices=[('yes', 'yes'),('no', 'no')],
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
             validators=[InputRequired(_l('validate.input-required'))])
 
@@ -118,7 +120,8 @@ class StepPauschbetragPersonB(StepPauschbetrag):
         
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
-            choices=[('yes', 'yes'),('no', '')],
+            # This mapping is for _generate_value_representation & get_overview_value_representation
+            choices=[('yes', 'yes'),('no', 'no')],
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
             validators=[InputRequired(_l('validate.input-required'))])
     
