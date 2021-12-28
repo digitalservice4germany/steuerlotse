@@ -58,3 +58,24 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+
+
+class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
+    name = 'person_b_no_pauschbetrag'
+    title = _l('form.lotse.no_pauschbetrag.title')
+    header_title = _l('form.lotse.mandatory_data.header-title')
+
+    def render(self):
+        props_dict = NoPauschbetragProps(
+            step_header={
+                'title': str(self.title),
+            },
+            prev_url=self.render_info.prev_url,
+            next_url=self.render_info.next_url,
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='NoPauschbetragPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))
