@@ -25,7 +25,7 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
     if has_pflegegrad or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_h:
         return 7400
     
-    if disability_degree == None:
+    if disability_degree is None:
         return 0
     if disability_degree == 100:
         return 2840
