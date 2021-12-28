@@ -1245,12 +1245,14 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
+            'person_a_has_pflegegrad': 'no',
             'person_a_disability_degree': 25,
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
+
         self.valid_data_married = {
             'steuernummer_exists': True,
             'steuernummer': '19811310010',
@@ -1272,6 +1274,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
+            'person_a_has_pflegegrad': 'no',
             'person_a_disability_degree': 25,
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
@@ -1282,7 +1285,6 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
             'person_b_has_disability': 'no',
-            'person_b_has_merkzeichen_h': True,
 
             'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',}

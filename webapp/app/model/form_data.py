@@ -88,7 +88,7 @@ class MandatoryFormData(BaseModel):
     person_a_plz: str
     person_a_town: str
     person_a_has_disability: str
-    # TODO add pflegegrad?
+    person_a_has_pflegegrad: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -97,7 +97,7 @@ class MandatoryFormData(BaseModel):
     person_b_first_name: Optional[str]
     person_b_religion: Optional[str]
     person_b_has_disability: Optional[str]
-    # TODO add pflegegrad?
+    person_b_has_pflegegrad: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -148,6 +148,20 @@ class MandatoryFormData(BaseModel):
         if not show_person_b(values.get('familienstandStruct', {})):
             if not values.get('is_user_account_holder') and not v:
                 raise MissingError
+            if not v:
+                raise MissingError
+        return v
+
+    @validator('person_a_has_pflegegrad', always=True)
+    def person_a_pflegegrad_required_if_person_a_has_disability(cls, v, values):
+        if values.get('person_a_has_disability') == "yes":
+            if not v:
+                raise MissingError
+        return v
+
+    @validator('person_b_has_pflegegrad', always=True)
+    def person_b_pflegegrad_required_if_person_b_has_disability(cls, v, values):
+        if values.get('person_b_has_disability') == "yes":
             if not v:
                 raise MissingError
         return v
