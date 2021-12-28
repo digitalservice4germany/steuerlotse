@@ -368,6 +368,22 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+    @validator('person_a_has_pflegegrad', 'person_a_disability_degree', 'person_a_has_merkzeichen_g',
+               'person_a_has_merkzeichen_ag', 'person_a_has_merkzeichen_bl', 'person_a_has_merkzeichen_tbl',
+               'person_a_has_merkzeichen_h')
+    def delete_person_a_disability_info_if_person_a_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') == 'no':
+            return None
+        return v
+
+    @validator('person_b_has_pflegegrad', 'person_b_disability_degree',
+               'person_b_has_merkzeichen_g', 'person_b_has_merkzeichen_ag', 'person_b_has_merkzeichen_bl',
+               'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h')
+    def delete_person_b_disability_info_if_person_b_no_disability(cls, v, values):
+        if values.get('person_b_has_disability') == 'no':
+            return None
+        return v
+
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.

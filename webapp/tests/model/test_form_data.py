@@ -346,8 +346,6 @@ class TestMandatoryFormData(unittest.TestCase):
                                      **self.valid_steuernummer})
 
 
-
-
 class TestFormDataDependencies:
     def test_if_no_tax_number_exists_then_delete_tax_number(self, tax_number_page_data):
         input_data = tax_number_page_data
@@ -472,4 +470,67 @@ class TestFormDataDependencies:
         with patch('app.model.form_data.show_person_b', return_value=False):
             returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
             assert returned_data == valid_stmind_data
+
+    def test_if_person_a_has_no_disability_then_delete_person_a_disability_info(self):
+        disability_data = {'person_a_has_disability': 'no',
+                           'person_a_has_pflegegrad': 'yes',
+                           'person_a_disability_degree': 20,
+                           'person_a_has_merkzeichen_g': True,
+                           'person_a_has_merkzeichen_ag': True,
+                           'person_a_has_merkzeichen_bl': True,
+                           'person_a_has_merkzeichen_tbl': True,
+                           'person_a_has_merkzeichen_h': True
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == {'person_a_has_disability': 'no'}
+
+    def test_if_person_a_has_disability_then_do_not_delete_person_a_disability_info(self):
+        disability_data = {'person_a_has_disability': 'yes',
+                           'person_a_has_pflegegrad': 'yes',
+                           'person_a_disability_degree': 20,
+                           'person_a_has_merkzeichen_g': True,
+                           'person_a_has_merkzeichen_ag': True,
+                           'person_a_has_merkzeichen_bl': True,
+                           'person_a_has_merkzeichen_tbl': True,
+                           'person_a_has_merkzeichen_h': True
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == disability_data
+
+    def test_if_person_b_has_no_disability_then_delete_person_b_disability_info(self):
+        disability_data = {'person_b_has_disability': 'no',
+                           'person_b_has_pflegegrad': 'yes',
+                           'person_b_disability_degree': 20,
+                           'person_b_has_merkzeichen_g': True,
+                           'person_b_has_merkzeichen_ag': True,
+                           'person_b_has_merkzeichen_bl': True,
+                           'person_b_has_merkzeichen_tbl': True,
+                           'person_b_has_merkzeichen_h': True
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == {'person_b_has_disability': 'no'}
+
+    def test_if_person_b_has_disability_then_do_not_delete_person_b_disability_info(self):
+        disability_data = {'person_b_has_disability': 'yes',
+                           'person_b_has_pflegegrad': 'yes',
+                           'person_b_disability_degree': 20,
+                           'person_b_has_merkzeichen_g': True,
+                           'person_b_has_merkzeichen_ag': True,
+                           'person_b_has_merkzeichen_bl': True,
+                           'person_b_has_merkzeichen_tbl': True,
+                           'person_b_has_merkzeichen_h': True
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == disability_data
+
+
+
 
