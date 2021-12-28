@@ -41,7 +41,7 @@ describe("PersonBHasDisability", () => {
 
     it("Should link forward to telephone number page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
 
