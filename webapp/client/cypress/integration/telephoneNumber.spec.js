@@ -10,7 +10,7 @@ describe("TelephoneNumber", () => {
 
     it("Should link back to person a page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/person_a_has_disability");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
 
     it("Should link forward to iban page", () => {
@@ -29,7 +29,7 @@ describe("TelephoneNumber", () => {
 
     it("Should link back to person a page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/person_a_has_disability");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
 
@@ -46,7 +46,7 @@ describe("TelephoneNumber", () => {
 
     it("Should link back to person b page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/person_b");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
 });
