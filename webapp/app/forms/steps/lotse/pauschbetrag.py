@@ -1,11 +1,10 @@
 from flask import render_template
-from pydantic import ValidationError, root_validator
 from flask_babel import lazy_gettext as _l, ngettext, _
 from wtforms.validators import InputRequired
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
-from app.model.components import PauschbetragPersonProps
+from app.model.components import PauschbetragProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
@@ -47,7 +46,6 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
     
     return 0
     
-    
 class StepPauschbetrag(LotseFormSteuerlotseStep):
     pauschbetrag_prefix = 'person_a'
         
@@ -76,7 +74,6 @@ class StepPauschbetragPersonA(StepPauschbetrag):
     
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
-            # TODO: This is empty string mapping of key mapping - the text is within the react component
             choices=[('yes', 'yes'),('no', '')],
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
             validators=[InputRequired(_l('validate.input-required'))])
@@ -88,7 +85,7 @@ class StepPauschbetragPersonA(StepPauschbetrag):
 
     
     def render(self):
-        props_dict = PauschbetragPersonProps(            
+        props_dict = PauschbetragProps(            
             step_header={
                 'title': ngettext('form.lotse.person_a.request_pauschbetrag.title', 'form.lotse.person_a.request_pauschbetrag.title',
                         num=get_number_of_users(self.stored_data))
@@ -125,7 +122,6 @@ class StepPauschbetragPersonB(StepPauschbetrag):
         
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
-            # TODO: This empty string mapping is because of key mapping - the text is within the react component
             choices=[('yes', 'yes'),('no', '')],
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
             validators=[InputRequired(_l('validate.input-required'))])
@@ -141,7 +137,7 @@ class StepPauschbetragPersonB(StepPauschbetrag):
         return None
     
     def render(self):
-        props_dict = PauschbetragPersonProps(            
+        props_dict = PauschbetragProps(            
             step_header={
                 'title': _('form.lotse.person_b.request_pauschbetrag.title')
             },

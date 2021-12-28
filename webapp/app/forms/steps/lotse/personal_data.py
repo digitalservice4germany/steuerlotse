@@ -1,6 +1,6 @@
 from flask import flash, Markup, render_template
 from flask_wtf.csrf import generate_csrf
-from pydantic import ValidationError, root_validator
+from pydantic import ValidationError, root_validator, validator
 from wtforms import validators, SelectField, RadioField, BooleanField
 from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
@@ -524,13 +524,13 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
 
-    
+
 class PersonAHasDisabilityPrecondition(DisabilityModel):
     _step_to_redirect_to = StepPersonAHasDisability.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
-    @root_validator(skip_on_failure=True)
-    def person_b_has_disability(cls, values):
+    @validator('person_a_has_disability', always=True)
+    def person_a_has_disability(cls, values):
         if values.get('person_a_has_disability') != 'yes':
             raise ValidationError
         return values
@@ -539,7 +539,7 @@ class PersonBHasDisabilityPrecondition(DisabilityModel):
     _step_to_redirect_to = StepPersonBHasDisability.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
-    @root_validator(skip_on_failure=True)
+    @validator('person_b_has_disability', always=True)
     def person_b_has_disability(cls, values):
         if values.get('person_b_has_disability') != 'yes':
             raise ValidationError
