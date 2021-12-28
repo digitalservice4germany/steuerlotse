@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-28 14:08+0100\n"
+"POT-Creation-Date: 2021-12-28 14:28+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1169,11 +1169,17 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse/pauschbetrag.py:44
-msgid "form.lotse.no_pauschbetrag.title"
-msgstr "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge."
-
 #: app/forms/steps/lotse/pauschbetrag.py:45
+#: app/forms/steps/lotse/pauschbetrag.py:54
+msgid "form.lotse.no_pauschbetrag.person_a.title"
+msgid_plural "form.lotse.no_pauschbetrag.person_a.title"
+msgstr[0] "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge."
+msgstr[1] ""
+"Leider hat Person A keinen Anspruch auf behinderungsbedingte "
+"Pauschbeträge."
+
+#: app/forms/steps/lotse/pauschbetrag.py:46
+#: app/forms/steps/lotse/pauschbetrag.py:77
 #: app/forms/steps/lotse/personal_data.py:31
 #: app/forms/steps/lotse/personal_data.py:185
 #: app/forms/steps/lotse/personal_data.py:297
@@ -1183,7 +1189,8 @@ msgstr "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/pauschbetrag.py:60
+#: app/forms/steps/lotse/pauschbetrag.py:71
+#: app/forms/steps/lotse/pauschbetrag.py:92
 #: app/forms/steps/lotse/personal_data.py:441
 #: app/forms/steps/lotse/personal_data.py:484
 #: app/forms/steps/lotse/personal_data.py:525
@@ -1192,6 +1199,12 @@ msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
+
+#: app/forms/steps/lotse/pauschbetrag.py:76
+msgid "form.lotse.no_pauschbetrag.person_b.title"
+msgstr ""
+"Leider hat Person B keinen Anspruch auf behinderungsbedingte "
+"Pauschbeträge."
 
 #: app/forms/steps/lotse/personal_data.py:29
 msgid "form.lotse.steuernummer-title"

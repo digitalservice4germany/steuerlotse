@@ -1,8 +1,9 @@
 from flask import render_template
 
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from flask_babel import lazy_gettext as _l, _
+from flask_babel import lazy_gettext as _l, _, ngettext
 
+from app.forms.steps.lotse.personal_data import get_number_of_users
 from app.model.components import NoPauschbetragProps
 
 
@@ -41,8 +42,18 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
 
 class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
-    title = _l('form.lotse.no_pauschbetrag.title')
+    title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
+
+    def _pre_handle(self):
+        self._set_multiple_texts()
+        super()._pre_handle()
+
+    def _set_multiple_texts(self):
+        num_of_users = get_number_of_users(self.render_info.stored_data)
+        self.render_info.step_title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
+                                               'form.lotse.no_pauschbetrag.person_a.title',
+                                               num=num_of_users)
 
     def render(self):
         props_dict = NoPauschbetragProps(
@@ -62,7 +73,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
 
 class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
-    title = _l('form.lotse.no_pauschbetrag.title')
+    title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
 
     def render(self):
