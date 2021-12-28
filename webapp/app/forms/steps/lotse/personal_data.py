@@ -523,3 +523,24 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+
+    
+class PersonAHasDisabilityPrecondition(DisabilityModel):
+    _step_to_redirect_to = StepPersonAHasDisability.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
+
+    @root_validator(skip_on_failure=True)
+    def person_b_has_disability(cls, values):
+        if values.get('person_a_has_disability') != 'yes':
+            raise ValidationError
+        return values
+        
+class PersonBHasDisabilityPrecondition(DisabilityModel):
+    _step_to_redirect_to = StepPersonBHasDisability.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
+
+    @root_validator(skip_on_failure=True)
+    def person_b_has_disability(cls, values):
+        if values.get('person_b_has_disability') != 'yes':
+            raise ValidationError
+        return values

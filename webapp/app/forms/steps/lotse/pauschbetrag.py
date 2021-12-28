@@ -11,12 +11,8 @@ from app.model.form_data import DisabilityModel, show_person_b
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import StepPersonAHasDisability, StepPersonBHasDisability, ShowPersonBPrecondition, StepFamilienstand
+from app.forms.steps.lotse.personal_data import PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition, ShowPersonBPrecondition, StepFamilienstand, get_number_of_users
 
-def get_number_of_users(input_data):
-    if show_person_b(input_data):
-        return 2
-    return 1
 
 def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
@@ -52,26 +48,6 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
     
     return 0
     
-    
-class PersonAHasDisabilityPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepPersonAHasDisability.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
-
-    @root_validator(skip_on_failure=True)
-    def person_b_has_disability(cls, values):
-        if values.get('person_a_has_disability') != 'yes':
-            raise ValidationError
-        return values
-        
-class PersonBHasDisabilityPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepPersonBHasDisability.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
-
-    @root_validator(skip_on_failure=True)
-    def person_b_has_disability(cls, values):
-        if values.get('person_b_has_disability') != 'yes':
-            raise ValidationError
-        return values
     
 class StepPauschbetrag(LotseFormSteuerlotseStep):
     pauschbetrag_prefix = 'person_a'
