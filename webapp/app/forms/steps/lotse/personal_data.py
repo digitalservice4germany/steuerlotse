@@ -548,4 +548,3 @@ class PersonBHasDisabilityPrecondition(BaseModel):
         if value != 'yes':
             raise ValidationError
         return value
-    
