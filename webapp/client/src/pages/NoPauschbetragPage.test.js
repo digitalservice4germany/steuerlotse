@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import NoPauschbetragPage from "./NoPauschbetragPage";
-import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
 let props = {
   stepHeader: {
