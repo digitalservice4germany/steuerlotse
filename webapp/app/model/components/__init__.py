@@ -113,5 +113,8 @@ class PersonAHasDisabilityProps(StepFormProps):
 class PersonBHasDisabilityProps(StepFormProps):
     pass
 
-class PauschbetragPersonProps(StepFormProps):
+class PauschbetragProps(StepFormProps):
     pauschbetrag: str
+    
+class FahrkostenpauschbetragProps(StepFormProps):
+    fahrkostenpauschale_amount: str

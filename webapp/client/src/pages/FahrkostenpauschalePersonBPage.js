@@ -15,7 +15,7 @@ export default function FahrkostenpauschalePersonBPage({
       {...{ stepHeader, form, prevUrl, fahrkostenpauschaleAmount }}
       fields={{
         requestsFahrkostenpauschale: {
-          ...fields.requestsFahrkostenpauschale,
+          ...fields.personBRequestsFahrkostenpauschale,
           name: "person_b_requests_fahrkostenpauschale",
         },
       }}
@@ -32,7 +32,7 @@ FahrkostenpauschalePersonBPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    requestsFahrkostenpauschale: fieldPropType,
+    personBRequestsFahrkostenpauschale: fieldPropType,
   }).isRequired,
   fahrkostenpauschaleAmount: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
