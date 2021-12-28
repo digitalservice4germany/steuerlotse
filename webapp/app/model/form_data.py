@@ -357,7 +357,18 @@ class FormDataDependencies(BaseModel):
         if show_person_b(values):
             return None
         return v
-
+    
+    @validator('person_a_requests_pauschbetrag')
+    def delete_if_person_a_has_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') == "yes":
+            return v
+        return None
+    
+    @validator('person_b_requests_pauschbetrag')
+    def delete_if_person_b_has_no_disability(cls, v, values):
+        if values.get('person_b_has_disability') == "yes":
+            return v
+        return None
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.
