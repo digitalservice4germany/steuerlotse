@@ -7,7 +7,6 @@ from flask_wtf.csrf import generate_csrf
 
 from app.model.components import PauschbetragPersonProps
 from app.model.components.helpers import form_fields_dict
-from app.model.form_data import DisabilityModel, show_person_b
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep

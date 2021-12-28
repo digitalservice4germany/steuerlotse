@@ -21,7 +21,7 @@ from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumbe
 from app.forms.validators import DecimalOnly, IntegerLength
 from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps, PersonAHasDisabilityProps, PersonBHasDisabilityProps
 from app.model.components.helpers import form_fields_dict
-from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
+from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel, DisabilityModel
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
