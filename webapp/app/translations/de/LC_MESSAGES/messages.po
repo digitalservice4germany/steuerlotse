@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-22 14:28+0100\n"
+"POT-Creation-Date: 2021-12-27 04:36+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -265,46 +265,46 @@ msgstr "Die Steuernummer ist nicht valide."
 msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
-#: app/forms/flows/logout_flow.py:18
-#: app/forms/flows/unlock_code_request_flow.py:37
+#: app/forms/flows/logout_flow.py:20
+#: app/forms/flows/unlock_code_request_flow.py:39
 msgid "form.auth-request.title"
 msgstr "Anforderung des Freischaltcodes"
 
-#: app/forms/flows/logout_flow.py:30
+#: app/forms/flows/logout_flow.py:32
 msgid "form.logout.logout-anyway-button"
 msgstr "Abmelden"
 
-#: app/forms/flows/logout_flow.py:45
+#: app/forms/flows/logout_flow.py:47
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:103
+#: app/forms/flows/lotse_flow.py:130 app/forms/flows/lotse_step_chooser.py:106
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:187
+#: app/forms/flows/lotse_flow.py:191
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:309
+#: app/forms/flows/lotse_flow.py:313
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:361
+#: app/forms/flows/lotse_flow.py:365
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
-#: app/forms/flows/unlock_code_activation_flow.py:31
+#: app/forms/flows/unlock_code_activation_flow.py:33
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
-#: app/forms/flows/unlock_code_request_flow.py:51
+#: app/forms/flows/unlock_code_request_flow.py:53
 #: app/forms/steps/unlock_code_request_steps.py:46
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:35
+#: app/forms/flows/unlock_code_revocation_flow.py:37
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
@@ -368,8 +368,10 @@ msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
 #: app/forms/steps/eligibility_steps.py:192
-#: app/forms/steps/lotse/personal_data.py:451
-#: app/forms/steps/lotse/personal_data.py:497
+#: app/forms/steps/lotse/personal_data.py:450
+#: app/forms/steps/lotse/personal_data.py:496
+#: app/forms/steps/lotse/personal_data.py:557
+#: app/forms/steps/lotse/personal_data.py:617
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1012,7 +1014,7 @@ msgid "form.logout.header-title"
 msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/personal_data.py:195
-#: app/forms/steps/lotse/personal_data.py:314
+#: app/forms/steps/lotse/personal_data.py:313
 #: app/forms/steps/unlock_code_activation_steps.py:19
 #: app/forms/steps/unlock_code_request_steps.py:20
 #: app/forms/steps/unlock_code_revocation_steps.py:20
@@ -1184,8 +1186,8 @@ msgstr ""
 
 #: app/forms/steps/lotse/personal_data.py:31
 #: app/forms/steps/lotse/personal_data.py:185
-#: app/forms/steps/lotse/personal_data.py:297
-#: app/forms/steps/lotse/personal_data.py:406
+#: app/forms/steps/lotse/personal_data.py:296
+#: app/forms/steps/lotse/personal_data.py:405
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
 msgid "form.lotse.mandatory_data.header-title"
@@ -1197,10 +1199,12 @@ msgstr "Steuernummer"
 
 #: app/forms/steps/lotse/personal_data.py:36
 #: app/forms/steps/lotse/personal_data.py:188
-#: app/forms/steps/lotse/personal_data.py:300
-#: app/forms/steps/lotse/personal_data.py:411
-#: app/forms/steps/lotse/personal_data.py:446
-#: app/forms/steps/lotse/personal_data.py:490
+#: app/forms/steps/lotse/personal_data.py:299
+#: app/forms/steps/lotse/personal_data.py:410
+#: app/forms/steps/lotse/personal_data.py:445
+#: app/forms/steps/lotse/personal_data.py:489
+#: app/forms/steps/lotse/personal_data.py:548
+#: app/forms/steps/lotse/personal_data.py:607
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:22
@@ -1356,124 +1360,124 @@ msgstr ""
 "an uns und schildern Sie uns das Problem. "
 
 #: app/forms/steps/lotse/personal_data.py:194
-#: app/forms/steps/lotse/personal_data.py:314
+#: app/forms/steps/lotse/personal_data.py:313
 msgid "form.lotse.field_person_idnr"
 msgstr "Steuer-Identifikationsnummer"
 
 #: app/forms/steps/lotse/personal_data.py:196
-#: app/forms/steps/lotse/personal_data.py:315
+#: app/forms/steps/lotse/personal_data.py:314
 msgid "form.lotse.field_person_idnr.data_label"
 msgstr "Steuer-Identifikationsnummer"
 
 #: app/forms/steps/lotse/personal_data.py:198
-#: app/forms/steps/lotse/personal_data.py:317
+#: app/forms/steps/lotse/personal_data.py:316
 msgid "form.lotse.field_person_dob"
 msgstr "Geburtsdatum"
 
 #: app/forms/steps/lotse/personal_data.py:199
-#: app/forms/steps/lotse/personal_data.py:318
+#: app/forms/steps/lotse/personal_data.py:317
 msgid "form.lotse.field_person_dob.data_label"
 msgstr "Geburtsdatum"
 
 #: app/forms/steps/lotse/personal_data.py:200
-#: app/forms/steps/lotse/personal_data.py:319
+#: app/forms/steps/lotse/personal_data.py:318
 msgid "form.lotse.validation-dob-missing"
 msgstr ""
 "Geben Sie Ihr vollständiges Geburtsdatum ein. Ihre Angabe muss folgendem "
 "Muster entsprechen: 29 2 1951 "
 
 #: app/forms/steps/lotse/personal_data.py:203
-#: app/forms/steps/lotse/personal_data.py:322
+#: app/forms/steps/lotse/personal_data.py:321
 msgid "form.lotse.field_person_first_name"
 msgstr "Vorname"
 
 #: app/forms/steps/lotse/personal_data.py:204
-#: app/forms/steps/lotse/personal_data.py:323
+#: app/forms/steps/lotse/personal_data.py:322
 msgid "form.lotse.field_person_first_name.data_label"
 msgstr "Vorname"
 
 #: app/forms/steps/lotse/personal_data.py:208
-#: app/forms/steps/lotse/personal_data.py:327
+#: app/forms/steps/lotse/personal_data.py:326
 msgid "form.lotse.field_person_last_name"
 msgstr "Nachname"
 
 #: app/forms/steps/lotse/personal_data.py:209
-#: app/forms/steps/lotse/personal_data.py:328
+#: app/forms/steps/lotse/personal_data.py:327
 msgid "form.lotse.field_person_last_name.data_label"
 msgstr "Nachname"
 
 #: app/forms/steps/lotse/personal_data.py:213
-#: app/forms/steps/lotse/personal_data.py:340
+#: app/forms/steps/lotse/personal_data.py:339
 msgid "form.lotse.field_person_street"
 msgstr "Straße"
 
 #: app/forms/steps/lotse/personal_data.py:214
-#: app/forms/steps/lotse/personal_data.py:341
+#: app/forms/steps/lotse/personal_data.py:340
 msgid "form.lotse.field_person_street.data_label"
 msgstr "Straße"
 
 #: app/forms/steps/lotse/personal_data.py:218
-#: app/forms/steps/lotse/personal_data.py:346
+#: app/forms/steps/lotse/personal_data.py:345
 msgid "form.lotse.field_person_street_number"
 msgstr "Hausnummer"
 
 #: app/forms/steps/lotse/personal_data.py:219
-#: app/forms/steps/lotse/personal_data.py:347
+#: app/forms/steps/lotse/personal_data.py:346
 msgid "form.lotse.field_person_street_number.data_label"
 msgstr "Hausnummer"
 
 #: app/forms/steps/lotse/personal_data.py:223
-#: app/forms/steps/lotse/personal_data.py:353
+#: app/forms/steps/lotse/personal_data.py:352
 msgid "form.lotse.field_person_street_number_ext"
 msgstr "Hausnummerzusatz"
 
 #: app/forms/steps/lotse/personal_data.py:224
-#: app/forms/steps/lotse/personal_data.py:354
+#: app/forms/steps/lotse/personal_data.py:353
 msgid "form.lotse.field_person_street_number_ext.data_label"
 msgstr "Hausnummerzusatz"
 
 #: app/forms/steps/lotse/personal_data.py:228
-#: app/forms/steps/lotse/personal_data.py:358
+#: app/forms/steps/lotse/personal_data.py:357
 msgid "form.lotse.field_person_address_ext"
 msgstr "Adressergänzung"
 
 #: app/forms/steps/lotse/personal_data.py:229
-#: app/forms/steps/lotse/personal_data.py:359
+#: app/forms/steps/lotse/personal_data.py:358
 msgid "form.lotse.field_person_address_ext.data_label"
 msgstr "Adressergänzung"
 
 #: app/forms/steps/lotse/personal_data.py:233
-#: app/forms/steps/lotse/personal_data.py:363
+#: app/forms/steps/lotse/personal_data.py:362
 msgid "form.lotse.field_person_plz"
 msgstr "Postleitzahl"
 
 #: app/forms/steps/lotse/personal_data.py:234
-#: app/forms/steps/lotse/personal_data.py:364
+#: app/forms/steps/lotse/personal_data.py:363
 msgid "form.lotse.field_person_plz.data_label"
 msgstr "Postleitzahl"
 
 #: app/forms/steps/lotse/personal_data.py:237
-#: app/forms/steps/lotse/personal_data.py:368
+#: app/forms/steps/lotse/personal_data.py:367
 msgid "validator-length-exactly"
 msgstr "Das Feld darf muss genau %(minmax)s Ziffern lang sein."
 
 #: app/forms/steps/lotse/personal_data.py:239
-#: app/forms/steps/lotse/personal_data.py:370
+#: app/forms/steps/lotse/personal_data.py:369
 msgid "form.lotse.field_person_town"
 msgstr "Wohnort"
 
 #: app/forms/steps/lotse/personal_data.py:240
-#: app/forms/steps/lotse/personal_data.py:371
+#: app/forms/steps/lotse/personal_data.py:370
 msgid "form.lotse.field_person_town.data_label"
 msgstr "Wohnort"
 
 #: app/forms/steps/lotse/personal_data.py:246
-#: app/forms/steps/lotse/personal_data.py:378
+#: app/forms/steps/lotse/personal_data.py:377
 msgid "form.lotse.field_person_beh_grad"
 msgstr "Grad der Behinderung"
 
 #: app/forms/steps/lotse/personal_data.py:249
-#: app/forms/steps/lotse/personal_data.py:380
+#: app/forms/steps/lotse/personal_data.py:379
 msgid "form.lotse.field_person_beh_grad-help"
 msgstr ""
 "Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
@@ -1488,37 +1492,37 @@ msgstr ""
 "typischen Berufskrankheit beruht.</li><ul>"
 
 #: app/forms/steps/lotse/personal_data.py:250
-#: app/forms/steps/lotse/personal_data.py:381
+#: app/forms/steps/lotse/personal_data.py:380
 msgid "form.lotse.field_person_beh_grad.data_label"
 msgstr "Grad der Behinderung"
 
 #: app/forms/steps/lotse/personal_data.py:251
-#: app/forms/steps/lotse/personal_data.py:382
+#: app/forms/steps/lotse/personal_data.py:381
 msgid "form.lotse.field_person_beh_grad.example_input"
 msgstr "z.B. 25, 30, 35 etc. "
 
 #: app/forms/steps/lotse/personal_data.py:254
-#: app/forms/steps/lotse/personal_data.py:385
+#: app/forms/steps/lotse/personal_data.py:384
 msgid "form.lotse.field_person_blind"
 msgstr "blind / ständig hilflos oder Pflegegrad 4 oder 5"
 
 #: app/forms/steps/lotse/personal_data.py:255
-#: app/forms/steps/lotse/personal_data.py:386
+#: app/forms/steps/lotse/personal_data.py:385
 msgid "form.lotse.field_person_blind.data_label"
 msgstr "blind / ständig hilflos oder Pflegegrad 4 oder 5"
 
 #: app/forms/steps/lotse/personal_data.py:257
-#: app/forms/steps/lotse/personal_data.py:388
+#: app/forms/steps/lotse/personal_data.py:387
 msgid "form.lotse.field_person_gehbeh"
 msgstr "geh- und stehbehindert"
 
 #: app/forms/steps/lotse/personal_data.py:258
-#: app/forms/steps/lotse/personal_data.py:389
+#: app/forms/steps/lotse/personal_data.py:388
 msgid "form.lotse.field_person_gehbeh.data_label"
 msgstr "geh- und stehbehindert"
 
 #: app/forms/steps/lotse/personal_data.py:262
-#: app/forms/steps/lotse/personal_data.py:393
+#: app/forms/steps/lotse/personal_data.py:392
 msgid "form.lotse.validation-person-beh-grad"
 msgstr ""
 "Sie haben eine Geh- oder Stehbehinderung angegeben. Bitte geben Sie hier "
@@ -1543,78 +1547,80 @@ msgstr ""
 "einer gleichgeschlechtlichen Partnerschaft leben, geben Sie bitte "
 "zunächst die Person an, deren Name im Alphabet zuerst kommt."
 
-#: app/forms/steps/lotse/personal_data.py:284
+#: app/forms/steps/lotse/personal_data.py:283
 msgid "form.lotse.skip_reason.familienstand_single"
 msgstr "Sie haben als Familienstand ledig angegeben."
 
-#: app/forms/steps/lotse/personal_data.py:295
+#: app/forms/steps/lotse/personal_data.py:294
 msgid "form.lotse.person-b-title"
 msgstr "Angaben für Person B"
 
-#: app/forms/steps/lotse/personal_data.py:296
+#: app/forms/steps/lotse/personal_data.py:295
 msgid "form.lotse.person-b-intro"
 msgstr ""
 "Geben Sie hier bitte die Daten der Ehefrau an. Wenn Sie in einer "
 "gleichgeschlechtlichen Partnerschaft leben, geben Sie bitte die Person "
 "an, deren Name im Alphabet zuletzt kommt."
 
-#: app/forms/steps/lotse/personal_data.py:299
+#: app/forms/steps/lotse/personal_data.py:298
 msgid "form.lotse.step_person_b.label"
 msgstr "Person B"
 
-#: app/forms/steps/lotse/personal_data.py:334
+#: app/forms/steps/lotse/personal_data.py:333
 msgid "form.lotse.field_person_b_same_address.data_label"
 msgstr "Mein Partner / Meine Partnerin und ich wohnen zusammen."
 
-#: app/forms/steps/lotse/personal_data.py:336
+#: app/forms/steps/lotse/personal_data.py:335
 msgid "form.lotse.field_person_b_same_address-yes"
 msgstr "Mein Partner / Meine Partnerin und ich wohnen zusammen."
 
-#: app/forms/steps/lotse/personal_data.py:337
+#: app/forms/steps/lotse/personal_data.py:336
 msgid "form.lotse.field_person_b_same_address-no"
 msgstr ""
 "Mein Partner / Meine Partnerin und ich wohnen nicht zusammen. Er / Sie "
 "ist wohnhaft in:"
 
-#: app/forms/steps/lotse/personal_data.py:404
+#: app/forms/steps/lotse/personal_data.py:403
 msgid "form.lotse.telephone-number.title"
 msgstr "Telefonnummer für Rückfragen"
 
-#: app/forms/steps/lotse/personal_data.py:405
+#: app/forms/steps/lotse/personal_data.py:404
 msgid "form.lotse.telephone-number.intro"
 msgstr ""
 "Geben Sie eine Telefonnummer an, wenn Sie wünschen, dass Ihr Finanzamt "
 "Sie bei eventuellen Rückfragen kontaktieren kann."
 
-#: app/forms/steps/lotse/personal_data.py:410
+#: app/forms/steps/lotse/personal_data.py:409
 msgid "form.lotse.step_telephone_number.label"
 msgstr "Telefonnummer für Rückfragen"
 
-#: app/forms/steps/lotse/personal_data.py:416
+#: app/forms/steps/lotse/personal_data.py:415
 msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
 
-#: app/forms/steps/lotse/personal_data.py:441
-#: app/forms/steps/lotse/personal_data.py:484
-#: app/forms/steps/lotse/personal_data.py:525
+#: app/forms/steps/lotse/personal_data.py:440
+#: app/forms/steps/lotse/personal_data.py:483
+#: app/forms/steps/lotse/personal_data.py:524
+#: app/forms/steps/lotse/personal_data.py:598
+#: app/forms/steps/lotse/personal_data.py:654
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/personal_data.py:450
-#: app/forms/steps/lotse/personal_data.py:496
+#: app/forms/steps/lotse/personal_data.py:449
+#: app/forms/steps/lotse/personal_data.py:495
 msgid "form.lotse.has_disability.data_label"
 msgstr "Liegt eine Behinderung oder Pflegebedürftigkeit vor?"
 
-#: app/forms/steps/lotse/personal_data.py:456
+#: app/forms/steps/lotse/personal_data.py:455
 msgid "form.lotse.has_disability.label_person_a"
 msgid_plural "form.lotse.has_disability.label_person_a"
 msgstr[0] "Behinderung oder Pflegebedürftigkeit"
 msgstr[1] "Behinderung oder Pflegebedürftigkeit für Person A"
 
-#: app/forms/steps/lotse/personal_data.py:462
+#: app/forms/steps/lotse/personal_data.py:461
 msgid "form.lotse.has_disability.title"
 msgid_plural "form.lotse.has_disability.title"
 msgstr[0] "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit machen?"
@@ -1622,15 +1628,50 @@ msgstr[1] ""
 "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit für "
 "Person A machen?"
 
-#: app/forms/steps/lotse/personal_data.py:489
+#: app/forms/steps/lotse/personal_data.py:488
 msgid "form.lotse.has_disability.label_person_b"
 msgstr "Behinderung oder Pflegebedürftigkeit für Person B"
 
-#: app/forms/steps/lotse/personal_data.py:506
+#: app/forms/steps/lotse/personal_data.py:505
 msgid "form.lotse.person_b.has_disability.title"
 msgstr ""
 "Möchten Sie Angaben zu einer Behinderung oder Pflegebedürftigkeit für "
 "Person B machen?"
+
+#: app/forms/steps/lotse/personal_data.py:528
+#: app/forms/steps/lotse/personal_data.py:538
+msgid "form.lotse.skip_reason.has_no_disability"
+msgstr "Sie haben angegeben, dass keine Behinderung vorliegt"
+
+#: app/forms/steps/lotse/personal_data.py:556
+#: app/forms/steps/lotse/personal_data.py:616
+msgid "form.lotse.request_pauschbetrag.data_label"
+msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
+
+#: app/forms/steps/lotse/personal_data.py:562
+msgid "form.lotse.person_a.request_pauschbetrag.label"
+msgid_plural "form.lotse.person_a.request_pauschbetrag.label"
+msgstr[0] "Beantragung Pauschbetrag für Menschen mit Behinderung"
+msgstr[1] "Beantragung Pauschbetrag für Menschen mit Behinderung Person A"
+
+#: app/forms/steps/lotse/personal_data.py:568
+#: app/forms/steps/lotse/personal_data.py:625
+msgid "currency.euro"
+msgstr "Euro"
+
+#: app/forms/steps/lotse/personal_data.py:576
+msgid "form.lotse.person_a.request_pauschbetrag.title"
+msgid_plural "form.lotse.person_a.request_pauschbetrag.title"
+msgstr[0] "Pauschbetrag für Menschen mit Behinderung"
+msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
+
+#: app/forms/steps/lotse/personal_data.py:609
+msgid "form.lotse.person_b.request_pauschbetrag.label"
+msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung Person B"
+
+#: app/forms/steps/lotse/personal_data.py:632
+msgid "form.lotse.person_b.request_pauschbetrag.title"
+msgstr "Pauschbetrag für Menschen mit Behinderung für Person B"
 
 #: app/forms/steps/lotse/steuerminderungen.py:25
 msgid "form.lotse.select_stmind-title"
@@ -2809,7 +2850,7 @@ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/model/form_data.py:369
+#: app/model/form_data.py:373
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2819,11 +2860,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:374
+#: app/model/form_data.py:378
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:380
+#: app/model/form_data.py:384
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "

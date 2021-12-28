@@ -31,6 +31,7 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
@@ -167,8 +168,10 @@ class TestLotseInit(unittest.TestCase):
             StepSteuernummer,
             StepPersonA,
             StepPersonAHasDisability,
+            StepPauschbetragPersonA,
             StepPersonB,
             StepPersonBHasDisability,
+            StepPauschbetragPersonB,
             StepTelephoneNumber,
             StepIban,
 
@@ -1244,6 +1247,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
+            'person_a_requests_pauschbetrag': 'yes',
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
@@ -1271,6 +1275,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
+            'person_a_requests_pauschbetrag': 'yes',
 
             'person_b_dob': datetime.date(1951, 2, 25),
             'person_b_first_name': 'Gerta',
@@ -1280,6 +1285,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_has_disability': 'no',
             'person_b_blind': False,
             'person_b_gehbeh': False,
+            'person_b_requests_pauschbetrag': 'yes',
 
             'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',}
@@ -1425,7 +1431,7 @@ class TestLotseValidateInput(unittest.TestCase):
         expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
                                    'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'person_a_has_disability', 'iban', 'is_user_account_holder', ]
+                                   'person_a_gehbeh', 'person_a_has_disability', 'person_a_requests_pauschbetrag', 'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,

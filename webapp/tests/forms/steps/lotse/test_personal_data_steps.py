@@ -527,7 +527,9 @@ class TestTelephoneNumberValidation:
 class TestPersonAHasDisabilityValidation:
     def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
         data = MultiDict({'person_a_has_disability': 'yes'})
-        with new_test_request_context(form_data=data):
+        with new_test_request_context(form_data=data) as req:
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
@@ -535,7 +537,9 @@ class TestPersonAHasDisabilityValidation:
 
     def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
         data = MultiDict()
-        with new_test_request_context(form_data=data):
+        with new_test_request_context(form_data=data) as req:
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form

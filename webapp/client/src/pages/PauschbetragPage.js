@@ -98,7 +98,9 @@ export default function PauschbetragPage({
 }
 
 PauschbetragPage.propTypes = {
-  stepHeader: stepHeaderPropType.isRequired,
+  stepHeader: PropTypes.shape({
+    title: PropTypes.string,
+  }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
     csrfToken: PropTypes.string,

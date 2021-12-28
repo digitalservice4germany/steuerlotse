@@ -523,4 +523,3 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
-        

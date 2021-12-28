@@ -29,6 +29,11 @@ class FamilienstandModel(BaseModel):
     familienstand_confirm_zusammenveranlagung: Optional[bool]
 
 
+class DisabilityModel(BaseModel):
+    person_a_has_disability: str
+    person_b_has_disability: Optional[str]
+    
+
 class JointTaxesModel(FamilienstandModel):
     @root_validator
     def check_that_joint_taxes(cls, values):
@@ -90,6 +95,7 @@ class MandatoryFormData(BaseModel):
     person_a_blind: bool
     person_a_gehbeh: bool
     person_a_has_disability: str
+    person_a_requests_pauschbetrag: str
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -100,6 +106,7 @@ class MandatoryFormData(BaseModel):
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
     person_b_has_disability: Optional[str]
+    person_b_requests_pauschbetrag: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -216,6 +223,7 @@ class FormDataDependencies(BaseModel):
     person_a_blind: Optional[bool]
     person_a_gehbeh: Optional[bool]
     person_a_has_disability: Optional[str]
+    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -233,6 +241,7 @@ class FormDataDependencies(BaseModel):
     person_b_blind: Optional[bool]
     person_b_gehbeh: Optional[bool]
     person_b_has_disability: Optional[str]
+    person_b_requests_pauschbetrag: Optional[str]
 
     telephone_number: Optional[str]
 
