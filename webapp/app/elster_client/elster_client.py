@@ -26,10 +26,10 @@ _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_li
               'person_b_same_address', 'request_new_tax_number',
               'person_a_has_pflegegrad', 'person_a_has_merkzeichen_bl',
               'person_a_has_merkzeichen_tbl', 'person_a_has_merkzeichen_h', 'person_a_has_merkzeichen_g',
-              'person_a_has_merkzeichen_ag', 'person_a_requests_pauschbetrag',
+              'person_a_has_merkzeichen_ag',
               'person_b_has_pflegegrad', 'person_b_has_merkzeichen_bl',
               'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'person_b_has_merkzeichen_g',
-              'person_b_has_merkzeichen_ag', 'person_b_requests_pauschbetrag']
+              'person_b_has_merkzeichen_ag',]
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',

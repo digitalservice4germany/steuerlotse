@@ -79,7 +79,7 @@ class StagingConfig(BaseConfig):
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     ALLOW_TESTING_ROUTES = True
-    PREFILL_SAMPLE_FORM_DATA = True
+    PREFILL_SAMPLE_FORM_DATA = False
     ALLOW_RESEND_FOR_TEST_USER = True
     SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
 

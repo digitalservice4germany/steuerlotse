@@ -41,7 +41,7 @@ const taxReturnData = {
         addressExt: 'Seitenflügel',
         postalCode: '11111',
         town: 'Musterhausen',
-        behGrad: '25',
+        disabilityDegree: '25',
     },
     personB: {
         idnr1: '02',
@@ -406,12 +406,15 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_address_ext').type(taxReturnData.personA.addressExt)
                 cy.get('#person_a_plz').type(taxReturnData.personA.postalCode)
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
-                cy.get('#person_a_beh_grad').type(taxReturnData.personA.behGrad)
-                cy.get('label[for=person_a_blind]').first().click()
-                cy.get('label[for=person_a_gehbeh]').first().click()
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get('label[for=person_a_has_disabilityyes]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_has_pflegegrad-yes]').click()
+                cy.get('#person_a_disability_degree').type(taxReturnData.personA.disabilityDegree)
+                cy.get('label[for=person_a_has_merkzeichen_bl]').first().click()
+                cy.get('label[for=person_a_has_merkzeichen_h]').first().click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)

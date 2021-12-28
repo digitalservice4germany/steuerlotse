@@ -104,7 +104,7 @@ class SteuerlotseStep(object):
         for precondition in cls.preconditions:
             try:
                 precondition.parse_obj(stored_data)
-            except ValidationError:
+            except ValidationError as e:
                 if hasattr(precondition, '_message_to_flash'):
                     flash(precondition._message_to_flash, 'warn')
                 return precondition._step_to_redirect_to

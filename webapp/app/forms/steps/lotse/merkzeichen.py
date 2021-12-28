@@ -1,13 +1,14 @@
 from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
+from pydantic import BaseModel, validator
 from wtforms import validators, BooleanField
 from wtforms.validators import InputRequired, ValidationError
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import YesNoField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import get_number_of_users
+from app.forms.steps.lotse.personal_data import get_number_of_users, StepPersonAHasDisability, StepPersonBHasDisability
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import SectionLink
 from app.forms.validations.validators import ValidDisabilityDegree
@@ -15,11 +16,25 @@ from app.model.components import MerkzeichenProps
 from app.model.components.helpers import form_fields_dict
 
 
+class ShowMerkzeichenPersonA(BaseModel):
+    _step_to_redirect_to = StepPersonAHasDisability.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
+
+    person_a_has_disability: bool
+
+    @validator('person_a_has_disability', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
 class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
     name = 'merkzeichen_person_a'
     title = _l('form.lotse.merkzeichen_person_a.title')
     intro = _l('form.lotse.merkzeichen.intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
+    preconditions = [ShowMerkzeichenPersonA]
 
     label = _l('form.lotse.merkzeichen.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -101,11 +116,25 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
 
+class ShowMerkzeichenPersonB(BaseModel):
+    _step_to_redirect_to = StepPersonBHasDisability.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
+
+    person_b_has_disability: bool
+
+    @validator('person_b_has_disability', always=True)
+    def has_to_be_set_true(cls, v):
+        if not v:
+            raise ValidationError
+        return v
+
+
 class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
     name = 'merkzeichen_person_b'
     title = _l('form.lotse.merkzeichen_person_b.title')
     intro = _l('form.lotse.merkzeichen.intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
+    preconditions = [ShowMerkzeichenPersonB]
 
     label = _l('form.lotse.merkzeichen.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
