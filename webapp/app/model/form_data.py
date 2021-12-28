@@ -29,11 +29,6 @@ class FamilienstandModel(BaseModel):
     familienstand_confirm_zusammenveranlagung: Optional[bool]
 
 
-class DisabilityModel(BaseModel):
-    person_a_has_disability: str
-    person_b_has_disability: Optional[str]
-    
-
 class JointTaxesModel(FamilienstandModel):
     @root_validator
     def check_that_joint_taxes(cls, values):
@@ -95,7 +90,7 @@ class MandatoryFormData(BaseModel):
     person_a_blind: bool
     person_a_gehbeh: bool
     person_a_has_disability: str
-    person_a_requests_pauschbetrag: str
+    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -357,7 +352,18 @@ class FormDataDependencies(BaseModel):
         if show_person_b(values):
             return None
         return v
-
+    
+    @validator('person_a_requests_pauschbetrag')
+    def delete_if_person_a_has_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') == "yes":
+            return v
+        return None
+    
+    @validator('person_b_requests_pauschbetrag')
+    def delete_if_person_b_has_no_disability(cls, v, values):
+        if values.get('person_b_has_disability') == "yes":
+            return v
+        return None
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.

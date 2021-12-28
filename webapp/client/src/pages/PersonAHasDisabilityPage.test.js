@@ -28,8 +28,8 @@ describe("PersonAHasDisabilityPage for single person", () => {
   });
 
   it("should render selected value yes", () => {
-    expect(screen.queryAllByRole("radio")[0].checked).toBe(true);
-    expect(screen.queryAllByRole("radio")[1].checked).toBe(false);
+    expect(screen.getByDisplayValue("yes").checked).toBe(true);
+    expect(screen.getByDisplayValue("no").checked).toBe(false);
   });
 
   it("should render yes and no input", () => {
@@ -74,8 +74,8 @@ describe("PersonAHasDisabilityPage no disability", () => {
   });
 
   it("should render selected value no", () => {
-    expect(screen.queryAllByRole("radio")[0].checked).toBe(false);
-    expect(screen.queryAllByRole("radio")[1].checked).toBe(true);
+    expect(screen.getByDisplayValue("yes").checked).toBe(false);
+    expect(screen.getByDisplayValue("no").checked).toBe(true);
   });
 });
 

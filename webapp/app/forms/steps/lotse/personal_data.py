@@ -1,6 +1,6 @@
 from flask import flash, Markup, render_template
 from flask_wtf.csrf import generate_csrf
-from pydantic import ValidationError, root_validator
+from pydantic import ValidationError, root_validator, validator
 from wtforms import validators, SelectField, RadioField, BooleanField
 from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
@@ -21,7 +21,7 @@ from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumbe
 from app.forms.validators import DecimalOnly, IntegerLength
 from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps, PersonAHasDisabilityProps, PersonBHasDisabilityProps
 from app.model.components.helpers import form_fields_dict
-from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
+from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel, BaseModel
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
@@ -523,3 +523,29 @@ class StepPersonBHasDisability(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+        
+        
+class PersonAHasDisabilityPrecondition(BaseModel):
+    _step_to_redirect_to = StepPersonAHasDisability.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
+    
+    person_a_has_disability: str
+
+    @validator('person_a_has_disability', always=True)
+    def has_to_be_yes(cls, value):
+        if value != 'yes':
+            raise ValidationError
+        return value
+        
+class PersonBHasDisabilityPrecondition(BaseModel):
+    _step_to_redirect_to = StepPersonBHasDisability.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
+    
+    person_b_has_disability: str
+
+    @validator('person_b_has_disability', always=True)
+    def has_to_be_yes(cls, value):
+        if value != 'yes':
+            raise ValidationError
+        return value
+    
