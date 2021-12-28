@@ -11,6 +11,10 @@ import { extendedSelectionFieldPropType } from "../lib/propTypes";
 
 const DetailsDiv = styled.div`
   margin-bottom: var(--spacing-04);
+
+  @media (max-width: 500px) {
+    margin-bottom: 0;
+  }
 `;
 
 export default function PauschbetragPage({
