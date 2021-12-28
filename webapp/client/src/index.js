@@ -15,6 +15,7 @@ import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import PersonAHasDisabilityPage from "./pages/PersonAHasDisabilityPage";
 import PersonBHasDisabilityPage from "./pages/PersonBHasDisabilityPage";
+import NoPauschbetragPage from "./pages/NoPauschbetragPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -26,6 +27,7 @@ const allowedComponents = {
   TaxNumberPage,
   PersonAHasDisabilityPage,
   PersonBHasDisabilityPage,
+  NoPauschbetragPage,
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,

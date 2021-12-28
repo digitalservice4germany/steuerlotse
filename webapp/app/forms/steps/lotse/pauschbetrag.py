@@ -1,3 +1,11 @@
+from flask import render_template
+
+from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
+from flask_babel import lazy_gettext as _l, _
+
+from app.model.components import NoPauschbetragProps
+
+
 def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
     Calculates the pauschbetrag given some information about the user.
@@ -29,3 +37,24 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
         return 620
     elif disability_degree >= 20:
         return 384
+
+
+class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
+    name = 'person_a_no_pauschbetrag'
+    title = _l('form.lotse.no_pauschbetrag.title')
+    header_title = _l('form.lotse.mandatory_data.header-title')
+
+    def render(self):
+        props_dict = NoPauschbetragProps(
+            step_header={
+                'title': str(self.title),
+            },
+            prev_url=self.render_info.prev_url,
+            next_url=self.render_info.next_url,
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='NoPauschbetragPage',
+                               props=props_dict,
+                               form=self.render_info.form,
+                               header_title=_('form.lotse.header-title'))

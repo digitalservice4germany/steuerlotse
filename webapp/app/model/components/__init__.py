@@ -62,6 +62,7 @@ class StepDisplayProps(ComponentProps):
     prev_url: Optional[str]
     next_url: Optional[str]
 
+
 class LoginProps(StepFormProps):
     pass
 
@@ -90,6 +91,23 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 
+class TaxNumberStepFormProps(StepFormProps):
+    tax_office_list: List[Dict]
+    number_of_users: int
+
+
+class PersonAHasDisabilityProps(StepFormProps):
+    num_users: int
+
+
+class PersonBHasDisabilityProps(StepFormProps):
+    pass
+
+
+class NoPauschbetragProps(StepDisplayProps):
+    pass
+
+
 class TelephoneNumberProps(StepFormProps):
     pass
 
@@ -98,17 +116,6 @@ class SelectStMindProps(StepFormProps):
     pass
 
 
-class TaxNumberStepFormProps(StepFormProps):
-    tax_office_list: List[Dict]
-    number_of_users: int
-
-
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str
-
-class PersonAHasDisabilityProps(StepFormProps):
-    num_users: int
-
-class PersonBHasDisabilityProps(StepFormProps):
-    pass

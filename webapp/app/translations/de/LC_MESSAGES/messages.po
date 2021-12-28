@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-22 14:28+0100\n"
+"POT-Creation-Date: 2021-12-28 14:08+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -265,20 +265,20 @@ msgstr "Die Steuernummer ist nicht valide."
 msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
-#: app/forms/flows/logout_flow.py:18
-#: app/forms/flows/unlock_code_request_flow.py:37
+#: app/forms/flows/logout_flow.py:20
+#: app/forms/flows/unlock_code_request_flow.py:39
 msgid "form.auth-request.title"
 msgstr "Anforderung des Freischaltcodes"
 
-#: app/forms/flows/logout_flow.py:30
+#: app/forms/flows/logout_flow.py:32
 msgid "form.logout.logout-anyway-button"
 msgstr "Abmelden"
 
-#: app/forms/flows/logout_flow.py:45
+#: app/forms/flows/logout_flow.py:47
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:103
+#: app/forms/flows/lotse_flow.py:128 app/forms/flows/lotse_step_chooser.py:104
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
@@ -295,16 +295,16 @@ msgstr "Keine Angabe"
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
-#: app/forms/flows/unlock_code_activation_flow.py:31
+#: app/forms/flows/unlock_code_activation_flow.py:33
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
-#: app/forms/flows/unlock_code_request_flow.py:51
+#: app/forms/flows/unlock_code_request_flow.py:53
 #: app/forms/steps/unlock_code_request_steps.py:46
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:35
+#: app/forms/flows/unlock_code_revocation_flow.py:37
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
@@ -1169,6 +1169,30 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
+#: app/forms/steps/lotse/pauschbetrag.py:44
+msgid "form.lotse.no_pauschbetrag.title"
+msgstr "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge."
+
+#: app/forms/steps/lotse/pauschbetrag.py:45
+#: app/forms/steps/lotse/personal_data.py:31
+#: app/forms/steps/lotse/personal_data.py:185
+#: app/forms/steps/lotse/personal_data.py:297
+#: app/forms/steps/lotse/personal_data.py:406
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
+#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
+msgid "form.lotse.mandatory_data.header-title"
+msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
+
+#: app/forms/steps/lotse/pauschbetrag.py:60
+#: app/forms/steps/lotse/personal_data.py:441
+#: app/forms/steps/lotse/personal_data.py:484
+#: app/forms/steps/lotse/personal_data.py:525
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
+msgid "form.lotse.header-title"
+msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
+
 #: app/forms/steps/lotse/personal_data.py:29
 msgid "form.lotse.steuernummer-title"
 msgstr "Steuernummer"
@@ -1181,15 +1205,6 @@ msgstr ""
 "Steuernummer, wenn sich Ihre Lebenssituation ändert. Gründe können "
 "beispielsweise ein Umzug, eine Heirat oder die Änderung der "
 "Veranlagungsart sein."
-
-#: app/forms/steps/lotse/personal_data.py:31
-#: app/forms/steps/lotse/personal_data.py:185
-#: app/forms/steps/lotse/personal_data.py:297
-#: app/forms/steps/lotse/personal_data.py:406
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:149
-#: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:225
-msgid "form.lotse.mandatory_data.header-title"
-msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/personal_data.py:35
 msgid "form.lotse.step_steuernummer.label"
@@ -1593,15 +1608,6 @@ msgstr "Telefonnummer für Rückfragen"
 #: app/forms/steps/lotse/personal_data.py:416
 msgid "form.lotse.field_telephone_number.data_label"
 msgstr "Angabe Telefonnummer"
-
-#: app/forms/steps/lotse/personal_data.py:441
-#: app/forms/steps/lotse/personal_data.py:484
-#: app/forms/steps/lotse/personal_data.py:525
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
-msgid "form.lotse.header-title"
-msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/personal_data.py:450
 #: app/forms/steps/lotse/personal_data.py:496
