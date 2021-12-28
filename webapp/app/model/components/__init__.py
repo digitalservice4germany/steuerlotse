@@ -114,4 +114,4 @@ class PersonBHasDisabilityProps(StepFormProps):
     pass
 
 class PauschbetragPersonProps(StepFormProps):
-    pauschbetrag: int
+    pauschbetrag: str

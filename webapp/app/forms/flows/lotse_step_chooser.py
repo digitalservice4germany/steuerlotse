@@ -7,8 +7,8 @@ from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability, \
-    StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 
 _LOTSE_DATA_KEY = 'form_data'
 
