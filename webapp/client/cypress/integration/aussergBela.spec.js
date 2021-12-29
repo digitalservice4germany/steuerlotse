@@ -100,7 +100,6 @@ describe("PersonAHasDisability", () => {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
-        person_a_has_disability: "yes",
 
         stmind_select_ausserg_bela: true,
         person_a_has_disability: "no",
