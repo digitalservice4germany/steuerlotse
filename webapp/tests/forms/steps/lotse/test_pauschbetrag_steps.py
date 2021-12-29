@@ -26,14 +26,14 @@ class TestPauschbetragPersonAValidation:
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_required_precondition_person_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
+    def test_if_precondition_person_a_has_disability_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({})
         with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'person_a_has_disability'
             
-    def test_if_required_precondition_person_a_has_disability_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
+    def test_if_precondition_person_a_has_disability_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({'person_a_has_disability':'no'})
         with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
@@ -63,7 +63,7 @@ class TestPauschbetragPersonBValidation:
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_required_precondition_person_b_has_disability_is_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
+    def test_if_precondition_person_b_has_disability_is_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',

@@ -552,24 +552,29 @@ class TestPersonBHasDisabilityValidation:
             'person_b_has_disability': 'no'
         })
 
-        with new_test_request_context(form_data=data):
+        with new_test_request_context(form_data=data) as req:
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_person_b_has_disability_is_not_given_then_validate_should_be_true(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_not_given_then_validate_should_be_false(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
         })
 
-        with new_test_request_context(form_data=data):
+        with new_test_request_context(form_data=data) as req:
+            req.session = SecureCookieSession(
+                {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
                 StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
-            assert form.validate() is True
+            assert form.validate() is False
             
 
 class TestPersonAHasDisabilityPrecondition:
