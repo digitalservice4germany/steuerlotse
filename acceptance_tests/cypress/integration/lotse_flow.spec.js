@@ -249,17 +249,6 @@ context('Acceptance tests', () => {
             cy.get('label[for=request_new_tax_number]').should('not.be.checked')
         })
 
-        it('Enter disability', () => {
-            cy.visit('/lotse/step/person_a_has_disability?link_overview=True')
-
-            // Set disability status to yes
-            cy.get('#person_a_has_disabilityyes').check().should('be.checked')
-            cy.get(submitBtnSelector).click()
-
-            // Select pauschbetrag
-            cy.get('#person_a_requests_pauschbetragyes').check().should('be.checked')
-        })
-
         context('Submitting tax returns', () => {
             beforeEach(() => {
                 // Step 1: accept opt-ins
