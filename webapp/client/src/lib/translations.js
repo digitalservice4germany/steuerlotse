@@ -148,7 +148,7 @@ const translations = {
     },
     fahrkostenpauschale: {
       introText:
-        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}}</bold> Euro abzüglich der zumutbaren Belastung. Einzelne Fahrten können Sie nicht mehr geltend machen.",
+        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}} Euro abzüglich der zumutbaren Belastung</bold> . Einzelne Fahrten können Sie nicht mehr geltend machen.",
       requestsFahrkostenpauschale: {
         yesLabel: "Pauschale beantragen",
         noLabel: "Pauschale nicht beantragen",
@@ -272,16 +272,6 @@ const translations = {
     yesNoSwitch: {
       Yes: "Ja",
       No: "Nein",
-    },
-  },
-  stories: {
-    fahrkostenpauschale: {
-      introText:
-        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}}</bold> Euro abzüglich der zumutbaren Belastung. Einzelne Fahrten können Sie nicht mehr geltend machen.",
-      requestsFahrkostenpauschale: {
-        yesLabel: "Pauschale beantragen",
-        noLabel: "Pauschale nicht beantragen",
-      },
     },
   },
 };

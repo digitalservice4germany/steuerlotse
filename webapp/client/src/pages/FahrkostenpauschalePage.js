@@ -36,7 +36,7 @@ export default function FahrkostenpauschalePage({
         title={stepHeader.title}
         intro={
           <Trans
-            i18nKey="stories.fahrkostenpauschale.introText"
+            i18nKey="lotse.fahrkostenpauschale.introText"
             values={{ fahrkostenpauschaleAmount }}
             components={{ bold: <b /> }}
           />
