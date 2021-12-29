@@ -18,7 +18,6 @@
     {% endblock %}
     {% for field in form %}
         {% if show_disability_stmind_fields or (field.name != "stmind_beh_aufw_summe" and field.name != "stmind_beh_aufw_anspruch") %}
-            Tests
             <div class="form-row-center">
                 {{ macros.render_field(field, first_field=field == render_info.form.first_field if not render_info.form.errors) }}
             </div>
