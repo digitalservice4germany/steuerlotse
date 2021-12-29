@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-06 14:27+0100\n"
+"POT-Creation-Date: 2021-12-29 12:38+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2821,6 +2821,7 @@ msgstr "Weitere Informationen"
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
+#: app/templates/basis/base_content.html:16
 #: app/templates/error/erica_error.html:8 app/templates/macros.html:7
 msgid "form.back"
 msgstr "Zurück"
@@ -2848,7 +2849,7 @@ msgstr ""
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:44
+#: app/templates/basis/base.html:44 app/templates/basis/base_content.html:7
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -4913,7 +4914,7 @@ msgstr "Das Lotsenteam wünscht ein gesundes&nbsp;neues&nbsp;Jahr!"
 #: app/templates/content/temp_landing_page.html:18
 msgid "landing.hero-title-2-temp"
 msgstr ""
-"Wir stellen auf das neue Steuerjahr 2021 um und sind ab dem 14. Januar "
+"Wir stellen auf das neue Steuerjahr 2021 um und sind ab dem 18. Januar "
 "wieder für Sie da."
 
 #: app/templates/content/temp_landing_page.html:19
