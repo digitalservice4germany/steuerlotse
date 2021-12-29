@@ -85,6 +85,9 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
         self.title = ngettext('form.lotse.merkzeichen_person_a.title',
                                                'form.lotse.merkzeichen_person_a.title',
                                                num=number_of_users)
+        self.label = ngettext('form.lotse.merkzeichen_person_a.label',
+                                               'form.lotse.merkzeichen_person_a.label',
+                                               num=number_of_users)
 
     def render(self):
         props_dict = MerkzeichenProps(
@@ -137,7 +140,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [ShowMerkzeichenPersonB]
 
-    label = _l('form.lotse.merkzeichen.label')
+    label = _l('form.lotse.merkzeichen_person_b.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):
