@@ -1,3 +1,5 @@
+from typing import Optional
+
 from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import BaseModel, root_validator, ValidationError
@@ -55,7 +57,7 @@ def calculate_pauschbetrag(has_pflegegrad: str = None, disability_degree: int = 
     return 0
 
 
-class DisabilityModelPersonA(BaseModel):
+class DisabilityModel(BaseModel):
     person_a_has_disability: Optional[str]
     person_a_has_pflegegrad: Optional[str]
     person_a_disability_degree: Optional[int]
@@ -65,15 +67,6 @@ class DisabilityModelPersonA(BaseModel):
     person_a_has_merkzeichen_ag: Optional[bool]
     person_a_has_merkzeichen_h: Optional[bool]
 
-    @root_validator()
-    def convert_disability_degree_to_int(cls, values):
-        values['person_a_disability_degree'] = int(values['person_a_disability_degree']) \
-            if values['person_a_disability_degree'] \
-            else None
-        return values
-
-
-class DisabilityModelPersonB(BaseModel):
     person_b_has_disability: Optional[str]
     person_b_has_pflegegrad: Optional[str]
     person_b_disability_degree: Optional[int]
@@ -85,20 +78,23 @@ class DisabilityModelPersonB(BaseModel):
 
     @root_validator()
     def convert_disability_degree_to_int(cls, values):
+        values['person_a_disability_degree'] = int(values['person_a_disability_degree']) \
+            if values['person_a_disability_degree'] \
+            else None
         values['person_b_disability_degree'] = int(values['person_b_disability_degree']) \
             if values['person_b_disability_degree'] \
             else None
         return values
 
 
-class PersonAHasPauschbetragClaimPrecondition(DisabilityModelPersonA):
+class PersonAHasPauschbetragClaimPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
     def has_to_have_pauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
-            has_pflegegrad=values.get('person_a_has_pflegegrad', False),
+            has_pflegegrad=values.get('person_a_has_pflegegrad', None),
             disability_degree=values.get('person_a_disability_degree', None),
             has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
@@ -110,15 +106,15 @@ class PersonAHasPauschbetragClaimPrecondition(DisabilityModelPersonA):
         return values
 
 
-class PersonBHasPauschbetragClaimPrecondition(BaseModel):
+class PersonBHasPauschbetragClaimPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
     def has_to_have_pauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
-            has_pflegegrad=values.get('person_b_has_pflegegrad', False),            
-            disability_degree=values.get('person_b_disability_degree', None),   
+            has_pflegegrad=values.get('person_b_has_pflegegrad', None),
+            disability_degree=values.get('person_b_disability_degree', None),
             has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
@@ -129,15 +125,15 @@ class PersonBHasPauschbetragClaimPrecondition(BaseModel):
         return values
 
 
-class PersonAHasNoPauschbetragClaimPrecondition(BaseModel):
+class PersonAHasNoPauschbetragClaimPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
     def has_to_have_pauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
-            has_pflegegrad=values.get('person_a_has_pflegegrad', False),            
-            disability_degree=values.get('person_a_disability_degree', None),   
+            has_pflegegrad=values.get('person_a_has_pflegegrad', None),
+            disability_degree=values.get('person_a_disability_degree', None),
             has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False)
@@ -148,15 +144,15 @@ class PersonAHasNoPauschbetragClaimPrecondition(BaseModel):
         return values
 
 
-class PersonBHasNoPauschbetragClaimPrecondition(BaseModel):
+class PersonBHasNoPauschbetragClaimPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
     def has_to_have_pauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
-            has_pflegegrad=values.get('person_b_has_pflegegrad', False),            
-            disability_degree=values.get('person_b_disability_degree', None),   
+            has_pflegegrad=values.get('person_b_has_pflegegrad', None),
+            disability_degree=values.get('person_b_disability_degree', None),
             has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
@@ -165,16 +161,16 @@ class PersonBHasNoPauschbetragClaimPrecondition(BaseModel):
         if pauschbetrag_claim != 0:
             raise ValidationError
         return values
-        
+
 
 class StepPauschbetrag(LotseFormSteuerlotseStep):
-    
+
     def get_overview_value_representation(self, value):
         result = ''
-        
+
         if value == 'yes':
             result = self.get_pauschbetrag() + ' ' + _('currency.euro')
-            
+
         return result
 
 
@@ -182,21 +178,21 @@ class StepPauschbetragPersonA(StepPauschbetrag):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
     preconditions = [PersonAHasDisabilityPrecondition, PersonAHasPauschbetragClaimPrecondition]
-    
+
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
             choices=[('yes', 'yes'),('no', 'no')],
-            render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
+            render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},
             validators=[InputRequired(_l('validate.input-required'))])
 
     @classmethod
     def get_label(cls, data=None):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label', 'form.lotse.person_a.request_pauschbetrag.label',
-                        num=get_number_of_users(data))        
+                        num=get_number_of_users(data))
 
     def render(self):
-        props_dict = PauschbetragProps(            
+        props_dict = PauschbetragProps(
             step_header={
                 'title': ngettext('form.lotse.person_a.request_pauschbetrag.title', 'form.lotse.person_a.request_pauschbetrag.title',
                         num=get_number_of_users(self.stored_data))
@@ -223,34 +219,34 @@ class StepPauschbetragPersonA(StepPauschbetrag):
 
     def get_pauschbetrag(self):
         return str(calculate_pauschbetrag(
-            has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', False),            
-            disability_degree=self.stored_data.get('person_a_disability_degree', None),   
+            has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', None),
+            disability_degree=self.stored_data.get('person_a_disability_degree', None),
             has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False)
         ))
-        
-        
+
+
 class StepPauschbetragPersonB(StepPauschbetrag):
     name = 'person_b_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
     preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition, PersonBHasPauschbetragClaimPrecondition]
-        
+
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
             choices=[('yes', 'yes'),('no', 'no')],
-            render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
+            render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},
             validators=[InputRequired(_l('validate.input-required'))])
-    
+
     @classmethod
     def get_label(cls, data):
         return cls.label
 
     def render(self):
-        props_dict = PauschbetragProps(            
+        props_dict = PauschbetragProps(
             step_header={
                 'title': _('form.lotse.person_b.request_pauschbetrag.title')
             },
@@ -263,11 +259,11 @@ class StepPauschbetragPersonB(StepPauschbetrag):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
-        
+
         # Humps fails to camelize individual letters correctly, so we have to fix it manually.
         # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
         props_dict['fields']['personBRequestsPauschbetrag'] = props_dict['fields'].pop('personB_requestsPauschbetrag')
-        
+
         return render_template('react_component.html',
                             component='PauschbetragPersonBPage',
                             props=props_dict,
@@ -276,8 +272,8 @@ class StepPauschbetragPersonB(StepPauschbetrag):
 
     def get_pauschbetrag(self):
         return str(calculate_pauschbetrag(
-            has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', False),            
-            disability_degree=self.stored_data.get('person_b_disability_degree', None),   
+            has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', None),
+            disability_degree=self.stored_data.get('person_b_disability_degree', None),
             has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False)
