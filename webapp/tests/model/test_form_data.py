@@ -305,6 +305,8 @@ class TestMandatoryFormData(unittest.TestCase):
 
         assert isinstance(validation_error.value.raw_errors[0].exc, MissingError) is True
         assert validation_error.value.raw_errors[0]._loc == 'person_a_has_pflegegrad'
+        assert len(validation_error.value.raw_errors) == 1
+
 
     def test_if_pflegegrad_set_and_person_a_has_disability_then_raise_no_error(self):
         MandatoryFormData.parse_obj({**self.valid_general_data_person_a,
@@ -329,6 +331,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
         assert isinstance(validation_error.value.raw_errors[0].exc, MissingError) is True
         assert validation_error.value.raw_errors[0]._loc == 'person_b_has_pflegegrad'
+        assert len(validation_error.value.raw_errors) == 1
 
     def test_if_pflegegrad_set_and_person_b_has_disability_then_raise_no_error(self):
         MandatoryFormData.parse_obj({**self.valid_data_person_a,

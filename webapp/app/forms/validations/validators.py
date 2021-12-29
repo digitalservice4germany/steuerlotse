@@ -182,7 +182,6 @@ class ValidTaxNumber:
 class ValidDisabilityDegree:
     def __call__(self, form, field):
         if not field.data:
-            # TODO check: no input valid?
             return
 
         if not isinstance(field.data, int):

@@ -8,7 +8,7 @@ describe("TelephoneNumber", () => {
       cy.visit("/lotse/step/telephone_number");
     });
 
-    it("Should link back to merkzeichen person a page", () => {
+    it("Should link back to person a has disability page", () => {
       cy.get("a").contains("Zurück").click();
       cy.url().should("include", "/lotse/step/has_disability_person_a");
     });
@@ -27,7 +27,7 @@ describe("TelephoneNumber", () => {
       cy.visit("/lotse/step/telephone_number");
     });
 
-    it("Should link back to person a page", () => {
+    it("Should link back to person a has disability page", () => {
       cy.get("a").contains("Zurück").click();
       cy.url().should("include", "/lotse/step/has_disability_person_a");
     });
@@ -44,7 +44,7 @@ describe("TelephoneNumber", () => {
       cy.visit("/lotse/step/telephone_number");
     });
 
-    it("Should link back to person b page", () => {
+    it("Should link back to person b has disability page", () => {
       cy.get("a").contains("Zurück").click();
       cy.url().should("include", "/lotse/step/has_disability_person_b");
     });

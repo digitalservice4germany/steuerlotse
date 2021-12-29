@@ -39,7 +39,7 @@ describe("PersonBHasDisability", () => {
       cy.get("#person_b_has_disabilityno").should("not.be.checked");
     });
 
-    it("Should link forward to telephone number page", () => {
+    it("Should link forward to merkzeichen person b page", () => {
       cy.get("button[type=submit]").click();
       cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
@@ -62,6 +62,11 @@ describe("PersonBHasDisability", () => {
 
     it("Should not check radio button for label yes", () => {
       cy.get("#person_b_has_disabilityyes").should("not.be.checked");
+    });
+
+    it("Should link forward to telephone number page", () => {
+      cy.get("button[type=submit]").click();
+      cy.url().should("include", "/lotse/step/telephone_number");
     });
   });
 });

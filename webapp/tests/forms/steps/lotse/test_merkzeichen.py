@@ -19,7 +19,7 @@ def new_merkzeichen_person_a_step(form_data):
 @pytest.fixture
 def test_request_context_with_person_a_disability(app):
     with app.test_request_context(method="POST") as req:
-        req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_a_has_disability': True})})
+        req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_a_has_disability': 'yes'})})
         yield req
 
 
@@ -38,7 +38,9 @@ class TestStepMerkzeichenPersonAValidation:
 
     def test_if_has_pflegegrad_given_then_succ_validation(self):
         data = MultiDict({'person_a_has_pflegegrad': 'no'})
+
         form = new_merkzeichen_person_a_step(form_data=data).render_info.form
+
         assert form.validate() is True
 
     def test_if_disability_degree_has_allowed_value_then_succ_validation(self):

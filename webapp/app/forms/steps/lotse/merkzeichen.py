@@ -16,7 +16,7 @@ from app.model.components import MerkzeichenProps
 from app.model.components.helpers import form_fields_dict
 
 
-class ShowMerkzeichenPersonA(BaseModel):
+class HasDisabilityPersonAPrecondition(BaseModel):
     _step_to_redirect_to = StepDisabilityPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
@@ -34,14 +34,14 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
     title = _l('form.lotse.merkzeichen_person_a.title')
     intro = _l('form.lotse.merkzeichen.intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [ShowMerkzeichenPersonA]
+    preconditions = [HasDisabilityPersonAPrecondition]
 
     label = _l('form.lotse.merkzeichen.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):
         person_a_has_pflegegrad = YesNoField(
-            validators=[InputRequired(_('form.lotse.merkzeichen.has_pflegegrad.required'))],
+            validators=[InputRequired(_l('form.lotse.merkzeichen.has_pflegegrad.required'))],
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_pflegegrad.data_label')})
         person_a_disability_degree = SteuerlotseIntegerField(
             validators=[ValidDisabilityDegree()],
@@ -65,7 +65,10 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
         def validate_person_a_disability_degree(self, field):
             if self.person_a_has_merkzeichen_g.data or self.person_a_has_merkzeichen_ag.data:
-                input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required') if self.person_a_has_merkzeichen_g.data else _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
+                if self.person_a_has_merkzeichen_g.data:
+                    input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required')
+                else:
+                    input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
                 validators.InputRequired(input_required_message)(self, field)
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
@@ -120,7 +123,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
 
-class ShowMerkzeichenPersonB(BaseModel):
+class HasDisabilityPersonBPrecondition(BaseModel):
     _step_to_redirect_to = StepDisabilityPersonB.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
@@ -138,7 +141,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
     title = _l('form.lotse.merkzeichen_person_b.title')
     intro = _l('form.lotse.merkzeichen.intro')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [ShowMerkzeichenPersonB]
+    preconditions = [HasDisabilityPersonBPrecondition]
 
     label = _l('form.lotse.merkzeichen_person_b.label')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
