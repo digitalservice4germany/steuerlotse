@@ -17,19 +17,20 @@ from app.forms.steps.lotse.personal_data import get_number_of_users
 from app.model.components import NoPauschbetragProps
 
 
-def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
+def calculate_pauschbetrag(has_pflegegrad: str = None, disability_degree: int = None, has_merkzeichen_bl: bool = False,
+                           has_merkzeichen_tbl: bool = False, has_merkzeichen_h: bool = False):
     """
     Calculates the pauschbetrag given some information about the user.
 
-    :param has_pflegegrad: A boolean indicating whether the user has a "Pflegegrad" of 4 or 5
+    :param has_pflegegrad: A str indicating whether the user has a "Pflegegrad" of 4 or 5 ('yes' or 'no')
     :param disability_degree: An integer indicating the disability degree of the user. Must be between 20 and 100
     :param has_merkzeichen_bl: A boolean indicating whether the user has the Merkzeichen Bl
     :param has_merkzeichen_tbl: A boolean indicating whether the user has the Merkzeichen TBl
     :param has_merkzeichen_h: A boolean indicating whether the user has the Merkzeichen H
     """
-    if has_pflegegrad or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_h:
+    if has_pflegegrad == 'yes' or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_h:
         return 7400
-    
+
     if disability_degree is None:
         return 0
     if disability_degree == 100:
@@ -50,19 +51,55 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
         return 620
     elif disability_degree >= 20:
         return 384
-    
+
     return 0
 
 
-class PersonAHasPauschbetragClaimPrecondition(BaseModel):
+class DisabilityModelPersonA(BaseModel):
+    person_a_has_disability: Optional[str]
+    person_a_has_pflegegrad: Optional[str]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_g: Optional[bool]
+    person_a_has_merkzeichen_ag: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
+
+    @root_validator()
+    def convert_disability_degree_to_int(cls, values):
+        values['person_a_disability_degree'] = int(values['person_a_disability_degree']) \
+            if values['person_a_disability_degree'] \
+            else None
+        return values
+
+
+class DisabilityModelPersonB(BaseModel):
+    person_b_has_disability: Optional[str]
+    person_b_has_pflegegrad: Optional[str]
+    person_b_disability_degree: Optional[int]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_g: Optional[bool]
+    person_b_has_merkzeichen_ag: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
+
+    @root_validator()
+    def convert_disability_degree_to_int(cls, values):
+        values['person_b_disability_degree'] = int(values['person_b_disability_degree']) \
+            if values['person_b_disability_degree'] \
+            else None
+        return values
+
+
+class PersonAHasPauschbetragClaimPrecondition(DisabilityModelPersonA):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
     def has_to_have_pauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
-            has_pflegegrad=values.get('person_a_has_pflegegrad', False),            
-            disability_degree=values.get('person_a_disability_degree', None),   
+            has_pflegegrad=values.get('person_a_has_pflegegrad', False),
+            disability_degree=values.get('person_a_disability_degree', None),
             has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False)

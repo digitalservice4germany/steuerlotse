@@ -32,7 +32,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -56,7 +56,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -79,7 +79,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -93,7 +93,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -107,7 +107,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': True,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -121,7 +121,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': True,
             'has_merkzeichen_h': False,
@@ -135,7 +135,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': True,
@@ -149,7 +149,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': True,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -163,7 +163,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': True,
             'has_merkzeichen_h': False,
@@ -177,7 +177,7 @@ class TestCalculatePauschbetrag:
         disability_degree_values = [20, 30, 40, 50, 60, 70, 80, 90, 100]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': True,
