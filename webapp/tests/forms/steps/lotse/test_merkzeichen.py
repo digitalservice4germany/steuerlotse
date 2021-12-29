@@ -23,29 +23,6 @@ def test_request_context_with_person_a_disability(app):
         yield req
 
 
-class TestStepMerkzeichenPersonASkip:
-
-    def test_if_person_a_has_no_disability_then_redirect_to_has_disability_step(self, app):
-        with app.test_request_context(method="POST") as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_a_has_disability': False})})
-
-            redirected_step = LotseStepChooser().get_correct_step(StepMerkzeichenPersonA.name,
-                                                                  True,
-                                                                  ImmutableMultiDict({}))
-
-            assert redirected_step.redirection_step_name == "has_disability_person_a"
-
-    def test_if_person_a_has_disability_then_do_not_redirect(self, app):
-        with app.test_request_context(method="POST") as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_a_has_disability': True})})
-
-            redirected_step = LotseStepChooser().get_correct_step(StepMerkzeichenPersonA.name,
-                                                                  True,
-                                                                  ImmutableMultiDict({}))
-
-            assert redirected_step.name == "merkzeichen_person_a"
-
-
 @pytest.mark.usefixtures('test_request_context_with_person_a_disability')
 class TestStepMerkzeichenPersonAValidation:
     @pytest.fixture()
@@ -196,29 +173,6 @@ def test_request_context_with_person_b_disability(app):
     with app.test_request_context(method="POST") as req:
         req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_b_has_disability': True})})
         yield req
-
-
-class TestStepMerkzeichenPersonBSkip:
-
-    def test_if_person_b_has_no_disability_then_redirect_to_has_disability_step(self, app):
-        with app.test_request_context(method="POST") as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_b_has_disability': False})})
-
-            redirected_step = LotseStepChooser().get_correct_step(StepMerkzeichenPersonB.name,
-                                                                  True,
-                                                                  ImmutableMultiDict({}))
-
-            assert redirected_step.redirection_step_name == "has_disability_person_b"
-
-    def test_if_person_b_has_disability_then_do_not_redirect(self, app):
-        with app.test_request_context(method="POST") as req:
-            req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_b_has_disability': True})})
-
-            redirected_step = LotseStepChooser().get_correct_step(StepMerkzeichenPersonB.name,
-                                                                  True,
-                                                                  ImmutableMultiDict({}))
-
-            assert redirected_step.name == "merkzeichen_person_b"
 
 
 @pytest.mark.usefixtures('test_request_context_with_person_b_disability')
