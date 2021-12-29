@@ -1,17 +1,9 @@
 import PropTypes from "prop-types";
-import styled from "styled-components";
-
-const Intro = styled.p`
-  font-size: var(--text-medium);
-`;
+import FormHeaderParagraphs from "./FormHeaderParagraphs";
 
 export default function FormHeader({ title, intro, hideIntro }) {
-  return (
-    <div>
-      <h1 className="my-4">{title}</h1>
-      {intro && !hideIntro && <Intro>{intro}</Intro>}
-    </div>
-  );
+  const intros = !hideIntro ? [intro] : [];
+  return <FormHeaderParagraphs title={title} intros={intros} />;
 }
 
 FormHeader.propTypes = {

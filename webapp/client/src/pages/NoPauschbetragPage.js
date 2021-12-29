@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import FormHeader from "../components/FormHeader";
+import FormHeaderParagraphs from "../components/FormHeaderParagraphs";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import StepNavButtons from "../components/StepNavButtons";
 
@@ -11,21 +11,18 @@ export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <FormHeader
+      <FormHeaderParagraphs
         title={stepHeader.title}
-        intro={
-          <>
-            {t("lotse.noPauschbetrag.intro.p1")}
-            <br />
-            <Trans
-              t={t}
-              i18nKey="lotse.noPauschbetrag.intro.p2"
-              components={{
-                bold: <b />,
-              }}
-            />
-          </>
-        }
+        intros={[
+          t("lotse.noPauschbetrag.intro.p1"),
+          <Trans
+            t={t}
+            i18nKey="lotse.noPauschbetrag.intro.p2"
+            components={{
+              bold: <b />,
+            }}
+          />,
+        ]}
       />
       <StepNavButtons isForm={false} nextUrl={nextUrl} />
     </>
