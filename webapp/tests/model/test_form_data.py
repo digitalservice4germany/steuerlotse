@@ -8,6 +8,8 @@ from unittest.mock import patch, MagicMock
 import pytest
 from pydantic import ValidationError, MissingError
 
+from app.forms.steps.lotse.pauschbetrag import PersonAHasNoPauschbetragClaimPrecondition, \
+    PersonBHasNoPauschbetragClaimPrecondition
 from app.utils import VERANLAGUNGSJAHR
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.model.form_data import FamilienstandModel, MandatoryFormData, FormDataDependencies, JointTaxesModel
@@ -187,7 +189,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
-            'person_a_requests_pauschbetrag': 'yes',
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
@@ -205,7 +206,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_b_blind': False,
             'person_b_gehbeh': False,
             'person_b_has_disability': 'no',
-            'person_b_requests_pauschbetrag': 'no',
             'account_holder': 'person_a'
         }
 
@@ -290,6 +290,40 @@ class TestMandatoryFormData(unittest.TestCase):
 
             self.assertTrue(all([isinstance(raw_e.exc, MissingError) for raw_e in validation_error.exception.raw_errors]))
             self.assertEqual(expected_missing_fields, [raw_e._loc for raw_e in validation_error.exception.raw_errors])
+
+    def test_if_person_a_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.PersonAHasNoPauschbetragClaimPrecondition.__init__',
+                   MagicMock(return_value=None)):
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer,
+                                         **self.single_familienstand_data})
+
+    def test_if_person_a_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.PersonAHasNoPauschbetragClaimPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], PersonAHasNoPauschbetragClaimPrecondition))):
+            with self.assertRaises(ValidationError) as validation_error:
+                MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer,
+                                             **self.single_familienstand_data})
+
+            assert len(validation_error.exception.raw_errors) == 1
+            assert isinstance(validation_error.exception.raw_errors[0].exc, MissingError)
+            assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_pauschbetrag'
+    
+    def test_if_person_b_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.PersonBHasNoPauschbetragClaimPrecondition.__init__',
+                   MagicMock(return_value=None)):
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
+                                         **self.valid_steuernummer, **self.married_familienstand})
+
+    def test_if_person_b_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.PersonBHasNoPauschbetragClaimPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], PersonBHasNoPauschbetragClaimPrecondition))):
+            with self.assertRaises(ValidationError) as validation_error:
+                MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
+                                             **self.valid_steuernummer, **self.married_familienstand})
+
+            assert len(validation_error.exception.raw_errors) == 1
+            assert isinstance(validation_error.exception.raw_errors[0].exc, MissingError)
+            assert validation_error.exception.raw_errors[0]._loc == 'person_b_requests_pauschbetrag'
 
 
 class TestFormDataDependencies:

@@ -158,15 +158,23 @@ class MandatoryFormData(BaseModel):
         return v
 
     @validator('person_a_requests_pauschbetrag', always=True)
-    def required_if_person_a_has_disability(cls, v, values):
-        if values.get('person_a_has_disability') == 'yes' and not v:
-            raise MissingError
+    def required_if_person_a_has_pauschbetrag_claim(cls, v, values):
+        if not v:
+            try:
+                from app.forms.steps.lotse.pauschbetrag import PersonAHasNoPauschbetragClaimPrecondition
+                PersonAHasNoPauschbetragClaimPrecondition.parse_obj(values)
+            except ValidationError:
+                raise MissingError
         return v
     
     @validator('person_b_requests_pauschbetrag', always=True)
-    def required_if_person_b_has_disability(cls, v, values):
-        if values.get('person_b_has_disability') == 'yes' and not v:
-            raise MissingError
+    def required_if_person_b_has_pauschbetrag_claim(cls, v, values):
+        if not v:
+            try:
+                from app.forms.steps.lotse.pauschbetrag import PersonBHasNoPauschbetragClaimPrecondition
+                PersonBHasNoPauschbetragClaimPrecondition.parse_obj(values)
+            except ValidationError:
+                raise MissingError
         return v
 
 
