@@ -17,6 +17,8 @@ import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import HasDisabilityPersonAPage from "./pages/HasDisabilityPersonAPage";
 import HasDisabilityPersonBPage from "./pages/HasDisabilityPersonBPage";
+import FahrkostenpauschalePersonAPage from "./pages/FahrkostenpauschalePersonAPage";
+import FahrkostenpauschalePersonBPage from "./pages/FahrkostenpauschalePersonBPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -30,6 +32,8 @@ const allowedComponents = {
   HasDisabilityPersonBPage,
   MerkzeichenPersonAPage,
   MerkzeichenPersonBPage,
+  FahrkostenpauschalePersonAPage,
+  FahrkostenpauschalePersonBPage,
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
