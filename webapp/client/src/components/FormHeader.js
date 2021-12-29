@@ -16,7 +16,11 @@ export default function FormHeader({ title, intro, hideIntro }) {
 
 FormHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  intro: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  intro: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.object,
+  ]),
   hideIntro: PropTypes.bool,
 };
 

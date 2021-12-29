@@ -213,7 +213,7 @@ export default function TaxNumberPage({
         selectedValue={taxNumberPageData.bundesland}
         options={fields.bundesland.options}
         label={{
-          text: t("lotseFlow.taxNumber.bundesland.labelText"),
+          text: t("lotse.taxNumber.bundesland.labelText"),
         }}
         errors={fields.bundesland.errors}
         onChangeHandler={(event) => {
@@ -243,7 +243,7 @@ export default function TaxNumberPage({
           taxOfficeList
         )}
         label={{
-          text: t("lotseFlow.taxNumber.taxOffices.labelText"),
+          text: t("lotse.taxNumber.taxOffices.labelText"),
         }}
         errors={fields.bufaNr.errors}
         onChangeHandler={(event) => {
@@ -264,8 +264,8 @@ export default function TaxNumberPage({
         fieldId="steuernummer"
         values={taxNumberPageData.steuernummer}
         label={{
-          text: t("lotseFlow.taxNumber.taxNumberInput.labelText"),
-          exampleInput: t("lotseFlow.taxNumber.taxNumberInput.labelText"),
+          text: t("lotse.taxNumber.taxNumberInput.labelText"),
+          exampleInput: t("lotse.taxNumber.taxNumberInput.labelText"),
         }}
         errors={fields.steuernummer.errors}
         key={selectedStateAbbreviation}
@@ -277,9 +277,9 @@ export default function TaxNumberPage({
   const requestNewTaxNumberCheckbox = (
     <div key="requestNewTaxNumberRow">
       <SubHeading>
-        {t("lotseFlow.taxNumber.requestNewTaxNumber.headline")}
+        {t("lotse.taxNumber.requestNewTaxNumber.headline")}
       </SubHeading>
-      <p>{t("lotseFlow.taxNumber.requestNewTaxNumber.intro")}</p>
+      <p>{t("lotse.taxNumber.requestNewTaxNumber.intro")}</p>
       <FormFieldConsentBox
         required
         fieldName="request_new_tax_number"
@@ -288,7 +288,7 @@ export default function TaxNumberPage({
         labelText={
           <Trans
             t={t}
-            i18nKey="lotseFlow.taxNumber.requestNewTaxNumber.labelText"
+            i18nKey="lotse.taxNumber.requestNewTaxNumber.labelText"
             count={numberOfUsers}
           />
         }
@@ -323,13 +323,13 @@ export default function TaxNumberPage({
             fieldId="steuernummer_exists"
             value={taxNumberPageData.taxNumberExists}
             label={{
-              text: t("lotseFlow.taxNumber.taxNumberExists.labelText", {
+              text: t("lotse.taxNumber.taxNumberExists.labelText", {
                 count: numberOfUsers,
               }),
             }}
             details={{
-              title: t("lotseFlow.taxNumber.taxNumberExists.help.title"),
-              text: t("lotseFlow.taxNumber.taxNumberExists.help.text"),
+              title: t("lotse.taxNumber.taxNumberExists.help.title"),
+              text: t("lotse.taxNumber.taxNumberExists.help.text"),
             }}
             errors={fields.steuernummerExists.errors}
             onChangeHandler={(event) => {

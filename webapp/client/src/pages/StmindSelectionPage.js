@@ -30,8 +30,8 @@ export default function StmindSelectionPage({
           fieldName="stmind_select_vorsorge"
           fieldId="stmind_select_vorsorge"
           checked={fields.stmindSelectVorsorge.checked}
-          title={t("stmindSelection.selectVorsorge.label.title")}
-          body={t("stmindSelection.selectVorsorge.label.text")}
+          title={t("lotse.stmindSelection.selectVorsorge.label.title")}
+          body={t("lotse.stmindSelection.selectVorsorge.label.text")}
           icon={vorsorgeIcon}
           errors={fields.stmindSelectVorsorge.errors}
         />
@@ -39,8 +39,8 @@ export default function StmindSelectionPage({
           fieldName="stmind_select_ausserg_bela"
           fieldId="stmind_select_ausserg_bela"
           checked={fields.stmindSelectAussergBela.checked}
-          title={t("stmindSelection.selectAussergBela.label.title")}
-          body={t("stmindSelection.selectAussergBela.label.text")}
+          title={t("lotse.stmindSelection.selectAussergBela.label.title")}
+          body={t("lotse.stmindSelection.selectAussergBela.label.text")}
           icon={aussergBelaIcon}
           errors={fields.stmindSelectAussergBela.errors}
         />
@@ -48,8 +48,8 @@ export default function StmindSelectionPage({
           fieldName="stmind_select_handwerker"
           fieldId="stmind_select_handwerker"
           checked={fields.stmindSelectHandwerker.checked}
-          title={t("stmindSelection.selectHandwerker.label.title")}
-          body={t("stmindSelection.selectHandwerker.label.text")}
+          title={t("lotse.stmindSelection.selectHandwerker.label.title")}
+          body={t("lotse.stmindSelection.selectHandwerker.label.text")}
           icon={handwerkerIcon}
           errors={fields.stmindSelectHandwerker.errors}
         />
@@ -57,8 +57,8 @@ export default function StmindSelectionPage({
           fieldName="stmind_select_spenden"
           fieldId="stmind_select_spenden"
           checked={fields.stmindSelectSpenden.checked}
-          title={t("stmindSelection.selectSpenden.label.title")}
-          body={t("stmindSelection.selectSpenden.label.text")}
+          title={t("lotse.stmindSelection.selectSpenden.label.title")}
+          body={t("lotse.stmindSelection.selectSpenden.label.text")}
           icon={spendenIcon}
           errors={fields.stmindSelectSpenden.errors}
         />
@@ -66,8 +66,8 @@ export default function StmindSelectionPage({
           fieldName="stmind_select_religion"
           fieldId="stmind_select_religion"
           checked={fields.stmindSelectReligion.checked}
-          title={t("stmindSelection.selectReligion.label.title")}
-          body={t("stmindSelection.selectReligion.label.text")}
+          title={t("lotse.stmindSelection.selectReligion.label.title")}
+          body={t("lotse.stmindSelection.selectReligion.label.text")}
           icon={religionIcon}
           errors={fields.stmindSelectReligion.errors}
         />

@@ -16,11 +16,6 @@ it("should render step header title", () => {
   expect(screen.getByText("Title")).toBeInTheDocument();
 });
 
-it("should ignore step header intro", () => {
-  render(<NoPauschbetragPage {...props} />);
-  expect(screen.queryByText("Intro")).not.toBeInTheDocument();
-});
-
 it("should link to the previous page", () => {
   render(<NoPauschbetragPage {...props} />);
   expect(screen.getByText("Zurück").closest("a")).toHaveAttribute(
