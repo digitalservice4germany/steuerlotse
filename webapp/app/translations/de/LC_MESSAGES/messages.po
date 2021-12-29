@@ -2882,8 +2882,7 @@ msgstr "Die Steuernummer ist nicht valide."
 #: app/forms/validations/validators.py:196
 msgid "validate.disability_degree.invalid_number"
 msgstr ""
-"Keine gültige Angabe. Mögliche Werte: 20, 25, 30, 35, 40, 45, 50, 55, 60,"
-" 65, 70, 75, 80, 85, 90, 95, 100."
+"Der Grad der Behinderung wird in 5er-Schritten bis 100 festgesetzt. Korrigieren Sie Ihre Angabe."
 
 #: app/model/form_data.py:374
 msgid "form.lotse.input_invalid.mandatory_field_missing"
@@ -5359,52 +5358,4 @@ msgstr ""
 #: app/templates/unlock_code/registration_success.html:21
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
-
-#~ msgid "form.lotse.field_person_beh_grad"
-#~ msgstr "Grad der Behinderung"
-
-#~ msgid "form.lotse.field_person_beh_grad.data_label"
-#~ msgstr "Grad der Behinderung"
-
-#~ msgid "form.lotse.field_person_beh_grad.example_input"
-#~ msgstr "z.B. 25, 30, 35 etc. "
-
-#~ msgid "form.lotse.field_person_blind"
-#~ msgstr "blind / ständig hilflos oder Pflegegrad 4 oder 5"
-
-#~ msgid "form.lotse.field_person_blind.data_label"
-#~ msgstr "blind / ständig hilflos oder Pflegegrad 4 oder 5"
-
-#~ msgid "form.lotse.field_person_gehbeh"
-#~ msgstr "geh- und stehbehindert"
-
-#~ msgid "form.lotse.field_person_gehbeh.data_label"
-#~ msgstr "geh- und stehbehindert"
-
-#~ msgid "form.lotse.validation-person-beh-grad"
-#~ msgstr ""
-#~ "Sie haben eine Geh- oder Stehbehinderung"
-#~ " angegeben. Bitte geben Sie hier den"
-#~ " Grad der Behinderung an."
-
-#~ msgid "form.lotse.person-header-beh"
-#~ msgstr "Pauschbetrag für Menschen mit Behinderung"
-
-#~ msgid "form.lotse.person-header-beh-intro"
-#~ msgstr ""
-#~ "Wenn bei Ihnen eine Behinderung "
-#~ "vorliegt, können Sie wählen, ob Sie "
-#~ "Ihre mit der Behinderung zusammenhängenden "
-#~ "Aufwendungen im Einzelnen geltend machen "
-#~ "oder einen Pauschbetrag in Anspruch "
-#~ "nehmen. Dafür muss auf Nachfrage ein "
-#~ "Behindertenausweis oder ein Bescheid über "
-#~ "die Behinderung vorgewiesen werden. Der "
-#~ "Pauschbetrag kann auch bei Vorlage des"
-#~ " Bescheids über die Einstufung als "
-#~ "Schwerstpflegebedürftiger (Pflegegrad 4 oder "
-#~ "5) gewährt werden."
-
-#~ msgid "form.lotse.person-merkzeichen.title"
-#~ msgstr "Angaben zum Merkzeichen"
 
