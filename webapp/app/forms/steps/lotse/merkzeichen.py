@@ -148,7 +148,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
 
     class InputForm(SteuerlotseBaseForm):
         person_b_has_pflegegrad = YesNoField(
-            validators=[InputRequired(_('form.lotse.merkzeichen.has_pflegegrad.required'))],
+            validators=[InputRequired(_l('form.lotse.merkzeichen.has_pflegegrad.required'))],
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_pflegegrad.data_label')})
         person_b_disability_degree = SteuerlotseIntegerField(
             validators=[ValidDisabilityDegree()],
