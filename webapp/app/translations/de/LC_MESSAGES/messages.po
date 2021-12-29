@@ -1233,7 +1233,6 @@ msgid "form.lotse.merkzeichen_person_b.title"
 msgstr "Angaben zu Behinderung oder Pflegebedürftigkeit von Person B"
 
 #: app/forms/steps/lotse/merkzeichen.py:169
-#, fuzzy
 msgid "form.lotse.validation-disability_degree.required"
 msgstr ""
 "Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der "
