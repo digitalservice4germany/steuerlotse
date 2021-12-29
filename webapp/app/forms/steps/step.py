@@ -20,12 +20,13 @@ class Step(object):
     section_link: SectionLink = None
     SKIP_COND = None
 
-    def __init__(self, title, intro, prev_step=None, next_step=None, header_title=None):
+    def __init__(self, title, intro, prev_step=None, next_step=None, header_title=None, stored_data=None):
         self.title = title
         self.intro = intro
         self._prev_step = prev_step
         self._next_step = next_step
         self.header_title = header_title
+        self.stored_data = stored_data
 
     def prev_step(self):
         if self._prev_step is None:
@@ -54,9 +55,8 @@ class Step(object):
 
         return None, None
 
-    # Override this function, to manipulate the overview value    
-    @classmethod
-    def get_overview_value_representation(cls, value):
+    # Override this function, to manipulate the overview value
+    def get_overview_value_representation(self, value):
         return value
 
 
@@ -65,9 +65,9 @@ class FormStep(Step):
     to use can be overidden and customised.
     """
 
-    def __init__(self, title, form, intro=None, prev_step=None, next_step=None, header_title=None,
+    def __init__(self, title, form, intro=None, prev_step=None, next_step=None, header_title=None, stored_data=None,
                  template='basis/form_full_width.html'):
-        super(FormStep, self).__init__(title, intro, prev_step, next_step, header_title)
+        super(FormStep, self).__init__(title, intro, prev_step, next_step, header_title, stored_data)
         self.form = form
         self.template = template
 

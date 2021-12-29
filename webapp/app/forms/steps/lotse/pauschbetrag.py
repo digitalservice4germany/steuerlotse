@@ -163,18 +163,7 @@ class PersonBHasNoPauschbetragClaimPrecondition(DisabilityModel):
         return values
 
 
-class StepPauschbetrag(LotseFormSteuerlotseStep):
-
-    def get_overview_value_representation(self, value):
-        result = ''
-
-        if value == 'yes':
-            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
-
-        return result
-
-
-class StepPauschbetragPersonA(StepPauschbetrag):
+class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
     preconditions = [PersonAHasDisabilityPrecondition, PersonAHasPauschbetragClaimPrecondition]
@@ -190,6 +179,17 @@ class StepPauschbetragPersonA(StepPauschbetrag):
     def get_label(cls, data=None):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label', 'form.lotse.person_a.request_pauschbetrag.label',
                         num=get_number_of_users(data))
+
+    def get_overview_value_representation(self, value):
+        result = ''
+
+        if value == 'yes':
+            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
+
+        elif not value and self.stored_data.get('person_a_has_disability') == 'yes':
+            result = _('form.lotse.no_answer')
+
+        return result
 
     def render(self):
         props_dict = PauschbetragProps(
@@ -227,7 +227,7 @@ class StepPauschbetragPersonA(StepPauschbetrag):
         ))
 
 
-class StepPauschbetragPersonB(StepPauschbetrag):
+class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -244,6 +244,17 @@ class StepPauschbetragPersonB(StepPauschbetrag):
     @classmethod
     def get_label(cls, data):
         return cls.label
+
+    def get_overview_value_representation(self, value):
+        result = ''
+
+        if value == 'yes':
+            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
+
+        elif not value and self.stored_data.get('person_b_has_disability') == 'yes':
+            result = _('form.lotse.no_answer')
+
+        return result
 
     def render(self):
         props_dict = PauschbetragProps(

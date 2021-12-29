@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-28 16:26+0100\n"
+"POT-Creation-Date: 2021-12-29 11:39+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -287,11 +287,12 @@ msgstr "Ihre Steuererklärung"
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:313
+#: app/forms/flows/lotse_flow.py:313 app/forms/steps/lotse/pauschbetrag.py:190
+#: app/forms/steps/lotse/pauschbetrag.py:255
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:366
+#: app/forms/flows/lotse_flow.py:360
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -368,8 +369,8 @@ msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
 #: app/forms/steps/eligibility_steps.py:192
-#: app/forms/steps/lotse/pauschbetrag.py:154
-#: app/forms/steps/lotse/pauschbetrag.py:209
+#: app/forms/steps/lotse/pauschbetrag.py:176
+#: app/forms/steps/lotse/pauschbetrag.py:242
 #: app/forms/steps/lotse/personal_data.py:451
 #: app/forms/steps/lotse/personal_data.py:497
 msgid "validate.input-required"
@@ -1171,24 +1172,20 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse/pauschbetrag.py:59
-#: app/forms/steps/lotse/pauschbetrag.py:78
+#: app/forms/steps/lotse/pauschbetrag.py:92
+#: app/forms/steps/lotse/pauschbetrag.py:111
 msgid "form.lotse.skip_reason.has_no_pauschbetrag_claim"
 msgstr ""
 "Ihre Angaben qualifizieren Sie leider nicht für den behinderungsbedingten"
 " Pauschbetrag."
 
-#: app/forms/steps/lotse/pauschbetrag.py:97
-#: app/forms/steps/lotse/pauschbetrag.py:116
+#: app/forms/steps/lotse/pauschbetrag.py:130
+#: app/forms/steps/lotse/pauschbetrag.py:149
 msgid "form.lotse.skip_reason.has_pauschbetrag_claim"
 msgstr "Ihre Angaben qualifizieren Sie für den behinderungsbedingten Pauschbetrag."
 
-#: app/forms/steps/lotse/pauschbetrag.py:139
-msgid "currency.euro"
-msgstr "Euro"
-
-#: app/forms/steps/lotse/pauschbetrag.py:146
-#: app/forms/steps/lotse/pauschbetrag.py:199
+#: app/forms/steps/lotse/pauschbetrag.py:168
+#: app/forms/steps/lotse/pauschbetrag.py:232
 #: app/forms/steps/lotse/personal_data.py:36
 #: app/forms/steps/lotse/personal_data.py:188
 #: app/forms/steps/lotse/personal_data.py:300
@@ -1202,27 +1199,32 @@ msgstr "Euro"
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
-#: app/forms/steps/lotse/pauschbetrag.py:153
-#: app/forms/steps/lotse/pauschbetrag.py:208
+#: app/forms/steps/lotse/pauschbetrag.py:175
+#: app/forms/steps/lotse/pauschbetrag.py:241
 msgid "form.lotse.request_pauschbetrag.data_label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
 
-#: app/forms/steps/lotse/pauschbetrag.py:159
+#: app/forms/steps/lotse/pauschbetrag.py:181
 msgid "form.lotse.person_a.request_pauschbetrag.label"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.label"
 msgstr[0] "Beantragung Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Beantragung Pauschbetrag für Menschen mit Behinderung Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:165
+#: app/forms/steps/lotse/pauschbetrag.py:187
+#: app/forms/steps/lotse/pauschbetrag.py:252
+msgid "currency.euro"
+msgstr "Euro"
+
+#: app/forms/steps/lotse/pauschbetrag.py:198
 msgid "form.lotse.person_a.request_pauschbetrag.title"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.title"
 msgstr[0] "Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:185
-#: app/forms/steps/lotse/pauschbetrag.py:238
-#: app/forms/steps/lotse/pauschbetrag.py:279
-#: app/forms/steps/lotse/pauschbetrag.py:302
+#: app/forms/steps/lotse/pauschbetrag.py:218
+#: app/forms/steps/lotse/pauschbetrag.py:282
+#: app/forms/steps/lotse/pauschbetrag.py:323
+#: app/forms/steps/lotse/pauschbetrag.py:346
 #: app/forms/steps/lotse/personal_data.py:441
 #: app/forms/steps/lotse/personal_data.py:484
 #: app/forms/steps/lotse/personal_data.py:525
@@ -1232,16 +1234,16 @@ msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/pauschbetrag.py:201
+#: app/forms/steps/lotse/pauschbetrag.py:234
 msgid "form.lotse.person_b.request_pauschbetrag.label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:218
+#: app/forms/steps/lotse/pauschbetrag.py:262
 msgid "form.lotse.person_b.request_pauschbetrag.title"
 msgstr "Pauschbetrag für Menschen mit Behinderung für Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:252
-#: app/forms/steps/lotse/pauschbetrag.py:262
+#: app/forms/steps/lotse/pauschbetrag.py:296
+#: app/forms/steps/lotse/pauschbetrag.py:306
 msgid "form.lotse.no_pauschbetrag.person_a.title"
 msgid_plural "form.lotse.no_pauschbetrag.person_a.title"
 msgstr[0] "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge."
@@ -1249,8 +1251,8 @@ msgstr[1] ""
 "Leider hat Person A keinen Anspruch auf behinderungsbedingte "
 "Pauschbeträge."
 
-#: app/forms/steps/lotse/pauschbetrag.py:253
-#: app/forms/steps/lotse/pauschbetrag.py:285
+#: app/forms/steps/lotse/pauschbetrag.py:297
+#: app/forms/steps/lotse/pauschbetrag.py:329
 #: app/forms/steps/lotse/personal_data.py:31
 #: app/forms/steps/lotse/personal_data.py:185
 #: app/forms/steps/lotse/personal_data.py:297
@@ -1260,7 +1262,7 @@ msgstr[1] ""
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/pauschbetrag.py:284
+#: app/forms/steps/lotse/pauschbetrag.py:328
 msgid "form.lotse.no_pauschbetrag.person_b.title"
 msgstr ""
 "Leider hat Person B keinen Anspruch auf behinderungsbedingte "
@@ -2884,7 +2886,7 @@ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/model/form_data.py:396
+#: app/model/form_data.py:404
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2894,11 +2896,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:401
+#: app/model/form_data.py:409
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:407
+#: app/model/form_data.py:415
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "

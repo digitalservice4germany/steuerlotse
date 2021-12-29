@@ -284,7 +284,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             if curr_step in _IGNORED_STEPS:
                 continue  # no need to collect data from ignored section steps
 
-            step_data = self._collect_data_for_step(curr_step(), form_data, missing_fields)
+            step_data = self._collect_data_for_step(curr_step(stored_data=form_data), form_data, missing_fields)
 
             if step_data:
                 if curr_step.section_link.name not in sections:
@@ -354,16 +354,17 @@ class LotseMultiStepFlow(MultiStepFlow):
         """
         step_data = {}
         for attr in step.create_form(request.form, form_data).__dict__:
-            if attr in form_data:
-                field = getattr(step.form, attr)
-                # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
-                label, value = self._generate_value_representation(field, form_data[attr])
-                if value:
-                    step_data[label] = step.get_overview_value_representation(value)
-            elif missing_fields and attr in missing_fields:
+            if missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']
                 step_data[label] = _l('form.lotse.missing_mandatory_field')
+            elif hasattr(step.form, attr):
+                field = getattr(step.form, attr)
+                # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
+                label, value = self._generate_value_representation(field, form_data.get(attr))
+                value = step.get_overview_value_representation(value)
+                if value:
+                    step_data[label] = value
         return step_data
 
     @staticmethod
