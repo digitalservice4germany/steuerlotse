@@ -41,10 +41,6 @@ describe("With default props", () => {
     expect(screen.getByText("Title")).toBeInTheDocument();
   });
 
-  it("should ignore step intro text", () => {
-    expect(screen.queryByText("Intro")).not.toBeInTheDocument();
-  });
-
   it("should ignore field option texts", () => {
     expect(screen.queryByLabelText("Ja")).not.toBeInTheDocument();
     expect(screen.queryByLabelText("Nein")).not.toBeInTheDocument();
