@@ -33,7 +33,7 @@ describe("PersonAHasDisability", () => {
 
     it("Should link forward to person a merkzeichen page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_a_no_pauschbetrag");
+      cy.url().should("include", "/lotse/step/telephone_number");
       // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
   });
