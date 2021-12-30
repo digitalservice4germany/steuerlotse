@@ -189,7 +189,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
-            'person_a_requests_pauschbetrag': 'yes',
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,

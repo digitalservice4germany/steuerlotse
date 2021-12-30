@@ -169,11 +169,9 @@ class TestLotseInit(unittest.TestCase):
             StepSteuernummer,
             StepPersonA,
             StepPersonAHasDisability,
-            StepPauschbetragPersonA,
             StepFahrkostenpauschalePersonA,
             StepPersonB,
             StepPersonBHasDisability,
-            StepPauschbetragPersonB,
             StepFahrkostenpauschalePersonB,
             StepTelephoneNumber,
             StepIban,
@@ -1250,7 +1248,6 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
-            'person_a_requests_pauschbetrag': 'yes',
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
@@ -1278,7 +1275,6 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_beh_grad': 25,
             'person_a_blind': True,
             'person_a_gehbeh': True,
-            'person_a_requests_pauschbetrag': 'yes',
 
             'person_b_dob': datetime.date(1951, 2, 25),
             'person_b_first_name': 'Gerta',

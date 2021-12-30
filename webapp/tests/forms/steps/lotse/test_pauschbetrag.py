@@ -181,11 +181,3 @@ class TestCalculatePauschbetrag:
         for disability_degree in disability_degree_values:
             calculated_pauschbetrag = calculate_pauschbetrag(**params, disability_degree=disability_degree)
             assert calculated_pauschbetrag == 7400
-
-    def test_if_no_parameters_then_zero_should_be_return(self):        
-        calculated_pauschbetrag = calculate_pauschbetrag()
-        assert calculated_pauschbetrag == 0
-        
-    def test_if_disability_degree_under_20_then_zero_should_be_return(self):        
-        calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
-        assert calculated_pauschbetrag == 0

@@ -24,8 +24,9 @@ export default function PauschbetragPersonAPage({
 }
 
 PauschbetragPersonAPage.propTypes = {
-  stepHeader: PropTypes.shape({
+  stepHeader: PropTypes.exact({
     title: PropTypes.string,
+    intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
