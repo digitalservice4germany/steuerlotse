@@ -82,6 +82,7 @@ describe("NoPauschbetragPage for person B", () => {
     });
 
     it("Should redirect to person b merkzeichen page", () => {
+      cy.url().should("include", "/lotse/step/familienstand");
       // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
@@ -104,6 +105,7 @@ describe("NoPauschbetragPage for person B", () => {
       });
 
       it("Should redirect to person b merkzeichen page", () => {
+        cy.url().should("include", "/lotse/step/familienstand");
         // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       });
     }
@@ -130,6 +132,7 @@ describe("NoPauschbetragPage for person B", () => {
 
       it("Should link back to merkzeichen page", () => {
         cy.get("a").contains("Zurück").click();
+        cy.url().should("include", "/lotse/step/person_b_has_disability");
         // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       });
 

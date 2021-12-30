@@ -39,9 +39,10 @@ describe("PersonBHasDisability", () => {
       cy.get("#person_b_has_disabilityno").should("not.be.checked");
     });
 
-    it("Should link forward to person b pauschbetrag page", () => {
+    it("Should link forward to person b merkzeichen page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "person_b_requests_pauschbetrag");
+      cy.url().should("include", "/lotse/step/person_b_no_pauschbetrag");
+      // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
 

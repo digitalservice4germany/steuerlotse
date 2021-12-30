@@ -31,9 +31,10 @@ describe("PersonAHasDisability", () => {
       cy.get("#person_a_has_disabilityno").should("not.be.checked");
     });
 
-    it("Should link forward to pauschbetrag for person a", () => {
+    it("Should link forward to person a merkzeichen page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
+      cy.url().should("include", "/lotse/step/person_a_no_pauschbetrag");
+      // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
   });
 
@@ -56,28 +57,6 @@ describe("PersonAHasDisability", () => {
     it("Should link forward to telephone number page", () => {
       cy.get("button[type=submit]").click();
       cy.url().should("include", "/lotse/step/telephone_number");
-    });
-  });
-
-  context("for joint taxes", () => {
-    beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
-        familienstand: "married",
-        familienstand_married_lived_separated: "no",
-        familienstand_confirm_zusammenveranlagung: true,
-        person_a_has_disability: "yes",
-      });
-      cy.visit("/lotse/step/person_a_has_disability");
-    });
-
-    it("Should link back to person a page", () => {
-      cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/person_a");
-    });
-
-    it("Should link forward to person a pauschbetrag page", () => {
-      cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
     });
   });
 });
