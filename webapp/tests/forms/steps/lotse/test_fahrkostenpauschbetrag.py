@@ -1,4 +1,4 @@
-from webapp.app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschbetrag
+from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschbetrag
 
 
 class TestCalculatePauschbetrag:
