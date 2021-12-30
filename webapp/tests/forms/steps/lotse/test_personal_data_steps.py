@@ -400,11 +400,8 @@ class TestShowPersonBPrecondition:
             ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
 
     def test_if_show_person_b_true_then_do_not_raise_validation_error(self):
-        try:
-            with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=True):
-                ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
+        with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=True):
+            ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
 
 
 class TestPersonBValidation:
@@ -590,10 +587,8 @@ class TestPersonAHasDisabilityPrecondition:
 
     def test_if_person_a_has_disability_set_yes_then_do_not_raise_validation_error(self):
         data = {'person_a_has_disability': 'yes'}
-        try:
-            PersonAHasDisabilityPrecondition.parse_obj(data)
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
+        PersonAHasDisabilityPrecondition.parse_obj(data)
+
 
 class TestPersonBHasDisabilityPrecondition:
     def test_if_person_b_has_disability_not_set_then_raise_validation_error(self):
@@ -608,7 +603,4 @@ class TestPersonBHasDisabilityPrecondition:
 
     def test_if_person_b_has_disability_set_yes_then_do_not_raise_validation_error(self):
         data = {'person_b_has_disability': 'yes'}
-        try:
-            PersonBHasDisabilityPrecondition.parse_obj(data)
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
+        PersonBHasDisabilityPrecondition.parse_obj(data)
