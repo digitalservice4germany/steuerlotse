@@ -39,9 +39,12 @@ describe("PersonBHasDisability", () => {
       cy.get("#person_b_has_disabilityno").should("not.be.checked");
     });
 
-    it("Should link forward to telephone number page", () => {
+    it("Should link forward to person b requests fahrkostenpauschale", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should(
+        "include",
+        "/lotse/step/person_b_requests_fahrkostenpauschale"
+      );
     });
   });
 
