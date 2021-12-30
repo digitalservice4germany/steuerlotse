@@ -84,7 +84,7 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
             
                 overview_value = step.get_overview_value_representation(value)
             
-                assert overview_value == str(pauschbetrag_result) + ' currency.euro'
+                assert str(pauschbetrag_result) in overview_value
             
             
 class TestPauschbetragPersonBValidation:
@@ -226,7 +226,7 @@ class TestPauschbetragPersonBGetOverviewValueRepresentation:
             with patch('app.forms.steps.lotse.pauschbetrag.StepPauschbetragPersonB.get_pauschbetrag', MagicMock(return_value=pauschbetrag_result)):
                 step = LotseStepChooser().get_correct_step(
                     StepPauschbetragPersonB.name, True, ImmutableMultiDict({}))
-            
+        
                 overview_value = step.get_overview_value_representation(value)
-            
-                assert overview_value == str(pauschbetrag_result) + ' currency.euro'
+        
+                assert str(pauschbetrag_result) in overview_value
