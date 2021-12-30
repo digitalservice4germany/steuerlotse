@@ -217,318 +217,214 @@ class TestFormDataEstFamilienstand:
             pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
 
-class TestFormDataEstPersonAPauschbetrag:
+class TestFormDataPersonAMerkzeichen:
 
-    def test_if_person_a_requests_pauschbetrag_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
+    def test_if_person_a_has_merkzeichen_bl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_bl'] = 'yes'
 
         with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_pauschbetrag_and_disability_degree_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = 25
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
+    def test_if_person_a_has_merkzeichen_tbl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_tbl'] = 'yes'
 
-        try:
+        with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_person_a_requests_pauschbetrag_and_has_pflegegrad_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = True
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
+    def test_if_person_a_has_merkzeichen_h_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_h'] = 'yes'
 
-        try:
+        with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_bl_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
+    def test_if_person_a_has_merkzeichen_ag_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_ag'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_pflegegrad_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_has_pflegegrad'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_has_merkzeichen_bl_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_a_has_merkzeichen_bl'] = True
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_tbl_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_bl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_a_has_merkzeichen_tbl'] = True
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_h_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_tbl'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_merkzeichen_h_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_a_has_merkzeichen_h'] = True
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_g_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_h'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_pflegegrad_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_a_has_pflegegrad'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_a_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_pflegegrad'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is None
+
+    def test_if_person_a_has_merkzeichen_g_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_a_has_merkzeichen_g'] = True
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_pauschbetrag_and_has_merkzeichen_ag_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_pauschbetrag'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is True
+
+    def test_if_person_a_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_g'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is None
+
+    def test_if_person_a_has_merkzeichen_ag_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_a_has_merkzeichen_ag'] = True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_g_ag is True
+
+    def test_if_person_a_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_a_has_merkzeichen_ag'] = True
+
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert resulting_input_data.person_a_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
 
-class TestFormDataEstPersonAFahrkostenpauschale:
+class TestFormDataPersonBMerkzeichen:
 
-    def test_if_person_a_requests_fahrkostenpauschale_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_fahrkostenpauschale'] = True
-        standard_est_data['person_a_disability_degree'] = None
-        standard_est_data['person_a_has_pflegegrad'] = None
-        standard_est_data['person_a_has_merkzeichen_bl'] = None
-        standard_est_data['person_a_has_merkzeichen_tbl'] = None
-        standard_est_data['person_a_has_merkzeichen_h'] = None
-        standard_est_data['person_a_has_merkzeichen_g'] = None
-        standard_est_data['person_a_has_merkzeichen_ag'] = None
-
-        with pytest.raises(ValidationError):
-            FormDataEst.parse_obj(standard_est_data)
-
-    def test_if_person_a_requests_fahrkostenpauschale_and_any_merkzeichen_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_fahrkostenpauschale'] = True
-
-        merkzeichen_keys = ['person_a_disability_degree', 'person_a_has_pflegegrad', 'person_a_has_merkzeichen_bl',
-                         'person_a_has_merkzeichen_tbl', 'person_a_has_merkzeichen_h', 'person_a_has_merkzeichen_g',
-                         'person_a_has_merkzeichen_ag']
-
-        for merkzeichen_key in merkzeichen_keys:
-            standard_est_data['person_a_disability_degree'] = None
-            standard_est_data['person_a_has_pflegegrad'] = None
-            standard_est_data['person_a_has_merkzeichen_bl'] = None
-            standard_est_data['person_a_has_merkzeichen_tbl'] = None
-            standard_est_data['person_a_has_merkzeichen_h'] = None
-            standard_est_data['person_a_has_merkzeichen_g'] = None
-            standard_est_data['person_a_has_merkzeichen_ag'] = None
-
-            standard_est_data[merkzeichen_key] = True
-
-            FormDataEst.parse_obj(standard_est_data)
-
-
-class TestFormDataEstPersonBPauschbetrag:
-
-    def test_if_person_b_requests_pauschbetrag_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+    def test_if_person_b_has_merkzeichen_bl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_bl'] = 'yes'
 
         with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_b_requests_pauschbetrag_and_disability_degree_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = 25
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+    def test_if_person_b_has_merkzeichen_tbl_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_tbl'] = 'yes'
 
-        try:
+        with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_person_b_requests_pauschbetrag_and_has_pflegegrad_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = True
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+    def test_if_person_b_has_merkzeichen_h_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_h'] = 'yes'
 
-        try:
+        with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
-    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_bl_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
+    def test_if_person_b_has_merkzeichen_ag_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_ag'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_pflegegrad_no_boolean_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_has_pflegegrad'] = 'yes'
+
+        with pytest.raises(ValidationError):
+            FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_has_merkzeichen_bl_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_b_has_merkzeichen_bl'] = True
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+    def test_if_person_b_has_merkzeichen_bl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_bl'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
 
-    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_tbl_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
+    def test_if_person_b_has_merkzeichen_tbl_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_b_has_merkzeichen_tbl'] = True
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+    def test_if_person_b_has_merkzeichen_tbl_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_tbl'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
 
-    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_h_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
+    def test_if_person_b_has_merkzeichen_h_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_b_has_merkzeichen_h'] = True
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+    def test_if_person_b_has_merkzeichen_h_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_h'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
 
-    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_g_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
+    def test_if_person_b_has_pflegegrad_then_set_correct_field(self, standard_est_data):
+        standard_est_data['person_b_has_pflegegrad'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is True
+
+    def test_if_person_b_has_pflegegrad_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_pflegegrad'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is None
+
+    def test_if_person_b_has_merkzeichen_g_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_b_has_merkzeichen_g'] = True
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
+    def test_if_person_b_has_merkzeichen_g_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_g'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
-    def test_if_person_b_requests_pauschbetrag_and_has_merkzeichen_ag_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_pauschbetrag'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
+    def test_if_person_b_has_merkzeichen_ag_then_set_correct_field(self, standard_est_data):
         standard_est_data['person_b_has_merkzeichen_ag'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_g_ag is True
 
-        try:
-            FormDataEst.parse_obj(standard_est_data)
-        except ValidationError as e:
-            pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
-
-
-class TestFormDataEstPersonBFahrkostenpauschale:
-
-    def test_if_person_b_requests_fahrkostenpauschale_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_fahrkostenpauschale'] = True
-        standard_est_data['person_b_disability_degree'] = None
-        standard_est_data['person_b_has_pflegegrad'] = None
-        standard_est_data['person_b_has_merkzeichen_bl'] = None
-        standard_est_data['person_b_has_merkzeichen_tbl'] = None
-        standard_est_data['person_b_has_merkzeichen_h'] = None
-        standard_est_data['person_b_has_merkzeichen_g'] = None
-        standard_est_data['person_b_has_merkzeichen_ag'] = None
-
-        with pytest.raises(ValidationError):
-            FormDataEst.parse_obj(standard_est_data)
-
-    def test_if_person_b_requests_fahrkostenpauschale_and_any_merkzeichen_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_fahrkostenpauschale'] = True
-
-        merkzeichen_keys = ['person_b_disability_degree', 'person_b_has_pflegegrad', 'person_b_has_merkzeichen_bl',
-                         'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'person_b_has_merkzeichen_g',
-                         'person_b_has_merkzeichen_ag']
-
-        for merkzeichen_key in merkzeichen_keys:
-            standard_est_data['person_b_disability_degree'] = None
-            standard_est_data['person_b_has_pflegegrad'] = None
-            standard_est_data['person_b_has_merkzeichen_bl'] = None
-            standard_est_data['person_b_has_merkzeichen_tbl'] = None
-            standard_est_data['person_b_has_merkzeichen_h'] = None
-            standard_est_data['person_b_has_merkzeichen_g'] = None
-            standard_est_data['person_b_has_merkzeichen_ag'] = None
-
-            standard_est_data[merkzeichen_key] = True
-
-            FormDataEst.parse_obj(standard_est_data)
+    def test_if_person_b_has_merkzeichen_ag_then_do_not_set_other_merkzeichen_field(self, standard_est_data):
+        standard_est_data['person_b_has_merkzeichen_ag'] = True
+        resulting_input_data = FormDataEst.parse_obj(standard_est_data)
+        assert resulting_input_data.person_b_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
 
 class TestMetaDataYear:

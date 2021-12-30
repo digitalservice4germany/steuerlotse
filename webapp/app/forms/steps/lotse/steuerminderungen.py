@@ -251,8 +251,6 @@ class StepAussergBela(LotseFormSteuerlotseStep):
             render_info=self.render_info,
             input_details_title=_('form.lotse.ausserg_bela.details-title'),
             input_details_text=_('form.lotse.ausserg_bela.details-text'),
-            show_disability_stmind_fields=self.stored_data.get('person_a_has_disability') == 'yes' or
-                                          self.stored_data.get('person_b_has_disability') == 'yes'
         )
 
 

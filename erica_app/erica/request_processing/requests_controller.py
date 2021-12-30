@@ -15,7 +15,6 @@ from erica.pyeric.pyeric_controller import EstPyericProcessController, EstValida
     UnlockCodeRevocationPyericProcessController, \
     DecryptBelegePyericController, BelegIdRequestPyericProcessController, \
     BelegRequestPyericProcessController, CheckTaxNumberPyericController
-from erica.request_processing.eric_mapper import EstEricMapping, UnlockCodeRequestEricMapper
 from erica.request_processing.erica_input import UnlockCodeRequestData, EstData
 
 SPECIAL_TESTMERKER_IDNR = '04452397687'
@@ -27,6 +26,7 @@ class EricaRequestController(object):
     performing the needed procedures and generating the response. Any request should inherit from this function.
     """
 
+    standard_date_format = "%d.%m.%Y"
     _PYERIC_CONTROLLER = None
 
     def __init__(self, input_data, include_elster_responses: bool = False):
@@ -47,6 +47,12 @@ class EricaRequestController(object):
 
     def generate_full_xml(self, use_testmerker):
         raise NotImplementedError
+
+    def _reformat_date(self, date_attribute):
+        if date_attribute:
+            return date_attribute.strftime(self.standard_date_format)
+        else:
+            return None
 
     def _is_testmerker_used(self):
         return self.input_data.idnr == SPECIAL_TESTMERKER_IDNR
@@ -73,6 +79,9 @@ class EstValidationRequestController(TransferTicketRequestController):
 
     def __init__(self, input_data: EstData, include_elster_responses: bool = False):
         super().__init__(input_data, include_elster_responses)
+        self.input_data.est_data.person_a_dob = self._reformat_date(self.input_data.est_data.person_a_dob)
+        self.input_data.est_data.person_b_dob = self._reformat_date(self.input_data.est_data.person_b_dob)
+        self.input_data.est_data.familienstand_date = self._reformat_date(self.input_data.est_data.familienstand_date)
 
     def _is_testmerker_used(self):
         return self.input_data.est_data.person_a_idnr == SPECIAL_TESTMERKER_IDNR
@@ -80,8 +89,7 @@ class EstValidationRequestController(TransferTicketRequestController):
     def process(self):
         # Translate our form data structure into the fields from
         # the Elster specification (see `Jahresdokumentation_10_2021.xml`)
-        est_with_eric_mapping = EstEricMapping.parse_obj(self.input_data.est_data)
-        fields = est_mapping.check_and_generate_entries(est_with_eric_mapping.__dict__)
+        fields = est_mapping.check_and_generate_entries(self.input_data.est_data.__dict__)
 
         common_vorsatz_args = (
                 self.input_data.meta_data.year,
@@ -126,12 +134,14 @@ class EstRequestController(EstValidationRequestController):
 class UnlockCodeRequestController(TransferTicketRequestController):
     _PYERIC_CONTROLLER = UnlockCodeRequestPyericProcessController
 
+    standard_date_format = "%Y-%m-%d"
+
     def __init__(self, input_data: UnlockCodeRequestData, include_elster_responses: bool = False):
         super().__init__(input_data, include_elster_responses)
+        self.input_data.dob = self._reformat_date(self.input_data.dob)
 
     def generate_full_xml(self, use_testmerker):
-        return elster_xml_generator.generate_full_vast_request_xml(
-            UnlockCodeRequestEricMapper.parse_obj(self.input_data).__dict__,
+        return elster_xml_generator.generate_full_vast_request_xml(self.input_data.__dict__,
                                                                    use_testmerker=use_testmerker)
 
     def generate_json(self, pyeric_response: PyericResponse):

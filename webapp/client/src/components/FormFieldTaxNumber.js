@@ -23,7 +23,7 @@ function FormFieldTaxNumber({
   const { t } = useTranslation();
 
   const label = {
-    text: t("lotse.taxNumber.taxNumberInput.label.labelText"),
+    text: t("lotseFlow.taxNumber.taxNumberInput.label.labelText"),
   };
 
   let reformattedValues = values.join("");
@@ -59,7 +59,7 @@ function FormFieldTaxNumber({
       setMaxLength = false;
       reformattedValues = [reformattedValues];
       label.exampleInput = t(
-        "lotse.taxNumber.taxNumberInput.label.exampleInput"
+        "lotseFlow.taxNumber.taxNumberInput.label.exampleInput"
       );
       break;
   }

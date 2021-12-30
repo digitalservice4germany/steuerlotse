@@ -41,6 +41,10 @@ describe("With default props", () => {
     expect(screen.getByText("Title")).toBeInTheDocument();
   });
 
+  it("should ignore step intro text", () => {
+    expect(screen.queryByText("Intro")).not.toBeInTheDocument();
+  });
+
   it("should ignore field option texts", () => {
     expect(screen.queryByLabelText("Ja")).not.toBeInTheDocument();
     expect(screen.queryByLabelText("Nein")).not.toBeInTheDocument();
@@ -121,7 +125,7 @@ describe("With no preselected", () => {
     };
     render(<PauschbetragPage {...noProps} />);
   });
-  it("should render selected value no", () => {
+  it("should render selected value yes", () => {
     expect(screen.getByDisplayValue("yes").checked).toBe(false);
     expect(screen.getByDisplayValue("no").checked).toBe(true);
   });

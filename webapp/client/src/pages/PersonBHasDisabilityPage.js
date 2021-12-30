@@ -1,21 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import styled from "styled-components";
 import FormHeader from "../components/FormHeader";
 import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import Details from "../components/Details";
 import { fieldPropType } from "../lib/propTypes";
-
-const DetailsDiv = styled.div`
-  margin-bottom: var(--spacing-04);
-
-  @media (max-width: 500px) {
-    margin-bottom: 0;
-  }
-`;
 
 export default function PersonBHasDisabilityPage({
   form,
@@ -37,14 +28,12 @@ export default function PersonBHasDisabilityPage({
         intro={translationBold("lotse.hasDisability.intro_person_b")}
       />
       <StepForm {...form}>
-        <DetailsDiv>
-          <Details
-            title={t("lotse.hasDisability.details.title")}
-            detailsId="person_b_has_disability"
-          >
-            {translationBold("lotse.hasDisability.details.text")}
-          </Details>
-        </DetailsDiv>
+        <Details
+          title={t("lotse.hasDisability.details.title")}
+          detailsId="person_b_has_disability"
+        >
+          {translationBold("lotse.hasDisability.details.text")}
+        </Details>
         <FormFieldRadioGroup
           fieldId="person_b_has_disability"
           fieldName="person_b_has_disability"

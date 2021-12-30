@@ -20,11 +20,9 @@ _ALL_FIELDS = {
     'person_a_address_ext': 'E0101301',
     'person_a_plz': 'E0100601',
     'person_a_town': 'E0100602',
-    'person_a_pauschbetrag_disability_degree': 'E0109708',
-    'person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad': 'E0109706',
-    'person_a_pauschbetrag_has_merkzeichen_g_ag': 'E0109707',
-    'person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': 'E0161806',
-    'person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': 'E0161706',
+    'person_a_disability_degree': 'E0109708',
+    'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': 'E0109706',
+    'person_a_has_merkzeichen_g_ag': 'E0109707',
 
     'married_since': 'E0100701',
     'widowed_since': 'E0100702',
@@ -43,11 +41,9 @@ _ALL_FIELDS = {
     'person_b_address_ext': 'E0102301',
     'person_b_plz': 'E0101701',
     'person_b_town': 'E0101702',
-    'person_b_pauschbetrag_disability_degree': 'E0109708',
-    'person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad': 'E0109706',
-    'person_b_pauschbetrag_has_merkzeichen_g_ag': 'E0109707',
-    'person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': 'E0161806',
-    'person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': 'E0161706',
+    'person_b_disability_degree': 'E0109708',
+    'person_b_has_merkzeichen_bl_tbl_h_pflegegrad': 'E0109706',
+    'person_b_has_merkzeichen_g_ag': 'E0109707',
 
     'telephone_number': 'E0100008',
     
@@ -139,16 +135,12 @@ _FULL_EURO_FIELDS = [
 ]
 
 _PERSON_SPECIFIC_FIELDS = {
-    'person_a_pauschbetrag_disability_degree': 'PersonA',
-    'person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad': 'PersonA',
-    'person_a_pauschbetrag_has_merkzeichen_g_ag': 'PersonA',
-    'person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': 'PersonA',
-    'person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': 'PersonA',
-    'person_b_pauschbetrag_disability_degree': 'PersonB',
-    'person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad': 'PersonB',
-    'person_b_pauschbetrag_has_merkzeichen_g_ag': 'PersonB',
-    'person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad': 'PersonB',
-    'person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80': 'PersonB',
+    'person_a_disability_degree': 'PersonA',
+    'person_a_has_merkzeichen_bl_tbl_h_pflegegrad': 'PersonA',
+    'person_a_has_merkzeichen_g_ag': 'PersonA',
+    'person_b_disability_degree': 'PersonB',
+    'person_b_has_merkzeichen_bl_tbl_h_pflegegrad': 'PersonB',
+    'person_b_has_merkzeichen_g_ag': 'PersonB',
 }
 
 BUNDESLAND_BUFANR_MAPPING = {

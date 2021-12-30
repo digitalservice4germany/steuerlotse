@@ -1,12 +1,11 @@
 import unittest
 from datetime import date
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import patch, MagicMock
 
 import pytest
 
 from erica.pyeric.eric_errors import InvalidBufaNumberError
 from erica.pyeric.pyeric_response import PyericResponse
-from erica.request_processing.eric_mapper import EstEricMapping, UnlockCodeRequestEricMapper
 from erica.request_processing.erica_input import UnlockCodeRequestData, UnlockCodeActivationData, \
     UnlockCodeRevocationData, GetAddressData
 from erica.request_processing.requests_controller import UnlockCodeRequestController, \
@@ -53,6 +52,21 @@ class TestEstValidationRequestProcess(unittest.TestCase):
 
 class TestEstRequestInit(unittest.TestCase):
 
+    def test_if_dates_given_then_set_as_string_with_correct_format(self):
+        input_data = create_est(correct_form_data=True)
+        correct_format_dates = [input_data.est_data.person_a_dob.strftime("%d.%m.%Y"),
+                                input_data.est_data.person_b_dob.strftime("%d.%m.%Y"),
+                                input_data.est_data.familienstand_date.strftime("%d.%m.%Y")]
+
+        created_request = EstRequestController(create_est(correct_form_data=True))
+
+        actual_dates = [created_request.input_data.est_data.person_a_dob,
+                        created_request.input_data.est_data.person_b_dob,
+                        created_request.input_data.est_data.familienstand_date]
+
+        for expected_date, actual_date in zip(correct_format_dates, actual_dates):
+            self.assertEqual(expected_date, actual_date)
+
     def test_if_no_include_param_given_then_set_include_false(self):
         created_request = EstRequestController(create_est(correct_form_data=True), include_elster_responses=False)
 
@@ -65,18 +79,6 @@ class TestEstRequestInit(unittest.TestCase):
 
 
 class TestEstRequestProcess(unittest.TestCase):
-
-    def test_check_and_generate_entries_is_called_with_eric_mapped_object(self):
-        eric_mapped_object = EstEricMapping.parse_obj(create_est(correct_form_data=True).est_data)
-        with patch('erica.request_processing.eric_mapper', MagicMock(return_value=eric_mapped_object)), \
-                patch('erica.request_processing.requests_controller.est_mapping.check_and_generate_entries') as generate_entries, \
-                patch('erica.pyeric.pyeric_controller.EstPyericProcessController.get_eric_response'), \
-                patch('erica.request_processing.requests_controller.EstRequestController.generate_json'), \
-                patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml'):
-            EstRequestController(create_est(correct_form_data=True)).process()
-
-        assert generate_entries.mock_calls == [call(eric_mapped_object.__dict__)]
-
 
     def test_pyeric_controller_is_initialised_with_correct_arguments(self):
         est_request = EstRequestController(create_est(correct_form_data=True))
@@ -112,7 +114,9 @@ class TestEstRequestProcess(unittest.TestCase):
         correct_est = create_est(correct_form_data=True)
         correct_est.est_data.person_a_idnr = SPECIAL_TESTMERKER_IDNR
 
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EstValidationRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.EstPyericProcessController.get_eric_response'), \
                 patch('erica.request_processing.requests_controller.EstRequestController.generate_json'):
             est_request = EstRequestController(correct_est)
@@ -125,7 +129,9 @@ class TestEstRequestProcess(unittest.TestCase):
         correct_est = create_est(correct_form_data=True)
         correct_est.est_data.person_a_idnr = '02293417683'
 
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EstValidationRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.EstPyericProcessController.get_eric_response'), \
                 patch('erica.request_processing.requests_controller.EstRequestController.generate_json'):
             est_request = EstRequestController(correct_est)
@@ -138,7 +144,9 @@ class TestEstRequestProcess(unittest.TestCase):
         correct_est = create_est(correct_form_data=True, with_tax_number=False)
         correct_est.est_data.bufa_nr = empfaenger
 
-        with patch('erica.request_processing.requests_controller.generate_vorsatz_without_tax_number') as generate_vorsatz_without_tax_number, \
+        with patch('erica.request_processing.requests_controller.EstValidationRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.request_processing.requests_controller.generate_vorsatz_without_tax_number') as generate_vorsatz_without_tax_number, \
                 patch('erica.elster_xml.elster_xml_generator.generate_full_est_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.EstPyericProcessController.get_eric_response'), \
                 patch('erica.request_processing.requests_controller.EstRequestController.generate_json'):
@@ -234,6 +242,13 @@ class TestEstRequestGenerateJson(unittest.TestCase):
 
 class TestUnlockCodeRequestInit(unittest.TestCase):
 
+    def test_if_dob_date_given_then_set_as_string_with_correct_format(self):
+        correct_format_dob = "1969-07-20"
+
+        created_request = UnlockCodeRequestController(UnlockCodeRequestData(idnr="09952417688", dob=date(1969, 7, 20)))
+
+        self.assertEqual(correct_format_dob, created_request.input_data.dob)
+
     def test_if_idnr_given_then_set_idnr_as_attribute_correctly(self):
         expected_idnr = "09952417688"
         created_request = UnlockCodeRequestController(UnlockCodeRequestData(idnr=expected_idnr, dob=date(1969, 7, 20)))
@@ -293,7 +308,9 @@ class TestUnlockCodeRequestProcess(unittest.TestCase):
             pyeric_controller_get_response.assert_called()
 
     def test_if_special_idnr_then_create_xml_is_called_with_use_testmerker_set_true(self):
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_vast_request_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EricaRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_vast_request_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.UnlockCodeRequestPyericProcessController.get_eric_response'), \
                 patch('erica.request_processing.requests_controller.UnlockCodeRequestController.generate_json'):
             self.unlock_request_with_valid_input_with_special_idnr.process()
@@ -301,25 +318,14 @@ class TestUnlockCodeRequestProcess(unittest.TestCase):
             self.assertTrue(generate_xml_fun.call_args.kwargs['use_testmerker'])
 
     def test_if_not_special_idnr_then_create_xml_is_called_with_use_testmerker_set_false(self):
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_vast_request_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EricaRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_vast_request_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.UnlockCodeRequestPyericProcessController.get_eric_response'), \
                 patch('erica.request_processing.requests_controller.UnlockCodeRequestController.generate_json'):
             self.unlock_request_with_valid_input.process()
 
             self.assertFalse(generate_xml_fun.call_args.kwargs['use_testmerker'])
-
-
-class TestUnlockCodeRequestGenerateFullXml(unittest.TestCase):
-
-    def test_if_dob_date_given_then_call_generate_full_xml_with_unlock_code_eric_mapping(self):
-        unlock_code_eric_mapping = UnlockCodeRequestEricMapper(idnr="09952417688", dob=date(1969, 7, 20))
-
-        created_request = UnlockCodeRequestController(UnlockCodeRequestData(idnr="09952417688", dob=date(1969, 7, 20)))
-
-        with patch('erica.request_processing.requests_controller.elster_xml_generator.generate_full_vast_request_xml') as generate_full_xml:
-            created_request.generate_full_xml(use_testmerker=True)
-
-        assert generate_full_xml.mock_calls == [call(unlock_code_eric_mapping.__dict__, use_testmerker=True)]
 
 
 class TestUnlockCodeRequestGenerateJson(unittest.TestCase):
@@ -450,7 +456,9 @@ class TestUnlockCodeActivationProcess(unittest.TestCase):
             pyeric_controller_get_response.assert_called()
 
     def test_if_special_idnr_then_create_xml_is_called_with_use_testmerker_set_true(self):
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_vast_activation_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EricaRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_vast_activation_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.UnlockCodeActivationPyericProcessController.get_eric_response'), \
                 patch(
                     'erica.request_processing.requests_controller.UnlockCodeActivationRequestController.generate_json'):
@@ -459,7 +467,9 @@ class TestUnlockCodeActivationProcess(unittest.TestCase):
             self.assertTrue(generate_xml_fun.call_args.kwargs['use_testmerker'])
 
     def test_if_not_special_idnr_then_create_xml_is_called_with_use_testmerker_set_false(self):
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_vast_activation_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EricaRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_vast_activation_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.UnlockCodeActivationPyericProcessController.get_eric_response'), \
                 patch(
                     'erica.request_processing.requests_controller.UnlockCodeActivationRequestController.generate_json'):
@@ -581,7 +591,9 @@ class TestUnlockCodeRevocationProcess(unittest.TestCase):
             pyeric_controller_get_response.assert_called()
 
     def test_if_special_idnr_then_create_xml_is_called_with_use_testmerker_set_true(self):
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_vast_revocation_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EricaRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_vast_revocation_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.UnlockCodeRevocationPyericProcessController.get_eric_response'), \
                 patch(
                     'erica.request_processing.requests_controller.UnlockCodeRevocationRequestController.generate_json'):
@@ -590,7 +602,9 @@ class TestUnlockCodeRevocationProcess(unittest.TestCase):
             self.assertTrue(generate_xml_fun.call_args.kwargs['use_testmerker'])
 
     def test_if_not_special_idnr_then_create_xml_is_called_with_use_testmerker_set_false(self):
-        with patch('erica.elster_xml.elster_xml_generator.generate_full_vast_revocation_xml') as generate_xml_fun, \
+        with patch('erica.request_processing.requests_controller.EricaRequestController._reformat_date',
+                   MagicMock(side_effect=lambda _: _)), \
+                patch('erica.elster_xml.elster_xml_generator.generate_full_vast_revocation_xml') as generate_xml_fun, \
                 patch('erica.pyeric.pyeric_controller.UnlockCodeRevocationPyericProcessController.get_eric_response'), \
                 patch(
                     'erica.request_processing.requests_controller.UnlockCodeRevocationRequestController.generate_json'):
