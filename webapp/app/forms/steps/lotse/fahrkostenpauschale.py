@@ -6,7 +6,7 @@ from wtforms.validators import InputRequired
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
-from app.model.components import FahrkostenpauschbetragProps
+from app.model.components import FahrkostenpauschaleProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
@@ -54,7 +54,7 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
                         num=get_number_of_users(data))
 
     def render(self):
-        props_dict = FahrkostenpauschbetragProps(
+        props_dict = FahrkostenpauschaleProps(
             step_header={
                 'title': ngettext('form.lotse.person_a.request_fahrkostenpauschale.title', 'form.lotse.person_a.request_fahrkostenpauschale.title',
                                   num=get_number_of_users(self.stored_data))
@@ -112,7 +112,7 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
         return cls.label
 
     def render(self):
-        props_dict = FahrkostenpauschbetragProps(
+        props_dict = FahrkostenpauschaleProps(
             step_header={
                 'title': _('form.lotse.person_b.request_fahrkostenpauschale.title')
             },

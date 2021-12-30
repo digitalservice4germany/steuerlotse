@@ -1,4 +1,4 @@
-from app.forms.steps.lotse.fahrkostenpauschbetrag import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
+from webapp.app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
