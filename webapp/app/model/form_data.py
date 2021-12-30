@@ -373,13 +373,13 @@ class FormDataDependencies(BaseModel):
         return v
     
     @validator('person_a_requests_pauschbetrag')
-    def required_if_person_a_has_disability(cls, v, values):
+    def delete_if_person_a_has_no_disability(cls, v, values):
         if values.get('person_a_has_disability') == "yes":
             return v
         return None
     
     @validator('person_b_requests_pauschbetrag')
-    def required_if_person_b_has_disability(cls, v, values):
+    def delete_if_person_b_has_no_disability(cls, v, values):
         if values.get('person_b_has_disability') == "yes":
             return v
         return None
