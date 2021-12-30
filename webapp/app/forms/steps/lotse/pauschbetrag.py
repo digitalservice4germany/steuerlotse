@@ -28,4 +28,3 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
         return 620
     elif disability_degree >= 20:
         return 384
-    
