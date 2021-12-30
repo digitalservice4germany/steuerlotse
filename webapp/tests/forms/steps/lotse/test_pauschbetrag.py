@@ -5,7 +5,8 @@ from pydantic import ValidationError
 
 from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, PersonAHasPauschbetragClaimPrecondition, \
     PersonBHasPauschbetragClaimPrecondition, PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, \
-    PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition
+    PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, PersonBHasPflegegradSetPrecondition, \
+    PersonAHasPflegegradSetPrecondition
 
 
 class TestCalculatePauschbetrag:
@@ -197,6 +198,30 @@ class TestCalculatePauschbetrag:
     def test_if_disability_degree_under_20_then_return_zero(self):
         calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
         assert calculated_pauschbetrag == 0
+
+
+class TestPersonAHasPflegegradSetPrecondition:
+    def test_if_pflegegrad_not_set_raise_validation_error(self):
+        with pytest.raises(ValidationError):
+            PersonAHasPflegegradSetPrecondition.parse_obj({})
+
+    def test_if_pflegegrad_set_yes_raise_no_error(self):
+        PersonAHasPflegegradSetPrecondition.parse_obj({'person_a_has_pflegegrad': 'yes'})
+
+    def test_if_pflegegrad_set_no_raise_no_error(self):
+        PersonAHasPflegegradSetPrecondition.parse_obj({'person_a_has_pflegegrad': 'no'})
+        
+        
+class TestPersonBHasPflegegradSetPrecondition:
+    def test_if_pflegegrad_not_set_raise_validation_error(self):
+        with pytest.raises(ValidationError):
+            PersonBHasPflegegradSetPrecondition.parse_obj({})
+
+    def test_if_pflegegrad_set_yes_raise_no_error(self):
+        PersonBHasPflegegradSetPrecondition.parse_obj({'person_b_has_pflegegrad': 'yes'})
+
+    def test_if_pflegegrad_set_no_raise_no_error(self):
+        PersonBHasPflegegradSetPrecondition.parse_obj({'person_b_has_pflegegrad': 'no'})
 
 
 class TestPersonAHasPauschbetragClaimPrecondition:

@@ -61,6 +61,7 @@ describe("NoPauschbetragPage for person B", () => {
       });
 
       it("Should redirect to person b merkzeichen page", () => {
+        cy.url().should("include", "/lotse/step/familienstand");
         // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       });
     }
