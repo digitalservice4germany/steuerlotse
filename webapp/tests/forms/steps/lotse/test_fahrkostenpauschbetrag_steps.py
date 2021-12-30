@@ -35,7 +35,7 @@ class TestStepFahrkostenpauschalePersonB:
             form = step.render_info.form
             assert form.validate() == True
 
-    def test_if_precondition_person_b_has_disability_yes_is_not_satisfied_then_a_redirect_to_familienstand_returns(self, new_test_request_context):
+    def test_if_precondition_person_b_has_disability_yes_is_not_satisfied_then_a_redirect_to_person_b_has_disability_returns(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
