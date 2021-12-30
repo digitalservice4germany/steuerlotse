@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-30 09:05+0100\n"
+"POT-Creation-Date: 2021-12-30 09:22+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1223,7 +1223,6 @@ msgid "form.lotse.person_b.request_fahrkostenpauschale.label"
 msgstr "Beantragung Pauschale Fahrtkosten"
 
 #: app/forms/steps/lotse/fahrkostenpauschbetrag.py:117
-#, fuzzy
 msgid "form.lotse.person_b.request_fahrkostenpauschale.title"
 msgstr "Beantragung Pauschale Fahrtkosten"
 
@@ -1671,7 +1670,11 @@ msgstr ""
 #: app/forms/steps/lotse/personal_data.py:530
 #: app/forms/steps/lotse/personal_data.py:542
 msgid "form.lotse.skip_reason.has_no_disability"
-msgstr "Sie haben angegeben, dass Sie keine Angaben zu einer Behinderung oder Pflegebedürftigkeit machen möchten. Ändern Sie die Antwort der Frage, wenn sie doch Angaben zu einer Behinderung oder Pflegebedürftigkeit machen möchten."
+msgstr ""
+"Sie haben angegeben, dass Sie keine Angaben zu einer Behinderung oder "
+"Pflegebedürftigkeit machen möchten. Ändern Sie die Antwort der Frage, "
+"wenn sie doch Angaben zu einer Behinderung oder Pflegebedürftigkeit "
+"machen möchten."
 
 #: app/forms/steps/lotse/steuerminderungen.py:25
 msgid "form.lotse.select_stmind-title"
