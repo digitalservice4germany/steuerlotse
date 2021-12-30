@@ -27,6 +27,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, \
     StepPersonAHasDisability, StepPersonBHasDisability
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.fahrkostenpauschbetrag import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
@@ -139,9 +140,11 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepPersonA,
                 StepPersonAHasDisability,
                 StepPauschbetragPersonA,
+                StepFahrkostenpauschalePersonA,                
                 StepPersonB,
                 StepPersonBHasDisability,
                 StepPauschbetragPersonB,
+                StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepIban,
 
@@ -358,7 +361,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 field = getattr(step.form, attr)
                 label, value = self._generate_value_representation(field, form_data[attr])
                 if value:
-                    step_data[label] = step.get_overview_value_representation(value)
+                    step_value = step.get_overview_value_representation(value)
+                    if step_value is not None:
+                        step_data[label] = step_value
             elif missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']

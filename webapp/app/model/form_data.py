@@ -219,6 +219,7 @@ class FormDataDependencies(BaseModel):
     person_a_gehbeh: Optional[bool]
     person_a_has_disability: Optional[str]
     person_a_requests_pauschbetrag: Optional[str]
+    person_a_requests_fahrkostenpauschale: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -237,6 +238,7 @@ class FormDataDependencies(BaseModel):
     person_b_gehbeh: Optional[bool]
     person_b_has_disability: Optional[str]
     person_b_requests_pauschbetrag: Optional[str]
+    person_b_requests_fahrkostenpauschale: Optional[str]
 
     telephone_number: Optional[str]
 

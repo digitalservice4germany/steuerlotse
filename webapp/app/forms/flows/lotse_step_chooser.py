@@ -9,6 +9,7 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.fahrkostenpauschbetrag import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -107,9 +108,11 @@ class LotseStepChooser(StepChooser):
                 StepPersonA,
                 StepPersonAHasDisability,
                 StepPauschbetragPersonA,
+                StepFahrkostenpauschalePersonA,
                 StepPersonB,
                 StepPersonBHasDisability,
                 StepPauschbetragPersonB,
+                StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,
                 StepVorsorge,
