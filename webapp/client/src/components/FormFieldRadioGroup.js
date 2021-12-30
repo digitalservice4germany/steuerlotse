@@ -19,7 +19,6 @@ const Radio = styled.div`
   }
 
   input[type="radio"] + label {
-    white-space: pre-wrap;
     display: flex;
     padding-left: 0;
     padding-top: 0;
