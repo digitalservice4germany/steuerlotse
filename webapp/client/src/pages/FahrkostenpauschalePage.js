@@ -14,6 +14,10 @@ import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 
 const DetailsDiv = styled.div`
   margin-bottom: var(--spacing-04);
+
+  @media (max-width: 500px) {
+    margin-bottom: 0;
+  }
 `;
 
 export default function FahrkostenpauschalePage({
@@ -32,7 +36,7 @@ export default function FahrkostenpauschalePage({
         title={stepHeader.title}
         intro={
           <Trans
-            i18nKey="stories.fahrkostenpauschale.introText"
+            i18nKey="lotse.fahrkostenpauschale.introText"
             values={{ fahrkostenpauschaleAmount }}
             components={{ bold: <b /> }}
           />
