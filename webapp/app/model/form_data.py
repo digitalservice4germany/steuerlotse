@@ -7,7 +7,6 @@ from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
 from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator, Extra
 from pydantic.error_wrappers import ErrorWrapper
-from pydantic.errors import StrError
 
 from app.data_access.user_controller import check_idnr
 from app.utils import get_first_day_of_tax_period
