@@ -1,15 +1,3 @@
-from flask import render_template
-from flask_babel import lazy_gettext as _l, ngettext, _
-from wtforms.validators import InputRequired
-from wtforms import SelectField
-from flask_wtf.csrf import generate_csrf
-
-from app.model.components.helpers import form_fields_dict
-from app.forms import SteuerlotseBaseForm
-from app.forms.steps.step import SectionLink
-from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-
-
 def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
     Calculates the pauschbetrag given some information about the user.
