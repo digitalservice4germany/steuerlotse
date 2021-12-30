@@ -334,6 +334,12 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+    @validator('stmind_beh_aufw_summe', 'stmind_beh_aufw_anspruch')
+    def delete_stmind_beh_if_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') != 'yes' and values.get('person_b_has_disability') != 'yes':
+            return None
+        return v
+
     @validator('stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
                'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
@@ -381,6 +387,7 @@ class FormDataDependencies(BaseModel):
         if values.get('person_b_has_disability') == 'no':
             return None
         return v
+
 
 
 class InputDataInvalidError(ValueError):

@@ -1,4 +1,4 @@
-{% extends 'basis/form_standard.html' %}
+{% extends 'basis/base_step_form.html' %}
 {% import "macros.html" as macros %}
 {% import "components.html" as components %}
 
@@ -12,3 +12,17 @@
         {% endfor -%}
     </ul>
 {% endblock %}
+
+{% block form_content %}
+    {% block intro_list %}
+    {% endblock %}
+    {% for field in form %}
+        {% if show_disability_stmind_fields or (field.name != "stmind_beh_aufw_summe" and field.name != "stmind_beh_aufw_anspruch") %}
+            <div class="form-row-center">
+                {{ macros.render_field(field, first_field=field == render_info.form.first_field if not render_info.form.errors) }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
