@@ -48,6 +48,16 @@ export const selectionFieldPropType = PropTypes.exact({
   errors: PropTypes.arrayOf(PropTypes.string),
 });
 
+export const stepHeaderPropType = PropTypes.exact({
+  title: PropTypes.string,
+  intro: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.object,
+  ]),
+  hideIntro: PropTypes.bool,
+});
+
 export const extendedSelectionFieldPropType = PropTypes.exact({
   selectedValue: PropTypes.any,
   options: optionsPropType,
