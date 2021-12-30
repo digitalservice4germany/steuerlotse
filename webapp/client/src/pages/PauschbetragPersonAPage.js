@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { selectionFieldPropType } from "../lib/propTypes";
+import { stepHeaderPropType, selectionFieldPropType } from "../lib/propTypes";
 import PauschbetragPage from "./PauschbetragPage";
 
 export default function PauschbetragPersonAPage({
@@ -24,9 +24,7 @@ export default function PauschbetragPersonAPage({
 }
 
 PauschbetragPersonAPage.propTypes = {
-  stepHeader: PropTypes.shape({
-    title: PropTypes.string,
-  }).isRequired,
+  stepHeader: stepHeaderPropType.isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
     csrfToken: PropTypes.string,
