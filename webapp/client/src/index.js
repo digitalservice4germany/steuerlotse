@@ -17,6 +17,8 @@ import PersonAHasDisabilityPage from "./pages/PersonAHasDisabilityPage";
 import PersonBHasDisabilityPage from "./pages/PersonBHasDisabilityPage";
 import PauschbetragPersonAPage from "./pages/PauschbetragPersonAPage";
 import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
+import MerkzeichenPersonAPage from "./pages/MerkzeichenPersonAPage";
+import MerkzeichenPersonBPage from "./pages/MerkzeichenPersonBPage";
 import FahrkostenpauschalePersonAPage from "./pages/FahrkostenpauschalePersonAPage";
 import FahrkostenpauschalePersonBPage from "./pages/FahrkostenpauschalePersonBPage";
 
@@ -33,6 +35,8 @@ const allowedComponents = {
   FahrkostenpauschalePersonAPage,
   PersonBHasDisabilityPage,
   PauschbetragPersonBPage,
+  MerkzeichenPersonAPage,
+  MerkzeichenPersonBPage,
   FahrkostenpauschalePersonBPage,
   TelephoneNumberPage,
   StmindSelectionPage,

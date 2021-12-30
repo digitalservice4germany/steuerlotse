@@ -49,7 +49,6 @@ export default function FahrkostenpauschalePage({
             values={{ fahrkostenpauschaleAmount }}
             components={{ bold: <b /> }}
           />
-          ,
         </Details>
       </DetailsDiv>
       <StepForm {...form}>
