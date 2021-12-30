@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import PauschbetragPage from "./PauschbetragPage";
+import FahrkostenpauschalePage from "./FahrkostenpauschalePage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
-let props = {
+const props = {
   stepHeader: {
     title: "Title",
     intro: "Intro",
@@ -12,33 +12,26 @@ let props = {
     ...StepFormDefault.args,
   },
   fields: {
-    requestsPauschbetrag: {
-      selectedValue: undefined,
-      options: [
-        {
-          value: "yes",
-          displayName: "Ja",
-        },
-        {
-          value: "no",
-          displayName: "Nein",
-        },
-      ],
+    requestsFahrkostenpauschale: {
       errors: [],
-      name: "requests_pauschbretrag",
+      name: "requests_fahrkostenpauschale",
     },
   },
-  pauschbetrag: 2400,
+  fahrkostenpauschaleAmount: 900,
   prevUrl: "/some/prev/path",
 };
 
-describe("With default props", () => {
+describe("FahrkostenpauschalePage default", () => {
   beforeEach(() => {
-    render(<PauschbetragPage {...props} />);
+    render(<FahrkostenpauschalePage {...props} />);
   });
 
   it("should render step title text", () => {
     expect(screen.getByText("Title")).toBeInTheDocument();
+  });
+
+  it("should ignore step intro text", () => {
+    expect(screen.queryByText("Intro")).not.toBeInTheDocument();
   });
 
   it("should ignore field option texts", () => {
@@ -46,17 +39,14 @@ describe("With default props", () => {
     expect(screen.queryByLabelText("Nein")).not.toBeInTheDocument();
   });
 
-  it("should render fields", () => {
+  it("should render yes no fields", () => {
     expect(screen.getByDisplayValue("yes")).toBeInTheDocument();
     expect(screen.getByDisplayValue("no")).toBeInTheDocument();
   });
 
-  it("should show pauschbetrag value in option yes text", () => {
-    expect(
-      screen.getByLabelText(
-        `Pauschbetrag in Höhe von ${props.pauschbetrag} Euro beantragen`
-      )
-    ).toHaveAttribute("value", "yes");
+  it("should render fahrkosten choice fields", () => {
+    expect(screen.getByText("Pauschale beantragen")).toBeInTheDocument();
+    expect(screen.getByText("Pauschale nicht beantragen")).toBeInTheDocument();
   });
 
   it("should link to the previous page", () => {
@@ -72,7 +62,7 @@ describe("With yes preselected", () => {
     let yesProps = {
       ...props,
       fields: {
-        requestsPauschbetrag: {
+        requestsFahrkostenpauschale: {
           selectedValue: "yes",
           options: [
             {
@@ -85,11 +75,11 @@ describe("With yes preselected", () => {
             },
           ],
           errors: [],
-          name: "requests_pauschbretrag",
+          name: "requests_fahrkostenpauschale",
         },
       },
     };
-    render(<PauschbetragPage {...yesProps} />);
+    render(<FahrkostenpauschalePage {...yesProps} />);
   });
   it("should render selected value yes", () => {
     expect(screen.getByDisplayValue("yes").checked).toBe(true);
@@ -102,7 +92,7 @@ describe("With no preselected", () => {
     let noProps = {
       ...props,
       fields: {
-        requestsPauschbetrag: {
+        requestsFahrkostenpauschale: {
           selectedValue: "no",
           options: [
             {
@@ -115,11 +105,11 @@ describe("With no preselected", () => {
             },
           ],
           errors: [],
-          name: "requests_pauschbretrag",
+          name: "requests_fahrkostenpauschale",
         },
       },
     };
-    render(<PauschbetragPage {...noProps} />);
+    render(<FahrkostenpauschalePage {...noProps} />);
   });
   it("should render selected value no", () => {
     expect(screen.getByDisplayValue("yes").checked).toBe(false);
