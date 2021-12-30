@@ -155,7 +155,7 @@ class PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(Disabili
 
 
 class PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand  # TODO: StepPersonBMerkzeichen.name
+    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
