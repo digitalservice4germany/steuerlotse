@@ -206,7 +206,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_b_blind': False,
             'person_b_gehbeh': False,
             'person_b_has_disability': 'no',
-            'person_b_requests_pauschbetrag': 'no',
             'account_holder': 'person_a'
         }
 
