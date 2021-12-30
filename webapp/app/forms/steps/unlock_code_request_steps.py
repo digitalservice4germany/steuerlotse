@@ -52,16 +52,12 @@ class UnlockCodeRequestInputStep(FormStep):
             data_privacy_link=url_for('data_privacy'),
         ).camelized_dict()
 
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['registrationConfirmEData'] = props_dict['fields'].pop('registrationConfirmE_data')
-
         return render_template('react_component.html',
-            component='RegistrationPage',
-            props=props_dict,
-            # TODO: These are still required by base.html to set the page title.
-            form=render_info.form,
-            header_title=_('form.unlock-code-request.header-title'))
+                               component='RegistrationPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=render_info.form,
+                               header_title=_('form.unlock-code-request.header-title'))
 
 
 class UnlockCodeRequestSuccessStep(DisplayStep):
