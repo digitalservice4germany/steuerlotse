@@ -8,7 +8,7 @@ from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
-from webapp.app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
+from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
 
 _LOTSE_DATA_KEY = 'form_data'
 
