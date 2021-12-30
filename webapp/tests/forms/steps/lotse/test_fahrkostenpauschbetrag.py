@@ -5,18 +5,19 @@ class TestCalculatePauschbetrag:
 
     def test_if_no_merkzeichen_or_pflegegrad_set_then_return_correct_value_for_disability_degree(self):
         input_output_pairs = [
-            (20, None),
-            (25, None),
-            (30, None),
-            (35, None),
-            (40, None),
-            (45, None),
-            (50, None),
-            (55, None),
-            (60, None),
-            (65, None),
-            (70, None),
-            (75, None),
+            (None, 0),
+            (20, 0),
+            (25, 0),
+            (30, 0),
+            (35, 0),
+            (40, 0),
+            (45, 0),
+            (50, 0),
+            (55, 0),
+            (60, 0),
+            (65, 0),
+            (70, 0),
+            (75, 0),
             (80, 900),
             (85, 900),
             (90, 900),
@@ -41,11 +42,12 @@ class TestCalculatePauschbetrag:
 
     def test_if_merkzeichen_g_and_no_pflegegrad_set_then_return_correct_value_for_disability_degree(self):
         input_output_pairs = [
-            (20, None),
-            (30, None),
-            (40, None),
-            (50, None),
-            (60, None),
+            (None, 0),
+            (20, 0),
+            (30, 0),
+            (40, 0),
+            (50, 0),
+            (60, 0),
             (70, 900),
             (80, 900),
             (90, 900),
@@ -69,6 +71,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_merkzeichen_bl_and_no_pflegegrad_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -97,6 +100,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_merkzeichen_tbl_and_no_pflegegrad_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -125,6 +129,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_merkzeichen_h_and_no_pflegegrad_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -153,6 +158,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_merkzeichen_ag_and_no_pflegegrad_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -181,6 +187,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_pflegrad_set_and_no_merkzeichen_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -209,6 +216,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_pflegrad_set_and_merkzeichen_bl_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -237,6 +245,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_pflegrad_set_and_merkzeichen_tbl_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -265,6 +274,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_pflegrad_set_and_merkzeichen_h_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -293,6 +303,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_pflegrad_set_and_merkzeichen_ag_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),
@@ -321,6 +332,7 @@ class TestCalculatePauschbetrag:
 
     def test_if_pflegrad_set_and_merkzeichen_g_set_then_return_4500_for_all_disability_degrees(self):
         input_output_pairs = [
+            (None, 4500),
             (20, 4500),
             (30, 4500),
             (40, 4500),

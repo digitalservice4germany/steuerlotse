@@ -161,8 +161,8 @@ class MandatoryFormData(BaseModel):
     def required_if_person_a_has_pauschbetrag_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import PersonAHasNoPauschbetragClaimPrecondition
-                PersonAHasNoPauschbetragClaimPrecondition.parse_obj(values)
+                from app.forms.steps.lotse.pauschbetrag import PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition
+                PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition.parse_obj(values)
             except ValidationError:
                 raise MissingError
         return v
@@ -171,8 +171,8 @@ class MandatoryFormData(BaseModel):
     def required_if_person_b_has_pauschbetrag_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import PersonBHasNoPauschbetragClaimPrecondition
-                PersonBHasNoPauschbetragClaimPrecondition.parse_obj(values)
+                from app.forms.steps.lotse.pauschbetrag import PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition
+                PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition.parse_obj(values)
             except ValidationError:
                 raise MissingError
         return v

@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
+from app.forms.steps.lotse.fahrkostenpauschbetrag import calculate_fahrkostenpauschbetrag
 from app.model.components import PauschbetragProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
@@ -125,12 +126,12 @@ class PersonBHasPauschbetragClaimPrecondition(DisabilityModel):
         return values
 
 
-class PersonAHasNoPauschbetragClaimPrecondition(DisabilityModel):
+class PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
-    def has_to_have_pauschbetrag_not_0(cls, values):
+    def has_to_have_pauschbetrag_and_fahrkostenpauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
             has_pflegegrad=values.get('person_a_has_pflegegrad', None),
             disability_degree=values.get('person_a_disability_degree', None),
@@ -138,18 +139,27 @@ class PersonAHasNoPauschbetragClaimPrecondition(DisabilityModel):
             has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False)
         )
+        fahrkostenpauschbetrag_claim = calculate_fahrkostenpauschbetrag(
+            has_pflegegrad=values.get('person_a_has_pflegegrad', None),
+            disability_degree=values.get('person_a_disability_degree', None),
+            has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_h=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_ag=values.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_g=values.get('person_a_has_merkzeichen_h', False)
+        )
 
-        if pauschbetrag_claim != 0:
+        if pauschbetrag_claim != 0 or fahrkostenpauschbetrag_claim != 0:
             raise ValidationError
         return values
 
 
-class PersonBHasNoPauschbetragClaimPrecondition(DisabilityModel):
+class PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
-    def has_to_have_pauschbetrag_not_0(cls, values):
+    def has_to_have_pauschbetrag_and_fahrkostenpauschbetrag_not_0(cls, values):
         pauschbetrag_claim = calculate_pauschbetrag(
             has_pflegegrad=values.get('person_b_has_pflegegrad', None),
             disability_degree=values.get('person_b_disability_degree', None),
@@ -157,8 +167,15 @@ class PersonBHasNoPauschbetragClaimPrecondition(DisabilityModel):
             has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
         )
+        fahrkostenpauschbetrag_claim = calculate_fahrkostenpauschbetrag(
+            has_pflegegrad=values.get('person_b_has_pflegegrad', None),
+            disability_degree=values.get('person_b_disability_degree', None),
+            has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
+        )
 
-        if pauschbetrag_claim != 0:
+        if pauschbetrag_claim != 0 or fahrkostenpauschbetrag_claim != 0:
             raise ValidationError
         return values
 
@@ -295,7 +312,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasNoPauschbetragClaimPrecondition]
+    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
 
     def _pre_handle(self):
         self._set_multiple_texts()
@@ -328,7 +345,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition,
-                     PersonBHasNoPauschbetragClaimPrecondition]
+                     PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
 
     def render(self):
         props_dict = NoPauschbetragProps(
