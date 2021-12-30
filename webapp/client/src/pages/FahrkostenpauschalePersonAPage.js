@@ -34,6 +34,6 @@ FahrkostenpauschalePersonAPage.propTypes = {
   fields: PropTypes.exact({
     personARequestsFahrkostenpauschale: selectionFieldPropType,
   }).isRequired,
-  fahrkostenpauschaleAmount: PropTypes.number.isRequired,
+  fahrkostenpauschaleAmount: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };
