@@ -5,6 +5,8 @@ import FieldLabelScaffolding from "./FieldLabelScaffolding";
 import { labelPropType } from "../lib/propTypes";
 
 const Legend = styled.legend`
+  margin-bottom: 0;
+
   & > span {
     display: block;
   }

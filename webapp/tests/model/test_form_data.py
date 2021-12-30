@@ -16,6 +16,8 @@ from app.model.form_data import FamilienstandModel, MandatoryFormData, FormDataD
 @pytest.fixture
 def valid_stmind_data():
     return {'familienstand': 'single',
+            'person_a_has_disability': 'yes',
+            'person_b_has_disability': 'yes',
             'stmind_select_vorsorge': True,
             'stmind_select_ausserg_bela': True,
             'stmind_select_handwerker': True,
@@ -355,6 +357,32 @@ class TestFormDataDependencies:
         input_data = valid_stmind_data
         input_data.pop('stmind_select_ausserg_bela')
         returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
+        expected_data = input_data
+        for dependent_field in dependent_fields:
+            expected_data.pop(dependent_field)
+        assert returned_data == expected_data
+
+    def test_if_no_disability_person_a_and_person_b_then_delete_stmin_beh_fields(self, valid_stmind_data):
+        dependent_fields = ['stmind_beh_aufw_summe', 'stmind_beh_aufw_anspruch']
+        input_data = valid_stmind_data
+        input_data['person_a_has_disability'] = 'no'
+        input_data['person_b_has_disability'] = 'no'
+
+        returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
+
+        expected_data = input_data
+        for dependent_field in dependent_fields:
+            expected_data.pop(dependent_field)
+        assert returned_data == expected_data
+
+    def test_if_disability_person_a_and_person_b_not_set_then_delete_stmin_beh_fields(self, valid_stmind_data):
+        dependent_fields = ['stmind_beh_aufw_summe', 'stmind_beh_aufw_anspruch']
+        input_data = valid_stmind_data
+        input_data.pop('person_a_has_disability', None)
+        input_data.pop('person_b_has_disability', None)
+
+        returned_data = FormDataDependencies.parse_obj(input_data).dict(exclude_none=True)
+
         expected_data = input_data
         for dependent_field in dependent_fields:
             expected_data.pop(dependent_field)
