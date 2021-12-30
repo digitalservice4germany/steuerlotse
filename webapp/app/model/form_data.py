@@ -161,21 +161,24 @@ class MandatoryFormData(BaseModel):
     def required_if_person_a_has_pauschbetrag_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition
-                PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition.parse_obj(values)
+                from app.forms.steps.lotse.pauschbetrag import PersonAHasPauschbetragClaimPrecondition
+                PersonAHasPauschbetragClaimPrecondition.parse_obj(values)
+                raise MissingError  # has pauschbetrag claim
             except ValidationError:
-                raise MissingError
+                return v  # has no pauschbetrag claim
         return v
     
     @validator('person_b_requests_pauschbetrag', always=True)
     def required_if_person_b_has_pauschbetrag_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition
-                PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition.parse_obj(values)
+                from app.forms.steps.lotse.pauschbetrag import PersonBHasPauschbetragClaimPrecondition
+                PersonBHasPauschbetragClaimPrecondition.parse_obj(values)
+                raise MissingError  # has pauschbetrag claim
             except ValidationError:
-                raise MissingError
+                return v  # has no pauschbetrag claim
         return v
+
 
 class MandatoryConfirmations(MandatoryFormData):
     confirm_complete_correct: bool
