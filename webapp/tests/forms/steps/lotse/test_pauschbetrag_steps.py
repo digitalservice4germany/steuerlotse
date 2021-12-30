@@ -84,7 +84,7 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
             
                 overview_value = step.get_overview_value_representation(value)
             
-                assert overview_value == str(pauschbetrag_result) + ' Euro'
+                assert overview_value == str(pauschbetrag_result) + ' currency.euro'
             
             
 class TestPauschbetragPersonBValidation:
@@ -229,4 +229,4 @@ class TestPauschbetragPersonBGetOverviewValueRepresentation:
             
                 overview_value = step.get_overview_value_representation(value)
             
-                assert overview_value == str(pauschbetrag_result) + ' Euro'
+                assert overview_value == str(pauschbetrag_result) + ' currency.euro'
