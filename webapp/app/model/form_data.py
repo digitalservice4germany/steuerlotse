@@ -219,7 +219,14 @@ class FormDataDependencies(BaseModel):
     person_a_gehbeh: Optional[bool]
     person_a_has_disability: Optional[str]
     person_a_requests_pauschbetrag: Optional[str]
-
+    
+    
+    person_a_has_pflegegrad: Optional[bool]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
+    
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
     person_b_dob: Optional[date]
@@ -237,6 +244,12 @@ class FormDataDependencies(BaseModel):
     person_b_gehbeh: Optional[bool]
     person_b_has_disability: Optional[str]
     person_b_requests_pauschbetrag: Optional[str]
+    
+    person_b_has_pflegegrad: Optional[bool]
+    person_b_disability_degree: Optional[int]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
 
     telephone_number: Optional[str]
 
