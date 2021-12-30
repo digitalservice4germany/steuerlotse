@@ -26,7 +26,7 @@ export default function HasDisabilityPage({
       <StepHeaderButtons url={prevUrl} />
       <FormHeader title={stepHeader.title} intro={headerIntro} />
       <StepForm {...form}>
-        <Details //TODO Replace with DetailSeparate when component has been merged
+        <Details // TODO Replace with DetailSeparate when component has been merged
           title={t("lotse.hasDisability.details.title")}
           detailsId={`${fields.hasDisability.name}_detail`}
         >
