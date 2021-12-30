@@ -24,7 +24,7 @@
     "prop-types": "^15.8.0",
     "react": "^17.0.2",
     "react-app-rewire-styled-components": "^3.0.2",
-    "react-app-rewired": "^2.1.9",
+    "react-app-rewired": "^2.1.10",
     "react-bootstrap": "^1.6.4",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.2",
