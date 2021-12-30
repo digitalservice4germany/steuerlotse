@@ -114,7 +114,7 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
     def render(self):
         props_dict = FahrkostenpauschbetragProps(
             step_header={
-                'title': _('form.lotse.person_b.request_pauschbetrag.title')
+                'title': _('form.lotse.person_b.request_fahrkostenpauschale.title')
             },
             form={
                 'action': self.render_info.submit_url,

@@ -26,7 +26,6 @@ from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepCo
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, \
     StepPersonAHasDisability, StepPersonBHasDisability
-from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse.fahrkostenpauschbetrag import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Section
@@ -139,11 +138,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepSteuernummer,
                 StepPersonA,
                 StepPersonAHasDisability,
-                StepPauschbetragPersonA,
                 StepFahrkostenpauschalePersonA,                
                 StepPersonB,
                 StepPersonBHasDisability,
-                StepPauschbetragPersonB,
                 StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepIban,

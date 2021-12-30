@@ -7,6 +7,7 @@ from flask_babel import lazy_gettext as _l, ngettext
 from flask_login import current_user
 from pydantic import BaseModel, validator, MissingError, ValidationError, root_validator, Extra
 from pydantic.error_wrappers import ErrorWrapper
+from pydantic.errors import StrError
 
 from app.data_access.user_controller import check_idnr
 from app.utils import get_first_day_of_tax_period
@@ -90,7 +91,6 @@ class MandatoryFormData(BaseModel):
     person_a_blind: bool
     person_a_gehbeh: bool
     person_a_has_disability: str
-    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -101,7 +101,6 @@ class MandatoryFormData(BaseModel):
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
     person_b_has_disability: Optional[str]
-    person_b_requests_pauschbetrag: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -218,7 +217,6 @@ class FormDataDependencies(BaseModel):
     person_a_blind: Optional[bool]
     person_a_gehbeh: Optional[bool]
     person_a_has_disability: Optional[str]
-    person_a_requests_pauschbetrag: Optional[str]
     person_a_requests_fahrkostenpauschale: Optional[str]
 
     person_b_same_address: Optional[str]
@@ -237,7 +235,6 @@ class FormDataDependencies(BaseModel):
     person_b_blind: Optional[bool]
     person_b_gehbeh: Optional[bool]
     person_b_has_disability: Optional[str]
-    person_b_requests_pauschbetrag: Optional[str]
     person_b_requests_fahrkostenpauschale: Optional[str]
 
     telephone_number: Optional[str]
@@ -361,18 +358,6 @@ class FormDataDependencies(BaseModel):
             return None
         return v
     
-    @validator('person_a_requests_pauschbetrag')
-    def delete_if_person_a_has_no_disability(cls, v, values):
-        if values.get('person_a_has_disability') == "yes":
-            return v
-        return None
-    
-    @validator('person_b_requests_pauschbetrag')
-    def delete_if_person_b_has_no_disability(cls, v, values):
-        if values.get('person_b_has_disability') == "yes":
-            return v
-        return None
-
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.
