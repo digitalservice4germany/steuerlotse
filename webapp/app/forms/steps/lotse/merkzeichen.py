@@ -67,13 +67,18 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             if self.person_a_has_merkzeichen_g.data or self.person_a_has_merkzeichen_ag.data:
                 if self.person_a_has_merkzeichen_g.data:
                     input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required')
+                    disability_min20_message = _l('form.lotse.merkzeichen_g_selected.validation-disability_degree.min20')
                 else:
                     input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
+                    disability_min20_message = _l('form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20')
                 validators.InputRequired(input_required_message)(self, field)
+
                 if field.data and field.data < 20:
-                    raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
+                    raise ValidationError(disability_min20_message)
             else:
                 validators.Optional()(self, field)
+                if field.data and field.data < 20:
+                    raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
     @classmethod
     def get_label(cls, data):
@@ -172,12 +177,20 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
 
         def validate_person_b_disability_degree(self, field):
             if self.person_b_has_merkzeichen_g.data or self.person_b_has_merkzeichen_ag.data:
-                input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required') if self.person_b_has_merkzeichen_g.data else _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
+                if self.person_b_has_merkzeichen_g.data:
+                    input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required')
+                    disability_min20_message = _l('form.lotse.merkzeichen_g_selected.validation-disability_degree.min20')
+                else:
+                    input_required_message = _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required')
+                    disability_min20_message = _l('form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20')
                 validators.InputRequired(input_required_message)(self, field)
+
                 if field.data and field.data < 20:
-                    raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
+                    raise ValidationError(disability_min20_message)
             else:
                 validators.Optional()(self, field)
+                if field.data and field.data < 20:
+                    raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
     @classmethod
     def get_label(cls, data):
