@@ -197,7 +197,8 @@ class PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(Disabili
 class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasPauschbetragClaimPrecondition]
+    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasPflegegradSetPrecondition,
+                     PersonAHasPauschbetragClaimPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
@@ -263,7 +264,8 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
-    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition, PersonBHasPauschbetragClaimPrecondition]
+    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition, PersonBHasPflegegradSetPrecondition,
+                     PersonBHasPauschbetragClaimPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
