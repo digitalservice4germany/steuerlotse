@@ -1,28 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import styled from "styled-components";
-import FormHeader from "../components/FormHeader";
-import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
-import StepForm from "../components/StepForm";
-import StepHeaderButtons from "../components/StepHeaderButtons";
-import Details from "../components/Details";
 import { fieldPropType } from "../lib/propTypes";
+import HasDisabilityPage from "./HasDisabilityPage";
 
-const DetailsDiv = styled.div`
-  margin-bottom: var(--spacing-04);
-
-  @media (max-width: 500px) {
-    margin-bottom: 0;
-  }
-`;
-
-export default function PersonAHasDisabilityPage({
+export default function HasDisabilityPersonAPage({
+  stepHeader,
   form,
   fields,
-  prevUrl,
-  stepHeader,
   numUsers,
+  prevUrl,
 }) {
   const { t } = useTranslation();
 
@@ -37,42 +24,20 @@ export default function PersonAHasDisabilityPage({
   }
 
   return (
-    <>
-      <StepHeaderButtons url={prevUrl} />
-      <FormHeader title={stepHeader.title} intro={headerIntro} />
-      <StepForm {...form}>
-        <DetailsDiv>
-          <Details
-            title={t("lotse.hasDisability.details.title")}
-            detailsId="person_a_has_disability_detail"
-          >
-            {translationBold("lotse.hasDisability.details.text")}
-          </Details>
-        </DetailsDiv>
-        <FormFieldRadioGroup
-          fieldId="person_a_has_disability"
-          fieldName="person_a_has_disability"
-          options={[
-            {
-              value: "yes",
-              displayName: t("fields.yesNoSwitch.Yes"),
-            },
-            {
-              value: "no",
-              displayName: t("fields.yesNoSwitch.No"),
-            },
-          ]}
-          value={fields.personAHasDisability.value}
-          errors={fields.personAHasDisability.errors}
-          required
-        />
-      </StepForm>
-    </>
+    <HasDisabilityPage
+      {...{ stepHeader, form, headerIntro, prevUrl }}
+      fields={{
+        hasDisability: {
+          ...fields.personAHasDisability,
+          name: "person_a_has_disability",
+        },
+      }}
+    />
   );
 }
 
-PersonAHasDisabilityPage.propTypes = {
-  stepHeader: PropTypes.shape({
+HasDisabilityPersonAPage.propTypes = {
+  stepHeader: PropTypes.exact({
     title: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
