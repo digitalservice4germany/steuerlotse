@@ -17,9 +17,8 @@ def new_merkzeichen_person_a_step(form_data):
 
 
 @pytest.fixture
-def test_request_context_with_person_a_disability(app):
-    with app.test_request_context(method="POST") as req:
-        req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_a_has_disability': 'yes'})})
+def test_request_context_with_person_a_disability(new_test_request_context):
+    with new_test_request_context(stored_data={'person_a_has_disability': 'yes'}) as req:
         yield req
 
 
