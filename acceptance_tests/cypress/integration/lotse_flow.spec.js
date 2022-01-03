@@ -455,8 +455,6 @@ context('Acceptance tests', () => {
                 cy.get('#stmind_krankheitskosten_anspruch').type(taxReturnData.stmind.krankheitskosten.anspruch)
                 cy.get('#stmind_pflegekosten_summe').type(taxReturnData.stmind.pflegekosten.summe)
                 cy.get('#stmind_pflegekosten_anspruch').type(taxReturnData.stmind.pflegekosten.anspruch)
-                cy.get('#stmind_beh_aufw_summe').type(taxReturnData.stmind.behAufw.summe)
-                cy.get('#stmind_beh_aufw_anspruch').type(taxReturnData.stmind.behAufw.anspruch)
                 cy.get('#stmind_bestattung_summe').type(taxReturnData.stmind.bestattung.summe)
                 cy.get('#stmind_bestattung_anspruch').type(taxReturnData.stmind.bestattung.anspruch)
                 cy.get('#stmind_aussergbela_sonst_summe').type(taxReturnData.stmind.aussergbelaSonst.summe)
