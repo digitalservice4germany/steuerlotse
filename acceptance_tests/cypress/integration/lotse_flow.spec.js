@@ -417,6 +417,9 @@ context('Acceptance tests', () => {
                 cy.get('label[for=person_a_has_merkzeichen_h]').first().click()
                 cy.get(submitBtnSelector).click()
 
+                cy.get('label[for=person_a_requests_pauschbetragyes').click()
+                cy.get(submitBtnSelector).click()
+
                 cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)
                 cy.get('#person_b_idnr_2').type(taxReturnData.personB.idnr2)
                 cy.get('#person_b_idnr_3').type(taxReturnData.personB.idnr3)
