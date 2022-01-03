@@ -97,7 +97,7 @@ function FormFieldRadioGroup({
               {options.map((option, i) => [
                 <input
                   type="radio"
-                  id={fieldId + option.value}
+                  id={`${fieldId}-${option.value}`}
                   key={`${fieldId}-${option.value}`}
                   name={fieldId}
                   required={required}
@@ -108,7 +108,7 @@ function FormFieldRadioGroup({
                   onChange={onChangeHandler}
                 />,
                 <label
-                  htmlFor={fieldId + option.value}
+                  htmlFor={`${fieldId}-${option.value}`}
                   key={`${fieldId}-label-${option.value}`}
                 >
                   <span>{option.displayName}</span>
