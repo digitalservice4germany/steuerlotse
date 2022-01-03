@@ -3,16 +3,21 @@ import { render, screen } from "@testing-library/react";
 import DetailsSeparated from "./DetailsSeparated";
 
 describe("DetailsSeparated with single paragraph", () => {
+  const paragraph = "content paragraph";
   beforeEach(() => {
     render(
       <DetailsSeparated title="title" detailsId="my-id">
-        <p>content paragraph</p>
+        <p>{paragraph}</p>
       </DetailsSeparated>
     );
   });
 
   it("should render the title", () => {
     expect(screen.getByText("title")).toBeInTheDocument();
+  });
+
+  it("should render the Paragraph", () => {
+    expect(screen.getByText(paragraph)).toBeInTheDocument();
   });
 
   it("should render paragraphs", () => {

@@ -55,7 +55,7 @@ describe("merkzeichenPersonB", () => {
       cy.visit("/lotse/step/merkzeichen_person_b");
     });
 
-    it("Should not stay on page and show error when submit button clicked", () => {
+    it("Should stay on page and show error when submit button clicked", () => {
       cy.get("button[type=submit]").click();
       cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       cy.get("[role=alert][for=person_b_has_pflegegrad]").contains(

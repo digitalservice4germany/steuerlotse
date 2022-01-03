@@ -159,6 +159,23 @@ class TestStepMerkzeichenPersonATexts:
 
         assert step.title == expected_step_title
 
+    def test_if_multiple_users_then_show_multiple_label(self, new_test_request_context):
+        expected_step_label = ngettext('form.lotse.merkzeichen_person_a.label', 'form.lotse.merkzeichen_person_a.label',
+                                       num=2)
+        session_data = {
+            'familienstand': 'married',
+            'familienstand_date': datetime.date(2000, 1, 31),
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': True,
+        }
+
+        with new_test_request_context(stored_data=session_data):
+            step = new_merkzeichen_person_a_step({})
+            step._pre_handle()
+
+        assert step.label == expected_step_label
+
     def test_if_single_user_then_show_single_title(self, new_test_request_context):
         expected_step_title = ngettext('form.lotse.merkzeichen_person_a.title', 'form.lotse.merkzeichen_person_a.title',
                                        num=1)
@@ -172,6 +189,20 @@ class TestStepMerkzeichenPersonATexts:
             step._pre_handle()
 
         assert step.title == expected_step_title
+
+    def test_if_single_user_then_show_single_label(self, new_test_request_context):
+        expected_step_label = ngettext('form.lotse.merkzeichen_person_a.label', 'form.lotse.merkzeichen_person_a.label',
+                                       num=1)
+        session_data = {
+            'familienstand': 'single',
+            'person_a_has_disability': True,
+        }
+
+        with new_test_request_context(stored_data=session_data):
+            step = new_merkzeichen_person_a_step({})
+            step._pre_handle()
+
+        assert step.label == expected_step_label
 
 
 def new_merkzeichen_person_b_step(form_data):
