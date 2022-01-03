@@ -1,24 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Trans, useTranslation } from "react-i18next";
-import styled from "styled-components";
 import FormHeader from "../components/FormHeader";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
-import Details from "../components/Details";
+import DetailsSeparated from "../components/DetailsSeparated";
 import {
   extendedSelectionFieldPropType,
   stepHeaderPropType,
 } from "../lib/propTypes";
-
-const DetailsDiv = styled.div`
-  margin-bottom: var(--spacing-04);
-
-  @media (max-width: 500px) {
-    margin-bottom: 0;
-  }
-`;
 
 export default function PauschbetragPage({
   stepHeader,
@@ -44,32 +35,30 @@ export default function PauschbetragPage({
           />
         }
       />
-      <DetailsDiv>
-        <Details
-          title={t("lotse.pauschbetrag.details.title")}
-          detailsId="pauschbetrag_details"
-        >
-          {[
-            <p key={0}>{t("lotse.pauschbetrag.details.p1")}</p>,
-            <ul key={1}>
-              <li key={0}>{t("lotse.pauschbetrag.details.list.listItem1")}</li>
-              <li key={1}>{t("lotse.pauschbetrag.details.list.listItem2")}</li>
-              <li key={2}>{t("lotse.pauschbetrag.details.list.listItem3")}</li>
-            </ul>,
-            <p key={2}>{t("lotse.pauschbetrag.details.p2")}</p>,
-            <p key={3}>
-              <Trans
-                t={t}
-                i18nKey="lotse.pauschbetrag.details.p3"
-                components={{
-                  bold: <b />,
-                }}
-              />
-            </p>,
-            <p key={4}>{t("lotse.pauschbetrag.details.p4")}</p>,
-          ]}
-        </Details>
-      </DetailsDiv>
+      <DetailsSeparated
+        title={t("lotse.pauschbetrag.details.title")}
+        detailsId="pauschbetrag_details"
+      >
+        {[
+          <p key={0}>{t("lotse.pauschbetrag.details.p1")}</p>,
+          <ul key={1}>
+            <li key={0}>{t("lotse.pauschbetrag.details.list.listItem1")}</li>
+            <li key={1}>{t("lotse.pauschbetrag.details.list.listItem2")}</li>
+            <li key={2}>{t("lotse.pauschbetrag.details.list.listItem3")}</li>
+          </ul>,
+          <p key={2}>{t("lotse.pauschbetrag.details.p2")}</p>,
+          <p key={3}>
+            <Trans
+              t={t}
+              i18nKey="lotse.pauschbetrag.details.p3"
+              components={{
+                bold: <b />,
+              }}
+            />
+          </p>,
+          <p key={4}>{t("lotse.pauschbetrag.details.p4")}</p>,
+        ]}
+      </DetailsSeparated>
       <StepForm {...form}>
         <FormFieldRadioGroup
           fieldName={fields.requestsPauschbetrag.name}

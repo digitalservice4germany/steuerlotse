@@ -1,7 +1,7 @@
 from flask import flash, Markup, render_template
 from flask_wtf.csrf import generate_csrf
 from pydantic import ValidationError, root_validator
-from wtforms import validators, SelectField, RadioField, BooleanField
+from wtforms import validators, SelectField, RadioField
 from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
 from flask_babel import lazy_gettext as _l, ngettext, _
@@ -10,16 +10,17 @@ from app.elster_client.elster_client import request_tax_offices
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, \
     TaxNumberField, YesNoField, LegacyIdNrField, LegacySteuerlotseDateField, SteuerlotseNameStringField, \
-    SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField, SteuerlotseIntegerField
+    SteuerlotseStringField, SteuerlotseHouseNumberIntegerField, SteuerlotseNumericStringField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
+from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban, \
     get_religion_field
-from app.forms.steps.step import SectionLink, FormStep
+from app.forms.steps.step import SectionLink
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.forms.validators import DecimalOnly, IntegerLength, ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
+from app.forms.validations.validators import ValidHessenTaxNumber, ValidTaxNumber, ValidTaxNumberLength, \
     ValidIdNr, MaximumLength
-from app.forms.validators import DecimalOnly, IntegerLength
-from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps, PersonAHasDisabilityProps, PersonBHasDisabilityProps
+from app.forms.validations.validators import DecimalOnly, IntegerLength
+from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
 
@@ -172,12 +173,6 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                                header_title=self.header_title)
 
 
-def get_number_of_users(input_data):
-    if show_person_b(input_data):
-        return 2
-    return 1
-
-
 class StepPersonA(LotseFormSteuerlotseStep):
     name = 'person_a'
     title = None  # set below
@@ -241,27 +236,6 @@ class StepPersonA(LotseFormSteuerlotseStep):
                        'max_characters': 25},
             validators=[InputRequired(), validators.length(max=20)])
         person_a_religion = get_religion_field()
-
-        person_a_beh_grad = SteuerlotseIntegerField(
-            label=_l('form.lotse.field_person_beh_grad'),
-            validators=[
-                validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
-            render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
-                       'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
-                       'max_characters': 3})
-        person_a_blind = BooleanField(
-            label=_l('form.lotse.field_person_blind'),
-            render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
-        person_a_gehbeh = BooleanField(
-            label=_l('form.lotse.field_person_gehbeh'),
-            render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
-
-        def validate_person_a_beh_grad(self, field):
-            if self.person_a_gehbeh.data:
-                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
-            else:
-                validators.Optional()(self, field)
 
     @classmethod
     def get_label(cls, data=None):
@@ -374,26 +348,6 @@ class StepPersonB(LotseFormSteuerlotseStep):
             validators=[input_required_if_not_same_address, validators.length(max=20)])
         person_b_religion = get_religion_field()
 
-        person_b_beh_grad = SteuerlotseIntegerField(
-            label=_l('form.lotse.field_person_beh_grad'),
-            validators=[validators.any_of([20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100])],
-            render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
-                       'data_label': _l('form.lotse.field_person_beh_grad.data_label'),
-                       'data-example-input': _l('form.lotse.field_person_beh_grad.example_input'),
-                       'max_characters': 3})
-        person_b_blind = BooleanField(
-            label=_l('form.lotse.field_person_blind'),
-            render_kw={'data_label': _l('form.lotse.field_person_blind.data_label')})
-        person_b_gehbeh = BooleanField(
-            label=_l('form.lotse.field_person_gehbeh'),
-            render_kw={'data_label': _l('form.lotse.field_person_gehbeh.data_label')})
-
-        def validate_person_b_beh_grad(self, field):
-            if self.person_b_gehbeh.data:
-                validators.InputRequired(_l('form.lotse.validation-person-beh-grad'))(self, field)
-            else:
-                validators.Optional()(self, field)
-
     @classmethod
     def get_label(cls, data):
         return cls.label
@@ -441,76 +395,3 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
 
-class StepPersonAHasDisability(LotseFormSteuerlotseStep):
-    name = 'person_a_has_disability'
-    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-
-    class InputForm(SteuerlotseBaseForm):
-        person_a_has_disability = YesNoField(
-            render_kw={'data_label':  _l('form.lotse.has_disability.data_label')},         
-            validators=[InputRequired(_l('validate.input-required'))])
-
-    @classmethod
-    def get_label(cls, data=None):
-        return ngettext('form.lotse.has_disability.label_person_a', 'form.lotse.has_disability.label_person_a',
-                        num=get_number_of_users(data))
-
-    def render(self):
-        props_dict = PersonAHasDisabilityProps(            
-            step_header={
-                'title': ngettext('form.lotse.has_disability.title', 'form.lotse.has_disability.title',
-                        num=get_number_of_users(self.stored_data))
-            },
-            form={
-                'action': self.render_info.submit_url,
-                'csrf_token': generate_csrf(),
-                'show_overview_button': bool(self.render_info.overview_url),
-            },
-            num_users=get_number_of_users(self.stored_data),
-            fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
-        ).camelized_dict()
-
-        return render_template('react_component.html',
-                               component='PersonAHasDisabilityPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
-        
-        
-class StepPersonBHasDisability(LotseFormSteuerlotseStep):
-    name = 'person_b_has_disability'
-    label = _l('form.lotse.has_disability.label_person_b')
-    section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-    
-    preconditions = [ShowPersonBPrecondition]
-
-    class InputForm(SteuerlotseBaseForm):
-        person_b_has_disability = YesNoField(
-            render_kw={'data_label': _l('form.lotse.has_disability.data_label')},            
-            validators=[InputRequired(_l('validate.input-required'))])
-
-    @classmethod
-    def get_label(cls, data):
-        return cls.label
-
-    def render(self):
-        props_dict = PersonBHasDisabilityProps(            
-            step_header={
-                'title': _('form.lotse.person_b.has_disability.title'),
-            },
-            form={
-                'action': self.render_info.submit_url,
-                'csrf_token': generate_csrf(),
-                'show_overview_button': bool(self.render_info.overview_url),
-            },
-            fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
-        ).camelized_dict()
-
-        return render_template('react_component.html',
-                               component='PersonBHasDisabilityPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
-        

@@ -8,7 +8,7 @@ from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
-    StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
+    StepTelephoneNumber
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -353,41 +353,6 @@ class TestPersonAValidation:
         form = new_person_a_step(form_data=data).render_info.form
         assert form.validate() is False
 
-    def test_if_gehbeh_has_allowed_value_then_succ_validation(self, valid_form_data):
-        for allowed_value in [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]:
-            data = MultiDict(
-                {**valid_form_data, **{'person_a_beh_grad': allowed_value}})
-            form = new_person_a_step(form_data=data).render_info.form
-            assert form.validate() is True
-
-    def test_if_gehbeh_has_unallowed_value_then_fail_validation(self, valid_form_data):
-        for allowed_value in [0, 15, 21, 110]:
-            data = MultiDict(
-                {**valid_form_data, **{'person_a_beh_grad': allowed_value}})
-            form = new_person_a_step(form_data=data).render_info.form
-            assert form.validate() is False
-
-    def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data):
-        data = MultiDict(valid_form_data)
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is True
-
-    def test_if_gehbeh_yes_and_beh_grad_not_set_then_fail_validation(self, valid_form_data):
-        data = MultiDict({**valid_form_data, **{'person_a_gehbeh': 'on'}})
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is False
-
-    def test_if_gehbeh_yes_and_beh_grad_set_then_succ_validation(self, valid_form_data):
-        data = MultiDict(
-            {**valid_form_data, **{'person_a_gehbeh': 'on', 'person_a_beh_grad': '30'}})
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is True
-
-    def test_if_not_gehbeh_but_beh_grad_set_then_succ_validation(self, valid_form_data):
-        data = MultiDict({**valid_form_data, **{'person_a_beh_grad': '30'}})
-        form = new_person_a_step(form_data=data).render_info.form
-        assert form.validate() is True
-
 
 def new_person_b_step(form_data):
     return LotseStepChooser().get_correct_step(StepPersonB.name, True, ImmutableMultiDict(form_data))
@@ -442,47 +407,6 @@ class TestPersonBValidation:
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is False
 
-    def test_if_gehbeh_has_allowed_value_then_succ_validation(self, valid_form_data, new_test_request_context):
-        for allowed_value in [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]:
-            data = MultiDict(
-                {**valid_form_data, **{'person_b_beh_grad': allowed_value}})
-            with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
-                form = new_person_b_step(form_data=data).render_info.form
-                assert form.validate() is True
-
-    def test_if_gehbeh_has_unallowed_value_then_fail_validation(self, valid_form_data, new_test_request_context):
-        for allowed_value in [0, 15, 21, 110]:
-            data = MultiDict(
-                {**valid_form_data, **{'person_b_beh_grad': allowed_value}})
-            with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
-                form = new_person_b_step(form_data=data).render_info.form
-                assert form.validate() is False
-
-    def test_if_gehbeh_and_beh_grad_not_set_then_succ_validation(self, valid_form_data, new_test_request_context):
-        data = MultiDict(valid_form_data)
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
-            form = new_person_b_step(form_data=data).render_info.form
-            assert form.validate() is True
-
-    def test_if_gehbeh_yes_and_beh_grad_not_set_then_fail_validation(self, valid_form_data, new_test_request_context):
-        data = MultiDict({**valid_form_data, **{'person_b_gehbeh': 'on'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
-            form = new_person_b_step(form_data=data).render_info.form
-            assert form.validate() is False
-
-    def test_if_gehbeh_yes_and_beh_grad_set_then_succ_validation(self, valid_form_data, new_test_request_context):
-        data = MultiDict(
-            {**valid_form_data, **{'person_b_gehbeh': 'on', 'person_b_beh_grad': '30'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
-            form = new_person_b_step(form_data=data).render_info.form
-            assert form.validate() is True
-
-    def test_if_not_gehbeh_but_beh_grad_set_then_succ_validation(self, valid_form_data, new_test_request_context):
-        data = MultiDict({**valid_form_data, **{'person_b_beh_grad': '30'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
-            form = new_person_b_step(form_data=data).render_info.form
-            assert form.validate() is True
-
     def test_if_same_address_yes_then_validation_succ_without_address(self, valid_form_data, new_test_request_context):
         data = MultiDict(
             {**valid_form_data, **{'person_b_same_address': 'yes'}})
@@ -524,52 +448,3 @@ class TestTelephoneNumberValidation:
             assert form.validate() is False
 
 
-class TestPersonAHasDisabilityValidation:
-    def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
-        data = MultiDict({'person_a_has_disability': 'yes'})
-        with new_test_request_context(form_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is True
-
-    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
-        data = MultiDict()
-        with new_test_request_context(form_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is False
-
-
-class TestPersonBHasDisabilityValidation:
-    def test_if_required_value_is_give_validation_should_be_success(self, new_test_request_context):
-        data = MultiDict({
-            'familienstand': 'married',
-            'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True,
-            'person_b_has_disability': 'no'
-        })
-
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
-            step = LotseStepChooser().get_correct_step(
-                StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is True
-
-    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
-        data = MultiDict({
-            'familienstand': 'married',
-            'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True
-        })
-
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
-            step = LotseStepChooser().get_correct_step(
-                StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is False

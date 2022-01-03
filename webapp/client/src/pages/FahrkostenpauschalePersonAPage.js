@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { fieldPropType, stepHeaderPropType } from "../lib/propTypes";
+import { selectionFieldPropType, stepHeaderPropType } from "../lib/propTypes";
 import FahrkostenpauschalePage from "./FahrkostenpauschalePage";
 
 export default function FahrkostenpauschalePersonAPage({
@@ -32,7 +32,7 @@ FahrkostenpauschalePersonAPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    personARequestsFahrkostenpauschale: fieldPropType,
+    personARequestsFahrkostenpauschale: selectionFieldPropType,
   }).isRequired,
   fahrkostenpauschaleAmount: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,

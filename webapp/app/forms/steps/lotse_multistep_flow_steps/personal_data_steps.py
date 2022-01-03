@@ -1,16 +1,15 @@
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import LegacyYesNoField, LegacySteuerlotseDateField, LegacySteuerlotseSelectField, ConfirmationField, \
-    SteuerlotseStringField, LegacyIdNrField, SteuerlotseIntegerField, SteuerlotseNumericStringField, \
-    SteuerlotseNameStringField, SteuerlotseIbanField, SteuerlotseHouseNumberIntegerField
+    SteuerlotseIbanField
 
-from flask_babel import _, ngettext
+from flask_babel import _
 from flask_babel import lazy_gettext as _l
-from wtforms import RadioField, validators, BooleanField
+from wtforms import RadioField, validators
 from wtforms.validators import InputRequired
 
-from app.forms.validators import IntegerLength, ValidIban, ValidIdNr, DecimalOnly
-from app.forms.validations.date_validations import ValidDateOfBirth, ValidDateOfMarriage, ValidDateOfDeath, ValidDateOfDivorce, ValidDateOfSeparatedSince
+from app.forms.validations.validators import ValidIban
+from app.forms.validations.date_validations import ValidDateOfMarriage, ValidDateOfDeath, ValidDateOfDivorce, ValidDateOfSeparatedSince
 from app.model.form_data import show_person_b
 from app.utils import get_first_day_of_tax_period
 

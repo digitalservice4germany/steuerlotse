@@ -7,11 +7,11 @@ from wtforms.utils import unset_value
 from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextInput, Markup, html_params
 
-from flask_babel import _, ngettext
+from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from babel.numbers import format_decimal, parse_decimal
 
-from app.forms.validators import ValidElsterCharacterSet
+from app.forms.validations.validators import ValidElsterCharacterSet
 
 
 def _add_classes_to_kwargs(kwargs, classes):

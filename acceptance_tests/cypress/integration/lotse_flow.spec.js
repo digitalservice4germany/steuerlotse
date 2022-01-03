@@ -41,7 +41,7 @@ const taxReturnData = {
         addressExt: 'Seitenflügel',
         postalCode: '11111',
         town: 'Musterhausen',
-        behGrad: '25',
+        disabilityDegree: '25',
     },
     personB: {
         idnr1: '02',
@@ -406,12 +406,15 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_address_ext').type(taxReturnData.personA.addressExt)
                 cy.get('#person_a_plz').type(taxReturnData.personA.postalCode)
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
-                cy.get('#person_a_beh_grad').type(taxReturnData.personA.behGrad)
-                cy.get('label[for=person_a_blind]').first().click()
-                cy.get('label[for=person_a_gehbeh]').first().click()
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disabilityno]').click()
+                cy.get('label[for=person_a_has_disabilityyes]').click()
+                cy.get(submitBtnSelector).click()
+
+                cy.get('label[for=person_a_has_pflegegrad-yes]').click()
+                cy.get('#person_a_disability_degree').type(taxReturnData.personA.disabilityDegree)
+                cy.get('label[for=person_a_has_merkzeichen_bl]').first().click()
+                cy.get('label[for=person_a_has_merkzeichen_h]').first().click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)
@@ -455,8 +458,6 @@ context('Acceptance tests', () => {
                 cy.get('#stmind_krankheitskosten_anspruch').type(taxReturnData.stmind.krankheitskosten.anspruch)
                 cy.get('#stmind_pflegekosten_summe').type(taxReturnData.stmind.pflegekosten.summe)
                 cy.get('#stmind_pflegekosten_anspruch').type(taxReturnData.stmind.pflegekosten.anspruch)
-                cy.get('#stmind_beh_aufw_summe').type(taxReturnData.stmind.behAufw.summe)
-                cy.get('#stmind_beh_aufw_anspruch').type(taxReturnData.stmind.behAufw.anspruch)
                 cy.get('#stmind_bestattung_summe').type(taxReturnData.stmind.bestattung.summe)
                 cy.get('#stmind_bestattung_anspruch').type(taxReturnData.stmind.bestattung.anspruch)
                 cy.get('#stmind_aussergbela_sonst_summe').type(taxReturnData.stmind.aussergbelaSonst.summe)
