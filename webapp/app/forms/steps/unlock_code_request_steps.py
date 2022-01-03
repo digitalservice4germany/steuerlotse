@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr
+from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.model.components import RegistrationProps
 from app.model.components.helpers import form_fields_dict

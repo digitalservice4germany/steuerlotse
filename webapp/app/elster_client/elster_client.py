@@ -13,7 +13,7 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
-    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError, EricaNotAuthenticatedError
+    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
 from app.utils import lru_cached, VERANLAGUNGSJAHR
 
 logger = logging.getLogger(__name__)
@@ -23,8 +23,13 @@ _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _REQUEST_TIMEOUT = 20
 
 _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_lived_separated',
-              'person_b_same_address', 'request_new_tax_number', 'person_a_has_merkzeichen_bl',
-              'person_b_has_merkzeichen_bl', 'person_a_has_merkzeichen_g', 'person_b_has_merkzeichen_g']
+              'person_b_same_address', 'request_new_tax_number',
+              'person_a_has_pflegegrad', 'person_a_has_merkzeichen_bl',
+              'person_a_has_merkzeichen_tbl', 'person_a_has_merkzeichen_h', 'person_a_has_merkzeichen_g',
+              'person_a_has_merkzeichen_ag',
+              'person_b_has_pflegegrad', 'person_b_has_merkzeichen_bl',
+              'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'person_b_has_merkzeichen_g',
+              'person_b_has_merkzeichen_ag',]
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -240,32 +245,26 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
 
 
 def _set_names_for_merkzeichen(adapted_form_data):
-    # TODO Remove this once we have transformed all the merkzeichen
-
-    if person_a_disability_degree := adapted_form_data.pop('person_a_beh_grad', None):
-        adapted_form_data['person_a_disability_degree'] = person_a_disability_degree
-
-    if person_b_disability_degree := adapted_form_data.pop('person_b_beh_grad', None):
-        adapted_form_data['person_b_disability_degree'] = person_b_disability_degree
-
-    adapted_form_data['person_a_has_merkzeichen_bl'] = adapted_form_data.pop('person_a_blind', None)
-
-    adapted_form_data['person_b_has_merkzeichen_bl'] = adapted_form_data.pop('person_b_blind', None)
-
-    adapted_form_data['person_a_has_merkzeichen_g'] = adapted_form_data.pop('person_a_gehbeh', None)
-
-    adapted_form_data['person_b_has_merkzeichen_g'] = adapted_form_data.pop('person_b_gehbeh', None)
+    # TODO Remove this once we have fully added the pauschbetrag step
 
     merkzeichen_person_a = [
         adapted_form_data.get('person_a_disability_degree'),
+        adapted_form_data.get('person_a_has_pflegegrad'),
         adapted_form_data.get('person_a_has_merkzeichen_bl'),
+        adapted_form_data.get('person_a_has_merkzeichen_tbl'),
+        adapted_form_data.get('person_a_has_merkzeichen_h'),
         adapted_form_data.get('person_a_has_merkzeichen_g'),
+        adapted_form_data.get('person_a_has_merkzeichen_ag'),
     ]
 
     merkzeichen_person_b = [
         adapted_form_data.get('person_b_disability_degree'),
+        adapted_form_data.get('person_b_has_pflegegrad'),
         adapted_form_data.get('person_b_has_merkzeichen_bl'),
+        adapted_form_data.get('person_b_has_merkzeichen_tbl'),
+        adapted_form_data.get('person_b_has_merkzeichen_h'),
         adapted_form_data.get('person_b_has_merkzeichen_g'),
+        adapted_form_data.get('person_b_has_merkzeichen_ag'),
     ]
 
     adapted_form_data['person_a_requests_pauschbetrag'] = any(merkzeichen_person_a)

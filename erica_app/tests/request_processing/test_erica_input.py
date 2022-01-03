@@ -337,6 +337,20 @@ class TestFormDataEstPersonAPauschbetrag:
         except ValidationError as e:
             pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
+    def test_if_person_a_requests_pauschbetrag_and_merkzeichen_set_then_set_request_pauschbetrag(self, standard_est_data):
+        standard_est_data['person_a_requests_pauschbetrag'] = True
+        standard_est_data['person_a_disability_degree'] = None
+        standard_est_data['person_a_has_pflegegrad'] = True
+        standard_est_data['person_a_has_merkzeichen_bl'] = True
+        standard_est_data['person_a_has_merkzeichen_tbl'] = True
+        standard_est_data['person_a_has_merkzeichen_h'] = True
+        standard_est_data['person_a_has_merkzeichen_g'] = True
+        standard_est_data['person_a_has_merkzeichen_ag'] = True
+
+        est_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert est_data.person_a_requests_pauschbetrag is True
+
 
 class TestFormDataEstPersonAFahrkostenpauschale:
 
@@ -372,6 +386,20 @@ class TestFormDataEstPersonAFahrkostenpauschale:
             standard_est_data[merkzeichen_key] = True
 
             FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_a_requests_fahrkostenpauschale_merkzeichen_set_then_set_request_fahrkostenpauschale(self, standard_est_data):
+        standard_est_data['person_a_requests_fahrkostenpauschale'] = True
+        standard_est_data['person_a_disability_degree'] = None
+        standard_est_data['person_a_has_pflegegrad'] = True
+        standard_est_data['person_a_has_merkzeichen_bl'] = True
+        standard_est_data['person_a_has_merkzeichen_tbl'] = True
+        standard_est_data['person_a_has_merkzeichen_h'] = True
+        standard_est_data['person_a_has_merkzeichen_g'] = True
+        standard_est_data['person_a_has_merkzeichen_ag'] = True
+
+        est_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert est_data.person_a_requests_fahrkostenpauschale is True
 
 
 class TestFormDataEstPersonBPauschbetrag:
@@ -494,6 +522,20 @@ class TestFormDataEstPersonBPauschbetrag:
         except ValidationError as e:
             pytest.fail("parse_obj failed with unexpected ValidationError " + str(e))
 
+    def test_if_person_b_requests_pauschbetrag_and_merkzeichen_set_then_set_request_pauschbetrag(self, standard_est_data):
+        standard_est_data['person_b_requests_pauschbetrag'] = True
+        standard_est_data['person_b_disability_degree'] = None
+        standard_est_data['person_b_has_pflegegrad'] = True
+        standard_est_data['person_b_has_merkzeichen_bl'] = True
+        standard_est_data['person_b_has_merkzeichen_tbl'] = True
+        standard_est_data['person_b_has_merkzeichen_h'] = True
+        standard_est_data['person_b_has_merkzeichen_g'] = True
+        standard_est_data['person_b_has_merkzeichen_ag'] = True
+
+        est_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert est_data.person_b_requests_pauschbetrag is True
+
 
 class TestFormDataEstPersonBFahrkostenpauschale:
 
@@ -529,6 +571,20 @@ class TestFormDataEstPersonBFahrkostenpauschale:
             standard_est_data[merkzeichen_key] = True
 
             FormDataEst.parse_obj(standard_est_data)
+
+    def test_if_person_b_requests_fahrkostenpauschale_merkzeichen_set_then_set_request_fahrkostenpauschale(self, standard_est_data):
+        standard_est_data['person_b_requests_fahrkostenpauschale'] = True
+        standard_est_data['person_b_disability_degree'] = None
+        standard_est_data['person_b_has_pflegegrad'] = True
+        standard_est_data['person_b_has_merkzeichen_bl'] = True
+        standard_est_data['person_b_has_merkzeichen_tbl'] = True
+        standard_est_data['person_b_has_merkzeichen_h'] = True
+        standard_est_data['person_b_has_merkzeichen_g'] = True
+        standard_est_data['person_b_has_merkzeichen_ag'] = True
+
+        est_data = FormDataEst.parse_obj(standard_est_data)
+
+        assert est_data.person_b_requests_fahrkostenpauschale is True
 
 
 class TestMetaDataYear:

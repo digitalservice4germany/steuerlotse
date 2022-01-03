@@ -149,6 +149,8 @@ class FormDataEst(BaseModel):
         if not any(disability_information) and v is True:
             raise ValueError('Person A can not request Pauschbetrag if no disability information given')
 
+        return v
+
     @validator('person_a_requests_fahrkostenpauschale')
     def fahrkostenpauschale_for_person_a_should_not_be_requested_if_no_disability_information_given(cls, v, values):
         disability_information = [
@@ -162,6 +164,8 @@ class FormDataEst(BaseModel):
         ]
         if not any(disability_information) and v is True:
             raise ValueError('Person A can not request Fahrkostenpauschale if no disability information given')
+
+        return v
 
     @validator('person_b_requests_pauschbetrag')
     def pauschbetrag_for_person_b_should_not_be_requested_if_no_disability_information_given(cls, v, values):
@@ -177,6 +181,8 @@ class FormDataEst(BaseModel):
         if not any(disability_information) and v is True:
             raise ValueError('Person B can not request Pauschbetrag if no disability information given')
 
+        return v
+
     @validator('person_b_requests_fahrkostenpauschale')
     def fahrkostenpauschale_for_person_b_should_not_be_requested_if_no_disability_information_given(cls, v, values):
         disability_information = [
@@ -190,6 +196,8 @@ class FormDataEst(BaseModel):
         ]
         if not any(disability_information) and v is True:
             raise ValueError('Person B can not request Fahrkostenpauschale if no disability information given')
+
+        return v
 
 
 class MetaDataEst(BaseModel):

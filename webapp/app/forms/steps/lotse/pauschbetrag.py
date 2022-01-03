@@ -9,7 +9,10 @@ from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition, ShowPersonBPrecondition, StepFamilienstand, get_number_of_users
+from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition, StepFamilienstand
+from app.forms.steps.lotse.utils import get_number_of_users
+from app.forms.steps.lotse.has_disability import PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition, \
+    HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 
 
 def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
@@ -47,7 +50,8 @@ def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_mer
         return 384
     
     return 0
-    
+
+
 class StepPauschbetrag(LotseFormSteuerlotseStep):
     
     def get_overview_value_representation(self, value):
@@ -58,10 +62,11 @@ class StepPauschbetrag(LotseFormSteuerlotseStep):
             
         return result
 
+
 class StepPauschbetragPersonA(StepPauschbetrag):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-    preconditions = [PersonAHasDisabilityPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition]
     
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
@@ -116,7 +121,7 @@ class StepPauschbetragPersonB(StepPauschbetrag):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
-    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition]
         
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(

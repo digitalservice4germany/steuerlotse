@@ -26,11 +26,13 @@ from app.forms.fields import LegacyYesNoField, SteuerlotseStringField, Steuerlot
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
 from app.forms.steps.lotse.confirmation import StepSummary
+from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
@@ -167,10 +169,12 @@ class TestLotseInit(unittest.TestCase):
             StepFamilienstand,
             StepSteuernummer,
             StepPersonA,
-            StepPersonAHasDisability,
+            StepDisabilityPersonA,
+            StepMerkzeichenPersonA,
             StepPauschbetragPersonA,
             StepPersonB,
-            StepPersonBHasDisability,
+            StepDisabilityPersonB,
+            StepMerkzeichenPersonB,
             StepPauschbetragPersonB,
             StepTelephoneNumber,
             StepIban,
@@ -867,8 +871,9 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         person_b_fields = ['person_b_same_address', 'person_b_dob', 'person_b_last_name', 'person_b_first_name',
                            'person_b_religion', 'person_b_street', 'person_b_street_number', 'person_b_idnr',
                            'person_b_street_number_ext', 'person_b_address_ext', 'person_b_plz',
-                           'person_b_town', 'person_b_beh_grad', 'person_b_blind', 'person_b_gehbeh',
-                           'account_holder']
+                           'person_b_town', 'person_b_has_pflegegrad', 'person_b_disability_degree',
+                           'person_b_has_merkzeichen_g', 'person_b_has_merkzeichen_ag', 'person_b_has_merkzeichen_bl',
+                           'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'account_holder']
         with self.app.test_request_context(method='POST',
                                            data={'familienstand': 'married',
                                                  'familienstand_date': ['1', '1', '1985'],
@@ -1244,13 +1249,15 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
-            'person_a_beh_grad': 25,
-            'person_a_blind': True,
-            'person_a_gehbeh': True,
+            'person_a_has_pflegegrad': 'no',
+            'person_a_disability_degree': 25,
+            'person_a_has_merkzeichen_bl': True,
+            'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
+
         self.valid_data_married = {
             'steuernummer_exists': True,
             'steuernummer': '19811310010',
@@ -1272,9 +1279,10 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
-            'person_a_beh_grad': 25,
-            'person_a_blind': True,
-            'person_a_gehbeh': True,
+            'person_a_has_pflegegrad': 'no',
+            'person_a_disability_degree': 25,
+            'person_a_has_merkzeichen_bl': True,
+            'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
 
             'person_b_dob': datetime.date(1951, 2, 25),
@@ -1283,9 +1291,6 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
             'person_b_has_disability': 'no',
-            'person_b_blind': False,
-            'person_b_gehbeh': False,
-            'person_b_requests_pauschbetrag': 'yes',
 
             'account_holder': 'person_a',
             'iban': 'DE35133713370000012345',}
@@ -1428,10 +1433,11 @@ class TestLotseValidateInput(unittest.TestCase):
                             form_data)
 
     def test_if_contains_not_all_mandatory_fields_but_all_confirmations_then_raise_invalidation_error(self):
-        expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number', 'familienstand', 'person_a_dob',
+        expected_missing_fields = ['steuernummer_exists', 'bundesland', 'bufa_nr', 'request_new_tax_number',
+                                   'familienstand', 'person_a_dob',
                                    'person_a_last_name', 'person_a_first_name', 'person_a_religion', 'person_a_street',
-                                   'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_blind',
-                                   'person_a_gehbeh', 'person_a_has_disability', 'iban', 'is_user_account_holder', ]
+                                   'person_a_street_number', 'person_a_plz', 'person_a_town', 'person_a_has_disability',
+                                   'iban', 'is_user_account_holder', ]
         existing_idnr = '04452397610'
         self._create_logged_in_user(existing_idnr)
         form_data = {'person_a_idnr': existing_idnr,
