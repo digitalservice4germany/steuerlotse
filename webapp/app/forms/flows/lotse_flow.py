@@ -24,7 +24,9 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepAck, StepFiling
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, StepPersonAHasDisability, StepPersonBHasDisability, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, \
+    StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
@@ -136,8 +138,10 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepSteuernummer,
                 StepPersonA,
                 StepPersonAHasDisability,
+                StepPauschbetragPersonA,
                 StepPersonB,
                 StepPersonBHasDisability,
+                StepPauschbetragPersonB,
                 StepTelephoneNumber,
                 StepIban,
 
@@ -352,9 +356,10 @@ class LotseMultiStepFlow(MultiStepFlow):
         for attr in step.create_form(request.form, form_data).__dict__:
             if attr in form_data:
                 field = getattr(step.form, attr)
+                # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
                 label, value = self._generate_value_representation(field, form_data[attr])
                 if value:
-                    step_data[label] = value
+                    step_data[label] = step.get_overview_value_representation(value)
             elif missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']

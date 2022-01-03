@@ -112,3 +112,6 @@ class PersonAHasDisabilityProps(StepFormProps):
 
 class PersonBHasDisabilityProps(StepFormProps):
     pass
+
+class PauschbetragProps(StepFormProps):
+    pauschbetrag: str

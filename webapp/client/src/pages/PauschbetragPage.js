@@ -7,10 +7,7 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import Details from "../components/Details";
-import {
-  extendedSelectionFieldPropType,
-  stepHeaderPropType,
-} from "../lib/propTypes";
+import { extendedSelectionFieldPropType } from "../lib/propTypes";
 
 const DetailsDiv = styled.div`
   margin-bottom: var(--spacing-04);
@@ -102,7 +99,9 @@ export default function PauschbetragPage({
 }
 
 PauschbetragPage.propTypes = {
-  stepHeader: stepHeaderPropType.isRequired,
+  stepHeader: PropTypes.shape({
+    title: PropTypes.string,
+  }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
     csrfToken: PropTypes.string,

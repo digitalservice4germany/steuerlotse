@@ -90,6 +90,7 @@ class MandatoryFormData(BaseModel):
     person_a_blind: bool
     person_a_gehbeh: bool
     person_a_has_disability: str
+    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -100,6 +101,7 @@ class MandatoryFormData(BaseModel):
     person_b_blind: Optional[str]
     person_b_gehbeh: Optional[str]
     person_b_has_disability: Optional[str]
+    person_b_requests_pauschbetrag: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -216,7 +218,15 @@ class FormDataDependencies(BaseModel):
     person_a_blind: Optional[bool]
     person_a_gehbeh: Optional[bool]
     person_a_has_disability: Optional[str]
-
+    person_a_requests_pauschbetrag: Optional[str]
+    
+    
+    person_a_has_pflegegrad: Optional[bool]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
+    
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
     person_b_dob: Optional[date]
@@ -233,6 +243,13 @@ class FormDataDependencies(BaseModel):
     person_b_blind: Optional[bool]
     person_b_gehbeh: Optional[bool]
     person_b_has_disability: Optional[str]
+    person_b_requests_pauschbetrag: Optional[str]
+    
+    person_b_has_pflegegrad: Optional[bool]
+    person_b_disability_degree: Optional[int]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
 
     telephone_number: Optional[str]
 
@@ -354,7 +371,18 @@ class FormDataDependencies(BaseModel):
         if show_person_b(values):
             return None
         return v
-
+    
+    @validator('person_a_requests_pauschbetrag')
+    def delete_if_person_a_has_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') == "yes":
+            return v
+        return None
+    
+    @validator('person_b_requests_pauschbetrag')
+    def delete_if_person_b_has_no_disability(cls, v, values):
+        if values.get('person_b_has_disability') == "yes":
+            return v
+        return None
 
 
 class InputDataInvalidError(ValueError):

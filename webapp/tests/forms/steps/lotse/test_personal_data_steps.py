@@ -8,7 +8,7 @@ from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
-    StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
+    StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability, PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -543,11 +543,12 @@ class TestPersonAHasDisabilityValidation:
 
 
 class TestPersonBHasDisabilityValidation:
-    def test_if_required_value_is_give_validation_should_be_success(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_given_validation_should_be_true(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
             'person_b_has_disability': 'no'
         })
 
@@ -559,11 +560,12 @@ class TestPersonBHasDisabilityValidation:
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_not_given_then_validate_should_be_false(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
         })
 
         with new_test_request_context(form_data=data) as req:
@@ -573,3 +575,40 @@ class TestPersonBHasDisabilityValidation:
                 StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is False
+            
+
+class TestPersonAHasDisabilityPrecondition:
+    def test_if_person_a_has_disability_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            PersonAHasDisabilityPrecondition.parse_obj(data)
+
+    def test_if_person_a_has_disability_set_no_then_raise_validation_error(self):
+        data = {'person_a_has_disability': 'no'}
+        with pytest.raises(ValidationError):
+            PersonAHasDisabilityPrecondition.parse_obj(data)
+
+    def test_if_person_a_has_disability_set_yes_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_disability': 'yes'}
+        try:
+            PersonAHasDisabilityPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+class TestPersonBHasDisabilityPrecondition:
+    def test_if_person_b_has_disability_not_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            PersonBHasDisabilityPrecondition.parse_obj(data)
+
+    def test_if_person_b_has_disability_set_no_then_raise_validation_error(self):
+        data = {'person_b_has_disability': 'no'}
+        with pytest.raises(ValidationError):
+            PersonBHasDisabilityPrecondition.parse_obj(data)
+
+    def test_if_person_b_has_disability_set_yes_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_disability': 'yes'}
+        try:
+            PersonBHasDisabilityPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
