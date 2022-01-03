@@ -8,7 +8,9 @@ from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepDisabilityPersonA, StepDisabilityPersonB
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -108,9 +110,11 @@ class LotseStepChooser(StepChooser):
                 StepPersonA,
                 StepDisabilityPersonA,
                 StepMerkzeichenPersonA,
+                StepPauschbetragPersonA,
                 StepPersonB,
                 StepDisabilityPersonB,
                 StepMerkzeichenPersonB,
+                StepPauschbetragPersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,
                 StepVorsorge,

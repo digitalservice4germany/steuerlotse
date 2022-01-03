@@ -31,7 +31,9 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
 from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA, StepDisabilityPersonA, StepDisabilityPersonB
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
@@ -169,9 +171,11 @@ class TestLotseInit(unittest.TestCase):
             StepPersonA,
             StepDisabilityPersonA,
             StepMerkzeichenPersonA,
+            StepPauschbetragPersonA,
             StepPersonB,
             StepDisabilityPersonB,
             StepMerkzeichenPersonB,
+            StepPauschbetragPersonB,
             StepTelephoneNumber,
             StepIban,
 
@@ -1249,6 +1253,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_disability_degree': 25,
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
+            'person_a_requests_pauschbetrag': 'yes',
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
@@ -1278,6 +1283,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_disability_degree': 25,
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
+            'person_a_requests_pauschbetrag': 'yes',
 
             'person_b_dob': datetime.date(1951, 2, 25),
             'person_b_first_name': 'Gerta',

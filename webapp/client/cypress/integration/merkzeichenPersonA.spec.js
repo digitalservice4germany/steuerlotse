@@ -90,9 +90,9 @@ describe("merkzeichenPersonA", () => {
       cy.url().should("include", "/lotse/step/has_disability_person_a");
     });
 
-    it("Should link forward to telephone number page", () => {
+    it("Should link forward to pauschbetrag person a page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
     });
   });
 
@@ -116,9 +116,9 @@ describe("merkzeichenPersonA", () => {
       cy.url().should("include", "/lotse/step/has_disability_person_a");
     });
 
-    it("Should link forward to person b page", () => {
+    it("Should link forward to pauschbetrag person a page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_b");
+      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
     });
   });
 });

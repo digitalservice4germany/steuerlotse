@@ -1,32 +1,20 @@
 from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
-from pydantic import BaseModel, validator
 from wtforms import validators, BooleanField
 from wtforms.validators import InputRequired, ValidationError
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import YesNoField, SteuerlotseIntegerField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import get_number_of_users, StepDisabilityPersonA, StepDisabilityPersonB
+from app.forms.steps.lotse.utils import get_number_of_users
+from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, \
+    HasDisabilityPersonBPrecondition
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.forms.steps.step import SectionLink
 from app.forms.validations.validators import ValidDisabilityDegree
 from app.model.components import MerkzeichenProps
 from app.model.components.helpers import form_fields_dict
-
-
-class HasDisabilityPersonAPrecondition(BaseModel):
-    _step_to_redirect_to = StepDisabilityPersonA.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
-
-    person_a_has_disability: bool
-
-    @validator('person_a_has_disability', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
 
 
 class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
@@ -77,7 +65,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                     raise ValidationError(disability_min20_message)
             else:
                 validators.Optional()(self, field)
-                if field.data and field.data < 20:
+                if field.data and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
     @classmethod
@@ -128,19 +116,6 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
 
-class HasDisabilityPersonBPrecondition(BaseModel):
-    _step_to_redirect_to = StepDisabilityPersonB.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
-
-    person_b_has_disability: bool
-
-    @validator('person_b_has_disability', always=True)
-    def has_to_be_set_true(cls, v):
-        if not v:
-            raise ValidationError
-        return v
-
-
 class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
     name = 'merkzeichen_person_b'
     title = _l('form.lotse.merkzeichen_person_b.title')
@@ -189,7 +164,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
                     raise ValidationError(disability_min20_message)
             else:
                 validators.Optional()(self, field)
-                if field.data and field.data < 20:
+                if field.data and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
     @classmethod

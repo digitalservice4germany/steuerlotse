@@ -188,6 +188,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_plz': '20354',
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
+            'person_a_requests_pauschbetrag': 'no',
 
             'iban': 'DE35133713370000012345',
         }

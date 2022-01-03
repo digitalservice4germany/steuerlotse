@@ -1,16 +1,8 @@
 import PropTypes from "prop-types";
-import FieldLabelScaffolding from "../components/FieldLabelScaffolding";
 
 export const checkboxPropType = PropTypes.exact({
   errors: PropTypes.arrayOf(PropTypes.string),
   checked: PropTypes.bool,
-});
-
-export const extendedCheckboxPropType = PropTypes.exact({
-  errors: PropTypes.arrayOf(PropTypes.string),
-  checked: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  label: FieldLabelScaffolding.propTypes.label,
 });
 
 export const labelPropType = PropTypes.exact({
@@ -18,6 +10,13 @@ export const labelPropType = PropTypes.exact({
   showOptionalTag: PropTypes.bool,
   help: PropTypes.string, // field.render_kw['help']
   exampleInput: PropTypes.string, // field.render_kw["example_input"]
+});
+
+export const extendedCheckboxPropType = PropTypes.exact({
+  errors: PropTypes.arrayOf(PropTypes.string),
+  checked: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  label: labelPropType,
 });
 
 export const fieldPropType = PropTypes.exact({
@@ -29,7 +28,7 @@ export const extendedFieldPropType = PropTypes.exact({
   value: PropTypes.any,
   errors: PropTypes.arrayOf(PropTypes.string),
   name: PropTypes.string.isRequired,
-  label: FieldLabelScaffolding.propTypes.label,
+  label: labelPropType,
 });
 
 export const optionsPropType = PropTypes.arrayOf(

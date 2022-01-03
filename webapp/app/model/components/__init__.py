@@ -118,3 +118,6 @@ class HasDisabilityPersonAProps(StepFormProps):
 
 class HasDisabilityPersonBProps(StepFormProps):
     pass
+
+class PauschbetragProps(StepFormProps):
+    pauschbetrag: str

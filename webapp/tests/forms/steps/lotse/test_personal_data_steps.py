@@ -8,7 +8,7 @@ from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
-    StepTelephoneNumber, StepDisabilityPersonA, StepDisabilityPersonB
+    StepTelephoneNumber
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -448,52 +448,3 @@ class TestTelephoneNumberValidation:
             assert form.validate() is False
 
 
-class TestPersonAHasDisabilityValidation:
-    def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
-        data = MultiDict({'person_a_has_disability': 'yes'})
-        with new_test_request_context(form_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepDisabilityPersonA.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is True
-
-    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
-        data = MultiDict()
-        with new_test_request_context(form_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepDisabilityPersonA.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is False
-
-
-class TestPersonBHasDisabilityValidation:
-    def test_if_required_value_is_give_validation_should_be_success(self, new_test_request_context):
-        data = MultiDict({
-            'familienstand': 'married',
-            'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True,
-            'person_b_has_disability': 'no'
-        })
-
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
-            step = LotseStepChooser().get_correct_step(
-                StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is True
-
-    def test_if_required_value_is_not_give_validation_should_be_failure(self, new_test_request_context):
-        data = MultiDict({
-            'familienstand': 'married',
-            'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True
-        })
-
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
-            step = LotseStepChooser().get_correct_step(
-                StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() is False

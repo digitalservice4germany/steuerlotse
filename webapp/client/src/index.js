@@ -11,14 +11,16 @@ import RevocationSuccessPage from "./pages/RevocationSuccessPage";
 import DeclarationIncomesPage from "./pages/DeclarationIncomesPage";
 import TaxNumberPage from "./pages/TaxNumberPage";
 import TelephoneNumberPage from "./pages/TelephoneNumberPage";
-import MerkzeichenPersonAPage from "./pages/MerkzeichenPersonAPage";
-import MerkzeichenPersonBPage from "./pages/MerkzeichenPersonBPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import HasDisabilityPersonAPage from "./pages/HasDisabilityPersonAPage";
 import HasDisabilityPersonBPage from "./pages/HasDisabilityPersonBPage";
+import MerkzeichenPersonAPage from "./pages/MerkzeichenPersonAPage";
+import MerkzeichenPersonBPage from "./pages/MerkzeichenPersonBPage";
 import FahrkostenpauschalePersonAPage from "./pages/FahrkostenpauschalePersonAPage";
 import FahrkostenpauschalePersonBPage from "./pages/FahrkostenpauschalePersonBPage";
+import PauschbetragPersonAPage from "./pages/PauschbetragPersonAPage";
+import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -29,11 +31,13 @@ const allowedComponents = {
   DeclarationIncomesPage,
   TaxNumberPage,
   HasDisabilityPersonAPage,
-  HasDisabilityPersonBPage,
   MerkzeichenPersonAPage,
-  MerkzeichenPersonBPage,
   FahrkostenpauschalePersonAPage,
+  PauschbetragPersonAPage,
+  HasDisabilityPersonBPage,
+  MerkzeichenPersonBPage,
   FahrkostenpauschalePersonBPage,
+  PauschbetragPersonBPage,
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,

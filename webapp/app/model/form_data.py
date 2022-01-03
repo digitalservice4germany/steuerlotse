@@ -89,6 +89,7 @@ class MandatoryFormData(BaseModel):
     person_a_town: str
     person_a_has_disability: str
     person_a_has_pflegegrad: Optional[str]
+    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -98,6 +99,7 @@ class MandatoryFormData(BaseModel):
     person_b_religion: Optional[str]
     person_b_has_disability: Optional[str]
     person_b_has_pflegegrad: Optional[str]
+    person_b_requests_pauschbetrag: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -229,6 +231,7 @@ class FormDataDependencies(BaseModel):
     person_a_has_merkzeichen_bl: Optional[bool]
     person_a_has_merkzeichen_tbl: Optional[bool]
     person_a_has_merkzeichen_h: Optional[bool]
+    person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -250,6 +253,7 @@ class FormDataDependencies(BaseModel):
     person_b_has_merkzeichen_bl: Optional[bool]
     person_b_has_merkzeichen_tbl: Optional[bool]
     person_b_has_merkzeichen_h: Optional[bool]
+    person_b_requests_pauschbetrag: Optional[str]
 
     telephone_number: Optional[str]
 
@@ -388,6 +392,18 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+
+    @validator('person_a_requests_pauschbetrag')
+    def delete_if_person_a_has_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') == "yes":
+            return v
+        return None
+
+    @validator('person_b_requests_pauschbetrag')
+    def delete_if_person_b_has_no_disability(cls, v, values):
+        if values.get('person_b_has_disability') == "yes":
+            return v
+        return None
 
 
 class InputDataInvalidError(ValueError):
