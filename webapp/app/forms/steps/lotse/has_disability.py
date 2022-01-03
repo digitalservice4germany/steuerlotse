@@ -47,9 +47,6 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['personBHasDisability'] = props_dict['fields'].pop('personB_hasDisability')
 
         return render_template('react_component.html',
                                component='HasDisabilityPersonBPage',
@@ -87,10 +84,6 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
-
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['personAHasDisability'] = props_dict['fields'].pop('personA_hasDisability')
 
         return render_template('react_component.html',
                                component='HasDisabilityPersonAPage',
