@@ -47,7 +47,6 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-
         return render_template('react_component.html',
                                component='HasDisabilityPersonBPage',
                                props=props_dict,
