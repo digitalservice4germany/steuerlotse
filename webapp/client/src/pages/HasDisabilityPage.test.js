@@ -63,6 +63,7 @@ describe("HasDisabilityPage no disability", () => {
       stepHeader: {
         title: "title",
       },
+      headerIntro: "Intro",
       form: {
         ...StepFormDefault.args,
       },

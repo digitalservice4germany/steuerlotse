@@ -4,11 +4,10 @@ import { Trans, useTranslation } from "react-i18next";
 import { fieldPropType } from "../lib/propTypes";
 import HasDisabilityPage from "./HasDisabilityPage";
 
-export default function HasDisabilityPersonAPage({
+export default function HasDisabilityPersonBPage({
   stepHeader,
   form,
   fields,
-  numUsers,
   prevUrl,
 }) {
   const { t } = useTranslation();
@@ -17,27 +16,22 @@ export default function HasDisabilityPersonAPage({
     return <Trans t={t} i18nKey={key} components={{ bold: <b /> }} />;
   };
 
-  let headerIntro = translationBold("lotse.hasDisability.intro_single");
-
-  if (numUsers > 1) {
-    headerIntro = translationBold("lotse.hasDisability.intro_person_a");
-  }
-
   return (
     <HasDisabilityPage
-      {...{ stepHeader, form, headerIntro, prevUrl }}
+      {...{ stepHeader, form, prevUrl }}
+      headerIntro={translationBold("lotse.hasDisability.intro_person_b")}
       fields={{
         hasDisability: {
-          ...fields.personAHasDisability,
-          name: "person_a_has_disability",
+          ...fields.personBHasDisability,
+          name: "person_b_has_disability",
         },
       }}
     />
   );
 }
 
-HasDisabilityPersonAPage.propTypes = {
-  stepHeader: PropTypes.exact({
+HasDisabilityPersonBPage.propTypes = {
+  stepHeader: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
@@ -47,8 +41,7 @@ HasDisabilityPersonAPage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    personAHasDisability: fieldPropType,
+    personBHasDisability: fieldPropType,
   }).isRequired,
-  numUsers: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

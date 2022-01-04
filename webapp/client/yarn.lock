@@ -6698,10 +6698,10 @@ eslint-config-airbnb-base@^15.0.0:
     object.entries "^1.1.5"
     semver "^6.3.0"
 
-eslint-config-airbnb@^19.0.2:
-  version "19.0.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-19.0.2.tgz#3a1681e39b68cc6abeae58300014ed5d5706b625"
-  integrity sha512-4v5DEMVSl043LaCT+gsxPcoiIk0iYG5zxJKKjIy80H/D//2E0vtuOBWkb0CBDxjF+y26yQzspIXYuY6wMmt9Cw==
+eslint-config-airbnb@^19.0.4:
+  version "19.0.4"
+  resolved "https://registry.yarnpkg.com/eslint-config-airbnb/-/eslint-config-airbnb-19.0.4.tgz#84d4c3490ad70a0ffa571138ebcdea6ab085fdc3"
+  integrity sha512-T75QYQVQX57jiNgpF9r1KegMICE94VYwoFQyMGhrvc+lB8YF2E/M/PYDaQe1AJcWaEgqLE+ErXV1Og/+6Vyzew==
   dependencies:
     eslint-config-airbnb-base "^15.0.0"
     object.assign "^4.1.2"
@@ -12584,10 +12584,10 @@ react-helmet-async@^1.0.7:
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
 
-react-i18next@^11.15.1:
-  version "11.15.1"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.15.1.tgz#1dec5f2bf2cf7bc5043e9fcb391c9d6e24bb9bfe"
-  integrity sha512-lnje1uKu5XeM5MLvfbt1oygF+nEIZnpOM4Iu8bkx5ECD4XRYgi3SJDmolrp0EDxDHeK2GgFb+vEEK0hsZ9sjeA==
+react-i18next@^11.15.2:
+  version "11.15.2"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.15.2.tgz#5bbbf1ab208d7fb77d93aa8161e06b7d55fb35ff"
+  integrity sha512-28WlZ6tr57RQoIM1x4/gTzvzh3Vvr+YeZwJHTOqV/sLXMFbR+xzjgSMdLnOCDxmlQ0irGN2uM+HT+mYK+3bg6g==
   dependencies:
     "@babel/runtime" "^7.14.5"
     html-escaper "^2.0.2"

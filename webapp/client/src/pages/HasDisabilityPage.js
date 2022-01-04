@@ -5,33 +5,32 @@ import FormHeader from "../components/FormHeader";
 import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import Details from "../components/Details";
+import DetailsSeparated from "../components/DetailsSeparated";
 import { extendedFieldPropType } from "../lib/propTypes";
 
 export default function HasDisabilityPage({
   form,
   fields,
-  prevUrl,
   stepHeader,
   headerIntro,
+  prevUrl,
 }) {
   const { t } = useTranslation();
 
   const translationBold = function translationBold(key) {
     return <Trans t={t} i18nKey={key} components={{ bold: <b /> }} />;
   };
-
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormHeader title={stepHeader.title} intro={headerIntro} />
       <StepForm {...form}>
-        <Details // TODO Replace with DetailSeparate when component has been merged
+        <DetailsSeparated
           title={t("lotse.hasDisability.details.title")}
           detailsId={`${fields.hasDisability.name}_detail`}
         >
           {translationBold("lotse.hasDisability.details.text")}
-        </Details>
+        </DetailsSeparated>
         <FormFieldRadioGroup
           fieldId={fields.hasDisability.name}
           fieldName={fields.hasDisability.name}
@@ -58,7 +57,8 @@ HasDisabilityPage.propTypes = {
   stepHeader: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,
-  headerIntro: PropTypes.string.isRequired,
+  headerIntro: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    .isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
     csrfToken: PropTypes.string,
@@ -68,6 +68,5 @@ HasDisabilityPage.propTypes = {
   fields: PropTypes.exact({
     hasDisability: extendedFieldPropType,
   }).isRequired,
-  numUsers: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

@@ -65,6 +65,10 @@ const YesNo = styled.div`
     opacity: 0;
     position: absolute;
   }
+
+  label {
+    margin: 0; // Overwrite general label styling
+  }
 `;
 
 function FormFieldYesNo({
