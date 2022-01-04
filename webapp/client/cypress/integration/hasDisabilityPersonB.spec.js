@@ -32,11 +32,11 @@ describe("PersonBHasDisability", () => {
     });
 
     it("Should check radio button for label yes", () => {
-      cy.get("#person_b_has_disabilityyes").should("be.checked");
+      cy.get("#person_b_has_disability-yes").should("be.checked");
     });
 
     it("Should not check radio button for label no", () => {
-      cy.get("#person_b_has_disabilityno").should("not.be.checked");
+      cy.get("#person_b_has_disability-no").should("not.be.checked");
     });
 
     it("Should link forward to merkzeichen person b page", () => {
@@ -57,11 +57,11 @@ describe("PersonBHasDisability", () => {
     });
 
     it("Should check radio button for label no", () => {
-      cy.get("#person_b_has_disabilityno").should("be.checked");
+      cy.get("#person_b_has_disability-no").should("be.checked");
     });
 
     it("Should not check radio button for label yes", () => {
-      cy.get("#person_b_has_disabilityyes").should("not.be.checked");
+      cy.get("#person_b_has_disability-yes").should("not.be.checked");
     });
 
     it("Should link forward to telephone number page", () => {
