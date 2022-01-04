@@ -5,10 +5,12 @@ from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPaus
 
 from unittest.mock import patch, MagicMock
 
+
 class TestPauschbetragPersonAValidation:
-    def test_if_person_a_has_disability_is_given_then_validation_should_be_success(self, new_test_request_context):
+
+    def test_if_person_a_requests_pauschbetrag_is_given_then_validation_should_be_success(self, new_test_request_context):
         form_data = {'person_a_requests_pauschbetrag': 'no'}
-        stored_data = {'person_a_has_disability':'yes'}
+        stored_data = {'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
         with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(form_data))
@@ -17,7 +19,7 @@ class TestPauschbetragPersonAValidation:
             
     def test_if_person_a_requests_pauschbetrag_is_not_given_then_validation_should_be_false(self, new_test_request_context):
         form_data = {}
-        stored_data = {'person_a_has_disability':'yes'}
+        stored_data = {'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
         with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(form_data))
@@ -127,17 +129,18 @@ class TestPauschbetragPersonBValidation:
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'familienstand' 
-            
-            
-            
+
+
 class TestPauschbetragPersonBValidation:
+
     def test_if_person_b_has_disability_is_given_then_validation_should_be_success(self, new_test_request_context):
         form_data = {'person_b_requests_pauschbetrag': 'no'}
         stored_data = {
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
-            'person_b_has_disability':'yes'
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
         }
         with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
@@ -151,7 +154,8 @@ class TestPauschbetragPersonBValidation:
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
-            'person_b_has_disability':'yes'
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
         }
         with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
