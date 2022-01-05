@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch, MagicMock
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
