@@ -74,7 +74,7 @@ class TestStepSummaryHandle:
         missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
 
         with patch('app.forms.steps.lotse.confirmation.flash') as mock_flash, \
-            patch('app.model.form_data.ngettext', MagicMock(side_effect=lambda text_id, _, **kwargs: text_id)), \
+            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
             patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
                   MagicMock(side_effect=missing_fields_error)):
             with new_test_request_context(stored_data=data_with_missing_fields):
@@ -87,9 +87,9 @@ class TestStepSummaryHandle:
         data_with_missing_fields = {'steuernummer': 'C3P0'}
         missing_fields = ['spacecraft', 'droids']
         missing_fields_error = MandatoryFieldMissingValidationError(missing_fields)
-
+        
         with patch('app.forms.steps.lotse.confirmation.flash') as mock_flash, \
-            patch('app.model.form_data.ngettext', MagicMock(side_effect=lambda text_id, _, **kwargs: text_id)), \
+            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'), \
             patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_mandatory_fields',
                   MagicMock(side_effect=missing_fields_error)):
             with new_test_request_context(stored_data=data_with_missing_fields):

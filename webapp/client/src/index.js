@@ -22,8 +22,6 @@ import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 import FahrkostenpauschalePersonAPage from "./pages/FahrkostenpauschalePersonAPage";
 import FahrkostenpauschalePersonBPage from "./pages/FahrkostenpauschalePersonBPage";
 import NoPauschbetragPage from "./pages/NoPauschbetragPage";
-import PauschbetragPersonAPage from "./pages/PauschbetragPersonAPage";
-import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 
 const allowedComponents = {
   ConfirmationPage,
@@ -39,8 +37,6 @@ const allowedComponents = {
   NoPauschbetragPage,
   PauschbetragPersonAPage,
   PauschbetragPersonBPage,
-  PersonAHasDisabilityPage,
-  PersonBHasDisabilityPage,
   RegistrationPage,
   RevocationPage,
   RevocationSuccessPage,

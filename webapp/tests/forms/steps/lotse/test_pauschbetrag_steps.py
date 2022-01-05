@@ -89,6 +89,10 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
         stored_data = {
             'person_a_has_disability':'yes', 
             'person_a_has_pflegegrad': True, 
+            'person_a_disability_degree': 25,
+            'person_a_has_merkzeichen_bl': True,
+            'person_a_has_merkzeichen_tbl': True,
+            'person_a_has_merkzeichen_h': True
         }
         value = 'yes'
         pauschbetrag_result = "1"
@@ -97,6 +101,8 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
             with patch('app.forms.steps.lotse.pauschbetrag.StepPauschbetragPersonA.get_pauschbetrag', MagicMock(return_value=pauschbetrag_result)):
                 step = LotseStepChooser().get_correct_step(
                     StepPauschbetragPersonA.name, True, ImmutableMultiDict({}))
+                
+                assert step.name == StepPauschbetragPersonA.name
             
                 overview_value = step.get_overview_value_representation(value)
             
