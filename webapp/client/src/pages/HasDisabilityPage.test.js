@@ -1,29 +1,32 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import PersonBHasDisabilityPage from "./PersonBHasDisabilityPage";
+import HasDisabilityPage from "./HasDisabilityPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
-describe("PersonBHasDisabilityPage", () => {
+describe("HasDisabilityPage for single person", () => {
   let props;
 
   beforeEach(() => {
     props = {
       stepHeader: {
-        title: "title",
+        title: "Title",
       },
+      headerIntro: "Intro",
       form: {
         ...StepFormDefault.args,
       },
       fields: {
-        personBHasDisability: {
+        hasDisability: {
           value: "yes",
           errors: [],
+          name: "has_disability",
         },
       },
       prevUrl: "prevUrl",
+      numUsers: 1,
     };
 
-    render(<PersonBHasDisabilityPage {...props} />);
+    render(<HasDisabilityPage {...props} />);
   });
 
   it("should render selected value yes", () => {
@@ -42,9 +45,17 @@ describe("PersonBHasDisabilityPage", () => {
       expect.stringContaining(props.prevUrl)
     );
   });
+
+  it("should render step title", () => {
+    expect(screen.getByText("Title")).toBeInTheDocument();
+  });
+
+  it("should render intro", () => {
+    expect(screen.getByText("Intro")).toBeInTheDocument();
+  });
 });
 
-describe("PersonBHasDisabilityPage with no disability", () => {
+describe("HasDisabilityPage no disability", () => {
   let props;
 
   beforeEach(() => {
@@ -52,19 +63,22 @@ describe("PersonBHasDisabilityPage with no disability", () => {
       stepHeader: {
         title: "title",
       },
+      headerIntro: "Intro",
       form: {
         ...StepFormDefault.args,
       },
       fields: {
-        personBHasDisability: {
+        hasDisability: {
           value: "no",
           errors: [],
+          name: "has_disability",
         },
       },
       prevUrl: "prevUrl",
+      numUsers: 1,
     };
 
-    render(<PersonBHasDisabilityPage {...props} />);
+    render(<HasDisabilityPage {...props} />);
   });
 
   it("should render selected value no", () => {

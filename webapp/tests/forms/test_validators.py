@@ -5,8 +5,9 @@ from wtforms import IntegerField, ValidationError, StringField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import UnlockCodeField, SteuerlotseStringField
-from app.forms.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, ValidUnlockCode, \
-    ValidUnlockCodeCharacterSet, ValidHessenTaxNumber, ValidIban, NoZero, MaximumLength
+from app.forms.validations.validators import IntegerLength, ValidIdNr, DecimalOnly, ValidElsterCharacterSet, \
+    ValidUnlockCode, \
+    ValidUnlockCodeCharacterSet, ValidHessenTaxNumber, ValidIban, NoZero, MaximumLength, ValidDisabilityDegree
 
 
 @pytest.fixture()
@@ -401,3 +402,43 @@ class TestValidHessenTaxNumber:
 
         with pytest.raises(ValidationError):
             ValidHessenTaxNumber().__call__(tax_number_form, tax_number_field)
+
+
+@pytest.fixture
+def integer_field():
+    return IntegerField()
+
+
+class TestValidDisabilityDegree:
+    def test_if_no_integer_then_raise_validation_error(self, steuerlotse_base_form, integer_field):
+        non_integer_values = ["some string", 10.0, [12], {'value': 14}]
+        for non_integer_value in non_integer_values:
+            integer_field.data = non_integer_value
+
+            with pytest.raises(ValidationError):
+                ValidDisabilityDegree()(steuerlotse_base_form, integer_field)
+
+    def test_if_invalid_value_then_raise_validation_error(self):
+        invalid_values = [21, 99, 101, 110]
+
+        for invalid_value in invalid_values:
+            integer_field.data = invalid_value
+
+            with pytest.raises(ValidationError):
+                ValidDisabilityDegree()(steuerlotse_base_form, integer_field)
+
+    def test_if_value_smaller_than_20_then_raise_no_error(self):
+        small_values = [0, 1, 15, 19]
+
+        for small_value in small_values:
+            integer_field.data = small_value
+
+            ValidDisabilityDegree()(steuerlotse_base_form, integer_field)
+
+    def test_if_empty_value_then_raise_no_error(self):
+        empty_values = [[], None]
+
+        for empty_value in empty_values:
+            integer_field.data = empty_value
+
+            ValidDisabilityDegree()(steuerlotse_base_form, integer_field)

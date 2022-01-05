@@ -5,10 +5,14 @@ from flask_babel import _
 
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
+from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
-from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability
+from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
+
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -41,10 +45,13 @@ class LotseStepChooser(StepChooser):
         'person_a_plz': '20354',
         'person_a_town': 'Hamburg',
         'person_a_religion': 'none',
-        'person_a_beh_grad': 25,
-        'person_a_blind': True,
-        'person_a_gehbeh': True,
         'person_a_has_disability': 'yes',
+        'person_a_has_pflegegrad': 'no',
+        'person_a_disability_degree': 80,
+        'person_a_has_merkzeichen_bl': True,
+        'person_a_has_merkzeichen_g': True,
+        'person_a_requests_pauschbetrag': 'yes',
+        'person_a_requests_fahrkostenpauschale': 'yes',
 
         'person_b_idnr': '02293417683',
         'person_b_dob': datetime.date(1951, 2, 25),
@@ -52,9 +59,9 @@ class LotseStepChooser(StepChooser):
         'person_b_last_name': 'Mustername',
         'person_b_same_address': 'yes',
         'person_b_religion': 'rk',
-        'person_b_blind': False,
-        'person_b_gehbeh': False,
-        'person_b_has_disability': 'no',
+        'person_b_has_disability': 'yes',
+        'person_b_has_pflegegrad': 'no',
+        'person_b_has_merkzeichen_h': True,
 
         # 'is_user_account_holder': 'yes', use for single user
         'account_holder': 'person_a',
@@ -105,10 +112,14 @@ class LotseStepChooser(StepChooser):
             steps=[
                 StepSteuernummer,
                 StepPersonA,
-                StepPersonAHasDisability,
+                StepDisabilityPersonA,
+                StepMerkzeichenPersonA,
+                StepPauschbetragPersonA,
                 StepFahrkostenpauschalePersonA,
                 StepPersonB,
-                StepPersonBHasDisability,
+                StepDisabilityPersonB,
+                StepMerkzeichenPersonB,
+                StepPauschbetragPersonB,
                 StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,

@@ -6,13 +6,14 @@ from wtforms.validators import InputRequired
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
+from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
+from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
+from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.model.components import FahrkostenpauschaleProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition, ShowPersonBPrecondition, StepFamilienstand, get_number_of_users
-
 
 def calculate_fahrkostenpauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False,
                                      has_merkzeichen_h=False, has_merkzeichen_ag=False, has_merkzeichen_g=False):
@@ -34,12 +35,13 @@ class StepFahrkostenpauschale(LotseFormSteuerlotseStep):
 
         return result
 
+
 class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
     name = 'person_a_requests_fahrkostenpauschale'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l(
         'form.lotse.mandatory_data.label'))
 
-    preconditions = [PersonAHasDisabilityPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_fahrkostenpauschale = SelectField(
@@ -69,11 +71,6 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['personARequestsFahrkostenpauschale'] = props_dict['fields'].pop(
-            'personA_requestsFahrkostenpauschale')
-
         return render_template('react_component.html',
                                component='FahrkostenpauschalePersonAPage',
                                props=props_dict,
@@ -92,13 +89,14 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
             has_merkzeichen_g=self.stored_data.get('person_a_has_merkzeichen_g', False)
         )
 
+
 class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
     name = 'person_b_requests_fahrkostenpauschale'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l(
         'form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_fahrkostenpauschale.label')
-    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_fahrkostenpauschale = SelectField(
@@ -125,11 +123,6 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
-
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['personBRequestsFahrkostenpauschale'] = props_dict['fields'].pop(
-            'personB_requestsFahrkostenpauschale')
 
         return render_template('react_component.html',
                                component='FahrkostenpauschalePersonBPage',

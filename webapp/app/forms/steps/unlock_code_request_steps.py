@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr
+from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.model.components import RegistrationProps
 from app.model.components.helpers import form_fields_dict
@@ -51,10 +51,6 @@ class UnlockCodeRequestInputStep(FormStep):
             terms_of_service_link=url_for('agb'),
             data_privacy_link=url_for('data_privacy'),
         ).camelized_dict()
-
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['registrationConfirmEData'] = props_dict['fields'].pop('registrationConfirmE_data')
 
         return render_template('react_component.html',
             component='RegistrationPage',

@@ -16,7 +16,7 @@ class TestStepFahrkostenpauschalePersonA:
         with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepFahrkostenpauschalePersonA.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'person_a_has_disability'
+            assert step.redirection_step_name == 'has_disability_person_a'
             
             
 class TestStepFahrkostenpauschalePersonB:
@@ -46,7 +46,7 @@ class TestStepFahrkostenpauschalePersonB:
         with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepFahrkostenpauschalePersonB.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'person_b_has_disability'
+            assert step.redirection_step_name == 'has_disability_person_b'
             
     
     def test_if_precondition_single_should_return_a_redirect_to_familienstand(self, new_test_request_context):

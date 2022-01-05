@@ -72,8 +72,7 @@ def valid_person_b_data():
             'person_b_first_name': 'Ronald Arthur', 'person_b_religion': 'none',
             'person_b_street': 'The Burrow', 'person_b_street_number': 7,
             'person_b_street_number_ext': 'c', 'person_b_address_ext': 'Sixth floor',
-            'person_b_plz': '12345', 'person_b_town': 'Devon', 'person_b_beh_grad': 25,
-            'person_b_blind': True, 'person_b_gehbeh': False}
+            'person_b_plz': '12345', 'person_b_town': 'Devon'}
 
 
 class TestShowPersonB:
@@ -169,7 +168,8 @@ class TestShowPersonB:
 class TestMandatoryFormData(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.valid_data_person_a = {
+
+        self.valid_general_data_person_a = {
             'person_a_idnr': '04452397610',
             'declaration_edaten': True,
             'declaration_incomes': True,
@@ -188,25 +188,28 @@ class TestMandatoryFormData(unittest.TestCase):
             'person_a_plz': '20354',
             'person_a_town': 'Hamburg',
             'person_a_religion': 'none',
-            'person_a_has_disability': 'yes',
-            'person_a_beh_grad': 25,
-            'person_a_blind': True,
-            'person_a_gehbeh': True,
+            'person_a_requests_pauschbetrag': 'no',
 
             'iban': 'DE35133713370000012345',
         }
 
-        self.valid_data_person_b = {
+        self.valid_data_person_a = {
+            **self.valid_general_data_person_a,
+            **{'person_a_has_disability': 'no'}
+        }
+
+        self.valid_general_data_person_b = {
             'person_b_idnr': '04452397610',
             'person_b_dob': datetime.date(1951, 2, 25),
             'person_b_first_name': 'Gerta',
             'person_b_last_name': 'Mustername',
             'person_b_same_address': 'yes',
             'person_b_religion': 'rk',
-            'person_b_blind': False,
-            'person_b_gehbeh': False,
-            'person_b_has_disability': 'no',
-            'account_holder': 'person_a'
+        }
+
+        self.valid_data_person_b = {
+            **self.valid_general_data_person_b,
+            **{'person_b_has_disability': 'no'}
         }
 
         self.valid_steuernummer = {
@@ -222,11 +225,16 @@ class TestMandatoryFormData(unittest.TestCase):
             'request_new_tax_number': 'yes'
         }
 
-        self.married_familienstand = {
+        self.familienstand_without_account_holder = {
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
+        }
+
+        self.valid_familienstand = {
+            **self.familienstand_without_account_holder,
+            **{'account_holder': 'person_a'}
         }
 
         self.single_familienstand_data = {
@@ -246,7 +254,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'bundesland': 'BY',
         }
         with self.assertRaises(ValidationError) as validation_error:
-            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.married_familienstand, **invalid_tax_nr_data})
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.familienstand_without_account_holder, **invalid_tax_nr_data})
         self.assertIsInstance(validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual('steuernummer', validation_error.exception.raw_errors[0]._loc)
 
@@ -257,7 +265,7 @@ class TestMandatoryFormData(unittest.TestCase):
             'request_new_tax_number': 'yes'
         }
         with self.assertRaises(ValidationError) as validation_error:
-            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.married_familienstand, **invalid_tax_nr_data} )
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.familienstand_without_account_holder, **invalid_tax_nr_data} )
         self.assertIsInstance(validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual('bufa_nr', validation_error.exception.raw_errors[0]._loc)
 
@@ -268,13 +276,13 @@ class TestMandatoryFormData(unittest.TestCase):
             'bufa_nr': '9201',
         }
         with self.assertRaises(ValidationError) as validation_error:
-            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.married_familienstand, **invalid_tax_nr_data} )
+            MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.familienstand_without_account_holder, **invalid_tax_nr_data} )
         self.assertIsInstance(validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual('request_new_tax_number', validation_error.exception.raw_errors[0]._loc)
 
     def test_if_all_data_is_provided_then_fill_familienstand_correctly(self):
-        mandatory_data: MandatoryFormData = MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.valid_steuernummer, **self.married_familienstand})
-        self.assertEqual(FamilienstandModel.parse_obj(self.married_familienstand), mandatory_data.familienstandStruct)
+        mandatory_data: MandatoryFormData = MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b, **self.valid_steuernummer, **self.valid_familienstand})
+        self.assertEqual(FamilienstandModel.parse_obj(self.familienstand_without_account_holder), mandatory_data.familienstandStruct)
 
     def test_if_show_person_b_false_then_raise_no_error_if_person_b_fields_missing(self):
         with patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=False)):
@@ -282,17 +290,69 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_show_person_b_true_then_raise_error_if_person_b_fields_missing(self):
         expected_missing_fields = ['person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
-                                   'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh',
-                                   'person_b_has_disability', 'account_holder']
+                                   'person_b_first_name', 'person_b_religion', 'person_b_has_disability',
+                                   'account_holder']
         with patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=True)):
             with self.assertRaises(ValidationError) as validation_error:
-                MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer, **self.married_familienstand})
+                MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer, **self.familienstand_without_account_holder})
 
             self.assertTrue(all([isinstance(raw_e.exc, MissingError) for raw_e in validation_error.exception.raw_errors]))
             self.assertEqual(expected_missing_fields, [raw_e._loc for raw_e in validation_error.exception.raw_errors])
 
+    def test_if_no_pflegegrad_set_and_person_a_has_disability_then_raise_missing_error(self):
+        with pytest.raises(ValidationError) as validation_error:
+            MandatoryFormData.parse_obj({**self.valid_general_data_person_a,
+                                         **{'person_a_has_disability': 'yes'},
+                                         **self.single_familienstand_data,
+                                         **self.valid_steuernummer})
+
+        assert isinstance(validation_error.value.raw_errors[0].exc, MissingError) is True
+        assert validation_error.value.raw_errors[0]._loc == 'person_a_has_pflegegrad'
+        assert len(validation_error.value.raw_errors) == 1
+
+    def test_if_pflegegrad_set_and_person_a_has_disability_then_raise_no_error(self):
+        MandatoryFormData.parse_obj({**self.valid_general_data_person_a,
+                                     **{'person_a_has_disability': 'yes',
+                                        'person_a_has_pflegegrad': 'no'},
+                                     **self.single_familienstand_data,
+                                     **self.valid_steuernummer})
+
+    def test_if_no_pflegegrad_set_and_person_a_has_no_disability_then_raise_no_error(self):
+        MandatoryFormData.parse_obj({**self.valid_general_data_person_a,
+                                     **{'person_a_has_disability': 'no'},
+                                     **self.single_familienstand_data,
+                                     **self.valid_steuernummer})
+
+    def test_if_no_pflegegrad_set_and_person_b_has_disability_then_raise_missing_error(self):
+        with pytest.raises(ValidationError) as validation_error:
+            MandatoryFormData.parse_obj({**self.valid_data_person_a,
+                                         **self.valid_general_data_person_b,
+                                         **{'person_b_has_disability': 'yes'},
+                                         **self.valid_familienstand,
+                                         **self.valid_steuernummer})
+
+        assert isinstance(validation_error.value.raw_errors[0].exc, MissingError) is True
+        assert validation_error.value.raw_errors[0]._loc == 'person_b_has_pflegegrad'
+        assert len(validation_error.value.raw_errors) == 1
+
+    def test_if_pflegegrad_set_and_person_b_has_disability_then_raise_no_error(self):
+        MandatoryFormData.parse_obj({**self.valid_data_person_a,
+                                     **self.valid_general_data_person_b,
+                                     **{'person_b_has_disability': 'yes',
+                                        'person_b_has_pflegegrad': 'no'},
+                                     **self.valid_familienstand,
+                                     **self.valid_steuernummer})
+
+    def test_if_no_pflegegrad_set_and_person_b_has_no_disability_then_raise_no_error(self):
+        MandatoryFormData.parse_obj({**self.valid_data_person_a,
+                                     **self.valid_general_data_person_b,
+                                     **{'person_b_has_disability': 'no'},
+                                     **self.valid_familienstand,
+                                     **self.valid_steuernummer})
+
 
 class TestFormDataDependencies:
+
     def test_if_no_tax_number_exists_then_delete_tax_number(self, tax_number_page_data):
         input_data = tax_number_page_data
         input_data['steuernummer_exists'] = "no"
@@ -442,3 +502,72 @@ class TestFormDataDependencies:
         with patch('app.model.form_data.show_person_b', return_value=False):
             returned_data = FormDataDependencies.parse_obj(valid_stmind_data).dict(exclude_none=True)
             assert returned_data == valid_stmind_data
+
+    def test_if_person_a_has_no_disability_then_delete_person_a_disability_info(self):
+        disability_data = {'person_a_has_disability': 'no',
+                           'person_a_has_pflegegrad': 'yes',
+                           'person_a_disability_degree': 20,
+                           'person_a_has_merkzeichen_g': True,
+                           'person_a_has_merkzeichen_ag': True,
+                           'person_a_has_merkzeichen_bl': True,
+                           'person_a_has_merkzeichen_tbl': True,
+                           'person_a_has_merkzeichen_h': True,
+                           'person_a_request_pauschbetrag': 'yes',
+                           'person_a_request_fahrkostenpauschale': 'yes',
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == {'person_a_has_disability': 'no'}
+
+    def test_if_person_a_has_disability_then_do_not_delete_person_a_disability_info(self):
+        disability_data = {'person_a_has_disability': 'yes',
+                           'person_a_has_pflegegrad': 'yes',
+                           'person_a_disability_degree': 20,
+                           'person_a_has_merkzeichen_g': True,
+                           'person_a_has_merkzeichen_ag': True,
+                           'person_a_has_merkzeichen_bl': True,
+                           'person_a_has_merkzeichen_tbl': True,
+                           'person_a_has_merkzeichen_h': True,
+                           'person_a_requests_pauschbetrag': 'yes',
+                           'person_a_requests_fahrkostenpauschale': 'yes',
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == disability_data
+
+    def test_if_person_b_has_no_disability_then_delete_person_b_disability_info(self):
+        disability_data = {'person_b_has_disability': 'no',
+                           'person_b_has_pflegegrad': 'yes',
+                           'person_b_disability_degree': 20,
+                           'person_b_has_merkzeichen_g': True,
+                           'person_b_has_merkzeichen_ag': True,
+                           'person_b_has_merkzeichen_bl': True,
+                           'person_b_has_merkzeichen_tbl': True,
+                           'person_b_has_merkzeichen_h': True,
+                           'person_b_requests_pauschbetrag': 'yes',
+                           'person_b_requests_fahrkostenpauschale': 'yes',
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == {'person_b_has_disability': 'no'}
+
+    def test_if_person_b_has_disability_then_do_not_delete_person_b_disability_info(self):
+        disability_data = {'person_b_has_disability': 'yes',
+                           'person_b_has_pflegegrad': 'yes',
+                           'person_b_disability_degree': 20,
+                           'person_b_has_merkzeichen_g': True,
+                           'person_b_has_merkzeichen_ag': True,
+                           'person_b_has_merkzeichen_bl': True,
+                           'person_b_has_merkzeichen_tbl': True,
+                           'person_b_has_merkzeichen_h': True,
+                           'person_b_requests_pauschbetrag': 'yes',
+                           'person_b_requests_fahrkostenpauschale': 'yes',
+                           }
+
+        returned_data = FormDataDependencies.parse_obj(disability_data).dict(exclude_none=True)
+
+        assert returned_data == disability_data
+

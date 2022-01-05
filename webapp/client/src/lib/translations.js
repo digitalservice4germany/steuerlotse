@@ -78,11 +78,11 @@ const translations = {
     },
     hasDisability: {
       intro_single:
-        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> in Anspruch nehmen.",
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
       intro_person_a:
-        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person A in Anspruch nehmen.",
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen für Person A in Anspruch nehmen.",
       intro_person_b:
-        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie <bold>steuerliche Vergünstigungen</bold> für Person B in Anspruch nehmen.",
+        "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen für Person B in Anspruch nehmen.",
       details: {
         title: "Infos zu den steuerlichen Vergünstigungen",
         text: "Bei einer Behinderung besteht in der Regel Anspruch auf den <bold>Pauschbetrag für Menschen mit Behinderung.</bold> Die Höhe des Pauschbetrags ist vom Grad der Behinderung abhängig. Menschen mit Behinderung können unter bestimmten Voraussetzungen außerdem eine <bold>Pauschale für Fahrtkosten</bold> beantragen. Wählen Sie hier aus, ob Sie Angaben zu einer Behinderung machen möchten.",
@@ -148,7 +148,7 @@ const translations = {
     },
     fahrkostenpauschale: {
       introText:
-        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}}</bold> Euro abzüglich der zumutbaren Belastung. Einzelne Fahrten können Sie nicht mehr geltend machen.",
+        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}} Euro abzüglich der zumutbaren Belastung</bold> . Einzelne Fahrten können Sie nicht mehr geltend machen.",
       requestsFahrkostenpauschale: {
         yesLabel: "Pauschale beantragen",
         noLabel: "Pauschale nicht beantragen",
@@ -272,16 +272,6 @@ const translations = {
     yesNoSwitch: {
       Yes: "Ja",
       No: "Nein",
-    },
-  },
-  stories: {
-    fahrkostenpauschale: {
-      introText:
-        "Auf Basis Ihrer Angaben haben Sie Anspruch auf die behinderungsbedingte Fahrtkostenpauschale von <bold>{{fahrkostenpauschaleAmount}}</bold> Euro abzüglich der zumutbaren Belastung. Einzelne Fahrten können Sie nicht mehr geltend machen.",
-      requestsFahrkostenpauschale: {
-        yesLabel: "Pauschale beantragen",
-        noLabel: "Pauschale nicht beantragen",
-      },
     },
   },
 };

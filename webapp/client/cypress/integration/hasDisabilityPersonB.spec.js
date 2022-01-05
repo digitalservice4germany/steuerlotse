@@ -11,7 +11,7 @@ describe("PersonBHasDisability", () => {
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
       });
-      cy.visit("/lotse/step/person_b_has_disability");
+      cy.visit("/lotse/step/has_disability_person_b");
     });
 
     it("Should link back to person b page", () => {
@@ -28,23 +28,20 @@ describe("PersonBHasDisability", () => {
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
       });
-      cy.visit("/lotse/step/person_b_has_disability");
+      cy.visit("/lotse/step/has_disability_person_b");
     });
 
     it("Should check radio button for label yes", () => {
-      cy.get("#person_b_has_disabilityyes").should("be.checked");
+      cy.get("#person_b_has_disability-yes").should("be.checked");
     });
 
     it("Should not check radio button for label no", () => {
-      cy.get("#person_b_has_disabilityno").should("not.be.checked");
+      cy.get("#person_b_has_disability-no").should("not.be.checked");
     });
 
-    it("Should link forward to person b requests fahrkostenpauschale", () => {
+    it("Should link forward to merkzeichen person b page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should(
-        "include",
-        "/lotse/step/person_b_requests_fahrkostenpauschale"
-      );
+      cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
 
@@ -56,15 +53,20 @@ describe("PersonBHasDisability", () => {
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "no",
       });
-      cy.visit("/lotse/step/person_b_has_disability");
+      cy.visit("/lotse/step/has_disability_person_b");
     });
 
     it("Should check radio button for label no", () => {
-      cy.get("#person_b_has_disabilityno").should("be.checked");
+      cy.get("#person_b_has_disability-no").should("be.checked");
     });
 
     it("Should not check radio button for label yes", () => {
-      cy.get("#person_b_has_disabilityyes").should("not.be.checked");
+      cy.get("#person_b_has_disability-yes").should("not.be.checked");
+    });
+
+    it("Should link forward to telephone number page", () => {
+      cy.get("button[type=submit]").click();
+      cy.url().should("include", "/lotse/step/telephone_number");
     });
   });
 });

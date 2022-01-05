@@ -5,9 +5,9 @@ from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import LegacySteuerlotseDateField, SteuerlotseStringField, LegacyIdNrField
+from app.forms.fields import LegacySteuerlotseDateField, LegacyIdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr
+from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.model.components import RevocationProps, RevocationSuccessProps
 from app.model.components.helpers import form_fields_dict
