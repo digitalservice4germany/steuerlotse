@@ -36,20 +36,15 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
         person_a_has_merkzeichen_g = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')},
-            name='person_a_has_merkzeichen_g')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
         person_a_has_merkzeichen_ag = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')},
-            name='person_a_has_merkzeichen_ag')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
         person_a_has_merkzeichen_bl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')},
-            name='person_a_has_merkzeichen_bl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')})
         person_a_has_merkzeichen_tbl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')},
-            name='person_a_has_merkzeichen_tbl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')})
         person_a_has_merkzeichen_h = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')},
-            name='person_a_has_merkzeichen_h')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')})
 
         def validate_person_a_disability_degree(self, field):
             if self.person_a_has_merkzeichen_g.data:
@@ -134,20 +129,15 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
         person_b_has_merkzeichen_g = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')},
-            name='person_b_has_merkzeichen_g')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
         person_b_has_merkzeichen_ag = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')},
-            name='person_b_has_merkzeichen_ag')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
         person_b_has_merkzeichen_bl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')},
-            name='person_b_has_merkzeichen_bl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')})
         person_b_has_merkzeichen_tbl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')},
-            name='person_b_has_merkzeichen_tbl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')})
         person_b_has_merkzeichen_h = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')},
-            name='person_b_has_merkzeichen_h')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')})
 
         def validate_person_b_disability_degree(self, field):
             if self.person_b_has_merkzeichen_g.data:

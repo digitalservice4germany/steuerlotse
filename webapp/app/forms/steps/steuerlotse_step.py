@@ -158,8 +158,8 @@ class FormSteuerlotseStep(SteuerlotseStep):
         # If `form_data` is present it will always override `data` during
         # value binding. For `BooleanFields` an empty/missing value in the `form_data`
         # will lead to an unchecked box.
-        if len(form_data) == 0:
-            form_data = None
+        # if len(form_data) == 0:
+            # form_data = None
 
         return cls.InputForm(form_data, **prefilled_data)
 
