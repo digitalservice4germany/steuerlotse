@@ -7,6 +7,7 @@ from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
+from app.forms.steps.lotse.pauschbetrag import HasMerkzeichenPersonAPrecondition, HasMerkzeichenPersonBPrecondition
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
@@ -46,7 +47,7 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l(
         'form.lotse.mandatory_data.label'))
 
-    preconditions = [HasDisabilityPersonAPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_fahrkostenpauschale = SelectField(
@@ -100,7 +101,7 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
         'form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_fahrkostenpauschale.label')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasMerkzeichenPersonBPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_fahrkostenpauschale = SelectField(
