@@ -94,15 +94,6 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url,
         ).camelized_dict()
 
-        # Manually fix Humps error to camelize individual letters correctly.
-        props_dict['fields']['personAHasPflegegrad'] = props_dict['fields'].pop('personA_hasPflegegrad')
-        props_dict['fields']['personADisabilityDegree'] = props_dict['fields'].pop('personA_disabilityDegree')
-        props_dict['fields']['personAHasMerkzeichenG'] = props_dict['fields'].pop('personA_hasMerkzeichenG')
-        props_dict['fields']['personAHasMerkzeichenAg'] = props_dict['fields'].pop('personA_hasMerkzeichenAg')
-        props_dict['fields']['personAHasMerkzeichenBl'] = props_dict['fields'].pop('personA_hasMerkzeichenBl')
-        props_dict['fields']['personAHasMerkzeichenTbl'] = props_dict['fields'].pop('personA_hasMerkzeichenTbl')
-        props_dict['fields']['personAHasMerkzeichenH'] = props_dict['fields'].pop('personA_hasMerkzeichenH')
-
         return render_template('react_component.html',
                                component='MerkzeichenPersonAPage',
                                props=props_dict,
@@ -173,15 +164,6 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url,
         ).camelized_dict()
-
-        # Manually fix Humps error to camelize individual letters correctly.
-        props_dict['fields']['personBHasPflegegrad'] = props_dict['fields'].pop('personB_hasPflegegrad')
-        props_dict['fields']['personBDisabilityDegree'] = props_dict['fields'].pop('personB_disabilityDegree')
-        props_dict['fields']['personBHasMerkzeichenG'] = props_dict['fields'].pop('personB_hasMerkzeichenG')
-        props_dict['fields']['personBHasMerkzeichenAg'] = props_dict['fields'].pop('personB_hasMerkzeichenAg')
-        props_dict['fields']['personBHasMerkzeichenBl'] = props_dict['fields'].pop('personB_hasMerkzeichenBl')
-        props_dict['fields']['personBHasMerkzeichenTbl'] = props_dict['fields'].pop('personB_hasMerkzeichenTbl')
-        props_dict['fields']['personBHasMerkzeichenH'] = props_dict['fields'].pop('personB_hasMerkzeichenH')
 
         return render_template('react_component.html',
                                component='MerkzeichenPersonBPage',

@@ -1,9 +1,8 @@
 from flask import render_template
 from flask_babel import lazy_gettext as _l, _, ngettext
 from flask_wtf.csrf import generate_csrf
-from pydantic import validator, ValidationError
+from pydantic import validator
 from pydantic.main import BaseModel
-from wtforms import ValidationError
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
@@ -47,10 +46,6 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['personBHasDisability'] = props_dict['fields'].pop('personB_hasDisability')
-
         return render_template('react_component.html',
                                component='HasDisabilityPersonBPage',
                                props=props_dict,
@@ -88,41 +83,11 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
-        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
-        props_dict['fields']['personAHasDisability'] = props_dict['fields'].pop('personA_hasDisability')
-
         return render_template('react_component.html',
                                component='HasDisabilityPersonAPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
-
-
-class PersonAHasDisabilityPrecondition(BaseModel):
-    _step_to_redirect_to = StepDisabilityPersonA.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
-
-    person_a_has_disability: str
-
-    @validator('person_a_has_disability', always=True)
-    def has_to_be_yes(cls, value):
-        if value != 'yes':
-            raise ValidationError
-        return value
-
-
-class PersonBHasDisabilityPrecondition(BaseModel):
-    _step_to_redirect_to = StepDisabilityPersonB.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
-
-    person_b_has_disability: str
-
-    @validator('person_b_has_disability', always=True)
-    def has_to_be_yes(cls, value):
-        if value != 'yes':
-            raise ValidationError
-        return value
 
 
 class HasDisabilityPersonAPrecondition(BaseModel):
@@ -134,7 +99,7 @@ class HasDisabilityPersonAPrecondition(BaseModel):
     @validator('person_a_has_disability', always=True)
     def has_to_be_set_true(cls, v):
         if not v:
-            raise ValidationError
+            raise ValueError
         return v
 
 
@@ -147,5 +112,5 @@ class HasDisabilityPersonBPrecondition(BaseModel):
     @validator('person_b_has_disability', always=True)
     def has_to_be_set_true(cls, v):
         if not v:
-            raise ValidationError
+            raise ValueError
         return v

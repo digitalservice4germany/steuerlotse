@@ -8,28 +8,22 @@ from tests.utils import create_session_form_data
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB, calculate_pauschbetrag
 
 
+
 class TestPauschbetragPersonAValidation:
-    @pytest.fixture
-    def valid_stored_data(self):
-        return {
-            'person_a_has_disability': 'yes',
-            'person_a_has_pflegegrad': 'no',
-            'person_a_disability_degree': 70,
-        }
 
-    def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context,
-                                                                          valid_stored_data):
-        data = MultiDict({'person_a_requests_pauschbetrag': 'no'})
-
-        with new_test_request_context(method='POST', form_data=data, stored_data=valid_stored_data):
-            step = LotseStepChooser().get_correct_step(StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
-
+    def test_if_person_a_requests_pauschbetrag_is_given_then_validation_should_be_success(self, new_test_request_context):
+        form_data = {'person_a_requests_pauschbetrag': 'no'}
+        stored_data = {'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
+        with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
+            step = LotseStepChooser().get_correct_step(
+                StepPauschbetragPersonA.name, True, ImmutableMultiDict(form_data))
             form = step.render_info.form
             assert form.validate() is True
-
-    def test_if_precondition_person_a_has_disability_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
-        data = MultiDict({})
-        with new_test_request_context(form_data=data):
+            
+    def test_if_person_a_requests_pauschbetrag_is_not_given_then_validation_should_be_false(self, new_test_request_context):
+        form_data = {}
+        stored_data = {'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
+        with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'person_a_has_disability'
@@ -164,7 +158,41 @@ class TestPauschbetragPersonBValidation:
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
             assert step.redirection_step_name == 'familienstand' 
+
+
+class TestPauschbetragPersonBValidation:
+
+    def test_if_person_b_has_disability_is_given_then_validation_should_be_success(self, new_test_request_context):
+        form_data = {'person_b_requests_pauschbetrag': 'no'}
+        stored_data = {
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
+        }
+        with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
+            step = LotseStepChooser().get_correct_step(
+                StepPauschbetragPersonB.name, True, ImmutableMultiDict(form_data))
+            form = step.render_info.form
+            assert form.validate() is True
             
+    def test_if_person_b_requests_pauschbetrag_is_not_given_then_validation_should_be_false(self, new_test_request_context):
+        form_data = {}
+        stored_data = {
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
+        }
+        with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
+            step = LotseStepChooser().get_correct_step(
+                StepPauschbetragPersonB.name, True, ImmutableMultiDict(form_data))
+            form = step.render_info.form
+            assert form.validate() is False
+            
+
 class TestPreconditionPauschbetragPersonBValidation:
     def test_if_empty_data_then_redirect_to_familienstand(self, new_test_request_context):
         data = {}

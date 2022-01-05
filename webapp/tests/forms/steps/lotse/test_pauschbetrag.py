@@ -6,8 +6,8 @@ from pydantic import ValidationError
 from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, PersonAHasPauschbetragClaimPrecondition, \
     PersonBHasPauschbetragClaimPrecondition, PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, \
     PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, PersonBHasPflegegradSetPrecondition, \
-    PersonAHasPflegegradSetPrecondition
-
+    PersonAHasPflegegradSetPrecondition, HasMerkzeichenPersonAPrecondition, \
+    HasMerkzeichenPersonBPrecondition
 
 class TestCalculatePauschbetrag:
 
@@ -289,3 +289,116 @@ class TestPersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition:
     def test_if_disability_degree_under_20_then_zero_should_be_return(self):        
         calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
         assert calculated_pauschbetrag == 0
+
+class TestHasMerkzeichenPersonAPrecondition:
+
+    def test_if_person_a_has_no_merkzeichen_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+
+    def test_if_person_a_has_pflegegrad_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_pflegegrad': 'yes'}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_a_disability_degree_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_disability_degree': 20}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_a_has_merkzeichen_g_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_merkzeichen_g': True}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_a_has_merkzeichen_ag_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_merkzeichen_ag': True}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_a_has_merkzeichen_bl_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_merkzeichen_bl': True}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_a_has_merkzeichen_tbl_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_merkzeichen_tbl': True}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_a_has_merkzeichen_h_set_then_do_not_raise_validation_error(self):
+        data = {'person_a_has_merkzeichen_h': True}
+        try:
+            HasMerkzeichenPersonAPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+
+class TestHasMerkzeichenPersonBPrecondition:
+
+    def test_if_person_b_has_no_merkzeichen_set_then_raise_validation_error(self):
+        data = {}
+        with pytest.raises(ValidationError):
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+
+    def test_if_person_b_has_pflegegrad_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_pflegegrad': 'yes'}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_b_disability_degree_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_disability_degree': 20}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_b_has_merkzeichen_g_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_merkzeichen_g': True}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_b_has_merkzeichen_ag_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_merkzeichen_ag': True}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_b_has_merkzeichen_bl_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_merkzeichen_bl': True}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_b_has_merkzeichen_tbl_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_merkzeichen_tbl': True}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
+
+    def test_if_person_b_has_merkzeichen_h_set_then_do_not_raise_validation_error(self):
+        data = {'person_b_has_merkzeichen_h': True}
+        try:
+            HasMerkzeichenPersonBPrecondition.parse_obj(data)
+        except ValidationError:
+            pytest.fail("Should not raise a validation error")
