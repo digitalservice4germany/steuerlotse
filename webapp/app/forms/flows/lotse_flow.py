@@ -371,11 +371,13 @@ class LotseMultiStepFlow(MultiStepFlow):
         for attr in step.create_form(request.form, form_data).__dict__:
             if attr in form_data:
                 field = getattr(step.form, attr)
-                # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
+                # TODO: When the summary page is refactored we should merge _generate_value_representation &
+                #  get_overview_value_representation
                 label, value = self._generate_value_representation(field, form_data[attr])
                 if value:
                     step_value = step.get_overview_value_representation(value)
                     if step_value is not None:
+                        # If get_overview_value_representation() returns None, the value will not be displayed
                         step_data[label] = step_value
             elif missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
