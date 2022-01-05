@@ -5,24 +5,22 @@ const Intro = styled.p`
   font-size: var(--text-medium);
 `;
 
-export default function FormHeaderParagraphs({ title, intros }) {
+export default function FormHeaderIntro({ paragraphs }) {
   return (
     <div>
-      <h1 className="my-4">{title}</h1>
-      {intros.map((intro, index) => (
+      {paragraphs.map((intro, index) => (
         <Intro key={`intro_${index}`}>{intro}</Intro>
       ))}
     </div>
   );
 }
 
-FormHeaderParagraphs.propTypes = {
-  title: PropTypes.string.isRequired,
-  intros: PropTypes.arrayOf(
+FormHeaderIntro.propTypes = {
+  paragraphs: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.element, PropTypes.object])
   ),
 };
 
-FormHeaderParagraphs.defaultProps = {
-  intros: [],
+FormHeaderIntro.defaultProps = {
+  paragraphs: [],
 };

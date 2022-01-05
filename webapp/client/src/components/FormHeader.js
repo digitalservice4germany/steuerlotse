@@ -1,9 +1,15 @@
 import PropTypes from "prop-types";
-import FormHeaderParagraphs from "./FormHeaderParagraphs";
+import FormHeaderIntro from "./FormHeaderIntro";
 
 export default function FormHeader({ title, intro, hideIntro }) {
-  const intros = !hideIntro ? [intro] : [];
-  return <FormHeaderParagraphs title={title} intros={intros} />;
+  const intros = [].concat(intro);
+  const paragraphs = !hideIntro ? intros : [];
+  return (
+    <div>
+      <h1 className="my-4">{title}</h1>
+      <FormHeaderIntro title={title} paragraphs={paragraphs} />;
+    </div>
+  );
 }
 
 FormHeader.propTypes = {
@@ -12,6 +18,13 @@ FormHeader.propTypes = {
     PropTypes.string,
     PropTypes.element,
     PropTypes.object,
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.element,
+        PropTypes.object,
+      ])
+    ),
   ]),
   hideIntro: PropTypes.bool,
 };
