@@ -3025,16 +3025,6 @@ msgstr "Fehler: "
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
-#: app/templates/basis/base.html:62
-msgid "tax-period-banner.alt-text"
-msgstr "Pfeil"
-
-#: app/templates/basis/base.html:64
-msgid "tax-period-banner.text"
-msgstr ""
-"<b>Wir stellen auf das neue Steuerjahr 2021 um!</b></br>Steuererklärung "
-"für 2020 nur noch bis zum 30.12.2021 möglich."
-
 #: app/templates/basis/display_failure_icon.html:14
 #: app/templates/eligibility/display_success.html:15
 msgid "success_icon"
