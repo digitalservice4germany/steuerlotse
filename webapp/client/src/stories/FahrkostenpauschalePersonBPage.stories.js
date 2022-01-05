@@ -20,7 +20,7 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personARequestsFahrkostenpauschale: {
+    personBRequestsFahrkostenpauschale: {
       errors: [],
     },
   },

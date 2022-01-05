@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.forms.fields import UnlockCodeField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
-from app.forms.validators import ValidIdNr, ValidUnlockCode
+from app.forms.validations.validators import ValidIdNr, ValidUnlockCode
 from app.model.components import LoginProps, LoginFailureProps
 
 

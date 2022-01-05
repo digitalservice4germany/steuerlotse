@@ -56,22 +56,4 @@
             {{ macros.render_field(form.person_a_religion) }}
         </div>
     </fieldset>
-
-    <fieldset class="grouped-input-fields">
-        <span>
-            <legend class="mb-0">
-                <h2 class="form-sub-heading mb-3">{{ _('form.lotse.person-header-beh') }}</h2>
-            </legend>
-        </span>
-        <p>{{ _('form.lotse.person-header-beh-intro') }}</p>
-        <div class="form-row-center">
-            {{ macros.render_field(form.person_a_beh_grad, 4) }}
-        </div>
-        <div class="form-row-center w-100">
-            <span class="text-input-field-label mb-2">{{ _('form.lotse.person-merkzeichen.title') }}</span>
-            {{ macros.render_field(form.person_a_blind, 12, d_block=True, hide_label=True) }}
-            {{ macros.render_field(form.person_a_gehbeh, 12, d_block=True, hide_label=True) }}
-        </div>
-    </fieldset>
-
 {% endblock %}

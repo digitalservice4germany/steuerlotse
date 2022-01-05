@@ -13,8 +13,8 @@ import TaxNumberPage from "./pages/TaxNumberPage";
 import TelephoneNumberPage from "./pages/TelephoneNumberPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
-import PersonAHasDisabilityPage from "./pages/PersonAHasDisabilityPage";
-import PersonBHasDisabilityPage from "./pages/PersonBHasDisabilityPage";
+import HasDisabilityPersonAPage from "./pages/HasDisabilityPersonAPage";
+import HasDisabilityPersonBPage from "./pages/HasDisabilityPersonBPage";
 import MerkzeichenPersonAPage from "./pages/MerkzeichenPersonAPage";
 import MerkzeichenPersonBPage from "./pages/MerkzeichenPersonBPage";
 import PauschbetragPersonAPage from "./pages/PauschbetragPersonAPage";
@@ -22,27 +22,31 @@ import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 import FahrkostenpauschalePersonAPage from "./pages/FahrkostenpauschalePersonAPage";
 import FahrkostenpauschalePersonBPage from "./pages/FahrkostenpauschalePersonBPage";
 import NoPauschbetragPage from "./pages/NoPauschbetragPage";
+import PauschbetragPersonAPage from "./pages/PauschbetragPersonAPage";
+import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 
 const allowedComponents = {
-  RegistrationPage,
-  LoginPage,
-  LoginFailurePage,
-  RevocationPage,
-  RevocationSuccessPage,
+  ConfirmationPage,
   DeclarationIncomesPage,
-  TaxNumberPage,
-  PersonAHasDisabilityPage,
-  PauschbetragPersonAPage,
-  PersonBHasDisabilityPage,
-  MerkzeichenPersonAPage,
-  MerkzeichenPersonBPage,
-  PauschbetragPersonBPage,
   FahrkostenpauschalePersonAPage,
   FahrkostenpauschalePersonBPage,
+  HasDisabilityPersonAPage,
+  HasDisabilityPersonBPage,
+  LoginFailurePage,
+  LoginPage,
+  MerkzeichenPersonAPage,
+  MerkzeichenPersonBPage,
   NoPauschbetragPage,
-  TelephoneNumberPage,
+  PauschbetragPersonAPage,
+  PauschbetragPersonBPage,
+  PersonAHasDisabilityPage,
+  PersonBHasDisabilityPage,
+  RegistrationPage,
+  RevocationPage,
+  RevocationSuccessPage,
   StmindSelectionPage,
-  ConfirmationPage,
+  TaxNumberPage,
+  TelephoneNumberPage,
 };
 
 function mountComponent(element) {

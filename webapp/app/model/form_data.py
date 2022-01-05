@@ -87,9 +87,8 @@ class MandatoryFormData(BaseModel):
     person_a_street_number: str
     person_a_plz: str
     person_a_town: str
-    person_a_blind: bool
-    person_a_gehbeh: bool
     person_a_has_disability: str
+    person_a_has_pflegegrad: Optional[str]
     person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
@@ -98,9 +97,8 @@ class MandatoryFormData(BaseModel):
     person_b_last_name: Optional[str]
     person_b_first_name: Optional[str]
     person_b_religion: Optional[str]
-    person_b_blind: Optional[str]
-    person_b_gehbeh: Optional[str]
     person_b_has_disability: Optional[str]
+    person_b_has_pflegegrad: Optional[str]
     person_b_requests_pauschbetrag: Optional[str]
 
     iban: str
@@ -140,9 +138,8 @@ class MandatoryFormData(BaseModel):
         return v
 
     @validator('person_b_same_address', 'person_b_idnr', 'person_b_dob', 'person_b_last_name',
-               'person_b_first_name', 'person_b_religion', 'person_b_blind', 'person_b_gehbeh',
-               'person_b_has_disability', 'account_holder',
-               always=True)
+               'person_b_first_name', 'person_b_religion', 'person_b_has_disability', 'account_holder',
+               'person_b_first_name', 'person_b_religion', 'account_holder', always=True)
     def person_b_required_if_shown(cls, v, values, **kwargs):
         if show_person_b(values.get('familienstandStruct', {})) and not v:
             raise MissingError()
@@ -165,7 +162,7 @@ class MandatoryFormData(BaseModel):
                 PersonAHasPauschbetragClaimPrecondition.parse_obj(values)
                 raise MissingError  # has pauschbetrag claim
             except ValidationError:
-                return v  # has no pauschbetrag claim
+                pass # has no pauschbetrag claim
         return v
     
     @validator('person_b_requests_pauschbetrag', always=True)
@@ -176,7 +173,19 @@ class MandatoryFormData(BaseModel):
                 PersonBHasPauschbetragClaimPrecondition.parse_obj(values)
                 raise MissingError  # has pauschbetrag claim
             except ValidationError:
-                return v  # has no pauschbetrag claim
+                pass # has no pauschbetrag claim
+        return v 
+ 
+    @validator('person_a_has_pflegegrad', always=True)
+    def person_a_pflegegrad_required_if_person_a_has_disability(cls, v, values):
+        if values.get('person_a_has_disability') == "yes" and not v:
+            raise MissingError
+        return v
+
+    @validator('person_b_has_pflegegrad', always=True)
+    def person_b_pflegegrad_required_if_person_b_has_disability(cls, v, values):
+        if values.get('person_b_has_disability') == "yes" and not v:
+            raise MissingError
         return v
 
 
@@ -236,10 +245,14 @@ class FormDataDependencies(BaseModel):
     person_a_address_ext: Optional[str]
     person_a_plz: Optional[str]
     person_a_town: Optional[str]
-    person_a_beh_grad: Optional[int]
-    person_a_blind: Optional[bool]
-    person_a_gehbeh: Optional[bool]
     person_a_has_disability: Optional[str]
+    person_a_has_pflegegrad: Optional[str]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_g: Optional[bool]
+    person_a_has_merkzeichen_ag: Optional[bool]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
     person_a_requests_pauschbetrag: Optional[str]
 
     person_b_same_address: Optional[str]
@@ -254,10 +267,14 @@ class FormDataDependencies(BaseModel):
     person_b_address_ext: Optional[str]
     person_b_plz: Optional[str]
     person_b_town: Optional[str]
-    person_b_beh_grad: Optional[int]
-    person_b_blind: Optional[bool]
-    person_b_gehbeh: Optional[bool]
     person_b_has_disability: Optional[str]
+    person_b_has_pflegegrad: Optional[str]
+    person_b_disability_degree: Optional[int]
+    person_b_has_merkzeichen_g: Optional[bool]
+    person_b_has_merkzeichen_ag: Optional[bool]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
     person_b_requests_pauschbetrag: Optional[str]
 
     telephone_number: Optional[str]
@@ -343,6 +360,12 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+    @validator('stmind_beh_aufw_summe', 'stmind_beh_aufw_anspruch')
+    def delete_stmind_beh_if_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') != 'yes' and values.get('person_b_has_disability') != 'yes':
+            return None
+        return v
+
     @validator('stmind_haushaltsnahe_entries', 'stmind_haushaltsnahe_summe',
                'stmind_handwerker_entries', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                'stmind_gem_haushalt_count', 'stmind_gem_haushalt_entries')
@@ -374,18 +397,36 @@ class FormDataDependencies(BaseModel):
         if show_person_b(values):
             return None
         return v
-    
+
+    @validator('person_a_has_pflegegrad', 'person_a_disability_degree', 'person_a_has_merkzeichen_g',
+               'person_a_has_merkzeichen_ag', 'person_a_has_merkzeichen_bl', 'person_a_has_merkzeichen_tbl',
+               'person_a_has_merkzeichen_h')
+    def delete_person_a_disability_info_if_person_a_no_disability(cls, v, values):
+        if values.get('person_a_has_disability') == 'no':
+            return None
+        return v
+
+    @validator('person_b_has_pflegegrad', 'person_b_disability_degree',
+               'person_b_has_merkzeichen_g', 'person_b_has_merkzeichen_ag', 'person_b_has_merkzeichen_bl',
+               'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h')
+    def delete_person_b_disability_info_if_person_b_no_disability(cls, v, values):
+        if values.get('person_b_has_disability') == 'no':
+            return None
+        return v
+
+
     @validator('person_a_requests_pauschbetrag')
-    def required_if_person_a_has_disability(cls, v, values):
+    def delete_if_person_a_has_no_disability(cls, v, values):
         if values.get('person_a_has_disability') == "yes":
             return v
         return None
-    
+
     @validator('person_b_requests_pauschbetrag')
-    def required_if_person_b_has_disability(cls, v, values):
+    def delete_if_person_b_has_no_disability(cls, v, values):
         if values.get('person_b_has_disability') == "yes":
             return v
         return None
+
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.

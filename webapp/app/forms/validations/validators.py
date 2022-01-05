@@ -177,3 +177,19 @@ class ValidTaxNumber:
             valid_tax_number = validate_tax_number(form.bundesland.data, form.steuernummer.data)
             if not valid_tax_number:
                 raise ValidationError(_('validate.invalid-tax-number'))
+
+
+class ValidDisabilityDegree:
+    def __call__(self, form, field):
+        if not field.data:
+            return
+
+        if not isinstance(field.data, int):
+            raise ValidationError(_('validate.not-a-decimal'))
+
+        if field.data < 20:
+            # Handled on a different page
+            return
+
+        if field.data not in [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]:
+            raise ValidationError(_('validate.disability_degree.invalid_number'))

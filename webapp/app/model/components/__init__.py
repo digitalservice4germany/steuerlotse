@@ -103,6 +103,9 @@ class PersonAHasDisabilityProps(StepFormProps):
 class PersonBHasDisabilityProps(StepFormProps):
     pass
 
+class MerkzeichenProps(StepFormProps):
+    pass
+
 
 class PauschbetragProps(StepFormProps):
     pauschbetrag: str
@@ -123,3 +126,12 @@ class SelectStMindProps(StepFormProps):
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str
+
+
+class HasDisabilityPersonAProps(StepFormProps):
+    num_users: int
+
+
+class HasDisabilityPersonBProps(StepFormProps):
+    pass
+

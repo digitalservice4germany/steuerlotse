@@ -13,15 +13,14 @@ from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-from app.forms.steps.lotse.personal_data import PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition, ShowPersonBPrecondition, StepFamilienstand, get_number_of_users
+from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition, StepFamilienstand
+from app.forms.steps.lotse.utils import get_number_of_users
+from app.forms.steps.lotse.has_disability import PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition, \
+    HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 
-
-from app.forms.steps.lotse.personal_data import get_number_of_users
 from app.model.components import NoPauschbetragProps
 
-
-def calculate_pauschbetrag(has_pflegegrad: str = None, disability_degree: int = None, has_merkzeichen_bl: bool = False,
-                           has_merkzeichen_tbl: bool = False, has_merkzeichen_h: bool = False):
+def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
     Calculates the pauschbetrag given some information about the user.
 
@@ -33,7 +32,7 @@ def calculate_pauschbetrag(has_pflegegrad: str = None, disability_degree: int = 
     """
     if has_pflegegrad == 'yes' or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_h:
         return 7400
-
+    
     if disability_degree is None:
         return 0
     if disability_degree == 100:
@@ -204,12 +203,17 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
         person_a_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
             choices=[('yes', 'yes'),('no', 'no')],
+<<<<<<< HEAD
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},
+=======
+            render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
             validators=[InputRequired(_l('validate.input-required'))])
 
     @classmethod
     def get_label(cls, data=None):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label', 'form.lotse.person_a.request_pauschbetrag.label',
+<<<<<<< HEAD
                         num=get_number_of_users(data))
 
     def get_overview_value_representation(self, value):
@@ -225,6 +229,12 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
 
     def render(self):
         props_dict = PauschbetragProps(
+=======
+                        num=get_number_of_users(data))        
+
+    def render(self):
+        props_dict = PauschbetragProps(            
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
             step_header={
                 'title': ngettext('form.lotse.person_a.request_pauschbetrag.title', 'form.lotse.person_a.request_pauschbetrag.title',
                         num=get_number_of_users(self.stored_data))
@@ -250,6 +260,7 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
     def get_pauschbetrag(self):
+<<<<<<< HEAD
         return str(calculate_pauschbetrag(
             has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', None),
             disability_degree=self.stored_data.get('person_a_disability_degree', None),
@@ -260,24 +271,48 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
 
 
 class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
+=======
+        return calculate_pauschbetrag(
+            has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', False),            
+            disability_degree=self.stored_data.get('person_a_disability_degree', None),   
+            has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False)
+        )
+        
+        
+class StepPauschbetragPersonB(StepPauschbetrag):
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
     name = 'person_b_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
+<<<<<<< HEAD
     preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition, PersonBHasPflegegradSetPrecondition,
                      PersonBHasPauschbetragClaimPrecondition]
 
+=======
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition]
+        
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
             choices=[('yes', 'yes'),('no', 'no')],
+<<<<<<< HEAD
             render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},
             validators=[InputRequired(_l('validate.input-required'))])
 
+=======
+            render_kw={'data_label':  _l('form.lotse.request_pauschbetrag.data_label')},         
+            validators=[InputRequired(_l('validate.input-required'))])
+    
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
     @classmethod
     def get_label(cls, data):
         return cls.label
 
+<<<<<<< HEAD
     def get_overview_value_representation(self, value):
         result = ''
 
@@ -291,6 +326,10 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
 
     def render(self):
         props_dict = PauschbetragProps(
+=======
+    def render(self):
+        props_dict = PauschbetragProps(            
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
             step_header={
                 'title': _('form.lotse.person_b.request_pauschbetrag.title')
             },
@@ -303,11 +342,19 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
+<<<<<<< HEAD
 
         # Humps fails to camelize individual letters correctly, so we have to fix it manually.
         # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
         props_dict['fields']['personBRequestsPauschbetrag'] = props_dict['fields'].pop('personB_requestsPauschbetrag')
 
+=======
+        
+        # Humps fails to camelize individual letters correctly, so we have to fix it manually.
+        # (A fix exists but hasn't been released at the time of writing: https://github.com/nficano/humps/issues/61)
+        props_dict['fields']['personBRequestsPauschbetrag'] = props_dict['fields'].pop('personB_requestsPauschbetrag')
+        
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
         return render_template('react_component.html',
                             component='PauschbetragPersonBPage',
                             props=props_dict,
@@ -315,6 +362,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
                             header_title=_('form.lotse.header-title'))
 
     def get_pauschbetrag(self):
+<<<<<<< HEAD
         return str(calculate_pauschbetrag(
             has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', None),
             disability_degree=self.stored_data.get('person_b_disability_degree', None),
@@ -378,3 +426,12 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+=======
+        return calculate_pauschbetrag(
+            has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', False),            
+            disability_degree=self.stored_data.get('person_b_disability_degree', None),   
+            has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False)
+        )
+>>>>>>> 8e56f9640ad925957987f72cdb4d0f446afac2a3
