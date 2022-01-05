@@ -249,13 +249,13 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
                                header_title=_('form.lotse.header-title'))
 
     def get_pauschbetrag(self):
-        return str(calculate_pauschbetrag(
+        return calculate_pauschbetrag(
             has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', None),
             disability_degree=self.stored_data.get('person_a_disability_degree', None),
             has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False)
-        ))
+        )
 
 
 class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
@@ -314,13 +314,13 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
                             header_title=_('form.lotse.header-title'))
 
     def get_pauschbetrag(self):
-        return str(calculate_pauschbetrag(
+        return calculate_pauschbetrag(
             has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', None),
             disability_degree=self.stored_data.get('person_b_disability_degree', None),
             has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False)
-        ))
+        )
 
 
 class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
