@@ -4,7 +4,7 @@ from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.utils import create_session_form_data
-from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB, calculate_pauschbetrag
 
 
 class TestPauschbetragPersonAValidation:
