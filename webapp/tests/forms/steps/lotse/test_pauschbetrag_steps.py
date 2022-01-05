@@ -91,7 +91,7 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
             'person_a_has_pflegegrad': True, 
         }
         value = 'yes'
-        pauschbetrag_result = 1
+        pauschbetrag_result = "1"
         
         with new_test_request_context(stored_data=stored_data):
             with patch('app.forms.steps.lotse.pauschbetrag.StepPauschbetragPersonA.get_pauschbetrag', MagicMock(return_value=pauschbetrag_result)):
@@ -217,9 +217,13 @@ class TestPauschbetragPersonBGetOverviewValueRepresentation:
             'familienstand_confirm_zusammenveranlagung': True,
             'person_b_has_disability':'yes', 
             'person_b_has_pflegegrad': True, 
+            'person_b_disability_degree': 25,
+            'person_b_has_merkzeichen_bl': True,
+            'person_b_has_merkzeichen_tbl': True,
+            'person_b_has_merkzeichen_h': True
         }
         value = 'yes'
-        pauschbetrag_result = 1
+        pauschbetrag_result = "1"
         
         with new_test_request_context(stored_data=stored_data):
             with patch('app.forms.steps.lotse.pauschbetrag.StepPauschbetragPersonB.get_pauschbetrag', MagicMock(return_value=pauschbetrag_result)):
