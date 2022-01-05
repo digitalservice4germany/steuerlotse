@@ -88,21 +88,21 @@ class DisabilityModel(BaseModel):
         return values
 
 
-class PersonAHasPflegegradSetPrecondition(DisabilityModel):
+class HasPflegegradSetPersonAPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_not_filled_pflegegrad')
 
     person_a_has_pflegegrad: str
 
 
-class PersonBHasPflegegradSetPrecondition(DisabilityModel):
+class HasPflegegradSetPersonBPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_not_filled_pflegegrad')
 
     person_b_has_pflegegrad: str
 
 
-class PersonAHasPauschbetragClaimPrecondition(DisabilityModel):
+class HasPauschbetragClaimPersonAPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
@@ -121,7 +121,7 @@ class PersonAHasPauschbetragClaimPrecondition(DisabilityModel):
         return values
 
 
-class PersonBHasPauschbetragClaimPrecondition(DisabilityModel):
+class HasPauschbetragClaimPersonBPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
@@ -221,7 +221,7 @@ class HasMerkzeichenPersonAPrecondition(BaseModel):
 class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, PersonAHasPflegegradSetPrecondition, PersonAHasPauschbetragClaimPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasPflegegradSetPersonAPrecondition, HasPauschbetragClaimPersonAPrecondition]
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
@@ -308,8 +308,8 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, PersonBHasPflegegradSetPrecondition,
-                     PersonBHasPauschbetragClaimPrecondition, HasMerkzeichenPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasPflegegradSetPersonBPrecondition,
+                     HasPauschbetragClaimPersonBPrecondition, HasMerkzeichenPersonBPrecondition]
         
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
@@ -368,7 +368,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [HasDisabilityPersonAPrecondition, PersonAHasPflegegradSetPrecondition,
+    preconditions = [HasDisabilityPersonAPrecondition, HasPflegegradSetPersonAPrecondition,
                      PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
 
     def _pre_handle(self):
@@ -401,7 +401,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonAPrecondition, PersonBHasPflegegradSetPrecondition,
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonAPrecondition, HasPflegegradSetPersonBPrecondition,
                      PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
 
     def render(self):

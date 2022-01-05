@@ -249,17 +249,6 @@ context('Acceptance tests', () => {
             cy.get('label[for=request_new_tax_number]').should('not.be.checked')
         })
 
-        it('Enter disability', () => {
-            cy.visit('/lotse/step/person_a_has_disability?link_overview=True')
-
-            // Set disability status to yes
-            cy.get('#person_a_has_disabilityyes').check().should('be.checked')
-            cy.get(submitBtnSelector).click()
-
-            // Select pauschbetrag
-            cy.get('#person_a_requests_pauschbetragyes').check().should('be.checked')
-        })
-
         context('Submitting tax returns', () => {
             beforeEach(() => {
                 // Step 1: accept opt-ins
@@ -295,7 +284,10 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disability-no]').click()
+                cy.get('#person_a_has_disability-yes').check().should('be.checked')
+                cy.get(submitBtnSelector).click()
+    
+                cy.get('#person_a_requests_pauschbetrag-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -351,7 +343,10 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disability-no]').click()
+                cy.get('#person_a_has_disability-yes').check().should('be.checked')
+                cy.get(submitBtnSelector).click()
+    
+                cy.get('#person_a_requests_pauschbetrag-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -419,7 +414,12 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disability-yes]').click()
+                // Set disability status to yes
+                cy.get('#person_a_has_disability-yes').check().should('be.checked')
+                cy.get(submitBtnSelector).click()
+                    
+                // Select pauschbetrag
+                cy.get('#person_a_requests_pauschbetrag-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=person_a_has_pflegegrad-yes]').click()
@@ -448,7 +448,12 @@ context('Acceptance tests', () => {
                 cy.get('select[id=person_b_religion]').select('ev')
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_b_has_disability-no]').click()
+                // Set disability status to yes
+                cy.get('#person_b_has_disability-yes').check().should('be.checked')
+                cy.get(submitBtnSelector).click()
+                    
+                // Select pauschbetrag
+                cy.get('#person_b_requests_pauschbetrag-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
                 // no telephone number

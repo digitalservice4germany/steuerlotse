@@ -5,7 +5,7 @@ def calculate_fahrkostenpauschbetrag(has_pflegegrad: str = None, disability_degr
     if has_pflegegrad == 'yes' or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_tbl \
             or has_merkzeichen_h or has_merkzeichen_ag:
         return 4500
-    elif disability_degree and (disability_degree >= 80 or (has_merkzeichen_g and disability_degree >= 70)):
+    elif disability_degree >= 80 or (has_merkzeichen_g and disability_degree >= 70):
         return 900
     else:
         return 0

@@ -3,10 +3,10 @@ from unittest.mock import patch, MagicMock
 import pytest
 from pydantic import ValidationError
 
-from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, PersonAHasPauschbetragClaimPrecondition, \
-    PersonBHasPauschbetragClaimPrecondition, PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, \
-    PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, PersonBHasPflegegradSetPrecondition, \
-    PersonAHasPflegegradSetPrecondition, HasMerkzeichenPersonAPrecondition, \
+from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, HasPauschbetragClaimPersonAPrecondition, \
+    HasPauschbetragClaimPersonBPrecondition, PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, \
+    PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition, HasPflegegradSetPersonBPrecondition, \
+    HasPflegegradSetPersonAPrecondition, HasMerkzeichenPersonAPrecondition, \
     HasMerkzeichenPersonBPrecondition
 
 class TestCalculatePauschbetrag:
@@ -200,50 +200,50 @@ class TestCalculatePauschbetrag:
         assert calculated_pauschbetrag == 0
 
 
-class TestPersonAHasPflegegradSetPrecondition:
+class TestHasPflegegradSetPersonAPrecondition:
     def test_if_pflegegrad_not_set_raise_validation_error(self):
         with pytest.raises(ValidationError):
-            PersonAHasPflegegradSetPrecondition.parse_obj({})
+            HasPflegegradSetPersonAPrecondition.parse_obj({})
 
     def test_if_pflegegrad_set_yes_raise_no_error(self):
-        PersonAHasPflegegradSetPrecondition.parse_obj({'person_a_has_pflegegrad': 'yes'})
+        HasPflegegradSetPersonAPrecondition.parse_obj({'person_a_has_pflegegrad': 'yes'})
 
     def test_if_pflegegrad_set_no_raise_no_error(self):
-        PersonAHasPflegegradSetPrecondition.parse_obj({'person_a_has_pflegegrad': 'no'})
+        HasPflegegradSetPersonAPrecondition.parse_obj({'person_a_has_pflegegrad': 'no'})
         
         
-class TestPersonBHasPflegegradSetPrecondition:
+class TestHasPflegegradSetPersonBPrecondition:
     def test_if_pflegegrad_not_set_raise_validation_error(self):
         with pytest.raises(ValidationError):
-            PersonBHasPflegegradSetPrecondition.parse_obj({})
+            HasPflegegradSetPersonBPrecondition.parse_obj({})
 
     def test_if_pflegegrad_set_yes_raise_no_error(self):
-        PersonBHasPflegegradSetPrecondition.parse_obj({'person_b_has_pflegegrad': 'yes'})
+        HasPflegegradSetPersonBPrecondition.parse_obj({'person_b_has_pflegegrad': 'yes'})
 
     def test_if_pflegegrad_set_no_raise_no_error(self):
-        PersonBHasPflegegradSetPrecondition.parse_obj({'person_b_has_pflegegrad': 'no'})
+        HasPflegegradSetPersonBPrecondition.parse_obj({'person_b_has_pflegegrad': 'no'})
 
 
-class TestPersonAHasPauschbetragClaimPrecondition:
+class TestHasPauschbetragClaimPersonAPrecondition:
     def test_if_calculate_pauschbetrag_returns_zero_then_raise_validation_error(self):
         with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
             with pytest.raises(ValidationError):
-                PersonAHasPauschbetragClaimPrecondition.parse_obj({})
+                HasPauschbetragClaimPersonAPrecondition.parse_obj({})
 
     def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_no_error(self):
         with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
-            PersonAHasPauschbetragClaimPrecondition.parse_obj({})
+            HasPauschbetragClaimPersonAPrecondition.parse_obj({})
 
 
-class TestPersonBHasPauschbetragClaimPrecondition:
+class TestHasPauschbetragClaimPersonBPrecondition:
     def test_if_calculate_pauschbetrag_returns_zero_then_raise_validation_error(self):
         with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
             with pytest.raises(ValidationError):
-                PersonBHasPauschbetragClaimPrecondition.parse_obj({})
+                HasPauschbetragClaimPersonBPrecondition.parse_obj({})
 
     def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_no_error(self):
         with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
-            PersonBHasPauschbetragClaimPrecondition.parse_obj({})
+            HasPauschbetragClaimPersonBPrecondition.parse_obj({})
 
 
 class TestPersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition:

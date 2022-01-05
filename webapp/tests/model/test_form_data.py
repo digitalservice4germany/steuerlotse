@@ -8,8 +8,8 @@ from unittest.mock import patch, MagicMock
 import pytest
 from pydantic import ValidationError, MissingError
 
-from app.forms.steps.lotse.pauschbetrag import PersonAHasPauschbetragClaimPrecondition, \
-    PersonBHasPauschbetragClaimPrecondition
+from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonAPrecondition, \
+    HasPauschbetragClaimPersonBPrecondition
 from app.utils import VERANLAGUNGSJAHR
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.model.form_data import FamilienstandModel, MandatoryFormData, FormDataDependencies, JointTaxesModel
@@ -333,13 +333,13 @@ class TestMandatoryFormData(unittest.TestCase):
                              raw_e._loc for raw_e in validation_error.exception.raw_errors])
 
     def test_if_person_a_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.PersonAHasPauschbetragClaimPrecondition.__init__',
-                   MagicMock(side_effect=ValidationError([], PersonAHasPauschbetragClaimPrecondition))):
+        with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], HasPauschbetragClaimPersonAPrecondition))):
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_steuernummer,
                                          **self.single_familienstand_data})
 
     def test_if_person_a_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.PersonAHasPauschbetragClaimPrecondition.__init__',
+        with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
                    MagicMock(return_value=None)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.pauschbetrag_person_a, **self.valid_steuernummer,
@@ -351,13 +351,13 @@ class TestMandatoryFormData(unittest.TestCase):
             assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_pauschbetrag'
 
     def test_if_person_b_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.PersonBHasPauschbetragClaimPrecondition.__init__',
-                   MagicMock(side_effect=ValidationError([], PersonBHasPauschbetragClaimPrecondition))):
+        with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonBPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], HasPauschbetragClaimPersonBPrecondition))):
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
                                          **self.valid_steuernummer, **self.valid_married_familienstand})
 
     def test_if_person_b_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.PersonBHasPauschbetragClaimPrecondition.__init__',
+        with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonBPrecondition.__init__',
                    MagicMock(return_value=None)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
