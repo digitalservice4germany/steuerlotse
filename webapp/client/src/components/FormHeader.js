@@ -2,12 +2,11 @@ import PropTypes from "prop-types";
 import FormHeaderIntro from "./FormHeaderIntro";
 
 export default function FormHeader({ title, intro, hideIntro }) {
-  const intros = [].concat(intro);
-  const paragraphs = !hideIntro ? intros : [];
+  const paragraphs = [].concat(intro);
   return (
     <div>
       <h1 className="my-4">{title}</h1>
-      <FormHeaderIntro title={title} paragraphs={paragraphs} />;
+      {intro && !hideIntro && <FormHeaderIntro paragraphs={paragraphs} />}
     </div>
   );
 }
