@@ -66,6 +66,9 @@ class StepPauschbetrag(LotseFormSteuerlotseStep):
             
         return result
 
+    def get_pauschbetrag(self):
+        pass
+
 
 class HasMerkzeichenPersonAPrecondition(BaseModel):
     _step_to_redirect_to = StepMerkzeichenPersonA.name

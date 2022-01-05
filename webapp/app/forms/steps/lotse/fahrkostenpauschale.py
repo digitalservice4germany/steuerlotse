@@ -37,6 +37,9 @@ class StepFahrkostenpauschale(LotseFormSteuerlotseStep):
 
         return result
 
+    def get_fahrkostenpauschale(self):
+        pass
+
 
 class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
     name = 'person_a_requests_fahrkostenpauschale'
