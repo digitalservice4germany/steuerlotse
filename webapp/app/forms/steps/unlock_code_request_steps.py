@@ -53,11 +53,11 @@ class UnlockCodeRequestInputStep(FormStep):
         ).camelized_dict()
 
         return render_template('react_component.html',
-            component='RegistrationPage',
-            props=props_dict,
-            # TODO: These are still required by base.html to set the page title.
-            form=render_info.form,
-            header_title=_('form.unlock-code-request.header-title'))
+                               component='RegistrationPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=render_info.form,
+                               header_title=_('form.unlock-code-request.header-title'))
 
 
 class UnlockCodeRequestSuccessStep(DisplayStep):

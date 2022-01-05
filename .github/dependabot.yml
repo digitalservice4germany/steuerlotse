@@ -9,6 +9,10 @@ updates:
     directory: "/erica_app"
     schedule:
       interval: "daily"
+    ignore:
+      # For boto3, ignore all patch updates
+      - dependency-name: "boto3"
+        update-types: ["version-update:semver-patch"]
 
   - package-ecosystem: "docker"
     directory: "/webapp"
@@ -27,6 +31,3 @@ updates:
     ignore:
       # For storybook, ignore all updates. We update storybook manually
       - dependency-name: "@storybook/*"
-      # For boto3, ignore all patch updates
-      - dependency-name: "boto3"
-        update-types: ["version-update:semver-patch"]

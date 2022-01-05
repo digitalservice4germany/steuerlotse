@@ -8,12 +8,14 @@ from flask_wtf.csrf import generate_csrf
 
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
+from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
 from app.model.components import FahrkostenpauschaleProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
+
 
 def calculate_fahrkostenpauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False,
                                      has_merkzeichen_h=False, has_merkzeichen_ag=False, has_merkzeichen_g=False):
@@ -76,7 +78,6 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
-
 
     def get_fahrkostenpauschale(self):
         return calculate_fahrkostenpauschbetrag(

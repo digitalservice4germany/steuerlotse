@@ -9,7 +9,7 @@ describe("HasDisabilityPage for single person", () => {
   beforeEach(() => {
     props = {
       stepHeader: {
-        title: "Title",
+        title: "title",
       },
       headerIntro: "Intro",
       form: {
@@ -29,6 +29,14 @@ describe("HasDisabilityPage for single person", () => {
     render(<HasDisabilityPage {...props} />);
   });
 
+  it("should render title", () => {
+    expect(screen.getByText("title")).toBeInTheDocument();
+  });
+
+  it("should render headerIntro", () => {
+    expect(screen.getByText("Intro")).toBeInTheDocument();
+  });
+
   it("should render selected value yes", () => {
     expect(screen.queryAllByRole("radio")[0].checked).toBe(true);
     expect(screen.queryAllByRole("radio")[1].checked).toBe(false);
@@ -44,14 +52,6 @@ describe("HasDisabilityPage for single person", () => {
     expect(screen.queryAllByRole("link")[0].href).toEqual(
       expect.stringContaining(props.prevUrl)
     );
-  });
-
-  it("should render step title", () => {
-    expect(screen.getByText("Title")).toBeInTheDocument();
-  });
-
-  it("should render intro", () => {
-    expect(screen.getByText("Intro")).toBeInTheDocument();
   });
 });
 

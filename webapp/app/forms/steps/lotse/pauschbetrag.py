@@ -200,7 +200,7 @@ class StepPauschbetragPersonB(StepPauschbetrag):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
-        
+
         return render_template('react_component.html',
                             component='PauschbetragPersonBPage',
                             props=props_dict,
