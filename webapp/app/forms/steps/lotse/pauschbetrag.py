@@ -140,7 +140,7 @@ class HasPauschbetragClaimPersonBPrecondition(DisabilityModel):
         return values
 
 
-class PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(DisabilityModel):
+class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
@@ -168,7 +168,7 @@ class PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(Disabili
         return values
 
 
-class PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition(DisabilityModel):
+class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(DisabilityModel):
     _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
@@ -369,7 +369,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [HasDisabilityPersonAPrecondition, HasPflegegradSetPersonAPrecondition,
-                     PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
+                     HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition]
 
     def _pre_handle(self):
         self._set_multiple_texts()
@@ -402,7 +402,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [ShowPersonBPrecondition, HasDisabilityPersonAPrecondition, HasPflegegradSetPersonBPrecondition,
-                     PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
+                     HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition]
 
     def render(self):
         props_dict = NoPauschbetragProps(
