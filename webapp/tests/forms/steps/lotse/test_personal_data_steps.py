@@ -8,7 +8,8 @@ from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
-    StepTelephoneNumber, StepPersonAHasDisability, StepPersonBHasDisability, PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition
+    StepTelephoneNumber
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonA, StepDisabilityPersonB, PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
