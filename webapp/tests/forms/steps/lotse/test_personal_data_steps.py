@@ -451,7 +451,7 @@ class TestPersonAHasDisabilityValidation:
         data = MultiDict({'person_a_has_disability': 'yes'})
         with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
-                StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
+                StepDisabilityPersonA.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
 
@@ -459,7 +459,7 @@ class TestPersonAHasDisabilityValidation:
         data = MultiDict()
         with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
-                StepPersonAHasDisability.name, True, ImmutableMultiDict(data))
+                StepDisabilityPersonA.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is False
 
@@ -478,7 +478,7 @@ class TestPersonBHasDisabilityValidation:
             req.session = SecureCookieSession(
                 {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
-                StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
+                StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
 
@@ -494,7 +494,7 @@ class TestPersonBHasDisabilityValidation:
             req.session = SecureCookieSession(
                 {_LOTSE_DATA_KEY: create_session_form_data(data)})
             step = LotseStepChooser().get_correct_step(
-                StepPersonBHasDisability.name, True, ImmutableMultiDict(data))
+                StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is False
             
