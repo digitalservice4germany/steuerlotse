@@ -9,7 +9,7 @@ from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
     StepTelephoneNumber
-from app.forms.steps.lotse.has_disability import StepDisabilityPersonA, StepDisabilityPersonB, PersonAHasDisabilityPrecondition, PersonBHasDisabilityPrecondition
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonA, StepDisabilityPersonB, HasDisabilityPersonAPrecondition, HasDisabilityPersonAPrecondition
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -446,7 +446,7 @@ class TestTelephoneNumberValidation:
             assert form.validate() is False
 
 
-class TestPersonAHasDisabilityValidation:
+class TestStepDisabilityPersonAValidation:
     def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
         data = MultiDict({'person_a_has_disability': 'yes'})
         with new_test_request_context(form_data=data):
@@ -464,7 +464,7 @@ class TestPersonAHasDisabilityValidation:
             assert form.validate() is False
 
 
-class TestPersonBHasDisabilityValidation:
+class TestStepHasDisabilityPersonBValidation:
     def test_if_person_b_has_disability_is_given_validation_should_be_true(self, new_test_request_context):
         data = MultiDict({
             'familienstand': 'married',
@@ -499,33 +499,33 @@ class TestPersonBHasDisabilityValidation:
             assert form.validate() is False
             
 
-class TestPersonAHasDisabilityPrecondition:
+class TestHasDisabilityPersonAPrecondition:
     def test_if_person_a_has_disability_not_set_then_raise_validation_error(self):
         data = {}
         with pytest.raises(ValidationError):
-            PersonAHasDisabilityPrecondition.parse_obj(data)
+            HasDisabilityPersonAPrecondition.parse_obj(data)
 
     def test_if_person_a_has_disability_set_no_then_raise_validation_error(self):
         data = {'person_a_has_disability': 'no'}
         with pytest.raises(ValidationError):
-            PersonAHasDisabilityPrecondition.parse_obj(data)
+            HasDisabilityPersonAPrecondition.parse_obj(data)
 
     def test_if_person_a_has_disability_set_yes_then_do_not_raise_validation_error(self):
         data = {'person_a_has_disability': 'yes'}
-        PersonAHasDisabilityPrecondition.parse_obj(data)
+        HasDisabilityPersonAPrecondition.parse_obj(data)
 
 
-class TestPersonBHasDisabilityPrecondition:
+class TestHasDisabilityPersonAPrecondition:
     def test_if_person_b_has_disability_not_set_then_raise_validation_error(self):
         data = {}
         with pytest.raises(ValidationError):
-            PersonBHasDisabilityPrecondition.parse_obj(data)
+            HasDisabilityPersonAPrecondition.parse_obj(data)
 
     def test_if_person_b_has_disability_set_no_then_raise_validation_error(self):
         data = {'person_b_has_disability': 'no'}
         with pytest.raises(ValidationError):
-            PersonBHasDisabilityPrecondition.parse_obj(data)
+            HasDisabilityPersonAPrecondition.parse_obj(data)
 
     def test_if_person_b_has_disability_set_yes_then_do_not_raise_validation_error(self):
         data = {'person_b_has_disability': 'yes'}
-        PersonBHasDisabilityPrecondition.parse_obj(data)
+        HasDisabilityPersonAPrecondition.parse_obj(data)

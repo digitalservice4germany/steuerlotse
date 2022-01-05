@@ -2,7 +2,7 @@ from typing import Optional
 
 from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
-from pydantic import validator
+from pydantic import validator, root_validator
 from pydantic.main import BaseModel
 from wtforms.validators import InputRequired, ValidationError
 from wtforms import SelectField
@@ -218,7 +218,7 @@ class HasMerkzeichenPersonAPrecondition(BaseModel):
             raise ValueError
         return v
 
-class StepPauschbetragPersonA(StepPauschbetrag):
+class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
     preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, PersonAHasPflegegradSetPrecondition, PersonAHasPauschbetragClaimPrecondition]
@@ -303,7 +303,7 @@ class HasMerkzeichenPersonBPrecondition(BaseModel):
         return v
 
         
-class StepPauschbetragPersonB(StepPauschbetrag):
+class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -368,7 +368,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [PersonAHasDisabilityPrecondition, PersonAHasPflegegradSetPrecondition,
+    preconditions = [HasDisabilityPersonAPrecondition, PersonAHasPflegegradSetPrecondition,
                      PersonAHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
 
     def _pre_handle(self):
@@ -401,7 +401,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [ShowPersonBPrecondition, PersonBHasDisabilityPrecondition, PersonBHasPflegegradSetPrecondition,
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonAPrecondition, PersonBHasPflegegradSetPrecondition,
                      PersonBHasNoPauschbetragOrFahrkostenpauschbetragClaimPrecondition]
 
     def render(self):
