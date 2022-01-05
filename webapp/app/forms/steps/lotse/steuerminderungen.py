@@ -14,7 +14,7 @@ from flask_babel import lazy_gettext as _l, _
 
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import SectionLink
-from app.forms.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
+from app.forms.validations.validators import IntegerLength, EURO_FIELD_MAX_LENGTH, NoZero
 from app.model.components import SelectStMindProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import FamilienstandModel, JointTaxesModel
@@ -251,6 +251,8 @@ class StepAussergBela(LotseFormSteuerlotseStep):
             render_info=self.render_info,
             input_details_title=_('form.lotse.ausserg_bela.details-title'),
             input_details_text=_('form.lotse.ausserg_bela.details-text'),
+            show_disability_stmind_fields=self.stored_data.get('person_a_has_disability') == 'yes' or
+                                          self.stored_data.get('person_b_has_disability') == 'yes'
         )
 
 

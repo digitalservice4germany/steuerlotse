@@ -38,8 +38,8 @@ class RecursiveDataModel(PotentialDataModelKeysMixin, BaseModel):
 
     Let's say you have the following decision tree:
                     Question A
-                YES /       \ NO
-                /               \
+                YES //       \\ NO
+                //               \\
             Question B      Question C
 
 
