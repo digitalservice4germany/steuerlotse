@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import FormHeaderIntro from "./FormHeaderIntro";
 
 export default function FormHeader({ title, intro, hideIntro }) {
-  const paragraphs = [].concat(intro);
+  const paragraphs = [].concat(intro); // intro could be an array or a single string/element/object. This will give us an array in both situations.
   return (
     <div>
       <h1 className="my-4">{title}</h1>
