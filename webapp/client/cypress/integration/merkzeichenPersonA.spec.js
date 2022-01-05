@@ -11,7 +11,7 @@ describe("merkzeichenPersonA", () => {
     it("Should redirect to person a has disability page", () => {
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain(
-          "/lotse/step/has_disability_person_a"
+          "/lotse/step/person_a_has_disability"
         );
       });
     });
@@ -28,7 +28,7 @@ describe("merkzeichenPersonA", () => {
     it("Should redirect to person a has disability page", () => {
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain(
-          "/lotse/step/has_disability_person_a"
+          "/lotse/step/person_a_has_disability"
         );
       });
     });
@@ -87,7 +87,7 @@ describe("merkzeichenPersonA", () => {
 
     it("Should link back to person a has disability page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/has_disability_person_a");
+      cy.url().should("include", "/lotse/step/person_a_has_disability");
     });
 
     it("Should link forward to pauschbetrag person a page", () => {
@@ -113,7 +113,7 @@ describe("merkzeichenPersonA", () => {
 
     it("Should link back to person a has disability page", () => {
       cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/has_disability_person_a");
+      cy.url().should("include", "/lotse/step/person_a_has_disability");
     });
 
     it("Should link forward to pauschbetrag person a page", () => {

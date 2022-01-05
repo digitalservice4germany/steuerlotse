@@ -5,7 +5,7 @@ describe("PersonAHasDisability", () => {
 
   context("with no data", () => {
     beforeEach(() => {
-      cy.visit("/lotse/step/has_disability_person_a");
+      cy.visit("/lotse/step/person_a_has_disability");
     });
 
     it("Should link back to person a page", () => {
@@ -20,7 +20,7 @@ describe("PersonAHasDisability", () => {
         person_a_has_disability: "yes",
       });
 
-      cy.visit("/lotse/step/has_disability_person_a");
+      cy.visit("/lotse/step/person_a_has_disability");
     });
 
     it("Should check radio button for label yes", () => {
@@ -47,7 +47,7 @@ describe("PersonAHasDisability", () => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "no",
       });
-      cy.visit("/lotse/step/has_disability_person_a");
+      cy.visit("/lotse/step/person_a_has_disability");
     });
 
     it("Should check radio button for label no", () => {

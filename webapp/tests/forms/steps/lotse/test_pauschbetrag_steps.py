@@ -72,14 +72,14 @@ class TestPreconditionPauschbetragPersonAValidation:
         with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'has_disability_person_a'
+            assert step.redirection_step_name == 'person_a_has_disability'
             
     def test_if_person_a_has_disability_is_no_then_redirect_to_person_a_has_disability(self, new_test_request_context):
         data = MultiDict({'person_a_has_disability':'no'})
         with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'has_disability_person_a'
+            assert step.redirection_step_name == 'person_a_has_disability'
             
     
 class TestPauschbetragPersonAGetPauschbetrag:
@@ -186,7 +186,7 @@ class TestPreconditionPauschbetragPersonBValidation:
         with new_test_request_context(stored_data=stored_data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict())
-            assert step.redirection_step_name == 'has_disability_person_b'
+            assert step.redirection_step_name == 'person_b_has_disability'
             
     
 class TestPauschbetragPersonBGetPauschbetrag:
