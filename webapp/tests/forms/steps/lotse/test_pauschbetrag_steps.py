@@ -40,7 +40,7 @@ class TestPreconditionPauschbetragPersonAValidation:
         with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'merkzeichen_person_a'
+            assert step.redirection_step_name == 'person_a_has_disability'
             
     
 class TestPauschbetragPersonAGetPauschbetrag:
