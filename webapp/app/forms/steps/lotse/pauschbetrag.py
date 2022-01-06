@@ -21,7 +21,7 @@ from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPreconditio
 
 from app.model.components import NoPauschbetragProps
 
-def calculate_pauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
+def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
     Calculates the pauschbetrag given some information about the user.
 
