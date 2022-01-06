@@ -9,7 +9,7 @@ from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
     StepTelephoneNumber
-from app.forms.steps.lotse.has_disability import StepDisabilityPersonA, StepDisabilityPersonB, HasDisabilityPersonAPrecondition, HasDisabilityPersonAPrecondition
+from app.forms.steps.lotse.has_disability import StepDisabilityPersonA, StepDisabilityPersonB, HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
@@ -515,17 +515,17 @@ class TestHasDisabilityPersonAPrecondition:
         HasDisabilityPersonAPrecondition.parse_obj(data)
 
 
-class TestHasDisabilityPersonAPrecondition:
+class TestHasDisabilityPersonBPrecondition:
     def test_if_person_b_has_disability_not_set_then_raise_validation_error(self):
         data = {}
         with pytest.raises(ValidationError):
-            HasDisabilityPersonAPrecondition.parse_obj(data)
+            HasDisabilityPersonBPrecondition.parse_obj(data)
 
     def test_if_person_b_has_disability_set_no_then_raise_validation_error(self):
         data = {'person_b_has_disability': 'no'}
         with pytest.raises(ValidationError):
-            HasDisabilityPersonAPrecondition.parse_obj(data)
+            HasDisabilityPersonBPrecondition.parse_obj(data)
 
     def test_if_person_b_has_disability_set_yes_then_do_not_raise_validation_error(self):
         data = {'person_b_has_disability': 'yes'}
-        HasDisabilityPersonAPrecondition.parse_obj(data)
+        HasDisabilityPersonBPrecondition.parse_obj(data)

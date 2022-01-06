@@ -94,11 +94,11 @@ class HasDisabilityPersonAPrecondition(BaseModel):
     _step_to_redirect_to = StepDisabilityPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
-    person_a_has_disability: bool
+    person_a_has_disability: str
 
     @validator('person_a_has_disability', always=True)
     def has_to_be_set_true(cls, v):
-        if not v:
+        if not v == 'yes':
             raise ValueError
         return v
 
@@ -107,10 +107,10 @@ class HasDisabilityPersonBPrecondition(BaseModel):
     _step_to_redirect_to = StepDisabilityPersonB.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_disability')
 
-    person_b_has_disability: bool
+    person_b_has_disability: str
 
     @validator('person_b_has_disability', always=True)
     def has_to_be_set_true(cls, v):
-        if not v:
+        if not v == 'yes':
             raise ValueError
         return v
