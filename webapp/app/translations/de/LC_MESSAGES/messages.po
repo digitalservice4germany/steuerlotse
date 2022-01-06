@@ -1297,8 +1297,12 @@ msgstr "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person 
 msgid "currency.euro"
 msgstr "Euro"
 
-#: app/forms/steps/lotse/pauschbetrag.py:72
-#: app/forms/steps/lotse/pauschbetrag.py:151
+#: app/forms/steps/lotse/pauschbetrag.py:68
+msgid "form.lotse.request_pauschbetrag.no-pauschbetrag-summary-page"
+msgstr "Keine Beantragung"
+
+#: app/forms/steps/lotse/pauschbetrag.py:75
+#: app/forms/steps/lotse/pauschbetrag.py:152
 msgid "form.lotse.skip_reason.has_no_merkzeichen"
 msgstr ""
 "Sie haben ausgewählt, dass Sie Angaben zu einer Behinderung oder "
