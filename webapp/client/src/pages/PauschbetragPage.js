@@ -101,6 +101,6 @@ PauschbetragPage.propTypes = {
   fields: PropTypes.exact({
     requestsPauschbetrag: extendedSelectionFieldPropType,
   }).isRequired,
-  pauschbetrag: PropTypes.number.isRequired,
+  pauschbetrag: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };
