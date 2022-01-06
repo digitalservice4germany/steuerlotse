@@ -166,7 +166,7 @@ class MandatoryFormData(BaseModel):
         return v
     
     @validator('person_b_requests_pauschbetrag', always=True)
-    def required_if_person_b_has_pauschbetrag_claim(cls, v, values):
+    def required_if_person_b_requests_pauschbetrag_claim(cls, v, values):
         if not v:
             try:
                 from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonBPrecondition

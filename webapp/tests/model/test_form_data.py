@@ -356,7 +356,7 @@ class TestMandatoryFormData(unittest.TestCase):
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
                                          **self.valid_steuernummer, **self.valid_married_familienstand})
 
-    def test_if_person_b_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+    def test_if_person_b_requests_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonBPrecondition.__init__',
                    MagicMock(return_value=None)):
             with self.assertRaises(ValidationError) as validation_error:

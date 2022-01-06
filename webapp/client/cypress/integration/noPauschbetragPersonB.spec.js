@@ -56,6 +56,7 @@ describe("NoPauschbetragPage for person B", () => {
           familienstand_married_lived_separated: "no",
           familienstand_confirm_zusammenveranlagung: true,
           person_b_has_disability: "yes",
+          person_b_disability_degree: 60,
         });
         cy.visit("/lotse/step/person_b_no_pauschbetrag");
       });
@@ -98,7 +99,6 @@ describe("NoPauschbetragPage for person B", () => {
           person_b_has_disability: "yes",
           person_b_has_pflegegrad: "no",
           person_b_disability_degree: 80,
-          person_b_has_merkzeichen_g: true,
         });
         cy.visit("/lotse/step/person_b_no_pauschbetrag");
       });
@@ -119,6 +119,7 @@ describe("NoPauschbetragPage for person B", () => {
           familienstand_married_lived_separated: "no",
           familienstand_confirm_zusammenveranlagung: true,
           person_b_has_disability: "yes",
+          person_b_requests_pauschbetrag: "yes",
           person_b_has_pflegegrad: "no",
         });
         cy.visit("/lotse/step/person_b_no_pauschbetrag");
