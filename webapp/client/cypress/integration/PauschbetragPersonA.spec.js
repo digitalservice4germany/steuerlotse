@@ -106,9 +106,12 @@ describe("PauschbetragPersonA", () => {
       cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
 
-    it("Should link forward to telephone_number page", () => {
+    it("Should link forward to fahrkostenpauschale page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should(
+        "include",
+        "/lotse/step/person_a_requests_fahrkostenpauschale"
+      );
     });
   });
 
@@ -131,9 +134,12 @@ describe("PauschbetragPersonA", () => {
       cy.get("#person_a_requests_pauschbetrag-yes").should("not.be.checked");
     });
 
-    it("Should link forward to telephone_number page", () => {
+    it("Should link forward to fahrkostenpauschale page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should(
+        "include",
+        "/lotse/step/person_a_requests_fahrkostenpauschale"
+      );
     });
   });
 
@@ -151,9 +157,12 @@ describe("PauschbetragPersonA", () => {
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
     });
 
-    it("Should link forward to person b page", () => {
+    it("Should link forward to fahrkostenpauschale page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_b");
+      cy.url().should(
+        "include",
+        "/lotse/step/person_a_requests_fahrkostenpauschale"
+      );
     });
   });
 });
