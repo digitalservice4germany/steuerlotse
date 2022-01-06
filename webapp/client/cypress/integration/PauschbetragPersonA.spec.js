@@ -11,7 +11,7 @@ describe("PauschbetragPersonA", () => {
     it("Should redirect to has disability page", () => {
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain(
-          "/lotse/step/has_disability_person_a"
+          "/lotse/step/person_a_has_disability"
         );
       });
     });
@@ -29,7 +29,7 @@ describe("PauschbetragPersonA", () => {
     it("Should redirect to has disability page", () => {
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain(
-          "/lotse/step/has_disability_person_a"
+          "/lotse/step/person_a_has_disability"
         );
       });
     });
