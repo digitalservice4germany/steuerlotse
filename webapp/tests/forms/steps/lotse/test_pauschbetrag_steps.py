@@ -25,7 +25,7 @@ class TestPauschbetragPersonAValidation:
         stored_data = {'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
         with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
-                StepPauschbetragPersonA.name, True, ImmutableMultiDict(data))
+                StepPauschbetragPersonA.name, True, ImmutableMultiDict(stored_data))
             assert step.redirection_step_name == 'person_a_has_disability'
             
     def test_if_precondition_person_a_has_disability_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
