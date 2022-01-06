@@ -16,7 +16,7 @@ from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterT
     ElsterInvalidBufaNumberError
 from app.forms.fields import SteuerlotseDateField, LegacySteuerlotseSelectField, LegacyYesNoField, \
     LegacySteuerlotseDateField, SteuerlotseStringField, \
-    ConfirmationField, EntriesField, EuroField, YesNoField
+    ConfirmationField, EntriesField, EuroField, YesNoField, MerkzeichenBooleanField
 from wtforms.fields import IntegerField
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.lotse.confirmation import StepSummary
@@ -330,6 +330,8 @@ class LotseMultiStepFlow(MultiStepFlow):
                     break
         elif field.field_class in (LegacyYesNoField, YesNoField):
             value_representation = "Ja" if value == "yes" else "Nein"
+        elif field.field_class == MerkzeichenBooleanField:
+            value_representation = "Ja" if value else None
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"
         elif field.field_class in (SteuerlotseDateField, LegacySteuerlotseDateField):
@@ -363,8 +365,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
                 label, value = self._generate_value_representation(field, form_data[attr])
-                if value:
-                    step_data[label] = step.get_overview_value_representation(value)
+                value = step.get_overview_value_representation(value)
+                if value is not None:
+                    step_data[label] = value
             elif missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']
@@ -374,7 +377,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
                 label, value = self._generate_value_representation(field, form_data.get(attr))
                 value = step.get_overview_value_representation(value)                
-                if value:
+                if value is not None:
                     step_data[label] = value
         return step_data
 

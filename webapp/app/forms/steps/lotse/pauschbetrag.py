@@ -309,7 +309,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
         return cls.label
 
     def get_overview_value_representation(self, value):
-        result = ''
+        result = None
 
         if value == 'yes':
             result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')

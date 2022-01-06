@@ -17,7 +17,7 @@
           <ul class="list-unstyled mb-0 margin-only-between">
               {% if step.data -%}
                 {% for label, value in step.data.items() -%}
-                {% if value %}
+                {% if value is not none %}
                     <li class="row">
                       <div class="col-sm-6 bold">{{ label }}:</div>
                       <div class="col-sm ">{{ value }} </div>
