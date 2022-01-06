@@ -27,3 +27,14 @@ it("should not render the intro if hideIntro is truthy", () => {
   );
   expect(screen.queryByText(/all good things/i)).toBeNull();
 });
+
+it("should render the intro if hideIntro is falsy", () => {
+  render(
+    <FormHeader
+      title="MyTitle"
+      intro="All good things come to those who wait"
+      hideIntro={false}
+    />
+  );
+  expect(screen.queryByText(/all good things/i)).toBeInTheDocument();
+});

@@ -13,19 +13,16 @@ export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
       <StepHeaderButtons url={prevUrl} />
       <FormHeader
         title={stepHeader.title}
-        intro={
-          <>
-            {t("lotse.noPauschbetrag.intro.p1")}
-            <br />
-            <Trans
-              t={t}
-              i18nKey="lotse.noPauschbetrag.intro.p2"
-              components={{
-                bold: <b />,
-              }}
-            />
-          </>
-        }
+        intro={[
+          t("lotse.noPauschbetrag.intro.p1"),
+          <Trans
+            t={t}
+            i18nKey="lotse.noPauschbetrag.intro.p2"
+            components={{
+              bold: <b />,
+            }}
+          />,
+        ]}
       />
       <StepNavButtons isForm={false} nextUrl={nextUrl} />
     </>
