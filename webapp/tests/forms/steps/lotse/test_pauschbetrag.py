@@ -5,8 +5,7 @@ from pydantic import ValidationError
 
 from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, HasPauschbetragClaimPersonAPrecondition, \
     HasPauschbetragClaimPersonBPrecondition, HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition, \
-    HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition, HasPflegegradSetPersonBPrecondition, \
-    HasPflegegradSetPersonAPrecondition, HasMerkzeichenPersonAPrecondition, \
+    HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition, HasMerkzeichenPersonAPrecondition, \
     HasMerkzeichenPersonBPrecondition
 
 class TestCalculatePauschbetrag:
@@ -198,30 +197,6 @@ class TestCalculatePauschbetrag:
     def test_if_disability_degree_under_20_then_return_zero(self):
         calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
         assert calculated_pauschbetrag == 0
-
-
-class TestHasPflegegradSetPersonAPrecondition:
-    def test_if_pflegegrad_not_set_raise_validation_error(self):
-        with pytest.raises(ValidationError):
-            HasPflegegradSetPersonAPrecondition.parse_obj({})
-
-    def test_if_pflegegrad_set_yes_raise_no_error(self):
-        HasPflegegradSetPersonAPrecondition.parse_obj({'person_a_has_pflegegrad': 'yes'})
-
-    def test_if_pflegegrad_set_no_raise_no_error(self):
-        HasPflegegradSetPersonAPrecondition.parse_obj({'person_a_has_pflegegrad': 'no'})
-        
-        
-class TestHasPflegegradSetPersonBPrecondition:
-    def test_if_pflegegrad_not_set_raise_validation_error(self):
-        with pytest.raises(ValidationError):
-            HasPflegegradSetPersonBPrecondition.parse_obj({})
-
-    def test_if_pflegegrad_set_yes_raise_no_error(self):
-        HasPflegegradSetPersonBPrecondition.parse_obj({'person_b_has_pflegegrad': 'yes'})
-
-    def test_if_pflegegrad_set_no_raise_no_error(self):
-        HasPflegegradSetPersonBPrecondition.parse_obj({'person_b_has_pflegegrad': 'no'})
 
 
 class TestHasPauschbetragClaimPersonAPrecondition:

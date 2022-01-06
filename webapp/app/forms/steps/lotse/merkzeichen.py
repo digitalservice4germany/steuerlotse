@@ -61,6 +61,14 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
                 if field.data and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
+                
+    def get_overview_value_representation(self, value):
+        result = None
+
+        if value == 'yes':
+            result = _('switch.yes')
+            
+        return result
 
     @classmethod
     def get_label(cls, data):
@@ -145,6 +153,14 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
                 if field.data and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
+                
+    def get_overview_value_representation(self, value):
+        result = None
+
+        if value == 'yes':
+            result = _('switch.yes')
+            
+        return result
 
     @classmethod
     def get_label(cls, data):

@@ -17,7 +17,7 @@ from app.model.components.helpers import form_fields_dict
 
 
 class StepDisabilityPersonB(LotseFormSteuerlotseStep):
-    name = 'person_b_has_disability'
+    name = 'has_disability_person_b'
     label = _l('form.lotse.has_disability.label_person_b')
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -54,7 +54,7 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
 
 
 class StepDisabilityPersonA(LotseFormSteuerlotseStep):
-    name = 'person_a_has_disability'
+    name = 'has_disability_person_a'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     class InputForm(SteuerlotseBaseForm):

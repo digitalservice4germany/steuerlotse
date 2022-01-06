@@ -25,7 +25,7 @@ describe("NoPauschbetragPage for person B", () => {
     });
 
     it("Should redirect to person b has disability page", () => {
-      cy.url().should("include", "/lotse/step/person_b_has_disability");
+      cy.url().should("include", "/lotse/step/has_disability_person_b");
     });
   });
 
@@ -42,7 +42,7 @@ describe("NoPauschbetragPage for person B", () => {
     });
 
     it("Should redirect to person b has disability page", () => {
-      cy.url().should("include", "/lotse/step/person_b_has_disability");
+      cy.url().should("include", "/lotse/step/has_disability_person_b");
     });
   });
 
@@ -61,8 +61,7 @@ describe("NoPauschbetragPage for person B", () => {
       });
 
       it("Should redirect to person b merkzeichen page", () => {
-        cy.url().should("include", "/lotse/step/familienstand");
-        // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
+        cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       });
     }
   );
@@ -83,8 +82,7 @@ describe("NoPauschbetragPage for person B", () => {
     });
 
     it("Should redirect to person b merkzeichen page", () => {
-      cy.url().should("include", "/lotse/step/familienstand");
-      // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
   });
 
@@ -106,8 +104,7 @@ describe("NoPauschbetragPage for person B", () => {
       });
 
       it("Should redirect to person b merkzeichen page", () => {
-        cy.url().should("include", "/lotse/step/familienstand");
-        // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
+        cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       });
     }
   );
@@ -133,8 +130,7 @@ describe("NoPauschbetragPage for person B", () => {
 
       it("Should link back to merkzeichen page", () => {
         cy.get("a").contains("Zurück").click();
-        cy.url().should("include", "/lotse/step/person_b_has_disability");
-        // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_b");
+        cy.url().should("include", "/lotse/step/merkzeichen_person_b");
       });
 
       it("Should link forward to telephone number page", () => {

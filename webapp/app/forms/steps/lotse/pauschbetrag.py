@@ -16,6 +16,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition, StepFamilienstand
+from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 
@@ -88,22 +89,8 @@ class DisabilityModel(BaseModel):
         return values
 
 
-class HasPflegegradSetPersonAPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_not_filled_pflegegrad')
-
-    person_a_has_pflegegrad: str
-
-
-class HasPflegegradSetPersonBPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
-    _message_to_flash = _l('form.lotse.skip_reason.has_not_filled_pflegegrad')
-
-    person_b_has_pflegegrad: str
-
-
 class HasPauschbetragClaimPersonAPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
+    _step_to_redirect_to = StepMerkzeichenPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
@@ -122,7 +109,7 @@ class HasPauschbetragClaimPersonAPrecondition(DisabilityModel):
 
 
 class HasPauschbetragClaimPersonBPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
+    _step_to_redirect_to = StepMerkzeichenPersonB.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
@@ -141,7 +128,7 @@ class HasPauschbetragClaimPersonBPrecondition(DisabilityModel):
 
 
 class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonAMerkzeichen.name
+    _step_to_redirect_to = StepMerkzeichenPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
@@ -169,7 +156,7 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(Disabili
 
 
 class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(DisabilityModel):
-    _step_to_redirect_to = StepFamilienstand.name  # TODO: StepPersonBMerkzeichen.name
+    _step_to_redirect_to = StepMerkzeichenPersonB.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
 
     @root_validator(skip_on_failure=True)
@@ -221,7 +208,7 @@ class HasMerkzeichenPersonAPrecondition(BaseModel):
 class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
-    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasPflegegradSetPersonAPrecondition, HasPauschbetragClaimPersonAPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasPauschbetragClaimPersonAPrecondition]
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
@@ -235,10 +222,10 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
                         num=get_number_of_users(data))
 
     def get_overview_value_representation(self, value):
-        result = ''
+        result = None
 
         if value == 'yes':
-            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
+            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
 
         elif not value and self.stored_data.get('person_a_has_disability') == 'yes':
             result = _('form.lotse.no_answer')
@@ -308,8 +295,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_pauschbetrag.label')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasPflegegradSetPersonBPrecondition,
-                     HasPauschbetragClaimPersonBPrecondition, HasMerkzeichenPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasPauschbetragClaimPersonBPrecondition, HasMerkzeichenPersonBPrecondition]
         
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_pauschbetrag = SelectField(
@@ -326,7 +312,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
         result = ''
 
         if value == 'yes':
-            result = self.get_pauschbetrag() + ' ' + _('currency.euro')
+            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
 
         elif not value and self.stored_data.get('person_b_has_disability') == 'yes':
             result = _('form.lotse.no_answer')
@@ -368,7 +354,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [HasDisabilityPersonAPrecondition, HasPflegegradSetPersonAPrecondition,
+    preconditions = [HasDisabilityPersonAPrecondition,
                      HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition]
 
     def _pre_handle(self):
@@ -401,8 +387,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonAPrecondition, HasPflegegradSetPersonBPrecondition,
-                     HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition]
 
     def render(self):
         props_dict = NoPauschbetragProps(

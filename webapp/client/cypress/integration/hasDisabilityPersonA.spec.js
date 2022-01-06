@@ -5,7 +5,7 @@ describe("PersonAHasDisability", () => {
 
   context("with no data", () => {
     beforeEach(() => {
-      cy.visit("/lotse/step/person_a_has_disability");
+      cy.visit("/lotse/step/has_disability_person_a");
     });
 
     it("Should link back to person a page", () => {
@@ -20,7 +20,7 @@ describe("PersonAHasDisability", () => {
         person_a_has_disability: "yes",
       });
 
-      cy.visit("/lotse/step/person_a_has_disability");
+      cy.visit("/lotse/step/has_disability_person_a");
     });
 
     it("Should check radio button for label yes", () => {
@@ -47,7 +47,7 @@ describe("PersonAHasDisability", () => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "no",
       });
-      cy.visit("/lotse/step/person_a_has_disability");
+      cy.visit("/lotse/step/has_disability_person_a");
     });
 
     it("Should check radio button for label no", () => {
@@ -75,9 +75,9 @@ describe("PersonAHasDisability", () => {
       cy.visit("/lotse/step/merkzeichen_person_a");
     });
 
-    it("Should link forward to telephone number page", () => {
+    it("Should link forward to person b", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/telephone_number");
+      cy.url().should("include", "/lotse/step/person_b");
     });
   });
 });
