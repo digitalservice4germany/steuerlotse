@@ -62,6 +62,7 @@ class StepDisplayProps(ComponentProps):
     prev_url: Optional[str]
     next_url: Optional[str]
 
+
 class LoginProps(StepFormProps):
     pass
 

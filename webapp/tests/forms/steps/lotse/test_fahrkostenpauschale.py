@@ -1,4 +1,11 @@
-from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschbetrag
+from unittest.mock import patch, MagicMock
+
+from werkzeug.datastructures import MultiDict, ImmutableMultiDict
+from flask_babel import _
+
+from app.forms.flows.lotse_step_chooser import LotseStepChooser
+from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschbetrag, StepFahrkostenpauschalePersonA, \
+    StepFahrkostenpauschalePersonB
 
 
 class TestCalculatePauschbetrag:
@@ -346,3 +353,141 @@ class TestCalculatePauschbetrag:
             calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
+
+
+class TestStepFahrkostenpauschalePersonA:
+
+    def test_if_person_a_requests_fahrkostenpauschale_is_given_then_validation_should_be_success(self, new_test_request_context):
+        data = MultiDict({
+            'person_a_has_merkzeichen': 'yes',
+            'person_a_disability_degree': 80,
+            'person_a_has_disability': 'yes',
+            'person_a_requests_fahrkostenpauschale': 'no'})
+        with new_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(
+                StepFahrkostenpauschalePersonA.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is True
+
+    def test_if_person_a_requests_fahrkostenpauschale_not_given_then_validation_should_fail(self, new_test_request_context):
+        data = MultiDict({
+            'person_a_has_disability': 'yes',
+            'person_a_has_merkzeichen': 'yes',
+            'person_a_disability_degree': 80,
+            })
+        with new_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(
+                StepFahrkostenpauschalePersonA.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is False
+
+
+class TestFahrkostenpauschalePersonAGetOverviewValueRepresentation:
+
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_yes_then_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
+        stored_data = {
+             'person_a_has_disability': 'yes',
+             'person_a_has_pflegegrad': True,
+         }
+        value = 'yes'
+        pauschbetrag_result = 1
+        with new_test_request_context(stored_data=stored_data):
+            with patch('app.forms.steps.lotse.fahrkostenpauschale.StepFahrkostenpauschalePersonA.get_fahrkostenpauschale', MagicMock(return_value=pauschbetrag_result)):
+                step = LotseStepChooser().get_correct_step(
+                    StepFahrkostenpauschalePersonA.name, True, ImmutableMultiDict({}))
+
+                overview_value = step.get_overview_value_representation(value)
+
+                assert str(pauschbetrag_result) in overview_value
+
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_yes_then_returns_no_request_label(self, new_test_request_context):
+        stored_data = {
+            'person_a_has_disability': 'yes',
+            'person_a_has_pflegegrad': 'yes',
+        }
+        value = 'no'
+
+        with new_test_request_context(stored_data=stored_data):
+            step = LotseStepChooser().get_correct_step(
+                    StepFahrkostenpauschalePersonA.name, True, ImmutableMultiDict({}))
+
+            overview_value = step.get_overview_value_representation(value)
+
+            assert overview_value == _('form.lotse.summary.not-requested')
+
+
+class TestStepFahrkostenpauschalePersonB:
+
+    def test_if_person_b_requests_fahrkostenpauschale_is_given_then_validation_should_be_success(self, new_test_request_context):
+        data = MultiDict({
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
+            'person_b_has_disability': 'yes',
+            'person_b_disability_degree': 80,
+            'person_b_has_merkzeichen_h': True,
+            'person_b_requests_fahrkostenpauschale': 'no'
+        })
+        with new_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(
+                StepFahrkostenpauschalePersonB.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is True
+
+    def test_if_person_b_requests_fahrkostenpauschale_not_given_then_validation_should_fail(self, new_test_request_context):
+        data = MultiDict({
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
+            'person_b_has_disability': 'yes',
+            'person_b_disability_degree': 80,
+            'person_b_has_merkzeichen_h': True,
+        })
+        with new_test_request_context(stored_data=data):
+            step = LotseStepChooser().get_correct_step(
+                StepFahrkostenpauschalePersonB.name, True, ImmutableMultiDict(data))
+            form = step.render_info.form
+            assert form.validate() is False
+
+
+class TestFahrkostenpauschalePersonBGetOverviewValueRepresentation:
+
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_yes_then_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
+        stored_data = {
+             'familienstand': 'married',
+             'familienstand_married_lived_separated': 'no',
+             'familienstand_confirm_zusammenveranlagung': True,
+             'person_b_has_disability': 'yes',
+             'person_b_has_pflegegrad': True,
+         }
+        value = 'yes'
+        pauschbetrag_result = 1
+        with new_test_request_context(stored_data=stored_data):
+            with patch('app.forms.steps.lotse.fahrkostenpauschale.StepFahrkostenpauschalePersonB.get_fahrkostenpauschale', MagicMock(return_value=pauschbetrag_result)):
+                step = LotseStepChooser().get_correct_step(
+                    StepFahrkostenpauschalePersonB.name, True, ImmutableMultiDict({}))
+
+                overview_value = step.get_overview_value_representation(value)
+
+                assert str(pauschbetrag_result) in overview_value
+
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_yes_then_returns_no_request_label(self, new_test_request_context):
+        stored_data = {
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
+        }
+        value = 'no'
+
+        with new_test_request_context(stored_data=stored_data):
+            step = LotseStepChooser().get_correct_step(
+                    StepFahrkostenpauschalePersonB.name, True, ImmutableMultiDict({}))
+
+            overview_value = step.get_overview_value_representation(value)
+
+            assert overview_value == _('form.lotse.summary.not-requested')
+
