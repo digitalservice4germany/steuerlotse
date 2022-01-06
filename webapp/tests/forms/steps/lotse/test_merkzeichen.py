@@ -150,7 +150,7 @@ class TestStepMerkzeichenPersonATexts:
             'familienstand_date': datetime.date(2000, 1, 31),
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
-            'person_a_has_disability': True,
+            'person_a_has_disability': 'yes',
         }
 
         with new_test_request_context(stored_data=session_data):
@@ -167,7 +167,7 @@ class TestStepMerkzeichenPersonATexts:
             'familienstand_date': datetime.date(2000, 1, 31),
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
-            'person_a_has_disability': True,
+            'person_a_has_disability': 'yes',
         }
 
         with new_test_request_context(stored_data=session_data):
@@ -181,7 +181,7 @@ class TestStepMerkzeichenPersonATexts:
                                        num=1)
         session_data = {
             'familienstand': 'single',
-            'person_a_has_disability': True,
+            'person_a_has_disability': 'yes',
         }
 
         with new_test_request_context(stored_data=session_data):
@@ -195,7 +195,7 @@ class TestStepMerkzeichenPersonATexts:
                                        num=1)
         session_data = {
             'familienstand': 'single',
-            'person_a_has_disability': True,
+            'person_a_has_disability': 'yes',
         }
 
         with new_test_request_context(stored_data=session_data):
@@ -212,7 +212,7 @@ def new_merkzeichen_person_b_step(form_data):
 @pytest.fixture
 def test_request_context_with_person_b_disability(app):
     with app.test_request_context(method="POST") as req:
-        req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_b_has_disability': True})})
+        req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_b_has_disability': 'yes'})})
         yield req
 
 
