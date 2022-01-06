@@ -35,6 +35,8 @@ class StepFahrkostenpauschale(LotseFormSteuerlotseStep):
 
         if value == 'yes':
             result = str(self.get_fahrkostenpauschale()) + ' ' + _('currency.euro')
+        elif value == 'no':
+            result = _('form.lotse.summary.not-requested')
 
         return result
 
