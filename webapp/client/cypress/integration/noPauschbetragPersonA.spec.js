@@ -35,8 +35,7 @@ describe("NoPauschbetragPage for person A", () => {
     });
 
     it("Should redirect to person a merkzeichen page", () => {
-      cy.url().should("include", "/lotse/step/familienstand");
-      // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_a");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
   });
 
@@ -52,8 +51,7 @@ describe("NoPauschbetragPage for person A", () => {
     });
 
     it("Should redirect to person a merkzeichen page", () => {
-      cy.url().should("include", "/lotse/step/familienstand");
-      // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_a");
+      cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
   });
 
@@ -71,8 +69,7 @@ describe("NoPauschbetragPage for person A", () => {
       });
 
       it("Should redirect to person a merkzeichen page", () => {
-        cy.url().should("include", "/lotse/step/familienstand");
-        // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_a");
+        cy.url().should("include", "/lotse/step/merkzeichen_person_a");
       });
     }
   );
@@ -95,7 +92,7 @@ describe("NoPauschbetragPage for person A", () => {
       it("Should link back to merkzeichen page", () => {
         cy.get("a").contains("Zurück").click();
         cy.url().should("include", "/lotse/step/person_a_has_disability");
-        // TODO cy.url().should("include", "/lotse/step/merkzeichen_person_a");
+        cy.url().should("include", "/lotse/step/merkzeichen_person_a");
       });
 
       it("Should link forward to telephone number page", () => {
