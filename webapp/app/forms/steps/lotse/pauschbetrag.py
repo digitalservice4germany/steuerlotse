@@ -64,7 +64,9 @@ class StepPauschbetrag(LotseFormSteuerlotseStep):
 
         if value == 'yes':
             result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
-            
+        elif value == 'no':
+            result = _('form.lotse.summary.not-requested')
+
         return result
 
 

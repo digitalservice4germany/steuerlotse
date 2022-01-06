@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-06 14:03+0100\n"
+"POT-Creation-Date: 2022-01-06 14:11+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -1298,7 +1298,7 @@ msgid "currency.euro"
 msgstr "Euro"
 
 #: app/forms/steps/lotse/pauschbetrag.py:68
-msgid "form.lotse.request_pauschbetrag.no-pauschbetrag-summary-page"
+msgid "form.lotse.summary.not-requested"
 msgstr "Keine Beantragung"
 
 #: app/forms/steps/lotse/pauschbetrag.py:75
