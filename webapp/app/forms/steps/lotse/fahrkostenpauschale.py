@@ -39,6 +39,9 @@ class StepFahrkostenpauschale(LotseFormSteuerlotseStep):
         return result
 
     def get_fahrkostenpauschale(self):
+        """
+            Get the amount of Fahrkostenpauschale for this step. Should be implemented for each step.
+        """
         pass
 
 

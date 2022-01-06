@@ -67,6 +67,9 @@ class StepPauschbetrag(LotseFormSteuerlotseStep):
         return result
 
     def get_pauschbetrag(self):
+        """
+            Get the amount of Pauschbetrag for this step. Should be implemented for each step.
+        """
         pass
 
 
