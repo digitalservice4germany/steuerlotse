@@ -1347,28 +1347,25 @@ msgstr ""
 
 #: app/forms/steps/lotse/pauschbetrag.py:93
 #: app/forms/steps/lotse/pauschbetrag.py:112
-#, fuzzy
 msgid "form.lotse.skip_reason.has_no_pauschbetrag_claim"
 msgstr ""
-"Sie haben ausgewählt, dass Sie Angaben zu einer Behinderung oder "
-"Pflegebedürftigkeit machen möchten, aber die Angaben sind noch "
-"ausstehend. Bitte machen Sie Angaben zu einer Behinderung oder "
-"Pflegebedürftigkeit."
+"Ihre Angaben qualifizieren Sie leider nicht für die behinderungsbedingte "
+"Fahrkostenpauschale."
 
 #: app/forms/steps/lotse/pauschbetrag.py:131
 #: app/forms/steps/lotse/pauschbetrag.py:152
-#, fuzzy
 msgid "form.lotse.skip_reason.has_fahrkostenpauschale_claim"
-msgstr "Beantragung Pauschale Fahrtkosten"
+msgstr ""
+"Ihre Angaben qualifizieren Sie leider nicht für die behinderungsbedingte "
+"Fahrkostenpauschale."
 
 #: app/forms/steps/lotse/pauschbetrag.py:173
 #: app/forms/steps/lotse/pauschbetrag.py:201
-#, fuzzy
 msgid "form.lotse.skip_reason.has_pauschbetrag_claim"
-msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung Person B"
+msgstr "Ihre Angaben qualifizieren Sie für den behinderungsbedingten Pauschbetrag."
 
 #: app/forms/steps/lotse/pauschbetrag.py:234
-#: app/forms/steps/lotse/pauschbetrag.py:324
+#: app/forms/steps/lotse/pauschbetrag.py:298
 msgid "form.lotse.request_pauschbetrag.data_label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
 
