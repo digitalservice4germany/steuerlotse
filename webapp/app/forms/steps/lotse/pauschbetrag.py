@@ -8,7 +8,6 @@ from wtforms.validators import InputRequired, ValidationError
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
-from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.fahrkostenpauschbetrag import calculate_fahrkostenpauschbetrag
 from app.model.components import PauschbetragProps
 from app.model.components.helpers import form_fields_dict
