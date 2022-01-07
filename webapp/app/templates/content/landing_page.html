@@ -1,12 +1,6 @@
 {% extends 'basis/base.html' %}
 {% import "components.html" as components %}
 
-{% block tax_period_banner %}
-    <div class="landing-page-tax-period-banner">
-        {{ super() }}
-    </div>
-{% endblock %}
-
 {% set accordeon_home = {
     'id': 'accordeon_home',
     'heading': _('info.heading-accordeon-home'),

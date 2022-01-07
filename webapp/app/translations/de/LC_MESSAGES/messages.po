@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-05 14:51+0100\n"
+"POT-Creation-Date: 2022-01-07 15:26+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -205,11 +205,12 @@ msgstr "Ihre Steuererklärung"
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:323
+#: app/forms/flows/lotse_flow.py:323 app/forms/steps/lotse/pauschbetrag.py:249
+#: app/forms/steps/lotse/pauschbetrag.py:338
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:383
+#: app/forms/flows/lotse_flow.py:380
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -286,12 +287,12 @@ msgid "form.eligibility.marital_status.widowed"
 msgstr "verwitwet"
 
 #: app/forms/steps/eligibility_steps.py:192
-#: app/forms/steps/lotse/fahrkostenpauschale.py:51
-#: app/forms/steps/lotse/fahrkostenpauschale.py:106
+#: app/forms/steps/lotse/fahrkostenpauschale.py:66
+#: app/forms/steps/lotse/fahrkostenpauschale.py:120
 #: app/forms/steps/lotse/has_disability.py:29
 #: app/forms/steps/lotse/has_disability.py:63
-#: app/forms/steps/lotse/pauschbetrag.py:106
-#: app/forms/steps/lotse/pauschbetrag.py:183
+#: app/forms/steps/lotse/pauschbetrag.py:235
+#: app/forms/steps/lotse/pauschbetrag.py:325
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1091,19 +1092,24 @@ msgstr ""
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:34
-#: app/forms/steps/lotse/pauschbetrag.py:65
+#: app/forms/steps/lotse/fahrkostenpauschale.py:41
+#: app/forms/steps/lotse/pauschbetrag.py:246
+#: app/forms/steps/lotse/pauschbetrag.py:335
 msgid "currency.euro"
 msgstr "Euro"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:41
-#: app/forms/steps/lotse/fahrkostenpauschale.py:95
+#: app/forms/steps/lotse/fahrkostenpauschale.py:43
+msgid "form.lotse.summary.not-requested"
+msgstr "Keine Beantragung"
+
+#: app/forms/steps/lotse/fahrkostenpauschale.py:56
+#: app/forms/steps/lotse/fahrkostenpauschale.py:109
 #: app/forms/steps/lotse/has_disability.py:22
 #: app/forms/steps/lotse/has_disability.py:58
-#: app/forms/steps/lotse/merkzeichen.py:28
-#: app/forms/steps/lotse/merkzeichen.py:117
-#: app/forms/steps/lotse/pauschbetrag.py:98
-#: app/forms/steps/lotse/pauschbetrag.py:173
+#: app/forms/steps/lotse/merkzeichen.py:31
+#: app/forms/steps/lotse/merkzeichen.py:119
+#: app/forms/steps/lotse/pauschbetrag.py:227
+#: app/forms/steps/lotse/pauschbetrag.py:314
 #: app/forms/steps/lotse/personal_data.py:37
 #: app/forms/steps/lotse/personal_data.py:183
 #: app/forms/steps/lotse/personal_data.py:274
@@ -1115,31 +1121,31 @@ msgstr "Euro"
 msgid "form.lotse.mandatory_data.label"
 msgstr "Pflichtangaben"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:49
-#: app/forms/steps/lotse/fahrkostenpauschale.py:104
+#: app/forms/steps/lotse/fahrkostenpauschale.py:64
+#: app/forms/steps/lotse/fahrkostenpauschale.py:118
 msgid "form.lotse.request_fahrkostenpauschale.data_label"
 msgstr "Beantragung Pauschale für Fahrtkosten"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:56
+#: app/forms/steps/lotse/fahrkostenpauschale.py:71
 msgid "form.lotse.person_a.request_fahrkostenpauschale.label"
 msgid_plural "form.lotse.person_a.request_fahrkostenpauschale.label"
 msgstr[0] "Beantragung Pauschale Fahrtkosten"
 msgstr[1] "Beantragung Pauschale Fahrtkosten Person A"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:62
+#: app/forms/steps/lotse/fahrkostenpauschale.py:77
 msgid "form.lotse.person_a.request_fahrkostenpauschale.title"
 msgid_plural "form.lotse.person_a.request_fahrkostenpauschale.title"
 msgstr[0] "Beantragung Pauschale Fahrtkosten"
 msgstr[1] "Beantragung Pauschale Fahrtkosten Person A"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:78
-#: app/forms/steps/lotse/fahrkostenpauschale.py:131
+#: app/forms/steps/lotse/fahrkostenpauschale.py:93
+#: app/forms/steps/lotse/fahrkostenpauschale.py:145
 #: app/forms/steps/lotse/has_disability.py:53
 #: app/forms/steps/lotse/has_disability.py:90
-#: app/forms/steps/lotse/merkzeichen.py:106
-#: app/forms/steps/lotse/merkzeichen.py:182
-#: app/forms/steps/lotse/pauschbetrag.py:133
-#: app/forms/steps/lotse/pauschbetrag.py:208
+#: app/forms/steps/lotse/merkzeichen.py:108
+#: app/forms/steps/lotse/merkzeichen.py:181
+#: app/forms/steps/lotse/pauschbetrag.py:274
+#: app/forms/steps/lotse/pauschbetrag.py:361
 #: app/forms/steps/lotse/personal_data.py:395
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
@@ -1147,11 +1153,11 @@ msgstr[1] "Beantragung Pauschale Fahrtkosten Person A"
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:98
+#: app/forms/steps/lotse/fahrkostenpauschale.py:112
 msgid "form.lotse.person_b.request_fahrkostenpauschale.label"
 msgstr "Beantragung Pauschale Fahrtkosten"
 
-#: app/forms/steps/lotse/fahrkostenpauschale.py:115
+#: app/forms/steps/lotse/fahrkostenpauschale.py:129
 msgid "form.lotse.person_b.request_fahrkostenpauschale.title"
 msgstr "Beantragung Pauschale Fahrtkosten"
 
@@ -1193,23 +1199,23 @@ msgstr ""
 "wenn sie doch Angaben zu einer Behinderung oder Pflegebedürftigkeit "
 "machen möchten."
 
-#: app/forms/steps/lotse/merkzeichen.py:22
-#: app/forms/steps/lotse/merkzeichen.py:80
+#: app/forms/steps/lotse/merkzeichen.py:25
+#: app/forms/steps/lotse/merkzeichen.py:82
 msgid "form.lotse.merkzeichen_person_a.title"
 msgid_plural "form.lotse.merkzeichen_person_a.title"
 msgstr[0] "Angaben zu Ihrer Behinderung oder Pflegebedürftigkeit"
 msgstr[1] "Angaben zu Behinderung oder Pflegebedürftigkeit von Person A"
 
-#: app/forms/steps/lotse/merkzeichen.py:23
-#: app/forms/steps/lotse/merkzeichen.py:112
+#: app/forms/steps/lotse/merkzeichen.py:26
+#: app/forms/steps/lotse/merkzeichen.py:114
 msgid "form.lotse.merkzeichen.intro"
 msgstr ""
 "Bei einer Behinderung besteht in der Regel Anspruch auf steuerliche "
 "Vergünstigungen in Form von Pauschbeträgen. Ob und in welcher Höhe Sie "
 "Anspruch auf die Pauschbeträge haben, ist von Ihren Angaben abhängig."
 
-#: app/forms/steps/lotse/merkzeichen.py:24
-#: app/forms/steps/lotse/merkzeichen.py:113
+#: app/forms/steps/lotse/merkzeichen.py:27
+#: app/forms/steps/lotse/merkzeichen.py:115
 #: app/forms/steps/lotse/personal_data.py:32
 #: app/forms/steps/lotse/personal_data.py:180
 #: app/forms/steps/lotse/personal_data.py:271
@@ -1219,22 +1225,22 @@ msgstr ""
 msgid "form.lotse.mandatory_data.header-title"
 msgstr "Steuerformular - Pflichtangaben - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/merkzeichen.py:27
+#: app/forms/steps/lotse/merkzeichen.py:30
 msgid "form.lotse.merkzeichen.label"
-msgstr "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit"
+msgstr "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit"
 
-#: app/forms/steps/lotse/merkzeichen.py:32
-#: app/forms/steps/lotse/merkzeichen.py:121
+#: app/forms/steps/lotse/merkzeichen.py:35
+#: app/forms/steps/lotse/merkzeichen.py:123
 msgid "form.lotse.merkzeichen.has_pflegegrad.required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
-#: app/forms/steps/lotse/merkzeichen.py:33
-#: app/forms/steps/lotse/merkzeichen.py:122
+#: app/forms/steps/lotse/merkzeichen.py:36
+#: app/forms/steps/lotse/merkzeichen.py:124
 msgid "form.lotse.merkzeichen.has_pflegegrad.data_label"
 msgstr "Wurde ein Pflegegrad von 4 oder 5 festgestellt? "
 
-#: app/forms/steps/lotse/merkzeichen.py:36
-#: app/forms/steps/lotse/merkzeichen.py:125
+#: app/forms/steps/lotse/merkzeichen.py:39
+#: app/forms/steps/lotse/merkzeichen.py:127
 msgid "form.lotse.field_person_beh_grad-help"
 msgstr ""
 "Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
@@ -1248,92 +1254,90 @@ msgstr ""
 "Einbuße der körperlichen Beweglichkeit geführt hat oder auf einer "
 "typischen Berufskrankheit beruht.</li><ul>"
 
-#: app/forms/steps/lotse/merkzeichen.py:37
-#: app/forms/steps/lotse/merkzeichen.py:126
+#: app/forms/steps/lotse/merkzeichen.py:40
+#: app/forms/steps/lotse/merkzeichen.py:128
 msgid "form.lotse.merkzeichen.disability_degree"
 msgstr "Grad der Behinderung"
 
-#: app/forms/steps/lotse/merkzeichen.py:39
-#: app/forms/steps/lotse/merkzeichen.py:128
+#: app/forms/steps/lotse/merkzeichen.py:42
+#: app/forms/steps/lotse/merkzeichen.py:130
 msgid "form.lotse.merkzeichen.has_merkzeichen_g.data_label"
 msgstr "Merkzeichen G"
 
-#: app/forms/steps/lotse/merkzeichen.py:42
-#: app/forms/steps/lotse/merkzeichen.py:131
+#: app/forms/steps/lotse/merkzeichen.py:44
+#: app/forms/steps/lotse/merkzeichen.py:132
 msgid "form.lotse.merkzeichen.has_merkzeichen_ag.data_label"
 msgstr "Merkzeichen aG"
 
-#: app/forms/steps/lotse/merkzeichen.py:45
+#: app/forms/steps/lotse/merkzeichen.py:46
 #: app/forms/steps/lotse/merkzeichen.py:134
 msgid "form.lotse.merkzeichen.has_merkzeichen_bl.data_label"
 msgstr "Merkzeichen Bl"
 
 #: app/forms/steps/lotse/merkzeichen.py:48
-#: app/forms/steps/lotse/merkzeichen.py:137
+#: app/forms/steps/lotse/merkzeichen.py:136
 msgid "form.lotse.merkzeichen.has_merkzeichen_tbl.data_label"
 msgstr "Merkzeichen TBl"
 
-#: app/forms/steps/lotse/merkzeichen.py:51
-#: app/forms/steps/lotse/merkzeichen.py:140
+#: app/forms/steps/lotse/merkzeichen.py:50
+#: app/forms/steps/lotse/merkzeichen.py:138
 msgid "form.lotse.merkzeichen.has_merkzeichen_h.data_label"
 msgstr "Merkzeichen H"
 
-#: app/forms/steps/lotse/merkzeichen.py:56
-#: app/forms/steps/lotse/merkzeichen.py:145
+#: app/forms/steps/lotse/merkzeichen.py:54
+#: app/forms/steps/lotse/merkzeichen.py:142
 msgid "form.lotse.validation-disability_degree.merkzeichen_g_selected.required"
 msgstr ""
 "Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
 "Merkzeichen G auswählen."
 
-#: app/forms/steps/lotse/merkzeichen.py:59
-#: app/forms/steps/lotse/merkzeichen.py:148
+#: app/forms/steps/lotse/merkzeichen.py:58
+#: app/forms/steps/lotse/merkzeichen.py:146
 msgid "form.lotse.merkzeichen_g_selected.validation-disability_degree.min20"
 msgstr ""
 "Es muss ein Grad der Behinderung von mindestens 20 angegeben werden, wenn"
 " Sie das Merkzeichen G auswählen."
 
 #: app/forms/steps/lotse/merkzeichen.py:61
-#: app/forms/steps/lotse/merkzeichen.py:150
+#: app/forms/steps/lotse/merkzeichen.py:149
 msgid "form.lotse.validation-disability_degree.merkzeichen_ag_selected.required"
 msgstr ""
 "Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
 "Merkzeichen aG auswählen."
 
 #: app/forms/steps/lotse/merkzeichen.py:64
-#: app/forms/steps/lotse/merkzeichen.py:153
+#: app/forms/steps/lotse/merkzeichen.py:152
 msgid "form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20"
 msgstr ""
 "Es muss ein Grad der Behinderung von mindestens 20 angegeben werden, wenn"
 " Sie das Merkzeichen aG auswählen."
 
 #: app/forms/steps/lotse/merkzeichen.py:68
-#: app/forms/steps/lotse/merkzeichen.py:157
+#: app/forms/steps/lotse/merkzeichen.py:156
 msgid "form.lotse.validation-disability_degree.min20"
 msgstr ""
 "Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der "
 "Behinderung von 20. Lassen Sie das Feld leer, falls der Wert unter 20 "
 "liegt."
 
-#: app/forms/steps/lotse/merkzeichen.py:83
+#: app/forms/steps/lotse/merkzeichen.py:74
+#: app/forms/steps/lotse/merkzeichen.py:85
 msgid "form.lotse.merkzeichen_person_a.label"
 msgid_plural "form.lotse.merkzeichen_person_a.label"
-msgstr[0] "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit"
-msgstr[1] "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit Person A"
+msgstr[0] "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit"
+msgstr[1] "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person A"
 
-#: app/forms/steps/lotse/merkzeichen.py:111
+#: app/forms/steps/lotse/merkzeichen.py:113
 msgid "form.lotse.merkzeichen_person_b.title"
 msgstr "Angaben zu Behinderung oder Pflegebedürftigkeit von Person B"
 
-#: app/forms/steps/lotse/merkzeichen.py:116
+#: app/forms/steps/lotse/merkzeichen.py:118
 msgid "form.lotse.merkzeichen_person_b.label"
-msgstr "Angaben zur festgestellen Behinderung oder Pflegebedürftigkeit Person B"
+msgstr "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:68
-msgid "form.lotse.summary.not-requested"
-msgstr "Keine Beantragung"
-
-#: app/forms/steps/lotse/pauschbetrag.py:72
-#: app/forms/steps/lotse/pauschbetrag.py:147
+#: app/forms/steps/lotse/merkzeichen.py:186
+#: app/forms/steps/lotse/merkzeichen.py:212
+#: app/forms/steps/lotse/pauschbetrag.py:288
 msgid "form.lotse.skip_reason.has_no_merkzeichen"
 msgstr ""
 "Sie haben ausgewählt, dass Sie Angaben zu einer Behinderung oder "
@@ -1341,28 +1345,50 @@ msgstr ""
 "ausstehend. Bitte machen Sie Angaben zu einer Behinderung oder "
 "Pflegebedürftigkeit."
 
-#: app/forms/steps/lotse/pauschbetrag.py:105
-#: app/forms/steps/lotse/pauschbetrag.py:182
+#: app/forms/steps/lotse/pauschbetrag.py:93
+#: app/forms/steps/lotse/pauschbetrag.py:112
+#, fuzzy
+msgid "form.lotse.skip_reason.has_no_pauschbetrag_claim"
+msgstr ""
+"Sie haben ausgewählt, dass Sie Angaben zu einer Behinderung oder "
+"Pflegebedürftigkeit machen möchten, aber die Angaben sind noch "
+"ausstehend. Bitte machen Sie Angaben zu einer Behinderung oder "
+"Pflegebedürftigkeit."
+
+#: app/forms/steps/lotse/pauschbetrag.py:131
+#: app/forms/steps/lotse/pauschbetrag.py:152
+#, fuzzy
+msgid "form.lotse.skip_reason.has_fahrkostenpauschale_claim"
+msgstr "Beantragung Pauschale Fahrtkosten"
+
+#: app/forms/steps/lotse/pauschbetrag.py:173
+#: app/forms/steps/lotse/pauschbetrag.py:201
+#, fuzzy
+msgid "form.lotse.skip_reason.has_pauschbetrag_claim"
+msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung Person B"
+
+#: app/forms/steps/lotse/pauschbetrag.py:234
+#: app/forms/steps/lotse/pauschbetrag.py:324
 msgid "form.lotse.request_pauschbetrag.data_label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
 
-#: app/forms/steps/lotse/pauschbetrag.py:111
+#: app/forms/steps/lotse/pauschbetrag.py:240
 msgid "form.lotse.person_a.request_pauschbetrag.label"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.label"
 msgstr[0] "Beantragung Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Beantragung Pauschbetrag für Menschen mit Behinderung Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:117
+#: app/forms/steps/lotse/pauschbetrag.py:258
 msgid "form.lotse.person_a.request_pauschbetrag.title"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.title"
 msgstr[0] "Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:175
+#: app/forms/steps/lotse/pauschbetrag.py:316
 msgid "form.lotse.person_b.request_pauschbetrag.label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:192
+#: app/forms/steps/lotse/pauschbetrag.py:345
 msgid "form.lotse.person_b.request_pauschbetrag.title"
 msgstr "Pauschbetrag für Menschen mit Behinderung für Person B"
 
@@ -2982,7 +3008,7 @@ msgstr ""
 "Der Grad der Behinderung wird in 5er-Schritten bis 100 festgesetzt. "
 "Korrigieren Sie Ihre Angabe."
 
-#: app/model/form_data.py:414
+#: app/model/form_data.py:438
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -2992,11 +3018,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:419
+#: app/model/form_data.py:443
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:425
+#: app/model/form_data.py:449
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
@@ -3060,16 +3086,6 @@ msgstr "Fehler: "
 #: app/templates/basis/base.html:43
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
-
-#: app/templates/basis/base.html:62
-msgid "tax-period-banner.alt-text"
-msgstr "Pfeil"
-
-#: app/templates/basis/base.html:64
-msgid "tax-period-banner.text"
-msgstr ""
-"<b>Wir stellen auf das neue Steuerjahr 2021 um!</b></br>Steuererklärung "
-"für 2020 nur noch bis zum 30.12.2021 möglich."
 
 #: app/templates/basis/display_failure_icon.html:14
 #: app/templates/eligibility/display_success.html:15
@@ -4375,19 +4391,19 @@ msgstr ""
 "zugeschnitten."
 
 #: app/templates/content/howitworks.html:11
-#: app/templates/content/landing_page.html:15
+#: app/templates/content/landing_page.html:9
 msgid "info-stl.card-who.heading"
 msgstr "Wer kann den Steuerlotsen nutzen?"
 
 #: app/templates/content/howitworks.html:13
-#: app/templates/content/landing_page.html:17
+#: app/templates/content/landing_page.html:11
 msgid "info-stl.card-who.p1-content"
 msgstr ""
 "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und "
 "Pension beziehen und keine Zusatzeinkünfte haben."
 
 #: app/templates/content/howitworks.html:14
-#: app/templates/content/landing_page.html:18
+#: app/templates/content/landing_page.html:12
 msgid "info-stl.card-who.p2-content"
 msgstr ""
 "Sie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus "
@@ -4395,33 +4411,33 @@ msgstr ""
 "Steuerlotsen derzeit nicht nutzen."
 
 #: app/templates/content/howitworks.html:15
-#: app/templates/content/landing_page.html:19
+#: app/templates/content/landing_page.html:13
 msgid "info-stl.card-who.p3-content"
 msgstr ""
 "Sie können <a href=%(link)s>mit unserem Fragebogen</a> prüfen, ob Sie "
 "alle Voraussetzungen für den Steuerlotsen erfüllen."
 
 #: app/templates/content/howitworks.html:20
-#: app/templates/content/landing_page.html:24
+#: app/templates/content/landing_page.html:18
 msgid "info-stl.card-process.heading"
 msgstr "Wie läuft die Nutzung des Steuerlotsen ab?"
 
 #: app/templates/content/howitworks.html:22
-#: app/templates/content/landing_page.html:26
+#: app/templates/content/landing_page.html:20
 msgid "info-stl.card-process.p1-content"
 msgstr ""
 "Mit dem Steuerlotsen kommen Sie ganz automatisch in 4 Schritten durch "
 "Ihre Steuererklärung:"
 
 #: app/templates/content/howitworks.html:25
-#: app/templates/content/landing_page.html:29
+#: app/templates/content/landing_page.html:23
 msgid "info-stl.card-process.list-item-1"
 msgstr ""
 "<a href=%(link)s>Prüfen Sie</a>, ob Sie die Voraussetzung für die Nutzung"
 " des Steuerlotsen erfüllen."
 
 #: app/templates/content/howitworks.html:26
-#: app/templates/content/landing_page.html:30
+#: app/templates/content/landing_page.html:24
 msgid "info-stl.card-process.list-item-2"
 msgstr ""
 "<a href=%(link)s>Registrieren Sie sich </a>beim Steuerlotsen für Ihre "
@@ -4429,12 +4445,12 @@ msgstr ""
 "Sie einen Freischaltcode bei Ihrer Finanzverwaltung."
 
 #: app/templates/content/howitworks.html:27
-#: app/templates/content/landing_page.html:31
+#: app/templates/content/landing_page.html:25
 msgid "info-stl.card-process.list-item-3"
 msgstr "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode. "
 
 #: app/templates/content/howitworks.html:28
-#: app/templates/content/landing_page.html:32
+#: app/templates/content/landing_page.html:26
 msgid "info-stl.card-process.list-item-4"
 msgstr ""
 "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie "
@@ -4443,19 +4459,19 @@ msgstr ""
 "Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen."
 
 #: app/templates/content/howitworks.html:32
-#: app/templates/content/landing_page.html:36
+#: app/templates/content/landing_page.html:30
 msgid "info-stl.card-submission.heading"
 msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 
 #: app/templates/content/howitworks.html:34
-#: app/templates/content/landing_page.html:38
+#: app/templates/content/landing_page.html:32
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
 "Einkommensteuererklärung bis zum <b>31. Juli</b> beim Finanzamt sein."
 
 #: app/templates/content/howitworks.html:35
-#: app/templates/content/landing_page.html:39
+#: app/templates/content/landing_page.html:33
 msgid "info-stl.card-submission.p2-content"
 msgstr ""
 "Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. "
@@ -4464,12 +4480,12 @@ msgstr ""
 "Zeit lassen. "
 
 #: app/templates/content/howitworks.html:40
-#: app/templates/content/landing_page.html:44
+#: app/templates/content/landing_page.html:38
 msgid "info-stl.card-steuerminderung.heading"
 msgstr "Kann ich Angaben machen, die meine Steuerlast reduzieren?"
 
 #: app/templates/content/howitworks.html:42
-#: app/templates/content/landing_page.html:46
+#: app/templates/content/landing_page.html:40
 msgid "info-stl.card-steuerminderung.p1-content"
 msgstr ""
 "Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und "
@@ -4481,7 +4497,7 @@ msgstr ""
 "Kirchensteuer</li></ul>"
 
 #: app/templates/content/howitworks.html:43
-#: app/templates/content/landing_page.html:47
+#: app/templates/content/landing_page.html:41
 msgid "info-stl.card-steuerminderung.p2-content"
 msgstr ""
 "Die <b>haushaltsnahen Dienstleistungen</b> und Handwerkerleistungen "
@@ -4490,7 +4506,7 @@ msgstr ""
 "Steuerlotsen nicht steuerlich absetzen."
 
 #: app/templates/content/howitworks.html:44
-#: app/templates/content/landing_page.html:48
+#: app/templates/content/landing_page.html:42
 msgid "info-stl.card-steuerminderung.p3-content"
 msgstr ""
 "Eine detaillierte Übersicht, welche Angaben zu den Bereichen gehören, "
@@ -5000,83 +5016,83 @@ msgstr ""
 msgid "interviews.button"
 msgstr "<a href=\"mailto:kontakt@steuerlotse-rente.de\">Schreiben Sie uns!</a>"
 
-#: app/templates/content/landing_page.html:12
+#: app/templates/content/landing_page.html:6
 msgid "info.heading-accordeon-home"
 msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 
-#: app/templates/content/landing_page.html:62
+#: app/templates/content/landing_page.html:56
 msgid "landing.hero-title"
 msgstr ""
 "Mit dem Steuerlotsen können Rentner:innen und Pensionär:innen ihre "
 "Steuererklärung online machen!"
 
-#: app/templates/content/landing_page.html:63
+#: app/templates/content/landing_page.html:57
 msgid "landing.hero-desc"
 msgstr ""
 "Der Steuerlotse bietet Rentner:innen und Pensionär:innen ohne weitere "
 "Einkünfte die Möglichkeit, ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen zu machen."
 
-#: app/templates/content/landing_page.html:65
+#: app/templates/content/landing_page.html:59
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:66
+#: app/templates/content/landing_page.html:60
 msgid "landing.hero-list-item-2"
 msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
 
-#: app/templates/content/landing_page.html:67
+#: app/templates/content/landing_page.html:61
 msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
-#: app/templates/content/landing_page.html:79
+#: app/templates/content/landing_page.html:73
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:89
+#: app/templates/content/landing_page.html:83
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:90
+#: app/templates/content/landing_page.html:84
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:97
+#: app/templates/content/landing_page.html:91
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:98
+#: app/templates/content/landing_page.html:92
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:105
+#: app/templates/content/landing_page.html:99
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:106
+#: app/templates/content/landing_page.html:100
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
-#: app/templates/content/landing_page.html:122
+#: app/templates/content/landing_page.html:116
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:123
+#: app/templates/content/landing_page.html:117
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:124
+#: app/templates/content/landing_page.html:118
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
