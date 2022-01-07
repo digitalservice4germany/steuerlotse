@@ -48,12 +48,14 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
         def validate_person_a_disability_degree(self, field):
             if self.person_a_has_merkzeichen_g.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required'))(
+                    self, field)
 
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_g_selected.validation-disability_degree.min20'))
             elif self.person_a_has_merkzeichen_ag.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required'))(self, field)
+                validators.InputRequired(
+                    _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required'))(self, field)
 
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20'))
@@ -65,7 +67,9 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
 
     @classmethod
     def get_label(cls, data):
-        return cls.label
+        return ngettext('form.lotse.merkzeichen_person_a.label',
+                        'form.lotse.merkzeichen_person_a.label',
+                        num=get_number_of_users(data))
 
     def _pre_handle(self):
         self._set_multiple_texts()
@@ -74,11 +78,11 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
     def _set_multiple_texts(self):
         number_of_users = get_number_of_users(self.stored_data)
         self.title = ngettext('form.lotse.merkzeichen_person_a.title',
-                                               'form.lotse.merkzeichen_person_a.title',
-                                               num=number_of_users)
+                              'form.lotse.merkzeichen_person_a.title',
+                              num=number_of_users)
         self.label = ngettext('form.lotse.merkzeichen_person_a.label',
-                                               'form.lotse.merkzeichen_person_a.label',
-                                               num=number_of_users)
+                              'form.lotse.merkzeichen_person_a.label',
+                              num=number_of_users)
 
     def render(self):
         props_dict = MerkzeichenProps(
@@ -133,12 +137,14 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
 
         def validate_person_b_disability_degree(self, field):
             if self.person_b_has_merkzeichen_g.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required'))(self, field)
+                validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required'))(
+                    self, field)
 
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_g_selected.validation-disability_degree.min20'))
             elif self.person_b_has_merkzeichen_ag.data:
-                validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required'))(self, field)
+                validators.InputRequired(
+                    _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required'))(self, field)
 
                 if field.data and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20'))

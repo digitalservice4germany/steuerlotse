@@ -12,8 +12,18 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
+export const WithManyParagraphs = Template.bind({});
+
 Default.args = {
   title: "Melden Sie sich mit Ihrem Freischaltcode an",
   intro:
     "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten? Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
+};
+
+WithManyParagraphs.args = {
+  title: "Melden Sie sich mit Ihrem Freischaltcode an",
+  intro: [
+    "Sie sind vorbereitet und haben den Freischaltcode per Post erhalten?",
+    "Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
+  ],
 };
