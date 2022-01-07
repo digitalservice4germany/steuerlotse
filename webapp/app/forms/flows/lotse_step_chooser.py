@@ -10,7 +10,8 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
-from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB, StepNoPauschbetragPersonA, StepNoPauschbetragPersonB
+from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.no_pauschbetrag import  StepNoPauschbetragPersonA, StepNoPauschbetragPersonB
 
 _LOTSE_DATA_KEY = 'form_data'
 
