@@ -58,6 +58,18 @@ def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merk
 
     return 0
 
+class StepPauschbetrag(LotseFormSteuerlotseStep):
+
+    def get_overview_value_representation(self, value):
+        result = ''
+
+        if value == 'yes':
+            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
+        elif value == 'no':
+            result = _('form.lotse.summary.not-requested')
+
+        return result
+
 
 class DisabilityModel(BaseModel):
     person_a_has_disability: Optional[str]
@@ -206,7 +218,7 @@ class HasMerkzeichenPersonAPrecondition(BaseModel):
             raise ValueError
         return v
 
-class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
+class StepPauschbetragPersonA(StepPauschbetrag):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
     preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasPauschbetragClaimPersonAPrecondition]
@@ -223,17 +235,6 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label',
                         'form.lotse.person_a.request_pauschbetrag.label',
                         num=get_number_of_users(data))
-
-    def get_overview_value_representation(self, value):
-        result = None
-
-        if value == 'yes':
-            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
-
-        elif not value and self.stored_data.get('person_a_has_disability') == 'yes':
-            result = _('form.lotse.no_answer')
-
-        return result
 
     def render(self):
         props_dict = PauschbetragProps(
@@ -294,7 +295,7 @@ class HasMerkzeichenPersonBPrecondition(BaseModel):
         return v
 
 
-class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
+class StepPauschbetragPersonB(StepPauschbetrag):
     name = 'person_b_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
 
@@ -311,28 +312,6 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
-
-    def get_overview_value_representation(self, value):
-        result = None
-
-        if value == 'yes':
-            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
-
-        elif not value and self.stored_data.get('person_a_has_disability') == 'yes':
-            result = _('form.lotse.no_answer')
-
-        return result
-
-    def get_overview_value_representation(self, value):
-        result = None
-
-        if value == 'yes':
-            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
-
-        elif not value and self.stored_data.get('person_b_has_disability') == 'yes':
-            result = _('form.lotse.no_answer')
-
-        return result
 
     def render(self):
         props_dict = PauschbetragProps(
