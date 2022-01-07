@@ -68,6 +68,13 @@ describe("PauschbetragPersonA", () => {
       cy.get("#person_a_requests_pauschbetrag-yes").should("not.be.checked");
     });
 
+    it("Should show pauschbetrag on page", () => {
+      cy.get("label[for=person_a_requests_pauschbetrag-yes]").should(
+        "contain",
+        "384"
+      );
+    });
+
     it("Should not check radio button for label no", () => {
       cy.get("#person_a_requests_pauschbetrag-no").should("not.be.checked");
     });

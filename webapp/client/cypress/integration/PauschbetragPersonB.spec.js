@@ -166,6 +166,13 @@ describe("PauschbetragPersonB", () => {
       cy.get("#person_b_requests_pauschbetrag-yes").should("not.be.checked");
     });
 
+    it("Should show pauschbetrag on page", () => {
+      cy.get("label[for=person_b_requests_pauschbetrag-yes]").should(
+        "contain",
+        "384"
+      );
+    });
+
     it("Should link forward to fahrkostenpauschale page", () => {
       cy.get("button[type=submit]").click();
       cy.url().should(

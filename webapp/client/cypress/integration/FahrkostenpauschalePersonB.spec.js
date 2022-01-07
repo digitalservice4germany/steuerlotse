@@ -83,7 +83,7 @@ describe("FahrkostenpauschalePersonA", () => {
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
-        person_b_disability_degree: "20",
+        person_b_disability_degree: "80",
         person_b_has_merkzeichen_g: true,
       });
 
@@ -100,6 +100,10 @@ describe("FahrkostenpauschalePersonA", () => {
       cy.get("#person_b_requests_fahrkostenpauschale-no").should(
         "not.be.checked"
       );
+    });
+
+    it("Should show fahrkostenpauschale on page", () => {
+      cy.contains("900 Euro");
     });
 
     it("Should stay on page and show error when submit button clicked", () => {

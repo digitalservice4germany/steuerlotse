@@ -57,7 +57,7 @@ describe("FahrkostenpauschalePersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
-        person_a_disability_degree: "20",
+        person_a_disability_degree: "80",
         person_a_has_merkzeichen_g: true,
       });
 
@@ -74,6 +74,10 @@ describe("FahrkostenpauschalePersonA", () => {
       cy.get("#person_a_requests_fahrkostenpauschale-no").should(
         "not.be.checked"
       );
+    });
+
+    it("Should show fahrkostenpauschale on page", () => {
+      cy.contains("900 Euro");
     });
 
     it("Should stay on page and show error when submit button clicked", () => {
