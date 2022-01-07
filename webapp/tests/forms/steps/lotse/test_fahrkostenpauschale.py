@@ -4,7 +4,7 @@ from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 from flask_babel import _
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
-from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschbetrag, StepFahrkostenpauschalePersonA, \
+from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschale, StepFahrkostenpauschalePersonA, \
     StepFahrkostenpauschalePersonB
 
 
@@ -32,7 +32,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -42,7 +42,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -60,7 +60,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -70,7 +70,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -88,7 +88,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': True,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -98,7 +98,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -116,7 +116,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': True,
             'has_merkzeichen_h': False,
@@ -126,7 +126,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -144,7 +144,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': True,
@@ -154,7 +154,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -172,7 +172,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': False,
+            'has_pflegegrad': 'no',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -182,7 +182,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -200,7 +200,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -210,7 +210,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -228,7 +228,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': True,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -238,7 +238,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -256,7 +256,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': True,
             'has_merkzeichen_h': False,
@@ -266,7 +266,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -284,7 +284,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': True,
@@ -294,7 +294,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -312,7 +312,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -322,7 +322,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 
@@ -340,7 +340,7 @@ class TestCalculatePauschbetrag:
         ]
 
         params = {
-            'has_pflegegrad': True,
+            'has_pflegegrad': 'yes',
             'has_merkzeichen_bl': False,
             'has_merkzeichen_tbl': False,
             'has_merkzeichen_h': False,
@@ -350,7 +350,7 @@ class TestCalculatePauschbetrag:
 
         for disability_degree, expected_result in input_output_pairs:
 
-            calculated_pauschbetrag = calculate_fahrkostenpauschbetrag(**params, disability_degree=disability_degree)
+            calculated_pauschbetrag = calculate_fahrkostenpauschale(**params, disability_degree=disability_degree)
 
             assert calculated_pauschbetrag == expected_result
 

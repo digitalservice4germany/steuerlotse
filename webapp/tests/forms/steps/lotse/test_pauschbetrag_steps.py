@@ -70,11 +70,13 @@ class TestPauschbetragPersonAGetPauschbetrag:
             
             assert pauschbetrag == expected_pauschbetrag
 
+
 class TestPauschbetragPersonAGetOverviewValueRepresentation:
+
     def test_if_merkzeichen_given_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
         stored_data = {
-            'person_a_has_disability':'yes', 
-            'person_a_has_pflegegrad': True, 
+            'person_a_has_disability': 'yes',
+            'person_a_has_pflegegrad': 'yes',
         }
         value = 'yes'
         pauschbetrag_result = 1
@@ -214,14 +216,16 @@ class TestPauschbetragPersonBGetPauschbetrag:
             
             assert pauschbetrag == expected_pauschbetrag
 
+
 class TestPauschbetragPersonBGetOverviewValueRepresentation:
+
     def test_if_merkzeichen_given_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
         stored_data = {
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
-            'person_b_has_disability':'yes', 
-            'person_b_has_pflegegrad': True, 
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
         }
         value = 'yes'
         pauschbetrag_result = 1

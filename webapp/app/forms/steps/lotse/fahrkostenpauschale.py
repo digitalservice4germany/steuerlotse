@@ -7,7 +7,7 @@ from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
-from app.forms.steps.lotse.pauschbetrag import HasMerkzeichenPersonAPrecondition, HasMerkzeichenPersonBPrecondition
+from app.forms.steps.lotse.merkzeichen import HasMerkzeichenPersonAPrecondition, HasMerkzeichenPersonBPrecondition
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
@@ -18,11 +18,15 @@ from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 
 
-def calculate_fahrkostenpauschbetrag(has_pflegegrad=False, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False,
-                                     has_merkzeichen_h=False, has_merkzeichen_ag=False, has_merkzeichen_g=False):
-    if has_pflegegrad or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_tbl or has_merkzeichen_h or has_merkzeichen_ag:
+def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
+                                  has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
+                                  has_merkzeichen_h: bool = False, has_merkzeichen_ag: bool = False,
+                                  has_merkzeichen_g: bool = False):
+
+    if has_pflegegrad == 'yes' or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_tbl \
+            or has_merkzeichen_h or has_merkzeichen_ag:
         return 4500
-    elif disability_degree is not None and disability_degree >= 80 or (has_merkzeichen_g and disability_degree >= 70):
+    elif disability_degree is not None and (disability_degree >= 80 or (has_merkzeichen_g and disability_degree >= 70)):
         return 900
 
     return 0
@@ -89,7 +93,7 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
                                header_title=_('form.lotse.header-title'))
 
     def get_fahrkostenpauschale(self):
-        return calculate_fahrkostenpauschbetrag(
+        return calculate_fahrkostenpauschale(
             has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', False),
             disability_degree=self.stored_data.get('person_a_disability_degree', None),
             has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
@@ -141,7 +145,7 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
                                header_title=_('form.lotse.header-title'))
 
     def get_fahrkostenpauschale(self):
-        return calculate_fahrkostenpauschbetrag(
+        return calculate_fahrkostenpauschale(
             has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', False),
             disability_degree=self.stored_data.get('person_b_disability_degree', None),
             has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),

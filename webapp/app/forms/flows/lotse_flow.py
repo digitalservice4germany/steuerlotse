@@ -335,10 +335,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                     break
         elif field.field_class in (LegacyYesNoField, YesNoField):
             value_representation = "Ja" if value == "yes" else "Nein"
-        elif field.field_class == BooleanField and field.name:
-            if 'merkzeichen' in field.name:
-                value_representation = "Ja" if value else None
-            else:
+        elif field.field_class == BooleanField:
                 value_representation = "Ja" if value else "Nein"
         elif field.field_class == BooleanField:
             value_representation = "Ja" if value else "Nein"

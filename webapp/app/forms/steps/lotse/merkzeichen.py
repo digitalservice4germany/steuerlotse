@@ -1,6 +1,9 @@
+from typing import Optional
+
 from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
+from pydantic import BaseModel, validator
 from wtforms import validators, BooleanField
 from wtforms.validators import InputRequired, ValidationError
 
@@ -36,20 +39,15 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
         person_a_has_merkzeichen_g = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')},
-            name='person_a_has_merkzeichen_g')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
         person_a_has_merkzeichen_ag = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')},
-            name='person_a_has_merkzeichen_ag')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
         person_a_has_merkzeichen_bl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')},
-            name='person_a_has_merkzeichen_bl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')})
         person_a_has_merkzeichen_tbl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')},
-            name='person_a_has_merkzeichen_tbl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')})
         person_a_has_merkzeichen_h = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')},
-            name='person_a_has_merkzeichen_h')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')})
 
         def validate_person_a_disability_degree(self, field):
             if self.person_a_has_merkzeichen_g.data:
@@ -125,20 +123,15 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
         person_b_has_merkzeichen_g = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')},
-            name='person_b_has_merkzeichen_g')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
         person_b_has_merkzeichen_ag = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')},
-            name='person_b_has_merkzeichen_ag')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
         person_b_has_merkzeichen_bl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')},
-            name='person_b_has_merkzeichen_bl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')})
         person_b_has_merkzeichen_tbl = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')},
-            name='person_b_has_merkzeichen_tbl')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')})
         person_b_has_merkzeichen_h = BooleanField(
-            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')},
-            name='person_b_has_merkzeichen_h')
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')})
 
         def validate_person_b_disability_degree(self, field):
             if self.person_b_has_merkzeichen_g.data:
@@ -180,3 +173,55 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+
+
+class HasMerkzeichenPersonAPrecondition(BaseModel):
+    _step_to_redirect_to = StepMerkzeichenPersonA.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_merkzeichen')
+
+    person_a_has_pflegegrad: Optional[str]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_g: Optional[bool]
+    person_a_has_merkzeichen_ag: Optional[bool]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
+
+    @validator('person_a_has_merkzeichen_h', always=True)
+    def any_merkzeichen_has_to_be_set(cls, v, values):
+        merkzeichen_keys = ['person_a_has_pflegegrad',
+                            'person_a_disability_degree',
+                            'person_a_has_merkzeichen_g',
+                            'person_a_has_merkzeichen_ag',
+                            'person_a_has_merkzeichen_bl',
+                            'person_a_has_merkzeichen_tbl',
+                            'person_a_has_merkzeichen_h']
+        if not v and not any([values.get(merkzeichen_key) for merkzeichen_key in merkzeichen_keys]):
+            raise ValueError
+        return v
+
+
+class HasMerkzeichenPersonBPrecondition(BaseModel):
+    _step_to_redirect_to = StepMerkzeichenPersonB.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_merkzeichen')
+
+    person_b_has_pflegegrad: Optional[str]
+    person_b_disability_degree: Optional[int]
+    person_b_has_merkzeichen_g: Optional[bool]
+    person_b_has_merkzeichen_ag: Optional[bool]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
+
+    @validator('person_b_has_merkzeichen_h', always=True)
+    def any_merkzeichen_has_to_be_set(cls, v, values):
+        merkzeichen_keys = ['person_b_has_pflegegrad',
+                            'person_b_disability_degree',
+                            'person_b_has_merkzeichen_g',
+                            'person_b_has_merkzeichen_ag',
+                            'person_b_has_merkzeichen_bl',
+                            'person_b_has_merkzeichen_tbl',
+                            'person_b_has_merkzeichen_h']
+        if not v and not any([values.get(merkzeichen_key) for merkzeichen_key in merkzeichen_keys]):
+            raise ValueError
+        return v

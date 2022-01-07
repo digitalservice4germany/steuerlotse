@@ -1257,6 +1257,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
+            'person_a_requests_fahrkostenpauschale': 'yes',
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
@@ -1287,6 +1288,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
+            'person_a_requests_fahrkostenpauschale': 'yes',
 
             'person_b_dob': datetime.date(1951, 2, 25),
             'person_b_first_name': 'Gerta',

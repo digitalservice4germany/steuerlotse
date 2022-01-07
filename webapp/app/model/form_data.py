@@ -9,6 +9,7 @@ from pydantic import BaseModel, validator, MissingError, ValidationError, root_v
 from pydantic.error_wrappers import ErrorWrapper
 
 from app.data_access.user_controller import check_idnr
+
 from app.utils import get_first_day_of_tax_period
 
 
@@ -90,6 +91,7 @@ class MandatoryFormData(BaseModel):
     person_a_has_disability: str
     person_a_has_pflegegrad: Optional[str]
     person_a_requests_pauschbetrag: Optional[str]
+    person_a_requests_fahrkostenpauschale: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -100,6 +102,7 @@ class MandatoryFormData(BaseModel):
     person_b_has_disability: Optional[str]
     person_b_has_pflegegrad: Optional[str]
     person_b_requests_pauschbetrag: Optional[str]
+    person_b_requests_fahrkostenpauschale: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -153,6 +156,27 @@ class MandatoryFormData(BaseModel):
             if not v:
                 raise MissingError
         return v
+
+    @validator('person_a_requests_fahrkostenpauschale', always=True)
+    def required_if_person_a_has_fahrkostenpauschale_claim(cls, v, values):
+        if not v:
+            try:
+                from app.forms.steps.lotse.pauschbetrag import HasFahrkostenpauschaleClaimPersonAPrecondition
+                HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
+                raise MissingError  # has fahrkostenpauschale claim
+            except ValidationError:
+                pass  # has no fahrkostenpauschale claim
+        return v
+
+    @validator('person_b_requests_fahrkostenpauschale', always=True)
+    def required_if_person_b_requests_pauschbetrag_claim(cls, v, values):
+        if not v:
+            try:
+                from app.forms.steps.lotse.pauschbetrag import HasFahrkostenpauschaleClaimPersonBPrecondition
+                HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
+                raise MissingError  # has fahrkostenpauschale claim
+            except ValidationError:
+                pass  # has no fahrkostenpauschale claim
 
     @validator('person_a_has_pflegegrad', always=True)
     def person_a_pflegegrad_required_if_person_a_has_disability(cls, v, values):
