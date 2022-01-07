@@ -39,7 +39,7 @@ describe("NoPauschbetragPage for person A", () => {
       cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
 
-    it("Should redirect to telephone number page", () => {
+    it("Should link forward to telephone number page", () => {
       cy.get("a").contains("Weiter").click();
       cy.url().should("include", "/lotse/step/telephone_number");
     });

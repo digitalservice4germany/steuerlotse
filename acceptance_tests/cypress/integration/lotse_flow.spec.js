@@ -284,16 +284,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_has_disability-yes]').click()
-                cy.get(submitBtnSelector).click()
-
-                cy.get('label[for=person_a_has_pflegegrad-yes]').click()
-                cy.get('#person_a_disability_degree').type(taxReturnData.personA.disabilityDegree)
-                cy.get('label[for=person_a_has_merkzeichen_bl]').first().click()
-                cy.get('label[for=person_a_has_merkzeichen_h]').first().click()
-                cy.get(submitBtnSelector).click()
-
-                cy.get('#person_a_requests_pauschbetrag-yes').check().should('be.checked')
+                cy.get('label[for=person_a_has_disability-no]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -349,7 +340,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#person_a_has_disability-no').check().should('be.checked')
+                cy.get('label[for=person_a_has_disability-no]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -456,7 +447,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
 
-                cy.get('#person_b_requests_pauschbetrag-yes').check().should('be.checked')
+                cy.get('#person_b_requests_pauschbetrag-yes').click()
                 cy.get(submitBtnSelector).click()
 
                 // no telephone number
