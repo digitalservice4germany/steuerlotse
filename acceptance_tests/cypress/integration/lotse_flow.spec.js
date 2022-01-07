@@ -214,7 +214,7 @@ context('Acceptance tests', () => {
             cy.get('#familienstand_date_3').clear().type(older_date_year)
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('not.be.visible')
         })
-    
+
         it('Enter different tax number data ', () => {
             cy.visit('/lotse/step/steuernummer?link_overview=True')
 
@@ -286,13 +286,13 @@ context('Acceptance tests', () => {
 
                 cy.get('#person_a_has_disability-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
-                    
+
                 cy.get('label[for=person_a_has_pflegegrad-yes]').click()
                 cy.get('#person_a_disability_degree').type(taxReturnData.personA.disabilityDegree)
                 cy.get('label[for=person_a_has_merkzeichen_bl]').first().click()
                 cy.get('label[for=person_a_has_merkzeichen_h]').first().click()
                 cy.get(submitBtnSelector).click()
-    
+
                 cy.get('#person_a_requests_pauschbetrag-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
@@ -349,16 +349,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#person_a_has_disability-yes').check().should('be.checked')
-                cy.get(submitBtnSelector).click()
-                    
-                cy.get('label[for=person_a_has_pflegegrad-yes]').click()
-                cy.get('#person_a_disability_degree').type(taxReturnData.personA.disabilityDegree)
-                cy.get('label[for=person_a_has_merkzeichen_bl]').first().click()
-                cy.get('label[for=person_a_has_merkzeichen_h]').first().click()
-                cy.get(submitBtnSelector).click()
-    
-                cy.get('#person_a_requests_pauschbetrag-yes').check().should('be.checked')
+                cy.get('#person_a_has_disability-no').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#telephone_number').type(taxReturnData.telephoneNumber)
@@ -428,7 +419,7 @@ context('Acceptance tests', () => {
 
                 cy.get('#person_a_has_disability-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
-                    
+
                 cy.get('label[for=person_a_has_pflegegrad-yes]').click()
                 cy.get('#person_a_disability_degree').type(taxReturnData.personA.disabilityDegree)
                 cy.get('label[for=person_a_has_merkzeichen_bl]').first().click()
@@ -457,14 +448,14 @@ context('Acceptance tests', () => {
 
                 cy.get('#person_b_has_disability-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
-                    
+
                 cy.get('label[for=person_b_has_pflegegrad-yes]').click()
                 cy.get('#person_b_disability_degree').type(taxReturnData.personA.disabilityDegree)
                 cy.get('label[for=person_b_has_merkzeichen_bl]').first().click()
                 cy.get('label[for=person_b_has_merkzeichen_h]').first().click()
                 cy.get(submitBtnSelector).click()
 
-                    
+
                 cy.get('#person_b_requests_pauschbetrag-yes').check().should('be.checked')
                 cy.get(submitBtnSelector).click()
 
