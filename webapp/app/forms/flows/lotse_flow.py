@@ -361,7 +361,7 @@ class LotseMultiStepFlow(MultiStepFlow):
         """
         step_data = {}
         for attr in step.create_form(request.form, form_data).__dict__:
-            if attr in form_data:
+            if attr in form_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
                 label, value = self._generate_value_representation(field, form_data[attr])
@@ -372,13 +372,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']
                 step_data[label] = _l('form.lotse.missing_mandatory_field')
-            elif hasattr(step.form, attr):
-                field = getattr(step.form, attr)
-                # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
-                label, value = self._generate_value_representation(field, form_data.get(attr))
-                value = step.get_overview_value_representation(value)                
-                if value is not None:
-                    step_data[label] = value
+
         return step_data
 
     @staticmethod
