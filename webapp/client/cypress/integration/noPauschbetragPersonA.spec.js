@@ -34,7 +34,7 @@ describe("NoPauschbetragPage for person A", () => {
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
     });
 
-    it("Should link back to telephone number page", () => {
+    it("Should link back to merkzeichen page", () => {
       cy.get("a").contains("Zurück").click();
       cy.url().should("include", "/lotse/step/merkzeichen_person_a");
     });
