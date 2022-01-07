@@ -193,7 +193,7 @@ class TestCalculatePauschbetrag:
     def test_if_no_parameters_then_return_zero(self):
         calculated_pauschbetrag = calculate_pauschbetrag()
         assert calculated_pauschbetrag == 0
-        
+
     def test_if_no_parameters_set_and_disability_degree_under_20_then_return_zero(self):
         calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
         assert calculated_pauschbetrag == 0
@@ -228,8 +228,16 @@ class TestHasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition:
                       MagicMock(return_value=0)):
             HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition.parse_obj({})
 
+    def test_if_calculate_pauschbetrag_and_fahrkostenpauschbetrag_return_number_other_than_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)), \
+            patch('app.forms.steps.lotse.fahrkostenpauschbetrag.calculate_fahrkostenpauschbetrag',
+                    MagicMock(return_value=1)):
+                with pytest.raises(ValidationError):
+                    HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition.parse_obj({})
+
     def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag',
+                   MagicMock(return_value=1)):
             with pytest.raises(ValidationError):
                 HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition.parse_obj({})
 
@@ -257,11 +265,11 @@ class TestHasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition:
                    MagicMock(return_value=1)):
             with pytest.raises(ValidationError):
                 HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
-    def test_if_no_parameters_then_zero_should_be_return(self):        
+    def test_if_no_parameters_then_zero_should_be_return(self):
         calculated_pauschbetrag = calculate_pauschbetrag()
         assert calculated_pauschbetrag == 0
-        
-    def test_if_disability_degree_under_20_then_zero_should_be_return(self):        
+
+    def test_if_disability_degree_under_20_then_zero_should_be_return(self):
         calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
         assert calculated_pauschbetrag == 0
 
