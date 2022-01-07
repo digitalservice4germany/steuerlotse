@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-06 14:11+0100\n"
+"POT-Creation-Date: 2022-01-06 18:32+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -205,12 +205,12 @@ msgstr "Ihre Steuererklärung"
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:318 app/forms/steps/lotse/pauschbetrag.py:221
-#: app/forms/steps/lotse/pauschbetrag.py:287
+#: app/forms/flows/lotse_flow.py:318 app/forms/steps/lotse/pauschbetrag.py:231
+#: app/forms/steps/lotse/pauschbetrag.py:318
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:376
+#: app/forms/flows/lotse_flow.py:371
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -289,8 +289,8 @@ msgstr "verwitwet"
 #: app/forms/steps/eligibility_steps.py:192
 #: app/forms/steps/lotse/has_disability.py:29
 #: app/forms/steps/lotse/has_disability.py:63
-#: app/forms/steps/lotse/pauschbetrag.py:109
-#: app/forms/steps/lotse/pauschbetrag.py:188
+#: app/forms/steps/lotse/pauschbetrag.py:217
+#: app/forms/steps/lotse/pauschbetrag.py:305
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -1097,9 +1097,9 @@ msgstr "Behinderung oder Pflegebedürftigkeit für Person B"
 #: app/forms/steps/lotse/has_disability.py:22
 #: app/forms/steps/lotse/has_disability.py:58
 #: app/forms/steps/lotse/merkzeichen.py:28
-#: app/forms/steps/lotse/merkzeichen.py:121
-#: app/forms/steps/lotse/pauschbetrag.py:101
-#: app/forms/steps/lotse/pauschbetrag.py:178
+#: app/forms/steps/lotse/merkzeichen.py:113
+#: app/forms/steps/lotse/pauschbetrag.py:210
+#: app/forms/steps/lotse/pauschbetrag.py:295
 #: app/forms/steps/lotse/personal_data.py:37
 #: app/forms/steps/lotse/personal_data.py:183
 #: app/forms/steps/lotse/personal_data.py:274
@@ -1124,10 +1124,12 @@ msgstr ""
 
 #: app/forms/steps/lotse/has_disability.py:53
 #: app/forms/steps/lotse/has_disability.py:90
-#: app/forms/steps/lotse/merkzeichen.py:110
-#: app/forms/steps/lotse/merkzeichen.py:188
-#: app/forms/steps/lotse/pauschbetrag.py:138
-#: app/forms/steps/lotse/pauschbetrag.py:213
+#: app/forms/steps/lotse/merkzeichen.py:102
+#: app/forms/steps/lotse/merkzeichen.py:173
+#: app/forms/steps/lotse/pauschbetrag.py:255
+#: app/forms/steps/lotse/pauschbetrag.py:341
+#: app/forms/steps/lotse/pauschbetrag.py:383
+#: app/forms/steps/lotse/pauschbetrag.py:405
 #: app/forms/steps/lotse/personal_data.py:395
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
@@ -1159,14 +1161,14 @@ msgstr ""
 "machen möchten."
 
 #: app/forms/steps/lotse/merkzeichen.py:22
-#: app/forms/steps/lotse/merkzeichen.py:84
+#: app/forms/steps/lotse/merkzeichen.py:76
 msgid "form.lotse.merkzeichen_person_a.title"
 msgid_plural "form.lotse.merkzeichen_person_a.title"
 msgstr[0] "Angaben zu Ihrer Behinderung oder Pflegebedürftigkeit"
 msgstr[1] "Angaben zu Behinderung oder Pflegebedürftigkeit von Person A"
 
 #: app/forms/steps/lotse/merkzeichen.py:23
-#: app/forms/steps/lotse/merkzeichen.py:116
+#: app/forms/steps/lotse/merkzeichen.py:108
 msgid "form.lotse.merkzeichen.intro"
 msgstr ""
 "Bei einer Behinderung besteht in der Regel Anspruch auf steuerliche "
@@ -1174,7 +1176,9 @@ msgstr ""
 "Anspruch auf die Pauschbeträge haben, ist von Ihren Angaben abhängig."
 
 #: app/forms/steps/lotse/merkzeichen.py:24
-#: app/forms/steps/lotse/merkzeichen.py:117
+#: app/forms/steps/lotse/merkzeichen.py:109
+#: app/forms/steps/lotse/pauschbetrag.py:356
+#: app/forms/steps/lotse/pauschbetrag.py:389
 #: app/forms/steps/lotse/personal_data.py:32
 #: app/forms/steps/lotse/personal_data.py:180
 #: app/forms/steps/lotse/personal_data.py:271
@@ -1189,17 +1193,17 @@ msgid "form.lotse.merkzeichen.label"
 msgstr "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit"
 
 #: app/forms/steps/lotse/merkzeichen.py:32
-#: app/forms/steps/lotse/merkzeichen.py:125
+#: app/forms/steps/lotse/merkzeichen.py:117
 msgid "form.lotse.merkzeichen.has_pflegegrad.required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
 #: app/forms/steps/lotse/merkzeichen.py:33
-#: app/forms/steps/lotse/merkzeichen.py:126
+#: app/forms/steps/lotse/merkzeichen.py:118
 msgid "form.lotse.merkzeichen.has_pflegegrad.data_label"
 msgstr "Wurde ein Pflegegrad von 4 oder 5 festgestellt? "
 
 #: app/forms/steps/lotse/merkzeichen.py:36
-#: app/forms/steps/lotse/merkzeichen.py:129
+#: app/forms/steps/lotse/merkzeichen.py:121
 msgid "form.lotse.field_person_beh_grad-help"
 msgstr ""
 "Tragen Sie bitte hier den Grad der Behinderung ein. Der Grad der "
@@ -1214,123 +1218,99 @@ msgstr ""
 "typischen Berufskrankheit beruht.</li><ul>"
 
 #: app/forms/steps/lotse/merkzeichen.py:37
-#: app/forms/steps/lotse/merkzeichen.py:130
+#: app/forms/steps/lotse/merkzeichen.py:122
 msgid "form.lotse.merkzeichen.disability_degree"
 msgstr "Grad der Behinderung"
 
 #: app/forms/steps/lotse/merkzeichen.py:39
-#: app/forms/steps/lotse/merkzeichen.py:132
+#: app/forms/steps/lotse/merkzeichen.py:124
 msgid "form.lotse.merkzeichen.has_merkzeichen_g.data_label"
 msgstr "Merkzeichen G"
 
-#: app/forms/steps/lotse/merkzeichen.py:42
-#: app/forms/steps/lotse/merkzeichen.py:135
+#: app/forms/steps/lotse/merkzeichen.py:41
+#: app/forms/steps/lotse/merkzeichen.py:126
 msgid "form.lotse.merkzeichen.has_merkzeichen_ag.data_label"
 msgstr "Merkzeichen aG"
 
-#: app/forms/steps/lotse/merkzeichen.py:45
-#: app/forms/steps/lotse/merkzeichen.py:138
+#: app/forms/steps/lotse/merkzeichen.py:43
+#: app/forms/steps/lotse/merkzeichen.py:128
 msgid "form.lotse.merkzeichen.has_merkzeichen_bl.data_label"
 msgstr "Merkzeichen Bl"
 
-#: app/forms/steps/lotse/merkzeichen.py:48
-#: app/forms/steps/lotse/merkzeichen.py:141
+#: app/forms/steps/lotse/merkzeichen.py:45
+#: app/forms/steps/lotse/merkzeichen.py:130
 msgid "form.lotse.merkzeichen.has_merkzeichen_tbl.data_label"
 msgstr "Merkzeichen TBl"
 
-#: app/forms/steps/lotse/merkzeichen.py:51
-#: app/forms/steps/lotse/merkzeichen.py:144
+#: app/forms/steps/lotse/merkzeichen.py:47
+#: app/forms/steps/lotse/merkzeichen.py:132
 msgid "form.lotse.merkzeichen.has_merkzeichen_h.data_label"
 msgstr "Merkzeichen H"
 
-#: app/forms/steps/lotse/merkzeichen.py:56
-#: app/forms/steps/lotse/merkzeichen.py:149
+#: app/forms/steps/lotse/merkzeichen.py:51
+#: app/forms/steps/lotse/merkzeichen.py:136
 msgid "form.lotse.validation-disability_degree.merkzeichen_g_selected.required"
 msgstr ""
 "Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
 "Merkzeichen G auswählen."
 
-#: app/forms/steps/lotse/merkzeichen.py:60
-#: app/forms/steps/lotse/merkzeichen.py:153
+#: app/forms/steps/lotse/merkzeichen.py:54
+#: app/forms/steps/lotse/merkzeichen.py:139
 msgid "form.lotse.merkzeichen_g_selected.validation-disability_degree.min20"
 msgstr ""
 "Es muss ein Grad der Behinderung von mindestens 20 angegeben werden, wenn"
 " Sie das Merkzeichen G auswählen."
 
-#: app/forms/steps/lotse/merkzeichen.py:63
-#: app/forms/steps/lotse/merkzeichen.py:156
+#: app/forms/steps/lotse/merkzeichen.py:56
+#: app/forms/steps/lotse/merkzeichen.py:141
 msgid "form.lotse.validation-disability_degree.merkzeichen_ag_selected.required"
 msgstr ""
 "Es muss ein Grad der Behinderung angegeben werden, wenn Sie das "
 "Merkzeichen aG auswählen."
 
-#: app/forms/steps/lotse/merkzeichen.py:66
-#: app/forms/steps/lotse/merkzeichen.py:159
+#: app/forms/steps/lotse/merkzeichen.py:59
+#: app/forms/steps/lotse/merkzeichen.py:144
 msgid "form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20"
 msgstr ""
 "Es muss ein Grad der Behinderung von mindestens 20 angegeben werden, wenn"
 " Sie das Merkzeichen aG auswählen."
 
-#: app/forms/steps/lotse/merkzeichen.py:70
-#: app/forms/steps/lotse/merkzeichen.py:163
+#: app/forms/steps/lotse/merkzeichen.py:63
+#: app/forms/steps/lotse/merkzeichen.py:148
 msgid "form.lotse.validation-disability_degree.min20"
 msgstr ""
 "Sie haben einen Anspruch auf den Pauschbetrag erst ab einem Grad der "
 "Behinderung von 20. Lassen Sie das Feld leer, falls der Wert unter 20 "
 "liegt."
 
-#: app/forms/steps/lotse/merkzeichen.py:76
-#: app/forms/steps/lotse/merkzeichen.py:87
+#: app/forms/steps/lotse/merkzeichen.py:79
 msgid "form.lotse.merkzeichen_person_a.label"
 msgid_plural "form.lotse.merkzeichen_person_a.label"
 msgstr[0] "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit"
 msgstr[1] "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person A"
 
-#: app/forms/steps/lotse/merkzeichen.py:115
+#: app/forms/steps/lotse/merkzeichen.py:107
 msgid "form.lotse.merkzeichen_person_b.title"
 msgstr "Angaben zu Behinderung oder Pflegebedürftigkeit von Person B"
 
-#: app/forms/steps/lotse/merkzeichen.py:120
+#: app/forms/steps/lotse/merkzeichen.py:112
 msgid "form.lotse.merkzeichen_person_b.label"
 msgstr "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:92
-#: app/forms/steps/lotse/pauschbetrag.py:99
-msgid "form.lotse.skip_reason.has_not_filled_pflegegrad"
-msgstr ""
-"Sie haben angegeben, dass Sie keine Angaben zu einer Behinderung oder "
-"Pflegebedürftigkeit machen möchten. Ändern Sie die Antwort der Frage, "
-"wenn sie doch Angaben zu einer Behinderung oder Pflegebedürftigkeit "
-"machen möchten."
-
-#: app/forms/steps/lotse/pauschbetrag.py:106
-#: app/forms/steps/lotse/pauschbetrag.py:125
+#: app/forms/steps/lotse/pauschbetrag.py:94
+#: app/forms/steps/lotse/pauschbetrag.py:113
 msgid "form.lotse.skip_reason.has_no_pauschbetrag_claim"
 msgstr ""
 "Ihre Angaben qualifizieren Sie leider nicht für den behinderungsbedingten"
 " Pauschbetrag."
 
-#: app/forms/steps/lotse/pauschbetrag.py:144
-#: app/forms/steps/lotse/pauschbetrag.py:172
+#: app/forms/steps/lotse/pauschbetrag.py:132
+#: app/forms/steps/lotse/pauschbetrag.py:160
 msgid "form.lotse.skip_reason.has_pauschbetrag_claim"
 msgstr "Ihre Angaben qualifizieren Sie für den behinderungsbedingten Pauschbetrag."
 
-#: app/forms/steps/lotse/pauschbetrag.py:206
-#: app/forms/steps/lotse/pauschbetrag.py:273
-msgid "form.lotse.request_pauschbetrag.data_label"
-msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
-
-#: app/forms/steps/lotse/pauschbetrag.py:212
-#: app/forms/steps/lotse/pauschbetrag.py:65
-msgid "currency.euro"
-msgstr "Euro"
-
-#: app/forms/steps/lotse/pauschbetrag.py:68
-msgid "form.lotse.summary.not-requested"
-msgstr "Keine Beantragung"
-
-#: app/forms/steps/lotse/pauschbetrag.py:75
-#: app/forms/steps/lotse/pauschbetrag.py:152
+#: app/forms/steps/lotse/pauschbetrag.py:185
+#: app/forms/steps/lotse/pauschbetrag.py:269
 msgid "form.lotse.skip_reason.has_no_merkzeichen"
 msgstr ""
 "Sie haben ausgewählt, dass Sie Angaben zu einer Behinderung oder "
@@ -1338,33 +1318,38 @@ msgstr ""
 "ausstehend. Bitte machen Sie Angaben zu einer Behinderung oder "
 "Pflegebedürftigkeit."
 
-#: app/forms/steps/lotse/pauschbetrag.py:108
-#: app/forms/steps/lotse/pauschbetrag.py:187
+#: app/forms/steps/lotse/pauschbetrag.py:216
+#: app/forms/steps/lotse/pauschbetrag.py:304
 msgid "form.lotse.request_pauschbetrag.data_label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
 
-#: app/forms/steps/lotse/pauschbetrag.py:115
+#: app/forms/steps/lotse/pauschbetrag.py:222
 msgid "form.lotse.person_a.request_pauschbetrag.label"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.label"
 msgstr[0] "Beantragung Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Beantragung Pauschbetrag für Menschen mit Behinderung Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:122
+#: app/forms/steps/lotse/pauschbetrag.py:228
+#: app/forms/steps/lotse/pauschbetrag.py:315
+msgid "currency.euro"
+msgstr "Euro"
+
+#: app/forms/steps/lotse/pauschbetrag.py:239
 msgid "form.lotse.person_a.request_pauschbetrag.title"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.title"
 msgstr[0] "Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:180
+#: app/forms/steps/lotse/pauschbetrag.py:297
 msgid "form.lotse.person_b.request_pauschbetrag.label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:197
+#: app/forms/steps/lotse/pauschbetrag.py:325
 msgid "form.lotse.person_b.request_pauschbetrag.title"
 msgstr "Pauschbetrag für Menschen mit Behinderung für Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:328
-#: app/forms/steps/lotse/pauschbetrag.py:339
+#: app/forms/steps/lotse/pauschbetrag.py:355
+#: app/forms/steps/lotse/pauschbetrag.py:366
 msgid "form.lotse.no_pauschbetrag.person_a.title"
 msgid_plural "form.lotse.no_pauschbetrag.person_a.title"
 msgstr[0] "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge."
@@ -1372,7 +1357,7 @@ msgstr[1] ""
 "Leider hat Person A keinen Anspruch auf behinderungsbedingte "
 "Pauschbeträge."
 
-#: app/forms/steps/lotse/pauschbetrag.py:361
+#: app/forms/steps/lotse/pauschbetrag.py:388
 msgid "form.lotse.no_pauschbetrag.person_b.title"
 msgstr ""
 "Leider hat Person B keinen Anspruch auf behinderungsbedingte "
@@ -5458,4 +5443,3 @@ msgstr ""
 #: app/templates/unlock_code/registration_success.html:21
 msgid "register.success.preparation.button"
 msgstr "Vorbereitungshilfe herunterladen"
-
