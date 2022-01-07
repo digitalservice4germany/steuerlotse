@@ -1,4 +1,5 @@
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
+from flask_babel import _
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB, calculate_pauschbetrag
@@ -70,11 +71,13 @@ class TestPauschbetragPersonAGetPauschbetrag:
             
             assert pauschbetrag == expected_pauschbetrag
 
+
 class TestPauschbetragPersonAGetOverviewValueRepresentation:
-    def test_if_merkzeichen_given_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
+
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_yes_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
         stored_data = {
-            'person_a_has_disability':'yes', 
-            'person_a_has_pflegegrad': True, 
+            'person_a_has_disability': 'yes',
+            'person_a_has_pflegegrad': 'yes', 
         }
         value = 'yes'
         pauschbetrag_result = 1
@@ -87,67 +90,41 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
                 overview_value = step.get_overview_value_representation(value)
             
                 assert str(pauschbetrag_result) in overview_value
-            
-            
-class TestPauschbetragPersonBValidation:
-    def test_if_person_b_has_disability_is_given_then_validation_should_be_success(self, new_test_request_context):
-        data = MultiDict({
-            'familienstand': 'married',
-            'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True,
-            'person_a_has_disability': 'no',
-            'person_b_has_disability': 'yes',
-            'person_b_requests_pauschbetrag': 'yes'
-        })
-        with new_test_request_context(stored_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
-            form = step.render_info.form
-            assert form.validate() == True
 
-    def test_if_precondition_person_b_has_disability_is_yes_is_not_satisfied_return_should_be_a_redirect_to_person_a_has_disability(self, new_test_request_context):
-        data = MultiDict({
-            'familienstand': 'married',
-            'familienstand_married_lived_separated': 'no',
-            'familienstand_confirm_zusammenveranlagung': True,
-            'person_a_has_disability': 'no',
-            'person_b_has_disability': 'no',
-            'person_b_requests_pauschbetrag': 'yes'
-        })
-        with new_test_request_context(stored_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'person_b_has_disability'
-            
-    
-    def test_if_precondition_show_person_b_is_not_satisfied_return_should_be_a_redirect_to_familienstand(self, new_test_request_context):
-        data = MultiDict({
-            'person_b_has_disability': 'yes',
-            'person_b_requests_pauschbetrag': 'yes'
-        })
-        with new_test_request_context(stored_data=data):
-            step = LotseStepChooser().get_correct_step(
-                StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
-            assert step.redirection_step_name == 'familienstand' 
-
-
-class TestPauschbetragPersonBValidation:
-
-    def test_if_person_b_has_disability_is_given_then_validation_should_be_success(self, new_test_request_context):
-        form_data = {'person_b_requests_pauschbetrag': 'no'}
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_no_then_get_pauschbetrag_returns_no_request_label(self, new_test_request_context):
         stored_data = {
+            'person_a_has_disability': 'yes',
+            'person_a_has_pflegegrad': 'yes',
+        }
+        value = 'no'
+
+        with new_test_request_context(stored_data=stored_data):
+            step = LotseStepChooser().get_correct_step(
+                    StepPauschbetragPersonA.name, True, ImmutableMultiDict({}))
+
+            overview_value = step.get_overview_value_representation(value)
+
+            assert overview_value == _('form.lotse.summary.not-requested')
+            
+            
+class TestPauschbetragPersonBValidation:
+
+    def test_if_person_b_has_disability_is_given_then_validation_should_be_success(self, new_test_request_context):
+        data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
+            'person_a_has_disability': 'no',
             'person_b_has_disability': 'yes',
             'person_b_has_pflegegrad': 'yes',
-        }
-        with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
+            'person_b_requests_pauschbetrag': 'yes',
+        })
+        with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
-                StepPauschbetragPersonB.name, True, ImmutableMultiDict(form_data))
+                StepPauschbetragPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
-            
+
     def test_if_person_b_requests_pauschbetrag_is_not_given_then_validation_should_be_false(self, new_test_request_context):
         form_data = {}
         stored_data = {
@@ -165,6 +142,7 @@ class TestPauschbetragPersonBValidation:
             
 
 class TestPreconditionPauschbetragPersonBValidation:
+
     def test_if_empty_data_then_redirect_to_familienstand(self, new_test_request_context):
         data = {}
         with new_test_request_context(stored_data=data):
@@ -185,6 +163,7 @@ class TestPreconditionPauschbetragPersonBValidation:
             
     
 class TestPauschbetragPersonBGetPauschbetrag:
+
     def test_if_merkzeichen_given_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
         stored_data = MultiDict({
             'familienstand': 'married',
@@ -214,14 +193,16 @@ class TestPauschbetragPersonBGetPauschbetrag:
             
             assert pauschbetrag == expected_pauschbetrag
 
+
 class TestPauschbetragPersonBGetOverviewValueRepresentation:
+
     def test_if_merkzeichen_given_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
         stored_data = {
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
-            'person_b_has_disability':'yes', 
-            'person_b_has_pflegegrad': True, 
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes', 
         }
         value = 'yes'
         pauschbetrag_result = 1
@@ -234,3 +215,21 @@ class TestPauschbetragPersonBGetOverviewValueRepresentation:
                 overview_value = step.get_overview_value_representation(value)
         
                 assert str(pauschbetrag_result) in overview_value
+
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_no_then_get_pauschbetrag_returns_no_request_label(self, new_test_request_context):
+        stored_data = {
+            'familienstand': 'married',
+            'familienstand_married_lived_separated': 'no',
+            'familienstand_confirm_zusammenveranlagung': True,
+            'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
+        }
+        value = 'no'
+
+        with new_test_request_context(stored_data=stored_data):
+            step = LotseStepChooser().get_correct_step(
+                    StepPauschbetragPersonB.name, True, ImmutableMultiDict({}))
+
+            overview_value = step.get_overview_value_representation(value)
+
+            assert overview_value == _('form.lotse.summary.not-requested')
