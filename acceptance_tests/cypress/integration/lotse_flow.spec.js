@@ -284,7 +284,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#person_a_has_disability-yes').check().should('be.checked')
+                cy.get('label[for=person_a_has_disability-yes]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=person_a_has_pflegegrad-yes]').click()
@@ -417,7 +417,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_a_town').type(taxReturnData.personA.town)
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#person_a_has_disability-yes').check().should('be.checked')
+                cy.get('label[for=person_a_has_disability-yes]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=person_a_has_pflegegrad-yes]').click()
@@ -446,7 +446,7 @@ context('Acceptance tests', () => {
                 cy.get('select[id=person_b_religion]').select('ev')
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#person_b_has_disability-yes').check().should('be.checked')
+                cy.get('label[for=person_b_has_disability-yes]').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=person_b_has_pflegegrad-yes]').click()
