@@ -311,7 +311,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     @classmethod
     def get_label(cls, data):
         return cls.label
-    
+
     def get_overview_value_representation(self, value):
         result = None
 
