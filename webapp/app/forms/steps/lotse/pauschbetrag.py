@@ -246,6 +246,8 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
             result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
         elif value == 'no':
             result = _('form.lotse.summary.not-requested')
+        elif not value and self.stored_data.get('person_a_has_disability') == 'yes':
+            result = _('form.lotse.no_answer')
 
         return result
 
@@ -308,6 +310,8 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
             result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
         elif value == 'no':
             result = _('form.lotse.summary.not-requested')
+        elif not value and self.stored_data.get('person_b_has_disability') == 'yes':
+            result = _('form.lotse.no_answer')
 
         return result
 
