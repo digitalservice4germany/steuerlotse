@@ -289,7 +289,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             if curr_step in _IGNORED_STEPS:
                 continue  # no need to collect data from ignored section steps
 
-            step_data = self._collect_data_for_step(curr_step(stored_data=form_data), form_data, missing_fields)
+            step_data = self._collect_data_for_step(curr_step(), form_data, missing_fields)
 
             if step_data:
                 if curr_step.section_link.name not in sections:
