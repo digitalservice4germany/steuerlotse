@@ -125,7 +125,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
         person_b_has_merkzeichen_g = MerkzeichenBooleanField(
-            render_kw={'data_label': _l('form.loMerkzeichenBooleanFieldtse.merkzeichen.has_merkzeichen_g.data_label')})
+            render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
         person_b_has_merkzeichen_ag = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
         person_b_has_merkzeichen_bl = MerkzeichenBooleanField(
