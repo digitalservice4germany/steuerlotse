@@ -55,6 +55,7 @@ def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merk
 
     return 0
 
+
 class StepPauschbetrag(LotseFormSteuerlotseStep):
 
     def get_overview_value_representation(self, value):
