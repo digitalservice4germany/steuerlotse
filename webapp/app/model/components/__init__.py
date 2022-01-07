@@ -62,6 +62,7 @@ class StepDisplayProps(ComponentProps):
     prev_url: Optional[str]
     next_url: Optional[str]
 
+
 class LoginProps(StepFormProps):
     pass
 
@@ -90,8 +91,24 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 
+class HasDisabilityPersonAProps(StepFormProps):
+    num_users: int
+
+
+class HasDisabilityPersonBProps(StepFormProps):
+    pass
+
+
 class MerkzeichenProps(StepFormProps):
     pass
+
+
+class PauschbetragProps(StepFormProps):
+    pauschbetrag: str
+
+
+class FahrkostenpauschaleProps(StepFormProps):
+    fahrkostenpauschale_amount: int
 
 
 class TelephoneNumberProps(StepFormProps):
@@ -110,14 +127,3 @@ class TaxNumberStepFormProps(StepFormProps):
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str
     data_privacy_link: str
-
-
-class HasDisabilityPersonAProps(StepFormProps):
-    num_users: int
-
-
-class HasDisabilityPersonBProps(StepFormProps):
-    pass
-
-class PauschbetragProps(StepFormProps):
-    pauschbetrag: str

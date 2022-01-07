@@ -1,11 +1,11 @@
-describe("PauschbetragPersonA", () => {
+describe("FahrkostenpauschalePersonA", () => {
   beforeEach(() => {
     cy.login();
   });
 
   context("with no data", () => {
     beforeEach(() => {
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
     it("Should redirect to has disability page", () => {
@@ -23,7 +23,7 @@ describe("PauschbetragPersonA", () => {
         person_a_has_disability: "no",
       });
 
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
     it("Should redirect to has disability page", () => {
@@ -41,7 +41,7 @@ describe("PauschbetragPersonA", () => {
         person_a_has_disability: "yes",
       });
 
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
     it("Should redirect to merkzeichen page", () => {
@@ -61,85 +61,92 @@ describe("PauschbetragPersonA", () => {
         person_a_has_merkzeichen_g: true,
       });
 
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
     it("Should not check radio button for label yes", () => {
-      cy.get("#person_a_requests_pauschbetrag-yes").should("not.be.checked");
+      cy.get("#person_a_requests_fahrkostenpauschale-yes").should(
+        "not.be.checked"
+      );
     });
 
     it("Should not check radio button for label no", () => {
-      cy.get("#person_a_requests_pauschbetrag-no").should("not.be.checked");
+      cy.get("#person_a_requests_fahrkostenpauschale-no").should(
+        "not.be.checked"
+      );
     });
 
     it("Should stay on page and show error when submit button clicked", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
-      cy.get("[role=alert][for=person_a_requests_pauschbetrag]").contains(
-        "Diese Angabe wird benötigt, um fortfahren zu können"
+      cy.url().should(
+        "include",
+        "/lotse/step/person_a_requests_fahrkostenpauschale"
       );
+      cy.get(
+        "[role=alert][for=person_a_requests_fahrkostenpauschale]"
+      ).contains("Diese Angabe wird benötigt, um fortfahren zu können");
     });
   });
 
-  context("with person_a_requests_pauschbetrag yes", () => {
+  context("with person_a_requests_fahrkostenpauschale yes", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
-        person_a_requests_pauschbetrag: "yes",
+        person_a_requests_pauschale: "yes",
+        person_a_requests_fahrkostenpauschale: "yes",
       });
 
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
     it("Should check radio button for label yes", () => {
-      cy.get("#person_a_requests_pauschbetrag-yes").should("be.checked");
+      cy.get("#person_a_requests_fahrkostenpauschale-yes").should("be.checked");
     });
 
     it("Should not check radio button for label no", () => {
-      cy.get("#person_a_requests_pauschbetrag-no").should("not.be.checked");
-    });
-
-    it("Should link back to merkzeichen person a page", () => {
-      cy.get("a").contains("Zurück").click();
-      cy.url().should("include", "/lotse/step/merkzeichen_person_a");
-    });
-
-    it("Should link forward to fahrkostenpauschale page", () => {
-      cy.get("button[type=submit]").click();
-      cy.url().should(
-        "include",
-        "/lotse/step/person_a_requests_fahrkostenpauschale"
+      cy.get("#person_a_requests_fahrkostenpauschale-no").should(
+        "not.be.checked"
       );
+    });
+
+    it("Should link back to request pauschbetrag person a page", () => {
+      cy.get("a").contains("Zurück").click();
+      cy.url().should("include", "/lotse/step/person_a_requests_pauschbetrag");
+    });
+
+    it("Should link forward to telephone_number page", () => {
+      cy.get("button[type=submit]").click();
+      cy.url().should("include", "/lotse/step/telephone_number");
     });
   });
 
-  context("with person_a_requests_pauschbetrag no", () => {
+  context("with person_a_requests_fahrkostenpauschale no", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
-        person_a_requests_pauschbetrag: "no",
+        person_a_requests_pauschale: "yes",
+        person_a_requests_fahrkostenpauschale: "no",
       });
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
     it("Should check radio button for label no", () => {
-      cy.get("#person_a_requests_pauschbetrag-no").should("be.checked");
+      cy.get("#person_a_requests_fahrkostenpauschale-no").should("be.checked");
     });
 
     it("Should not check radio button for label yes", () => {
-      cy.get("#person_a_requests_pauschbetrag-yes").should("not.be.checked");
+      cy.get("#person_a_requests_fahrkostenpauschale-yes").should(
+        "not.be.checked"
+      );
     });
 
-    it("Should link forward to fahrkostenpauschale page", () => {
+    it("Should link forward to telephone_number page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should(
-        "include",
-        "/lotse/step/person_a_requests_fahrkostenpauschale"
-      );
+      cy.url().should("include", "/lotse/step/telephone_number");
     });
   });
 
@@ -152,17 +159,15 @@ describe("PauschbetragPersonA", () => {
         person_a_has_disability: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
-        person_a_requests_pauschbetrag: "yes",
+        person_a_requests_pauschale: "yes",
+        person_a_requests_fahrkostenpauschale: "yes",
       });
-      cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
     });
 
-    it("Should link forward to fahrkostenpauschale page", () => {
+    it("Should link forward to person b page", () => {
       cy.get("button[type=submit]").click();
-      cy.url().should(
-        "include",
-        "/lotse/step/person_a_requests_fahrkostenpauschale"
-      );
+      cy.url().should("include", "/lotse/step/person_b");
     });
   });
 });

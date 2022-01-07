@@ -11,6 +11,8 @@ from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBel
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, StepTelephoneNumber
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
+
 
 _LOTSE_DATA_KEY = 'form_data'
 
@@ -45,9 +47,11 @@ class LotseStepChooser(StepChooser):
         'person_a_religion': 'none',
         'person_a_has_disability': 'yes',
         'person_a_has_pflegegrad': 'no',
-        'person_a_disability_degree': 25,
+        'person_a_disability_degree': 80,
         'person_a_has_merkzeichen_bl': True,
         'person_a_has_merkzeichen_g': True,
+        'person_a_requests_pauschbetrag': 'yes',
+        'person_a_requests_fahrkostenpauschale': 'yes',
 
         'person_b_idnr': '02293417683',
         'person_b_dob': datetime.date(1951, 2, 25),
@@ -111,10 +115,12 @@ class LotseStepChooser(StepChooser):
                 StepDisabilityPersonA,
                 StepMerkzeichenPersonA,
                 StepPauschbetragPersonA,
+                StepFahrkostenpauschalePersonA,
                 StepPersonB,
                 StepDisabilityPersonB,
                 StepMerkzeichenPersonB,
                 StepPauschbetragPersonB,
+                StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,
                 StepVorsorge,

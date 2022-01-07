@@ -17,7 +17,7 @@ const props = {
       name: "requests_fahrkostenpauschale",
     },
   },
-  fahrkostenpauschaleAmount: 900,
+  fahrkostenpauschaleAmount: "900",
   prevUrl: "/some/prev/path",
 };
 
