@@ -1298,7 +1298,7 @@ msgstr "Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person 
 
 #: app/forms/steps/lotse/merkzeichen.py:128
 #, fuzzy
-msgid "form.loMerkzeichenBooleanFieldtse.merkzeichen.has_merkzeichen_g.data_label"
+msgid "form.lotse.merkzeichen.has_merkzeichen_g.data_label"
 msgstr "Merkzeichen G"
 
 #: app/forms/steps/lotse/pauschbetrag.py:95
