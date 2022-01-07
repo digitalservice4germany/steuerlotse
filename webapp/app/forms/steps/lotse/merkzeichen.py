@@ -1,6 +1,9 @@
+from typing import Optional
+
 from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
+from pydantic import BaseModel, validator
 from wtforms import validators
 from wtforms.validators import InputRequired, ValidationError
 
@@ -63,7 +66,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
                 if field.data and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
-                
+
 
     @classmethod
     def get_label(cls, data):
@@ -177,3 +180,55 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
+
+
+class HasMerkzeichenPersonAPrecondition(BaseModel):
+    _step_to_redirect_to = StepMerkzeichenPersonA.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_merkzeichen')
+
+    person_a_has_pflegegrad: Optional[str]
+    person_a_disability_degree: Optional[int]
+    person_a_has_merkzeichen_g: Optional[bool]
+    person_a_has_merkzeichen_ag: Optional[bool]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
+
+    @validator('person_a_has_merkzeichen_h', always=True)
+    def any_merkzeichen_has_to_be_set(cls, v, values):
+        merkzeichen_keys = ['person_a_has_pflegegrad',
+                            'person_a_disability_degree',
+                            'person_a_has_merkzeichen_g',
+                            'person_a_has_merkzeichen_ag',
+                            'person_a_has_merkzeichen_bl',
+                            'person_a_has_merkzeichen_tbl',
+                            'person_a_has_merkzeichen_h']
+        if not v and not any([values.get(merkzeichen_key) for merkzeichen_key in merkzeichen_keys]):
+            raise ValueError
+        return v
+
+
+class HasMerkzeichenPersonBPrecondition(BaseModel):
+    _step_to_redirect_to = StepMerkzeichenPersonB.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_no_merkzeichen')
+
+    person_b_has_pflegegrad: Optional[str]
+    person_b_disability_degree: Optional[int]
+    person_b_has_merkzeichen_g: Optional[bool]
+    person_b_has_merkzeichen_ag: Optional[bool]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
+
+    @validator('person_b_has_merkzeichen_h', always=True)
+    def any_merkzeichen_has_to_be_set(cls, v, values):
+        merkzeichen_keys = ['person_b_has_pflegegrad',
+                            'person_b_disability_degree',
+                            'person_b_has_merkzeichen_g',
+                            'person_b_has_merkzeichen_ag',
+                            'person_b_has_merkzeichen_bl',
+                            'person_b_has_merkzeichen_tbl',
+                            'person_b_has_merkzeichen_h']
+        if not v and not any([values.get(merkzeichen_key) for merkzeichen_key in merkzeichen_keys]):
+            raise ValueError
+        return v

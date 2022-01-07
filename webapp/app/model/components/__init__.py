@@ -91,17 +91,23 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 
+class ConfirmationProps(StepFormProps):
+    terms_of_service_link: str
+    data_privacy_link: str
+
+
 class TaxNumberStepFormProps(StepFormProps):
     tax_office_list: List[Dict]
     number_of_users: int
 
 
-class PersonAHasDisabilityProps(StepFormProps):
+class HasDisabilityPersonAProps(StepFormProps):
     num_users: int
 
 
-class PersonBHasDisabilityProps(StepFormProps):
+class HasDisabilityPersonBProps(StepFormProps):
     pass
+
 
 class MerkzeichenProps(StepFormProps):
     pass
@@ -115,23 +121,13 @@ class NoPauschbetragProps(StepDisplayProps):
     pass
 
 
+class FahrkostenpauschaleProps(StepFormProps):
+    fahrkostenpauschale_amount: int
+
+
 class TelephoneNumberProps(StepFormProps):
     pass
 
 
 class SelectStMindProps(StepFormProps):
     pass
-
-
-class ConfirmationProps(StepFormProps):
-    terms_of_service_link: str
-    data_privacy_link: str
-
-
-class HasDisabilityPersonAProps(StepFormProps):
-    num_users: int
-
-
-class HasDisabilityPersonBProps(StepFormProps):
-    pass
-

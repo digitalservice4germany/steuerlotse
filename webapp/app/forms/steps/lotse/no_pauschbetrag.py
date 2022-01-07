@@ -3,7 +3,7 @@ from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
 from wtforms.validators import ValidationError
 
-from app.forms.steps.lotse.fahrkostenpauschbetrag import calculate_fahrkostenpauschbetrag
+from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschale
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
@@ -11,7 +11,6 @@ from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 from app.forms.steps.lotse.pauschbetrag import DisabilityModel, calculate_pauschbetrag
 
-from app.model.components import NoPauschbetragProps
 
 
 class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(DisabilityModel):
@@ -27,7 +26,7 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(Disabili
             has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False)
         )
-        fahrkostenpauschbetrag_claim = calculate_fahrkostenpauschbetrag(
+        fahrkostenpauschbetrag_claim = calculate_fahrkostenpauschale(
             has_pflegegrad=values.get('person_a_has_pflegegrad', None),
             disability_degree=values.get('person_a_disability_degree', None),
             has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
@@ -55,7 +54,7 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(Disabili
             has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
         )
-        fahrkostenpauschbetrag_claim = calculate_fahrkostenpauschbetrag(
+        fahrkostenpauschbetrag_claim = calculate_fahrkostenpauschale(
             has_pflegegrad=values.get('person_b_has_pflegegrad', None),
             disability_degree=values.get('person_b_disability_degree', None),
             has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
@@ -66,7 +65,6 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(Disabili
         if pauschbetrag_claim != 0 or fahrkostenpauschbetrag_claim != 0:
             raise ValidationError
         return values
-
 
 
 class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):

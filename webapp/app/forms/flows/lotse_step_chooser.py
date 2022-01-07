@@ -5,6 +5,7 @@ from flask_babel import _
 
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
+from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonB, StepFahrkostenpauschalePersonA
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
@@ -12,7 +13,6 @@ from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, S
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse.no_pauschbetrag import  StepNoPauschbetragPersonA, StepNoPauschbetragPersonB
-
 _LOTSE_DATA_KEY = 'form_data'
 
 
@@ -46,9 +46,11 @@ class LotseStepChooser(StepChooser):
         'person_a_religion': 'none',
         'person_a_has_disability': 'yes',
         'person_a_has_pflegegrad': 'no',
-        'person_a_disability_degree': 25,
+        'person_a_disability_degree': 80,
         'person_a_has_merkzeichen_bl': True,
         'person_a_has_merkzeichen_g': True,
+        'person_a_requests_pauschbetrag': 'yes',
+        'person_a_requests_fahrkostenpauschale': 'yes',
 
         'person_b_idnr': '02293417683',
         'person_b_dob': datetime.date(1951, 2, 25),
@@ -113,11 +115,13 @@ class LotseStepChooser(StepChooser):
                 StepMerkzeichenPersonA,
                 StepNoPauschbetragPersonA,
                 StepPauschbetragPersonA,
+                StepFahrkostenpauschalePersonA,
                 StepPersonB,
                 StepDisabilityPersonB,
                 StepMerkzeichenPersonB,
                 StepNoPauschbetragPersonB,
                 StepPauschbetragPersonB,
+                StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,
                 StepVorsorge,

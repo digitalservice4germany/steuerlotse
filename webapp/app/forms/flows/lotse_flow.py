@@ -28,6 +28,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
@@ -71,8 +72,10 @@ class LotseMultiStepFlow(MultiStepFlow):
             'person_a_religion': 'none',
             'person_a_has_disability': 'yes',
             'person_a_has_pflegegrad': 'no',
-            'person_a_disability_degree': 25,
+            'person_a_disability_degree': 80,
             'person_a_has_merkzeichen_g': True,
+            'person_a_requests_pauschbetrag': 'yes',
+            'person_a_requests_fahrkostenpauschale': 'yes',
 
             'person_b_idnr': '02293417683',
             'person_b_dob': datetime.date(1951, 2, 25),
@@ -143,10 +146,12 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepDisabilityPersonA,
                 StepMerkzeichenPersonA,
                 StepPauschbetragPersonA,
+                StepFahrkostenpauschalePersonA,
                 StepPersonB,
                 StepDisabilityPersonB,
                 StepMerkzeichenPersonB,
                 StepPauschbetragPersonB,
+                StepFahrkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepIban,
 
@@ -367,10 +372,12 @@ class LotseMultiStepFlow(MultiStepFlow):
                 step_data[label] = _l('form.lotse.missing_mandatory_field')
             elif attr in form_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
-                # TODO: When the summary page is refactored we should merge _generate_value_representation & get_overview_value_representation
+                # TODO: When the summary page is refactored we should merge _generate_value_representation &
+                #  get_overview_value_representation
                 label, value = self._generate_value_representation(field, form_data.get(attr))
-                value = step.get_overview_value_representation(value)                
+                value = step.get_overview_value_representation(value)
                 if value is not None:
+                    # If get_overview_value_representation() returns None, the value will not be displayed
                     step_data[label] = value
 
         return step_data

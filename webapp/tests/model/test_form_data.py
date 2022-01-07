@@ -423,6 +423,7 @@ class TestMandatoryFormData(unittest.TestCase):
 
 
 class TestFormDataDependencies:
+
     def test_if_no_tax_number_exists_then_delete_tax_number(self, tax_number_page_data):
         input_data = tax_number_page_data
         input_data['steuernummer_exists'] = "no"
@@ -603,7 +604,9 @@ class TestFormDataDependencies:
                            'person_a_has_merkzeichen_ag': True,
                            'person_a_has_merkzeichen_bl': True,
                            'person_a_has_merkzeichen_tbl': True,
-                           'person_a_has_merkzeichen_h': True
+                           'person_a_has_merkzeichen_h': True,
+                           'person_a_request_pauschbetrag': 'yes',
+                           'person_a_request_fahrkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -619,7 +622,9 @@ class TestFormDataDependencies:
                            'person_a_has_merkzeichen_ag': True,
                            'person_a_has_merkzeichen_bl': True,
                            'person_a_has_merkzeichen_tbl': True,
-                           'person_a_has_merkzeichen_h': True
+                           'person_a_has_merkzeichen_h': True,
+                           'person_a_requests_pauschbetrag': 'yes',
+                           'person_a_requests_fahrkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -635,7 +640,9 @@ class TestFormDataDependencies:
                            'person_b_has_merkzeichen_ag': True,
                            'person_b_has_merkzeichen_bl': True,
                            'person_b_has_merkzeichen_tbl': True,
-                           'person_b_has_merkzeichen_h': True
+                           'person_b_has_merkzeichen_h': True,
+                           'person_b_requests_pauschbetrag': 'yes',
+                           'person_b_requests_fahrkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -651,7 +658,9 @@ class TestFormDataDependencies:
                            'person_b_has_merkzeichen_ag': True,
                            'person_b_has_merkzeichen_bl': True,
                            'person_b_has_merkzeichen_tbl': True,
-                           'person_b_has_merkzeichen_h': True
+                           'person_b_has_merkzeichen_h': True,
+                           'person_b_requests_pauschbetrag': 'yes',
+                           'person_b_requests_fahrkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(

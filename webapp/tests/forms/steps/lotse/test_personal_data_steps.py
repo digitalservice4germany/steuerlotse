@@ -438,7 +438,7 @@ class TestTelephoneNumberValidation:
 
     def test_if_number_over_25_chars_then_succ_validation(self, new_test_request_context):
         data = MultiDict({'telephone_number': 'Lorem ipsum dolor sit amet'})
-        with new_test_request_context(form_data=data):
+        with new_test_request_context(stored_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepTelephoneNumber.name, True, ImmutableMultiDict(data))
             form = step.render_info.form

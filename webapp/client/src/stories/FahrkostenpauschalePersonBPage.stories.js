@@ -24,6 +24,6 @@ Default.args = {
       errors: [],
     },
   },
-  fahrkostenpauschaleAmount: 1200,
+  fahrkostenpauschaleAmount: "1200",
   prevUrl: "fooUrl",
 };
