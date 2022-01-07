@@ -91,7 +91,7 @@ class TestPauschbetragPersonAGetOverviewValueRepresentation:
 
                 assert str(pauschbetrag_result) in overview_value
 
-    def test_if_merkzeichen_given_and_requests_pauschbetrag_no_then_get_pauschbetrag_returns_no_request_label(self, new_test_request_context):
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_no_then_get_pauschbetrag_returns_not_requested_label(self, new_test_request_context):
         stored_data = {
             'person_a_has_disability': 'yes',
             'person_a_has_pflegegrad': 'yes',
@@ -216,7 +216,7 @@ class TestPauschbetragPersonBGetOverviewValueRepresentation:
 
                 assert str(pauschbetrag_result) in overview_value
 
-    def test_if_merkzeichen_given_and_requests_pauschbetrag_no_then_get_pauschbetrag_returns_no_request_label(self, new_test_request_context):
+    def test_if_merkzeichen_given_and_requests_pauschbetrag_no_then_get_pauschbetrag_returns_not_requested_label(self, new_test_request_context):
         stored_data = {
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
