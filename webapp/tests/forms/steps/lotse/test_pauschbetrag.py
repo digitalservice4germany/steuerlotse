@@ -279,21 +279,21 @@ class TestHasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition:
 
     def test_if_calculate_pauschbetrag_and_fahrkostenpauschbetrag_return_number_other_than_zero_then_raise_validation_error(self):
         with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)), \
-        patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschbetrag',
-                MagicMock(return_value=1)):
+                patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschbetrag',
+                    MagicMock(return_value=1)):
             with pytest.raises(ValidationError):
                 HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
 
     def test_if_calculate_pauschbetrag_return_zero_and_fahrkostenpauschbetrag_return_number_other_than_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)):
-            with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschbetrag',
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)), \
+                patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschbetrag',
                     MagicMock(return_value=1)):
                 with pytest.raises(ValidationError):
                     HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
 
     def test_if_calculate_pauschbetrag_return_number_other_than_zero_and_fahrkostenpauschbetrag_return_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
-            with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschbetrag',
+        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)), \
+                patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschbetrag',
                     MagicMock(return_value=0)):
                 with pytest.raises(ValidationError):
                     HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
