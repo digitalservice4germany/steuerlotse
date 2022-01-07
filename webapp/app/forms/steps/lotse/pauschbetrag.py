@@ -22,6 +22,7 @@ from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPreconditio
 
 from app.model.components import NoPauschbetragProps
 
+
 def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
     """
     Calculates the pauschbetrag given some information about the user.
@@ -180,6 +181,7 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(Disabili
             raise ValidationError
         return values
 
+
 class HasMerkzeichenPersonAPrecondition(BaseModel):
     _step_to_redirect_to = StepMerkzeichenPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_merkzeichen')
@@ -205,10 +207,12 @@ class HasMerkzeichenPersonAPrecondition(BaseModel):
             raise ValueError
         return v
 
+
 class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
     preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasPauschbetragClaimPersonAPrecondition]
+
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_pauschbetrag = SelectField(
             # This mapping is for _generate_value_representation & get_overview_value_representation
