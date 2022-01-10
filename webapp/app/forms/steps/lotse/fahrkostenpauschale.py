@@ -63,13 +63,13 @@ class HasFahrkostenpauschaleClaimPersonBPrecondition(DisabilityModel):
     @root_validator(skip_on_failure=True)
     def has_to_have_fahrkostenpauschale_not_0(cls, values):
         fahrkostenpauschale_claim = calculate_fahrkostenpauschale(
-            has_pflegegrad=values.get('person_abhas_pflegegrad', None),
-            disability_degree=values.get('person_abdisability_degree', None),
-            has_merkzeichen_bl=values.get('person_abhas_merkzeichen_bl', False),
-            has_merkzeichen_tbl=values.get('person_abhas_merkzeichen_bl', False),
-            has_merkzeichen_h=values.get('person_abhas_merkzeichen_bl', False),
-            has_merkzeichen_ag=values.get('person_abhas_merkzeichen_tbl', False),
-            has_merkzeichen_g=values.get('person_abhas_merkzeichen_h', False)
+            has_pflegegrad=values.get('person_b_has_pflegegrad', None),
+            disability_degree=values.get('person_b_disability_degree', None),
+            has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_h=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_ag=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_g=values.get('person_b_has_merkzeichen_h', False)
         )
 
         if fahrkostenpauschale_claim == 0:

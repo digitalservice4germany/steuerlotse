@@ -1,5 +1,7 @@
 from unittest.mock import patch, MagicMock
 
+import pytest
+from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 from flask_babel import _
 
@@ -7,6 +9,8 @@ from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschale, StepFahrkostenpauschalePersonA, \
     StepFahrkostenpauschalePersonB
 
+from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition, \
+    HasFahrkostenpauschaleClaimPersonBPrecondition
 
 class TestCalculatePauschbetrag:
 
@@ -400,6 +404,7 @@ class TestFahrkostenpauschalePersonAGetOverviewValueRepresentation:
         stored_data = {
              'person_a_has_disability': 'yes',
              'person_a_has_pflegegrad': True,
+             'person_a_has_pflegegrad': 'yes',
          }
         value = 'yes'
         pauschbetrag_result = 1
@@ -436,6 +441,7 @@ class TestStepFahrkostenpauschalePersonB:
             'familienstand_married_lived_separated': 'no',
             'familienstand_confirm_zusammenveranlagung': True,
             'person_a_has_disability': 'no',
+            'person_b_has_pflegegrad': 'yes',
             'person_b_has_disability': 'yes',
             'person_b_disability_degree': 80,
             'person_b_has_merkzeichen_h': True,
@@ -454,6 +460,7 @@ class TestStepFahrkostenpauschalePersonB:
             'familienstand_confirm_zusammenveranlagung': True,
             'person_a_has_disability': 'no',
             'person_b_has_disability': 'yes',
+            'person_b_has_pflegegrad': 'yes',
             'person_b_disability_degree': 80,
             'person_b_has_merkzeichen_h': True,
         })
@@ -472,7 +479,7 @@ class TestFahrkostenpauschalePersonBGetOverviewValueRepresentation:
              'familienstand_married_lived_separated': 'no',
              'familienstand_confirm_zusammenveranlagung': True,
              'person_b_has_disability': 'yes',
-             'person_b_has_pflegegrad': True,
+             'person_b_has_pflegegrad': 'yes',
          }
         value = 'yes'
         pauschbetrag_result = 1
@@ -503,3 +510,24 @@ class TestFahrkostenpauschalePersonBGetOverviewValueRepresentation:
 
             assert overview_value == _('form.lotse.summary.not-requested')
 
+
+class TestHasFahrkostenpauschaleClaimPersonAPrecondition:
+    def test_if_calculate_fahrkostenpauschale_returns_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.fahrkostenpauschale.calculate_fahrkostenpauschale', MagicMock(return_value=0)):
+            with pytest.raises(ValidationError):
+                HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj({})
+
+    def test_if_calculate_fahrkostenpauschale_returns_number_other_than_zero_then_raise_no_error(self):
+        with patch('app.forms.steps.lotse.fahrkostenpauschale.calculate_fahrkostenpauschale', MagicMock(return_value=1)):
+            HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj({})
+
+
+class TestHasFahrkostenpauschaleClaimPersonBPrecondition:
+    def test_if_calculate_fahrkostenpauschale_returns_zero_then_raise_validation_error(self):
+        with patch('app.forms.steps.lotse.fahrkostenpauschale.calculate_fahrkostenpauschale', MagicMock(return_value=0)):
+            with pytest.raises(ValidationError):
+                HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj({})
+
+    def test_if_calculate_fahrkostenpauschale_returns_number_other_than_zero_then_raise_no_error(self):
+        with patch('app.forms.steps.lotse.fahrkostenpauschale.calculate_fahrkostenpauschale', MagicMock(return_value=1)):
+            HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj({})

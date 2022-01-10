@@ -3,6 +3,7 @@ from unittest.mock import patch, MagicMock
 import pytest
 from pydantic import ValidationError
 
+from app.forms.steps.lotse.merkzeichen import HasMerkzeichenPersonBPrecondition
 from app.forms.steps.lotse.no_pauschbetrag import HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition, \
     HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition
     
@@ -86,4 +87,3 @@ class TestHasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition:
                    MagicMock(return_value=1)):
             with pytest.raises(ValidationError):
                 HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
-

@@ -6,14 +6,8 @@ from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
 from app.forms.flows.lotse_step_chooser import LotseStepChooser
-from app.forms.steps.lotse.merkzeichen import HasMerkzeichenPersonBPrecondition
 from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, HasPauschbetragClaimPersonAPrecondition, \
     HasPauschbetragClaimPersonBPrecondition, StepPauschbetragPersonA, StepPauschbetragPersonB
-    
-from app.forms.steps.lotse.no_pauschbetrag import HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition, \
-    HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition
-from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition, \
-    HasFahrkostenpauschaleClaimPersonBPrecondition
 
 class TestCalculatePauschbetrag:
 
@@ -226,105 +220,6 @@ class TestHasPauschbetragClaimPersonBPrecondition:
     def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_no_error(self):
         with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
             HasPauschbetragClaimPersonBPrecondition.parse_obj({})
-
-
-class TestHasFahrkostenpauschaleClaimPersonAPrecondition:
-    def test_if_calculate_fahrkostenpauschale_returns_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale', MagicMock(return_value=0)):
-            with pytest.raises(ValidationError):
-                HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj({})
-
-    def test_if_calculate_fahrkostenpauschale_returns_number_other_than_zero_then_raise_no_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale', MagicMock(return_value=1)):
-            HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj({})
-
-
-class TestHasFahrkostenpauschaleClaimPersonBPrecondition:
-    def test_if_calculate_fahrkostenpauschale_returns_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.fahrkostenpauschale.calculate_fahrkostenpauschale', MagicMock(return_value=0)):
-            with pytest.raises(ValidationError):
-                HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj({})
-
-    def test_if_calculate_fahrkostenpauschale_returns_number_other_than_zero_then_raise_no_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale', MagicMock(return_value=1)):
-            HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj({})
-
-
-class TestHasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition:
-
-    def test_if_calculate_pauschbetrag_and_fahrkostenpauschbetrag_return_zero_then_raise_no_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)), \
-                patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale',
-                      MagicMock(return_value=0)):
-            HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition.parse_obj({})
-
-    def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
-            with pytest.raises(ValidationError):
-                HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition.parse_obj({})
-
-    def test_if_calculate_fahrkostenpauschbetrag_returns_number_other_than_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale',
-                   MagicMock(return_value=1)):
-            with pytest.raises(ValidationError):
-                HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition.parse_obj({})
-
-
-class TestHasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition:
-
-    def test_if_calculate_pauschbetrag_and_fahrkostenpauschale_return_zero_then_raise_no_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=0)), \
-                patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale',
-                      MagicMock(return_value=0)):
-            HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
-
-    def test_if_calculate_pauschbetrag_returns_number_other_than_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_pauschbetrag', MagicMock(return_value=1)):
-            with pytest.raises(ValidationError):
-                HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
-
-    def test_if_calculate_fahrkostenpauschale_returns_number_other_than_zero_then_raise_validation_error(self):
-        with patch('app.forms.steps.lotse.pauschbetrag.calculate_fahrkostenpauschale',
-                   MagicMock(return_value=1)):
-            with pytest.raises(ValidationError):
-                HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition.parse_obj({})
-
-    def test_if_no_parameters_then_zero_should_be_return(self):
-        calculated_pauschbetrag = calculate_pauschbetrag()
-        assert calculated_pauschbetrag == 0
-
-    def test_if_disability_degree_under_20_then_zero_should_be_return(self):
-        calculated_pauschbetrag = calculate_pauschbetrag(disability_degree=19)
-        assert calculated_pauschbetrag == 0
-
-    def test_if_person_b_has_merkzeichen_ag_set_then_do_not_raise_validation_error(self):
-        data = {'person_b_has_merkzeichen_ag': True}
-        try:
-            HasMerkzeichenPersonBPrecondition.parse_obj(data)
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
-
-    def test_if_person_b_has_merkzeichen_bl_set_then_do_not_raise_validation_error(self):
-        data = {'person_b_has_merkzeichen_bl': True}
-        try:
-            HasMerkzeichenPersonBPrecondition.parse_obj(data)
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
-
-    def test_if_person_b_has_merkzeichen_tbl_set_then_do_not_raise_validation_error(self):
-        data = {'person_b_has_merkzeichen_tbl': True}
-        try:
-            HasMerkzeichenPersonBPrecondition.parse_obj(data)
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
-
-    def test_if_person_b_has_merkzeichen_h_set_then_do_not_raise_validation_error(self):
-        data = {'person_b_has_merkzeichen_h': True}
-        try:
-            HasMerkzeichenPersonBPrecondition.parse_obj(data)
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
-
 
 class TestPauschbetragPersonAGetPauschbetrag:
     def test_if_merkzeichen_given_then_get_pauschbetrag_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
