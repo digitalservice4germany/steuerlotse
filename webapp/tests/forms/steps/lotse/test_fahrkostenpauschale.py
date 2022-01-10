@@ -403,7 +403,6 @@ class TestFahrkostenpauschalePersonAGetOverviewValueRepresentation:
     def test_if_merkzeichen_given_and_requests_pauschbetrag_yes_then_returns_result_of_calculate_pauschbetrag(self, new_test_request_context):
         stored_data = {
              'person_a_has_disability': 'yes',
-             'person_a_has_pflegegrad': True,
              'person_a_has_pflegegrad': 'yes',
          }
         value = 'yes'
