@@ -10,6 +10,7 @@ from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkze
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 from app.forms.steps.lotse.pauschbetrag import DisabilityModel, calculate_pauschbetrag
+from app.model.components import NoPauschbetragProps
 
 
 
