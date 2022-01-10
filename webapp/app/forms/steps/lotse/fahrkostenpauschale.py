@@ -20,6 +20,7 @@ from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.model.disability_data import DisabilityModel
 
+
 def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
                                   has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
                                   has_merkzeichen_h: bool = False, has_merkzeichen_ag: bool = False,
@@ -32,7 +33,6 @@ def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree:
         return 900
 
     return 0
-
 
 
 class HasFahrkostenpauschaleClaimPersonAPrecondition(DisabilityModel):
