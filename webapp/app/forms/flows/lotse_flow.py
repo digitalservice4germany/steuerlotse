@@ -275,13 +275,13 @@ class LotseMultiStepFlow(MultiStepFlow):
             render_info.next_url = self.url_for_step(StepSummary.name)
         return render_info, stored_data
 
-    def _get_overview_data(self, form_data, missing_fields=None) -> {str, Section}:
+    def _get_overview_data(self, stored_data, missing_fields=None) -> {str, Section}:
         """
             Method to structure the data from the form according to the steps, where it was collected.
             To do this, the data is collected for each step's fields and the put into the correct section.
 
 
-            :param form_data: The unstructured data from the forms taken out of the cookie.
+            :param stored_data: The unstructured data from the forms taken out of the cookie.
             :return: A dict of the sections, in which the data is structured.
         """
         _IGNORED_STEPS = [
@@ -294,7 +294,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             if curr_step in _IGNORED_STEPS:
                 continue  # no need to collect data from ignored section steps
 
-            step_data = self._collect_data_for_step(curr_step(), form_data, missing_fields)
+            step_data = self._collect_data_for_step(curr_step(), stored_data, missing_fields)
 
             if step_data:
                 if curr_step.section_link.name not in sections:
@@ -303,7 +303,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                         curr_step.section_link, {})
                 curr_section = sections[curr_step.section_link.name]
 
-                curr_section.data[curr_step.name] = Section(curr_step.get_label(form_data),
+                curr_section.data[curr_step.name] = Section(curr_step.get_label(stored_data),
                                                             self.url_for_step(curr_step.name, _has_link_overview=True),
                                                             step_data)
 
@@ -357,25 +357,25 @@ class LotseMultiStepFlow(MultiStepFlow):
         return label, value_representation
 
     # TODO: Use a better structure to collect data for the summary page. Potentially use a pydantic data structure
-    def _collect_data_for_step(self, step, form_data, missing_fields=None):
+    def _collect_data_for_step(self, step, stored_data, missing_fields=None):
         """
             This function collects all the data from the form_data, which is represented through a field in the step.
 
             :param step: An instance of the step, of which the data will be collected
-            :param form_data: The form_data from the cookie
+            :param stored_data: The form_data from the cookie
         """
         step_data = {}
-        for attr in step.create_form(request.form, form_data).__dict__:
+        for attr in step.create_form(request.form, stored_data).__dict__:
             if missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']
                 step_data[label] = _l('form.lotse.missing_mandatory_field')
-            elif attr in form_data or hasattr(step.form, attr):
+            elif attr in stored_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation &
-                #  get_overview_value_representation
-                label, value = self._generate_value_representation(field, form_data.get(attr))
-                value = step.get_overview_value_representation(value)
+                #  get_overview_value_representation     
+                label, value = self._generate_value_representation(field, stored_data.get(attr))
+                value = step.get_overview_value_representation(value, stored_data)
                 if value is not None:
                     # If get_overview_value_representation() returns None, the value will not be displayed
                     step_data[label] = value
