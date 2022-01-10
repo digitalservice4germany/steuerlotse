@@ -32,6 +32,7 @@ Default.args = {
   },
   termsOfServiceLink: "/agb",
   dataPrivacyLink: "/datenschutz",
+  prevUrl: "/prevUrl",
 };
 
 export const WithErrors = Template.bind({});
