@@ -20,7 +20,6 @@ export default function ConfirmationPage({
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <StepHeaderButtons />
       <FormHeader {...stepHeader} />
       <StepForm {...form} nextButtonLabel={t("lotse.confirmation.finish")}>
         <FormFieldConsentBox
