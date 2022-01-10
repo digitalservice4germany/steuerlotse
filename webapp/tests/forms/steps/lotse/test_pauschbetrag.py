@@ -9,9 +9,9 @@ from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.merkzeichen import HasMerkzeichenPersonBPrecondition
 from app.forms.steps.lotse.pauschbetrag import calculate_pauschbetrag, HasPauschbetragClaimPersonAPrecondition, \
     HasPauschbetragClaimPersonBPrecondition, HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition, \
-    HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition, HasFahrkostenpauschaleClaimPersonAPrecondition, \
-    HasFahrkostenpauschaleClaimPersonBPrecondition, StepPauschbetragPersonA, StepPauschbetragPersonB
-
+    HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition, StepPauschbetragPersonA, StepPauschbetragPersonB
+from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition, \
+    HasFahrkostenpauschaleClaimPersonBPrecondition
 
 class TestCalculatePauschbetrag:
 

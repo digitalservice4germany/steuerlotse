@@ -182,7 +182,7 @@ class MandatoryFormData(BaseModel):
     def required_if_person_a_has_fahrkostenpauschale_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import HasFahrkostenpauschaleClaimPersonAPrecondition
+                from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition
                 HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
                 raise MissingError  # has fahrkostenpauschale claim
             except ValidationError:
@@ -193,7 +193,7 @@ class MandatoryFormData(BaseModel):
     def required_if_person_b_has_fahrkostenpauschale_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import HasFahrkostenpauschaleClaimPersonBPrecondition
+                from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonBPrecondition
                 HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
                 raise MissingError  # has fahrkostenpauschale claim
             except ValidationError:
