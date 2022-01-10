@@ -9,7 +9,6 @@ from pydantic import BaseModel, validator, MissingError, ValidationError, root_v
 from pydantic.error_wrappers import ErrorWrapper
 
 from app.data_access.user_controller import check_idnr
-
 from app.utils import get_first_day_of_tax_period
 
 
@@ -157,11 +156,33 @@ class MandatoryFormData(BaseModel):
                 raise MissingError
         return v
 
+    @validator('person_a_requests_pauschbetrag', always=True)
+    def required_if_person_a_has_pauschbetrag_claim(cls, v, values):
+        if not v:
+            try:
+                from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonAPrecondition
+                HasPauschbetragClaimPersonAPrecondition.parse_obj(values)
+                raise MissingError  # has pauschbetrag claim
+            except ValidationError:
+                pass # has no pauschbetrag claim
+        return v
+    
+    @validator('person_b_requests_pauschbetrag', always=True)
+    def required_if_person_b_requests_pauschbetrag_claim(cls, v, values):
+        if not v:
+            try:
+                from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonBPrecondition
+                HasPauschbetragClaimPersonBPrecondition.parse_obj(values)
+                raise MissingError  # has pauschbetrag claim
+            except ValidationError:
+                pass # has no pauschbetrag claim
+        return v 
+ 
     @validator('person_a_requests_fahrkostenpauschale', always=True)
     def required_if_person_a_has_fahrkostenpauschale_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import HasFahrkostenpauschaleClaimPersonAPrecondition
+                from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition
                 HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
                 raise MissingError  # has fahrkostenpauschale claim
             except ValidationError:
@@ -169,10 +190,10 @@ class MandatoryFormData(BaseModel):
         return v
 
     @validator('person_b_requests_fahrkostenpauschale', always=True)
-    def required_if_person_b_requests_pauschbetrag_claim(cls, v, values):
+    def required_if_person_b_has_fahrkostenpauschale_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.pauschbetrag import HasFahrkostenpauschaleClaimPersonBPrecondition
+                from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonBPrecondition
                 HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
                 raise MissingError  # has fahrkostenpauschale claim
             except ValidationError:

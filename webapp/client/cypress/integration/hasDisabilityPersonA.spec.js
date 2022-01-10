@@ -75,7 +75,7 @@ describe("PersonAHasDisability", () => {
       cy.visit("/lotse/step/merkzeichen_person_a");
     });
 
-    it("Should link forward to person b page", () => {
+    it("Should link forward to person b", () => {
       cy.get("button[type=submit]").click();
       cy.url().should("include", "/lotse/step/person_b");
     });

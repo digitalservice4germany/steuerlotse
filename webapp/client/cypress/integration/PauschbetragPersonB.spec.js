@@ -83,6 +83,7 @@ describe("PauschbetragPersonB", () => {
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
+        person_b_has_pflegegrad: "yes",
         person_b_disability_degree: "20",
         person_b_has_merkzeichen_g: true,
       });
@@ -114,6 +115,7 @@ describe("PauschbetragPersonB", () => {
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
+        person_b_has_pflegegrad: "yes",
         person_b_disability_degree: "20",
         person_b_has_merkzeichen_g: true,
         person_b_requests_pauschbetrag: "yes",
@@ -151,9 +153,11 @@ describe("PauschbetragPersonB", () => {
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
         person_b_has_disability: "yes",
-        person_b_disability_degree: "20",
+        person_b_has_pflegegrad: "no",
+        person_b_disability_degree: "70",
         person_b_has_merkzeichen_g: true,
         person_b_requests_pauschbetrag: "no",
+        person_b_requests_fahrkostenpauschale: "yes",
       });
       cy.visit("/lotse/step/person_b_requests_pauschbetrag");
     });
@@ -164,6 +168,13 @@ describe("PauschbetragPersonB", () => {
 
     it("Should not check radio button for label yes", () => {
       cy.get("#person_b_requests_pauschbetrag-yes").should("not.be.checked");
+    });
+
+    it("Should show pauschbetrag on page", () => {
+      cy.get("label[for=person_b_requests_pauschbetrag-yes]").should(
+        "contain",
+        "1780"
+      );
     });
 
     it("Should link forward to fahrkostenpauschale page", () => {

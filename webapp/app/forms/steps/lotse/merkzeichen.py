@@ -4,11 +4,11 @@ from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
 from pydantic import BaseModel, validator
-from wtforms import validators, BooleanField
+from wtforms import validators
 from wtforms.validators import InputRequired, ValidationError
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.fields import YesNoField, SteuerlotseIntegerField
+from app.forms.fields import YesNoField, SteuerlotseIntegerField, MerkzeichenBooleanField
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, \
@@ -38,15 +38,15 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             validators=[ValidDisabilityDegree()],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
-        person_a_has_merkzeichen_g = BooleanField(
+        person_a_has_merkzeichen_g = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
-        person_a_has_merkzeichen_ag = BooleanField(
+        person_a_has_merkzeichen_ag = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
-        person_a_has_merkzeichen_bl = BooleanField(
+        person_a_has_merkzeichen_bl = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')})
-        person_a_has_merkzeichen_tbl = BooleanField(
+        person_a_has_merkzeichen_tbl = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')})
-        person_a_has_merkzeichen_h = BooleanField(
+        person_a_has_merkzeichen_h = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')})
 
         def validate_person_a_disability_degree(self, field):
@@ -66,6 +66,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
                 if field.data and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
+
 
     @classmethod
     def get_label(cls, data):
@@ -126,15 +127,15 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             validators=[ValidDisabilityDegree()],
             render_kw={'help': _l('form.lotse.field_person_beh_grad-help'),
                        'data_label': _l('form.lotse.merkzeichen.disability_degree')})
-        person_b_has_merkzeichen_g = BooleanField(
+        person_b_has_merkzeichen_g = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_g.data_label')})
-        person_b_has_merkzeichen_ag = BooleanField(
+        person_b_has_merkzeichen_ag = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_ag.data_label')})
-        person_b_has_merkzeichen_bl = BooleanField(
+        person_b_has_merkzeichen_bl = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_bl.data_label')})
-        person_b_has_merkzeichen_tbl = BooleanField(
+        person_b_has_merkzeichen_tbl = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_tbl.data_label')})
-        person_b_has_merkzeichen_h = BooleanField(
+        person_b_has_merkzeichen_h = MerkzeichenBooleanField(
             render_kw={'data_label': _l('form.lotse.merkzeichen.has_merkzeichen_h.data_label')})
 
         def validate_person_b_disability_degree(self, field):

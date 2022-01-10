@@ -22,7 +22,7 @@ from app.forms.validations.validators import ValidHessenTaxNumber, ValidTaxNumbe
 from app.forms.validations.validators import DecimalOnly, IntegerLength
 from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
-from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
+from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel, BaseModel
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
@@ -393,5 +393,4 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
-
 

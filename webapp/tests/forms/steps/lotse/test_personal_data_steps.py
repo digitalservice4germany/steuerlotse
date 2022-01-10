@@ -365,11 +365,8 @@ class TestShowPersonBPrecondition:
             ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
 
     def test_if_show_person_b_true_then_do_not_raise_validation_error(self):
-        try:
-            with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=True):
-                ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
-        except ValidationError:
-            pytest.fail("Should not raise a validation error")
+        with patch('app.model.form_data.JointTaxesModel.show_person_b', return_value=True):
+            ShowPersonBPrecondition.parse_obj({'familienstand': 'single'})
 
 
 class TestPersonBValidation:
@@ -446,5 +443,3 @@ class TestTelephoneNumberValidation:
                 StepTelephoneNumber.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is False
-
-

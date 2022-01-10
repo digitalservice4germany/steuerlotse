@@ -57,6 +57,7 @@ describe("PauschbetragPersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
+        person_a_has_pflegegrad: "no",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
       });
@@ -66,6 +67,13 @@ describe("PauschbetragPersonA", () => {
 
     it("Should not check radio button for label yes", () => {
       cy.get("#person_a_requests_pauschbetrag-yes").should("not.be.checked");
+    });
+
+    it("Should show pauschbetrag on page", () => {
+      cy.get("label[for=person_a_requests_pauschbetrag-yes]").should(
+        "contain",
+        "384"
+      );
     });
 
     it("Should not check radio button for label no", () => {
@@ -85,6 +93,7 @@ describe("PauschbetragPersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
+        person_a_has_pflegegrad: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschbetrag: "yes",
@@ -119,6 +128,7 @@ describe("PauschbetragPersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
+        person_a_has_pflegegrad: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschbetrag: "no",
@@ -149,6 +159,7 @@ describe("PauschbetragPersonA", () => {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
+        person_a_has_pflegegrad: "yes",
         person_a_has_disability: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,

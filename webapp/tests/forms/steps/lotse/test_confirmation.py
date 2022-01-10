@@ -48,8 +48,7 @@ class TestStepSummaryHandle:
     def test_if_data_missing_then_set_next_url_correct(self, new_test_request_context, summary_step):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
 
-        with new_test_request_context(stored_data=data_with_missing_fields), \
-                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data'):
+        with new_test_request_context(stored_data=data_with_missing_fields):
             summary_step.handle()
 
             assert summary_step.render_info.next_url == LotseMultiStepFlow(endpoint='lotse').url_for_step(StepSummary.name)

@@ -449,7 +449,7 @@ context('Acceptance tests', () => {
                 cy.get('label[for=person_b_has_merkzeichen_h]').first().click()
                 cy.get(submitBtnSelector).click()
 
-                cy.get('#person_b_requests_pauschbetrag-yes').check().should('be.checked')
+                cy.get('#person_b_requests_pauschbetrag-yes').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=person_b_requests_fahrkostenpauschale-yes').click()

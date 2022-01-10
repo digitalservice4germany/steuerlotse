@@ -39,6 +39,7 @@ describe("FahrkostenpauschalePersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
+        person_a_has_pflegegrad: "no",
       });
 
       cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
@@ -57,7 +58,8 @@ describe("FahrkostenpauschalePersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
-        person_a_disability_degree: "20",
+        person_a_has_pflegegrad: "no",
+        person_a_disability_degree: "80",
         person_a_has_merkzeichen_g: true,
       });
 
@@ -76,6 +78,10 @@ describe("FahrkostenpauschalePersonA", () => {
       );
     });
 
+    it("Should show fahrkostenpauschale on page", () => {
+      cy.contains("900 Euro");
+    });
+
     it("Should stay on page and show error when submit button clicked", () => {
       cy.get("button[type=submit]").click();
       cy.url().should(
@@ -92,6 +98,7 @@ describe("FahrkostenpauschalePersonA", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
+        person_a_has_pflegegrad: "yes",
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschale: "yes",
@@ -127,6 +134,7 @@ describe("FahrkostenpauschalePersonA", () => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
         person_a_disability_degree: "20",
+        person_a_has_pflegegrad: "yes",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschale: "yes",
         person_a_requests_fahrkostenpauschale: "no",
@@ -158,6 +166,7 @@ describe("FahrkostenpauschalePersonA", () => {
         familienstand_confirm_zusammenveranlagung: true,
         person_a_has_disability: "yes",
         person_a_disability_degree: "20",
+        person_a_has_pflegegrad: "yes",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschale: "yes",
         person_a_requests_fahrkostenpauschale: "yes",

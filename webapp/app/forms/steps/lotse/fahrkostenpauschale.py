@@ -2,12 +2,14 @@
 
 from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
-from wtforms.validators import InputRequired
+from pydantic import root_validator
+from wtforms.validators import InputRequired, ValidationError
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
-from app.forms.steps.lotse.merkzeichen import HasMerkzeichenPersonAPrecondition, HasMerkzeichenPersonBPrecondition
+from app.forms.steps.lotse.merkzeichen import HasMerkzeichenPersonAPrecondition, HasMerkzeichenPersonBPrecondition, \
+    StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand
@@ -16,7 +18,7 @@ from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
-
+from app.model.disability_data import DisabilityModel
 
 def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
                                   has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
@@ -30,6 +32,49 @@ def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree:
         return 900
 
     return 0
+
+
+
+class HasFahrkostenpauschaleClaimPersonAPrecondition(DisabilityModel):
+    _step_to_redirect_to = StepMerkzeichenPersonA.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_fahrkostenpauschale_claim')
+
+    @root_validator(skip_on_failure=True)
+    def has_to_have_fahrkostenpauschale_not_0(cls, values):
+        fahrkostenpauschale_claim = calculate_fahrkostenpauschale(
+            has_pflegegrad=values.get('person_a_has_pflegegrad', None),
+            disability_degree=values.get('person_a_disability_degree', None),
+            has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_h=values.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_ag=values.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_g=values.get('person_a_has_merkzeichen_h', False)
+        )
+
+        if fahrkostenpauschale_claim == 0:
+            raise ValidationError
+        return values
+
+
+class HasFahrkostenpauschaleClaimPersonBPrecondition(DisabilityModel):
+    _step_to_redirect_to = StepMerkzeichenPersonB.name
+    _message_to_flash = _l('form.lotse.skip_reason.has_fahrkostenpauschale_claim')
+
+    @root_validator(skip_on_failure=True)
+    def has_to_have_fahrkostenpauschale_not_0(cls, values):
+        fahrkostenpauschale_claim = calculate_fahrkostenpauschale(
+            has_pflegegrad=values.get('person_b_has_pflegegrad', None),
+            disability_degree=values.get('person_b_disability_degree', None),
+            has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False),
+            has_merkzeichen_ag=values.get('person_b_has_merkzeichen_ag', False),
+            has_merkzeichen_g=values.get('person_b_has_merkzeichen_g', False)
+        )
+
+        if fahrkostenpauschale_claim == 0:
+            raise ValidationError
+        return values
 
 
 class StepFahrkostenpauschale(LotseFormSteuerlotseStep):
@@ -56,7 +101,7 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l(
         'form.lotse.mandatory_data.label'))
 
-    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasFahrkostenpauschaleClaimPersonAPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_fahrkostenpauschale = SelectField(
@@ -110,7 +155,7 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
         'form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_fahrkostenpauschale.label')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasMerkzeichenPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasMerkzeichenPersonBPrecondition, HasFahrkostenpauschaleClaimPersonBPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_fahrkostenpauschale = SelectField(

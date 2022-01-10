@@ -36,6 +36,6 @@ PauschbetragPersonBPage.propTypes = {
   fields: PropTypes.exact({
     personBRequestsPauschbetrag: selectionFieldPropType,
   }).isRequired,
-  pauschbetrag: PropTypes.number.isRequired,
+  pauschbetrag: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

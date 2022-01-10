@@ -570,3 +570,7 @@ class LegacyYesNoField(YesNoField):
         super().__init__(label, validators, **kwargs)
         self.widget = YesNoWidget()
 
+
+
+class MerkzeichenBooleanField(BooleanField):
+    pass
