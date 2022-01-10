@@ -238,7 +238,7 @@ class TestPauschbetragPersonAGetPauschbetrag:
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(form_data))
 
-            pauschbetrag = step.get_pauschbetrag()
+            pauschbetrag = step.get_pauschbetrag(stored_data)
             expected_pauschbetrag = calculate_pauschbetrag(
                 has_pflegegrad=True,
                 disability_degree=25,
@@ -341,7 +341,7 @@ class TestPauschbetragPersonBGetPauschbetrag:
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonB.name, True, ImmutableMultiDict(form_data))
 
-            pauschbetrag = step.get_pauschbetrag()
+            pauschbetrag = step.get_pauschbetrag(stored_data)
             expected_pauschbetrag = calculate_pauschbetrag(
                 has_pflegegrad=True,
                 disability_degree=25,

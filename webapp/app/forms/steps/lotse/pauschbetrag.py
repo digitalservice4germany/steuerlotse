@@ -58,6 +58,7 @@ def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merk
 
     return 0
 
+
 class HasPauschbetragClaimPersonAPrecondition(DisabilityModel):
     _step_to_redirect_to = StepMerkzeichenPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_no_pauschbetrag_claim')
@@ -95,6 +96,7 @@ class HasPauschbetragClaimPersonBPrecondition(DisabilityModel):
             raise ValidationError
         return values
 
+
 class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))
@@ -112,14 +114,14 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
         return ngettext('form.lotse.person_a.request_pauschbetrag.label', 'form.lotse.person_a.request_pauschbetrag.label',
                         num=get_number_of_users(data))
 
-    def get_overview_value_representation(self, value):
+    def get_overview_value_representation(self, value, stored_data=None):
         result = None
 
         if value == 'yes':
-            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
+            result = str(self.get_pauschbetrag(stored_data)) + ' ' + _('currency.euro')
         elif value == 'no':
             result = _('form.lotse.summary.not-requested')
-        elif not value and self.stored_data.get('person_a_has_disability') == 'yes':
+        elif not value and stored_data.get('person_a_has_disability') == 'yes':
             result = _('form.lotse.no_answer')
 
         return result
@@ -136,7 +138,7 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(self.render_info.overview_url),
             },
-            pauschbetrag=self.get_pauschbetrag(),
+            pauschbetrag=self.get_pauschbetrag(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
@@ -147,13 +149,13 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
 
-    def get_pauschbetrag(self):
+    def get_pauschbetrag(self, form_data):
         return calculate_pauschbetrag(
-            has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', None),
-            disability_degree=self.stored_data.get('person_a_disability_degree', None),
-            has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
-            has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False)
+            has_pflegegrad=form_data.get('person_a_has_pflegegrad', None),
+            disability_degree=form_data.get('person_a_disability_degree', None),
+            has_merkzeichen_bl=form_data.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=form_data.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=form_data.get('person_a_has_merkzeichen_h', False)
         )
 
 
@@ -176,14 +178,14 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
     def get_label(cls, data):
         return cls.label
 
-    def get_overview_value_representation(self, value):
+    def get_overview_value_representation(self, value, stored_data=None):
         result = None
 
         if value == 'yes':
-            result = str(self.get_pauschbetrag()) + ' ' + _('currency.euro')
+            result = str(self.get_pauschbetrag(stored_data)) + ' ' + _('currency.euro')
         elif value == 'no':
             result = _('form.lotse.summary.not-requested')
-        elif not value and self.stored_data.get('person_b_has_disability') == 'yes':
+        elif not value and stored_data.get('person_b_has_disability') == 'yes':
             result = _('form.lotse.no_answer')
 
         return result
@@ -198,7 +200,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(self.render_info.overview_url),
             },
-            pauschbetrag=self.get_pauschbetrag(),
+            pauschbetrag=self.get_pauschbetrag(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
@@ -209,12 +211,12 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
 
-    def get_pauschbetrag(self):
+    def get_pauschbetrag(self, form_data):
         return calculate_pauschbetrag(
-            has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', None),
-            disability_degree=self.stored_data.get('person_b_disability_degree', None),
-            has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
-            has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False)
+            has_pflegegrad=form_data.get('person_b_has_pflegegrad', None),
+            disability_degree=form_data.get('person_b_disability_degree', None),
+            has_merkzeichen_bl=form_data.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=form_data.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=form_data.get('person_b_has_merkzeichen_h', False)
         )
 

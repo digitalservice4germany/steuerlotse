@@ -55,7 +55,7 @@ class Step(object):
         return None, None
 
     # Override this function, to manipulate the overview value
-    def get_overview_value_representation(self, value):
+    def get_overview_value_representation(self, value, stored_data=None):
         return value
 
 

@@ -20,6 +20,7 @@ from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.model.disability_data import DisabilityModel
 
+
 def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
                                   has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
                                   has_merkzeichen_h: bool = False, has_merkzeichen_ag: bool = False,
@@ -32,7 +33,6 @@ def calculate_fahrkostenpauschale(has_pflegegrad: str = None, disability_degree:
         return 900
 
     return 0
-
 
 
 class HasFahrkostenpauschaleClaimPersonAPrecondition(DisabilityModel):
@@ -79,17 +79,17 @@ class HasFahrkostenpauschaleClaimPersonBPrecondition(DisabilityModel):
 
 class StepFahrkostenpauschale(LotseFormSteuerlotseStep):
 
-    def get_overview_value_representation(self, value):
+    def get_overview_value_representation(self, value, stored_data=None):
         result = None
 
         if value == 'yes':
-            result = str(self.get_fahrkostenpauschale()) + ' ' + _('currency.euro')
+            result = str(self.get_fahrkostenpauschale(stored_data)) + ' ' + _('currency.euro')
         elif value == 'no':
             result = _('form.lotse.summary.not-requested')
 
         return result
 
-    def get_fahrkostenpauschale(self):
+    def get_fahrkostenpauschale(self, form_data):
         """
             Get the amount of Fahrkostenpauschale for this step. Should be implemented for each step.
         """
@@ -126,7 +126,7 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(self.render_info.overview_url),
             },
-            fahrkostenpauschale_amount=self.get_fahrkostenpauschale(),
+            fahrkostenpauschale_amount=self.get_fahrkostenpauschale(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
@@ -137,15 +137,15 @@ class StepFahrkostenpauschalePersonA(StepFahrkostenpauschale):
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
 
-    def get_fahrkostenpauschale(self):
+    def get_fahrkostenpauschale(self, stored_data):
         return calculate_fahrkostenpauschale(
-            has_pflegegrad=self.stored_data.get('person_a_has_pflegegrad', False),
-            disability_degree=self.stored_data.get('person_a_disability_degree', None),
-            has_merkzeichen_bl=self.stored_data.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=self.stored_data.get('person_a_has_merkzeichen_tbl', False),
-            has_merkzeichen_h=self.stored_data.get('person_a_has_merkzeichen_h', False),
-            has_merkzeichen_ag=self.stored_data.get('person_a_has_merkzeichen_ag', False),
-            has_merkzeichen_g=self.stored_data.get('person_a_has_merkzeichen_g', False)
+            has_pflegegrad=stored_data.get('person_a_has_pflegegrad', False),
+            disability_degree=stored_data.get('person_a_disability_degree', None),
+            has_merkzeichen_bl=stored_data.get('person_a_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=stored_data.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=stored_data.get('person_a_has_merkzeichen_h', False),
+            has_merkzeichen_ag=stored_data.get('person_a_has_merkzeichen_ag', False),
+            has_merkzeichen_g=stored_data.get('person_a_has_merkzeichen_g', False)
         )
 
 
@@ -178,7 +178,7 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(self.render_info.overview_url),
             },
-            fahrkostenpauschale_amount=self.get_fahrkostenpauschale(),
+            fahrkostenpauschale_amount=self.get_fahrkostenpauschale(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
@@ -189,13 +189,13 @@ class StepFahrkostenpauschalePersonB(StepFahrkostenpauschale):
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
 
-    def get_fahrkostenpauschale(self):
+    def get_fahrkostenpauschale(self, form_data):
         return calculate_fahrkostenpauschale(
-            has_pflegegrad=self.stored_data.get('person_b_has_pflegegrad', False),
-            disability_degree=self.stored_data.get('person_b_disability_degree', None),
-            has_merkzeichen_bl=self.stored_data.get('person_b_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=self.stored_data.get('person_b_has_merkzeichen_tbl', False),
-            has_merkzeichen_h=self.stored_data.get('person_b_has_merkzeichen_h', False),
-            has_merkzeichen_ag=self.stored_data.get('person_b_has_merkzeichen_ag', False),
-            has_merkzeichen_g=self.stored_data.get('person_b_has_merkzeichen_g', False)
+            has_pflegegrad=form_data.get('person_b_has_pflegegrad', False),
+            disability_degree=form_data.get('person_b_disability_degree', None),
+            has_merkzeichen_bl=form_data.get('person_b_has_merkzeichen_bl', False),
+            has_merkzeichen_tbl=form_data.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=form_data.get('person_b_has_merkzeichen_h', False),
+            has_merkzeichen_ag=form_data.get('person_b_has_merkzeichen_ag', False),
+            has_merkzeichen_g=form_data.get('person_b_has_merkzeichen_g', False)
         )

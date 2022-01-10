@@ -87,7 +87,7 @@ class SteuerlotseStep(object):
             return redirect(self.render_info.redirect_url)
     
     # Override this function, to manipulate the overview value
-    def get_overview_value_representation(self, value):
+    def get_overview_value_representation(self, value, stored_data=None):
         return value
 
     @classmethod
