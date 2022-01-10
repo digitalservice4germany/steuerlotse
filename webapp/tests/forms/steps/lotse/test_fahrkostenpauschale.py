@@ -12,6 +12,7 @@ from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpausch
 from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition, \
     HasFahrkostenpauschaleClaimPersonBPrecondition
 
+
 class TestCalculatePauschbetrag:
 
     def test_if_no_merkzeichen_or_pflegegrad_set_then_return_correct_value_for_disability_degree(self):
@@ -375,7 +376,6 @@ class TestStepFahrkostenpauschalePersonA:
 
     def test_if_person_a_requests_fahrkostenpauschale_is_given_then_validation_should_be_success(self, new_test_request_context):
         data = MultiDict({
-            'person_a_has_merkzeichen': 'yes',
             'person_a_disability_degree': 80,
             'person_a_has_disability': 'yes',
             'person_a_requests_fahrkostenpauschale': 'no'})
@@ -388,7 +388,6 @@ class TestStepFahrkostenpauschalePersonA:
     def test_if_person_a_requests_fahrkostenpauschale_not_given_then_validation_should_fail(self, new_test_request_context):
         data = MultiDict({
             'person_a_has_disability': 'yes',
-            'person_a_has_merkzeichen': 'yes',
             'person_a_disability_degree': 80,
             })
         with new_test_request_context(stored_data=data):
