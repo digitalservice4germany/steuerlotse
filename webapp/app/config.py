@@ -77,13 +77,20 @@ class StagingConfig(BaseConfig):
 
 
 class DevelopmentConfig(BaseConfig):
-    DEBUG = True
-    ALLOW_TESTING_ROUTES = True
-    PREFILL_SAMPLE_FORM_DATA = True
+    #DEBUG = True
+    #ALLOW_TESTING_ROUTES = True
+    #PREFILL_SAMPLE_FORM_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
     SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
 
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
+    
+    DEBUG = False
+    ALLOW_TESTING_ROUTES = True
+    PREFILL_SAMPLE_FORM_DATA = False
+    USE_MOCK_API = True
+
+    RATELIMIT_ENABLED = False
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL') or "memory://"
