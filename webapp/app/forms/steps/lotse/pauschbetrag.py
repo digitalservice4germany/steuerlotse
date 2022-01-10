@@ -198,7 +198,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(self.render_info.overview_url),
             },
-            pauschbetrag=self.get_pauschbetrag(),
+            pauschbetrag=self.get_pauschbetrag(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url
         ).camelized_dict()
