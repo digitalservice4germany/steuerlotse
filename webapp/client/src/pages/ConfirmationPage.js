@@ -13,11 +13,13 @@ export default function ConfirmationPage({
   fields,
   dataPrivacyLink,
   termsOfServiceLink,
+  prevUrl,
 }) {
   const { t } = useTranslation();
 
   return (
     <>
+      <StepHeaderButtons url={prevUrl} />
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
       <StepForm {...form} nextButtonLabel={t("lotse.confirmation.finish")}>
@@ -87,4 +89,5 @@ ConfirmationPage.propTypes = {
   }).isRequired,
   dataPrivacyLink: PropTypes.string.isRequired,
   termsOfServiceLink: PropTypes.string.isRequired,
+  prevUrl: PropTypes.string.isRequired,
 };

@@ -42,6 +42,7 @@ class StepConfirmation(FormStep):
             fields=form_fields_dict(render_info.form),
             terms_of_service_link=url_for('agb'),
             data_privacy_link=url_for('data_privacy'),
+            prev_url=render_info.prev_url,
         ).camelized_dict()
 
         return render_template('react_component.html',
