@@ -60,7 +60,9 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(Disabili
             disability_degree=values.get('person_b_disability_degree', None),
             has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
-            has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False)
+            has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False),
+            has_merkzeichen_ag=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_g=values.get('person_b_has_merkzeichen_g', False)
         )
 
         if pauschbetrag_claim != 0 or fahrkostenpauschbetrag_claim != 0:
