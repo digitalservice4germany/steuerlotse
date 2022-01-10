@@ -13,7 +13,6 @@ from app.forms.steps.lotse.pauschbetrag import DisabilityModel, calculate_pausch
 from app.model.components import NoPauschbetragProps
 
 
-
 class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(DisabilityModel):
     _step_to_redirect_to = StepMerkzeichenPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
@@ -31,10 +30,10 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(Disabili
             has_pflegegrad=values.get('person_a_has_pflegegrad', None),
             disability_degree=values.get('person_a_disability_degree', None),
             has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_h=values.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_ag=values.get('person_a_has_merkzeichen_tbl', False),
-            has_merkzeichen_g=values.get('person_a_has_merkzeichen_h', False)
+            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False),
+            has_merkzeichen_ag=values.get('person_a_has_merkzeichen_ag', False),
+            has_merkzeichen_g=values.get('person_a_has_merkzeichen_g', False)
         )
 
         if pauschbetrag_claim != 0 or fahrkostenpauschbetrag_claim != 0:
@@ -61,7 +60,7 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(Disabili
             has_merkzeichen_bl=values.get('person_b_has_merkzeichen_bl', False),
             has_merkzeichen_tbl=values.get('person_b_has_merkzeichen_tbl', False),
             has_merkzeichen_h=values.get('person_b_has_merkzeichen_h', False),
-            has_merkzeichen_ag=values.get('person_b_has_merkzeichen_tbl', False),
+            has_merkzeichen_ag=values.get('person_b_has_merkzeichen_ag', False),
             has_merkzeichen_g=values.get('person_b_has_merkzeichen_g', False)
         )
 
