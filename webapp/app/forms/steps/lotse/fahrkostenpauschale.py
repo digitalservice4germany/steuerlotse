@@ -45,10 +45,10 @@ class HasFahrkostenpauschaleClaimPersonAPrecondition(DisabilityModel):
             has_pflegegrad=values.get('person_a_has_pflegegrad', None),
             disability_degree=values.get('person_a_disability_degree', None),
             has_merkzeichen_bl=values.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_h=values.get('person_a_has_merkzeichen_bl', False),
-            has_merkzeichen_ag=values.get('person_a_has_merkzeichen_tbl', False),
-            has_merkzeichen_g=values.get('person_a_has_merkzeichen_h', False)
+            has_merkzeichen_tbl=values.get('person_a_has_merkzeichen_tbl', False),
+            has_merkzeichen_h=values.get('person_a_has_merkzeichen_h', False),
+            has_merkzeichen_ag=values.get('person_a_has_merkzeichen_ag', False),
+            has_merkzeichen_g=values.get('person_a_has_merkzeichen_g', False)
         )
 
         if fahrkostenpauschale_claim == 0:
