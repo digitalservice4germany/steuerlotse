@@ -82,7 +82,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
 
     def _set_multiple_texts(self):
         num_of_users = get_number_of_users(self.render_info.stored_data)
-        self.render_info.step_title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
+        self.title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
                                                'form.lotse.no_pauschbetrag.person_a.title',
                                                num=num_of_users)
 
