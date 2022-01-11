@@ -110,7 +110,6 @@ const OutlineButton = styled.button`
   background-color: var(--bg-white);
   background-clip: padding-box;
 
-  border: 0;
   border-radius: 0;
   border: 1px solid var(--border-color);
 
