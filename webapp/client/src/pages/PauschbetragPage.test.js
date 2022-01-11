@@ -28,7 +28,7 @@ let props = {
       name: "requests_pauschbretrag",
     },
   },
-  pauschbetrag: 2400,
+  pauschbetrag: "2400",
   prevUrl: "/some/prev/path",
 };
 

@@ -36,6 +36,8 @@ _BEH_GEH_STEH_BLIND_HILFL = ElsterXmlTreeNode(name='Geh_Steh_Blind_Hilfl', sub_e
 _BEH_AUSW_RENTB_BESCH = ElsterXmlTreeNode(name='Ausw_Rentb_Besch', sub_elements=['E0109708'])
 _AGB_BEH = ElsterXmlTreeNode(name="Beh", sub_elements=[_BEH_AUSW_RENTB_BESCH, _BEH_GEH_STEH_BLIND_HILFL],
                              is_person_specific=True, repetitions=2)
+_BEH_FK_PAUSCH = ElsterXmlTreeNode(name="Beh_Fk_Pausch", sub_elements=['E0161706', 'E0161806'], is_person_specific=True,
+                                   repetitions=2)
 
 # Besondere Belastungen
 _KRANKH_SUM = ElsterXmlTreeNode(name='Sum', sub_elements=['E0161304', 'E0161305'])
@@ -79,6 +81,6 @@ _VOR_KIST = ElsterXmlTreeNode(name='KiSt', sub_elements=[_KIST_GEZAHLT, _KIST_ER
 
 TOP_ELEMENT_ESTA1A = ElsterXmlTreeNode(name='ESt1A', sub_elements=[_EST1A_ART_ERKL, _EST1A_BELEGE, _EST1A_ALLG])
 TOP_ELEMENT_SA = ElsterXmlTreeNode(name='SA', sub_elements=[_VOR_KIST, _SA_ZUW])
-TOP_ELEMENT_AGB = ElsterXmlTreeNode(name='AgB', sub_elements=[_AGB_BEH, _AGB_AND_AUFW])
+TOP_ELEMENT_AGB = ElsterXmlTreeNode(name='AgB', sub_elements=[_AGB_BEH, _BEH_FK_PAUSCH, _AGB_AND_AUFW])
 TOP_ELEMENT_HA35A = ElsterXmlTreeNode(name='HA_35a', sub_elements=[_ST_ERM])
 TOP_ELEMENT_VOR = ElsterXmlTreeNode(name='VOR', sub_elements=[_VOR_WEIT])
