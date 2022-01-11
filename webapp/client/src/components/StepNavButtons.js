@@ -171,9 +171,8 @@ export default function StepNavButtons({
       {!isForm && showOverviewButton && (
         <OutlineLink
           href={overviewUrl}
-          type="submit"
           className="btn mr-2"
-          name="overview_button"
+          name="overview_link"
         >
           {overviewLabel}
         </OutlineLink>
