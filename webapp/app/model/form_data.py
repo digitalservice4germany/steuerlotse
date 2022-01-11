@@ -439,6 +439,42 @@ class FormDataDependencies(BaseModel):
             return None
         return v
 
+    @validator('person_a_requests_pauschbetrag')
+    def delete_person_a_pauschbetrags_request_data_if_no_claim(cls, v, values):
+        try:
+            from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonAPrecondition
+            HasPauschbetragClaimPersonAPrecondition.parse_obj(values)
+            return v
+        except ValidationError:
+            return None
+
+    @validator('person_b_requests_pauschbetrag')
+    def delete_person_b_pauschbetrags_request_data_if_no_claim(cls, v, values):
+        try:
+            from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonBPrecondition
+            HasPauschbetragClaimPersonBPrecondition.parse_obj(values)
+            return v
+        except ValidationError:
+            return None
+
+    @validator('person_a_requests_fahrkostenpauschale')
+    def delete_person_a_fahrkostenpauschale_request_data_if_no_claim(cls, v, values):
+        try:
+            from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition
+            HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
+            return v
+        except ValidationError:
+            return None
+
+    @validator('person_b_requests_fahrkostenpauschale')
+    def delete_person_b_fahrkostenpauschale_request_data_if_no_claim(cls, v, values):
+        try:
+            from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonBPrecondition
+            HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
+            return v
+        except ValidationError:
+            return None
+
 
 class InputDataInvalidError(ValueError):
     """Raised in case of invalid input data at the end of the lotse flow. This is an abstract class.
