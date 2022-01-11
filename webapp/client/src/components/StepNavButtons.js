@@ -68,24 +68,25 @@ const OutlineLink = styled.a`
   font-weight: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
+
   color: var(--link-color);
 
-  background: white;
+  background-color: var(--bg-white);
   background-clip: padding-box;
-
-  border: 0;
-  border-radius: 0;
   border: 1px solid var(--border-color);
+
+  &:visited {
+    color: var(--link-color);
+  }
 
   :not(:disabled):not(.disabled):active {
     color: var(--link-active-color);
-    background-color: inherit;
     border: 1px solid var(--link-active-color);
   }
 
   :hover {
     color: var(--link-hover-color);
-    background: white;
+    background-color: var(--bg-white);
     border: 1px solid var(--link-hover-color);
   }
 
@@ -106,7 +107,7 @@ const OutlineButton = styled.button`
   text-decoration: none;
   color: var(--link-color);
 
-  background: white;
+  background-color: var(--bg-white);
   background-clip: padding-box;
 
   border: 0;
@@ -121,7 +122,7 @@ const OutlineButton = styled.button`
 
   :hover {
     color: var(--link-hover-color);
-    background: white;
+    background-color: var(--bg-white);
     border: 1px solid var(--link-hover-color);
   }
 
