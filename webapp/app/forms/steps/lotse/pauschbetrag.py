@@ -95,6 +95,7 @@ class HasPauschbetragClaimPersonBPrecondition(DisabilityModel):
             raise ValidationError
         return values
 
+
 class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_requests_pauschbetrag'
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l('form.lotse.mandatory_data.label'))

@@ -54,17 +54,17 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                 validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required'))(
                     self, field)
 
-                if field.data and field.data < 20:
+                if field.data is not None and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_g_selected.validation-disability_degree.min20'))
             elif self.person_a_has_merkzeichen_ag.data:
                 validators.InputRequired(
                     _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required'))(self, field)
 
-                if field.data and field.data < 20:
+                if field.data is not None and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20'))
             else:
                 validators.Optional()(self, field)
-                if field.data and 0 < field.data < 20:
+                if field.data is not None and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
 
@@ -143,17 +143,17 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
                 validators.InputRequired(_l('form.lotse.validation-disability_degree.merkzeichen_g_selected.required'))(
                     self, field)
 
-                if field.data and field.data < 20:
+                if field.data is not None and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_g_selected.validation-disability_degree.min20'))
             elif self.person_b_has_merkzeichen_ag.data:
                 validators.InputRequired(
                     _l('form.lotse.validation-disability_degree.merkzeichen_ag_selected.required'))(self, field)
 
-                if field.data and field.data < 20:
+                if field.data is not None and field.data < 20:
                     raise ValidationError(_l('form.lotse.merkzeichen_ag_selected.validation-disability_degree.min20'))
             else:
                 validators.Optional()(self, field)
-                if field.data and 0 < field.data < 20:
+                if field.data is not None and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
     @classmethod

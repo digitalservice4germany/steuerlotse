@@ -13,7 +13,6 @@ from app.forms.steps.lotse.pauschbetrag import DisabilityModel, calculate_pausch
 from app.model.components import NoPauschbetragProps
 
 
-
 class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition(DisabilityModel):
     _step_to_redirect_to = StepMerkzeichenPersonA.name
     _message_to_flash = _l('form.lotse.skip_reason.has_pauschbetrag_claim')
