@@ -26,10 +26,10 @@ _BOOL_KEYS = ['familienstand_married_lived_separated', 'familienstand_widowed_li
               'person_b_same_address', 'request_new_tax_number',
               'person_a_has_pflegegrad', 'person_a_has_merkzeichen_bl',
               'person_a_has_merkzeichen_tbl', 'person_a_has_merkzeichen_h', 'person_a_has_merkzeichen_g',
-              'person_a_has_merkzeichen_ag',
+              'person_a_has_merkzeichen_ag', 'person_a_requests_pauschbetrag', 'person_a_requests_fahrkostenpauschale',
               'person_b_has_pflegegrad', 'person_b_has_merkzeichen_bl',
               'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'person_b_has_merkzeichen_g',
-              'person_b_has_merkzeichen_ag',]
+              'person_b_has_merkzeichen_ag', 'person_b_requests_pauschbetrag', 'person_b_requests_fahrkostenpauschale',]
 _DECIMAL_KEYS = ['stmind_haushaltsnahe_summe', 'stmind_handwerker_summe', 'stmind_handwerker_lohn_etc_summe',
                  'stmind_vorsorge_summe', 'stmind_religion_paid_summe', 'stmind_religion_reimbursed_summe',
                  'stmind_krankheitskosten_summe', 'stmind_krankheitskosten_anspruch', 'stmind_pflegekosten_summe',
@@ -203,8 +203,6 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
     if adapted_form_data.pop('is_user_account_holder', None):
         adapted_form_data['account_holder'] = 'person_a'
 
-    adapted_form_data = _set_names_for_merkzeichen(adapted_form_data)
-
     for key in list(set(_BOOL_KEYS) & set(adapted_form_data.keys())):
         if isinstance(adapted_form_data[key], str):
             adapted_form_data[key] = adapted_form_data[key] == 'yes'
@@ -242,35 +240,6 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
     }
 
     return {'est_data': adapted_form_data, 'meta_data': meta_data}
-
-
-def _set_names_for_merkzeichen(adapted_form_data):
-    # TODO Remove this once we have fully added the pauschbetrag step
-
-    merkzeichen_person_a = [
-        adapted_form_data.get('person_a_disability_degree'),
-        adapted_form_data.get('person_a_has_pflegegrad'),
-        adapted_form_data.get('person_a_has_merkzeichen_bl'),
-        adapted_form_data.get('person_a_has_merkzeichen_tbl'),
-        adapted_form_data.get('person_a_has_merkzeichen_h'),
-        adapted_form_data.get('person_a_has_merkzeichen_g'),
-        adapted_form_data.get('person_a_has_merkzeichen_ag'),
-    ]
-
-    merkzeichen_person_b = [
-        adapted_form_data.get('person_b_disability_degree'),
-        adapted_form_data.get('person_b_has_pflegegrad'),
-        adapted_form_data.get('person_b_has_merkzeichen_bl'),
-        adapted_form_data.get('person_b_has_merkzeichen_tbl'),
-        adapted_form_data.get('person_b_has_merkzeichen_h'),
-        adapted_form_data.get('person_b_has_merkzeichen_g'),
-        adapted_form_data.get('person_b_has_merkzeichen_ag'),
-    ]
-
-    adapted_form_data['person_a_requests_pauschbetrag'] = any(merkzeichen_person_a)
-    adapted_form_data['person_b_requests_pauschbetrag'] = any(merkzeichen_person_b)
-
-    return adapted_form_data
 
 
 def check_pyeric_response_for_errors(pyeric_response):
