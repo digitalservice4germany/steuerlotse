@@ -86,6 +86,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
                 'title': str(step_title),
             },
             showOverviewButton=bool(self.render_info.overview_url),
+            overviewUrl=self.render_info.overview_url,
             prev_url=self.render_info.prev_url,
             next_url=self.render_info.next_url,
         ).camelized_dict()
@@ -109,6 +110,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
                 'title': str(self.title),
             },
             showOverviewButton=bool(self.render_info.overview_url),
+            overviewUrl=self.render_info.overview_url,
             prev_url=self.render_info.prev_url,
             next_url=self.render_info.next_url,
         ).camelized_dict()

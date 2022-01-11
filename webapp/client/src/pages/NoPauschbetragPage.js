@@ -8,6 +8,7 @@ import StepNavButtons from "../components/StepNavButtons";
 export default function NoPauschbetragPage({
   stepHeader,
   showOverviewButton,
+  overviewUrl,
   prevUrl,
   nextUrl,
 }) {
@@ -33,6 +34,7 @@ export default function NoPauschbetragPage({
         isForm={false}
         nextUrl={nextUrl}
         showOverviewButton={showOverviewButton}
+        overviewUrl={overviewUrl}
       />
     </>
   );
@@ -45,4 +47,5 @@ NoPauschbetragPage.propTypes = {
   prevUrl: PropTypes.string.isRequired,
   nextUrl: PropTypes.string.isRequired,
   showOverviewButton: PropTypes.bool.isRequired,
+  overviewUrl: PropTypes.string.isRequired,
 };

@@ -60,6 +60,44 @@ const Link = styled.a`
   }
 `;
 
+const OutlineLink = styled.a`
+  ${sharedButtonLinkStyle}
+
+  padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
+
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wide);
+  text-decoration: none;
+  color: var(--link-color);
+
+  background: white;
+  background-clip: padding-box;
+
+  border: 0;
+  border-radius: 0;
+  border: 1px solid var(--border-color);
+
+  :not(:disabled):not(.disabled):active {
+    color: var(--link-active-color);
+    background-color: inherit;
+    border: 1px solid var(--link-active-color);
+  }
+
+  :hover {
+    color: var(--link-hover-color);
+    background: white;
+    border: 1px solid var(--link-hover-color);
+  }
+
+  :focus {
+    color: var(--focus-color);
+
+    outline: none;
+    box-shadow: none;
+    border: 1px solid var(--focus-border-color);
+  }
+`;
+
 const OutlineButton = styled.button`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
 
@@ -108,6 +146,7 @@ const ExplanatoryText = styled.small`
 export default function StepNavButtons({
   explanatoryButtonText,
   showOverviewButton,
+  overviewUrl,
   nextButtonLabel,
   nextUrl,
   isForm,
@@ -119,7 +158,7 @@ export default function StepNavButtons({
 
   return (
     <Row className="form-row">
-      {showOverviewButton && (
+      {isForm && showOverviewButton && (
         <OutlineButton
           type="submit"
           className="btn mr-2"
@@ -127,6 +166,17 @@ export default function StepNavButtons({
         >
           {overviewLabel}
         </OutlineButton>
+      )}
+
+      {!isForm && showOverviewButton && (
+        <OutlineLink
+          href={overviewUrl}
+          type="submit"
+          className="btn mr-2"
+          name="overview_button"
+        >
+          {overviewLabel}
+        </OutlineLink>
       )}
 
       {isForm && (
@@ -150,6 +200,7 @@ export default function StepNavButtons({
 StepNavButtons.propTypes = {
   nextButtonLabel: PropTypes.string,
   showOverviewButton: PropTypes.bool,
+  overviewUrl: PropTypes.string,
   explanatoryButtonText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
@@ -161,6 +212,7 @@ StepNavButtons.propTypes = {
 StepNavButtons.defaultProps = {
   nextButtonLabel: undefined,
   showOverviewButton: false,
+  overviewUrl: undefined,
   explanatoryButtonText: undefined,
   nextUrl: undefined,
   isForm: true,
