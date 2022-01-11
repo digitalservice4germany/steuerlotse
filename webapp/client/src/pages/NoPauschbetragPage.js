@@ -5,7 +5,12 @@ import FormHeader from "../components/FormHeader";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import StepNavButtons from "../components/StepNavButtons";
 
-export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
+export default function NoPauschbetragPage({
+  stepHeader,
+  showOverviewButton,
+  prevUrl,
+  nextUrl,
+}) {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +29,11 @@ export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
           />,
         ]}
       />
-      <StepNavButtons isForm={false} nextUrl={nextUrl} />
+      <StepNavButtons
+        isForm={false}
+        nextUrl={nextUrl}
+        showOverviewButton={showOverviewButton}
+      />
     </>
   );
 }
@@ -35,4 +44,5 @@ NoPauschbetragPage.propTypes = {
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
   nextUrl: PropTypes.string.isRequired,
+  showOverviewButton: PropTypes.bool.isRequired,
 };

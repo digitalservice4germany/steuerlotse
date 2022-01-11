@@ -19,4 +19,5 @@ Default.args = {
   },
   prevUrl: "/previous/step",
   nextUrl: "/next/step",
+  showOverviewButton: false,
 };

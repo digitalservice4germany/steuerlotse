@@ -76,21 +76,16 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     preconditions = [HasDisabilityPersonAPrecondition,
                      HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition]
 
-    def _pre_handle(self):
-        self._set_multiple_texts()
-        super()._pre_handle()
-
-    def _set_multiple_texts(self):
+    def render(self):
         num_of_users = get_number_of_users(self.render_info.stored_data)
-        self.title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
+        step_title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
                                                'form.lotse.no_pauschbetrag.person_a.title',
                                                num=num_of_users)
-
-    def render(self):
         props_dict = NoPauschbetragProps(
             step_header={
-                'title': str(self.title),
+                'title': str(step_title),
             },
+            showOverviewButton=bool(self.render_info.overview_url),
             prev_url=self.render_info.prev_url,
             next_url=self.render_info.next_url,
         ).camelized_dict()
@@ -113,6 +108,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
             step_header={
                 'title': str(self.title),
             },
+            showOverviewButton=bool(self.render_info.overview_url),
             prev_url=self.render_info.prev_url,
             next_url=self.render_info.next_url,
         ).camelized_dict()

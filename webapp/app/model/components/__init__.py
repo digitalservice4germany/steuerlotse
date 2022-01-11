@@ -118,6 +118,7 @@ class PauschbetragProps(StepFormProps):
 
 
 class NoPauschbetragProps(StepDisplayProps):
+    showOverviewButton: bool
     pass
 
 

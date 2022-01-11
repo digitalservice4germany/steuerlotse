@@ -9,6 +9,7 @@ let props = {
   },
   prevUrl: "/some/prev/path",
   nextUrl: "/some/next/path",
+  showOverviewButton: false,
 };
 
 it("should render step header title", () => {
