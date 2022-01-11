@@ -75,15 +75,20 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [HasDisabilityPersonAPrecondition,
                      HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition]
+    def _pre_handle(self):
+        self._set_multiple_texts()
+        super()._pre_handle()
 
-    def render(self):
+    def _set_multiple_texts(self):
         num_of_users = get_number_of_users(self.render_info.stored_data)
-        step_title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
+        self.title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
                                                'form.lotse.no_pauschbetrag.person_a.title',
                                                num=num_of_users)
+
+    def render(self):
         props_dict = NoPauschbetragProps(
             step_header={
-                'title': str(step_title),
+                'title': str(self.title),
             },
             showOverviewButton=bool(self.render_info.overview_url),
             overviewUrl=self.url_for_step(self.overview_step.name),
