@@ -118,7 +118,8 @@ class PauschbetragProps(StepFormProps):
 
 
 class NoPauschbetragProps(StepDisplayProps):
-    pass
+    showOverviewButton: bool
+    overviewUrl: str
 
 
 class FahrkostenpauschaleProps(StepFormProps):

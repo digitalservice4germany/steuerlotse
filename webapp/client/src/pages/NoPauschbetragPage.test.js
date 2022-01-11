@@ -9,6 +9,7 @@ let props = {
   },
   prevUrl: "/some/prev/path",
   nextUrl: "/some/next/path",
+  showOverviewButton: true,
 };
 
 it("should render step header title", () => {
@@ -30,4 +31,9 @@ it("should link to the next page", () => {
     "href",
     expect.stringContaining("/some/next/path")
   );
+});
+
+it("should link to the overview page", () => {
+  render(<NoPauschbetragPage {...props} />);
+  expect(screen.getByText("Zurück zur Übersicht")).toBeInTheDocument();
 });

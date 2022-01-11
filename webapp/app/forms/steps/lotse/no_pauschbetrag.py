@@ -75,7 +75,6 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [HasDisabilityPersonAPrecondition,
                      HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition]
-
     def _pre_handle(self):
         self._set_multiple_texts()
         super()._pre_handle()
@@ -91,6 +90,8 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
             step_header={
                 'title': str(self.title),
             },
+            showOverviewButton=bool(self.render_info.overview_url),
+            overviewUrl=self.url_for_step(self.overview_step.name),
             prev_url=self.render_info.prev_url,
             next_url=self.render_info.next_url,
         ).camelized_dict()
@@ -113,6 +114,8 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
             step_header={
                 'title': str(self.title),
             },
+            showOverviewButton=bool(self.render_info.overview_url),
+            overviewUrl=self.url_for_step(self.overview_step.name),
             prev_url=self.render_info.prev_url,
             next_url=self.render_info.next_url,
         ).camelized_dict()
