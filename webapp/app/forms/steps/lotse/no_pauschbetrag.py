@@ -3,6 +3,8 @@ from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
 from wtforms.validators import ValidationError
 
+from flask_wtf.csrf import generate_csrf
+
 from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschale
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.forms.steps.lotse.personal_data import ShowPersonBPrecondition
@@ -71,28 +73,26 @@ class HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonBPrecondition(Disabili
 
 class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     name = 'person_a_no_pauschbetrag'
-    title = _l('form.lotse.no_pauschbetrag.person_a.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [HasDisabilityPersonAPrecondition,
                      HasNoPauschbetragOrFahrkostenpauschbetragClaimPersonAPrecondition]
 
-    def _pre_handle(self):
-        self._set_multiple_texts()
-        super()._pre_handle()
-
-    def _set_multiple_texts(self):
+    def render(self):
         num_of_users = get_number_of_users(self.render_info.stored_data)
-        self.render_info.step_title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
+        step_title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
                                                'form.lotse.no_pauschbetrag.person_a.title',
                                                num=num_of_users)
-
-    def render(self):
         props_dict = NoPauschbetragProps(
             step_header={
-                'title': str(self.title),
+                'title': str(step_title),
             },
-            prev_url=self.render_info.prev_url,
-            next_url=self.render_info.next_url,
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields={},
+            prev_url=self.render_info.prev_url
         ).camelized_dict()
 
         return render_template('react_component.html',
@@ -100,7 +100,12 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
-
+    @classmethod
+    def get_label(cls, data=None):
+        num_of_users = get_number_of_users(data)
+        return ngettext('form.lotse.no_pauschbetrag.person_a.title',
+                                               'form.lotse.no_pauschbetrag.person_a.title',
+                                               num=num_of_users)
 
 class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
@@ -113,8 +118,13 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
             step_header={
                 'title': str(self.title),
             },
-            prev_url=self.render_info.prev_url,
-            next_url=self.render_info.next_url,
+            form={
+                'action': self.render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(self.render_info.overview_url),
+            },
+            fields={},
+            prev_url=self.render_info.prev_url
         ).camelized_dict()
 
         return render_template('react_component.html',

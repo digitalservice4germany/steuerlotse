@@ -3,9 +3,9 @@ import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FormHeader from "../components/FormHeader";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import StepNavButtons from "../components/StepNavButtons";
+import StepForm from "../components/StepForm";
 
-export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
+export default function NoPauschbetragPage({ stepHeader, form, prevUrl }) {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +24,7 @@ export default function NoPauschbetragPage({ stepHeader, prevUrl, nextUrl }) {
           />,
         ]}
       />
-      <StepNavButtons isForm={false} nextUrl={nextUrl} />
+      <StepForm {...form} />
     </>
   );
 }
@@ -33,6 +33,11 @@ NoPauschbetragPage.propTypes = {
   stepHeader: PropTypes.shape({
     title: PropTypes.string,
   }).isRequired,
+  form: PropTypes.exact({
+    action: PropTypes.string,
+    csrfToken: PropTypes.string,
+    showOverviewButton: PropTypes.bool,
+    nextButtonLabel: PropTypes.string,
+  }).isRequired,
   prevUrl: PropTypes.string.isRequired,
-  nextUrl: PropTypes.string.isRequired,
 };
