@@ -72,7 +72,7 @@ def valid_person_b_data():
     return {'familienstand': 'married', 'familienstand_date': datetime.date(2000, 1, 31),
             'familienstand_married_lived_separated': 'no', 'familienstand_confirm_zusammenveranlagung': True,
             'person_b_same_address': 'no', 'person_b_idnr': '04452397687',
-            'person_b_dob': datetime.date(1980, 3, 1),  'person_b_last_name': "Weasley",
+            'person_b_dob': datetime.date(1980, 3, 1), 'person_b_last_name': "Weasley",
             'person_b_first_name': 'Ronald Arthur', 'person_b_religion': 'none',
             'person_b_street': 'The Burrow', 'person_b_street_number': 7,
             'person_b_street_number_ext': 'c', 'person_b_address_ext': 'Sixth floor',
@@ -173,7 +173,6 @@ class TestShowPersonB:
 class TestMandatoryFormData(unittest.TestCase):
 
     def setUp(self) -> None:
-
         self.valid_general_data_person_a = {
             'person_a_idnr': '04452397610',
             'declaration_edaten': True,
@@ -181,7 +180,6 @@ class TestMandatoryFormData(unittest.TestCase):
             'confirm_data_privacy': True,
             'confirm_complete_correct': True,
             'confirm_terms_of_service': True,
-
 
             'person_a_dob': datetime.date(1950, 8, 16),
             'person_a_first_name': 'Manfred',
@@ -275,7 +273,7 @@ class TestMandatoryFormData(unittest.TestCase):
         }
         with self.assertRaises(ValidationError) as validation_error:
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
-                                        **self.married_familienstand_without_account_holder, **invalid_tax_nr_data})
+                                         **self.married_familienstand_without_account_holder, **invalid_tax_nr_data})
         self.assertIsInstance(
             validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual(
@@ -289,7 +287,7 @@ class TestMandatoryFormData(unittest.TestCase):
         }
         with self.assertRaises(ValidationError) as validation_error:
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
-                                        **self.married_familienstand_without_account_holder, **invalid_tax_nr_data})
+                                         **self.married_familienstand_without_account_holder, **invalid_tax_nr_data})
         self.assertIsInstance(
             validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual(
@@ -303,7 +301,7 @@ class TestMandatoryFormData(unittest.TestCase):
         }
         with self.assertRaises(ValidationError) as validation_error:
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
-                                        **self.married_familienstand_without_account_holder, **invalid_tax_nr_data})
+                                         **self.married_familienstand_without_account_holder, **invalid_tax_nr_data})
         self.assertIsInstance(
             validation_error.exception.raw_errors[0].exc, MissingError)
         self.assertEqual('request_new_tax_number',
@@ -311,7 +309,8 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_all_data_is_provided_then_fill_familienstand_correctly(self):
         mandatory_data: MandatoryFormData = MandatoryFormData.parse_obj(
-            {**self.valid_data_person_a, **self.valid_data_person_b, **self.valid_steuernummer, **self.valid_married_familienstand})
+            {**self.valid_data_person_a, **self.valid_data_person_b, **self.valid_steuernummer,
+             **self.valid_married_familienstand})
         self.assertEqual(FamilienstandModel.parse_obj(
             self.married_familienstand_without_account_holder), mandatory_data.familienstandStruct)
 
@@ -327,12 +326,13 @@ class TestMandatoryFormData(unittest.TestCase):
         with patch('app.model.form_data.JointTaxesModel.show_person_b', MagicMock(return_value=True)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj(
-                    {**self.valid_data_person_a, **self.valid_steuernummer, **self.married_familienstand_without_account_holder})
+                    {**self.valid_data_person_a, **self.valid_steuernummer,
+                     **self.married_familienstand_without_account_holder})
 
             self.assertTrue(all([isinstance(raw_e.exc, MissingError)
-                            for raw_e in validation_error.exception.raw_errors]))
+                                 for raw_e in validation_error.exception.raw_errors]))
             self.assertEqual(expected_missing_fields, [
-                             raw_e._loc for raw_e in validation_error.exception.raw_errors])
+                raw_e._loc for raw_e in validation_error.exception.raw_errors])
 
     def test_if_person_a_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
@@ -342,7 +342,10 @@ class TestMandatoryFormData(unittest.TestCase):
 
     def test_if_person_a_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
-                   MagicMock(return_value=None)):
+                   MagicMock(return_value=None)), \
+                patch(
+                    'app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonAPrecondition.__init__',
+                    MagicMock(side_effect=ValidationError([], HasFahrkostenpauschaleClaimPersonAPrecondition))):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.pauschbetrag_person_a, **self.valid_steuernummer,
                                              **self.single_familienstand_data})
@@ -352,13 +355,28 @@ class TestMandatoryFormData(unittest.TestCase):
                 validation_error.exception.raw_errors[0].exc, MissingError)
             assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_pauschbetrag'
 
+    def test_if_person_a_has_fahrkostenpauschale_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], HasPauschbetragClaimPersonAPrecondition))), \
+                patch(
+                    'app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonAPrecondition.__init__',
+                    MagicMock(return_value=None)):
+            with self.assertRaises(ValidationError) as validation_error:
+                MandatoryFormData.parse_obj({**self.pauschbetrag_person_a, **self.valid_steuernummer,
+                                             **self.single_familienstand_data})
+
+            assert len(validation_error.exception.raw_errors) == 1
+            assert isinstance(
+                validation_error.exception.raw_errors[0].exc, MissingError)
+            assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_fahrkostenpauschale'
+
     def test_if_person_b_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonBPrecondition.__init__',
                    MagicMock(side_effect=ValidationError([], HasPauschbetragClaimPersonBPrecondition))):
             MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
                                          **self.valid_steuernummer, **self.valid_married_familienstand})
 
-    def test_if_person_b_requests_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+    def test_if_person_b_has_pauschbetrag_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonBPrecondition.__init__',
                    MagicMock(return_value=None)):
             with self.assertRaises(ValidationError) as validation_error:
@@ -369,6 +387,18 @@ class TestMandatoryFormData(unittest.TestCase):
             assert isinstance(
                 validation_error.exception.raw_errors[0].exc, MissingError)
             assert validation_error.exception.raw_errors[0]._loc == 'person_b_requests_pauschbetrag'
+
+    def test_if_person_b_has_fahrkostenpauschale_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonBPrecondition.__init__',
+                   MagicMock(return_value=None)):
+            with self.assertRaises(ValidationError) as validation_error:
+                MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
+                                             **self.valid_steuernummer, **self.valid_married_familienstand})
+
+            assert len(validation_error.exception.raw_errors) == 1
+            assert isinstance(
+                validation_error.exception.raw_errors[0].exc, MissingError)
+            assert validation_error.exception.raw_errors[0]._loc == 'person_b_requests_fahrkostenpauschale'
 
     def test_if_no_pflegegrad_set_and_person_a_has_disability_then_raise_missing_error(self):
         with pytest.raises(ValidationError) as validation_error:

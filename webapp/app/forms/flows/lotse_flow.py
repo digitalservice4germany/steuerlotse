@@ -85,7 +85,6 @@ class LotseMultiStepFlow(MultiStepFlow):
             'person_b_religion': 'rk',
             'person_b_has_disability': 'yes',
             'person_b_has_pflegegrad': 'no',
-            'person_b_has_merkzeichen_h': True,
 
             #'is_user_account_holder': 'yes', use for single user
             'account_holder': 'person_a',

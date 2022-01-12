@@ -89,6 +89,13 @@ class MandatoryFormData(BaseModel):
     person_a_town: str
     person_a_has_disability: str
     person_a_has_pflegegrad: Optional[str]
+    person_a_disability_degree: Optional[str]
+    person_a_has_merkzeichen_g: Optional[bool]
+    person_a_has_merkzeichen_ag: Optional[bool]
+    person_a_has_merkzeichen_bl: Optional[bool]
+    person_a_has_merkzeichen_tbl: Optional[bool]
+    person_a_has_merkzeichen_h: Optional[bool]
+    person_a_has_pflegegrad: Optional[str]
     person_a_requests_pauschbetrag: Optional[str]
     person_a_requests_fahrkostenpauschale: Optional[str]
 
@@ -100,6 +107,12 @@ class MandatoryFormData(BaseModel):
     person_b_religion: Optional[str]
     person_b_has_disability: Optional[str]
     person_b_has_pflegegrad: Optional[str]
+    person_b_disability_degree: Optional[str]
+    person_b_has_merkzeichen_g: Optional[bool]
+    person_b_has_merkzeichen_ag: Optional[bool]
+    person_b_has_merkzeichen_bl: Optional[bool]
+    person_b_has_merkzeichen_tbl: Optional[bool]
+    person_b_has_merkzeichen_h: Optional[bool]
     person_b_requests_pauschbetrag: Optional[str]
     person_b_requests_fahrkostenpauschale: Optional[str]
 
