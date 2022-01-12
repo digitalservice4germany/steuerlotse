@@ -1864,7 +1864,10 @@ msgstr ""
 "Aufwendungen für Basisbeiträge zu Ihrer Kranken- und Pflegeversicherung "
 "die Grenze von typischerweise <b>1.900 Euro nicht bereits "
 "überschreitet</b>. Bei Zusammenveranlagung verdoppelt sich der "
-"Höchstbetrag auf 3.800 Euro. "
+"Höchstbetrag auf 3.800 Euro.</p><p>Ihre monatlichen Basisbeiträge zur "
+"Kranken- und Pflegeversicherung finden Sie auf Ihrer letzten "
+"Rentenanpassungsmitteilung. Ihrer Jahresbeiträge können Sie auch Ihrer "
+"Jahreslohnsteuerbescheinigung entnehmen."
 
 #: app/forms/steps/lotse/steuerminderungen.py:170
 msgid "form.lotse.field_vorsorge_summe.data_label"
