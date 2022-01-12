@@ -1767,8 +1767,8 @@ msgstr "Ihre Ausgaben"
 msgid "form.lotse.select_stmind-intro"
 msgstr ""
 "Sie können eine Vielzahl an Ausgaben in Ihrer Steuererklärung angeben und"
-" somit Ihre Belastung durch Steuern reduzieren. Wählen Sie die Bereiche, "
-"in denen Sie Angaben machen möchten."
+" somit Ihre Steuerbelastung reduzieren. Wählen Sie die Bereiche, in denen"
+" Sie Angaben machen möchten."
 
 #: app/forms/steps/lotse/steuerminderungen.py:27
 #: app/forms/steps/lotse/steuerminderungen.py:156

@@ -17,7 +17,7 @@ Default.args = {
   stepHeader: {
     title: "Ihre Ausgaben",
     intro:
-      "Sie können eine Vielzahl an Ausgaben in Ihrer Steuererklärung angeben und somit Ihre Belastung durch Steuern reduzieren. Wählen Sie die Bereiche, in denen Sie Angaben machen möchten.",
+      "Sie können eine Vielzahl an Ausgaben in Ihrer Steuererklärung angeben und somit Ihre Steuerbelastung reduzieren. Wählen Sie die Bereiche, in denen Sie Angaben machen möchten.",
   },
   form: {
     ...StepFormDefault.args,

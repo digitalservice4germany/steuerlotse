@@ -172,25 +172,25 @@ const translations = {
       selectAussergBela: {
         label: {
           title: "Krankheitskosten und weitere außergewöhnliche Belastungen",
-          text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit und Kur, einer Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
+          text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit, Kur, einer Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
         },
       },
       selectHandwerker: {
         label: {
           title: "Haushaltsnahe Dienstleistungen und Handwerkerleistungen",
-          text: "Zu den Kosten für Dienstleistungen im Haushalt und Handwerker zählen z.B. Leistungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
+          text: "Zu den Kosten für haushaltsnahe Dienst- und Handwerkerleistungen zählen z.B. Leistungen für Reinigung, Winterdienst, Gartenarbeit, Handwerker, Schornsteinfeger, Pflegeleistungen oder die Betreuung von Haustieren.",
         },
       },
       selectSpenden: {
         label: {
           title: "Spenden und Mitgliedsbeiträge",
-          text: "An dieser Stellen können Sie Spenden und Mitgliedsbeiträge angeben, die zum Teil von der Steuer absetzbar sind. Hierzu zählen z.B. Zahlungen an Vereine, Stiftungen und inländische Parteien.",
+          text: "An dieser Stellen können Sie Spenden und Mitgliedsbeiträge für steuerbegünstigte Zwecke angeben. Hierzu zählen z.B. Zahlungen an steuerbegünstigte Vereine, Stiftungen und inländische Parteien.",
         },
       },
       selectReligion: {
         label: {
           title: "Steuern für Ihre Religionsgemeinschaft",
-          text: "Letztes Jahr gezahlte Steuern für Ihre Religionsgemeinschaft können Sie als sogenannte Sonderausgaben angeben.",
+          text: "Im Veranlagungsjahr 2021 gezahlte Steuern für Ihre Religionsgemeinschaft können Sie als sogenannte Sonderausgaben angeben.",
         },
       },
     },
