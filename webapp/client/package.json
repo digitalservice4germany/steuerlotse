@@ -17,7 +17,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "http-proxy-middleware": "^2.0.1",
-    "i18next": "^21.6.5",
+    "i18next": "^21.6.6",
     "jquery": "3.6.0",
     "jquery-mask-plugin": "^1.14.16",
     "popper.js": "^1.16.1",
