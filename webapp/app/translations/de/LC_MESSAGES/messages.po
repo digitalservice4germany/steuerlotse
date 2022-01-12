@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-11 12:23+0100\n"
+"POT-Creation-Date: 2022-01-12 13:13+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -196,21 +196,20 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:136 app/forms/flows/lotse_step_chooser.py:110
+#: app/forms/flows/lotse_flow.py:135 app/forms/flows/lotse_step_chooser.py:109
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:201
+#: app/forms/flows/lotse_flow.py:200
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:323 app/forms/steps/lotse/pauschbetrag.py:127
-#: app/forms/steps/lotse/pauschbetrag.py:193
+#: app/forms/flows/lotse_flow.py:322
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:372
+#: app/forms/flows/lotse_flow.py:371
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -219,7 +218,7 @@ msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
 #: app/forms/flows/unlock_code_request_flow.py:53
-#: app/forms/steps/unlock_code_request_steps.py:46
+#: app/forms/steps/unlock_code_request_steps.py:47
 msgid "form.register"
 msgstr "Registrieren"
 
@@ -292,7 +291,7 @@ msgstr "verwitwet"
 #: app/forms/steps/lotse/has_disability.py:29
 #: app/forms/steps/lotse/has_disability.py:63
 #: app/forms/steps/lotse/pauschbetrag.py:110
-#: app/forms/steps/lotse/pauschbetrag.py:177
+#: app/forms/steps/lotse/pauschbetrag.py:175
 msgid "validate.input-required"
 msgstr "Diese Angabe wird benötigt, um fortfahren zu können."
 
@@ -969,43 +968,43 @@ msgstr "Anmeldung fehlgeschlagen"
 msgid "validation-date-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/unlock_code_request_steps.py:23
+#: app/forms/steps/unlock_code_request_steps.py:24
 msgid "form.unlock-code-request.confirm_data_privacy.required"
 msgstr ""
 "Bestätigen Sie, dass Sie mit den Datenschutzrichtlinien einverstanden "
 "sind, um fortfahren zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:25
+#: app/forms/steps/unlock_code_request_steps.py:26
 msgid "form.unlock-code-request.confirm_terms_of_service.required"
 msgstr ""
 "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen, um fortfahren "
 "zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:27
+#: app/forms/steps/unlock_code_request_steps.py:28
 msgid "form.unlock-code-request.confirm_eligibility.required"
 msgstr ""
 "Bestätigen Sie, dass Sie die Voraussetzungen zur Nutzung des Steuerlotsen"
 " erfüllen, um fortfahren zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:29
+#: app/forms/steps/unlock_code_request_steps.py:30
 msgid "form.unlock-code-request.confirm_e_data.required"
 msgstr "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:33
+#: app/forms/steps/unlock_code_request_steps.py:34
 msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
-#: app/forms/steps/unlock_code_request_steps.py:60
-#: app/forms/steps/unlock_code_request_steps.py:73
-#: app/forms/steps/unlock_code_request_steps.py:86
+#: app/forms/steps/unlock_code_request_steps.py:61
+#: app/forms/steps/unlock_code_request_steps.py:74
+#: app/forms/steps/unlock_code_request_steps.py:87
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_request_steps.py:68
+#: app/forms/steps/unlock_code_request_steps.py:69
 msgid "form.unlock-code-request.success-title"
 msgstr "Ihre Registrierung war erfolgreich!"
 
-#: app/forms/steps/unlock_code_request_steps.py:69
+#: app/forms/steps/unlock_code_request_steps.py:70
 msgid "form.unlock-code-request.success-intro"
 msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
@@ -1013,11 +1012,11 @@ msgstr ""
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern bis Sie "
 "Ihren Brief erhalten."
 
-#: app/forms/steps/unlock_code_request_steps.py:81
+#: app/forms/steps/unlock_code_request_steps.py:82
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:82
+#: app/forms/steps/unlock_code_request_steps.py:83
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie "
@@ -1101,13 +1100,13 @@ msgstr ""
 
 #: app/forms/steps/lotse/fahrkostenpauschale.py:86
 #: app/forms/steps/lotse/pauschbetrag.py:121
-#: app/forms/steps/lotse/pauschbetrag.py:187
+#: app/forms/steps/lotse/pauschbetrag.py:185
 msgid "currency.euro"
 msgstr "Euro"
 
 #: app/forms/steps/lotse/fahrkostenpauschale.py:88
 #: app/forms/steps/lotse/pauschbetrag.py:123
-#: app/forms/steps/lotse/pauschbetrag.py:189
+#: app/forms/steps/lotse/pauschbetrag.py:187
 msgid "form.lotse.summary.not-requested"
 msgstr "Keine Beantragung"
 
@@ -1118,7 +1117,7 @@ msgstr "Keine Beantragung"
 #: app/forms/steps/lotse/merkzeichen.py:31
 #: app/forms/steps/lotse/merkzeichen.py:120
 #: app/forms/steps/lotse/pauschbetrag.py:102
-#: app/forms/steps/lotse/pauschbetrag.py:166
+#: app/forms/steps/lotse/pauschbetrag.py:164
 #: app/forms/steps/lotse/personal_data.py:37
 #: app/forms/steps/lotse/personal_data.py:183
 #: app/forms/steps/lotse/personal_data.py:274
@@ -1153,10 +1152,10 @@ msgstr[1] "Behinderungsbedingte Fahrtkostenpauschale für Person A"
 #: app/forms/steps/lotse/has_disability.py:90
 #: app/forms/steps/lotse/merkzeichen.py:109
 #: app/forms/steps/lotse/merkzeichen.py:182
-#: app/forms/steps/lotse/no_pauschbetrag.py:102
-#: app/forms/steps/lotse/no_pauschbetrag.py:124
-#: app/forms/steps/lotse/pauschbetrag.py:152
-#: app/forms/steps/lotse/pauschbetrag.py:216
+#: app/forms/steps/lotse/no_pauschbetrag.py:103
+#: app/forms/steps/lotse/no_pauschbetrag.py:127
+#: app/forms/steps/lotse/pauschbetrag.py:150
+#: app/forms/steps/lotse/pauschbetrag.py:212
 #: app/forms/steps/lotse/personal_data.py:395
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
@@ -1228,7 +1227,7 @@ msgstr ""
 #: app/forms/steps/lotse/merkzeichen.py:27
 #: app/forms/steps/lotse/merkzeichen.py:116
 #: app/forms/steps/lotse/no_pauschbetrag.py:75
-#: app/forms/steps/lotse/no_pauschbetrag.py:108
+#: app/forms/steps/lotse/no_pauschbetrag.py:109
 #: app/forms/steps/lotse/personal_data.py:32
 #: app/forms/steps/lotse/personal_data.py:180
 #: app/forms/steps/lotse/personal_data.py:271
@@ -1363,7 +1362,7 @@ msgid "form.lotse.skip_reason.has_pauschbetrag_claim"
 msgstr "Ihre Angaben qualifizieren Sie für den behinderungsbedingten Pauschbetrag."
 
 #: app/forms/steps/lotse/no_pauschbetrag.py:74
-#: app/forms/steps/lotse/no_pauschbetrag.py:85
+#: app/forms/steps/lotse/no_pauschbetrag.py:84
 msgid "form.lotse.no_pauschbetrag.person_a.title"
 msgid_plural "form.lotse.no_pauschbetrag.person_a.title"
 msgstr[0] "Leider haben Sie keinen Anspruch auf behinderungsbedingte Pauschbeträge."
@@ -1371,7 +1370,7 @@ msgstr[1] ""
 "Leider hat Person A keinen Anspruch auf behinderungsbedingte "
 "Pauschbeträge."
 
-#: app/forms/steps/lotse/no_pauschbetrag.py:107
+#: app/forms/steps/lotse/no_pauschbetrag.py:108
 msgid "form.lotse.no_pauschbetrag.person_b.title"
 msgstr ""
 "Leider hat Person B keinen Anspruch auf behinderungsbedingte "
@@ -1385,7 +1384,7 @@ msgstr ""
 " Pauschbetrag."
 
 #: app/forms/steps/lotse/pauschbetrag.py:109
-#: app/forms/steps/lotse/pauschbetrag.py:176
+#: app/forms/steps/lotse/pauschbetrag.py:174
 msgid "form.lotse.request_pauschbetrag.data_label"
 msgstr "Beantragung Pauschbetrag für Menschen mit Behinderung"
 
@@ -1396,21 +1395,21 @@ msgstr[0] "Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
 
 #: app/forms/steps/lotse/pauschbetrag.py:125
-#: app/forms/steps/lotse/pauschbetrag.py:191
+#: app/forms/steps/lotse/pauschbetrag.py:189
 msgid "form.lotse.summary.no-claim"
 msgstr "Kein Anspruch"
 
-#: app/forms/steps/lotse/pauschbetrag.py:136
+#: app/forms/steps/lotse/pauschbetrag.py:134
 msgid "form.lotse.person_a.request_pauschbetrag.title"
 msgid_plural "form.lotse.person_a.request_pauschbetrag.title"
 msgstr[0] "Pauschbetrag für Menschen mit Behinderung"
 msgstr[1] "Pauschbetrag für Menschen mit Behinderung für Person A"
 
-#: app/forms/steps/lotse/pauschbetrag.py:168
+#: app/forms/steps/lotse/pauschbetrag.py:166
 msgid "form.lotse.person_b.request_pauschbetrag.label"
 msgstr "Pauschbetrag für Menschen mit Behinderung für Person B"
 
-#: app/forms/steps/lotse/pauschbetrag.py:200
+#: app/forms/steps/lotse/pauschbetrag.py:196
 msgid "form.lotse.person_b.request_pauschbetrag.title"
 msgstr "Pauschbetrag für Menschen mit Behinderung für Person B"
 
@@ -1896,28 +1895,22 @@ msgstr "Krankheitskosten Summe"
 msgid "form.lotse.field_krankheitskosten-help"
 msgstr ""
 "Hier können Kosten eingetragen werden, die im Zusammenhang mit "
-"Krankheiten entstanden sind. Einige Beispiele:<ul><li><b>Arztkosten</b> "
-"zum Beispiel vom Zahnarzt, Logopäden, Physiotherapeuten, Heilpraktiker "
-"oder Psychotherapeuten</li><li><b>Rezeptgebühren</b>, wenn Belege "
-"vorliegen</li><li><b>Notwendige Hilfsmittel</b> wie Brillen, Hörgeräte "
-"oder spezielle Schuheinlagen</li><li><b>Verschriebene Heilkuren, "
-"Massagen, Bäder und Einläufe</b> müssen mit einem amtsärztlichen Attest "
-"nachgewiesen werden. Das Attest muss vor Behandlungsbeginn ausgestellt "
-"worden sein</li><li><b>Eigenanteil bei "
+"Krankheiten entstanden sind. Einige Beispiele:<ul><li><b>Selbstgetragene "
+"Arztkosten/Behandlungskosten und Zuzahlungen</b> zum Beispiel von "
+"Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen"
+" oder "
+"Psychotherapeut:innen</li><li><b>Rezeptgebühren</b></li><li><b>Notwendige"
+" Hilfsmittel</b> wie Brillen, Hörgeräte oder spezielle "
+"Schuheinlagen</li><li><b>Verschriebene Heilkuren, Massagen, Bäder und "
+"Einläufe</b></li><li><b>Eigenanteil bei "
 "Zahnersatz</b></li><li><b>Fahrtkosten zum "
-"Arzt</b></li></ul></p><p><b>Nachweise</b><br>Für Krankheitskosten "
-"brauchen Sie eine <b>ärztliche Verordnung, ein Rezept oder ein "
-"amtsärztliches Gutachten</b> als Nachweis für eine medizinische "
-"Indikation der Behandlung.<br>Bei einer andauernden Erkrankung mit "
-"anhaltendem Verbrauch bestimmter Medikamente, reicht die einmalige "
-"Vorlage einer solchen Verordnung aus.</p><p><b>Kurkosten</b><br>Möchten "
-"Sie Kurkosten geltend machen, müssen Sie die Notwendigkeit der Kur durch "
-"Vorlage eines vor Kurbeginn ausgestellten amtsärztlichen Gutachtens "
-"nachweisen können.<br>Ergibt sich die Notwendigkeit aus anderen "
-"Unterlagen (z.B. bei Pflichtversicherten aus einer Bescheinigung der "
-"zuständigen Krankenkasse) reicht dies aus.<br>Der Zuschuss einer "
-"Krankenversicherung zu Arzt-, Arznei- und Kurmittelkosten reicht als "
-"Nachweis der Notwendigkeit der Kur nicht aus."
+"Arzt</b></li></ul></p><p><b>Nachweise</b><br>Für die steuerliche "
+"Anerkennung der Krankheitskosten brauchen Sie eine ärztliche Verordnung, "
+"ein Rezept oder ein amtsärztliches Gutachten als Nachweis für eine "
+"medizinische Indikation der Behandlung. Das amtsärztliche Gutachten muss "
+"vor Behandlungsbeginn ausgestellt worden sein.<br>Bei einer andauernden "
+"Erkrankung mit anhaltendem Verbrauch bestimmter Medikamente, reicht die "
+"einmalige Vorlage einer solchen Verordnung aus."
 
 #: app/forms/steps/lotse/steuerminderungen.py:198
 msgid "form.lotse.field_krankheitskosten_summe.data_label"
@@ -1947,19 +1940,20 @@ msgstr "Pflegekosten Summe"
 #: app/forms/steps/lotse/steuerminderungen.py:207
 msgid "form.lotse.field_pflegekosten-help"
 msgstr ""
-"Zu den Pflegekosten zählen Kosten, die wegen Krankheit oder Behinderung "
-"entstanden sind. Dazu zählen zum Beispiel <b>Unterbringung in einem "
-"Pflegeheim</b> oder  <b>Kosten zur Beschäftigung einer ambulanten "
-"Pflegekraft</b>.</p><p><b>Wichtig:</b> Haben Sie den den <b>Pauschbetrag "
-"für Menschen mit Behinderung beantragt</b>, sind Aufwendungen im "
-"Zusammenhang mit einer Behinderung des täglichen Lebens <b>bereits "
-"abgegolten</b>. Dies kann zum Beispiel eine Hilfe bei den gewöhnlichen "
-"und regelmäßig wiederkehrenden Verrichtungen des täglichen Lebens "
+"Zu den Pflegekosten zählen Kosten, die durch die Pflegebedürftigkeit "
+"entstanden sind. Dazu zählen zum Beispiel Aufwendungen für die "
+"<b>Unterbringung in einem Pflegeheim</b> oder  <b>Kosten zur "
+"Beschäftigung einer ambulanten Pflegekraft</b>.</p><p><b>Wichtig:</b> "
+"Haben Sie den den <b>Pauschbetrag für Menschen mit Behinderung "
+"beantragt</b>, sind (Pflege-)aufwendungen des täglichen Lebens, die "
+"aufgrund einer Behinderung notwendig sind, <b>bereits abgegolten</b>. "
+"Dies kann zum Beispiel eine Hilfe bei den gewöhnlichen und regelmäßig "
+"wiederkehrenden Verrichtungen des täglichen Lebens "
 "sein.</p><p><b>Nachweise</b></br>Die Pflegebedürftigkeit muss "
 "nachgewiesen werden. Dies kann mit der Bescheinigung der Pflegekasse oder"
 " einer privaten Pflegeversicherung gemacht werden. Auch der "
-"Schwerbehindertenausweis dient als Nachweis, wenn die Merkzeichen Bl oder"
-" H vorliegen."
+"Schwerbehindertenausweis dient als Nachweis, wenn das Merkzeichen H "
+"vorliegt."
 
 #: app/forms/steps/lotse/steuerminderungen.py:208
 msgid "form.lotse.field_pflegekosten_summe.data_label"
@@ -1981,16 +1975,24 @@ msgstr "Behinderungsbedingte Aufwendungen Summe"
 msgid "form.lotse.field_beh_aufw-help"
 msgstr ""
 "Hier können alle Aufwendungen eingetragen werden, die Menschen mit "
-"Behinderung erfahrungsgemäß <b>durch ihre Krankheit oder Behinderung "
-"entstehen</b>. Das können Aufwendungen für die Unterstützung und – "
-"teilweise – Übernahme für folgende Beispiele "
-"sein:</p><p><ul><li><b>Körperpflege</b> wie Waschen, Zahnpflege, Kämmen, "
-"Rasieren</li><li><b>Mobilität</b> wie An- und Auskleiden, Aufstehen und "
-"Zubettgehen</li><li><b>Nahrungsaufnahme</b> wie mundgerechte "
-"Zubereitung</li><li><b>hauswirtschaftliche Versorgung</b> wie Einkaufen, "
-"Kochen, Reinigen der Wohnung, Spülen oder Wäschepflege</li></ul>Hierzu "
-"gehören auch Aufwendungen für den behindertengerechten Umbau oder Neubau "
-"einer Wohnung oder eines Hauses."
+"Behinderung typischerweise <b>durch ihre Behinderung entstehen</b>. Das "
+"können Aufwendungen für die Unterstützung und – teilweise – Übernahme für"
+" folgende Beispiele sein:</p><p><ul><li><b>Körperpflege</b> wie Waschen, "
+"Zahnpflege, Kämmen, Rasieren</li><li><b>Mobilität</b> wie An- und "
+"Auskleiden, Aufstehen und Zubettgehen</li><li><b>Nahrungsaufnahme</b> wie"
+" mundgerechte Zubereitung</li><li><b>hauswirtschaftliche Versorgung</b> "
+"wie Einkaufen, Kochen, Reinigen der Wohnung, Spülen oder "
+"Wäschepflege</li></ul><b>Wichtig:</b> Haben Sie den <b>Pauschbetrag für "
+"Menschen mit Behinderung beantragt</b>, sind Aufwendungen des täglichen "
+"Lebens im Zusammenhang mit einer Behinderung <b>bereits abgegolten</b>. "
+"Dies kann zum Beispiel eine Hilfe bei den gewöhnlichen und regelmäßig "
+"wiederkehrenden Verrichtungen des täglichen Lebens sein.</p><p>Zusätzlich"
+" zum Pauschbetrag für Menschen mit Behinderung können Aufwendungen für "
+"den behindertengerechten Umbau oder Neubau einer Wohnung oder eines "
+"Hauses geltend gemacht werden.</p><p><b>Nachweise</b></br>Eine "
+"Behinderung können Sie zum Beispiel mithilfe eines "
+"Schwerbehindertenausweis oder eines Bescheides über die Behinderung "
+"nachweisen."
 
 #: app/forms/steps/lotse/steuerminderungen.py:217
 msgid "form.lotse.field_beh_aufw_summe.data_label"
@@ -2015,11 +2017,13 @@ msgstr ""
 "Bestattung von Angehörigen zusammenhängen. Dazu zählen zum Beispiel "
 "Kosten "
 "für:<ul><li>Grabstätte</li><li>Sarg</li><li>Blumen</li><li>Kränze</li><li>eine"
-" Todesanzeige</li></ul>Die Kosten können allerdings nur anteilig "
-"abgesetzt werden, wenn diese das Erbe übersteigen.</p><p><b>Folgende "
-"Angaben werden nicht anerkannt</b><br>Kosten für Trauerkleidung und "
-"Bewirtung der Trauergäste, Reisekosten anlässlich der Bestattung sowie "
-"Kosten für die laufende Grabpflege."
+" Todesanzeige</li></ul>Die Kosten können allerdings nur insoweit "
+"abgesetzt werden, wie diese das Erbe übersteigen.</p><p><b>Folgende "
+"Angaben werden steuerlich nicht anerkannt</b><br>Kosten für "
+"Trauerkleidung und Bewirtung der Trauergäste, Reisekosten anlässlich der "
+"Bestattung sowie Kosten für die laufende "
+"Grabpflege.</p><p><b>Nachweise</b><br>Die entstehenden Kosten weisen Sie "
+"mithilfe der entsprechenden Rechnungen nach."
 
 #: app/forms/steps/lotse/steuerminderungen.py:226
 msgid "form.lotse.bestattung_summe.data_label"
@@ -3033,7 +3037,7 @@ msgstr ""
 "Der Grad der Behinderung wird in 5er-Schritten bis 100 festgesetzt. "
 "Korrigieren Sie Ihre Angabe."
 
-#: app/model/form_data.py:495
+#: app/model/form_data.py:508
 msgid "form.lotse.input_invalid.mandatory_field_missing"
 msgid_plural "form.lotse.input_invalid.mandatory_field_missing"
 msgstr[0] ""
@@ -3043,11 +3047,11 @@ msgstr[1] ""
 "Bitte füllen Sie alle notwendigen Felder aus, um Ihre Angaben verschicken"
 " zu können. Es sind noch %(num)s notwendige Felder nicht ausgefüllt."
 
-#: app/model/form_data.py:500
+#: app/model/form_data.py:513
 msgid "form.lotse.input_invalid.confirmation_missing"
 msgstr "Bitte erteilen Sie alle notwendigen Einwilligungen um fortzufahren."
 
-#: app/model/form_data.py:506
+#: app/model/form_data.py:519
 msgid "form.lotse.input_invalid.idnr_mismatch"
 msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
