@@ -4526,9 +4526,9 @@ msgstr ""
 "Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und "
 "somit Ihre Steuerlast reduzieren. Zu folgenden Bereichen können Sie "
 "Angaben machen:<ul><li>Vorsorgeaufwendungen</li><li>Spenden und "
-"Mitgliedsbeiträge</li><li>Krankheits- und weitere außergewöhnliche "
-"Belastungen</li><li>Haushaltsnahe "
-"Dienstleistungen</li><li>Handwerkerleistungen</li><li>Gezahlte "
+"Mitgliedsbeiträge</li><li>außergewöhnliche "
+"Belastungen, wie Krankheitskosten</li><li>Haushaltsnahe "
+"Dienstleistungen</li><li>Haushaltsnahe Handwerkerleistungen</li><li>Gezahlte "
 "Kirchensteuer</li></ul>"
 
 #: app/templates/content/howitworks.html:43
