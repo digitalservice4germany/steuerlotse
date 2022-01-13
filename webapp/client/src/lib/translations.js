@@ -172,7 +172,7 @@ const translations = {
       selectAussergBela: {
         label: {
           title: "Krankheitskosten und weitere außergewöhnliche Belastungen",
-          text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit, Kur, einer Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
+          text: "In diesen Bereich fallen z.B. Aufwendungen, die durch Krankheit, Kur, eine Behinderung, Pflege, Bestattung, Unwetter oder durch Naturkatastrophen entstanden sind.",
         },
       },
       selectHandwerker: {
