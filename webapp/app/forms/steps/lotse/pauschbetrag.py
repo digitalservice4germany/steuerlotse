@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired, ValidationError
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
-from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschale
+from app.forms.steps.lotse.fahrtkostenpauschale import calculate_fahrtkostenpauschale
 from app.model.components import PauschbetragProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm

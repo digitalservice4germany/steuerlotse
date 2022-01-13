@@ -1,11 +1,11 @@
-describe("FahrkostenpauschalePersonA", () => {
+describe("FahrtkostenpauschalePersonA", () => {
   beforeEach(() => {
     cy.login();
   });
 
   context("with no data", () => {
     beforeEach(() => {
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should redirect to has disability page", () => {
@@ -23,7 +23,7 @@ describe("FahrkostenpauschalePersonA", () => {
         person_a_has_disability: "no",
       });
 
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should redirect to has disability page", () => {
@@ -42,7 +42,7 @@ describe("FahrkostenpauschalePersonA", () => {
         person_a_has_pflegegrad: "no",
       });
 
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should redirect to merkzeichen page", () => {
@@ -63,22 +63,22 @@ describe("FahrkostenpauschalePersonA", () => {
         person_a_has_merkzeichen_g: true,
       });
 
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should not check radio button for label yes", () => {
-      cy.get("#person_a_requests_fahrkostenpauschale-yes").should(
+      cy.get("#person_a_requests_fahrtkostenpauschale-yes").should(
         "not.be.checked"
       );
     });
 
     it("Should not check radio button for label no", () => {
-      cy.get("#person_a_requests_fahrkostenpauschale-no").should(
+      cy.get("#person_a_requests_fahrtkostenpauschale-no").should(
         "not.be.checked"
       );
     });
 
-    it("Should show fahrkostenpauschale on page", () => {
+    it("Should show fahrtkostenpauschale on page", () => {
       cy.contains("900 Euro");
     });
 
@@ -86,15 +86,15 @@ describe("FahrkostenpauschalePersonA", () => {
       cy.get("button[type=submit]").click();
       cy.url().should(
         "include",
-        "/lotse/step/person_a_requests_fahrkostenpauschale"
+        "/lotse/step/person_a_requests_fahrtkostenpauschale"
       );
       cy.get(
-        "[role=alert][for=person_a_requests_fahrkostenpauschale]"
+        "[role=alert][for=person_a_requests_fahrtkostenpauschale]"
       ).contains("Diese Angabe wird benötigt, um fortfahren zu können");
     });
   });
 
-  context("with person_a_requests_fahrkostenpauschale yes", () => {
+  context("with person_a_requests_fahrtkostenpauschale yes", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
@@ -102,18 +102,20 @@ describe("FahrkostenpauschalePersonA", () => {
         person_a_disability_degree: "20",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschale: "yes",
-        person_a_requests_fahrkostenpauschale: "yes",
+        person_a_requests_fahrtkostenpauschale: "yes",
       });
 
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should check radio button for label yes", () => {
-      cy.get("#person_a_requests_fahrkostenpauschale-yes").should("be.checked");
+      cy.get("#person_a_requests_fahrtkostenpauschale-yes").should(
+        "be.checked"
+      );
     });
 
     it("Should not check radio button for label no", () => {
-      cy.get("#person_a_requests_fahrkostenpauschale-no").should(
+      cy.get("#person_a_requests_fahrtkostenpauschale-no").should(
         "not.be.checked"
       );
     });
@@ -129,7 +131,7 @@ describe("FahrkostenpauschalePersonA", () => {
     });
   });
 
-  context("with person_a_requests_fahrkostenpauschale no", () => {
+  context("with person_a_requests_fahrtkostenpauschale no", () => {
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
@@ -137,17 +139,17 @@ describe("FahrkostenpauschalePersonA", () => {
         person_a_has_pflegegrad: "yes",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschale: "yes",
-        person_a_requests_fahrkostenpauschale: "no",
+        person_a_requests_fahrtkostenpauschale: "no",
       });
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should check radio button for label no", () => {
-      cy.get("#person_a_requests_fahrkostenpauschale-no").should("be.checked");
+      cy.get("#person_a_requests_fahrtkostenpauschale-no").should("be.checked");
     });
 
     it("Should not check radio button for label yes", () => {
-      cy.get("#person_a_requests_fahrkostenpauschale-yes").should(
+      cy.get("#person_a_requests_fahrtkostenpauschale-yes").should(
         "not.be.checked"
       );
     });
@@ -169,9 +171,9 @@ describe("FahrkostenpauschalePersonA", () => {
         person_a_has_pflegegrad: "yes",
         person_a_has_merkzeichen_g: true,
         person_a_requests_pauschale: "yes",
-        person_a_requests_fahrkostenpauschale: "yes",
+        person_a_requests_fahrtkostenpauschale: "yes",
       });
-      cy.visit("/lotse/step/person_a_requests_fahrkostenpauschale");
+      cy.visit("/lotse/step/person_a_requests_fahrtkostenpauschale");
     });
 
     it("Should link forward to person b page", () => {

@@ -352,10 +352,10 @@ class TestFormDataEstPersonAPauschbetrag:
         assert est_data.person_a_requests_pauschbetrag is True
 
 
-class TestFormDataEstPersonAFahrkostenpauschale:
+class TestFormDataEstPersonAFahrtkostenpauschale:
 
-    def test_if_person_a_requests_fahrkostenpauschale_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_fahrkostenpauschale'] = True
+    def test_if_person_a_requests_fahrtkostenpauschale_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_a_requests_fahrtkostenpauschale'] = True
         standard_est_data['person_a_disability_degree'] = None
         standard_est_data['person_a_has_pflegegrad'] = None
         standard_est_data['person_a_has_merkzeichen_bl'] = None
@@ -367,8 +367,8 @@ class TestFormDataEstPersonAFahrkostenpauschale:
         with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_fahrkostenpauschale_and_any_merkzeichen_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_a_requests_fahrkostenpauschale'] = True
+    def test_if_person_a_requests_fahrtkostenpauschale_and_any_merkzeichen_set_then_raise_no_validation_error(self, standard_est_data):
+        standard_est_data['person_a_requests_fahrtkostenpauschale'] = True
 
         merkzeichen_keys = ['person_a_disability_degree', 'person_a_has_pflegegrad', 'person_a_has_merkzeichen_bl',
                          'person_a_has_merkzeichen_tbl', 'person_a_has_merkzeichen_h', 'person_a_has_merkzeichen_g',
@@ -387,8 +387,8 @@ class TestFormDataEstPersonAFahrkostenpauschale:
 
             FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_a_requests_fahrkostenpauschale_merkzeichen_set_then_set_request_fahrkostenpauschale(self, standard_est_data):
-        standard_est_data['person_a_requests_fahrkostenpauschale'] = True
+    def test_if_person_a_requests_fahrtkostenpauschale_merkzeichen_set_then_set_request_fahrtkostenpauschale(self, standard_est_data):
+        standard_est_data['person_a_requests_fahrtkostenpauschale'] = True
         standard_est_data['person_a_disability_degree'] = None
         standard_est_data['person_a_has_pflegegrad'] = True
         standard_est_data['person_a_has_merkzeichen_bl'] = True
@@ -399,7 +399,7 @@ class TestFormDataEstPersonAFahrkostenpauschale:
 
         est_data = FormDataEst.parse_obj(standard_est_data)
 
-        assert est_data.person_a_requests_fahrkostenpauschale is True
+        assert est_data.person_a_requests_fahrtkostenpauschale is True
 
 
 class TestFormDataEstPersonBPauschbetrag:
@@ -537,10 +537,10 @@ class TestFormDataEstPersonBPauschbetrag:
         assert est_data.person_b_requests_pauschbetrag is True
 
 
-class TestFormDataEstPersonBFahrkostenpauschale:
+class TestFormDataEstPersonBFahrtkostenpauschale:
 
-    def test_if_person_b_requests_fahrkostenpauschale_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_fahrkostenpauschale'] = True
+    def test_if_person_b_requests_fahrtkostenpauschale_and_no_disability_information_set_then_raise_validation_error(self, standard_est_data):
+        standard_est_data['person_b_requests_fahrtkostenpauschale'] = True
         standard_est_data['person_b_disability_degree'] = None
         standard_est_data['person_b_has_pflegegrad'] = None
         standard_est_data['person_b_has_merkzeichen_bl'] = None
@@ -552,8 +552,8 @@ class TestFormDataEstPersonBFahrkostenpauschale:
         with pytest.raises(ValidationError):
             FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_b_requests_fahrkostenpauschale_and_any_merkzeichen_set_then_raise_no_validation_error(self, standard_est_data):
-        standard_est_data['person_b_requests_fahrkostenpauschale'] = True
+    def test_if_person_b_requests_fahrtkostenpauschale_and_any_merkzeichen_set_then_raise_no_validation_error(self, standard_est_data):
+        standard_est_data['person_b_requests_fahrtkostenpauschale'] = True
 
         merkzeichen_keys = ['person_b_disability_degree', 'person_b_has_pflegegrad', 'person_b_has_merkzeichen_bl',
                          'person_b_has_merkzeichen_tbl', 'person_b_has_merkzeichen_h', 'person_b_has_merkzeichen_g',
@@ -572,8 +572,8 @@ class TestFormDataEstPersonBFahrkostenpauschale:
 
             FormDataEst.parse_obj(standard_est_data)
 
-    def test_if_person_b_requests_fahrkostenpauschale_merkzeichen_set_then_set_request_fahrkostenpauschale(self, standard_est_data):
-        standard_est_data['person_b_requests_fahrkostenpauschale'] = True
+    def test_if_person_b_requests_fahrtkostenpauschale_merkzeichen_set_then_set_request_fahrtkostenpauschale(self, standard_est_data):
+        standard_est_data['person_b_requests_fahrtkostenpauschale'] = True
         standard_est_data['person_b_disability_degree'] = None
         standard_est_data['person_b_has_pflegegrad'] = True
         standard_est_data['person_b_has_merkzeichen_bl'] = True
@@ -584,7 +584,7 @@ class TestFormDataEstPersonBFahrkostenpauschale:
 
         est_data = FormDataEst.parse_obj(standard_est_data)
 
-        assert est_data.person_b_requests_fahrkostenpauschale is True
+        assert est_data.person_b_requests_fahrtkostenpauschale is True
 
 
 class TestMetaDataYear:

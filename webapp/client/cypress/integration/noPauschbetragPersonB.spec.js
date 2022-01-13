@@ -68,7 +68,7 @@ describe("NoPauschbetragPage for person B", () => {
   );
 
   context("with joint taxes and person b has pauschbetrag claim", () => {
-    // There is no possible combination to only have a fahrkostenpauschbetrag claim.
+    // There is no possible combination to only have a fahrtkostenpauschbetrag claim.
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         familienstand: "married",
@@ -88,7 +88,7 @@ describe("NoPauschbetragPage for person B", () => {
   });
 
   context(
-    "with joint taxes and person b has pauschbetrag and fahrkostenpauschbetrag claim",
+    "with joint taxes and person b has pauschbetrag and fahrtkostenpauschbetrag claim",
     () => {
       beforeEach(() => {
         cy.request("POST", "/testing/set_data/form_data", {
@@ -110,7 +110,7 @@ describe("NoPauschbetragPage for person B", () => {
   );
 
   context(
-    "with joint taxes and person b has no pauschbetrag or fahrkostenpauschale claim",
+    "with joint taxes and person b has no pauschbetrag or fahrtkostenpauschale claim",
     () => {
       beforeEach(() => {
         cy.request("POST", "/testing/set_data/form_data", {

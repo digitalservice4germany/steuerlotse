@@ -28,7 +28,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
-from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
+from app.forms.steps.lotse.fahrtkostenpauschale import StepFahrtkostenpauschalePersonA, StepFahrtkostenpauschalePersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepIban, StepFamilienstand
 from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
@@ -75,7 +75,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             'person_a_disability_degree': 80,
             'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
-            'person_a_requests_fahrkostenpauschale': 'yes',
+            'person_a_requests_fahrtkostenpauschale': 'yes',
 
             'person_b_idnr': '02293417683',
             'person_b_dob': datetime.date(1951, 2, 25),
@@ -145,12 +145,12 @@ class LotseMultiStepFlow(MultiStepFlow):
                 StepDisabilityPersonA,
                 StepMerkzeichenPersonA,
                 StepPauschbetragPersonA,
-                StepFahrkostenpauschalePersonA,
+                StepFahrtkostenpauschalePersonA,
                 StepPersonB,
                 StepDisabilityPersonB,
                 StepMerkzeichenPersonB,
                 StepPauschbetragPersonB,
-                StepFahrkostenpauschalePersonB,
+                StepFahrtkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepIban,
 

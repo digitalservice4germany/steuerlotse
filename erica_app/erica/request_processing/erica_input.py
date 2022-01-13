@@ -51,7 +51,7 @@ class FormDataEst(BaseModel):
     person_a_has_merkzeichen_g: Optional[bool]
     person_a_has_merkzeichen_ag: Optional[bool]
     person_a_requests_pauschbetrag: Optional[bool]
-    person_a_requests_fahrkostenpauschale: Optional[bool]
+    person_a_requests_fahrtkostenpauschale: Optional[bool]
 
     person_b_same_address: Optional[bool]
     person_b_idnr: Optional[str]
@@ -73,7 +73,7 @@ class FormDataEst(BaseModel):
     person_b_has_merkzeichen_g: Optional[bool]
     person_b_has_merkzeichen_ag: Optional[bool]
     person_b_requests_pauschbetrag: Optional[bool]
-    person_b_requests_fahrkostenpauschale: Optional[bool]
+    person_b_requests_fahrtkostenpauschale: Optional[bool]
 
     stmind_haushaltsnahe_entries: Optional[List[str]]
     stmind_haushaltsnahe_summe: Optional[Decimal]
@@ -151,8 +151,8 @@ class FormDataEst(BaseModel):
 
         return v
 
-    @validator('person_a_requests_fahrkostenpauschale')
-    def fahrkostenpauschale_for_person_a_should_not_be_requested_if_no_disability_information_given(cls, v, values):
+    @validator('person_a_requests_fahrtkostenpauschale')
+    def fahrtkostenpauschale_for_person_a_should_not_be_requested_if_no_disability_information_given(cls, v, values):
         disability_information = [
             values.get('person_a_disability_degree'),
             values.get('person_a_has_pflegegrad'),
@@ -163,7 +163,7 @@ class FormDataEst(BaseModel):
             values.get('person_a_has_merkzeichen_ag'),
         ]
         if not any(disability_information) and v is True:
-            raise ValueError('Person A can not request Fahrkostenpauschale if no disability information given')
+            raise ValueError('Person A can not request Fahrtkostenpauschale if no disability information given')
 
         return v
 
@@ -183,8 +183,8 @@ class FormDataEst(BaseModel):
 
         return v
 
-    @validator('person_b_requests_fahrkostenpauschale')
-    def fahrkostenpauschale_for_person_b_should_not_be_requested_if_no_disability_information_given(cls, v, values):
+    @validator('person_b_requests_fahrtkostenpauschale')
+    def fahrtkostenpauschale_for_person_b_should_not_be_requested_if_no_disability_information_given(cls, v, values):
         disability_information = [
             values.get('person_b_disability_degree'),
             values.get('person_b_has_pflegegrad'),
@@ -195,7 +195,7 @@ class FormDataEst(BaseModel):
             values.get('person_b_has_merkzeichen_ag'),
         ]
         if not any(disability_information) and v is True:
-            raise ValueError('Person B can not request Fahrkostenpauschale if no disability information given')
+            raise ValueError('Person B can not request Fahrtkostenpauschale if no disability information given')
 
         return v
 

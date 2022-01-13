@@ -11,12 +11,12 @@ import {
 } from "../lib/propTypes";
 import FormFieldRadioGroup from "../components/FormFieldRadioGroup";
 
-export default function FahrkostenpauschalePage({
+export default function FahrtkostenpauschalePage({
   stepHeader,
   form,
   fields,
   prevUrl,
-  fahrkostenpauschaleAmount,
+  fahrtkostenpauschaleAmount,
 }) {
   const { t } = useTranslation();
 
@@ -27,50 +27,50 @@ export default function FahrkostenpauschalePage({
         title={stepHeader.title}
         intro={
           <Trans
-            i18nKey="lotse.fahrkostenpauschale.introText"
-            values={{ fahrkostenpauschaleAmount }}
+            i18nKey="lotse.fahrtkostenpauschale.introText"
+            values={{ fahrtkostenpauschaleAmount }}
             components={{ bold: <b /> }}
           />
         }
       />
       <DetailsSeparated
-        title={t("lotse.fahrkostenpauschale.helpTitle")}
-        detailsId="fahrkostenpauschale.details"
+        title={t("lotse.fahrtkostenpauschale.helpTitle")}
+        detailsId="fahrtkostenpauschale.details"
       >
         <Trans
           t={t}
-          i18nKey="lotse.fahrkostenpauschale.helpText"
-          values={{ fahrkostenpauschaleAmount }}
+          i18nKey="lotse.fahrtkostenpauschale.helpText"
+          values={{ fahrtkostenpauschaleAmount }}
           components={{ bold: <b /> }}
         />
       </DetailsSeparated>
       <StepForm {...form}>
         <FormFieldRadioGroup
-          fieldName={fields.requestsFahrkostenpauschale.name}
-          fieldId={fields.requestsFahrkostenpauschale.name}
+          fieldName={fields.requestsFahrtkostenpauschale.name}
+          fieldId={fields.requestsFahrtkostenpauschale.name}
           options={[
             {
               value: "yes",
               displayName: t(
-                "lotse.fahrkostenpauschale.requestsFahrkostenpauschale.yesLabel"
+                "lotse.fahrtkostenpauschale.requestsFahrtkostenpauschale.yesLabel"
               ),
             },
             {
               value: "no",
               displayName: t(
-                "lotse.fahrkostenpauschale.requestsFahrkostenpauschale.noLabel"
+                "lotse.fahrtkostenpauschale.requestsFahrtkostenpauschale.noLabel"
               ),
             },
           ]}
-          value={fields.requestsFahrkostenpauschale.selectedValue}
-          errors={fields.requestsFahrkostenpauschale.errors}
+          value={fields.requestsFahrtkostenpauschale.selectedValue}
+          errors={fields.requestsFahrtkostenpauschale.errors}
         />
       </StepForm>
     </>
   );
 }
 
-FahrkostenpauschalePage.propTypes = {
+FahrtkostenpauschalePage.propTypes = {
   stepHeader: stepHeaderPropType.isRequired,
   form: PropTypes.exact({
     action: PropTypes.string,
@@ -79,8 +79,8 @@ FahrkostenpauschalePage.propTypes = {
     nextButtonLabel: PropTypes.string,
   }).isRequired,
   fields: PropTypes.exact({
-    requestsFahrkostenpauschale: extendedSelectionFieldPropType,
+    requestsFahrtkostenpauschale: extendedSelectionFieldPropType,
   }).isRequired,
-  fahrkostenpauschaleAmount: PropTypes.string.isRequired,
+  fahrtkostenpauschaleAmount: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
 };

@@ -97,7 +97,7 @@ class MandatoryFormData(BaseModel):
     person_a_has_merkzeichen_h: Optional[bool]
     person_a_has_pflegegrad: Optional[str]
     person_a_requests_pauschbetrag: Optional[str]
-    person_a_requests_fahrkostenpauschale: Optional[str]
+    person_a_requests_fahrtkostenpauschale: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -114,7 +114,7 @@ class MandatoryFormData(BaseModel):
     person_b_has_merkzeichen_tbl: Optional[bool]
     person_b_has_merkzeichen_h: Optional[bool]
     person_b_requests_pauschbetrag: Optional[str]
-    person_b_requests_fahrkostenpauschale: Optional[str]
+    person_b_requests_fahrtkostenpauschale: Optional[str]
 
     iban: str
     account_holder: Optional[str]
@@ -191,26 +191,26 @@ class MandatoryFormData(BaseModel):
                 pass # has no pauschbetrag claim
         return v 
  
-    @validator('person_a_requests_fahrkostenpauschale', always=True)
-    def required_if_person_a_has_fahrkostenpauschale_claim(cls, v, values):
+    @validator('person_a_requests_fahrtkostenpauschale', always=True)
+    def required_if_person_a_has_fahrtkostenpauschale_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition
-                HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
-                raise MissingError  # has fahrkostenpauschale claim
+                from app.forms.steps.lotse.fahrtkostenpauschale import HasFahrtkostenpauschaleClaimPersonAPrecondition
+                HasFahrtkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
+                raise MissingError  # has fahrtkostenpauschale claim
             except ValidationError:
-                pass  # has no fahrkostenpauschale claim
+                pass  # has no fahrtkostenpauschale claim
         return v
 
-    @validator('person_b_requests_fahrkostenpauschale', always=True)
-    def required_if_person_b_has_fahrkostenpauschale_claim(cls, v, values):
+    @validator('person_b_requests_fahrtkostenpauschale', always=True)
+    def required_if_person_b_has_fahrtkostenpauschale_claim(cls, v, values):
         if not v:
             try:
-                from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonBPrecondition
-                HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
-                raise MissingError  # has fahrkostenpauschale claim
+                from app.forms.steps.lotse.fahrtkostenpauschale import HasFahrtkostenpauschaleClaimPersonBPrecondition
+                HasFahrtkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
+                raise MissingError  # has fahrtkostenpauschale claim
             except ValidationError:
-                pass  # has no fahrkostenpauschale claim
+                pass  # has no fahrtkostenpauschale claim
 
     @validator('person_a_has_pflegegrad', always=True)
     def person_a_pflegegrad_required_if_person_a_has_disability(cls, v, values):
@@ -290,7 +290,7 @@ class FormDataDependencies(BaseModel):
     person_a_has_merkzeichen_tbl: Optional[bool]
     person_a_has_merkzeichen_h: Optional[bool]
     person_a_requests_pauschbetrag: Optional[str]
-    person_a_requests_fahrkostenpauschale: Optional[str]
+    person_a_requests_fahrtkostenpauschale: Optional[str]
 
     person_b_same_address: Optional[str]
     person_b_idnr: Optional[str]
@@ -313,7 +313,7 @@ class FormDataDependencies(BaseModel):
     person_b_has_merkzeichen_tbl: Optional[bool]
     person_b_has_merkzeichen_h: Optional[bool]
     person_b_requests_pauschbetrag: Optional[str]
-    person_b_requests_fahrkostenpauschale: Optional[str]
+    person_b_requests_fahrtkostenpauschale: Optional[str]
 
     telephone_number: Optional[str]
 
@@ -438,7 +438,7 @@ class FormDataDependencies(BaseModel):
 
     @validator('person_a_has_pflegegrad', 'person_a_disability_degree', 'person_a_has_merkzeichen_g',
                'person_a_has_merkzeichen_ag', 'person_a_has_merkzeichen_bl', 'person_a_has_merkzeichen_tbl',
-               'person_a_has_merkzeichen_h', 'person_a_requests_pauschbetrag', 'person_a_requests_fahrkostenpauschale')
+               'person_a_has_merkzeichen_h', 'person_a_requests_pauschbetrag', 'person_a_requests_fahrtkostenpauschale')
     def delete_person_a_disability_info_if_person_a_no_disability(cls, v, values):
         if values.get('person_a_has_disability') == 'no':
             return None
@@ -446,7 +446,7 @@ class FormDataDependencies(BaseModel):
 
     @validator('person_b_has_pflegegrad', 'person_b_disability_degree', 'person_b_has_merkzeichen_g',
                'person_b_has_merkzeichen_ag', 'person_b_has_merkzeichen_bl', 'person_b_has_merkzeichen_tbl',
-               'person_b_has_merkzeichen_h', 'person_b_requests_pauschbetrag', 'person_b_requests_fahrkostenpauschale')
+               'person_b_has_merkzeichen_h', 'person_b_requests_pauschbetrag', 'person_b_requests_fahrtkostenpauschale')
     def delete_person_b_disability_info_if_person_b_no_disability(cls, v, values):
         if values.get('person_b_has_disability') == 'no':
             return None
@@ -470,20 +470,20 @@ class FormDataDependencies(BaseModel):
         except ValidationError:
             return None
 
-    @validator('person_a_requests_fahrkostenpauschale')
-    def delete_person_a_fahrkostenpauschale_request_data_if_no_claim(cls, v, values):
+    @validator('person_a_requests_fahrtkostenpauschale')
+    def delete_person_a_fahrtkostenpauschale_request_data_if_no_claim(cls, v, values):
         try:
-            from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition
-            HasFahrkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
+            from app.forms.steps.lotse.fahrtkostenpauschale import HasFahrtkostenpauschaleClaimPersonAPrecondition
+            HasFahrtkostenpauschaleClaimPersonAPrecondition.parse_obj(values)
             return v
         except ValidationError:
             return None
 
-    @validator('person_b_requests_fahrkostenpauschale')
-    def delete_person_b_fahrkostenpauschale_request_data_if_no_claim(cls, v, values):
+    @validator('person_b_requests_fahrtkostenpauschale')
+    def delete_person_b_fahrtkostenpauschale_request_data_if_no_claim(cls, v, values):
         try:
-            from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonBPrecondition
-            HasFahrkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
+            from app.forms.steps.lotse.fahrtkostenpauschale import HasFahrtkostenpauschaleClaimPersonBPrecondition
+            HasFahrtkostenpauschaleClaimPersonBPrecondition.parse_obj(values)
             return v
         except ValidationError:
             return None

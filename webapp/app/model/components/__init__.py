@@ -122,8 +122,8 @@ class NoPauschbetragProps(StepDisplayProps):
     overviewUrl: str
 
 
-class FahrkostenpauschaleProps(StepFormProps):
-    fahrkostenpauschale_amount: int
+class FahrtkostenpauschaleProps(StepFormProps):
+    fahrtkostenpauschale_amount: int
 
 
 class TelephoneNumberProps(StepFormProps):
