@@ -13,6 +13,7 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
@@ -51,8 +52,8 @@
     "lint": "yarn run eslint src/",
     "format": "yarn prettier --write .",
     "prepare": "cd ../.. && husky install webapp/client/.husky",
-    "storybook": "start-storybook -p 6006 -s public",
-    "storybook:build": "build-storybook -s public",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook",
     "cypress": "cypress open",
     "cypress:run": "cypress run"
   },

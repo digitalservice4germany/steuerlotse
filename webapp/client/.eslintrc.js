@@ -11,6 +11,7 @@ module.exports = {
     "plugin:jsx-a11y/recommended",
     "plugin:jest/recommended",
     "prettier",
+    "plugin:cypress/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -34,6 +35,12 @@ module.exports = {
     ],
     "jsx-a11y/no-autofocus": "warn",
     "react/forbid-prop-types": "warn",
+    "jest/expect-expect": [
+      "off",
+      {
+        assertFunctionNames: ["expect"],
+      },
+    ],
   },
   settings: {
     react: {

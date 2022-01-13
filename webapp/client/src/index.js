@@ -22,6 +22,7 @@ import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 import FahrtkostenpauschalePersonAPage from "./pages/FahrtkostenpauschalePersonAPage";
 import FahrtkostenpauschalePersonBPage from "./pages/FahrtkostenpauschalePersonBPage";
 import NoPauschbetragPage from "./pages/NoPauschbetragPage";
+import UnlockCodeSuccessPage from "./pages/UnlockCodeSuccessPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -43,6 +44,7 @@ const allowedComponents = {
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
+  UnlockCodeSuccessPage,
 };
 
 function mountComponent(element) {
