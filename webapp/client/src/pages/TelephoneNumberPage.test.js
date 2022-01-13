@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import TelephoneNumberPage from "./TelephoneNumberPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
-let props = {
+const props = {
   stepHeader: {
     title: "Title",
     intro: "Intro",

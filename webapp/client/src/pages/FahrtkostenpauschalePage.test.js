@@ -59,7 +59,7 @@ describe("FahrtkostenpauschalePage default", () => {
 
 describe("With yes preselected", () => {
   beforeEach(() => {
-    let yesProps = {
+    const yesProps = {
       ...props,
       fields: {
         requestsFahrtkostenpauschale: {
@@ -89,7 +89,7 @@ describe("With yes preselected", () => {
 
 describe("With no preselected", () => {
   beforeEach(() => {
-    let noProps = {
+    const noProps = {
       ...props,
       fields: {
         requestsFahrtkostenpauschale: {

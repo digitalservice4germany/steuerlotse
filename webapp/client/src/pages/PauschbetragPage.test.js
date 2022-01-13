@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import PauschbetragPage from "./PauschbetragPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
-let props = {
+const props = {
   stepHeader: {
     title: "Title",
     intro: "Intro",
@@ -69,7 +69,7 @@ describe("With default props", () => {
 
 describe("With yes preselected", () => {
   beforeEach(() => {
-    let yesProps = {
+    const yesProps = {
       ...props,
       fields: {
         requestsPauschbetrag: {
@@ -99,7 +99,7 @@ describe("With yes preselected", () => {
 
 describe("With no preselected", () => {
   beforeEach(() => {
-    let noProps = {
+    const noProps = {
       ...props,
       fields: {
         requestsPauschbetrag: {

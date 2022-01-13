@@ -5,7 +5,7 @@ import MerkzeichenPersonBPage from "./MerkzeichenPersonBPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
 describe("MerkzeichenPersonBPage default", () => {
-  let props = {
+  const props = {
     stepHeader: {
       title: "Title",
       intro: "Intro",
