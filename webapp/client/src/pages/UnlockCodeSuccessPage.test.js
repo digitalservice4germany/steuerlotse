@@ -29,7 +29,15 @@ describe("UnlockCodeSuccessPage", () => {
     );
   });
 
-  it("should link to download", () => {
+  it("should link to download in text", () => {
+    render(<UnlockCodeSuccessPage {...MOCK_PROPS} />);
+    expect(screen.getByText("Vorbereitungshilfe").closest("a")).toHaveAttribute(
+      "href",
+      expect.stringContaining(MOCK_PROPS.vorbereitungshilfeLink)
+    );
+  });
+
+  it("should link to download on anchor button", () => {
     render(<UnlockCodeSuccessPage {...MOCK_PROPS} />);
     expect(
       screen.getByText("Vorbereitungshilfe herunterladen").closest("a")

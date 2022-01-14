@@ -26,6 +26,7 @@ const Anchor = styled.a`
     border: none;
     border-bottom: 4px solid var(--link-hover-color);
     color: var(--inverse-text-color);
+    text-decoration: none;
   }
 
   &:focus {
