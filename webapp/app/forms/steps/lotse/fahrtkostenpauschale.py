@@ -1,5 +1,3 @@
-
-
 from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
