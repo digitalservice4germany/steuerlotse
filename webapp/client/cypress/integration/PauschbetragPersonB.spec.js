@@ -137,11 +137,11 @@ describe("PauschbetragPersonB", () => {
       cy.url().should("include", "/lotse/step/merkzeichen_person_b");
     });
 
-    it("Should link forward to fahrkostenpauschale page", () => {
+    it("Should link forward to fahrtkostenpauschale page", () => {
       cy.get("button[type=submit]").click();
       cy.url().should(
         "include",
-        "/lotse/step/person_b_requests_fahrkostenpauschale"
+        "/lotse/step/person_b_requests_fahrtkostenpauschale"
       );
     });
   });
@@ -157,7 +157,7 @@ describe("PauschbetragPersonB", () => {
         person_b_disability_degree: "70",
         person_b_has_merkzeichen_g: true,
         person_b_requests_pauschbetrag: "no",
-        person_b_requests_fahrkostenpauschale: "yes",
+        person_b_requests_fahrtkostenpauschale: "yes",
       });
       cy.visit("/lotse/step/person_b_requests_pauschbetrag");
     });
@@ -177,11 +177,11 @@ describe("PauschbetragPersonB", () => {
       );
     });
 
-    it("Should link forward to fahrkostenpauschale page", () => {
+    it("Should link forward to fahrtkostenpauschale page", () => {
       cy.get("button[type=submit]").click();
       cy.url().should(
         "include",
-        "/lotse/step/person_b_requests_fahrkostenpauschale"
+        "/lotse/step/person_b_requests_fahrtkostenpauschale"
       );
     });
   });

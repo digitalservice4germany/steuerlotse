@@ -1,14 +1,10 @@
-from typing import Optional
-
 from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
-from pydantic.main import BaseModel
 from wtforms.validators import InputRequired, ValidationError
 from wtforms import SelectField
 from flask_wtf.csrf import generate_csrf
 
-from app.forms.steps.lotse.fahrkostenpauschale import calculate_fahrkostenpauschale
 from app.model.components import PauschbetragProps
 from app.model.components.helpers import form_fields_dict
 from app.forms import SteuerlotseBaseForm
