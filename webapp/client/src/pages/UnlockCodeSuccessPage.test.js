@@ -10,6 +10,8 @@ const MOCK_PROPS = {
   prevUrl: "/some/prev/path",
   nextUrl: "/some/next/path",
   downloadUrl: "/some/download/path",
+  steuerErklaerungsLink: "/some/link/path",
+  vorbereitungshilfeLink: "/some/link/path",
 };
 
 describe("UnlockCodeSuccessPage", () => {
@@ -24,14 +26,6 @@ describe("UnlockCodeSuccessPage", () => {
     expect(screen.getByText("Zurück").closest("a")).toHaveAttribute(
       "href",
       expect.stringContaining(MOCK_PROPS.prevUrl)
-    );
-  });
-
-  it("should link to the next page", () => {
-    render(<UnlockCodeSuccessPage {...MOCK_PROPS} />);
-    expect(screen.getByText("Weiter").closest("a")).toHaveAttribute(
-      "href",
-      expect.stringContaining(MOCK_PROPS.nextUrl)
     );
   });
 

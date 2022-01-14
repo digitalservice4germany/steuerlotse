@@ -10,7 +10,7 @@ describe("Unlock Code Success", () => {
   });
 
   it("has download link", () => {
-    cy.get("a").contains("Vorbereitungshilfe herunterladen").click();
+    cy.get("a").contains("Vorbereitungshilfe").click();
 
     cy.url().should("include", "download_preparation");
   });

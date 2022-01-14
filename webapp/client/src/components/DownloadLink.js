@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const sharedButtonLinkStyle = css`
+const Anchor = styled.a`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem;
   margin-right: var(--spacing-05);
   font-size: var(--text-base);
@@ -30,18 +30,12 @@ const sharedButtonLinkStyle = css`
 
   &:focus {
     color: var(--focus-text-color);
-
     background: var(--focus-color);
-
     outline: none;
     box-shadow: none;
     border: 0;
     border-bottom: 4px solid var(--focus-border-color);
   }
-`;
-
-const Anchor = styled.a`
-  ${sharedButtonLinkStyle}
 
   &:visited {
     color: var(--inverse-text-color);
