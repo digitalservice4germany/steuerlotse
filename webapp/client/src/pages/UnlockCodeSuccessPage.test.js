@@ -8,7 +8,6 @@ const MOCK_PROPS = {
     intro: "Intro",
   },
   prevUrl: "/some/prev/path",
-  nextUrl: "/some/next/path",
   downloadUrl: "/some/download/path",
   steuerErklaerungsLink: "/some/link/path",
   vorbereitungshilfeLink: "/some/link/path",
