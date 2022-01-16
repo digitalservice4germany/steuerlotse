@@ -22,7 +22,7 @@ Default.args = {
   },
   fields: {
     declarationEdaten: {
-      checked: true,
+      checked: false,
       errors: [],
     },
   },
