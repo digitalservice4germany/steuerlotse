@@ -12,6 +12,7 @@ module.exports = {
     "plugin:jest/recommended",
     "prettier",
     "plugin:cypress/recommended",
+    "plugin:storybook/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -23,7 +24,12 @@ module.exports = {
   plugins: ["react", "jsx-a11y", "jest"],
   rules: {
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        extensions: [".js", ".jsx"],
+      },
+    ],
     "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "warn",
     "react/function-component-definition": [

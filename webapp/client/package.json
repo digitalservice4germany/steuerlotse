@@ -34,12 +34,13 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.4.8",
-    "@storybook/addon-essentials": "^6.4.8",
-    "@storybook/addon-links": "^6.4.8",
-    "@storybook/node-logger": "^6.4.8",
+    "@storybook/addon-actions": "^6.4.13",
+    "@storybook/addon-essentials": "^6.4.13",
+    "@storybook/addon-links": "^6.4.13",
+    "@storybook/node-logger": "^6.4.13",
     "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.4.8",
+    "@storybook/react": "^6.4.13",
+    "eslint-plugin-storybook": "^0.5.5",
     "husky": "^7.0.2",
     "lint-staged": "^12.1.7",
     "prettier": "2.5.1"
