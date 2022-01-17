@@ -22,10 +22,8 @@ const defaultProps = {
 };
 
 describe("DeclarationEDatenPage default", () => {
-  let renderContainer;
-
   beforeEach(() => {
-    renderContainer = render(<DeclarationEDatenPage {...defaultProps} />);
+    render(<DeclarationEDatenPage {...defaultProps} />);
   });
 
   it("should render step title text", () => {
