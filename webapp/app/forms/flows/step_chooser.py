@@ -5,7 +5,7 @@ from flask import flash
 from werkzeug.exceptions import abort
 
 from app.config import Config
-from app.forms.session_data import get_session_data, deserialize_session_data
+from app.forms.session_data import get_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
 

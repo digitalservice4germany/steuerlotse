@@ -131,8 +131,7 @@ class MultiStepFlow:
                        **values)
 
     def _get_session_data(self, ttl: Optional[int] = None):
-        serialized_session = session.get('form_data', b"")
-        session_data = deserialize_session_data(serialized_session, ttl)
+        session_data = deserialize_session_data('form_data', ttl)
         if self.default_data():
             session_data = self.default_data()[1] | session_data  # updates session_data only with non_existent values
         return session_data
