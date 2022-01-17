@@ -85,6 +85,10 @@ class UnlockCodeSuccessProps(ComponentProps):
     vorbereitungs_hilfe_link: str
 
 
+class UnlockCodeFailureProps(ComponentProps):
+    prev_url: Optional[str]
+
+
 class RevocationProps(StepFormProps):
     pass
 

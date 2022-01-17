@@ -9,7 +9,7 @@ from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.model.components import RegistrationProps, UnlockCodeSuccessProps
+from app.model.components import RegistrationProps, UnlockCodeSuccessProps, UnlockCodeFailureProps
 from app.model.components.helpers import form_fields_dict
 
 
@@ -91,5 +91,11 @@ class UnlockCodeRequestFailureStep(DisplayStep):
             intro=_('form.unlock-code-request.failure-intro'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('basis/display_failure.html', render_info=render_info,
+        props_dict = UnlockCodeFailureProps(
+            prev_url=url_for('unlock_code_request', step='data_input'),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='UnlockCodeFailurePage',
+                               props=props_dict,
                                header_title=_('form.unlock-code-request.header-title'))
