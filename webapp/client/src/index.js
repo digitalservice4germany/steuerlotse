@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
 import LoginFailurePage from "./pages/LoginFailurePage";
+import LogoutPage from "./pages/LogoutPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import RevocationPage from "./pages/RevocationPage";
 import RevocationSuccessPage from "./pages/RevocationSuccessPage";
@@ -43,6 +44,7 @@ const allowedComponents = {
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
+  LogoutPage,
 };
 
 function mountComponent(element) {

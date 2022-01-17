@@ -20,6 +20,12 @@ const translations = {
     back: "Zurück",
     backToOverview: "Zurück zur Übersicht",
     next: "Weiter",
+    logout: {
+      button: "Abmelden",
+      title: "Sind Sie sicher, dass Sie sich abmelden möchten?",
+      intro:
+        "Ihre bisher eingetragenen Angaben werden erst an uns übermittelt, wenn Sie Ihre Steuererklärung verschicken. Ihre Steuererklärung wird daher nicht zwischengespeichert. Wenn Sie sich abmelden, kann es sein, dass Ihre Angaben bei der nächsten Anmeldung nicht mehr vorhanden sind.",
+    },
   },
   lotse: {
     fieldDeclarationIncomes: {
