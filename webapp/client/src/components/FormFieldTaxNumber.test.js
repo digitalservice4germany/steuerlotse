@@ -13,7 +13,7 @@ describe("FormFieldTaxNumber has splitType_0", () => {
       fieldId: "fooId",
       label: {
         text: "foo",
-        exampleInput: exampleInput,
+        exampleInput,
       },
       errors: [],
       values: [],
@@ -104,7 +104,7 @@ describe("FormFieldTaxNumber has splitType_1", () => {
       fieldId: "fooId",
       label: {
         text: "foo",
-        exampleInput: exampleInput,
+        exampleInput,
       },
       errors: [],
       values: [],
@@ -160,7 +160,7 @@ describe("FormFieldTaxNumber has splitType_2", () => {
       fieldId: "fooId",
       label: {
         text: "foo",
-        exampleInput: exampleInput,
+        exampleInput,
       },
       errors: [],
       values: [],
@@ -216,7 +216,7 @@ describe("FormFieldTaxNumber is not split", () => {
       fieldId: "fooId",
       label: {
         text: "foo",
-        exampleInput: exampleInput,
+        exampleInput,
       },
       errors: [],
       values: [],

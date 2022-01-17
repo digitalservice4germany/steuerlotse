@@ -21,12 +21,12 @@ describe("FormFieldRadioGroup", () => {
         { value: "B", displayName: "Terra" },
         { value: "C", displayName: "Earth" },
       ],
-      onChangeHandler: onChangeHandler,
+      onChangeHandler,
     };
     render(<FormFieldRadioGroup {...props} />);
   });
 
-  it("When label is clicked, correct input is selected ", () => {
+  it("When label is clicked, correct input is selected", () => {
     userEvent.click(screen.getByText("Vulcan"));
 
     expect(screen.getByLabelText("Vulcan").checked).toEqual(true);
@@ -127,7 +127,7 @@ describe("FormFieldRadioGroup with errors", () => {
         { value: "B", displayName: "Terra" },
         { value: "C", displayName: "Earth" },
       ],
-      onChangeHandler: onChangeHandler,
+      onChangeHandler,
     };
     render(<FormFieldRadioGroup {...props} />);
   });

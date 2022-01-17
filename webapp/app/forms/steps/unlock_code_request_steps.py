@@ -9,7 +9,7 @@ from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.model.components import RegistrationProps
+from app.model.components import RegistrationProps, UnlockCodeSuccessProps
 from app.model.components.helpers import form_fields_dict
 
 
@@ -66,11 +66,19 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
 
     def __init__(self, **kwargs):
         super(UnlockCodeRequestSuccessStep, self).__init__(
-            title=_l('form.unlock-code-request.success-title'),
-            intro=_l('form.unlock-code-request.success-intro'), **kwargs)
+            title=_('form.unlock-code-request.success-title'),
+            intro=_('form.unlock-code-request.success-intro'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('unlock_code/registration_success.html', render_info=render_info,
+        props_dict = UnlockCodeSuccessProps(
+            prev_url=url_for('unlock_code_request', step='data_input'),
+            steuer_erklaerung_link=url_for('unlock_code_activation', step='start'),
+            vorbereitungs_hilfe_link=url_for('download_preparation'),
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='UnlockCodeSuccessPage',
+                               props=props_dict,
                                header_title=_('form.unlock-code-request.header-title'))
 
 

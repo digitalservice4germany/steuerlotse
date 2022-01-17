@@ -20,7 +20,7 @@ describe("FormFieldDropDown", () => {
         { value: "B", displayName: "Terra" },
         { value: "C", displayName: "Earth" },
       ],
-      onChangeHandler: onChangeHandler,
+      onChangeHandler,
     };
     render(<FormFieldDropDown {...props} />);
   });
