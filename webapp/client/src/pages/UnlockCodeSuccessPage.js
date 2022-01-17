@@ -6,13 +6,15 @@ import FormSuccessHeader from "../components/FormSuccessHeader";
 import DownloadLink from "../components/DownloadLink";
 
 export default function UnlockCodeSuccessPage({
-  stepHeader,
   prevUrl,
-  downloadUrl,
-  steuerErklaerungsLink,
-  vorbereitungshilfeLink,
+  steuerErklaerungLink,
+  vorbereitungsHilfeLink,
 }) {
   const { t } = useTranslation();
+  const stepHeader = {
+    title: t("register.success.next-steps.header.title"),
+    intro: t("register.success.next-steps.header.intro"),
+  };
 
   return (
     <>
@@ -36,7 +38,7 @@ export default function UnlockCodeSuccessPage({
             components={{
               // The anchors get content in the translation file
               // eslint-disable-next-line jsx-a11y/anchor-has-content
-              vorbereitungshilfeLink: <a href={vorbereitungshilfeLink} />,
+              vorbereitungsHilfeLink: <a href={vorbereitungsHilfeLink} />,
             }}
           />
         </li>
@@ -48,7 +50,7 @@ export default function UnlockCodeSuccessPage({
             components={{
               // The anchors get content in the translation file
               // eslint-disable-next-line jsx-a11y/anchor-has-content
-              steuerErklaerungsLink: <a href={steuerErklaerungsLink} />,
+              steuerErklaerungLink: <a href={steuerErklaerungLink} />,
             }}
           />
         </li>
@@ -65,20 +67,15 @@ export default function UnlockCodeSuccessPage({
       <h2 className="mt-5">{t("register.success.preparation.heading")}</h2>
       <p>{t("register.success.preparation.intro")}</p>
       <DownloadLink
-        url={downloadUrl}
-        text={t("register.success.preparation.button")}
+        url={vorbereitungsHilfeLink}
+        text={t("register.success.preparation.anchor")}
       />
     </>
   );
 }
 
 UnlockCodeSuccessPage.propTypes = {
-  stepHeader: PropTypes.exact({
-    title: PropTypes.string,
-    intro: PropTypes.string,
-  }).isRequired,
   prevUrl: PropTypes.string.isRequired,
-  downloadUrl: PropTypes.string.isRequired,
-  steuerErklaerungsLink: PropTypes.string.isRequired,
-  vorbereitungshilfeLink: PropTypes.string.isRequired,
+  steuerErklaerungLink: PropTypes.string.isRequired,
+  vorbereitungsHilfeLink: PropTypes.string.isRequired,
 };

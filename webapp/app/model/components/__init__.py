@@ -80,11 +80,9 @@ class RegistrationProps(StepFormProps):
 
 
 class UnlockCodeSuccessProps(ComponentProps):
-    step_header: StepHeaderProps
     prev_url: Optional[str]
-    download_url: str
-    steuer_erklaerungs_link: str
-    vorbereitungshilfe_link: str
+    steuer_erklaerung_link: str
+    vorbereitungs_hilfe_link: str
 
 
 class RevocationProps(StepFormProps):

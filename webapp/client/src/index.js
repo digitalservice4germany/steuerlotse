@@ -30,6 +30,7 @@ const allowedComponents = {
   LoginFailurePage,
   RevocationPage,
   RevocationSuccessPage,
+  UnlockCodeSuccessPage,
   DeclarationIncomesPage,
   TaxNumberPage,
   HasDisabilityPersonAPage,
@@ -44,7 +45,6 @@ const allowedComponents = {
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
-  UnlockCodeSuccessPage,
 };
 
 function mountComponent(element) {

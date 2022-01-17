@@ -71,21 +71,15 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
 
     def render(self, data, render_info):
         props_dict = UnlockCodeSuccessProps(
-            step_header={
-                'title': render_info.step_title,
-                'intro': render_info.step_intro
-            },
             prev_url=url_for('unlock_code_request', step='data_input'),
-            download_url=url_for('download_preparation'),
-            steuer_erklaerungs_link=url_for('unlock_code_activation', step='start'),
-            vorbereitungshilfe_link=url_for('download_preparation'),
+            steuer_erklaerung_link=url_for('unlock_code_activation', step='start'),
+            vorbereitungs_hilfe_link=url_for('download_preparation'),
         ).camelized_dict()
 
         return render_template('react_component.html',
                                component='UnlockCodeSuccessPage',
                                props=props_dict,
-                               header_title='form.unlock-code-request.header-title'
-                               )
+                               header_title=_('form.unlock-code-request.header-title'))
 
 
 class UnlockCodeRequestFailureStep(DisplayStep):

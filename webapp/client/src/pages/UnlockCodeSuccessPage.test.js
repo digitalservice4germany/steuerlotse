@@ -3,21 +3,21 @@ import { render, screen } from "@testing-library/react";
 import UnlockCodeSuccessPage from "./UnlockCodeSuccessPage";
 
 const MOCK_PROPS = {
-  stepHeader: {
-    title: "Title",
-    intro: "Intro",
-  },
   prevUrl: "/some/prev/path",
-  downloadUrl: "/some/download/path",
-  steuerErklaerungsLink: "/some/link/path",
-  vorbereitungshilfeLink: "/some/link/path",
+  steuerErklaerungLink: "/some/link/path",
+  vorbereitungsHilfeLink: "/some/link/path",
+};
+const EXPECTED_HEADER = {
+  title: "Ihre Registrierung war erfolgreich!",
+  intro:
+    "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie Ihren Brief erhalten.",
 };
 
 describe("UnlockCodeSuccessPage", () => {
   it("should render step header texts", () => {
     render(<UnlockCodeSuccessPage {...MOCK_PROPS} />);
-    expect(screen.getByText(MOCK_PROPS.stepHeader.title)).toBeInTheDocument();
-    expect(screen.getByText(MOCK_PROPS.stepHeader.intro)).toBeInTheDocument();
+    expect(screen.getByText(EXPECTED_HEADER.title)).toBeInTheDocument();
+    expect(screen.getByText(EXPECTED_HEADER.intro)).toBeInTheDocument();
   });
 
   it("should link to the previous page", () => {
@@ -32,7 +32,7 @@ describe("UnlockCodeSuccessPage", () => {
     render(<UnlockCodeSuccessPage {...MOCK_PROPS} />);
     expect(screen.getByText("Vorbereitungshilfe").closest("a")).toHaveAttribute(
       "href",
-      expect.stringContaining(MOCK_PROPS.vorbereitungshilfeLink)
+      expect.stringContaining(MOCK_PROPS.vorbereitungsHilfeLink)
     );
   });
 
@@ -40,6 +40,9 @@ describe("UnlockCodeSuccessPage", () => {
     render(<UnlockCodeSuccessPage {...MOCK_PROPS} />);
     expect(
       screen.getByText("Vorbereitungshilfe herunterladen").closest("a")
-    ).toHaveAttribute("href", expect.stringContaining(MOCK_PROPS.downloadUrl));
+    ).toHaveAttribute(
+      "href",
+      expect.stringContaining(MOCK_PROPS.vorbereitungsHilfeLink)
+    );
   });
 });
