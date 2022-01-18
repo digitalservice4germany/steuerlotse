@@ -26,7 +26,6 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
     title = _l('form.lotse.select_stmind-title')
     intro = _l('form.lotse.select_stmind-intro')
     header_title = _l('form.lotse.steuerminderungen.header-title')
-    template = 'react_component.html'
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepIban
     
