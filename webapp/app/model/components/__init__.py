@@ -101,7 +101,7 @@ class DeclarationIncomesProps(StepFormProps):
     pass
 
 class DeclarationEDatenProps(StepFormProps):
-    pass
+    prev_url: str
 
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str

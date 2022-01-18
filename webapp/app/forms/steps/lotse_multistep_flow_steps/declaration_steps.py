@@ -83,6 +83,7 @@ class StepDeclarationEdaten(FormStep):
                 'csrf_token': generate_csrf(),
                 'show_overview_button': bool(render_info.overview_url),
             },
+            prev_url=render_info.prev_url,
             fields=form_fields_dict(render_info.form),
         ).camelized_dict()
 

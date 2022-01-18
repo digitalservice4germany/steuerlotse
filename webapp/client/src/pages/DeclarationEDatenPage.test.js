@@ -19,6 +19,7 @@ const defaultProps = {
       errors: [],
     },
   },
+  prevUrl: "/some/prev/path",
 };
 
 describe("DeclarationEDatenPage default", () => {
@@ -28,6 +29,10 @@ describe("DeclarationEDatenPage default", () => {
 
   it("should render step title text", () => {
     expect(screen.getByText("Title")).toBeInTheDocument();
+  });
+
+  it("should render back button", () => {
+    expect(screen.getByText("Zurück")).toBeInTheDocument();
   });
 
   it("should render checked value false", () => {
@@ -48,6 +53,7 @@ const checkedProps = {
       errors: [],
     },
   },
+  prevUrl: "/some/prev/path",
 };
 
 describe("With checked checkbox", () => {
@@ -73,6 +79,7 @@ const errorProps = {
       errors: ["Error1"],
     },
   },
+  prevUrl: "/some/prev/path",
 };
 
 describe("With error value", () => {

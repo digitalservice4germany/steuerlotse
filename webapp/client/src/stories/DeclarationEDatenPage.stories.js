@@ -26,4 +26,5 @@ Default.args = {
       errors: [],
     },
   },
+  prevUrl: "/some/prev/path",
 };

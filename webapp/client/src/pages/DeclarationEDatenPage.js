@@ -7,12 +7,17 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { checkboxPropType } from "../lib/propTypes";
 
-export default function DeclarationEDatenPage({ stepHeader, form, fields }) {
+export default function DeclarationEDatenPage({
+  stepHeader,
+  form,
+  fields,
+  prevUrl,
+}) {
   const { t } = useTranslation();
 
   return (
     <>
-      <StepHeaderButtons />
+      <StepHeaderButtons url={prevUrl} />
       <FormHeader
         title={stepHeader.title}
         intro={[
@@ -48,4 +53,5 @@ DeclarationEDatenPage.propTypes = {
   fields: PropTypes.exact({
     declarationEdaten: checkboxPropType,
   }).isRequired,
+  prevUrl: PropTypes.string.isRequired,
 };
