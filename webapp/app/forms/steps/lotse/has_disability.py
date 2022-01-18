@@ -1,4 +1,3 @@
-from flask import render_template
 from flask_babel import lazy_gettext as _l, _, ngettext
 from flask_wtf.csrf import generate_csrf
 from pydantic import validator
@@ -14,6 +13,7 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.forms.steps.step import SectionLink
 from app.model.components import HasDisabilityPersonBProps, HasDisabilityPersonAProps
 from app.model.components.helpers import form_fields_dict
+from app.templates.react_template import render_react_template
 
 
 class StepDisabilityPersonB(LotseFormSteuerlotseStep):
@@ -46,8 +46,7 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='HasDisabilityPersonBPage',
+        return render_react_template(component='HasDisabilityPersonBPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
@@ -83,8 +82,7 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='HasDisabilityPersonAPage',
+        return render_react_template(component='HasDisabilityPersonAPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))

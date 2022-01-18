@@ -1,4 +1,4 @@
-from flask import render_template, url_for
+from flask import url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
@@ -11,9 +11,9 @@ from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
 from app.model.components import RevocationProps, RevocationSuccessProps, RevocationFailureProps
 from app.model.components.helpers import form_fields_dict
+from app.templates.react_template import render_react_template
 
 HEADER_TITLE = 'form.unlock-code-revocation.header-title'
-REACT_COMPONENT = 'react_component.html'
 
 
 class UnlockCodeRevocationInputStep(FormStep):
@@ -48,8 +48,7 @@ class UnlockCodeRevocationInputStep(FormStep):
             fields=form_fields_dict(render_info.form),
         ).camelized_dict()
 
-        return render_template(REACT_COMPONENT,
-                               component='RevocationPage',
+        return render_react_template(component='RevocationPage',
                                props=props_dict,
                                form=render_info.form,
                                header_title=_(HEADER_TITLE))
@@ -73,8 +72,7 @@ class UnlockCodeRevocationSuccessStep(DisplayStep):
             next_url=url_for('unlock_code_request', step='data_input')
         ).camelized_dict()
 
-        return render_template(REACT_COMPONENT,
-                               component='RevocationSuccessPage',
+        return render_react_template(component='RevocationSuccessPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=render_info.form,
@@ -94,7 +92,6 @@ class UnlockCodeRevocationFailureStep(DisplayStep):
             prev_url=url_for('unlock_code_revocation', step='data_input')
         ).camelized_dict()
 
-        return render_template(REACT_COMPONENT,
-                               component='RevocationFailurePage',
+        return render_react_template(component='RevocationFailurePage',
                                props=props_dict,
                                header_title=_(HEADER_TITLE))

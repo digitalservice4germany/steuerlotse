@@ -18,6 +18,7 @@ from app.forms.validations.validators import IntegerLength, EURO_FIELD_MAX_LENGT
 from app.model.components import SelectStMindProps
 from app.model.components.helpers import form_fields_dict
 from app.model.form_data import FamilienstandModel, JointTaxesModel
+from app.templates.react_template import render_react_template
 
 
 class StepSelectStmind(LotseFormSteuerlotseStep):
@@ -65,8 +66,7 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='StmindSelectionPage',
+        return render_react_template(component='StmindSelectionPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=self.render_info.form,

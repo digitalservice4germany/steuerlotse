@@ -1,6 +1,5 @@
 from typing import Optional
 
-from flask import render_template
 from flask_wtf.csrf import generate_csrf
 from flask_babel import lazy_gettext as _l, _, ngettext
 from pydantic import BaseModel, validator
@@ -18,6 +17,7 @@ from app.forms.steps.step import SectionLink
 from app.forms.validations.validators import ValidDisabilityDegree
 from app.model.components import MerkzeichenProps
 from app.model.components.helpers import form_fields_dict
+from app.templates.react_template import render_react_template
 
 
 class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
@@ -102,8 +102,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url,
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='MerkzeichenPersonAPage',
+        return render_react_template(component='MerkzeichenPersonAPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
@@ -175,8 +174,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url,
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='MerkzeichenPersonBPage',
+        return render_react_template(component='MerkzeichenPersonBPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
