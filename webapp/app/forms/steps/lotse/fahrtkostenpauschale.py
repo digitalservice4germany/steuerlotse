@@ -1,4 +1,3 @@
-from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
 from wtforms.validators import InputRequired, ValidationError
@@ -17,6 +16,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import SectionLink
 from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.model.disability_data import DisabilityModel
+from app.templates.react_template import render_react_template
 
 
 def calculate_fahrtkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
@@ -129,8 +129,7 @@ class StepFahrtkostenpauschalePersonA(StepFahrtkostenpauschale):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='FahrtkostenpauschalePersonAPage',
+        return render_react_template(component='FahrtkostenpauschalePersonAPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
@@ -181,8 +180,7 @@ class StepFahrtkostenpauschalePersonB(StepFahrtkostenpauschale):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='FahrtkostenpauschalePersonBPage',
+        return render_react_template(component='FahrtkostenpauschalePersonBPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))

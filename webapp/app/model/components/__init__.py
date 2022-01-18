@@ -97,11 +97,17 @@ class RevocationSuccessProps(StepDisplayProps):
     pass
 
 
+class RevocationFailureProps(ComponentProps):
+    prev_url: Optional[str]
+
+
 class DeclarationIncomesProps(StepFormProps):
     pass
 
+
 class DeclarationEDatenProps(StepFormProps):
     prev_url: str
+
 
 class ConfirmationProps(StepFormProps):
     terms_of_service_link: str

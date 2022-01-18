@@ -299,6 +299,15 @@ const translations = {
       },
     },
   },
+  revocation: {
+    failure: {
+      header: {
+        title: "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
+        intro:
+          "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun.",
+      },
+    },
+  },
   fields: {
     idnr: {
       labelText: "Steuer-Identifikationsnummer",

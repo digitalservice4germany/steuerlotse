@@ -1,5 +1,5 @@
 from app.model.components.helpers import form_fields_dict
-from flask import render_template, url_for
+from flask import url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
@@ -10,6 +10,7 @@ from app.forms.fields import UnlockCodeField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validations.validators import ValidIdNr, ValidUnlockCode
 from app.model.components import LoginProps, LoginFailureProps
+from app.templates.react_template import render_react_template
 
 
 class UnlockCodeActivationInputStep(FormStep):
@@ -41,8 +42,7 @@ class UnlockCodeActivationInputStep(FormStep):
             fields=form_fields_dict(render_info.form)
         )
 
-        return render_template(
-            'react_component.html',
+        return render_react_template(
             component='LoginPage',
             props=props_model.camelized_dict(),
             # TODO: These are still required by base.html to set the page title.
@@ -68,8 +68,7 @@ class UnlockCodeActivationFailureStep(DisplayStep):
             revocation_link=url_for('unlock_code_revocation', step='start'),
         )
 
-        return render_template(
-            'react_component.html',
+        return render_react_template(
             component='LoginFailurePage',
             props=props_model.camelized_dict(),
             header_title=_('form.unlock-code-activation.header-title')

@@ -11,7 +11,7 @@ from flask_babel import lazy_gettext as _l
 
 from app.model.components import ConfirmationProps
 from app.model.components.helpers import form_fields_dict
-
+from app.templates.react_template import render_react_template
 
 class StepConfirmation(FormStep):
     name = 'confirmation'
@@ -45,8 +45,7 @@ class StepConfirmation(FormStep):
             prev_url=render_info.prev_url,
         ).camelized_dict()
 
-        return render_template('react_component.html',
-            component='ConfirmationPage',
+        return render_react_template(component='ConfirmationPage',
             props=props_dict,
             # TODO: These are still required by base.html to set the page title.
             form=render_info.form,

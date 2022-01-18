@@ -11,6 +11,7 @@ from flask_babel import lazy_gettext as _l
 
 from app.model.components import DeclarationIncomesProps, DeclarationEDatenProps
 from app.model.components.helpers import form_fields_dict
+from app.templates.react_template import render_react_template
 
 
 class StepDeclarationIncomes(FormStep):
@@ -46,8 +47,7 @@ class StepDeclarationIncomes(FormStep):
             fields=form_fields_dict(render_info.form),
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='DeclarationIncomesPage',
+        return render_react_template(component='DeclarationIncomesPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=render_info.form,
@@ -87,8 +87,7 @@ class StepDeclarationEdaten(FormStep):
             fields=form_fields_dict(render_info.form),
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='DeclarationEDatenPage',
+        return render_react_template(component='DeclarationEDatenPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=render_info.form,

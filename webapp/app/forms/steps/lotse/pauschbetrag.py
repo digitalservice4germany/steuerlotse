@@ -1,4 +1,3 @@
-from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
 from wtforms.validators import InputRequired, ValidationError
@@ -16,6 +15,7 @@ from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkze
 from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 from app.model.disability_data import DisabilityModel
+from app.templates.react_template import render_react_template
 
 
 def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merkzeichen_bl=False, has_merkzeichen_tbl=False, has_merkzeichen_h=False):
@@ -139,8 +139,7 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='PauschbetragPersonAPage',
+        return render_react_template(component='PauschbetragPersonAPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
@@ -201,8 +200,7 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='PauschbetragPersonBPage',
+        return render_react_template(component='PauschbetragPersonBPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))

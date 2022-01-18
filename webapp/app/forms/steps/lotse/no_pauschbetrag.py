@@ -1,4 +1,3 @@
-from flask import render_template
 from flask_babel import lazy_gettext as _l, ngettext, _
 from pydantic import root_validator
 from wtforms.validators import ValidationError
@@ -11,6 +10,7 @@ from app.forms.steps.lotse.utils import get_number_of_users
 from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
 from app.forms.steps.lotse.pauschbetrag import DisabilityModel, calculate_pauschbetrag
 from app.model.components import NoPauschbetragProps
+from app.templates.react_template import render_react_template
 
 
 class HasNoPauschbetragOrFahrtkostenpauschbetragClaimPersonAPrecondition(DisabilityModel):
@@ -96,8 +96,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
             next_url=self.render_info.next_url,
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='NoPauschbetragPage',
+        return render_react_template(component='NoPauschbetragPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
@@ -120,8 +119,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
             next_url=self.render_info.next_url,
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='NoPauschbetragPage',
+        return render_react_template(component='NoPauschbetragPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))
