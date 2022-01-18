@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { configure } from "@testing-library/dom";
 import DeclarationEDatenPage from "./DeclarationEDatenPage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
-import { configure } from "@testing-library/dom";
 
 configure({ testIdAttribute: "id" });
 

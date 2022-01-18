@@ -25,6 +25,7 @@ import NoPauschbetragPage from "./pages/NoPauschbetragPage";
 import DeclarationEDatenPage from "./pages/DeclarationEDatenPage";
 import UnlockCodeSuccessPage from "./pages/UnlockCodeSuccessPage";
 import UnlockCodeFailurePage from "./pages/UnlockCodeFailurePage";
+import RevocationFailurePage from "./pages/RevocationFailurePage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -32,6 +33,7 @@ const allowedComponents = {
   LoginFailurePage,
   RevocationPage,
   RevocationSuccessPage,
+  RevocationFailurePage,
   UnlockCodeSuccessPage,
   UnlockCodeFailurePage,
   DeclarationIncomesPage,

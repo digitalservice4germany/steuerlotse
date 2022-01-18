@@ -9,19 +9,23 @@ from app.forms.fields import LegacySteuerlotseDateField, LegacyIdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.model.components import RevocationProps, RevocationSuccessProps
+from app.model.components import RevocationProps, RevocationSuccessProps, RevocationFailureProps
 from app.model.components.helpers import form_fields_dict
+
+HEADER_TITLE = 'form.unlock-code-revocation.header-title'
+REACT_COMPONENT = 'react_component.html'
 
 
 class UnlockCodeRevocationInputStep(FormStep):
     name = 'data_input'
 
     class Form(SteuerlotseBaseForm):
-        idnr = LegacyIdNrField(_l('unlock-code-revocation.idnr'), [InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
-        dob = LegacySteuerlotseDateField(label=_l('unlock-code-revocation.dob'), 
+        idnr = LegacyIdNrField(_l('unlock-code-revocation.idnr'),
+                               [InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()])
+        dob = LegacySteuerlotseDateField(label=_l('unlock-code-revocation.dob'),
                                          prevent_validation_error=True,
-                                         validators=[InputRequired(message=_l('validate.day-of-birth-missing')), 
-                                         ValidDateOfBirth()])
+                                         validators=[InputRequired(message=_l('validate.day-of-birth-missing')),
+                                                     ValidDateOfBirth()])
 
     def __init__(self, **kwargs):
         super(UnlockCodeRevocationInputStep, self).__init__(
@@ -44,11 +48,11 @@ class UnlockCodeRevocationInputStep(FormStep):
             fields=form_fields_dict(render_info.form),
         ).camelized_dict()
 
-        return render_template('react_component.html',
+        return render_template(REACT_COMPONENT,
                                component='RevocationPage',
                                props=props_dict,
                                form=render_info.form,
-                               header_title=_('form.unlock-code-revocation.header-title'))
+                               header_title=_(HEADER_TITLE))
 
 
 class UnlockCodeRevocationSuccessStep(DisplayStep):
@@ -69,12 +73,12 @@ class UnlockCodeRevocationSuccessStep(DisplayStep):
             next_url=url_for('unlock_code_request', step='data_input')
         ).camelized_dict()
 
-        return render_template('react_component.html',
+        return render_template(REACT_COMPONENT,
                                component='RevocationSuccessPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=render_info.form,
-                               header_title=_('form.unlock-code-revocation.header-title'))
+                               header_title=_(HEADER_TITLE))
 
 
 class UnlockCodeRevocationFailureStep(DisplayStep):
@@ -86,5 +90,11 @@ class UnlockCodeRevocationFailureStep(DisplayStep):
             intro=_('form.unlock-code-revocation.failure-intro'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('basis/display_failure.html', render_info=render_info,
-                               header_title=_('form.unlock-code-revocation.header-title'))
+        props_dict = RevocationFailureProps(
+            prev_url=url_for('unlock_code_revocation', step='data_input')
+        ).camelized_dict()
+
+        return render_template(REACT_COMPONENT,
+                               component='RevocationFailurePage',
+                               props=props_dict,
+                               header_title=_(HEADER_TITLE))
