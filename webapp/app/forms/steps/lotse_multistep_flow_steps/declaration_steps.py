@@ -9,7 +9,7 @@ from app.forms.fields import ConfirmationField
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
-from app.model.components import DeclarationIncomesProps
+from app.model.components import DeclarationIncomesProps, DeclarationEDatenProps
 from app.model.components.helpers import form_fields_dict
 
 
@@ -60,21 +60,38 @@ class StepDeclarationEdaten(FormStep):
     label = _l('form.lotse.field_declaration_edaten.label')
     section_link = SectionLink('mandatory_data', StepDeclarationIncomes.name, _l('form.lotse.mandatory_data.label'))
 
+    def __init__(self, **kwargs):
+        super(StepDeclarationEdaten, self).__init__(
+            title=_('form.lotse.declaration-edaten-title'),
+            intro=_('form.lotse.declaration-edaten-intro'),
+            form=self.Form,
+            **kwargs)
+        
     class Form(SteuerlotseBaseForm):
         declaration_edaten = ConfirmationField(
             label=_l('form.lotse.field_declaration_edaten'),
             validators=[InputRequired(message=_l('form.lotse.declaration_edaten.required'))],
-            render_kw={'data_label': _l('form.lotse.field_declaration_edaten.data_label')})
+            render_kw={'data_label': _l('form.lotse.field_declaration_edaten.data_label')})        
+        
+    def render(self, data, render_info):
+        props_dict = DeclarationEDatenProps(
+            step_header={
+                'title': _('form.lotse.declaration-edaten-title')
+            },
+            form={
+                'action': render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(render_info.overview_url),
+            },
+            fields=form_fields_dict(render_info.form),
+        ).camelized_dict()
 
-    def __init__(self, **kwargs):
-        super(StepDeclarationEdaten, self).__init__(
-            title=_('form.lotse.declaration-edaten-title'),
-            intro=_l('form.lotse.declaration-edaten-intro'),
-            form=self.Form,
-            header_title=_('form.lotse.header-title'),
-            template='basis/form_standard_with_list.html',
-            **kwargs,
-        )
+        return render_template('react_component.html',
+                               component='DeclarationEDatenPage',
+                               props=props_dict,
+                               # TODO: These are still required by base.html to set the page title.
+                               form=render_info.form,
+                               header_title=_('form.lotse.header-title'))
 
 
 class StepSessionNote(DisplayStep):

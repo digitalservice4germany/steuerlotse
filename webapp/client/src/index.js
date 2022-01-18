@@ -22,6 +22,7 @@ import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 import FahrtkostenpauschalePersonAPage from "./pages/FahrtkostenpauschalePersonAPage";
 import FahrtkostenpauschalePersonBPage from "./pages/FahrtkostenpauschalePersonBPage";
 import NoPauschbetragPage from "./pages/NoPauschbetragPage";
+import DeclarationEDatenPage from "./pages/DeclarationEDatenPage";
 import UnlockCodeSuccessPage from "./pages/UnlockCodeSuccessPage";
 
 const allowedComponents = {
@@ -32,6 +33,7 @@ const allowedComponents = {
   RevocationSuccessPage,
   UnlockCodeSuccessPage,
   DeclarationIncomesPage,
+  DeclarationEDatenPage,
   TaxNumberPage,
   HasDisabilityPersonAPage,
   MerkzeichenPersonAPage,
