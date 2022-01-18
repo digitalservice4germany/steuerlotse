@@ -42,8 +42,8 @@ class EstEricMapping(BaseModel):
     person_a_pauschbetrag_disability_degree: Optional[int]
     person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad: Optional[bool]
     person_a_pauschbetrag_has_merkzeichen_g_ag: Optional[bool]
-    person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad: Optional[bool]
-    person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80: Optional[bool]
+    person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad: Optional[bool]
+    person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80: Optional[bool]
 
     person_b_same_address: Optional[bool]
     person_b_idnr: Optional[str]
@@ -61,8 +61,8 @@ class EstEricMapping(BaseModel):
     person_b_pauschbetrag_disability_degree: Optional[int]
     person_b_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad: Optional[bool]
     person_b_pauschbetrag_has_merkzeichen_g_ag: Optional[bool]
-    person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad: Optional[bool]
-    person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80: Optional[bool]
+    person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad: Optional[bool]
+    person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80: Optional[bool]
 
     stmind_haushaltsnahe_entries: Optional[List[str]]
     stmind_haushaltsnahe_summe: Optional[Decimal]
@@ -123,8 +123,8 @@ class EstEricMapping(BaseModel):
         return values
 
     @root_validator(pre=True)
-    def set_person_a_fahrkostenpauschale(cls, values):
-        merkzeichen_for_higher_fahrkostenpauschale = [
+    def set_person_a_fahrtkostenpauschale(cls, values):
+        merkzeichen_for_higher_fahrtkostenpauschale = [
             values.get('person_a_has_pflegegrad'),
             values.get('person_a_has_merkzeichen_bl'),
             values.get('person_a_has_merkzeichen_tbl'),
@@ -132,11 +132,11 @@ class EstEricMapping(BaseModel):
             values.get('person_a_has_merkzeichen_h'),
             values.get('person_a_has_merkzeichen_ag')
         ]
-        if values.get('person_a_requests_fahrkostenpauschale'):
-            if any(merkzeichen_for_higher_fahrkostenpauschale):
-                values['person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad'] = True
+        if values.get('person_a_requests_fahrtkostenpauschale'):
+            if any(merkzeichen_for_higher_fahrtkostenpauschale):
+                values['person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad'] = True
             elif values.get('person_a_disability_degree') >= 80 or (values.get('person_a_has_merkzeichen_g') and values.get('person_a_disability_degree') >= 70):
-                values['person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80'] = True
+                values['person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80'] = True
         return values
 
     @root_validator(pre=True)
@@ -162,8 +162,8 @@ class EstEricMapping(BaseModel):
         return values
 
     @root_validator(pre=True)
-    def set_person_b_fahrkostenpauschale(cls, values):
-        merkzeichen_for_higher_fahrkostenpauschale = [
+    def set_person_b_fahrtkostenpauschale(cls, values):
+        merkzeichen_for_higher_fahrtkostenpauschale = [
             values.get('person_b_has_pflegegrad'),
             values.get('person_b_has_merkzeichen_bl'),
             values.get('person_b_has_merkzeichen_tbl'),
@@ -171,11 +171,11 @@ class EstEricMapping(BaseModel):
             values.get('person_b_has_merkzeichen_h'),
             values.get('person_b_has_merkzeichen_ag')
         ]
-        if values.get('person_b_requests_fahrkostenpauschale'):
-            if any(merkzeichen_for_higher_fahrkostenpauschale):
-                values['person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad'] = True
+        if values.get('person_b_requests_fahrtkostenpauschale'):
+            if any(merkzeichen_for_higher_fahrtkostenpauschale):
+                values['person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad'] = True
             elif values.get('person_b_disability_degree') >= 80 or (values.get('person_b_has_merkzeichen_g') and values.get('person_b_disability_degree') >= 70):
-                values['person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80'] = True
+                values['person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80'] = True
         return values
 
     @validator('person_a_dob', 'person_b_dob', 'familienstand_date', pre=True)

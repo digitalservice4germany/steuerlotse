@@ -44,206 +44,206 @@ def standard_est_input_data():
         )
 
 
-class TestEstDataPersonAFahrkostenPauschale:
+class TestEstDataPersonAFahrtkostenPauschale:
 
-    def test_if_person_a_has_pflegegrad_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_pflegegrad_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_pflegegrad = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_pflegegrad_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_pflegegrad_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_pflegegrad = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_bl_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_bl_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_bl = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_bl_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_bl_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_bl = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_tbl_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_tbl_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_tbl = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_tbl_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_tbl_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_tbl = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_h_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_h_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_h = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_h_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_h_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_h = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_ag_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_ag_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_ag = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_ag_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_ag_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_a_has_merkzeichen_ag = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_a_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_g_and_disability_degree_70_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_g_and_disability_degree_70_and_requests_fahrtkostenpauschale_then_set_lower_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 70
         standard_est_input_data.person_a_has_merkzeichen_g = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_a_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
 
-    def test_if_person_a_has_merkzeichen_g_and_disability_degree_70_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_g_and_disability_degree_70_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 70
         standard_est_input_data.person_a_has_merkzeichen_g = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         standard_est_input_data.person_a_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_a_has_merkzeichen_g_and_disability_degree_below_70_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_a_has_merkzeichen_g_and_disability_degree_below_70_and_requests_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 65
         standard_est_input_data.person_a_has_merkzeichen_g = True
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_a_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_requests_fahrtkostenpauschale_then_set_lower_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 80
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_a_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
 
-    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 80
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = False
 
         standard_est_input_data.person_a_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_a_has_no_merkzeichen_and_disability_degree_below_80_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_a_has_no_merkzeichen_and_disability_degree_below_80_and_requests_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 75
-        standard_est_input_data.person_a_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_a_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_a_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_a_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_a_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
 
 class TestEstDataPersonAPauschbetrag:
@@ -359,206 +359,206 @@ class TestEstDataPersonAPauschbetrag:
         assert resulting_input_data.person_a_pauschbetrag_has_merkzeichen_bl_tbl_h_pflegegrad is None
 
 
-class TestEstDataPersonBFahrkostenPauschale:
+class TestEstDataPersonBFahrtkostenPauschale:
 
-    def test_if_person_b_has_pflegegrad_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_pflegegrad_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_pflegegrad = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_pflegegrad_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_pflegegrad_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_pflegegrad = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_bl_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_bl_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_bl = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_bl_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_bl_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_bl = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_tbl_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_tbl_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_tbl = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_tbl_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_tbl_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_tbl = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_h_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_h_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_h = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_h_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_h_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_h = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_ag_and_requests_fahrkostenpauschale_then_set_higher_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_ag_and_requests_fahrtkostenpauschale_then_set_higher_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_ag = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is True
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_ag_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_ag_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale_for_all_disability_degrees(self, standard_est_input_data):
         disability_degrees = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         standard_est_input_data.person_b_has_merkzeichen_ag = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         for disability_degree in disability_degrees:
             standard_est_input_data.person_b_disability_degree = disability_degree
 
             resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
-            assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+            assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_g_and_disability_degree_70_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_g_and_disability_degree_70_and_requests_fahrtkostenpauschale_then_set_lower_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 70
         standard_est_input_data.person_b_has_merkzeichen_g = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
 
-    def test_if_person_b_has_merkzeichen_g_and_disability_degree_70_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_g_and_disability_degree_70_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 70
         standard_est_input_data.person_b_has_merkzeichen_g = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_person_b_has_merkzeichen_g_and_disability_degree_below_70_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_person_b_has_merkzeichen_g_and_disability_degree_below_70_and_requests_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 65
         standard_est_input_data.person_b_has_merkzeichen_g = True
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_requests_fahrkostenpauschale_then_set_lower_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_requests_fahrtkostenpauschale_then_set_lower_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 80
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is True
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_bl_tbl_h_ag_pflegegrad is None
 
-    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_does_not_want_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_a_has_no_merkzeichen_and_disability_degree_80_and_does_not_want_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 80
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = False
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = False
 
         standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
-    def test_if_a_has_no_merkzeichen_and_disability_degree_below_80_and_requests_fahrkostenpauschale_then_set_no_fahrkostenpauschale(self, standard_est_input_data):
+    def test_if_a_has_no_merkzeichen_and_disability_degree_below_80_and_requests_fahrtkostenpauschale_then_set_no_fahrtkostenpauschale(self, standard_est_input_data):
         disability_degree = 75
-        standard_est_input_data.person_b_requests_fahrkostenpauschale = True
+        standard_est_input_data.person_b_requests_fahrtkostenpauschale = True
 
         standard_est_input_data.person_b_disability_degree = disability_degree
 
         resulting_input_data = EstEricMapping.parse_obj(standard_est_input_data)
 
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
-        assert resulting_input_data.person_b_fahrkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
+        assert resulting_input_data.person_b_fahrtkostenpauschale_has_merkzeichen_g_and_degree_70_degree_80 is None
 
 
 class TestEstDataPersonBPauschbetrag:

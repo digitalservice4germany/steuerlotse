@@ -15,7 +15,7 @@ describe("FormFieldYesNo", () => {
         text: "foo",
       },
       errors: [],
-      onChangeHandler: onChangeHandler,
+      onChangeHandler,
     };
     render(<FormFieldYesNo {...props} />);
   });

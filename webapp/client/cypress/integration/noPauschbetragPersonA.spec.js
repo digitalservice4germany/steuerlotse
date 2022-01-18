@@ -46,7 +46,7 @@ describe("NoPauschbetragPage for person A", () => {
   });
 
   context("with person a has pauschbetrag claim", () => {
-    // There is no possible combination to only have a fahrkostenpauschbetrag claim.
+    // There is no possible combination to only have a fahrtkostenpauschbetrag claim.
     beforeEach(() => {
       cy.request("POST", "/testing/set_data/form_data", {
         person_a_has_disability: "yes",
@@ -62,7 +62,7 @@ describe("NoPauschbetragPage for person A", () => {
   });
 
   context(
-    "with person a has pauschbetrag and fahrkostenpauschbetrag claim",
+    "with person a has pauschbetrag and fahrtkostenpauschbetrag claim",
     () => {
       beforeEach(() => {
         cy.request("POST", "/testing/set_data/form_data", {
@@ -81,7 +81,7 @@ describe("NoPauschbetragPage for person A", () => {
   );
 
   context(
-    "with person a has no pauschbetrag or fahrkostenpauschbetrag claim",
+    "with person a has no pauschbetrag or fahrtkostenpauschbetrag claim",
     () => {
       beforeEach(() => {
         cy.request("POST", "/testing/set_data/form_data", {

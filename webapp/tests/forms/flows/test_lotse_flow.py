@@ -34,7 +34,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonB, StepTelephoneNumber, StepPersonA
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
-from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonA, StepFahrkostenpauschalePersonB
+from app.forms.steps.lotse.fahrtkostenpauschale import StepFahrtkostenpauschalePersonA, StepFahrtkostenpauschalePersonB
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.forms.steps.step import Step, Section
 from app.model.form_data import ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, \
@@ -173,12 +173,12 @@ class TestLotseInit(unittest.TestCase):
             StepDisabilityPersonA,
             StepMerkzeichenPersonA,
             StepPauschbetragPersonA,
-            StepFahrkostenpauschalePersonA,
+            StepFahrtkostenpauschalePersonA,
             StepPersonB,
             StepDisabilityPersonB,
             StepMerkzeichenPersonB,
             StepPauschbetragPersonB,
-            StepFahrkostenpauschalePersonB,
+            StepFahrtkostenpauschalePersonB,
             StepTelephoneNumber,
             StepIban,
 
@@ -1257,7 +1257,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
-            'person_a_requests_fahrkostenpauschale': 'yes',
+            'person_a_requests_fahrtkostenpauschale': 'yes',
 
             'is_user_account_holder': 'yes',
             'iban': 'DE35133713370000012345',}
@@ -1288,7 +1288,7 @@ class TestLotseValidateInput(unittest.TestCase):
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_g': True,
             'person_a_requests_pauschbetrag': 'yes',
-            'person_a_requests_fahrkostenpauschale': 'yes',
+            'person_a_requests_fahrtkostenpauschale': 'yes',
 
             'person_b_dob': datetime.date(1951, 2, 25),
             'person_b_first_name': 'Gerta',

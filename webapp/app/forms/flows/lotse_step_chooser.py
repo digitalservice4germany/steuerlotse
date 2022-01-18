@@ -5,7 +5,7 @@ from flask_babel import _
 
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.lotse.confirmation import StepSummary
-from app.forms.steps.lotse.fahrkostenpauschale import StepFahrkostenpauschalePersonB, StepFahrkostenpauschalePersonA
+from app.forms.steps.lotse.fahrtkostenpauschale import StepFahrtkostenpauschalePersonB, StepFahrtkostenpauschalePersonA
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
     StepGemeinsamerHaushalt, StepReligion, StepSpenden, StepSelectStmind
@@ -50,7 +50,7 @@ class LotseStepChooser(StepChooser):
         'person_a_has_merkzeichen_bl': True,
         'person_a_has_merkzeichen_g': True,
         'person_a_requests_pauschbetrag': 'yes',
-        'person_a_requests_fahrkostenpauschale': 'yes',
+        'person_a_requests_fahrtkostenpauschale': 'yes',
 
         'person_b_idnr': '02293417683',
         'person_b_dob': datetime.date(1951, 2, 25),
@@ -114,13 +114,13 @@ class LotseStepChooser(StepChooser):
                 StepMerkzeichenPersonA,
                 StepNoPauschbetragPersonA,
                 StepPauschbetragPersonA,
-                StepFahrkostenpauschalePersonA,
+                StepFahrtkostenpauschalePersonA,
                 StepPersonB,
                 StepDisabilityPersonB,
                 StepMerkzeichenPersonB,
                 StepNoPauschbetragPersonB,
                 StepPauschbetragPersonB,
-                StepFahrkostenpauschalePersonB,
+                StepFahrtkostenpauschalePersonB,
                 StepTelephoneNumber,
                 StepSelectStmind,
                 StepVorsorge,

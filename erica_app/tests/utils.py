@@ -76,7 +76,7 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=False,
             person_a_requests_pauschbetrag=False,
-            person_a_requests_fahrkostenpauschale=False,
+            person_a_requests_fahrtkostenpauschale=False,
             telephone_number='01715151',
 
             person_b_idnr='02293417683',
@@ -92,7 +92,7 @@ def create_form_data(correct=True, with_tax_number=True):
             person_b_has_merkzeichen_ag=False,
             person_b_has_merkzeichen_g=False,
             person_b_requests_pauschbetrag=False,
-            person_b_requests_fahrkostenpauschale=False,
+            person_b_requests_fahrtkostenpauschale=False,
 
             iban='DE35133713370000012345',
             account_holder='person_a',
@@ -133,7 +133,7 @@ def create_form_data(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=True,
             person_a_requests_pauschbetrag=True,
-            person_a_requests_fahrkostenpauschale=False,
+            person_a_requests_fahrtkostenpauschale=False,
             telephone_number='01715151',
         )
 
@@ -165,7 +165,7 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=False,
             person_a_requests_pauschbetrag=False,
-            person_a_requests_fahrkostenpauschale=False,
+            person_a_requests_fahrtkostenpauschale=False,
             telephone_number='01715151',
 
             iban='DE35133713370000012345',
@@ -198,7 +198,7 @@ def create_form_data_single(correct=True, with_tax_number=True):
             person_a_has_merkzeichen_ag=False,
             person_a_has_merkzeichen_g=False,
             person_a_requests_pauschbetrag=False,
-            person_a_requests_fahrkostenpauschale=False,
+            person_a_requests_fahrtkostenpauschale=False,
             telephone_number='01715151',
 
             iban='DE35133713370000012345',

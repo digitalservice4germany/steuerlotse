@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FahrkostenpauschalePage from "./FahrkostenpauschalePage";
+import FahrtkostenpauschalePage from "./FahrtkostenpauschalePage";
 import { Default as StepFormDefault } from "../stories/StepForm.stories";
 
 const props = {
@@ -12,18 +12,18 @@ const props = {
     ...StepFormDefault.args,
   },
   fields: {
-    requestsFahrkostenpauschale: {
+    requestsFahrtkostenpauschale: {
       errors: [],
-      name: "requests_fahrkostenpauschale",
+      name: "requests_fahrtkostenpauschale",
     },
   },
-  fahrkostenpauschaleAmount: "900",
+  fahrtkostenpauschaleAmount: "900",
   prevUrl: "/some/prev/path",
 };
 
-describe("FahrkostenpauschalePage default", () => {
+describe("FahrtkostenpauschalePage default", () => {
   beforeEach(() => {
-    render(<FahrkostenpauschalePage {...props} />);
+    render(<FahrtkostenpauschalePage {...props} />);
   });
 
   it("should render step title text", () => {
@@ -44,7 +44,7 @@ describe("FahrkostenpauschalePage default", () => {
     expect(screen.getByDisplayValue("no")).toBeInTheDocument();
   });
 
-  it("should render fahrkosten choice fields", () => {
+  it("should render fahrtkosten choice fields", () => {
     expect(screen.getByText("Pauschale beantragen")).toBeInTheDocument();
     expect(screen.getByText("Pauschale nicht beantragen")).toBeInTheDocument();
   });
@@ -59,10 +59,10 @@ describe("FahrkostenpauschalePage default", () => {
 
 describe("With yes preselected", () => {
   beforeEach(() => {
-    let yesProps = {
+    const yesProps = {
       ...props,
       fields: {
-        requestsFahrkostenpauschale: {
+        requestsFahrtkostenpauschale: {
           selectedValue: "yes",
           options: [
             {
@@ -75,11 +75,11 @@ describe("With yes preselected", () => {
             },
           ],
           errors: [],
-          name: "requests_fahrkostenpauschale",
+          name: "requests_fahrtkostenpauschale",
         },
       },
     };
-    render(<FahrkostenpauschalePage {...yesProps} />);
+    render(<FahrtkostenpauschalePage {...yesProps} />);
   });
   it("should render selected value yes", () => {
     expect(screen.getByDisplayValue("yes").checked).toBe(true);
@@ -89,10 +89,10 @@ describe("With yes preselected", () => {
 
 describe("With no preselected", () => {
   beforeEach(() => {
-    let noProps = {
+    const noProps = {
       ...props,
       fields: {
-        requestsFahrkostenpauschale: {
+        requestsFahrtkostenpauschale: {
           selectedValue: "no",
           options: [
             {
@@ -105,11 +105,11 @@ describe("With no preselected", () => {
             },
           ],
           errors: [],
-          name: "requests_fahrkostenpauschale",
+          name: "requests_fahrtkostenpauschale",
         },
       },
     };
-    render(<FahrkostenpauschalePage {...noProps} />);
+    render(<FahrtkostenpauschalePage {...noProps} />);
   });
   it("should render selected value no", () => {
     expect(screen.getByDisplayValue("yes").checked).toBe(false);

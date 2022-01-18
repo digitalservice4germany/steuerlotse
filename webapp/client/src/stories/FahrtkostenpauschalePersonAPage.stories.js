@@ -1,14 +1,14 @@
 import React from "react";
-import FahrkostenpauschalePersonAPage from "../pages/FahrkostenpauschalePersonAPage";
+import FahrtkostenpauschalePersonAPage from "../pages/FahrtkostenpauschalePersonAPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
-  title: "Pages/FahrkostenpauschalePersonAPage",
-  component: FahrkostenpauschalePersonAPage,
+  title: "Pages/FahrtkostenpauschalePersonAPage",
+  component: FahrtkostenpauschalePersonAPage,
 };
 
 function Template(args) {
-  return <FahrkostenpauschalePersonAPage {...args} />;
+  return <FahrtkostenpauschalePersonAPage {...args} />;
 }
 
 export const Default = Template.bind({});
@@ -20,10 +20,10 @@ Default.args = {
     ...StepFormDefault.args,
   },
   fields: {
-    personARequestsFahrkostenpauschale: {
+    personARequestsFahrtkostenpauschale: {
       errors: [],
     },
   },
-  fahrkostenpauschaleAmount: "900",
+  fahrtkostenpauschaleAmount: "900",
   prevUrl: "fooUrl",
 };

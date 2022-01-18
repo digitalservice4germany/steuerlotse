@@ -79,6 +79,12 @@ class RegistrationProps(StepFormProps):
     data_privacy_link: str
 
 
+class UnlockCodeSuccessProps(ComponentProps):
+    prev_url: Optional[str]
+    steuer_erklaerung_link: str
+    vorbereitungs_hilfe_link: str
+
+
 class RevocationProps(StepFormProps):
     pass
 
@@ -124,8 +130,8 @@ class NoPauschbetragProps(StepDisplayProps):
     overviewUrl: str
 
 
-class FahrkostenpauschaleProps(StepFormProps):
-    fahrkostenpauschale_amount: int
+class FahrtkostenpauschaleProps(StepFormProps):
+    fahrtkostenpauschale_amount: int
 
 
 class TelephoneNumberProps(StepFormProps):

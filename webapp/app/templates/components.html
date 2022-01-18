@@ -219,7 +219,9 @@
                                 <p> {{ paragraphs }}</p>
                             {% else %}
                                 {% for (content) in paragraphs %}
-                                    <p> {{ content }}</p>
+                                    {% if content is not none %}
+                                        <p> {{ content }}</p>
+                                    {% endif %}
                                 {%- endfor %}
                             {% endif %}
                             {% if list_items %}

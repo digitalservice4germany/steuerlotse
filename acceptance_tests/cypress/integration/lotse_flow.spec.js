@@ -420,7 +420,7 @@ context('Acceptance tests', () => {
                 cy.get('label[for=person_a_requests_pauschbetrag-yes').click()
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_a_requests_fahrkostenpauschale-yes').click()
+                cy.get('label[for=person_a_requests_fahrtkostenpauschale-yes').click()
                 cy.get(submitBtnSelector).click()
 
                 cy.get('#person_b_idnr_1').type(taxReturnData.personB.idnr1)
@@ -452,7 +452,7 @@ context('Acceptance tests', () => {
                 cy.get('#person_b_requests_pauschbetrag-yes').click()
                 cy.get(submitBtnSelector).click()
 
-                cy.get('label[for=person_b_requests_fahrkostenpauschale-yes').click()
+                cy.get('label[for=person_b_requests_fahrtkostenpauschale-yes').click()
                 cy.get(submitBtnSelector).click()
 
                 // no telephone number

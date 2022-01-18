@@ -8,8 +8,8 @@ from unittest.mock import patch, MagicMock
 import pytest
 from pydantic import ValidationError, MissingError
 
-from app.forms.steps.lotse.fahrkostenpauschale import HasFahrkostenpauschaleClaimPersonAPrecondition, \
-    HasFahrkostenpauschaleClaimPersonBPrecondition
+from app.forms.steps.lotse.fahrtkostenpauschale import HasFahrtkostenpauschaleClaimPersonAPrecondition, \
+    HasFahrtkostenpauschaleClaimPersonBPrecondition
 from app.forms.steps.lotse.pauschbetrag import HasPauschbetragClaimPersonAPrecondition, \
     HasPauschbetragClaimPersonBPrecondition
 from app.utils import VERANLAGUNGSJAHR
@@ -344,8 +344,8 @@ class TestMandatoryFormData(unittest.TestCase):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
                    MagicMock(return_value=None)), \
                 patch(
-                    'app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonAPrecondition.__init__',
-                    MagicMock(side_effect=ValidationError([], HasFahrkostenpauschaleClaimPersonAPrecondition))):
+                    'app.forms.steps.lotse.fahrtkostenpauschale.HasFahrtkostenpauschaleClaimPersonAPrecondition.__init__',
+                    MagicMock(side_effect=ValidationError([], HasFahrtkostenpauschaleClaimPersonAPrecondition))):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.pauschbetrag_person_a, **self.valid_steuernummer,
                                              **self.single_familienstand_data})
@@ -355,11 +355,11 @@ class TestMandatoryFormData(unittest.TestCase):
                 validation_error.exception.raw_errors[0].exc, MissingError)
             assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_pauschbetrag'
 
-    def test_if_person_a_has_fahrkostenpauschale_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+    def test_if_person_a_has_fahrtkostenpauschale_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonAPrecondition.__init__',
                    MagicMock(side_effect=ValidationError([], HasPauschbetragClaimPersonAPrecondition))), \
                 patch(
-                    'app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonAPrecondition.__init__',
+                    'app.forms.steps.lotse.fahrtkostenpauschale.HasFahrtkostenpauschaleClaimPersonAPrecondition.__init__',
                     MagicMock(return_value=None)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.pauschbetrag_person_a, **self.valid_steuernummer,
@@ -368,7 +368,7 @@ class TestMandatoryFormData(unittest.TestCase):
             assert len(validation_error.exception.raw_errors) == 1
             assert isinstance(
                 validation_error.exception.raw_errors[0].exc, MissingError)
-            assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_fahrkostenpauschale'
+            assert validation_error.exception.raw_errors[0]._loc == 'person_a_requests_fahrtkostenpauschale'
 
     def test_if_person_b_has_no_pauschbetrag_claim_then_do_not_raise_error_if_requests_pauschbetrag_is_missing(self):
         with patch('app.forms.steps.lotse.pauschbetrag.HasPauschbetragClaimPersonBPrecondition.__init__',
@@ -388,8 +388,8 @@ class TestMandatoryFormData(unittest.TestCase):
                 validation_error.exception.raw_errors[0].exc, MissingError)
             assert validation_error.exception.raw_errors[0]._loc == 'person_b_requests_pauschbetrag'
 
-    def test_if_person_b_has_fahrkostenpauschale_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
-        with patch('app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonBPrecondition.__init__',
+    def test_if_person_b_has_fahrtkostenpauschale_claim_then_raise_error_if_requests_pauschbetrag_is_missing(self):
+        with patch('app.forms.steps.lotse.fahrtkostenpauschale.HasFahrtkostenpauschaleClaimPersonBPrecondition.__init__',
                    MagicMock(return_value=None)):
             with self.assertRaises(ValidationError) as validation_error:
                 MandatoryFormData.parse_obj({**self.valid_data_person_a, **self.valid_data_person_b,
@@ -398,7 +398,7 @@ class TestMandatoryFormData(unittest.TestCase):
             assert len(validation_error.exception.raw_errors) == 1
             assert isinstance(
                 validation_error.exception.raw_errors[0].exc, MissingError)
-            assert validation_error.exception.raw_errors[0]._loc == 'person_b_requests_fahrkostenpauschale'
+            assert validation_error.exception.raw_errors[0]._loc == 'person_b_requests_fahrtkostenpauschale'
 
     def test_if_no_pflegegrad_set_and_person_a_has_disability_then_raise_missing_error(self):
         with pytest.raises(ValidationError) as validation_error:
@@ -638,7 +638,7 @@ class TestFormDataDependencies:
                            'person_a_has_merkzeichen_tbl': True,
                            'person_a_has_merkzeichen_h': True,
                            'person_a_request_pauschbetrag': 'yes',
-                           'person_a_request_fahrkostenpauschale': 'yes',
+                           'person_a_request_fahrtkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -656,7 +656,7 @@ class TestFormDataDependencies:
                            'person_a_has_merkzeichen_tbl': True,
                            'person_a_has_merkzeichen_h': True,
                            'person_a_requests_pauschbetrag': 'yes',
-                           'person_a_requests_fahrkostenpauschale': 'yes',
+                           'person_a_requests_fahrtkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -674,7 +674,7 @@ class TestFormDataDependencies:
                            'person_b_has_merkzeichen_tbl': True,
                            'person_b_has_merkzeichen_h': True,
                            'person_b_requests_pauschbetrag': 'yes',
-                           'person_b_requests_fahrkostenpauschale': 'yes',
+                           'person_b_requests_fahrtkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -692,7 +692,7 @@ class TestFormDataDependencies:
                            'person_b_has_merkzeichen_tbl': True,
                            'person_b_has_merkzeichen_h': True,
                            'person_b_requests_pauschbetrag': 'yes',
-                           'person_b_requests_fahrkostenpauschale': 'yes',
+                           'person_b_requests_fahrtkostenpauschale': 'yes',
                            }
 
         returned_data = FormDataDependencies.parse_obj(
@@ -726,12 +726,12 @@ class TestFormDataDependencies:
 
             assert returned_data == {'person_b_has_disability': 'yes'}
 
-    def test_if_person_a_has_no_fahrkostenpauschale_claim_then_delete_answer_to_pauschbetrag_request(self):
-        with patch('app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonAPrecondition.__init__',
-                   MagicMock(side_effect=ValidationError([], HasFahrkostenpauschaleClaimPersonAPrecondition))):
+    def test_if_person_a_has_no_fahrtkostenpauschale_claim_then_delete_answer_to_pauschbetrag_request(self):
+        with patch('app.forms.steps.lotse.fahrtkostenpauschale.HasFahrtkostenpauschaleClaimPersonAPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], HasFahrtkostenpauschaleClaimPersonAPrecondition))):
             disability_data = {
                 'person_a_has_disability': 'yes',
-                'person_a_requests_fahrkostenpauschale': 'yes',
+                'person_a_requests_fahrtkostenpauschale': 'yes',
             }
 
             returned_data = FormDataDependencies.parse_obj(
@@ -739,12 +739,12 @@ class TestFormDataDependencies:
 
             assert returned_data == {'person_a_has_disability': 'yes'}
 
-    def test_if_person_b_has_no_fahrkostenpauschale_claim_then_delete_answer_to_pauschbetrag_request(self):
-        with patch('app.forms.steps.lotse.fahrkostenpauschale.HasFahrkostenpauschaleClaimPersonBPrecondition.__init__',
-                   MagicMock(side_effect=ValidationError([], HasFahrkostenpauschaleClaimPersonBPrecondition))):
+    def test_if_person_b_has_no_fahrtkostenpauschale_claim_then_delete_answer_to_pauschbetrag_request(self):
+        with patch('app.forms.steps.lotse.fahrtkostenpauschale.HasFahrtkostenpauschaleClaimPersonBPrecondition.__init__',
+                   MagicMock(side_effect=ValidationError([], HasFahrtkostenpauschaleClaimPersonBPrecondition))):
             disability_data = {
                 'person_b_has_disability': 'yes',
-                'person_b_requests_fahrkostenpauschale': 'yes',
+                'person_b_requests_fahrtkostenpauschale': 'yes',
             }
 
             returned_data = FormDataDependencies.parse_obj(

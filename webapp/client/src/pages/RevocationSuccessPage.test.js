@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import RevocationSuccessPage from "./RevocationSuccessPage";
 
-let props = {
+const props = {
   stepHeader: {
     title: "Title",
     intro: "Intro",
