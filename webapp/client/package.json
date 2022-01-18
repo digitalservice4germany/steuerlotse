@@ -17,6 +17,7 @@
     "eslint-plugin-jest": "^25.3.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-storybook": "^0.5.5",
     "http-proxy-middleware": "^2.0.1",
     "i18next": "^21.6.6",
     "jquery": "3.6.0",
@@ -40,7 +41,6 @@
     "@storybook/node-logger": "^6.4.13",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.4.13",
-    "eslint-plugin-storybook": "^0.5.5",
     "husky": "^7.0.2",
     "lint-staged": "^12.1.7",
     "prettier": "2.5.1"
