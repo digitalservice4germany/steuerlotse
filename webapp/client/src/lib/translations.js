@@ -291,6 +291,13 @@ const translations = {
         anchor: "Vorbereitungshilfe herunterladen",
       },
     },
+    failure: {
+      header: {
+        title: "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
+        intro:
+          "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+      },
+    },
   },
   fields: {
     idnr: {
