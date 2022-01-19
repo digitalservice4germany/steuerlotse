@@ -7,9 +7,6 @@ import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
 import FormFieldSeparatedField from "./FormFieldSeparatedField";
 
-const FormEuroField = styled.div``;
-const FormCurrencyField = styled.div``;
-
 function FormFieldEuroInput({
   fieldName,
   fieldId,
@@ -32,7 +29,7 @@ function FormFieldEuroInput({
       }}
       labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
-        <FormEuroField
+        <div
           className={classNames(
             "input-group",
             "euro-field",
@@ -56,12 +53,12 @@ function FormFieldEuroInput({
             onWheel={(e) => e.target.blur()}
             className={classNames("form-control", "euro_field")}
           />
-          <FormCurrencyField
+          <div
             className={classNames("input-group-text", "euro-field-appendix")}
           >
             {currency}
-          </FormCurrencyField>
-        </FormEuroField>
+          </div>
+        </div>
       )}
     />
   );
