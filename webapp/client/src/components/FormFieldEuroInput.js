@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { IMaskInput } from "react-imask";
-import styled from "styled-components";
 import classNames from "classnames";
 import FormFieldScaffolding from "./FormFieldScaffolding";
 import FieldLabel from "./FieldLabel";
@@ -25,7 +24,6 @@ function FormFieldEuroInput({
       {...{
         fieldName,
         errors,
-        label,
       }}
       labelComponent={<FieldLabel {...{ label, fieldId, details }} />}
       render={() => (
