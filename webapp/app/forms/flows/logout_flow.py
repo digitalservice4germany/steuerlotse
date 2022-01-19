@@ -30,15 +30,15 @@ class LogoutMultiStepFlow(MultiStepFlow):
 
         if isinstance(step, LogoutInputStep):
             render_info.additional_info['next_button_label'] = _('form.logout.logout-anyway-button')
-            if request.method == 'POST' and render_info.form.validate():
-                self._logout_user_and_flash_success()
-                stored_data = {}
-                render_info.next_url = url_for('unlock_code_activation')
-
-            elif current_user.has_completed_tax_return():
+            if current_user.has_completed_tax_return():
                 self._logout_user_and_flash_success()
                 stored_data = {}
                 render_info.redirect_url = url_for('index')
+
+            elif request.method == 'POST' and render_info.form.validate():
+                self._logout_user_and_flash_success()
+                stored_data = {}
+                render_info.next_url = url_for('unlock_code_activation')
 
         return render_info, stored_data
 

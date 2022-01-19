@@ -23,7 +23,7 @@ export default function StepForm({
 }
 
 StepForm.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   action: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
   showOverviewButton: PropTypes.bool,

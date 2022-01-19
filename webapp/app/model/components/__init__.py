@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union, Tuple
+from typing import Dict, List, Optional, Union
 
 import humps
 from pydantic import BaseModel, Extra
@@ -18,6 +18,12 @@ class FormProps(ComponentProps):
     action: str
     csrf_token: str
     show_overview_button: bool
+    next_button_label: Optional[str]
+
+
+class FormPropsNoOverview(ComponentProps):
+    action: str
+    csrf_token: str
     next_button_label: Optional[str]
 
 
@@ -65,6 +71,10 @@ class StepDisplayProps(ComponentProps):
 
 class LoginProps(StepFormProps):
     pass
+
+
+class LogoutProps(ComponentProps):
+    form: FormPropsNoOverview
 
 
 class LoginFailureProps(StepDisplayProps):
