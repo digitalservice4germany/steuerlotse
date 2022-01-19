@@ -1,6 +1,5 @@
 from flask_babel import _
 from flask_wtf.csrf import generate_csrf
-from wtforms import HiddenField
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep
@@ -14,7 +13,7 @@ class LogoutInputStep(FormStep):
     name = 'data_input'
 
     class Form(SteuerlotseBaseForm):
-        hidden = HiddenField(label='')
+        pass
 
     def __init__(self, **kwargs):
         super(LogoutInputStep, self).__init__(
@@ -28,7 +27,6 @@ class LogoutInputStep(FormStep):
             form={
                 'action': render_info.submit_url,
                 'csrf_token': generate_csrf(),
-                'show_overview_button': bool(render_info.overview_url),
             }
         ).camelized_dict()
 

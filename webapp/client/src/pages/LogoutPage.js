@@ -24,7 +24,6 @@ LogoutPage.propTypes = {
   form: PropTypes.exact({
     action: PropTypes.string,
     csrfToken: PropTypes.string,
-    showOverviewButton: PropTypes.bool,
     nextButtonLabel: PropTypes.string,
   }).isRequired,
 };
