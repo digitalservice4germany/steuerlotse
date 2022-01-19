@@ -84,7 +84,7 @@
 
   --sidebar-width: 220px;
   --main-max-width: 1000px;
-  --back-link-size: 1.8em;
+  --back-link-size: 1.5rem;
   --header-navigation-height: var(--spacing-09);
 }
 
@@ -606,4 +606,4 @@ img.icon {
 /** END copied unorganised CSS from base.css **/
 
 
-/*# sourceMappingURL=main.974e98db.chunk.css.map*/
+/*# sourceMappingURL=main.4d5914f4.chunk.css.map*/
