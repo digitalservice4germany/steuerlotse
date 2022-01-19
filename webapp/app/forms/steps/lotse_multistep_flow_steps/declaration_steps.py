@@ -3,13 +3,13 @@ from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.steps.step import FormStep, SectionLink, DisplayStep
+from app.forms.steps.step import FormStep, SectionLink
 from app.forms.fields import ConfirmationField
 
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
-from app.model.components import DeclarationIncomesProps
+from app.model.components import DeclarationIncomesProps, StepSessionNoteProps
 from app.model.components.helpers import form_fields_dict
 
 
@@ -77,17 +77,29 @@ class StepDeclarationEdaten(FormStep):
         )
 
 
-class StepSessionNote(DisplayStep):
+class StepSessionNote(FormStep):
     name = 'session_note'
+
+    class Form(SteuerlotseBaseForm):
+        pass
 
     def __init__(self, **kwargs):
         super(StepSessionNote, self).__init__(
-            title=_('form.lotse.session-note.title'), **kwargs)
+            title=_('form.lotse.session-note.title'),
+            form=self.Form,
+            **kwargs)
 
     def render(self, data, render_info):
-        return render_template('basis/display_standard_with_list.html', render_info=render_info, list_items=[
-            _l('form.lotse.session-note.list-item-1'),
-            _l('form.lotse.session-note.list-item-2'),
-            _l('form.lotse.session-note.list-item-3'),
-            _l('form.lotse.session-note.list-item-4'),
-        ], header_title=_('form.lotse.header-title'))
+        props_dict = StepSessionNoteProps(
+            form={
+                'action': render_info.submit_url,
+                'csrf_token': generate_csrf(),
+                'show_overview_button': bool(render_info.overview_url),
+            },
+            prev_url=render_info.prev_url,
+        ).camelized_dict()
+
+        return render_template('react_component.html',
+                               component='SessionNotePage',
+                               props=props_dict,
+                               header_title=_('form.lotse.header-title'))

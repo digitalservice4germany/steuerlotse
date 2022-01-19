@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union, Tuple
+from typing import Dict, List, Optional, Union
 
 import humps
 from pydantic import BaseModel, Extra
@@ -138,3 +138,8 @@ class TelephoneNumberProps(StepFormProps):
 
 class SelectStMindProps(StepFormProps):
     pass
+
+
+class StepSessionNoteProps(ComponentProps):
+    prev_url: Optional[str]
+    form: FormProps

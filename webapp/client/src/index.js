@@ -9,6 +9,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import RevocationPage from "./pages/RevocationPage";
 import RevocationSuccessPage from "./pages/RevocationSuccessPage";
 import DeclarationIncomesPage from "./pages/DeclarationIncomesPage";
+import SessionNotePage from "./pages/SessionNotePage";
 import TaxNumberPage from "./pages/TaxNumberPage";
 import TelephoneNumberPage from "./pages/TelephoneNumberPage";
 import StmindSelectionPage from "./pages/StmindSelectionPage";
@@ -32,6 +33,7 @@ const allowedComponents = {
   RevocationSuccessPage,
   UnlockCodeSuccessPage,
   DeclarationIncomesPage,
+  SessionNotePage,
   TaxNumberPage,
   HasDisabilityPersonAPage,
   MerkzeichenPersonAPage,

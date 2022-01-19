@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-14 16:57+0100\n"
+"POT-Creation-Date: 2022-01-19 18:01+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -995,7 +995,8 @@ msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
 #: app/forms/steps/unlock_code_request_steps.py:61
-#: app/forms/steps/unlock_code_request_steps.py:101
+#: app/forms/steps/unlock_code_request_steps.py:82
+#: app/forms/steps/unlock_code_request_steps.py:95
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
@@ -1011,11 +1012,11 @@ msgstr ""
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie"
 " Ihren Brief erhalten."
 
-#: app/forms/steps/unlock_code_request_steps.py:96
+#: app/forms/steps/unlock_code_request_steps.py:90
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:97
+#: app/forms/steps/unlock_code_request_steps.py:91
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie "
@@ -1121,8 +1122,8 @@ msgstr "Keine Beantragung"
 #: app/forms/steps/lotse/personal_data.py:183
 #: app/forms/steps/lotse/personal_data.py:274
 #: app/forms/steps/lotse/personal_data.py:365
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:21
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:62
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:21
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:189
 msgid "form.lotse.mandatory_data.label"
@@ -1156,9 +1157,9 @@ msgstr[1] "Behinderungsbedingte Fahrtkostenpauschale für Person A"
 #: app/forms/steps/lotse/pauschbetrag.py:146
 #: app/forms/steps/lotse/pauschbetrag.py:208
 #: app/forms/steps/lotse/personal_data.py:395
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:55
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:75
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:106
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
@@ -2475,62 +2476,62 @@ msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:19
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
 msgid "form.lotse.declaration_incomes.label"
 msgstr "Angabe zu weiteren Einkünften"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:24
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:25
 msgid "form.lotse.field_declaration_incomes.field-confirm-incomes"
 msgstr ""
 "Hiermit erkläre ich / erklären wir, dass ich / wir im Steuerjahr 2021 "
 "keine weiteren Einkünfte hatte / hatten, außer der oben aufgeführten "
 "Einkünfte."
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:25
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:26
 msgid "form.lotse.declaration_incomes.required"
 msgstr ""
 "Bestätigen Sie, dass Sie keine weiteren Einkünfte hatten, um fortfahren "
 "zu können"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:26
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:27
 msgid "form.lotse.field_declaration_incomes.data_label"
 msgstr "Keine weiteren Einkünfte vorhanden"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:30
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:31
 msgid "form.lotse.declaration_incomes.title"
 msgstr "Erklärung zu weiteren Einkünften"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:31
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:32
 msgid "form.lotse.declaration_incomes.intro"
 msgstr ""
 "Sie können Ihre Steuererklärung nur mit diesem Service machen, wenn Sie "
 "und ggf. Ihr Partner bzw. Ihre Partnerin keine weiteren Einkünfte hatten,"
 " außer:"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:60
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
 msgid "form.lotse.field_declaration_edaten.label"
 msgstr "Übernahme vorliegender Daten"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:65
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:66
 msgid "form.lotse.field_declaration_edaten"
 msgstr ""
 "Ich bzw. wir sind damit einverstanden, dass die Festsetzung meiner / "
 "unserer Einkommensteuer anhand der elektronisch vorliegenden Daten "
 "erfolgt, die der Finanzbehörde vorliegen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:66
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:67
 msgid "form.lotse.declaration_edaten.required"
 msgstr "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:67
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:68
 msgid "form.lotse.field_declaration_edaten.data_label"
 msgstr "Einverständnis vorhanden"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:71
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:72
 msgid "form.lotse.declaration-edaten-title"
 msgstr "Einverständnis zur automatischen Übernahme vorliegender Daten"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:72
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:73
 msgid "form.lotse.declaration-edaten-intro"
 msgstr ""
 "Da viele Informationen der Finanzverwaltung bereits vorliegen, müssen Sie"
@@ -2541,34 +2542,9 @@ msgstr ""
 "wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen "
 "Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle."
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:85
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:89
 msgid "form.lotse.session-note.title"
 msgstr "Hinweis zur Sitzung"
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:89
-msgid "form.lotse.session-note.list-item-1"
-msgstr ""
-"Ihre Daten gehören Ihnen und werden erst übermittelt, wenn Sie Ihre "
-"Steuererklärung verschicken."
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:90
-msgid "form.lotse.session-note.list-item-2"
-msgstr ""
-"Aus diesem Grund werden Ihre Angaben derzeit nicht zwischengespeichert. "
-"Sie müssen Ihre Steuererklärung daher <b>in einer Sitzung "
-"abschließen.</b>"
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:91
-msgid "form.lotse.session-note.list-item-3"
-msgstr ""
-"Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer "
-"Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <b>länger "
-"als 3 Stunden</b> nichts mehr auf dieser Webseite machen, werden Sie aus "
-"Sicherheitsgründen automatisch abgemeldet."
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:92
-msgid "form.lotse.session-note.list-item-4"
-msgstr "Sie können alle Angaben vor Versand noch einmal kontrollieren."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:20
 msgid "form.lotse.step_familienstand.label"
@@ -5071,54 +5047,54 @@ msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
 msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
-#: app/templates/content/landing_page.html:73
+#: app/templates/content/landing_page.html:74
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:83
+#: app/templates/content/landing_page.html:84
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:84
+#: app/templates/content/landing_page.html:85
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:91
+#: app/templates/content/landing_page.html:92
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:92
+#: app/templates/content/landing_page.html:93
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:99
+#: app/templates/content/landing_page.html:100
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:100
+#: app/templates/content/landing_page.html:101
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
-#: app/templates/content/landing_page.html:116
+#: app/templates/content/landing_page.html:117
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:117
+#: app/templates/content/landing_page.html:118
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:118
+#: app/templates/content/landing_page.html:119
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
@@ -5441,61 +5417,90 @@ msgstr "Religion"
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
 
-#: app/templates/unlock_code/registration_success.html:4
-msgid "register.success.next-steps.heading"
-msgstr "So geht es weiter"
+#~ msgid "form.lotse.session-note.list-item-1"
+#~ msgstr ""
+#~ "Ihre Daten gehören Ihnen und werden "
+#~ "erst übermittelt, wenn Sie Ihre "
+#~ "Steuererklärung verschicken."
 
-#: app/templates/unlock_code/registration_success.html:6
-msgid "register.success.next-steps.step-1"
-msgstr ""
-"Sie bekommen von Ihrem Finanzamt den <b>Brief mit Ihrem persönlichen "
-"Freischaltcode</b> zugeschickt."
+#~ msgid "form.lotse.session-note.list-item-2"
+#~ msgstr ""
+#~ "Aus diesem Grund werden Ihre Angaben "
+#~ "derzeit nicht zwischengespeichert. Sie müssen"
+#~ " Ihre Steuererklärung daher <b>in einer "
+#~ "Sitzung abschließen.</b>"
 
-#: app/templates/unlock_code/registration_success.html:7
-msgid "register.success.next-steps.step-2"
-msgstr ""
-"Sie können sich auf Ihre Steuererklärung vorbereiten bis Sie den Brief "
-"erhalten haben. Sammeln Sie dazu alle notwendigen Unterlagen sowie "
-"Belege. Eine Übersicht über die notwendigen Unterlagen, die Sie für die "
-"Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer <a "
-"href=%(link)s>Vorbereitungshilfe</a>."
+#~ msgid "form.lotse.session-note.list-item-3"
+#~ msgstr ""
+#~ "Sie können sich innerhalb der Sitzung"
+#~ " für das Ausfüllen Ihrer Steuererklärung"
+#~ " natürlich Zeit lassen. Sollten Sie "
+#~ "allerdings <b>länger als 3 Stunden</b> "
+#~ "nichts mehr auf dieser Webseite machen,"
+#~ " werden Sie aus Sicherheitsgründen "
+#~ "automatisch abgemeldet."
 
-#: app/templates/unlock_code/registration_success.html:8
-msgid "register.success.next-steps.step-3"
-msgstr ""
-"Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut "
-"auf www.steuerlotse-rente.de"
+#~ msgid "form.lotse.session-note.list-item-4"
+#~ msgstr "Sie können alle Angaben vor Versand noch einmal kontrollieren."
 
-#: app/templates/unlock_code/registration_success.html:9
-msgid "register.success.next-steps.step-4"
-msgstr ""
-"Wählen Sie den Menüpunkt <a href=%(link)s> Ihre Steuererklärung</a> und "
-"melden sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie "
-"das Steuerformular ausfüllen und verschicken."
+#~ msgid "register.success.next-steps.heading"
+#~ msgstr "So geht es weiter"
 
-#: app/templates/unlock_code/registration_success.html:12
-msgid "register.success.letter.heading"
-msgstr "So sieht der Brief aus, den Sie erhalten werden"
+#~ msgid "register.success.next-steps.step-1"
+#~ msgstr ""
+#~ "Sie bekommen von Ihrem Finanzamt den "
+#~ "<b>Brief mit Ihrem persönlichen "
+#~ "Freischaltcode</b> zugeschickt."
 
-#: app/templates/unlock_code/registration_success.html:13
-msgid "register.success.letter.intro"
-msgstr ""
-"Auf dem Brief wird der DigitalService4Germany als Antragsteller "
-"angegeben. Die Organisation ist der Betreiber des Steuerlotsen. Ihren "
-"Freischaltcode finden Sie auf der letzten Seite des Briefes."
+#~ msgid "register.success.next-steps.step-2"
+#~ msgstr ""
+#~ "Sie können sich auf Ihre Steuererklärung"
+#~ " vorbereiten bis Sie den Brief "
+#~ "erhalten haben. Sammeln Sie dazu alle"
+#~ " notwendigen Unterlagen sowie Belege. Eine"
+#~ " Übersicht über die notwendigen Unterlagen,"
+#~ " die Sie für die Erstellung Ihrer "
+#~ "Steuererklärung brauchen, finden Sie in "
+#~ "unserer <a href=%(link)s>Vorbereitungshilfe</a>."
 
-#: app/templates/unlock_code/registration_success.html:18
-msgid "register.success.preparation.heading"
-msgstr "Wie Sie sich auf Ihre Steuererklärung vorbereiten können"
+#~ msgid "register.success.next-steps.step-3"
+#~ msgstr ""
+#~ "Wenn Sie den Brief erhalten haben "
+#~ "und vorbereitet sind, gehen Sie erneut"
+#~ " auf www.steuerlotse-rente.de"
 
-#: app/templates/unlock_code/registration_success.html:19
-msgid "register.success.preparation.intro"
-msgstr ""
-"Unsere Vorbereitungshilfe gibt Ihnen einen Überblick darüber, welche "
-"Unterlagen Sie für die Erstellung Ihrer Steuererklärung beim Steuerlotsen"
-" brauchen, und erklärt, wie Sie nach Erhalt des Briefes fortfahren."
+#~ msgid "register.success.next-steps.step-4"
+#~ msgstr ""
+#~ "Wählen Sie den Menüpunkt <a "
+#~ "href=%(link)s> Ihre Steuererklärung</a> und "
+#~ "melden sich mit Ihrem Freischaltcode an."
+#~ " Nach der Anmeldung können Sie das"
+#~ " Steuerformular ausfüllen und verschicken."
 
-#: app/templates/unlock_code/registration_success.html:21
-msgid "register.success.preparation.button"
-msgstr "Vorbereitungshilfe herunterladen"
+#~ msgid "register.success.letter.heading"
+#~ msgstr "So sieht der Brief aus, den Sie erhalten werden"
+
+#~ msgid "register.success.letter.intro"
+#~ msgstr ""
+#~ "Auf dem Brief wird der "
+#~ "DigitalService4Germany als Antragsteller angegeben."
+#~ " Die Organisation ist der Betreiber "
+#~ "des Steuerlotsen. Ihren Freischaltcode finden"
+#~ " Sie auf der letzten Seite des "
+#~ "Briefes."
+
+#~ msgid "register.success.preparation.heading"
+#~ msgstr "Wie Sie sich auf Ihre Steuererklärung vorbereiten können"
+
+#~ msgid "register.success.preparation.intro"
+#~ msgstr ""
+#~ "Unsere Vorbereitungshilfe gibt Ihnen einen "
+#~ "Überblick darüber, welche Unterlagen Sie "
+#~ "für die Erstellung Ihrer Steuererklärung "
+#~ "beim Steuerlotsen brauchen, und erklärt, "
+#~ "wie Sie nach Erhalt des Briefes "
+#~ "fortfahren."
+
+#~ msgid "register.success.preparation.button"
+#~ msgstr "Vorbereitungshilfe herunterladen"
 
