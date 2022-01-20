@@ -19,6 +19,8 @@ function FormFieldEuroInput({
   details,
   errors,
 }) {
+  const calculatedMaxLength =
+    maxLength !== undefined ? maxLength + Math.floor(maxLength / 3) : undefined;
   return (
     <FormFieldScaffolding
       {...{
@@ -35,21 +37,22 @@ function FormFieldEuroInput({
           )}
         >
           <IMaskInput
-            mask={Number}
-            scale={2}
-            thousandsSeparator="."
-            type="text"
             id={fieldId}
             name={fieldName}
             defaultValue={value}
+            scale={2}
+            type="text"
             inputMode="numeric"
             pattern="[0-9]*"
-            maxLength={maxLength}
+            mask={Number}
+            thousandsSeparator="."
+            radix=","
+            mapToRadix={[]} // Overwrite to prevent that the thousandsSeparator '.' is mapped to radix
+            maxLength={calculatedMaxLength}
             // TODO: autofocus is under review.
             // eslint-disable-next-line
             autoFocus={autofocus || Boolean(errors.length)}
             required={required}
-            onWheel={(e) => e.target.blur()}
             className={classNames("form-control", "euro_field")}
           />
           <div

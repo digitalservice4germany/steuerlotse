@@ -30,6 +30,11 @@ describe("FormFieldEuroInput", () => {
       expect(screen.getByLabelText("Label")).toHaveValue("123,45");
     });
 
+    it("Should allow input of point as thousands separator ", () => {
+      userEvent.type(screen.getByRole("textbox"), "1.023,45");
+      expect(screen.getByLabelText("Label")).toHaveValue("1.023,45");
+    });
+
     it("Should not allow more than 2 decimal places", () => {
       userEvent.type(screen.getByRole("textbox"), "123,435");
       expect(screen.getByLabelText("Label")).toHaveValue("123,43");
@@ -70,7 +75,7 @@ describe("FormFieldEuroInput", () => {
 
     it("Should not limit input of values", () => {
       userEvent.type(screen.getByLabelText("Label"), "12345678910");
-      expect(screen.getByLabelText("Label")).toHaveValue("12345678910");
+      expect(screen.getByLabelText("Label")).toHaveValue("12.345.678.910");
     });
 
     it("should set width class", () => {
@@ -95,7 +100,7 @@ describe("FormFieldEuroInput", () => {
 
     it("Should limit input of values", () => {
       userEvent.type(screen.getByLabelText("Label"), "123456789,10");
-      expect(screen.getByLabelText("Label")).toHaveValue("12345");
+      expect(screen.getByLabelText("Label")).toHaveValue("12.345");
     });
 
     it("should not set width class", () => {
@@ -105,7 +110,7 @@ describe("FormFieldEuroInput", () => {
     it("Should limit input of values when using keyboard", () => {
       userEvent.tab();
       userEvent.keyboard("123,456");
-      expect(screen.getByLabelText("Label")).toHaveValue("123,4");
+      expect(screen.getByLabelText("Label")).toHaveValue("123,45");
     });
   });
 });
