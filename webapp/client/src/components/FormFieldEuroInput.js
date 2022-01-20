@@ -19,6 +19,7 @@ function FormFieldEuroInput({
   details,
   errors,
 }) {
+  // To adapt for the thousandsSeparator sign increase the maxLength
   const calculatedMaxLength =
     maxLength !== undefined ? maxLength + Math.floor(maxLength / 3) : undefined;
   return (
