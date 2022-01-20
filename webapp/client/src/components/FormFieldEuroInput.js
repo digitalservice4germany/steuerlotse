@@ -37,6 +37,7 @@ function FormFieldEuroInput({
           <IMaskInput
             mask={Number}
             scale={2}
+            thousandsSeparator="."
             type="text"
             id={fieldId}
             name={fieldName}
