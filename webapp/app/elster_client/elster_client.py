@@ -6,6 +6,7 @@ from decimal import Decimal
 import requests
 from flask_login import current_user, logout_user
 from markupsafe import escape
+from requests import RequestException
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_address_entry
@@ -13,11 +14,10 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
     ElsterResponseUnexpectedStructure, GeneralEricaError, EricaIsMissingFieldError, ElsterRequestAlreadyRevoked, \
-    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
+    ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError, EricaRequestTimeoutError, EricaRequestConnectionError
 from app.utils import lru_cached, VERANLAGUNGSJAHR
 
 logger = logging.getLogger(__name__)
-
 
 _PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
 _REQUEST_TIMEOUT = 20
@@ -42,14 +42,22 @@ _DATE_KEYS = ['familienstand_date', 'familienstand_married_lived_separated_since
 
 def send_to_erica(*args, **kwargs):
     logger.info(f'Making Erica POST request with args {args!r}')
-    if Config.USE_MOCK_API:
-        from tests.elster_client.mock_erica import MockErica
-        response = MockErica.mocked_elster_requests(*args, **kwargs)
-    else:
-        headers = {'Content-type': 'application/json'}
-        response = requests.post(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
-    logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
-    return response
+    try:
+        if Config.USE_MOCK_API:
+            from tests.elster_client.mock_erica import MockErica
+            response = MockErica.mocked_elster_requests(*args, **kwargs)
+        else:
+            headers = {'Content-type': 'application/json'}
+            response = requests.post(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
+            logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
+        return response
+    except RequestException as error:
+        logger.info(f'Completed Erica POST request with args {args!r}, got code {error.response.status_code}')
+        if error is TimeoutError:
+            raise EricaRequestTimeoutError(error)
+        if error is ConnectionError:
+            raise EricaRequestConnectionError(error)
+        raise GeneralEricaError()
 
 
 def request_from_erica(*args, **kwargs):
@@ -224,7 +232,7 @@ def _generate_est_request_data(form_data, year=VERANLAGUNGSJAHR):
         # no non-active user should come until here, but we want to log that as an error
         logger.error('Elster_Client: Non-active user tried to send tax declaration.')
         raise TaxDeclarationNotDigitallySigned
-    
+
     if not current_user.is_authenticated:
         # no non-authenticated user should come until here, but we want to log that as an error
         logger.error('Elster_Client: Non-authenticated user tried to send tax declaration.')

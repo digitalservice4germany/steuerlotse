@@ -1,4 +1,5 @@
 from flask_babel import lazy_gettext as _l
+from werkzeug.exceptions import InternalServerError
 
 
 class ElsterProcessNotSuccessful(Exception):
@@ -39,6 +40,7 @@ class ElsterGlobalInitialisationError(ElsterGlobalError):
 class ElsterTransferError(ElsterProcessNotSuccessful):
     """Exception raised in case of an unsuccessful process in the ERiC binaries due to an error with the transfer
     """
+
     def __init__(self, message=None, eric_response=None, server_response=None):
         self.eric_response = eric_response
         self.server_response = server_response
@@ -123,6 +125,7 @@ class ElsterUnknownError(ElsterProcessNotSuccessful):
 class GeneralEricaError(Exception):
     """Exception raised when an error occurred in Erica that is not an
     expected ElsterProcessNotSuccessfulError"""
+
     def __init__(self, message=None):
         self.message = message
         super().__init__()
@@ -136,4 +139,22 @@ class EricaIsMissingFieldError(GeneralEricaError):
 
     def __init__(self):
         self.message = _l('form.lotse.input_invalid.MissingFieldsInputValidationError')
+
+
+class EricaRequestTimeoutError(InternalServerError):
+    """Exception raised when a Timeout reached in Erica"""
+
+    def __init__(self, original_exception=None):
+        self.message = _l('erica.timeout.error')
+        self.original_exception = original_exception
+        super(EricaRequestTimeoutError, self).__init__()
+
+
+class EricaRequestConnectionError(InternalServerError):
+    """Exception raised when a Connection Error reached in Erica"""
+
+    def __init__(self, original_exception=None):
+        self.message = _l('erica.connection.error')
+        self.original_exception = original_exception
+        super(EricaRequestConnectionError, self).__init__()
 

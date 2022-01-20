@@ -11,7 +11,7 @@ from werkzeug.exceptions import InternalServerError
 
 from app.config import Config
 from app.data_access.db_model.user import User
-from app.elster_client.elster_errors import GeneralEricaError
+from app.elster_client.elster_errors import GeneralEricaError, EricaRequestTimeoutError, EricaRequestConnectionError
 from app.extensions import nav, login_manager, limiter, csrf
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
 from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
@@ -90,7 +90,6 @@ def extract_information_from_request():
 
 def register_request_handlers(app):
     app.before_request(log_flask_request)
-
     # Multistep flows
 
     @login_manager.user_loader
@@ -315,6 +314,18 @@ def register_error_handlers(app):
     def error_500(error):
         current_app.logger.error(
             'An uncaught error occurred', exc_info=error.original_exception)
+        return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+
+    @app.errorhandler(EricaRequestTimeoutError)
+    def error_500(error):
+        current_app.logger.error(
+            'An Erica Request Timeout error occurred', exc_info=error.original_exception)
+        return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+
+    @app.errorhandler(EricaRequestConnectionError)
+    def error_500(error):
+        current_app.logger.error(
+            'An Erica Request Connection error occurred', exc_info=error.original_exception)
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
 
 
