@@ -23,7 +23,8 @@ from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMult
 from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepFlow
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
-from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, \
+    StepSessionNote
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 
@@ -90,6 +91,12 @@ def extract_information_from_request():
 
 def register_request_handlers(app):
     app.before_request(log_flask_request)
+
+    @app.route('/test')
+    @add_caching_headers
+    def test():
+        raise EricaRequestConnectionError()
+
     # Multistep flows
 
     @login_manager.user_loader
@@ -271,7 +278,8 @@ def register_request_handlers(app):
     @app.route('/digitalservice')
     @add_caching_headers
     def about_digitalservice():
-        return render_template('content/about_digitalservice.html', header_title=_('about_digitalservice.header-title'), js_needed=False)
+        return render_template('content/about_digitalservice.html', header_title=_('about_digitalservice.header-title'),
+                               js_needed=False)
 
     @app.route('/download_preparation', methods=['GET'])
     @limiter.limit('15 per minute')
@@ -288,11 +296,15 @@ def register_request_handlers(app):
         return 'pong'
 
 
+ERICA_ERROR_TEMPLATE = 'error/erica_error.html'
+
+
 def register_error_handlers(app):
     @app.errorhandler(GeneralEricaError)
     def error_erica(error):
         current_app.logger.exception('A general erica error occurred')
-        return render_template('error/erica_error.html', header_title=_('erica-error.header-title'), js_needed=False), 500
+        return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica-error.header-title'),
+                               js_needed=False), 500
 
     @app.errorhandler(400)
     def error_400(error):
@@ -304,7 +316,8 @@ def register_error_handlers(app):
 
     @app.errorhandler(IncorrectEligibilityData)
     def handle_incorrect_eligibility_data(error):
-        return render_template('error/incorrect_eligiblity_data.html', header_title=_('400.header-title'), js_needed=False), 400
+        return render_template('error/incorrect_eligiblity_data.html', header_title=_('400.header-title'),
+                               js_needed=False), 400
 
     @app.errorhandler(429)
     def error_429(error):
@@ -317,16 +330,18 @@ def register_error_handlers(app):
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
 
     @app.errorhandler(EricaRequestTimeoutError)
-    def error_500(error):
+    def error_erica(error):
         current_app.logger.error(
             'An Erica Request Timeout error occurred', exc_info=error.original_exception)
-        return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+        return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica_error.header-title'),
+                               js_needed=False), 504
 
     @app.errorhandler(EricaRequestConnectionError)
-    def error_500(error):
+    def error_erica(error):
         current_app.logger.error(
             'An Erica Request Connection error occurred', exc_info=error.original_exception)
-        return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+        return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica_error.header-title'),
+                               js_needed=False), 503
 
 
 def register_testing_request_handlers(app):

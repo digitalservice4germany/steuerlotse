@@ -52,11 +52,13 @@ def send_to_erica(*args, **kwargs):
             logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
         return response
     except RequestException as error:
-        logger.info(f'Completed Erica POST request with args {args!r}, got code {error.response.status_code}')
         if error is TimeoutError:
+            logger.info(f'Erica POST request raised a timeout exception, got code {error.response.status_code}')
             raise EricaRequestTimeoutError(error)
         if error is ConnectionError:
+            logger.info(f'Erica POST request raised a connection exception, got code {error.response.status_code}')
             raise EricaRequestConnectionError(error)
+        logger.info(f'Erica POST request raised an exception, got code {error.response.status_code}')
         raise GeneralEricaError()
 
 

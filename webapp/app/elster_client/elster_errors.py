@@ -1,4 +1,5 @@
 from flask_babel import lazy_gettext as _l
+from requests import RequestException
 from werkzeug.exceptions import InternalServerError
 
 
@@ -141,7 +142,7 @@ class EricaIsMissingFieldError(GeneralEricaError):
         self.message = _l('form.lotse.input_invalid.MissingFieldsInputValidationError')
 
 
-class EricaRequestTimeoutError(InternalServerError):
+class EricaRequestTimeoutError(RequestException):
     """Exception raised when a Timeout reached in Erica"""
 
     def __init__(self, original_exception=None):
@@ -150,7 +151,7 @@ class EricaRequestTimeoutError(InternalServerError):
         super(EricaRequestTimeoutError, self).__init__()
 
 
-class EricaRequestConnectionError(InternalServerError):
+class EricaRequestConnectionError(RequestException):
     """Exception raised when a Connection Error reached in Erica"""
 
     def __init__(self, original_exception=None):
