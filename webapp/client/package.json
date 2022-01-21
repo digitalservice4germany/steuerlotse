@@ -53,8 +53,8 @@
     "lint": "yarn run eslint src/",
     "format": "yarn prettier --write .",
     "prepare": "cd ../.. && husky install webapp/client/.husky",
-    "storybook": "start-storybook -p 6006 -s public",
-    "storybook:build": "build-storybook -s public",
+    "storybook": "start-storybook -p 6006",
+    "storybook:build": "build-storybook",
     "cypress": "cypress open",
     "cypress:run": "cypress run"
   },
