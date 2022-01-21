@@ -160,3 +160,8 @@ class TelephoneNumberProps(StepFormProps):
 
 class SelectStMindProps(StepFormProps):
     pass
+
+
+class StepSessionNoteProps(ComponentProps):
+    prev_url: Optional[str]
+    form: FormProps
