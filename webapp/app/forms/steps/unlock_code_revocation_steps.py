@@ -13,8 +13,6 @@ from app.model.components import RevocationProps, RevocationSuccessProps, Revoca
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
-HEADER_TITLE = 'form.unlock-code-revocation.header-title'
-
 
 class UnlockCodeRevocationInputStep(FormStep):
     name = 'data_input'
@@ -51,7 +49,7 @@ class UnlockCodeRevocationInputStep(FormStep):
         return render_react_template(component='RevocationPage',
                                props=props_dict,
                                form=render_info.form,
-                               header_title=_(HEADER_TITLE))
+                               header_title=_('form.unlock-code-revocation.header-title'))
 
 
 class UnlockCodeRevocationSuccessStep(DisplayStep):
@@ -76,7 +74,7 @@ class UnlockCodeRevocationSuccessStep(DisplayStep):
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=render_info.form,
-                               header_title=_(HEADER_TITLE))
+                               header_title=_('form.unlock-code-revocation.header-title'))
 
 
 class UnlockCodeRevocationFailureStep(DisplayStep):
@@ -94,4 +92,4 @@ class UnlockCodeRevocationFailureStep(DisplayStep):
 
         return render_react_template(component='RevocationFailurePage',
                                props=props_dict,
-                               header_title=_(HEADER_TITLE))
+                               header_title=_('form.unlock-code-revocation.header-title'))
