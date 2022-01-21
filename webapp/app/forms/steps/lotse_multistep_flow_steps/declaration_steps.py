@@ -115,7 +115,6 @@ class StepSessionNote(FormStep):
             prev_url=render_info.prev_url,
         ).camelized_dict()
 
-        return render_react_template('react_component.html',
-                               component='SessionNotePage',
+        return render_react_template(component='SessionNotePage',
                                props=props_dict,
                                header_title=_('form.lotse.header-title'))
