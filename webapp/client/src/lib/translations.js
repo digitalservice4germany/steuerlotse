@@ -40,6 +40,17 @@ const translations = {
       listItem3:
         "pauschal besteuerte Einkünfte aus geringfügigen Beschäftigungen (Mini-Jobs) bis zu einer Höhe von insgesamt 450 Euro monatlich",
     },
+    sessionNote: {
+      title: "Hinweis zur Sitzung",
+      listItem1:
+        "Ihre Daten gehören Ihnen und werden erst übermittelt, wenn Sie Ihre Steuererklärung verschicken.",
+      listItem2:
+        "Aus diesem Grund werden Ihre Angaben derzeit nicht zwischengespeichert. Sie müssen Ihre Steuererklärung daher <bold>in einer Sitzung abschließen.</bold>",
+      listItem3:
+        "Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <bold>länger als 3 Stunden</bold> nichts mehr auf dieser Webseite machen, werden Sie aus Sicherheitsgründen automatisch abgemeldet.",
+      listItem4:
+        "Sie können alle Angaben vor Versand noch einmal kontrollieren.",
+    },
     declarationEdaten: {
       intro1:
         "Da viele Informationen der Finanzverwaltung bereits vorliegen, müssen Sie diese nicht mehr in Ihre Steuererklärung eintragen. Dazu gehören zum Beispiel die elektronisch an die Finanzverwaltung übermittelten inländischen Renteneinkünfte, Pensionen und Krankenversicherungsbeiträge.",

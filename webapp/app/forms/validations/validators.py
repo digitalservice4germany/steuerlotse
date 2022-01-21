@@ -14,7 +14,8 @@ from app.forms.valid_characters import VALID_ELSTER_CHARACTERS, VALID_UNLOCK_COD
 # TODO: Unify validation and error messages (some is done on the client, some on the backend)
 #       and potentially move more into client.
 
-# 15 instead of 12 because Euro fields have ',00' attached
+# 15 instead of 12 because Euro fields have '00' attached
+# TODO: If we change the euro field to the react component 'FormFieldEuroInput' we can change it to 12
 EURO_FIELD_MAX_LENGTH = 15
 
 

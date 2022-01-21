@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-20 19:26+0100\n"
+"POT-Creation-Date: 2022-01-21 11:13+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -945,7 +945,7 @@ msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 #: app/forms/steps/lotse/personal_data.py:288
 #: app/forms/steps/unlock_code_activation_steps.py:20
 #: app/forms/steps/unlock_code_request_steps.py:21
-#: app/forms/steps/unlock_code_revocation_steps.py:24
+#: app/forms/steps/unlock_code_revocation_steps.py:22
 msgid "validate.missing-idnr"
 msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
 
@@ -1031,33 +1031,39 @@ msgstr ""
 "sich nicht erneut registrieren und bekommen einen Brief mit Ihrem "
 "persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:23
+#: app/forms/steps/unlock_code_revocation_steps.py:21
 msgid "unlock-code-revocation.idnr"
 msgstr "Steueridentifikationsnummer"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:25
+#: app/forms/steps/unlock_code_revocation_steps.py:23
 msgid "unlock-code-revocation.dob"
 msgstr "Geburtsdatum"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:27
+#: app/forms/steps/unlock_code_revocation_steps.py:25
 msgid "validate.day-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:32
+#: app/forms/steps/unlock_code_revocation_steps.py:30
 msgid "form.unlock-code-revocation.input-title"
 msgstr "Ihre Dateneingabe zur Stornierung"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:33
+#: app/forms/steps/unlock_code_revocation_steps.py:31
 msgid "form.unlock-code-revocation.input-intro"
 msgstr ""
 "Wenn Sie Ihren Freischaltcode verloren haben oder aus anderen Gründen "
 "einen neuen beantragen wollen, können Sie den alten hier stornieren."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:62
+#: app/forms/steps/unlock_code_revocation_steps.py:52
+#: app/forms/steps/unlock_code_revocation_steps.py:77
+#: app/forms/steps/unlock_code_revocation_steps.py:95
+msgid "form.unlock-code-revocation.header-title"
+msgstr "Stornieren - Der Steuerlotse für Rente und Pension"
+
+#: app/forms/steps/unlock_code_revocation_steps.py:60
 msgid "form.unlock-code-revocation.success-title"
 msgstr "Stornierung erfolgreich"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:63
+#: app/forms/steps/unlock_code_revocation_steps.py:61
 msgid "form.unlock-code-revocation.success-intro"
 msgstr ""
 "Ihr Freischaltcode wurde storniert. Wenn Sie einen Neuen beantragen "
@@ -1124,8 +1130,8 @@ msgstr "Keine Beantragung"
 #: app/forms/steps/lotse/personal_data.py:183
 #: app/forms/steps/lotse/personal_data.py:274
 #: app/forms/steps/lotse/personal_data.py:365
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:21
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:61
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:20
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:60
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:21
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:189
 msgid "form.lotse.mandatory_data.label"
@@ -1159,9 +1165,9 @@ msgstr[1] "Behinderungsbedingte Fahrtkostenpauschale für Person A"
 #: app/forms/steps/lotse/pauschbetrag.py:145
 #: app/forms/steps/lotse/pauschbetrag.py:206
 #: app/forms/steps/lotse/personal_data.py:394
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:54
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:94
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:110
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:53
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:93
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:120
 msgid "form.lotse.header-title"
 msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
@@ -2510,16 +2516,16 @@ msgstr ""
 "und ggf. Ihr Partner bzw. Ihre Partnerin keine weiteren Einkünfte hatten,"
 " außer:"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:60
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:59
 msgid "form.lotse.field_declaration_edaten.label"
 msgstr "Übernahme vorliegender Daten"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:65
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:79
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:64
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:78
 msgid "form.lotse.declaration-edaten-title"
 msgstr "Einverständnis zur automatischen Übernahme vorliegender Daten"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:66
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:65
 msgid "form.lotse.declaration-edaten-intro"
 msgstr ""
 "Da viele Informationen der Finanzverwaltung bereits vorliegen, müssen Sie"
@@ -2530,49 +2536,24 @@ msgstr ""
 "wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen "
 "Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle."
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:72
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:71
 msgid "form.lotse.field_declaration_edaten"
 msgstr ""
 "Ich bzw. wir sind damit einverstanden, dass die Festsetzung meiner / "
 "unserer Einkommensteuer anhand der elektronisch vorliegenden Daten "
 "erfolgt, die der Finanzbehörde vorliegen."
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:73
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:72
 msgid "form.lotse.declaration_edaten.required"
 msgstr "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:74
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:73
 msgid "form.lotse.field_declaration_edaten.data_label"
 msgstr "Einverständnis vorhanden"
 
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:102
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:104
 msgid "form.lotse.session-note.title"
 msgstr "Hinweis zur Sitzung"
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:106
-msgid "form.lotse.session-note.list-item-1"
-msgstr ""
-"Ihre Daten gehören Ihnen und werden erst übermittelt, wenn Sie Ihre "
-"Steuererklärung verschicken."
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:107
-msgid "form.lotse.session-note.list-item-2"
-msgstr ""
-"Aus diesem Grund werden Ihre Angaben derzeit nicht zwischengespeichert. "
-"Sie müssen Ihre Steuererklärung daher <b>in einer Sitzung "
-"abschließen.</b>"
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:108
-msgid "form.lotse.session-note.list-item-3"
-msgstr ""
-"Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer "
-"Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <b>länger "
-"als 3 Stunden</b> nichts mehr auf dieser Webseite machen, werden Sie aus "
-"Sicherheitsgründen automatisch abgemeldet."
-
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:109
-msgid "form.lotse.session-note.list-item-4"
-msgstr "Sie können alle Angaben vor Versand noch einmal kontrollieren."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:20
 msgid "form.lotse.step_familienstand.label"
@@ -5444,68 +5425,3 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#~ msgid "form.unlock-code-revocation.header-title"
-#~ msgstr "Stornieren - Der Steuerlotse für Rente und Pension"
-
-#~ msgid "register.success.next-steps.heading"
-#~ msgstr "So geht es weiter"
-
-#~ msgid "register.success.next-steps.step-1"
-#~ msgstr ""
-#~ "Sie bekommen von Ihrem Finanzamt den "
-#~ "<b>Brief mit Ihrem persönlichen "
-#~ "Freischaltcode</b> zugeschickt."
-
-#~ msgid "register.success.next-steps.step-2"
-#~ msgstr ""
-#~ "Sie können sich auf Ihre Steuererklärung"
-#~ " vorbereiten bis Sie den Brief "
-#~ "erhalten haben. Sammeln Sie dazu alle"
-#~ " notwendigen Unterlagen sowie Belege. Eine"
-#~ " Übersicht über die notwendigen Unterlagen,"
-#~ " die Sie für die Erstellung Ihrer "
-#~ "Steuererklärung brauchen, finden Sie in "
-#~ "unserer <a href=%(link)s>Vorbereitungshilfe</a>."
-
-#~ msgid "register.success.next-steps.step-3"
-#~ msgstr ""
-#~ "Wenn Sie den Brief erhalten haben "
-#~ "und vorbereitet sind, gehen Sie erneut"
-#~ " auf www.steuerlotse-rente.de"
-
-#~ msgid "register.success.next-steps.step-4"
-#~ msgstr ""
-#~ "Wählen Sie den Menüpunkt <a "
-#~ "href=%(link)s> Ihre Steuererklärung</a> und "
-#~ "melden sich mit Ihrem Freischaltcode an."
-#~ " Nach der Anmeldung können Sie das"
-#~ " Steuerformular ausfüllen und verschicken."
-
-#~ msgid "register.success.letter.heading"
-#~ msgstr "So sieht der Brief aus, den Sie erhalten werden"
-
-#~ msgid "register.success.letter.intro"
-#~ msgstr ""
-#~ "Auf dem Brief wird der "
-#~ "DigitalService4Germany als Antragsteller angegeben."
-#~ " Die Organisation ist der Betreiber "
-#~ "des Steuerlotsen. Ihren Freischaltcode finden"
-#~ " Sie auf der letzten Seite des "
-#~ "Briefes."
-
-#~ msgid "register.success.preparation.heading"
-#~ msgstr "Wie Sie sich auf Ihre Steuererklärung vorbereiten können"
-
-#~ msgid "register.success.preparation.intro"
-#~ msgstr ""
-#~ "Unsere Vorbereitungshilfe gibt Ihnen einen "
-#~ "Überblick darüber, welche Unterlagen Sie "
-#~ "für die Erstellung Ihrer Steuererklärung "
-#~ "beim Steuerlotsen brauchen, und erklärt, "
-#~ "wie Sie nach Erhalt des Briefes "
-#~ "fortfahren."
-
-#~ msgid "register.success.preparation.button"
-#~ msgstr "Vorbereitungshilfe herunterladen"
-
