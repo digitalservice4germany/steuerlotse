@@ -16,8 +16,7 @@ const DEFAULT_PROPS = {
 
 const OVERVIEW_PROPS = {
   form: {
-    action: "#form-submit",
-    csrfToken: "abc123imacsrftoken",
+    ...StepFormDefault.args,
     showOverviewButton: true,
   },
   prevUrl: "/some/prev/path",

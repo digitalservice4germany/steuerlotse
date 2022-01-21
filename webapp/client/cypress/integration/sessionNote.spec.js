@@ -35,7 +35,7 @@ describe("SessionNote with overview button", () => {
     cy.url().should("include", "/lotse/step/familienstand");
   });
 
-  it("not having overview button", () => {
+  it("going to overview page", () => {
     cy.get("button[type=submit]").contains("Zurück").click();
     cy.url().should("include", "/lotse/step/summary");
   });

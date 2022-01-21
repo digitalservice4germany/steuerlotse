@@ -1,6 +1,7 @@
 import React from "react";
 
 import SessionNotePage from "../pages/SessionNotePage";
+import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
   title: "Pages/SessionNote",
@@ -14,8 +15,7 @@ function Template(args) {
 export const Default = Template.bind({});
 Default.args = {
   form: {
-    action: "#form-submit",
-    csrfToken: "abc123imacsrftoken",
+    ...StepFormDefault,
     showOverviewButton: true,
   },
   prevUrl: "/previous/step",
