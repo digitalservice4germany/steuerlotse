@@ -56,6 +56,13 @@ describe("FormFieldEuroInput", () => {
       userEvent.tab();
       expect(screen.getByRole("textbox")).not.toHaveFocus();
     });
+
+    it("Should pad fractional zeroes when focus is lost", () => {
+      userEvent.tab();
+      userEvent.keyboard("123");
+      userEvent.tab();
+      expect(screen.getByLabelText("Label")).toHaveValue("123,00");
+    });
   });
 
   describe("When fieldWidth given", () => {
@@ -100,7 +107,7 @@ describe("FormFieldEuroInput", () => {
 
     it("Should limit input of values", () => {
       userEvent.type(screen.getByLabelText("Label"), "123456789,10");
-      expect(screen.getByLabelText("Label")).toHaveValue("12.345");
+      expect(screen.getByLabelText("Label")).toHaveValue("1.234");
     });
 
     it("should not set width class", () => {
@@ -109,8 +116,8 @@ describe("FormFieldEuroInput", () => {
 
     it("Should limit input of values when using keyboard", () => {
       userEvent.tab();
-      userEvent.keyboard("123,456");
-      expect(screen.getByLabelText("Label")).toHaveValue("123,45");
+      userEvent.keyboard("1234,56");
+      expect(screen.getByLabelText("Label")).toHaveValue("1.234");
     });
   });
 });
