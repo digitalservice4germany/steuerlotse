@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import "./lib/i18n";
 import LoginPage from "./pages/LoginPage";
 import LoginFailurePage from "./pages/LoginFailurePage";
+import LogoutPage from "./pages/LogoutPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import RevocationPage from "./pages/RevocationPage";
 import RevocationSuccessPage from "./pages/RevocationSuccessPage";
@@ -23,17 +24,24 @@ import PauschbetragPersonBPage from "./pages/PauschbetragPersonBPage";
 import FahrtkostenpauschalePersonAPage from "./pages/FahrtkostenpauschalePersonAPage";
 import FahrtkostenpauschalePersonBPage from "./pages/FahrtkostenpauschalePersonBPage";
 import NoPauschbetragPage from "./pages/NoPauschbetragPage";
+import DeclarationEDatenPage from "./pages/DeclarationEDatenPage";
 import UnlockCodeSuccessPage from "./pages/UnlockCodeSuccessPage";
+import UnlockCodeFailurePage from "./pages/UnlockCodeFailurePage";
+import RevocationFailurePage from "./pages/RevocationFailurePage";
 
 const allowedComponents = {
   RegistrationPage,
   LoginPage,
   LoginFailurePage,
+  LogoutPage,
   RevocationPage,
   RevocationSuccessPage,
+  RevocationFailurePage,
   UnlockCodeSuccessPage,
+  UnlockCodeFailurePage,
   DeclarationIncomesPage,
   SessionNotePage,
+  DeclarationEDatenPage,
   TaxNumberPage,
   HasDisabilityPersonAPage,
   MerkzeichenPersonAPage,

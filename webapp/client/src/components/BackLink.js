@@ -1,17 +1,41 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import backArrow from "../assets/icons/arrow_back.svg";
+import { ReactComponent as BackArrow } from "../assets/icons/arrow_back.svg";
 
 const Anchor = styled.a`
+  display: inline-flex;
+  align-items: center;
   font-weight: var(--font-bold);
   font-size: var(--text-sm);
-  line-height: var(--lineheight-s);
   text-transform: uppercase;
   letter-spacing: var(--tracking-extra-wide);
-  text-decoration: none !important;
+  text-decoration: none;
+
+  > svg {
+    margin-right: 5px;
+  }
 
   &:focus {
+    span:last-child {
+      background-color: var(--focus-color);
+      border-bottom: 1px solid var(--text-color);
+    }
+
+    > svg {
+      circle {
+        fill: var(--focus-color);
+      }
+    }
+  }
+
+  &:hover {
     text-decoration: none;
+
+    > svg {
+      circle {
+        fill: var(--icon-hover-color);
+      }
+    }
   }
 
   &:visited {
@@ -20,30 +44,19 @@ const Anchor = styled.a`
 
   &:focus &:active {
     color: var(--text-color);
-    background-color: none;
   }
 `;
 
 const LinkElement = styled.span`
   color: var(--text-color);
-  vertical-align: middle;
-`;
-
-const Icon = styled(LinkElement)`
-  --size: var(--back-link-size);
-  content: url(${backArrow});
-  margin: 3px 3px 3px 0px;
-
-  width: var(--size);
-  height: var(--size);
-
-  border-radius: 50%;
+  border-bottom: 1px solid transparent;
+  padding: 3px 3px 0;
 `;
 
 export default function BackLink({ text, url }) {
   return (
     <Anchor href={url}>
-      <Icon />
+      <BackArrow />
       <LinkElement>{text}</LinkElement>
     </Anchor>
   );

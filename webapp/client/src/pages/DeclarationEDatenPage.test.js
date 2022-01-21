@@ -1,0 +1,93 @@
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { configure } from "@testing-library/dom";
+import DeclarationEDatenPage from "./DeclarationEDatenPage";
+import { Default as StepFormDefault } from "../stories/StepForm.stories";
+
+configure({ testIdAttribute: "id" });
+
+const defaultProps = {
+  stepHeader: {
+    title: "Title",
+  },
+  form: {
+    ...StepFormDefault.args,
+  },
+  fields: {
+    declarationEdaten: {
+      checked: false,
+      errors: [],
+    },
+  },
+  prevUrl: "/some/prev/path",
+};
+
+describe("DeclarationEDatenPage default", () => {
+  beforeEach(() => {
+    render(<DeclarationEDatenPage {...defaultProps} />);
+  });
+
+  it("should render step title text", () => {
+    expect(screen.getByText("Title")).toBeInTheDocument();
+  });
+
+  it("should render back button", () => {
+    expect(screen.getByText("Zurück")).toBeInTheDocument();
+  });
+
+  it("should render checked value false", () => {
+    expect(screen.getByTestId("declaration_edaten").checked).toBe(false);
+  });
+});
+
+const checkedProps = {
+  stepHeader: {
+    title: "title",
+  },
+  form: {
+    ...StepFormDefault.args,
+  },
+  fields: {
+    declarationEdaten: {
+      checked: true,
+      errors: [],
+    },
+  },
+  prevUrl: "/some/prev/path",
+};
+
+describe("With checked checkbox", () => {
+  beforeEach(() => {
+    render(<DeclarationEDatenPage {...checkedProps} />);
+  });
+
+  it("should render checked value true", () => {
+    expect(screen.getByTestId("declaration_edaten").checked).toBe(true);
+  });
+});
+
+const errorProps = {
+  stepHeader: {
+    title: "title",
+  },
+  form: {
+    ...StepFormDefault.args,
+  },
+  fields: {
+    declarationEdaten: {
+      checked: false,
+      errors: ["Error1"],
+    },
+  },
+  prevUrl: "/some/prev/path",
+};
+
+describe("With error value", () => {
+  beforeEach(() => {
+    render(<DeclarationEDatenPage {...errorProps} />);
+  });
+
+  it("should render error value", () => {
+    expect(screen.getByText("Error1")).toBeInTheDocument();
+  });
+});

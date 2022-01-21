@@ -1,4 +1,4 @@
-from flask import render_template, url_for
+from flask import url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
@@ -9,8 +9,9 @@ from app.forms.fields import ConfirmationField, SteuerlotseDateField, IdNrField
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.validations.validators import ValidIdNr
 from app.forms.validations.date_validations import ValidDateOfBirth
-from app.model.components import RegistrationProps, UnlockCodeSuccessProps
+from app.model.components import RegistrationProps, UnlockCodeSuccessProps, UnlockCodeFailureProps
 from app.model.components.helpers import form_fields_dict
+from app.templates.react_template import render_react_template
 
 
 class UnlockCodeRequestInputStep(FormStep):
@@ -53,8 +54,7 @@ class UnlockCodeRequestInputStep(FormStep):
             data_privacy_link=url_for('data_privacy'),
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='RegistrationPage',
+        return render_react_template(component='RegistrationPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=render_info.form,
@@ -76,8 +76,7 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
             vorbereitungs_hilfe_link=url_for('download_preparation'),
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='UnlockCodeSuccessPage',
+        return render_react_template(component='UnlockCodeSuccessPage',
                                props=props_dict,
                                header_title=_('form.unlock-code-request.header-title'))
 
@@ -91,5 +90,10 @@ class UnlockCodeRequestFailureStep(DisplayStep):
             intro=_('form.unlock-code-request.failure-intro'), **kwargs)
 
     def render(self, data, render_info):
-        return render_template('basis/display_failure.html', render_info=render_info,
+        props_dict = UnlockCodeFailureProps(
+            prev_url=url_for('unlock_code_request', step='data_input'),
+        ).camelized_dict()
+
+        return render_react_template(component='UnlockCodeFailurePage',
+                               props=props_dict,
                                header_title=_('form.unlock-code-request.header-title'))

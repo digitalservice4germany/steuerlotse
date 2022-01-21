@@ -20,6 +20,12 @@ const translations = {
     back: "Zurück",
     backToOverview: "Zurück zur Übersicht",
     next: "Weiter",
+    logout: {
+      button: "Abmelden",
+      title: "Sind Sie sicher, dass Sie sich abmelden möchten?",
+      intro:
+        "Ihre bisher eingetragenen Angaben werden erst an uns übermittelt, wenn Sie Ihre Steuererklärung verschicken. Ihre Steuererklärung wird daher nicht zwischengespeichert. Wenn Sie sich abmelden, kann es sein, dass Ihre Angaben bei der nächsten Anmeldung nicht mehr vorhanden sind.",
+    },
   },
   lotse: {
     fieldDeclarationIncomes: {
@@ -44,6 +50,14 @@ const translations = {
         "Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <bold>länger als 3 Stunden</bold> nichts mehr auf dieser Webseite machen, werden Sie aus Sicherheitsgründen automatisch abgemeldet.",
       listItem4:
         "Sie können alle Angaben vor Versand noch einmal kontrollieren.",
+    },
+    declarationEdaten: {
+      intro1:
+        "Da viele Informationen der Finanzverwaltung bereits vorliegen, müssen Sie diese nicht mehr in Ihre Steuererklärung eintragen. Dazu gehören zum Beispiel die elektronisch an die Finanzverwaltung übermittelten inländischen Renteneinkünfte, Pensionen und Krankenversicherungsbeiträge.",
+      intro2:
+        "Welche Beträge über Sie übermittelt wurden, können Sie den Bescheiden entnehmen, die Sie von der jeweiligen Stelle per Post erhalten haben. Die Daten kommen aus der gleichen Quelle.",
+      labelText:
+        "Ich bzw. wir sind damit einverstanden, dass die Festsetzung meiner / unserer Einkommensteuer anhand der elektronisch vorliegenden Daten erfolgt, die der Finanzbehörde vorliegen.",
     },
     confirmation: {
       fieldRegistrationConfirmDataPrivacy: {
@@ -292,6 +306,22 @@ const translations = {
         intro:
           "Unsere Vorbereitungshilfe gibt Ihnen einen Überblick darüber, welche Unterlagen Sie für die Erstellung Ihrer Steuererklärung beim Steuerlotsen brauchen, und erklärt, wie Sie nach Erhalt des Briefes fortfahren.",
         anchor: "Vorbereitungshilfe herunterladen",
+      },
+    },
+    failure: {
+      header: {
+        title: "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
+        intro:
+          "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+      },
+    },
+  },
+  revocation: {
+    failure: {
+      header: {
+        title: "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
+        intro:
+          "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun.",
       },
     },
   },

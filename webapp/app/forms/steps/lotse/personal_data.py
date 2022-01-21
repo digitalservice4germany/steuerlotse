@@ -1,4 +1,4 @@
-from flask import flash, Markup, render_template
+from flask import flash, Markup
 from flask_wtf.csrf import generate_csrf
 from pydantic import ValidationError, root_validator
 from wtforms import validators, SelectField, RadioField
@@ -22,7 +22,8 @@ from app.forms.validations.validators import ValidHessenTaxNumber, ValidTaxNumbe
 from app.forms.validations.validators import DecimalOnly, IntegerLength
 from app.model.components import TaxNumberStepFormProps, TelephoneNumberProps
 from app.model.components.helpers import form_fields_dict
-from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel, BaseModel
+from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
+from app.templates.react_template import render_react_template
 
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
@@ -165,8 +166,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             number_of_users=2 if show_person_b(self.stored_data) else 1
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='TaxNumberPage',
+        return render_react_template(component='TaxNumberPage',
                                props=props_dict,
                                # TODO: These are still required by base.html to set the page title.
                                form=self.render_info.form,
@@ -388,8 +388,7 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url,
         ).camelized_dict()
 
-        return render_template('react_component.html',
-                               component='TelephoneNumberPage',
+        return render_react_template(component='TelephoneNumberPage',
                                props=props_dict,
                                form=self.render_info.form,
                                header_title=_('form.lotse.header-title'))

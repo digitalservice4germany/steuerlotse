@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/dom": "^8.11.1",
+    "@testing-library/dom": "^8.11.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -14,9 +14,10 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-jest": "^25.3.4",
+    "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-storybook": "^0.5.5",
     "http-proxy-middleware": "^2.0.1",
     "i18next": "^21.6.6",
     "jquery": "3.6.0",
@@ -34,14 +35,14 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.4.8",
-    "@storybook/addon-essentials": "^6.4.8",
-    "@storybook/addon-links": "^6.4.8",
-    "@storybook/node-logger": "^6.4.8",
+    "@storybook/addon-actions": "^6.4.13",
+    "@storybook/addon-essentials": "^6.4.13",
+    "@storybook/addon-links": "^6.4.13",
+    "@storybook/node-logger": "^6.4.13",
     "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.4.8",
+    "@storybook/react": "^6.4.13",
     "husky": "^7.0.2",
-    "lint-staged": "^12.1.7",
+    "lint-staged": "^12.2.0",
     "prettier": "2.5.1"
   },
   "scripts": {

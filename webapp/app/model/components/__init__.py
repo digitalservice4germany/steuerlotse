@@ -21,6 +21,12 @@ class FormProps(ComponentProps):
     next_button_label: Optional[str]
 
 
+class FormPropsNoOverview(ComponentProps):
+    action: str
+    csrf_token: str
+    next_button_label: Optional[str]
+
+
 class InputFieldProps(ComponentProps):
     value: Union[str, List[str]]
     errors: List[str]
@@ -67,6 +73,10 @@ class LoginProps(StepFormProps):
     pass
 
 
+class LogoutProps(ComponentProps):
+    form: FormPropsNoOverview
+
+
 class LoginFailureProps(StepDisplayProps):
     registration_link: str
     revocation_link: str
@@ -85,6 +95,10 @@ class UnlockCodeSuccessProps(ComponentProps):
     vorbereitungs_hilfe_link: str
 
 
+class UnlockCodeFailureProps(ComponentProps):
+    prev_url: Optional[str]
+
+
 class RevocationProps(StepFormProps):
     pass
 
@@ -93,8 +107,16 @@ class RevocationSuccessProps(StepDisplayProps):
     pass
 
 
+class RevocationFailureProps(ComponentProps):
+    prev_url: Optional[str]
+
+
 class DeclarationIncomesProps(StepFormProps):
     pass
+
+
+class DeclarationEDatenProps(StepFormProps):
+    prev_url: str
 
 
 class ConfirmationProps(StepFormProps):

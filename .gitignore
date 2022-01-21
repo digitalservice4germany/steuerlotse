@@ -59,6 +59,7 @@ instance/
 env
 .venv
 .env
+source_env
 env/
 venv/
 ENV/
