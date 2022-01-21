@@ -19,9 +19,6 @@ function FormFieldEuroInput({
   details,
   errors,
 }) {
-  // To adapt for the thousandsSeparator sign increase the maxLength
-  const calculatedMaxLength =
-    maxLength !== undefined ? maxLength + Math.floor(maxLength / 3) : undefined;
   return (
     <FormFieldScaffolding
       {...{
@@ -46,10 +43,11 @@ function FormFieldEuroInput({
             inputMode="numeric"
             pattern="[0-9]*"
             mask={Number}
+            padFractionalZeros
             thousandsSeparator="."
             radix=","
             mapToRadix={[]} // Overwrite to prevent that the thousandsSeparator '.' is mapped to radix
-            maxLength={calculatedMaxLength}
+            maxLength={maxLength}
             // TODO: autofocus is under review.
             // eslint-disable-next-line
             autoFocus={autofocus || Boolean(errors.length)}
