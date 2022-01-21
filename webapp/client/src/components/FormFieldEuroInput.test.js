@@ -105,9 +105,11 @@ describe("FormFieldEuroInput", () => {
       render(<FormFieldEuroInput {...props} />);
     });
 
-    it("Should limit input of values", () => {
-      userEvent.type(screen.getByLabelText("Label"), "123456789,10");
-      expect(screen.getByLabelText("Label")).toHaveValue("1.234");
+    it("Should limit pre-decimals but not decimals", () => {
+      userEvent.type(screen.getByLabelText("Label"), "12345");
+      expect(screen.getByLabelText("Label")).toHaveValue("12.345");
+      userEvent.type(screen.getByLabelText("Label"), ",99");
+      expect(screen.getByLabelText("Label")).toHaveValue("12.345,99");
     });
 
     it("should not set width class", () => {
@@ -116,8 +118,8 @@ describe("FormFieldEuroInput", () => {
 
     it("Should limit input of values when using keyboard", () => {
       userEvent.tab();
-      userEvent.keyboard("1234,56");
-      expect(screen.getByLabelText("Label")).toHaveValue("1.234");
+      userEvent.keyboard("12345,565");
+      expect(screen.getByLabelText("Label")).toHaveValue("12.345,56");
     });
   });
 });

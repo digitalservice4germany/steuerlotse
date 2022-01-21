@@ -19,6 +19,9 @@ function FormFieldEuroInput({
   details,
   errors,
 }) {
+  const maxTemplate = "9.99";
+  const maxMask = maxTemplate.padStart(maxLength + maxTemplate.length - 1, "9");
+
   return (
     <FormFieldScaffolding
       {...{
@@ -47,7 +50,8 @@ function FormFieldEuroInput({
             thousandsSeparator="."
             radix=","
             mapToRadix={[]} // Overwrite to prevent that the thousandsSeparator '.' is mapped to radix
-            maxLength={maxLength}
+            // This will convert the max length to a max number (prevent max character length and decimal / thousands separator)
+            max={maxMask}
             // TODO: autofocus is under review.
             // eslint-disable-next-line
             autoFocus={autofocus || Boolean(errors.length)}
@@ -84,7 +88,7 @@ FormFieldEuroInput.defaultProps = {
   required: FormFieldSeparatedField.defaultProps.required,
   label: FieldLabel.defaultProps.label,
   fieldWidth: 25,
-  maxLength: undefined,
+  maxLength: 13,
   currency: "€",
   details: FieldLabel.defaultProps.details,
 };
