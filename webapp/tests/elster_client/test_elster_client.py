@@ -17,7 +17,8 @@ from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValid
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterResponseUnexpectedStructure, \
     ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, GeneralEricaError, EricaIsMissingFieldError, \
-    ElsterRequestAlreadyRevoked, ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError
+    ElsterRequestAlreadyRevoked, ElsterInvalidBufaNumberError, ElsterInvalidTaxNumberError, EricaRequestTimeoutError, \
+    EricaRequestConnectionError
 from app.elster_client.elster_client import send_unlock_code_request_with_elster, \
     check_pyeric_response_for_errors
 from app.utils import VERANLAGUNGSJAHR
@@ -105,6 +106,28 @@ class TestSendEst(unittest.TestCase):
                                   include_elster_responses=False)
         finally:
             MockErica.eric_transfer_error_occurred = False
+
+    def test_if_erica_timeout_error_occurred_raise_error(self):
+        MockErica.invalid_request_timeout_occurred = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
+                self.assertRaises(EricaRequestTimeoutError, send_est_with_elster, self.valid_form_data, 'IP',
+                                  include_elster_responses=False)
+        finally:
+            MockErica.invalid_request_timeout_occurred = False
+
+    def test_if_erica_connection_error_occurred_raise_error(self):
+        MockErica.invalid_request_connection_error_occurred = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                    patch('app.elster_client.elster_client.current_user',
+                          MagicMock(is_active=True, is_authenticated=True)):
+                self.assertRaises(EricaRequestConnectionError, send_est_with_elster, self.valid_form_data, 'IP',
+                                  include_elster_responses=False)
+        finally:
+            MockErica.invalid_request_connection_error_occurred = False
 
     def test_if_eric_transfer_error_with_responses_occurred_raise_error_with_responses(self):
         MockErica.eric_transfer_error_occurred = True

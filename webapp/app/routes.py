@@ -92,11 +92,6 @@ def extract_information_from_request():
 def register_request_handlers(app):
     app.before_request(log_flask_request)
 
-    @app.route('/test')
-    @add_caching_headers
-    def test():
-        raise EricaRequestConnectionError()
-
     # Multistep flows
 
     @login_manager.user_loader

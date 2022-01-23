@@ -1,6 +1,8 @@
 from typing import List, Tuple
 
+import requests
 from flask import json
+from requests import RequestException
 
 from app.config import Config
 from app.utils import VERANLAGUNGSJAHR
@@ -45,6 +47,8 @@ class MockErica:
     invalid_bufa_number_error_occurred = False
     invalid_tax_number_error_occurred = False
     tax_number_is_invalid = False
+    invalid_request_timeout_occurred = False
+    invalid_request_connection_error_occurred = False
 
     INVALID_ID = 'C3PO'
 
@@ -341,3 +345,11 @@ class MockErica:
         # InvalidTaxNumberError
         if MockErica.invalid_tax_number_error_occurred:
             return get_json_response('invalid_tax_number')
+
+        # Connection Timeout
+        if MockErica.invalid_request_timeout_occurred:
+            raise requests.Timeout(response=MockResponse(None, '503'))
+
+        # Connection Error
+        if MockErica.invalid_request_connection_error_occurred:
+            raise requests.ConnectionError(response=MockResponse(None, '504'))

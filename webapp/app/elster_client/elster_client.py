@@ -6,7 +6,7 @@ from decimal import Decimal
 import requests
 from flask_login import current_user, logout_user
 from markupsafe import escape
-from requests import RequestException
+from requests import RequestException, Timeout
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_address_entry
@@ -51,11 +51,11 @@ def send_to_erica(*args, **kwargs):
             response = requests.post(*args, headers=headers, timeout=_REQUEST_TIMEOUT, **kwargs)
             logger.info(f'Completed Erica POST request with args {args!r}, got code {response.status_code}')
         return response
-    except RequestException as error:
-        if error is TimeoutError:
+    except requests.RequestException as error:
+        if type(error) is Timeout:
             logger.info(f'Erica POST request raised a timeout exception, got code {error.response.status_code}')
             raise EricaRequestTimeoutError(error)
-        if error is ConnectionError:
+        if type(error) is requests.ConnectionError:
             logger.info(f'Erica POST request raised a connection exception, got code {error.response.status_code}')
             raise EricaRequestConnectionError(error)
         logger.info(f'Erica POST request raised an exception, got code {error.response.status_code}')
