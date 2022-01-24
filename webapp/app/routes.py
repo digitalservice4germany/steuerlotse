@@ -114,7 +114,8 @@ def register_request_handlers(app):
                 user = login_manager._user_callback(user_id)
             return user is not None
 
-        current_app.logger.info('{' + f"'Session protection intact: {not login_manager._session_protection_failed()},"
+        current_app.logger.info('{' + f"'Request has session cookie: {'session' in request.cookies},"
+                                      f"'Session protection intact: {not login_manager._session_protection_failed()},"
                                       f"'User_id in session': {'_user_id' in session},"
                                       f"'User is in database': {is_user_in_database()}"
                                 + '}'
