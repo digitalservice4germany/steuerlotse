@@ -2935,7 +2935,7 @@ msgstr "Die Angabe ist %(diff)s Zeichen zu lang."
 
 #: app/forms/validations/validators.py:53
 msgid "validate.integer-length-max"
-msgstr "Das Feld darf maximal %(max)s Ziffern lang sein."
+msgstr "Die Angabe darf insgesamt maximal %(max)s Zeichen lang sein."
 
 #: app/forms/validations/validators.py:55
 msgid "validate.integer-length-min"
