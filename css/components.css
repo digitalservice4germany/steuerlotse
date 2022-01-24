@@ -374,11 +374,14 @@
 
 /* LINKS */
 .back-link{
-    font-weight: var(--font-bold);
-    font-size: var(--text-sm);
-    line-height: var(--lineheight-s);
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-extra-wide);
+  display: inline-flex;
+  align-items: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-extra-wide);
+  text-decoration: none;
+  padding-top: 0.3rem;
 }
 
 a.back-link{
@@ -401,18 +404,16 @@ a.back-link:focus a.back-link:active{
 .back-link-icon {
     --size: var(--back-link-size);
     content: url("/icons/arrow_back.svg");
-    margin: 3px 3px 3px 0px;
-
+    margin-right: 8px;
+    margin-top: -1px;
     width: var(--size);
     height: var(--size);
-
     color: var(--text-color);
-
-    border-radius: 50%;
 }
 
 .back-link-element{
     vertical-align: middle;
+    line-height: 1.6rem;
 }
 
 .edit-button {
