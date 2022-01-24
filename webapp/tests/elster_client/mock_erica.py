@@ -345,11 +345,3 @@ class MockErica:
         # InvalidTaxNumberError
         if MockErica.invalid_tax_number_error_occurred:
             return get_json_response('invalid_tax_number')
-
-        # Connection Timeout
-        if MockErica.invalid_request_timeout_occurred:
-            raise requests.Timeout(response=MockResponse(None, '503'))
-
-        # Connection Error
-        if MockErica.invalid_request_connection_error_occurred:
-            raise requests.ConnectionError(response=MockResponse(None, '504'))

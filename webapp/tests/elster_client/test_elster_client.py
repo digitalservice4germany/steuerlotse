@@ -5,13 +5,14 @@ from decimal import Decimal, DecimalException
 from unittest.mock import patch, MagicMock
 
 import pytest
+import requests
 from markupsafe import escape
 
 from app.config import Config
 from app.elster_client.elster_client import _generate_est_request_data, _BOOL_KEYS, _DECIMAL_KEYS, \
     _DATE_KEYS, _extract_est_response_data, send_unlock_code_activation_with_elster, \
     send_unlock_code_revocation_with_elster, validate_est_with_elster, send_est_with_elster, _log_address_data, \
-    validate_tax_number, TaxDeclarationNotDigitallySigned
+    validate_tax_number, TaxDeclarationNotDigitallySigned, send_to_erica
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
@@ -107,27 +108,35 @@ class TestSendEst(unittest.TestCase):
         finally:
             MockErica.eric_transfer_error_occurred = False
 
-    def test_if_erica_timeout_error_occurred_raise_error(self):
-        MockErica.invalid_request_timeout_occurred = True
+    def test_if_erica_timeout_error_occurred_then_raise_corresponding_error(self):
+        old_use_mock_api_value = Config.USE_MOCK_API
+        Config.USE_MOCK_API = False
         try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user',
-                          MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(EricaRequestTimeoutError, send_est_with_elster, self.valid_form_data, 'IP',
-                                  include_elster_responses=False)
+            with patch('requests.post', side_effect=requests.Timeout(response=MockResponse(None, '503'))):
+                with pytest.raises(EricaRequestTimeoutError):
+                    send_to_erica()
         finally:
-            MockErica.invalid_request_timeout_occurred = False
+            Config.USE_MOCK_API = old_use_mock_api_value
 
     def test_if_erica_connection_error_occurred_raise_error(self):
-        MockErica.invalid_request_connection_error_occurred = True
+        old_use_mock_api_value = Config.USE_MOCK_API
+        Config.USE_MOCK_API = False
         try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client.current_user',
-                          MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(EricaRequestConnectionError, send_est_with_elster, self.valid_form_data, 'IP',
-                                  include_elster_responses=False)
+            with patch('requests.post', side_effect=requests.ConnectionError(response=MockResponse(None, '504'))):
+                with pytest.raises(EricaRequestConnectionError):
+                    send_to_erica()
         finally:
-            MockErica.invalid_request_connection_error_occurred = False
+            Config.USE_MOCK_API = old_use_mock_api_value
+
+    def test_if_erica_request_error_occurred_raise_error(self):
+        old_use_mock_api_value = Config.USE_MOCK_API
+        Config.USE_MOCK_API = False
+        try:
+            with patch('requests.post', side_effect=requests.RequestException(response=MockResponse(None, '500'))):
+                with pytest.raises(GeneralEricaError):
+                    send_to_erica()
+        finally:
+            Config.USE_MOCK_API = old_use_mock_api_value
 
     def test_if_eric_transfer_error_with_responses_occurred_raise_error_with_responses(self):
         MockErica.eric_transfer_error_occurred = True

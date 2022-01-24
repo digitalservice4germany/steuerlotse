@@ -325,14 +325,14 @@ def register_error_handlers(app):
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
 
     @app.errorhandler(EricaRequestTimeoutError)
-    def error_erica(error):
+    def timeout_error_erica(error):
         current_app.logger.error(
             'An Erica Request Timeout error occurred', exc_info=error.original_exception)
         return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica_error.header-title'),
                                js_needed=False), 504
 
     @app.errorhandler(EricaRequestConnectionError)
-    def error_erica(error):
+    def connection_error_erica(error):
         current_app.logger.error(
             'An Erica Request Connection error occurred', exc_info=error.original_exception)
         return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica_error.header-title'),
