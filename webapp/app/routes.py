@@ -11,7 +11,7 @@ from werkzeug.exceptions import InternalServerError
 
 from app.config import Config
 from app.data_access.db_model.user import User
-from app.elster_client.elster_errors import GeneralEricaError
+from app.elster_client.elster_errors import GeneralEricaError, EricaRequestTimeoutError, EricaRequestConnectionError
 from app.extensions import nav, login_manager, limiter, csrf
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
 from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
@@ -23,7 +23,8 @@ from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMult
 from app.forms.flows.unlock_code_request_flow import UnlockCodeRequestMultiStepFlow
 from app.forms.flows.unlock_code_revocation_flow import UnlockCodeRevocationMultiStepFlow
 from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepConfirmation, StepFiling, StepAck
-from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, StepSessionNote
+from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDeclarationIncomes, StepDeclarationEdaten, \
+    StepSessionNote
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 
@@ -272,7 +273,8 @@ def register_request_handlers(app):
     @app.route('/digitalservice')
     @add_caching_headers
     def about_digitalservice():
-        return render_template('content/about_digitalservice.html', header_title=_('about_digitalservice.header-title'), js_needed=False)
+        return render_template('content/about_digitalservice.html', header_title=_('about_digitalservice.header-title'),
+                               js_needed=False)
 
     @app.route('/download_preparation', methods=['GET'])
     @limiter.limit('15 per minute')
@@ -289,11 +291,15 @@ def register_request_handlers(app):
         return 'pong'
 
 
+ERICA_ERROR_TEMPLATE = 'error/erica_error.html'
+
+
 def register_error_handlers(app):
     @app.errorhandler(GeneralEricaError)
     def error_erica(error):
         current_app.logger.exception('A general erica error occurred')
-        return render_template('error/erica_error.html', header_title=_('erica-error.header-title'), js_needed=False), 500
+        return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica-error.header-title'),
+                               js_needed=False), 500
 
     @app.errorhandler(400)
     def error_400(error):
@@ -305,7 +311,8 @@ def register_error_handlers(app):
 
     @app.errorhandler(IncorrectEligibilityData)
     def handle_incorrect_eligibility_data(error):
-        return render_template('error/incorrect_eligiblity_data.html', header_title=_('400.header-title'), js_needed=False), 400
+        return render_template('error/incorrect_eligiblity_data.html', header_title=_('400.header-title'),
+                               js_needed=False), 400
 
     @app.errorhandler(429)
     def error_429(error):
@@ -316,6 +323,20 @@ def register_error_handlers(app):
         current_app.logger.error(
             'An uncaught error occurred', exc_info=error.original_exception)
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
+
+    @app.errorhandler(EricaRequestTimeoutError)
+    def timeout_error_erica(error):
+        current_app.logger.error(
+            'An Erica Request Timeout error occurred', exc_info=error.original_exception)
+        return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica_error.header-title'),
+                               js_needed=False), 504
+
+    @app.errorhandler(EricaRequestConnectionError)
+    def connection_error_erica(error):
+        current_app.logger.error(
+            'An Erica Request Connection error occurred', exc_info=error.original_exception)
+        return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica_error.header-title'),
+                               js_needed=False), 503
 
 
 def register_testing_request_handlers(app):
