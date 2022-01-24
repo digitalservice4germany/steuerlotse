@@ -215,6 +215,10 @@ class EstData(BaseModel):
     meta_data: MetaDataEst
 
 
+class GrundsteuerData(BaseModel):
+    pass
+
+
 class UnlockCodeRequestData(BaseModel):
     idnr: str
     dob: date
