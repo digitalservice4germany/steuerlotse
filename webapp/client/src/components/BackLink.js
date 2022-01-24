@@ -10,6 +10,7 @@ const Anchor = styled.a`
   text-transform: uppercase;
   letter-spacing: var(--tracking-extra-wide);
   text-decoration: none;
+  padding-top: 0.3rem;
 
   > svg {
     margin-right: 5px;
