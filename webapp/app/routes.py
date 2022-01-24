@@ -105,6 +105,23 @@ def register_request_handlers(app):
         return user
 
     @app.before_request
+    def log_flask_login_session_info():
+
+        def is_user_in_database():
+            user = None
+            user_id = session.get('_user_id')
+            if user_id is not None and login_manager._user_callback is not None:
+                user = login_manager._user_callback(user_id)
+            return user is not None
+
+        current_app.logger.info('{' + f"'Request has session cookie: {'session' in request.cookies},"
+                                      f"'Session protection intact: {not login_manager._session_protection_failed()},"
+                                      f"'User_id in session': {'_user_id' in session},"
+                                      f"'User is in database': {is_user_in_database()}"
+                                + '}'
+                                )
+
+    @app.before_request
     def make_session_permanent():
         session.permanent = True
 
