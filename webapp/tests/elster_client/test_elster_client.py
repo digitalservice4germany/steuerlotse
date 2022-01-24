@@ -108,36 +108,6 @@ class TestSendEst(unittest.TestCase):
         finally:
             MockErica.eric_transfer_error_occurred = False
 
-    def test_if_erica_timeout_error_occurred_then_raise_corresponding_error(self):
-        old_use_mock_api_value = Config.USE_MOCK_API
-        Config.USE_MOCK_API = False
-        try:
-            with patch('requests.post', side_effect=requests.Timeout(response=MockResponse(None, '503'))):
-                with pytest.raises(EricaRequestTimeoutError):
-                    send_to_erica()
-        finally:
-            Config.USE_MOCK_API = old_use_mock_api_value
-
-    def test_if_erica_connection_error_occurred_raise_error(self):
-        old_use_mock_api_value = Config.USE_MOCK_API
-        Config.USE_MOCK_API = False
-        try:
-            with patch('requests.post', side_effect=requests.ConnectionError(response=MockResponse(None, '504'))):
-                with pytest.raises(EricaRequestConnectionError):
-                    send_to_erica()
-        finally:
-            Config.USE_MOCK_API = old_use_mock_api_value
-
-    def test_if_erica_request_error_occurred_raise_error(self):
-        old_use_mock_api_value = Config.USE_MOCK_API
-        Config.USE_MOCK_API = False
-        try:
-            with patch('requests.post', side_effect=requests.RequestException(response=MockResponse(None, '500'))):
-                with pytest.raises(GeneralEricaError):
-                    send_to_erica()
-        finally:
-            Config.USE_MOCK_API = old_use_mock_api_value
-
     def test_if_eric_transfer_error_with_responses_occurred_raise_error_with_responses(self):
         MockErica.eric_transfer_error_occurred = True
         try:
@@ -1009,3 +979,35 @@ class TestLogAddressData(unittest.TestCase):
             self.assertRaises(ElsterTransferError, _log_address_data, 'IP', '04452397687',
                               {'include_elster_responses': False})
             audit_log_fun.assert_not_called()
+
+
+class TestSendToErica:
+    def test_if_erica_timeout_error_occurred_then_raise_corresponding_error(self):
+        old_use_mock_api_value = Config.USE_MOCK_API
+        Config.USE_MOCK_API = False
+        try:
+            with patch('requests.post', side_effect=requests.Timeout(response=MockResponse(None, '503'))):
+                with pytest.raises(EricaRequestTimeoutError):
+                    send_to_erica()
+        finally:
+            Config.USE_MOCK_API = old_use_mock_api_value
+
+    def test_if_erica_connection_error_occurred_raise_error(self):
+        old_use_mock_api_value = Config.USE_MOCK_API
+        Config.USE_MOCK_API = False
+        try:
+            with patch('requests.post', side_effect=requests.ConnectionError(response=MockResponse(None, '504'))):
+                with pytest.raises(EricaRequestConnectionError):
+                    send_to_erica()
+        finally:
+            Config.USE_MOCK_API = old_use_mock_api_value
+
+    def test_if_erica_request_error_occurred_raise_error(self):
+        old_use_mock_api_value = Config.USE_MOCK_API
+        Config.USE_MOCK_API = False
+        try:
+            with patch('requests.post', side_effect=requests.RequestException(response=MockResponse(None, '500'))):
+                with pytest.raises(GeneralEricaError):
+                    send_to_erica()
+        finally:
+            Config.USE_MOCK_API = old_use_mock_api_value
