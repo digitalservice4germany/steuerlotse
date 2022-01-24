@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-21 11:13+0100\n"
+"POT-Creation-Date: 2022-01-24 12:52+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2920,94 +2920,94 @@ msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
-#: app/forms/validations/validators.py:24
-#: app/forms/validations/validators.py:188
+#: app/forms/validations/validators.py:25
+#: app/forms/validations/validators.py:189
 msgid "validate.not-a-decimal"
 msgstr "Der Wert darf nur Ziffern beinhalten."
 
-#: app/forms/validations/validators.py:30
+#: app/forms/validations/validators.py:31
 msgid "validate.must-not-be-zero"
 msgstr "Dieses Feld darf nicht 0 sein."
 
-#: app/forms/validations/validators.py:40
+#: app/forms/validations/validators.py:41
 msgid "validate.length-max-reached"
 msgstr "Die Angabe ist %(diff)s Zeichen zu lang."
 
-#: app/forms/validations/validators.py:53
+#: app/forms/validations/validators.py:54
 msgid "validate.integer-length-max"
-msgstr "Die Angabe darf insgesamt maximal %(max)s Zeichen lang sein."
+msgstr "Die Angabe darf maximal %(max)s Zeichen lang sein."
 
-#: app/forms/validations/validators.py:55
+#: app/forms/validations/validators.py:56
 msgid "validate.integer-length-min"
 msgstr "Das Feld muss mindestens %(min)s Ziffern lang sein."
 
-#: app/forms/validations/validators.py:57
+#: app/forms/validations/validators.py:58
 msgid "validate.integer-length-between"
 msgstr "Das Feld muss zwischen %(min)s und %(max)s Ziffern lang sein."
 
-#: app/forms/validations/validators.py:75
+#: app/forms/validations/validators.py:76
 msgid "validate.invalid-iban"
 msgstr "Ungültige IBAN Nummer"
 
-#: app/forms/validations/validators.py:78
+#: app/forms/validations/validators.py:79
 msgid "validate.country-code-not-de"
 msgstr "Geben Sie bitte eine IBAN an, die mit DE beginnt."
 
-#: app/forms/validations/validators.py:93
-#: app/forms/validations/validators.py:103
-#: app/forms/validations/validators.py:106
-#: app/forms/validations/validators.py:109
-#: app/forms/validations/validators.py:112
+#: app/forms/validations/validators.py:94
+#: app/forms/validations/validators.py:104
+#: app/forms/validations/validators.py:107
+#: app/forms/validations/validators.py:110
+#: app/forms/validations/validators.py:113
 msgid "validate.invalid-idnr"
 msgstr "Keine korrekte Steuer-Identifikationsnummer. Prüfen Sie Ihre Angabe."
 
-#: app/forms/validations/validators.py:96
+#: app/forms/validations/validators.py:97
 msgid "validate.idnr-length"
 msgstr ""
 "Unvollständige Angabe. Ihre Steuer-Identifikationsnummer muss aus "
 "insgesamt 11 Ziffern bestehen. Die Angabe muss folgendem Muster "
 "entsprechen: 00 000 000 000"
 
-#: app/forms/validations/validators.py:118
-#: app/forms/validations/validators.py:123
+#: app/forms/validations/validators.py:119
+#: app/forms/validations/validators.py:124
 msgid "validate.unlock-code-length"
 msgstr ""
 "Ihr Freischaltcode ist nicht vollständig. Der Freischaltcode muss aus 3 x"
 " 4 Zeichen bestehen."
 
-#: app/forms/validations/validators.py:126
+#: app/forms/validations/validators.py:127
 msgid "validate.invalid-unlock-code"
 msgstr "Der Freischaltcode ist nicht valide."
 
-#: app/forms/validations/validators.py:136
-#: app/forms/validations/validators.py:146
+#: app/forms/validations/validators.py:137
+#: app/forms/validations/validators.py:147
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
 
-#: app/forms/validations/validators.py:158
+#: app/forms/validations/validators.py:159
 msgid "validate.invalid-tax-number-length.shorter-than-ten"
 msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
 
-#: app/forms/validations/validators.py:160
+#: app/forms/validations/validators.py:161
 msgid "validate.invalid-tax-number-length.shorter-than-eleven"
 msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
 
-#: app/forms/validations/validators.py:162
+#: app/forms/validations/validators.py:163
 msgid "validate.invalid-tax-number-length.too-long"
 msgstr "Die Angabe darf höchstens 11 Ziffern umfassen."
 
-#: app/forms/validations/validators.py:171
+#: app/forms/validations/validators.py:172
 msgid "validate.invalid-hessen-tax-number"
 msgstr ""
 "In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
 "Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
 "Stelle eine 0 ein."
 
-#: app/forms/validations/validators.py:179
+#: app/forms/validations/validators.py:180
 msgid "validate.invalid-tax-number"
 msgstr "Die Steuernummer ist nicht valide."
 
-#: app/forms/validations/validators.py:195
+#: app/forms/validations/validators.py:196
 msgid "validate.disability_degree.invalid_number"
 msgstr ""
 "Der Grad der Behinderung wird in 5er-Schritten bis 100 festgesetzt. "
