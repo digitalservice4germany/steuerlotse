@@ -7,8 +7,9 @@ from fastapi.exceptions import HTTPException
 
 from erica.pyeric.eric import EricResponse
 from erica.pyeric.pyeric_controller import GetTaxOfficesPyericController
+from erica.request_processing.erica_input import GrundsteuerData
 from erica.routes import request_unlock_code, activate_unlock_code, send_est, validate_est, revoke_unlock_code, \
-    get_tax_offices, is_valid_tax_number
+    get_tax_offices, is_valid_tax_number, send_grundsteuer
 from tests.utils import create_unlock_request, create_unlock_activation, create_est, create_unlock_revocation, \
     missing_cert, missing_pyeric_lib
 
@@ -81,6 +82,18 @@ class TestSendEst(unittest.TestCase):
         self.assertIn('pdf', response)
         self.assertNotIn('eric_response', response)
         self.assertNotIn('server_response', response)
+
+
+class TestSendGrundsteuer(unittest.TestCase):
+
+    def test_if_request_correct_then_no_error_and_correct_response(self):
+        try:
+            response = send_grundsteuer(GrundsteuerData(), include_elster_responses=True)
+        except HTTPException:
+            self.fail("send_est raise unexpected HTTP exception")
+
+        assert 'request' in response
+        assert response['request'] == 'successful'
 
 
 @pytest.mark.skipif(missing_cert(), reason="skipped because of missing cert.pfx; see pyeric/README.md")
