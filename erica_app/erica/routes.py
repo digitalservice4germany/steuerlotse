@@ -58,7 +58,7 @@ def send_est(est: EstData, include_elster_responses: bool = False):
 @app.post(ERICA_VERSION_URL + '/grundsteuer', status_code=status.HTTP_201_CREATED)
 def send_grundsteuer(grundsteuer_data: GrundsteuerData, include_elster_responses: bool = False):
     """
-    The Grundsteuer data is validated and then send to ELSTER using ERiC. If it is successful, this should return a 200
+    The Grundsteuer data is validated and then send to ELSTER using ERiC. If it is successful, this should return a 201
     HTTP response with {'transfer_ticket': str, 'pdf': str}. The pdf is base64 encoded binary data of the pdf
     If there is any error with the validation, this should return a 400 response. If the validation failed with
     {‘code’ : int,‘message’: str,‘description’: str, ‘validation_problems’ : [{‘code’: int, ‘message’: str}]}
