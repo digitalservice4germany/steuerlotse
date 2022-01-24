@@ -1,0 +1,7 @@
+.grouped-input-fields .text-input-field-label{
+    margin-top: var(--spacing-08);
+}
+
+.grouped-input-fields .first-grouped-field .text-input-field-label{
+    margin-top: var(--spacing-02);
+}
