@@ -73,10 +73,10 @@ nav.Bar('top', [
     SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
 ])
 
-login_manager.login_view = 'unlock_code_activation'
+login_manager.login_view = 'relogin_unlock_code_activation'
 login_manager.login_message = _l('login.not-logged-in-warning')
 login_manager.login_message_category = 'warn'
-login_manager.refresh_view = "unlock_code_activation"
+login_manager.refresh_view = 'refresh_unlock_code_activation'
 
 
 def extract_information_from_request():
@@ -175,7 +175,7 @@ def register_request_handlers(app):
 
         flow = UnlockCodeRequestMultiStepFlow(endpoint='unlock_code_request')
         return flow.handle(step_name=step)
-
+  
     @app.route('/unlock_code_activation/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_activation/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
@@ -190,6 +190,22 @@ def register_request_handlers(app):
         current_app.logger.info('User inactive, start unlock_code_activation flow')
         flow = UnlockCodeActivationMultiStepFlow(endpoint='unlock_code_activation')
         return flow.handle(step_name=step)
+    
+    @app.route('/relogin_unlock_code_activation/step', methods=['GET', 'POST'])
+    @app.route('/relogin_unlock_code_activation/step/<step>', methods=['GET', 'POST'])
+    def relogin_unlock_code_activation(step='start'):
+        if not current_user.is_active:
+            current_app.logger.info('User inactive, start relogin_unlock_code_activation flow')
+            
+        return unlock_code_activation(step)
+        
+    @app.route('/refresh_unlock_code_activation/step', methods=['GET', 'POST'])
+    @app.route('/refresh_unlock_code_activation/step/<step>', methods=['GET', 'POST'])  
+    def refresh_unlock_code_activation(step='start'):
+        if not current_user.is_active:
+            current_app.logger.info('User inactive, start refresh_unlock_code_activation flow')
+            
+        return unlock_code_activation(step)
 
     @app.route('/unlock_code_revocation/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
