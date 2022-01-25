@@ -26,20 +26,20 @@ class TestLotseStepLoginRequired(IntegrationTest):
     def test_if_user_does_not_exist_then_returns_redirect(self):
         res = self.client.get('/lotse/step/summary')
         self.assertEqual(302, res.status_code)
-        self.assertIn("unlock_code_activation", res.headers[2][1])
+        self.assertIn("relogin_unlock_code_activation", res.headers[2][1])
 
     def test_if_user_does_exist_not_logged_in_then_returns_redirect(self):
         create_user('1234', '1985-01-01', '0000')
         res = self.client.get('/lotse/step/summary')
         self.assertEqual(302, res.status_code)
-        self.assertIn("unlock_code_activation", res.headers[2][1])
+        self.assertIn("relogin_unlock_code_activation", res.headers[2][1])
 
     def test_if_user_active_not_logged_in_then_returns_redirect(self):
         user = create_user('1234', '1985-01-01', '0000')
         user.activate('789')
         res = self.client.get('/lotse/step/summary')
         self.assertEqual(302, res.status_code)
-        self.assertIn("unlock_code_activation", res.headers[2][1])
+        self.assertIn("relogin_unlock_code_activation", res.headers[2][1])
 
     def test_if_logged_in_cookie_sent_then_returns_200(self):
         user = create_user('04452397687', '1985-01-01', '0000')
