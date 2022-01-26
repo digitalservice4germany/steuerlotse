@@ -23,9 +23,9 @@ When this React app is loaded on a page, it scans for elements that have these a
 
 ```html
 <div
-        data-is-component="yes"
-        data-component-name="MyComponent"
-        data-props-json="{{ {} | tojson | forceescape }}"
+  data-is-component="yes"
+  data-component-name="MyComponent"
+  data-props-json="{{ {} | tojson | forceescape }}"
 ></div>
 ```
 
@@ -62,6 +62,7 @@ Opens the Cypress test runner UI. [See here for details](https://docs.cypress.io
 #### `pipenv run invoke test-functional-ui`
 
 Opens the Cypress test runner UI by invoking a task that cleans the database.
+Do not have either the flask app nor the client running since the task already starts both of them.
 
 ### `yarn lint`
 
