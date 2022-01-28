@@ -4,6 +4,7 @@ from typing import Any
 
 from flask import Flask
 from werkzeug.middleware.proxy_fix import ProxyFix
+from flask_session import Session
 
 from app import commands
 from app.extensions import (
@@ -37,6 +38,9 @@ def create_app() -> Flask:
     register_context_processor(app)
     register_commands(app)
     configure_json_handling(app)
+    
+    Session(app)
+    
     return app
 
 

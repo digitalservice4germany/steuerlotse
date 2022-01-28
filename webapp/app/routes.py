@@ -3,6 +3,7 @@ import datetime as dt
 from functools import wraps
 import io
 
+from flask_session import Session
 from flask import current_app, render_template, request, send_file, session, make_response, redirect
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
