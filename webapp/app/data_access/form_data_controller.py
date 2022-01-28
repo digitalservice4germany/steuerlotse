@@ -10,7 +10,7 @@ else:
     r = redis.Redis.from_url(Config.SESSION_DATA_STORAGE_URL)
 
 
-def save(key: str, value):
+def save(key: str, value) -> bool:
     """Saves/updates a key/value pair that expires given the config TTL.
     :param str key: the key value including the user identifier, so all keys are unique.
     :param value: the value corresponding to the key.
@@ -21,7 +21,7 @@ def save(key: str, value):
     return r.setex(key, ttl_seconds, value)
 
 
-def get(key: str):
+def get(key: str) -> str:
     """Retrieves the value of a given key and decodes it, since returned object is Python's byte type.
     :param str key: the key of which the value shall be retrieved.
     :raise: MissingError if the key is not present in the redis.

@@ -28,6 +28,7 @@ flask-static-digest = "*"
 python-dotenv = "*"
 pyhumps = "*"
 redislite = "*"
+fakeredis = "*"
 
 [dev-packages]
 pytest = "*"
