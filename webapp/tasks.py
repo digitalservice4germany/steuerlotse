@@ -33,7 +33,17 @@ def test_client_unit(c):
 
 
 @task
-def test_functional(c):
+def test_functional_run(c):
+    test_functional(c, "run")
+
+
+@task
+def test_functional_ui(c):
+    test_functional(c, "ui")
+
+
+@task
+def test_functional(c, mode):
     import psutil
     import sarge
 
@@ -58,7 +68,7 @@ def test_functional(c):
 
         # Run functional tests
         with c.cd(CLIENT_DIR):
-            c.run("yarn test:functional", env=env)
+            c.run("yarn test:functional-" + mode, env=env)
 
     finally:
         # Shut down started processes
@@ -76,7 +86,7 @@ def test_functional(c):
         c.run("rm ./app/functional-testing.db")
 
 
-@task(test_pytest, test_client_unit, test_functional)
+@task(test_pytest, test_client_unit, test_functional_run)
 def test(c):
     """This no-op task triggers all test suites as dependencies."""
     pass

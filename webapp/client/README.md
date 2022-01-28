@@ -59,6 +59,11 @@ Runs functional tests which exercise both the flask app and the client-side comp
 
 Opens the Cypress test runner UI. [See here for details](https://docs.cypress.io/guides/core-concepts/test-runner).
 
+#### `pipenv run invoke test-functional-ui`
+
+Opens the Cypress test runner UI by invoking a task that cleans the database.
+Do not have either the flask app nor the client running since the task already starts both of them.
+
 ### `yarn lint`
 
 Runs eslint and shows information about coding errors.
