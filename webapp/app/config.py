@@ -39,6 +39,10 @@ class BaseConfig(object):
 
     USE_LRU_CACHE = True
 
+    SESSION_DATA_REDIS_TTL_HOURS = 3
+
+    SESSION_DATA_STORAGE_URL = 'None'
+
 
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
@@ -46,6 +50,7 @@ class ProductionConfig(BaseConfig):
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL')
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL')
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
 
     ENCRYPTION_KEY = environ.get('ENCRYPTION_KEY')
@@ -65,6 +70,7 @@ class StagingConfig(BaseConfig):
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL')
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL')
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
 
     ENCRYPTION_KEY = environ.get('ENCRYPTION_KEY')
