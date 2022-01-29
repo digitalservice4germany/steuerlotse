@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  erica:
+    env_file:
+      - ".env"
+    build:
+      context: "./erica_app"
+      dockerfile: "Development.Dockerfile"
+      args:
+        - ERICA_BUCKET_NAME=$ERICA_BUCKET_NAME
+        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+        - ENDPOINT_URL=$ENDPOINT_URL
+        - ELSTER_DATENLIEFERANT=$ELSTER_DATENLIEFERANT
+        - ELSTER_HERSTELLER_ID=$ELSTER_HERSTELLER_ID
+    volumes:
+      - "./erica_app:/app"
+    expose:
+      - 8000
+    ports:
+      - "8000:8000"
+  web:
+    env_file:
+      - ".env"
+    build:
+      context: "./webapp"
+      dockerfile: "Development.Dockerfile"
+    volumes:
+      - "./webapp:/app"
+    ports:
+      - "5000:5000"
+    links:
+      - postgres
+      - redis
+
+  migrations:
+    env_file:
+      - ".env"
+    build:
+      context: "./webapp"
+      dockerfile: "Development.Dockerfile"
+    volumes:
+      - "./webapp:/app"
+    links:
+      - postgres
+      - redis
+    command: bash -c "flask db upgrade && flask populate-database && pybabel extract -F babel.cfg -k _l -o messages.pot . && pybabel update -i messages.pot -d app/translations && pybabel compile -d app/translations"
+
+  redis:
+    image: "redis:alpine"
+    restart: always
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: "postgres:alpine"
+    restart: always
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: steuerlotse
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
