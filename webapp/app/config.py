@@ -87,7 +87,7 @@ class DevelopmentConfig(BaseConfig):
     ################################
     SESSION_TYPE = 'redis'
     SESSION_USE_SIGNER = True
-    SESSION_REDIS = redis.from_url('redis://localhost:6379')################################################################
+    SESSION_REDIS = redis.from_url(environ.get('SESSION_REDIS'))################################################################
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
     SESSION_PERMANENT = False
     ################################

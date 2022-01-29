@@ -15,6 +15,8 @@ echo "SQLALCHEMY_DATABASE_URI=$SQLALCHEMY_DATABASE_URI" >> /app/.env
 echo "RSA_ENCRYPT_PUBLIC_KEY=$RSA_ENCRYPT_PUBLIC_KEY" >> /app/.env
 echo "IDNR_SALT=$IDNR_SALT" >> /app/.env
 echo "prometheus_multiproc_dir=$prometheus_multiproc_dir" >> /app/.env
+echo "SESSION_REDIS=$SESSION_REDIS" >> /app/.env
+
 set -x  # Turn command logging back on
 
 # Hand off to the CMD
