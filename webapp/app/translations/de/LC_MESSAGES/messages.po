@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-30 22:13+0000\n"
+"POT-Creation-Date: 2022-01-31 09:53+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -108,7 +108,7 @@ msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:334
+#: app/routes.py:334 app/routes.py:364 app/routes.py:371
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
@@ -123,11 +123,6 @@ msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 #: app/routes.py:358
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:364 app/routes.py:371
-#, fuzzy
-msgid "erica_error.header-title"
-msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
 #: app/elster_client/elster_errors.py:102
 msgid "form.lotse.input_invalid.InvalidBufaNumber"
@@ -5430,4 +5425,7 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "erica_error.header-title"
+#~ msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
