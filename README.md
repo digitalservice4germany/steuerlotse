@@ -105,7 +105,7 @@ docker-compose -f docker-compose.development.yml up
 
 Run database migrations, create test data and translations:
 ```bash
-docker-compose -f docker-compose.development.yml up migration
+docker-compose -f docker-compose.development.yml up migrations
 ```
 
 Start frontend client app

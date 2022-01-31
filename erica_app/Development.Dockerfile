@@ -15,6 +15,7 @@ ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
 ENV ENDPOINT_URL=$ENDPOINT_URL
 ENV ELSTER_DATENLIEFERANT=$ELSTER_DATENLIEFERANT
 ENV ELSTER_HERSTELLER_ID=$ELSTER_HERSTELLER_ID
+ENV ERICA_ENV=testing
 
 WORKDIR /app
 
@@ -29,7 +30,7 @@ COPY . .
 
 # Get tax office list and ERiC libraries
 RUN python scripts/load_eric_binaries.py download-eric-cert-and-binaries
-RUN env ERICA_ENV=testing python scripts/create_tax_office_lists.py create
+RUN python scripts/create_tax_office_lists.py create
 EXPOSE 8000
 
 #ENTRYPOINT [ "/entrypoint.sh" ]
