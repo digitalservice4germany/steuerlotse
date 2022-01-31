@@ -118,11 +118,11 @@
         },
         "charset-normalizer": {
             "hashes": [
-                "sha256:876d180e9d7432c5d1dfd4c5d26b72f099d503e8fcc0feb7532c9289be60fcbd",
-                "sha256:cb957888737fc0bbcd78e3df769addb41fd1ff8cf950dc9e7ad7793f1bf44455"
+                "sha256:2842d8f5e82a1f6aa437380934d5e1cd4fcf2003b06fed6940769c164a480a45",
+                "sha256:98398a9d69ee80548c762ba991a4728bfc3836768ed226b3945908d1a688371c"
             ],
             "markers": "python_version >= '3'",
-            "version": "==2.0.10"
+            "version": "==2.0.11"
         },
         "click": {
             "hashes": [
@@ -184,12 +184,12 @@
         },
         "flask-limiter": {
             "hashes": [
-                "sha256:737879086a132f59942bb5084609ea5d6d16da59d571953312d5d5d575e42764",
-                "sha256:bf5a8114bed84eafaa986c798f7ec3f25889897db925330cc092bc3cbf02f620",
-                "sha256:cf4252e31bdb4695e59378263d0019164abc895a0b13e30406ffc3f168a952e7"
+                "sha256:28c6b3c51fcbfab131e592dec7cf826ccc02dfb7cc4fe3e16c8ac21058672467",
+                "sha256:2ad327f8b625bff29f581d4db28b2dafe12526c6cc782bd8e4a5614f7d664f98",
+                "sha256:66697f9793cb8ed3b388c70297715ac14fc8958e0d206b1fcac998997e3e98ba"
             ],
             "index": "pypi",
-            "version": "==2.1"
+            "version": "==2.1.3"
         },
         "flask-login": {
             "hashes": [
@@ -341,11 +341,11 @@
         },
         "limits": {
             "hashes": [
-                "sha256:894866c8d9768d50cf6478503f71cad4a8bf1c45d3dbd688104991a0fe4e474b",
-                "sha256:e924e44f19265e38241b85d27b0b637b51b946f060aa1c63fa30887e465b8c39"
+                "sha256:6d6469c6014457b9c47e160f39f9aad333d3ca0a37e87263b5844268bdfe1b22",
+                "sha256:7f1311b9d48fcccf2b3120dad67126a329f44c5f9a3c33df97d6c19e20e66f82"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.3.1"
+            "version": "==2.3.2"
         },
         "mako": {
             "hashes": [
@@ -448,11 +448,11 @@
         },
         "prometheus-client": {
             "hashes": [
-                "sha256:1b12ba48cee33b9b0b9de64a1047cbd3c5f2d0ab6ebcead7ddda613a750ec3c5",
-                "sha256:317453ebabff0a1b02df7f708efbab21e3489e7072b61cb6957230dd004a0af0"
+                "sha256:357a447fd2359b0a1d2e9b311a0c5778c330cfbe186d880ad5a6b39884652316",
+                "sha256:ada41b891b79fca5638bd5cfe149efa86512eaa55987893becd2c6d8d0a5dfc5"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-            "version": "==0.12.0"
+            "markers": "python_version >= '3.6'",
+            "version": "==0.13.1"
         },
         "prometheus-flask-exporter": {
             "hashes": [
@@ -689,11 +689,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:2404879cda71495fc4d5cbc445ed52fdaddf352b36e40be8dcc63147cb4edabe",
-                "sha256:68eb94073fc486091447fcb0501efd6560a0e5a1839ba249e5ff3c4c93f05f90"
+                "sha256:c99207037c38984eae838c2fd986f39a9ddf4fabfe0fddd957e622d1d1dcdd05",
+                "sha256:eb83b1012ae6bf436901c2a2cee35d45b7260f31fd4b65fd1e50a9f99c11d7f8"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==60.5.0"
+            "version": "==60.6.0"
         },
         "six": {
             "hashes": [
