@@ -33,6 +33,7 @@ services:
     links:
       - postgres
       - redis
+      - erica
 
   migrations:
     env_file:

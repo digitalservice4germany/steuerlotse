@@ -91,6 +91,39 @@ docker-compose exec web pipenv run flask populate-database
 
 Visit the application by pointing your browser at http://localhost.
 
+### Run with docker-compose for development
+Copy env file
+```bash
+cp .env.example .env
+```
+
+Start our needed services for development
+(migrations, testdata and translations will be automatically populated)
+```bash
+docker-compose -f docker-compose.development.yml up
+```
+
+Run database migrations, create test data and translations:
+```bash
+docker-compose -f docker-compose.development.yml up migration
+```
+
+Start frontend client app
+```bash
+cd ./webapp/client
+yarn start
+```
+
+Start frontend storybook client
+```bash
+cd ./webapp/client
+yarn storybook
+```
+
+When docker services are running you can configure IDE(e.g. Pycharm) 
+to use this docker compose services as python interpreter to debug.
+(see .run/Flask (autoapp).run.xml)
+
 ### Enviroments
 We support four different environments with different configurations:
 - Testing
