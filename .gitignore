@@ -73,14 +73,6 @@ venv.bak/
 
 # Custom
 logs/
-abruf_code_log.txt
 webapp/app/dev.db
-
-# Eric binaries and cer
-erica_app/erica/lib/*.dylib
-erica_app/erica/lib/*.so
-erica_app/erica/lib/plugins2/*.dylib
-erica_app/erica/lib/plugins2/*.so
-erica_app/erica/instances/blueprint/cert.pfx
 
 .DS_Store
