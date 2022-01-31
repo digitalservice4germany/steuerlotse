@@ -234,7 +234,7 @@ jobs:
         -e ERICA_SSH_KEY='${{ secrets.CI_ERICA_SSH_KEY }}' \
         -e IMAGE_TAG='${{ env.IMAGE_TAG }}' \
         -e NAMESPACE='${{ env.NAMESPACE }}' \
-        ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment
+        ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment steuerlotse
       shell: bash
 
     - name: Logout of docker container
