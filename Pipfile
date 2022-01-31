@@ -4,10 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyhumps = "*"
-adr-tools-python = "*"
 
 [dev-packages]
+adr-tools-python = "*"
 
 [requires]
 python_version = "3.9"

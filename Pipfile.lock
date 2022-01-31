@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "86a53ef8d179a1e8e9a78388775ac7a7a8b361da5fb4b044839c264756d86cd8"
+            "sha256": "71e24a25fe31d8a787773233eb7a32b44b6107370a57310ad09defff3a0911e1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,7 +15,8 @@
             }
         ]
     },
-    "default": {
+    "default": {},
+    "develop": {
         "adr-tools-python": {
             "hashes": [
                 "sha256:0bbd23ea47ec72559f16bd9e4237c1ff3ee848fd2b8a03f31e2b976ba185ecfd"
@@ -29,15 +30,6 @@
                 "sha256:c31647edb69fd3d465a847ea3157d37bed1f95f19760b11a47aa91c04b666314"
             ],
             "version": "==1.4.0"
-        },
-        "pyhumps": {
-            "hashes": [
-                "sha256:2433eef13d1c258227a0bd5de9660ba17dd6a307e1255d2d20ec9287f8626d96",
-                "sha256:55e37f16846eaab26057200924cbdadd2152bf0a5d49175a42358464fa881c73"
-            ],
-            "index": "pypi",
-            "version": "==3.5.0"
         }
-    },
-    "develop": {}
+    }
 }
