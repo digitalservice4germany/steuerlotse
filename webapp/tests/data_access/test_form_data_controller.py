@@ -1,34 +1,50 @@
-import unittest
-from unittest.mock import patch
-
 import fakeredis as fakeredis
+import pytest
 
 from pydantic import MissingError
-from app.data_access.form_data_controller import save, get
+from app.data_access.form_data_controller import FormDataController
 from app.config import Config
 
-redis_fake = fakeredis.FakeStrictRedis()
+
+class TestSaveToRedis:
+
+    @pytest.fixture(autouse=True)
+    def setup(self, monkeypatch):
+        self.key = "key"
+        self.value = "value"
+        self.ttl_seconds = Config.SESSION_DATA_REDIS_TTL_HOURS * 3600
+        self.controller = FormDataController()
+        # Using monkeypatch to replace the redis connection of the controller with a fake redis instance
+        monkeypatch.setattr(FormDataController, "_redis_connection", fakeredis.FakeStrictRedis())
+        yield
+        self.controller._redis_connection.flushall()
+
+    def test_if_key_value_provided_then_save_key_value_pair_into_database(self, setup):
+        response = self.controller.save_to_redis(self.key, self.value)
+        assert response is True
+
+    def test_if_key_value_provided_then_set_correct_configuration_ttl_to_database_entry(self, setup):
+        self.controller.save_to_redis(self.key, self.value)
+        assert self.ttl_seconds == self.controller._redis_connection.ttl(self.key)
 
 
-@patch("app.data_access.form_data_controller.r", redis_fake)
-class TestFormDataController(unittest.TestCase):
+class TestGetFromRedis:
 
-    key = "key"
-    value = "value"
-    ttl_seconds = Config.SESSION_DATA_REDIS_TTL_HOURS * 3600
+    @pytest.fixture(autouse=True)
+    def setup(self, monkeypatch):
+        self.key = "key"
+        self.value = "value"
+        self.ttl_seconds = Config.SESSION_DATA_REDIS_TTL_HOURS * 3600
+        self.controller = FormDataController()
+        # Using monkeypatch to replace the redis connection of the controller with a fake redis instance
+        monkeypatch.setattr(FormDataController, "_redis_connection", fakeredis.FakeStrictRedis())
+        yield
+        self.controller._redis_connection.flushall()
 
-    def tearDown(self):
-        redis_fake.flushall()
+    def test_if_key_exists_then_retrieve_value(self, setup):
+        self.controller.save_to_redis(self.key, self.value)
+        assert self.value == self.controller.get_from_redis(self.key)
 
-    def test_if_saving_key_value_then_return_true(self):
-        saved = save(self.key, self.value)
-        self.assertTrue(self.ttl_seconds == redis_fake.ttl(self.key))
-        self.assertTrue(saved)
-
-    def test_if_key_exists_then_retrieve_value(self):
-        saved = save(self.key, self.value)
-        self.assertTrue(saved)
-        self.assertEqual(self.value, get(self.key))
-
-    def test_if_key_not_exist_then_raise_error(self):
-        self.assertRaises(MissingError, get, self.key)
+    def test_if_key_not_exist_then_raise_error(self, setup):
+        with pytest.raises(MissingError):
+            self.controller.get_from_redis(self.key)

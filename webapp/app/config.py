@@ -39,9 +39,9 @@ class BaseConfig(object):
 
     USE_LRU_CACHE = True
 
+    USE_REDIS_LITE = True
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
-
-    SESSION_DATA_STORAGE_URL = 'None'
 
 
 class ProductionConfig(BaseConfig):
@@ -50,7 +50,6 @@ class ProductionConfig(BaseConfig):
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL')
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL')
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
 
     ENCRYPTION_KEY = environ.get('ENCRYPTION_KEY')
@@ -60,6 +59,8 @@ class ProductionConfig(BaseConfig):
     HASH_ALGORITHM = 'bcrypt'
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
+
+    USE_REDIS_LITE = False
 
 
 class StagingConfig(BaseConfig):
@@ -70,7 +71,6 @@ class StagingConfig(BaseConfig):
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL')
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL')
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI')
 
     ENCRYPTION_KEY = environ.get('ENCRYPTION_KEY')
@@ -80,6 +80,8 @@ class StagingConfig(BaseConfig):
     HASH_ALGORITHM = 'bcrypt'
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
+
+    USE_REDIS_LITE = False
 
 
 class DevelopmentConfig(BaseConfig):
