@@ -166,6 +166,14 @@
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.2.13"
         },
+        "fakeredis": {
+            "hashes": [
+                "sha256:6f1e04f64557ad3b6835bdc6e5a8d022cbace4bdc24a47ad58f6a72e0fbff760",
+                "sha256:c9bd12e430336cbd3e189fae0e91eb99997b93e76dbfdd6ed67fa352dc684c71"
+            ],
+            "index": "pypi",
+            "version": "==1.7.0"
+        },
         "flask": {
             "hashes": [
                 "sha256:7b2fb8e934ddd50731893bdcdb00fc8c0315916f9fcd50d22c7cc1a95ab634e2",
@@ -670,6 +678,25 @@
             ],
             "index": "pypi",
             "version": "==4.1.2"
+        },
+        "redislite": {
+            "hashes": [
+                "sha256:10551f3c3acbb45e6b398120f4586d02cbf0a1499ede06b7817be6111c645089",
+                "sha256:170eb1353e3ea56c58d58019029eb4797a24a4b9996dc8a8df2f774b66e54803",
+                "sha256:1ea50ae4da7ca65e618b5103bde77e0d27c0458c619a6c2f57d3069c04c2c5b3",
+                "sha256:24c02a9b644d3397616989d93175a8b4c9940fbafe3a6b244c1513e0778c99d9",
+                "sha256:472abdf314ca20ba72e33864fd52405a8679a15433069180fba6c5baa3566918",
+                "sha256:50e6c92dd07bc65dc64658b6bae2959d23e9e1ac85bfdb8214aab3ac8b30e807",
+                "sha256:66c927fae6df8e40d2f5ff16d47f3f4708ee62a37562394ebc18bacf8c99c034",
+                "sha256:6ffc1c2233d5ca036f907e521ca8e0e0d5ce9957357e18de997332b4978357de",
+                "sha256:937e4a200402590b02aff537a6327322162f02c0b8bf359e063ed680dc4f8bd3",
+                "sha256:9859ca5d24bb0594a61c3cba87f62ec46934e3f539bb8cab373c53bcdb6f0a97",
+                "sha256:ab26ec837b0c1a744e58288e2986c48b0c18773071efba5072117640e3795bd3",
+                "sha256:c75a09b26ef05335e7276f416352f1af0db57e80cff25fe8aac38b92fffd0215",
+                "sha256:f27402586a9639b66aeb59189e44d027065a71c7c01e56b701be865de8406fe8"
+            ],
+            "index": "pypi",
+            "version": "==6.0.674960"
         },
         "requests": {
             "hashes": [
