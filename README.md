@@ -99,3 +99,15 @@ We support four different environments with different configurations:
 - Production
 
 In the testing environment a mocked version of Erica and the hashing algorithm is used.
+
+### Architecture Decision Records
+We will document architecture decision records going forward. If you want to add a new ADR you can use [adr-tools](https://github.com/npryce/adr-tools):
+```bash
+adr new <title of adr>
+```
+or the [python version](https://pypi.org/project/adr-tools-python/):
+```bash
+pipenv run adr-new create <title of adr>
+```
+
+Both commands create a new file in doc/adr. Make sure to edit this file to explain the decision.
