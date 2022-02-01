@@ -46,7 +46,7 @@ services:
     links:
       - postgres
       - redis
-    command: bash -c "flask db upgrade && flask populate-database && pybabel extract -F babel.cfg -k _l -o messages.pot . && pybabel update -i messages.pot -d app/translations && pybabel compile -d app/translations"
+    command: bash -c "flask db upgrade && flask populate-database && pybabel extract -F babel.cfg -k _l -o messages.pot . && ./scripts/babel_run.sh"
 
   redis:
     image: "redis:alpine"
