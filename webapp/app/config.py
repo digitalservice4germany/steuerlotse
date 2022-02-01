@@ -39,7 +39,7 @@ class BaseConfig(object):
 
     USE_LRU_CACHE = True
 
-    USE_REDIS_LITE = True
+    USE_REDIS_LITE = False
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
 
@@ -60,8 +60,6 @@ class ProductionConfig(BaseConfig):
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
 
-    USE_REDIS_LITE = False
-
 
 class StagingConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
@@ -80,8 +78,6 @@ class StagingConfig(BaseConfig):
     HASH_ALGORITHM = 'bcrypt'
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
-
-    USE_REDIS_LITE = False
 
 
 class DevelopmentConfig(BaseConfig):
@@ -106,6 +102,8 @@ class DevelopmentConfig(BaseConfig):
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
 
+    USE_REDIS_LITE = True
+
 
 class FunctionalTestingConfig(DevelopmentConfig):
     DEBUG = False
@@ -116,6 +114,8 @@ class FunctionalTestingConfig(DevelopmentConfig):
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
+
+    USE_REDIS_LITE = True
 
 
 class TestingConfig(BaseConfig):
@@ -138,6 +138,8 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
+
+    USE_REDIS_LITE = True
 
 try:
     Config = {

@@ -5,7 +5,6 @@ from pydantic import MissingError
 
 
 class FormDataController:
-
     _instance = None
     _redis_connection = None
 
@@ -13,17 +12,9 @@ class FormDataController:
         """Singleton creation so that the redis connection is not recreated."""
         if cls._instance is None:
             cls._instance = super(FormDataController, cls).__new__(cls)
-            cls._redis_connection = cls.get_redis_connection()
+            cls._redis_connection = redislite.StrictRedis() if Config.USE_REDIS_LITE else redis.Redis.from_url(
+                Config.SESSION_DATA_STORAGE_URL)
         return cls._instance
-
-    @staticmethod
-    def get_redis_connection():
-        if Config.USE_REDIS_LITE:
-            redis_connection = redislite.StrictRedis()
-            return redis_connection
-        else:
-            redis_connection = redis.Redis.from_url(Config.SESSION_DATA_STORAGE_URL)
-            return redis_connection
 
     def save_to_redis(self, key: str, value) -> bool:
         """Saves/updates a key/value pair that expires given the config TTL.
@@ -32,7 +23,7 @@ class FormDataController:
         return: true or false depending on the successfulness of the operation.
         rtype: bool
         """
-        ttl_seconds = Config.SESSION_DATA_REDIS_TTL_HOURS*3600
+        ttl_seconds = Config.SESSION_DATA_REDIS_TTL_HOURS * 3600
         return self._redis_connection.setex(key, ttl_seconds, value)
 
     def get_from_redis(self, key: str) -> str:
