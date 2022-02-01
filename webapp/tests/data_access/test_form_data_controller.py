@@ -5,10 +5,6 @@ from pydantic import MissingError
 from app.data_access.form_data_controller import FormDataController
 from app.config import Config
 
-key = "key"
-value = "value"
-ttl_seconds = Config.SESSION_DATA_REDIS_TTL_HOURS * 3600
-
 
 @pytest.fixture(autouse=True)
 def testing_database(monkeypatch):
@@ -30,20 +26,20 @@ class TestSingletonCreation:
 class TestSaveToRedis:
 
     def test_if_key_value_provided_then_return_true(self, testing_database):
-        response = testing_database.save_to_redis(key, value)
+        response = testing_database.save_to_redis("key", "value")
         assert response is True
 
     def test_if_key_value_provided_then_set_correct_configuration_ttl_to_database_entry(self, testing_database):
-        testing_database.save_to_redis(key, value)
-        assert ttl_seconds == testing_database._redis_connection.ttl(key)
+        testing_database.save_to_redis("key", "value")
+        assert Config.SESSION_DATA_REDIS_TTL_HOURS * 3600 == testing_database._redis_connection.ttl("key")
 
 
 class TestGetFromRedis:
 
     def test_if_key_exists_then_retrieve_value(self, testing_database):
-        testing_database.save_to_redis(key, value)
-        assert value == testing_database.get_from_redis(key)
+        testing_database.save_to_redis("key", "value")
+        assert "value" == testing_database.get_from_redis("key")
 
     def test_if_key_not_exist_then_raise_error(self, testing_database):
         with pytest.raises(MissingError):
-            testing_database.get_from_redis(key)
+            testing_database.get_from_redis("key")
