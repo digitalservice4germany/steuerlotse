@@ -2,7 +2,7 @@ import logging
 from collections import namedtuple
 from typing import Optional
 
-from flask import redirect, request, url_for, session, abort
+from flask import redirect, request, url_for, abort
 from wtforms import Form
 
 # The RenderInfo is provided to all templates
