@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-01 11:49+0000\n"
+"POT-Creation-Date: 2022-02-02 16:09+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2658,19 +2658,19 @@ msgstr "Einverständnis Zusammenveranlagung"
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:69
 #: app/forms/validations/date_validations.py:79
 msgid "validate.date-of-marriage-missing"
-msgstr "Geben Sie Ihr Geburtsdatum ein."
+msgstr "Geben Sie Ihr Hochzeitsdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:72
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:99
 #: app/forms/validations/date_validations.py:70
 msgid "validate.date-of-death-missing"
-msgstr "Geben Sie Ihr Geburtsdatum ein."
+msgstr "Geben Sie das Todesdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:75
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:87
 #: app/forms/validations/date_validations.py:89
 msgid "validate.date-of-divorce-missing"
-msgstr "Geben Sie Ihr Geburtsdatum ein."
+msgstr "Geben Sie das Datum der Trennung ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:80
 msgid "form.lotse.validation-familienstand-married-lived-separated"
