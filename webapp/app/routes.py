@@ -330,7 +330,7 @@ ERICA_ERROR_TEMPLATE = 'error/erica_error.html'
 def register_error_handlers(app):
     @app.errorhandler(GeneralEricaError)
     def error_erica(error):
-        current_app.logger.warning('A general erica error occurred', exc_info=error.original_exception)
+        current_app.logger.exception('A general erica error occurred')
         return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica-error.header-title'),
                                js_needed=False), 500
 
