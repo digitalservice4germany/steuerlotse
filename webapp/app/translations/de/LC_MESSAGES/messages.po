@@ -2670,7 +2670,7 @@ msgstr "Geben Sie das Todesdatum ein."
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:87
 #: app/forms/validations/date_validations.py:89
 msgid "validate.date-of-divorce-missing"
-msgstr "Geben Sie das Datum der Trennung ein."
+msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:80
 msgid "form.lotse.validation-familienstand-married-lived-separated"
