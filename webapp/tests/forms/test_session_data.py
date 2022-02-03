@@ -11,6 +11,8 @@ from app.data_access.form_data_controller import FormDataController
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
     override_session_data
 
+CURRENT_USER = "app.forms.session_data.current_user"
+
 
 @pytest.fixture(autouse=True)
 def testing_database(monkeypatch):
@@ -18,7 +20,7 @@ def testing_database(monkeypatch):
     fakeredis_connection = fakeredis.FakeStrictRedis()
     monkeypatch.setattr(FormDataController, "_redis_connection", fakeredis_connection)
     # Also mocking the current_user
-    monkeypatch.setattr("app.forms.session_data.current_user", MagicMock(idnr_hashed="0123456789"))
+    monkeypatch.setattr(CURRENT_USER, MagicMock(idnr_hashed="0123456789"))
     yield monkeypatch
     fakeredis_connection.flushall()
 
@@ -51,7 +53,7 @@ class TestGetSessionData:
         other_form_data = {"enemy": "Bowser"}
         expected_data = {**other_form_data}
         override_session_data(form_data)
-        testing_database.setattr("app.forms.session_data.current_user", MagicMock(idnr_hashed="9876543210"))
+        testing_database.setattr(CURRENT_USER, MagicMock(idnr_hashed="9876543210"))
         override_session_data(other_form_data)
         # when
         session_data = get_session_data('form_data')
@@ -79,10 +81,6 @@ class TestGetSessionData:
         session_data = get_session_data('form_data', default_data=original_default_data)
 
         assert original_default_data is not session_data
-
-    def test_if_no_session_data_and_no_debug_data_then_return_empty_dict(self):
-        session_data = get_session_data('form_data')
-        assert {} == session_data
 
 
 class TestSerializeSessionData:
@@ -187,9 +185,9 @@ class TestOverrideSessionData:
     def test_if_data_stored_with_other_identifier_then_it_is_not_changed(self, testing_database):
         new_data = {'brother': 'Luigi'}
         override_session_data(new_data)
-        testing_database.setattr("app.forms.session_data.current_user", MagicMock(idnr_hashed="9876543210"))
+        testing_database.setattr(CURRENT_USER, MagicMock(idnr_hashed="9876543210"))
         other_data = {'enemy': 'Bowser'}
         override_session_data(other_data)
-        testing_database.setattr("app.forms.session_data.current_user", MagicMock(idnr_hashed="0123456789"))
+        testing_database.setattr(CURRENT_USER, MagicMock(idnr_hashed="0123456789"))
         form_data = get_session_data('form_data')
         assert new_data == form_data
