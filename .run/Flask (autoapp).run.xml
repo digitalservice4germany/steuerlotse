@@ -1,0 +1,33 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Flask (autoapp)" type="Python.FlaskServer" nameIsGenerated="true">
+    <option name="flaskDebug" value="true" />
+    <module name="steuerlotse" />
+    <option name="target" value="autoapp" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <option name="SDK_HOME" value="$USER_HOME$/.virtualenvs/webapp-ByyOlsu3/bin/python" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    <option name="launchJavascriptDebuger" value="false" />
+    <method v="2" />
+  </configuration>
+  <configuration default="false" name="Flask (autoapp)" type="Python.FlaskServer" nameIsGenerated="true">
+    <option name="additionalOptions" value="--host=0.0.0.0 --debugger" />
+    <option name="flaskDebug" value="true" />
+    <module name="steuerlotse" />
+    <option name="target" value="autoapp" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="false" />
+    <option name="SDK_HOME" value="docker-compose://[$PROJECT_DIR$/docker-compose.development.yml]:web/python" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <option name="IS_MODULE_SDK" value="false" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+    <option name="launchJavascriptDebuger" value="false" />
+    <method v="2" />
+  </configuration>
+</component>

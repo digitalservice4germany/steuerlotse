@@ -353,20 +353,20 @@ def register_error_handlers(app):
 
     @app.errorhandler(InternalServerError)
     def error_500(error):
-        current_app.logger.error(
+        current_app.logger.warning(
             'An uncaught error occurred', exc_info=error.original_exception)
         return render_template('error/500.html', header_title=_('500.header-title'), js_needed=False), 500
 
     @app.errorhandler(EricaRequestTimeoutError)
     def timeout_error_erica(error):
-        current_app.logger.error(
+        current_app.logger.warning(
             'An Erica Request Timeout error occurred', exc_info=error.original_exception)
         return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica-error.header-title'),
                                js_needed=False), 504
 
     @app.errorhandler(EricaRequestConnectionError)
     def connection_error_erica(error):
-        current_app.logger.error(
+        current_app.logger.warning(
             'An Erica Request Connection error occurred', exc_info=error.original_exception)
         return render_template(ERICA_ERROR_TEMPLATE, header_title=_('erica-error.header-title'),
                                js_needed=False), 503

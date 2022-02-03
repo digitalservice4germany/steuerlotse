@@ -2658,19 +2658,19 @@ msgstr "Einverständnis Zusammenveranlagung"
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:69
 #: app/forms/validations/date_validations.py:79
 msgid "validate.date-of-marriage-missing"
-msgstr "Geben Sie Ihr Geburtsdatum ein."
+msgstr "Geben Sie Ihr Hochzeitsdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:72
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:99
 #: app/forms/validations/date_validations.py:70
 msgid "validate.date-of-death-missing"
-msgstr "Geben Sie Ihr Geburtsdatum ein."
+msgstr "Geben Sie das Todesdatum ein."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:75
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:87
 #: app/forms/validations/date_validations.py:89
 msgid "validate.date-of-divorce-missing"
-msgstr "Geben Sie Ihr Geburtsdatum ein."
+msgstr "Geben Sie an seit wann Sie als Paar dauernd getrennt leben."
 
 #: app/forms/steps/lotse_multistep_flow_steps/personal_data_steps.py:80
 msgid "form.lotse.validation-familienstand-married-lived-separated"
