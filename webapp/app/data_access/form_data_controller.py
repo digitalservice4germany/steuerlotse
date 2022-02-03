@@ -12,6 +12,7 @@ class FormDataController:
         """Singleton creation so that the redis connection is not recreated."""
         if cls._instance is None:
             cls._instance = super(FormDataController, cls).__new__(cls)
+        if cls._redis_connection is None:
             cls._redis_connection = redislite.StrictRedis() if Config.USE_REDIS_LITE else redis.Redis.from_url(
                 Config.SESSION_DATA_STORAGE_URL)
         return cls._instance
