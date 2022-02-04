@@ -87,7 +87,7 @@ class TestStepSteuernummer:
         form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is True
 
-    def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context):
+    def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context_with_data_in_session):
         session_data = {
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
@@ -101,7 +101,7 @@ class TestStepSteuernummer:
         expected_request_new_tax_number_label = ngettext('form.lotse.steuernummer.request_new_tax_number',
                                                          'form.lotse.steuernummer.request_new_tax_number',
                                                          num=expected_number_of_users)
-        with new_test_request_context(method='GET', form_data=session_data):
+        with new_test_request_context_with_data_in_session(method='GET', session_data=session_data):
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -249,7 +249,7 @@ class TestStepSteuernummerValidate:
 
 
 class TestStepPersonATexts:
-    def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context):
+    def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context_with_data_in_session):
         session_data = {
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
@@ -262,7 +262,7 @@ class TestStepPersonATexts:
         expected_step_intro = _(
             'form.lotse.person-a-intro') if expected_number_of_users > 1 else None
 
-        with new_test_request_context(method='GET', form_data=session_data) as req:
+        with new_test_request_context_with_data_in_session(method='GET', session_data=session_data):
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -366,7 +366,7 @@ class TestShowPersonBPrecondition:
 
 
 class TestPersonBValidation:
-    valid_stored_data = {'familienstand': 'married', 'familienstand_date': datetime.date(2000, 1, 31),
+    valid_session_data = {'familienstand': 'married', 'familienstand_date': datetime.date(2000, 1, 31),
                          'familienstand_married_lived_separated': 'no',
                          'familienstand_confirm_zusammenveranlagung': True}
 
@@ -376,49 +376,49 @@ class TestPersonBValidation:
                 'person_b_last_name': 'Granger', 'person_b_dob': ['01', '01', '1985'],
                 'person_b_same_address': 'yes', 'person_b_religion': 'none'}
 
-    def test_if_plz_starts_with_zero_then_succ_validation(self, valid_form_data, new_test_request_context):
+    def test_if_plz_starts_with_zero_then_succ_validation(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict({**valid_form_data, ** {'person_b_plz': '01234'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
 
-    def test_if_plz_has_5_digits_then_succ_validation(self, valid_form_data, new_test_request_context):
+    def test_if_plz_has_5_digits_then_succ_validation(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict({**valid_form_data, **{'person_b_plz': '12345'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
 
-    def test_if_plz_has_too_little_digits_then_fail_validation(self, valid_form_data, new_test_request_context):
+    def test_if_plz_has_too_little_digits_then_fail_validation(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict({**valid_form_data, **{'person_b_plz': '1234'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is False
 
-    def test_if_plz_has_too_many_digits_then_fail_validation(self, valid_form_data, new_test_request_context):
+    def test_if_plz_has_too_many_digits_then_fail_validation(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict({**valid_form_data, **{'person_b_plz': '123456'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is False
 
-    def test_if_same_address_yes_then_validation_succ_without_address(self, valid_form_data, new_test_request_context):
+    def test_if_same_address_yes_then_validation_succ_without_address(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict(
             {**valid_form_data, **{'person_b_same_address': 'yes'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
 
-    def test_if_same_address_no_and_no_address_set_then_fail_validation(self, valid_form_data, new_test_request_context):
+    def test_if_same_address_no_and_no_address_set_then_fail_validation(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict(
             {**valid_form_data, **{'person_b_same_address': 'no'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is False
 
-    def test_if_same_address_no_and_address_set_then_succ_validation(self, valid_form_data, new_test_request_context):
+    def test_if_same_address_no_and_address_set_then_succ_validation(self, valid_form_data, new_test_request_context_with_data_in_session):
         data = MultiDict({**valid_form_data, **{'person_b_same_address': 'no', 'person_b_street': 'Diagon Alley',
                                                 'person_b_street_number': '7', 'person_b_plz': '12345',
                                                 'person_b_town': 'Hogsmeade'}})
-        with new_test_request_context(stored_data=self.valid_stored_data, form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=self.valid_session_data, form_data=data):
             form = new_person_b_step(form_data=data).render_info.form
             assert form.validate() is True
 

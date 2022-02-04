@@ -1,13 +1,19 @@
 import os
 import sys
-from unittest.mock import MagicMock
-
-import fakeredis
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 os.environ["FLASK_ENV"] = 'testing'
 
 from contextlib import contextmanager
+
+from unittest.mock import MagicMock
+import fakeredis
+
+from flask.sessions import SecureCookieSession
+from werkzeug.datastructures import ImmutableMultiDict
+
+from tests.utils import create_session_form_data
+
 import pytest
 
 from app.app import create_app
@@ -54,29 +60,29 @@ def testing_database(monkeypatch):
 def new_test_request_context(app):
     @contextmanager
     def _new_test_request_context(method='GET', form_data=None, stored_data=None, session_identifier='form_data'):
-        from app.forms.session_data import serialize_session_data
-        from app.data_access.form_data_controller import FormDataController
         with app.test_request_context() as req:
             req.request.method = method
             if stored_data:
-                FormDataController().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
-                                                   serialize_session_data(stored_data))
-            else:
-                FormDataController().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
-                                                   serialize_session_data(form_data))
+                req.session = SecureCookieSession({session_identifier: create_session_form_data(stored_data)})
+            if form_data:
+                req.request.data = ImmutableMultiDict(form_data)
+                req.request.form = ImmutableMultiDict(form_data)
             yield req
-
     return _new_test_request_context
 
 
 @pytest.fixture
-def test_request_context_with_person_b_disability(app):
-    from app.forms.session_data import serialize_session_data
-    from app.data_access.form_data_controller import FormDataController
-    with app.test_request_context(method="POST") as req:
-        FormDataController().save_to_redis(CURRENT_USER_IDNR + '_form_data',
-                                            serialize_session_data({'person_b_has_disability': 'yes'}))
-        yield req
+def new_test_request_context_with_data_in_session(app, new_test_request_context):
+    @contextmanager
+    def _new_test_request_context(method='GET', form_data=None, session_data=None, session_identifier='form_data'):
+        from app.forms.session_data import serialize_session_data
+        from app.data_access.form_data_controller import FormDataController
+        with new_test_request_context(method=method, form_data=form_data) as req:
+            if session_data:
+                FormDataController().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
+                                               serialize_session_data(session_data))
+            yield req
+    return _new_test_request_context
 
 
 @pytest.fixture(scope="session")

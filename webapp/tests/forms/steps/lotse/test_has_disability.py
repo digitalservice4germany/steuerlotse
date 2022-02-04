@@ -46,17 +46,17 @@ class TestHasDisabilityPersonBPrecondition:
 
 
 class TestStepDisabilityPersonAValidation:
-    def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context):
+    def test_if_required_value_is_given_then_validation_should_be_success(self, new_test_request_context_with_data_in_session):
         data = MultiDict({'person_a_has_disability': 'yes'})
-        with new_test_request_context(form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepDisabilityPersonA.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_required_value_is_not_given_then_validation_should_be_failure(self, new_test_request_context):
+    def test_if_required_value_is_not_given_then_validation_should_be_failure(self, new_test_request_context_with_data_in_session):
         data = MultiDict()
-        with new_test_request_context(form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepDisabilityPersonA.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
@@ -64,7 +64,7 @@ class TestStepDisabilityPersonAValidation:
 
 
 class TestStepDisabilityPersonBValidation:
-    def test_if_person_b_has_disability_is_given_then_validation_should_be_true(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_given_then_validation_should_be_true(self, new_test_request_context_with_data_in_session):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
@@ -73,13 +73,13 @@ class TestStepDisabilityPersonBValidation:
             'person_b_has_disability': 'no'
         })
 
-        with new_test_request_context(form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
             assert form.validate() is True
 
-    def test_if_person_b_has_disability_is_not_given_then_validate_should_be_false(self, new_test_request_context):
+    def test_if_person_b_has_disability_is_not_given_then_validate_should_be_false(self, new_test_request_context_with_data_in_session):
         data = MultiDict({
             'familienstand': 'married',
             'familienstand_married_lived_separated': 'no',
@@ -87,7 +87,7 @@ class TestStepDisabilityPersonBValidation:
             'person_a_has_disability': 'no',
         })
 
-        with new_test_request_context(form_data=data):
+        with new_test_request_context_with_data_in_session(session_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form

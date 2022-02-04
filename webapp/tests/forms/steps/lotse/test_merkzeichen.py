@@ -17,8 +17,8 @@ def new_merkzeichen_person_a_step(form_data):
 
 
 @pytest.fixture
-def test_request_context_with_person_a_disability(new_test_request_context):
-    with new_test_request_context(stored_data={'person_a_has_disability': 'yes'}) as req:
+def test_request_context_with_person_a_disability(new_test_request_context_with_data_in_session):
+    with new_test_request_context_with_data_in_session(session_data={'person_a_has_disability': 'yes'}) as req:
         yield req
 
 
@@ -152,7 +152,7 @@ class TestStepMerkzeichenPersonAValidation:
         
 class TestStepMerkzeichenPersonATexts:
 
-    def test_if_multiple_users_then_show_multiple_title(self, new_test_request_context):
+    def test_if_multiple_users_then_show_multiple_title(self, new_test_request_context_with_data_in_session):
         expected_step_title = ngettext('form.lotse.merkzeichen_person_a.title', 'form.lotse.merkzeichen_person_a.title',
                                        num=2)
         session_data = {
@@ -163,13 +163,13 @@ class TestStepMerkzeichenPersonATexts:
             'person_a_has_disability': 'yes',
         }
 
-        with new_test_request_context(stored_data=session_data):
+        with new_test_request_context_with_data_in_session(session_data=session_data):
             step = new_merkzeichen_person_a_step({})
             step._pre_handle()
 
         assert step.title == expected_step_title
 
-    def test_if_multiple_users_then_show_multiple_label(self, new_test_request_context):
+    def test_if_multiple_users_then_show_multiple_label(self, new_test_request_context_with_data_in_session):
         expected_step_label = ngettext('form.lotse.merkzeichen_person_a.label', 'form.lotse.merkzeichen_person_a.label',
                                        num=2)
         session_data = {
@@ -180,13 +180,13 @@ class TestStepMerkzeichenPersonATexts:
             'person_a_has_disability': 'yes',
         }
 
-        with new_test_request_context(stored_data=session_data):
+        with new_test_request_context_with_data_in_session(session_data=session_data):
             step = new_merkzeichen_person_a_step({})
             step._pre_handle()
 
         assert step.label == expected_step_label
 
-    def test_if_single_user_then_show_single_title(self, new_test_request_context):
+    def test_if_single_user_then_show_single_title(self, new_test_request_context_with_data_in_session):
         expected_step_title = ngettext('form.lotse.merkzeichen_person_a.title', 'form.lotse.merkzeichen_person_a.title',
                                        num=1)
         session_data = {
@@ -194,13 +194,13 @@ class TestStepMerkzeichenPersonATexts:
             'person_a_has_disability': 'yes',
         }
 
-        with new_test_request_context(stored_data=session_data):
+        with new_test_request_context_with_data_in_session(session_data=session_data):
             step = new_merkzeichen_person_a_step({})
             step._pre_handle()
 
         assert step.title == expected_step_title
 
-    def test_if_single_user_then_show_single_label(self, new_test_request_context):
+    def test_if_single_user_then_show_single_label(self, new_test_request_context_with_data_in_session):
         expected_step_label = ngettext('form.lotse.merkzeichen_person_a.label', 'form.lotse.merkzeichen_person_a.label',
                                        num=1)
         session_data = {
@@ -208,7 +208,7 @@ class TestStepMerkzeichenPersonATexts:
             'person_a_has_disability': 'yes',
         }
 
-        with new_test_request_context(stored_data=session_data):
+        with new_test_request_context_with_data_in_session(session_data=session_data):
             step = new_merkzeichen_person_a_step({})
             step._pre_handle()
 
@@ -219,7 +219,13 @@ def new_merkzeichen_person_b_step(form_data):
     return LotseStepChooser().get_correct_step(StepMerkzeichenPersonB.name, True, ImmutableMultiDict(form_data))
 
 
-@pytest.mark.usefixtures('test_request_context_with_person_b_disability')
+@pytest.fixture
+def test_post_request_context_with_person_b_disability(new_test_request_context_with_data_in_session):
+    with new_test_request_context_with_data_in_session(method="POST", session_data={'person_b_has_disability': 'yes'}) as req:
+        yield req
+
+
+@pytest.mark.usefixtures('test_post_request_context_with_person_b_disability')
 class TestStepMerkzeichenPersonBValidation:
     @pytest.fixture()
     def valid_form_data(self):

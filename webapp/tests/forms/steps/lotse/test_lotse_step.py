@@ -17,9 +17,8 @@ class TestLotseFormSteuerlotseStepPrepareRenderInfo:
 
 
 class TestLotseFormSteuerlotseStepMainHandle:
-
-    def test_if_overview_button_set_in_request_set_next_url_to_summary_step(self, new_test_request_context):
-        with new_test_request_context(form_data={'overview_button': ''}):
+    def test_if_overview_button_set_in_request_set_next_url_to_summary_step(self, new_test_request_context_with_data_in_session):
+        with new_test_request_context_with_data_in_session(form_data={'overview_button': ''}):
             render_info = LotseFormSteuerlotseStep.prepare_render_info({}, {})
             step = LotseFormSteuerlotseStep(render_info=render_info)
             step._main_handle()
