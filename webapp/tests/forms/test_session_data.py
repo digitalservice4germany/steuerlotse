@@ -3,7 +3,6 @@ import time
 import pytest
 from unittest.mock import MagicMock, patch
 from cryptography.fernet import InvalidToken
-from flask_login import current_user
 
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
     override_session_data, create_key_identifier_with_user_id
@@ -51,6 +50,27 @@ class TestGetSessionData:
         original_default_data = {}
         session_data = get_session_data('form_data', default_data=original_default_data)
         assert original_default_data is not session_data
+
+    def test_if_session_data_in_incorrect_identifier_then_return_only_data_from_correct_identifier(self):
+        form_data = {"brother": "Luigi"}
+        incorrect_identifier_data = {"enemy": "Bowser"}
+        expected_data = {**form_data}
+
+        override_session_data(form_data)
+        override_session_data(incorrect_identifier_data, "INCORRECT_IDENTIFIER")
+
+        session_data = get_session_data("form_data")
+
+        assert expected_data == session_data
+
+    def test_if_only_data_in_incorrect_identifier_then_return_empty_data(self):
+        incorrect_identifier_data = {"enemy": "Bowser"}
+
+        override_session_data(incorrect_identifier_data, "INCORRECT_IDENTIFIER")
+
+        session_data = get_session_data("form_data")
+
+        assert {} == session_data
 
 
 class TestOverrideSessionData:
