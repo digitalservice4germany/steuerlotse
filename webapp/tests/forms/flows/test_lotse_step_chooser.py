@@ -49,7 +49,7 @@ class TestStepHaushaltsnaheHandwerker:
     invalid_data = {'stmind_select_vorsorge': True, 'stmind_select_ausserg_bela': True,
                     'stmind_select_religion': True, 'stmind_select_spenden': True}
 
-    def test_if_handwerker_given_then_do_not_delete_stmind_gem_haushalt(self, new_test_request_context):
+    def test_if_handwerker_given_then_do_not_delete_stmind_gem_haushalt(self, new_test_request_context_with_data_in_session):
         stored_data = {'familienstand': 'single',
                        'stmind_select_handwerker': True,
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
@@ -57,32 +57,32 @@ class TestStepHaushaltsnaheHandwerker:
         form_data = ImmutableMultiDict({'stmind_handwerker_summe': '100',
                                         'stmind_handwerker_entries': ['Badezimmer'],
                                         'stmind_handwerker_lohn_etc_summe': '50'})
-        with new_test_request_context(stored_data=stored_data):
+        with new_test_request_context_with_data_in_session(session_data=stored_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, should_update_data=True,
                                                        form_data=form_data)
             assert 'stmind_gem_haushalt_entries' in step.stored_data
             assert 'stmind_gem_haushalt_count' in step.stored_data
 
-    def test_if_haushaltsnahe_given_then_do_not_delete_stmind_gem_haushalt(self, new_test_request_context):
+    def test_if_haushaltsnahe_given_then_do_not_delete_stmind_gem_haushalt(self, new_test_request_context_with_data_in_session):
         stored_data = {'familienstand': 'single',
                        'stmind_select_handwerker': True,
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
                        'stmind_gem_haushalt_count': 1}
         form_data = ImmutableMultiDict({'stmind_haushaltsnahe_summe': '10',
                                         'stmind_haushaltsnahe_entries': ['Dach']})
-        with new_test_request_context(stored_data=stored_data):
+        with new_test_request_context_with_data_in_session(session_data=stored_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, should_update_data=True,
                                                        form_data=form_data)
             assert 'stmind_gem_haushalt_entries' in step.stored_data
             assert 'stmind_gem_haushalt_count' in step.stored_data
 
-    def test_if_no_data_given_then_delete_stmind_gem_haushalt(self, new_test_request_context):
+    def test_if_no_data_given_then_delete_stmind_gem_haushalt(self, new_test_request_context_with_data_in_session):
         stored_data = {'familienstand': 'single',
                        'stmind_select_handwerker': True,
                        'stmind_gem_haushalt_entries': ['Helene Fischer'],
                        'stmind_gem_haushalt_count': 1}
         form_data = ImmutableMultiDict({})
-        with new_test_request_context(stored_data=stored_data):
+        with new_test_request_context_with_data_in_session(session_data=stored_data):
             step = LotseStepChooser().get_correct_step(StepHaushaltsnaheHandwerker.name, should_update_data=True,
                                                        form_data=form_data)
             assert 'stmind_gem_haushalt_entries' not in step.stored_data
@@ -97,49 +97,49 @@ class TestStepGemeinsamerHaushalt:
     no_familienstand_data = {'stmind_select_handwerker': True, 'stmind_haushaltsnahe_summe': 1337}
     no_haushaltsnahe_data = {'familienstand': 'single', 'stmind_select_handwerker': True}
 
-    def test_do_not_skip_if_single(self, new_test_request_context):
+    def test_do_not_skip_if_single(self, new_test_request_context_with_data_in_session):
         single_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14, 'familienstand': 'single'}
-        with new_test_request_context(stored_data=single_data):
+        with new_test_request_context_with_data_in_session(session_data=single_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, StepGemeinsamerHaushalt)
 
-    def test_skip_if_married(self, new_test_request_context):
+    def test_skip_if_married(self, new_test_request_context_with_data_in_session):
         married_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                         'familienstand': 'married', 'familienstand_married_lived_separated': 'no',
                         'familienstand_confirm_zusammenveranlagung': True}
-        with new_test_request_context(stored_data=married_data):
+        with new_test_request_context_with_data_in_session(session_data=married_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepFamilienstand.name
 
-    def test_do_not_skip_if_separated(self, new_test_request_context):
+    def test_do_not_skip_if_separated(self, new_test_request_context_with_data_in_session):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'married', 'familienstand_married_lived_separated': 'yes',
                           'familienstand_married_lived_separated_since': datetime.date(1990, 1, 1)}
-        with new_test_request_context(stored_data=separated_data):
+        with new_test_request_context_with_data_in_session(session_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, StepGemeinsamerHaushalt)
 
-    def test_do_not_skip_if_widowed_longer_than_veranlagungszeitraum(self, new_test_request_context):
+    def test_do_not_skip_if_widowed_longer_than_veranlagungszeitraum(self, new_test_request_context_with_data_in_session):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(VERANLAGUNGSJAHR - 1, 12, 31)}
-        with new_test_request_context(stored_data=separated_data):
+        with new_test_request_context_with_data_in_session(session_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, StepGemeinsamerHaushalt)
 
-    def test_skip_if_widowed_recently_zusammenveranlagung(self, new_test_request_context):
+    def test_skip_if_widowed_recently_zusammenveranlagung(self, new_test_request_context_with_data_in_session):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(VERANLAGUNGSJAHR, 1, 2),
                           'familienstand_widowed_lived_separated': 'no',
                           'familienstand_confirm_zusammenveranlagung': True}
-        with new_test_request_context(stored_data=separated_data):
+        with new_test_request_context_with_data_in_session(session_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepFamilienstand.name
 
-    def test_do_not_skip_if_widowed_recently_and_separated_and_einzelveranlagung(self, new_test_request_context):
+    def test_do_not_skip_if_widowed_recently_and_separated_and_einzelveranlagung(self, new_test_request_context_with_data_in_session):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           # set to first day of the veranlagungszeitraum
@@ -147,25 +147,25 @@ class TestStepGemeinsamerHaushalt:
                           'familienstand_widowed_lived_separated': 'yes',
                           'familienstand_widowed_lived_separated_since': datetime.date(VERANLAGUNGSJAHR - 1, 12, 31),
                           'familienstand_zusammenveranlagung': 'no'}
-        with new_test_request_context(stored_data=separated_data):
+        with new_test_request_context_with_data_in_session(session_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, StepGemeinsamerHaushalt)
 
-    def test_skip_if_widowed_recently_and_separated_and_zusammenveranlagung(self, new_test_request_context):
+    def test_skip_if_widowed_recently_and_separated_and_zusammenveranlagung(self, new_test_request_context_with_data_in_session):
         separated_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                           'familienstand': 'widowed',
                           'familienstand_date': datetime.date(VERANLAGUNGSJAHR, 1, 10),
                           'familienstand_widowed_lived_separated': 'yes',
                           'familienstand_widowed_lived_separated_since': datetime.date(VERANLAGUNGSJAHR, 1, 2),
                           'familienstand_zusammenveranlagung': 'yes'}
-        with new_test_request_context(stored_data=separated_data):
+        with new_test_request_context_with_data_in_session(session_data=separated_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, RedirectSteuerlotseStep)
             assert step.redirection_step_name == StepFamilienstand.name
 
-    def test_do_not_skip_if_divorced(self, new_test_request_context):
+    def test_do_not_skip_if_divorced(self, new_test_request_context_with_data_in_session):
         divorced_data = {'stmind_select_handwerker': True, 'stmind_handwerker_summe': 14,
                          'familienstand': 'divorced'}
-        with new_test_request_context(stored_data=divorced_data):
+        with new_test_request_context_with_data_in_session(session_data=divorced_data):
             step = LotseStepChooser().get_correct_step(StepGemeinsamerHaushalt.name, False, ImmutableMultiDict({}))
             assert isinstance(step, StepGemeinsamerHaushalt)
