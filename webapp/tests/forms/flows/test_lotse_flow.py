@@ -25,6 +25,7 @@ from app.elster_client.elster_errors import ElsterTransferError, ElsterGlobalVal
 from app.forms.fields import LegacyYesNoField, SteuerlotseStringField, SteuerlotseDateField, EntriesField, EuroField
 from app.forms.flows.lotse_flow import LotseMultiStepFlow, SPECIAL_RESEND_TEST_IDNRS
 from app.forms.flows.multistep_flow import RenderInfo
+from app.forms.session_data import override_session_data
 from app.forms.steps.lotse.confirmation import StepSummary
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB
 from app.forms.steps.lotse.steuerminderungen import StepVorsorge, StepAussergBela, StepHaushaltsnaheHandwerker, \
@@ -284,7 +285,7 @@ class TestLotseHandle(unittest.TestCase):
 
     def test_if_form_step_and_not_post_then_return_render(self):
         with self.app.test_request_context(path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name, method='GET') as req:
-            req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
+            override_session_data(self.session_data, 'form_data')
             response = self.flow.handle(MockRenderStep.name)
 
             self.assertEqual(200, response.status_code)
@@ -497,7 +498,7 @@ class TestLotseGetSessionData(unittest.TestCase):
         self.session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
 
     def test_if_session_valid_then_return_updated_session_data(self):
-        self.req.session = SecureCookieSession({'form_data': create_session_form_data(self.session_data)})
+        override_session_data(self.session_data, 'form_data')
         session_data = self.flow._get_session_data()
 
         self.assertTrue(set(self.session_data).issubset(set(session_data)))
