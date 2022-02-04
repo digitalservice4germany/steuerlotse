@@ -10,7 +10,7 @@ from app.forms.steps.lotse_multistep_flow_steps.confirmation_steps import StepCo
 from app.model.form_data import MandatoryFieldMissingValidationError
 
 
-@pytest.mark.usefixtures('test_request_context')
+@pytest.mark.usefixtures('test_request_context', 'testing_current_user', 'testing_database')
 class TestStepSummaryForm:
     @pytest.fixture
     def summary_step(self):
@@ -28,7 +28,7 @@ class TestStepSummaryForm:
         assert form.validate() is True
 
 
-@pytest.mark.usefixtures('test_request_context')
+@pytest.mark.usefixtures('test_request_context', 'testing_current_user', 'testing_database')
 class TestStepSummaryHandle:
     @pytest.fixture
     def summary_step(self):

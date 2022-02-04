@@ -1,100 +1,85 @@
 import datetime
 import time
-from unittest.mock import MagicMock, patch
-
-import fakeredis
 import pytest
+from unittest.mock import MagicMock, patch
 from cryptography.fernet import InvalidToken
-
-from app.data_access.form_data_controller import FormDataController
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
     override_session_data
 
 CURRENT_USER = "app.forms.session_data.current_user"
 
 
-class TestSessionData:
+@pytest.mark.usefixtures('testing_database', 'testing_current_user')
+class TestGetSessionData:
 
-    @pytest.fixture(autouse=True)
-    def testing_database(self, monkeypatch):
-        fakeredis_connection = fakeredis.FakeStrictRedis()
-        monkeypatch.setattr(FormDataController, "_redis_connection", fakeredis_connection)
-        yield
-        fakeredis_connection.flushall()
+    def test_if_session_data_then_return_session_data(self):
+        data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
+        override_session_data(data)
+        stored_data = get_session_data('form_data')
+        assert data == stored_data
 
-    @pytest.fixture(autouse=True)
-    def testing_current_user(self, monkeypatch):
-        monkeypatch.setattr(CURRENT_USER, MagicMock(idnr_hashed="0123456789"))
-        yield monkeypatch
+    def test_if_session_data_and_default_data_different_then_update_session_data(self):
+        default_data = {"brother": "Luigi"}
+        session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
+        expected_data = {**session_data, **default_data}
+        override_session_data(session_data)
+        session_data = get_session_data('form_data', default_data=default_data)
+        assert expected_data == session_data
 
-    class TestGetSessionData:
-
-        def test_if_session_data_then_return_session_data(self):
-            data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
-            override_session_data(data)
-            stored_data = get_session_data('form_data')
-            assert data == stored_data
-
-        def test_if_session_data_and_default_data_different_then_update_session_data(self):
-            default_data = {"brother": "Luigi"}
-            session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
-            expected_data = {**session_data, **default_data}
-            override_session_data(session_data)
-            session_data = get_session_data('form_data', default_data=default_data)
-            assert expected_data == session_data
-
-        def test_if_session_data_for_the_current_user_is_returned(self, testing_current_user):
-            form_data = {"brother": "Luigi"}
-            other_form_data = {"enemy": "Bowser"}
-            expected_data = {**other_form_data}
-            override_session_data(form_data)
-            testing_current_user.setattr(CURRENT_USER, MagicMock(idnr_hashed="9876543210"))
+    def test_if_session_data_for_the_current_user_is_returned(self, testing_current_user):
+        form_data = {"brother": "Luigi"}
+        other_form_data = {"enemy": "Bowser"}
+        expected_data = {**other_form_data}
+        override_session_data(form_data)
+        with patch(CURRENT_USER, MagicMock(idnr_hashed="9876543210")):
             override_session_data(other_form_data)
             session_data = get_session_data('form_data')
             assert expected_data == session_data
 
-        def test_if_no_form_data_in_session_and_no_default_data_then_return_nothing(self):
-            session_data = get_session_data('form_data')
-            assert {} == session_data
+    def test_if_no_form_data_in_session_and_no_default_data_then_return_nothing(self):
+        session_data = get_session_data('form_data')
+        assert {} == session_data
 
-        def test_if_no_form_data_in_session_then_return_default_data(self):
-            default_data = {"brother": "Luigi"}
-            session_data = get_session_data('form_data', default_data=default_data)
-            assert default_data == session_data
+    def test_if_no_form_data_in_session_then_return_default_data(self):
+        default_data = {"brother": "Luigi"}
+        session_data = get_session_data('form_data', default_data=default_data)
+        assert default_data == session_data
 
-        def test_if_no_session_data_and_debug_data_provided_then_return_copy(self):
-            original_default_data = {}
-            session_data = get_session_data('form_data', default_data=original_default_data)
-            assert original_default_data is not session_data
+    def test_if_no_session_data_and_debug_data_provided_then_return_copy(self):
+        original_default_data = {}
+        session_data = get_session_data('form_data', default_data=original_default_data)
+        assert original_default_data is not session_data
 
-    class TestOverrideSessionData:
 
-        def test_data_is_saved_as_new_form_data(self):
-            form_data = get_session_data('form_data')
-            assert form_data == {}
-            new_data = {'brother': 'Luigi'}
-            override_session_data(new_data)
-            form_data = get_session_data('form_data')
-            assert form_data == new_data
+@pytest.mark.usefixtures('testing_database', 'testing_current_user')
+class TestOverrideSessionData:
 
-        def test_data_is_saved_as_update_form_data(self):
-            new_data = {'brother': 'Luigi'}
-            override_session_data(new_data)
-            update_data = {'mother': 'daisy'}
-            override_session_data(update_data)
-            form_data = get_session_data('form_data')
-            assert form_data != new_data
-            assert form_data == update_data
+    def test_data_is_saved_as_new_form_data(self):
+        form_data = get_session_data('form_data')
+        assert form_data == {}
+        new_data = {'brother': 'Luigi'}
+        override_session_data(new_data)
+        form_data = get_session_data('form_data')
+        assert form_data == new_data
 
-        def test_if_data_stored_with_other_identifier_then_it_is_not_changed(self, testing_current_user):
-            new_data = {'brother': 'Luigi'}
-            override_session_data(new_data)
-            testing_current_user.setattr(CURRENT_USER, MagicMock(idnr_hashed="9876543210"))
+    def test_data_is_saved_as_update_form_data(self):
+        new_data = {'brother': 'Luigi'}
+        override_session_data(new_data)
+        update_data = {'mother': 'daisy'}
+        override_session_data(update_data)
+        form_data = get_session_data('form_data')
+        assert form_data != new_data
+        assert form_data == update_data
+
+    def test_if_data_stored_with_other_identifier_then_it_is_not_changed(self):
+        new_data = {'brother': 'Luigi'}
+        override_session_data(new_data)
+        with patch(CURRENT_USER, MagicMock(idnr_hashed="9876543210")):
             other_data = {'enemy': 'Bowser'}
             override_session_data(other_data)
-            testing_current_user.setattr(CURRENT_USER, MagicMock(idnr_hashed="0123456789"))
+        with patch(CURRENT_USER, MagicMock(idnr_hashed="0123456789")):
             form_data = get_session_data('form_data')
-            assert new_data == form_data
+        assert new_data == form_data
 
 
 class TestSerializeSessionData:
@@ -117,7 +102,6 @@ class TestSerializeSessionData:
 
         with patch("app.forms.session_data.encrypt", MagicMock(wraps=encrypt)) as encrypt_mock, \
                 patch("app.forms.session_data.zlib.compress", MagicMock(wraps=compress)) as compress_mock:
-
             serialize_session_data(original_data)
 
             encrypt_mock.assert_called()
@@ -171,6 +155,3 @@ class TestDeserializeSessionData:
             deserialized_data = deserialize_session_data(b'', self.app.config['PERMANENT_SESSION_LIFETIME'])
             assert {} == deserialized_data
             log_fun.assert_not_called()
-
-
-

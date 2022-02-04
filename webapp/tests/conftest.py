@@ -1,5 +1,8 @@
 import os
 import sys
+from unittest.mock import MagicMock
+
+import fakeredis
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 os.environ["FLASK_ENV"] = 'testing'
@@ -37,6 +40,20 @@ def test_request_context(app):
 
 
 @pytest.fixture
+def testing_current_user(monkeypatch):
+    monkeypatch.setattr("app.forms.session_data.current_user", MagicMock(idnr_hashed="0123456789"))
+
+
+@pytest.fixture
+def testing_database(monkeypatch):
+    fakeredis_connection = fakeredis.FakeStrictRedis()
+    monkeypatch.setattr("app.data_access.form_data_controller.FormDataController._redis_connection",
+                        fakeredis_connection)
+    yield
+    fakeredis_connection.flushall()
+
+
+@pytest.fixture
 def new_test_request_context(app):
     @contextmanager
     def _new_test_request_context(method='GET', form_data=None, stored_data=None, session_identifier='form_data'):
@@ -48,6 +65,7 @@ def new_test_request_context(app):
                 req.request.data = ImmutableMultiDict(form_data)
                 req.request.form = ImmutableMultiDict(form_data)
             yield req
+
     return _new_test_request_context
 
 
