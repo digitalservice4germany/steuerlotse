@@ -284,7 +284,7 @@ class TestLotseHandle(unittest.TestCase):
             )
 
     def test_if_form_step_and_not_post_then_return_render(self):
-        with self.app.test_request_context(path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name, method='GET') as req:
+        with self.app.test_request_context(path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name, method='GET'):
             override_session_data(self.session_data, 'form_data')
             response = self.flow.handle(MockRenderStep.name)
 
