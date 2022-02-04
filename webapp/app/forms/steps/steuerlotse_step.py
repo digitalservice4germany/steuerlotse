@@ -1,14 +1,14 @@
 import logging
 from typing import Optional
 
-from flask import request, session, url_for, render_template, flash
+from flask import request, url_for, render_template, flash
 from flask_babel import ngettext
 from pydantic import ValidationError
 from werkzeug.utils import redirect
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import serialize_session_data, override_session_data
+from app.forms.session_data import override_session_data
 
 logger = logging.getLogger(__name__)
 
@@ -80,7 +80,7 @@ class SteuerlotseStep(object):
     def _override_session_data(self, stored_data, session_data_identifier=None):
         if session_data_identifier is None:
             session_data_identifier = self.session_data_identifier
-        session[session_data_identifier] = serialize_session_data(stored_data)
+        override_session_data(stored_data, session_data_identifier)
 
     def _handle_redirects(self):
         if self.render_info.redirect_url:
