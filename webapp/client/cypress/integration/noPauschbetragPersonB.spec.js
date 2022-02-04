@@ -15,7 +15,7 @@ describe("NoPauschbetragPage for person B", () => {
 
   context("With joint taxes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_date: "02.09.2000",
         familienstand_married_lived_separated: "no",
@@ -31,7 +31,7 @@ describe("NoPauschbetragPage for person B", () => {
 
   context("with joint taxes and person b has no disability data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_date: "02.09.2000",
         familienstand_married_lived_separated: "no",
@@ -50,7 +50,7 @@ describe("NoPauschbetragPage for person B", () => {
     "with joint taxes and person b has disability but no merkzeichen set",
     () => {
       beforeEach(() => {
-        cy.request("POST", "/testing/set_data/form_data", {
+        cy.request("POST", "/testing/set_session_data/form_data", {
           familienstand: "married",
           familienstand_date: "02.09.2000",
           familienstand_married_lived_separated: "no",
@@ -70,7 +70,7 @@ describe("NoPauschbetragPage for person B", () => {
   context("with joint taxes and person b has pauschbetrag claim", () => {
     // There is no possible combination to only have a fahrtkostenpauschbetrag claim.
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_date: "02.09.2000",
         familienstand_married_lived_separated: "no",
@@ -91,7 +91,7 @@ describe("NoPauschbetragPage for person B", () => {
     "with joint taxes and person b has pauschbetrag and fahrtkostenpauschbetrag claim",
     () => {
       beforeEach(() => {
-        cy.request("POST", "/testing/set_data/form_data", {
+        cy.request("POST", "/testing/set_session_data/form_data", {
           familienstand: "married",
           familienstand_date: "02.09.2000",
           familienstand_married_lived_separated: "no",
@@ -113,7 +113,7 @@ describe("NoPauschbetragPage for person B", () => {
     "with joint taxes and person b has no pauschbetrag or fahrtkostenpauschale claim",
     () => {
       beforeEach(() => {
-        cy.request("POST", "/testing/set_data/form_data", {
+        cy.request("POST", "/testing/set_session_data/form_data", {
           familienstand: "married",
           familienstand_date: "02.09.2000",
           familienstand_married_lived_separated: "no",

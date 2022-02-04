@@ -17,7 +17,7 @@ describe("FahrtkostenpauschalePersonA", () => {
 
   context("with married data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -36,7 +36,7 @@ describe("FahrtkostenpauschalePersonA", () => {
 
   context("with has disability no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -57,7 +57,7 @@ describe("FahrtkostenpauschalePersonA", () => {
 
   context("with no data for merkzeichen", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -78,7 +78,7 @@ describe("FahrtkostenpauschalePersonA", () => {
 
   context("with merkzeichen data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -120,7 +120,7 @@ describe("FahrtkostenpauschalePersonA", () => {
 
   context("with person_b_requests_fahrtkostenpauschale yes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -160,7 +160,7 @@ describe("FahrtkostenpauschalePersonA", () => {
 
   context("with person_b_requests_fahrtkostenpauschale no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,

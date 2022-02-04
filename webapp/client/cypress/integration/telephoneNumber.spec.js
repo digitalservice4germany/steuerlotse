@@ -21,7 +21,7 @@ describe("TelephoneNumber", () => {
 
   context("for separated taxes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "single",
       });
       cy.visit("/lotse/step/telephone_number");
@@ -35,7 +35,7 @@ describe("TelephoneNumber", () => {
 
   context("for joint taxes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_date: "02.09.2022",
         familienstand_married_lived_separated: "no",

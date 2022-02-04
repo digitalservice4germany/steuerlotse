@@ -377,7 +377,7 @@ def register_testing_request_handlers(app):
         return
 
     @csrf.exempt
-    @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
+    @app.route('/testing/set_session_data/<session_identifier>', methods=['POST'])
     def set_data(session_identifier):
         _ALLOWED_IDENTIFIERS = [_LOTSE_DATA_KEY, _ELIGIBILITY_DATA_KEY]
         if session_identifier not in _ALLOWED_IDENTIFIERS:

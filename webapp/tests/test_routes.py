@@ -1,6 +1,5 @@
 import copy
 import datetime
-import json
 
 import pytest
 from flask import Flask
@@ -9,7 +8,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 
 from app.app import create_app
 from app.config import Config, ProductionConfig, FunctionalTestingConfig
-from app.forms.session_data import get_session_data, serialize_session_data
+from app.forms.session_data import get_session_data
 
 from app.routes import extract_information_from_request, register_testing_request_handlers
 
@@ -85,39 +84,38 @@ class TestRegisterTestingRequestHandlers:
 
 class TestSetTestingDataRoute:
 
-    @pytest.mark.usefixtures("configuration_with_production_environment_testing_route_policy")
+    @pytest.mark.usefixtures("configuration_with_production_environment_testing_route_policy", "testing_current_user")
     def test_if_production_environment_then_return_405(self):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
         app = create_app()
 
         with app.app_context(), app.test_client() as c:
-            response = c.post(f'/testing/set_data/{identifier}', json=data)
+            response = c.post(f'/testing/set_session_data/{identifier}', json=data)
             assert response.status_code == 405
 
-    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy")
-    def test_if_staging_environment_then_return_set_data(self):
+    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy", "testing_current_user")
+    def test_if_staging_environment_then_return_set_data(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
-        app = create_app()
 
         with app.app_context(), app.test_client() as c:
-            response = c.post(f'/testing/set_data/{identifier}', json=data)
+            response = c.post(f'/testing/set_session_data/{identifier}', json=data)
         assert response.status_code == 200
         assert response.json == data
 
-    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy")
-    def test_if_staging_environment_and_incorrect_identifier_then_return_set_data(self):
+    @pytest.mark.usefixtures("configuration_with_functional_environment_testing_route_policy", "testing_current_user")
+    def test_if_staging_environment_and_incorrect_identifier_then_return_set_data(self, app):
         identifier = "INCORRECT_IDENTIFIER"
         data = {'username': 'Frodo', 'ring': 'one'}
-        app = create_app()
 
         with app.app_context(), app.test_client() as c:
-            response = c.post(f'/testing/set_data/{identifier}', json=data)
+            response = c.post(f'/testing/set_session_data/{identifier}', json=data)
         assert response.status_code == 200
         assert response.json is None
         assert response.data == b"Not allowed identifier"
 
+    @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_then_set_session_correctly(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'ring': 'one'}
@@ -127,6 +125,7 @@ class TestSetTestingDataRoute:
 
             assert get_session_data(identifier) == data
 
+    @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_with_date_then_set_session_correctly(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'date': '02.09.2022'}
@@ -137,6 +136,7 @@ class TestSetTestingDataRoute:
 
             assert get_session_data(identifier) == expected_data
 
+    @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_with_bool_then_set_session_correctly(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'bool': True}
@@ -146,6 +146,7 @@ class TestSetTestingDataRoute:
 
             assert get_session_data(identifier) == data
 
+    @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_with_int_then_set_session_correctly(self, app):
         identifier = "form_data"
         data = {'username': 'Frodo', 'int': 7531}
@@ -155,6 +156,7 @@ class TestSetTestingDataRoute:
 
             assert get_session_data(identifier) == data
 
+    @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_but_incorrect_session_identifier_then_do_not_set_session(self, app):
         identifier = "INCORRECT_IDENTIFIER"
         data = {'username': 'Frodo', 'ring': 'one'}

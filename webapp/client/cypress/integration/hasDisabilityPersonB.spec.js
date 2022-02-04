@@ -6,7 +6,7 @@ describe("PersonBHasDisability", () => {
   context("with no data", () => {
     beforeEach(() => {
       // precondition of person_b_has_disability
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -22,7 +22,7 @@ describe("PersonBHasDisability", () => {
 
   context("with person_b_has_disability yes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -47,7 +47,7 @@ describe("PersonBHasDisability", () => {
 
   context("with person_b_has_disability no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,

@@ -18,7 +18,7 @@ describe("PersonAHasDisability", () => {
 
   context("with aussergBela selected but no disability data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         stmind_select_ausserg_bela: true,
       });
 
@@ -62,7 +62,7 @@ describe("PersonAHasDisability", () => {
     "with aussergBela selected but person a and b have no disability",
     () => {
       beforeEach(() => {
-        cy.request("POST", "/testing/set_data/form_data", {
+        cy.request("POST", "/testing/set_session_data/form_data", {
           stmind_select_ausserg_bela: true,
           person_a_has_disability: "no",
           person_b_has_disability: "no",
@@ -80,7 +80,7 @@ describe("PersonAHasDisability", () => {
 
   context("with aussergBela selected and person a has disability", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         stmind_select_ausserg_bela: true,
         person_a_has_disability: "yes",
       });
@@ -96,7 +96,7 @@ describe("PersonAHasDisability", () => {
 
   context("with aussergBela selected and person b has disability", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
