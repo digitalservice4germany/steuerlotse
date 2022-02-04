@@ -3,8 +3,11 @@ import time
 import pytest
 from unittest.mock import MagicMock, patch
 from cryptography.fernet import InvalidToken
+from flask_login import current_user
+
 from app.forms.session_data import get_session_data, serialize_session_data, deserialize_session_data, \
-    override_session_data
+    override_session_data, create_key_identifier_with_user_id
+from tests.conftest import CURRENT_USER_IDNR
 
 CURRENT_USER = "app.forms.session_data.current_user"
 
@@ -153,3 +156,23 @@ class TestDeserializeSessionData:
             deserialized_data = deserialize_session_data(b'', self.app.config['PERMANENT_SESSION_LIFETIME'])
             assert {} == deserialized_data
             log_fun.assert_not_called()
+
+
+class TestCreateIdentifierWithKey:
+
+    @pytest.mark.usefixtures("testing_current_user")
+    def test_if_no_identifier_given_then_use_default_identifier(self):
+        expected_identifier = CURRENT_USER_IDNR + "_default"
+
+        created_identifier = create_key_identifier_with_user_id(None)
+
+        assert created_identifier == expected_identifier
+
+    @pytest.mark.usefixtures("testing_current_user")
+    def test_if_identifier_given_then_return_key_from_user_id_plus_identifier(self):
+        identifier = "alohomora"
+        expected_identifier = CURRENT_USER_IDNR + "_" + identifier
+
+        created_identifier = create_key_identifier_with_user_id(identifier)
+
+        assert created_identifier == expected_identifier

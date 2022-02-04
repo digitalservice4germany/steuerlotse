@@ -57,4 +57,8 @@ def override_session_data(stored_data, session_data_identifier='form_data'):
 
 
 def create_key_identifier_with_user_id(identifier):
+    default_identifier = 'default'
+    if identifier is None:
+        identifier = default_identifier
+
     return current_user.idnr_hashed + '_' + identifier
