@@ -6,7 +6,7 @@ from flask import request, flash, url_for
 from flask_babel import _, lazy_gettext as _l
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
-from wtforms import SelectField, BooleanField, RadioField, IntegerField
+from wtforms import SelectField, BooleanField, RadioField
 from wtforms.fields.core import UnboundField
 
 from app.config import Config

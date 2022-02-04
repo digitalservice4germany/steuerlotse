@@ -1,7 +1,7 @@
 import datetime
 import unittest
 from decimal import Decimal
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, call
 
 import pytest
 from flask import json
@@ -12,11 +12,18 @@ from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
 from app.forms.flows.multistep_flow import MultiStepFlow, RenderInfo
-from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data
+from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data, \
+    get_session_data
 
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, MockForm, \
     MockRenderStep, MockFormWithInputStep, MockYesNoStep
 from tests.utils import create_session_form_data
+
+
+@pytest.fixture
+def test_multistep_flow():
+    testing_steps = [MockStartStep, MockMiddleStep, MockFinalStep]
+    return MultiStepFlow(title="Testing MultiStepFlow", steps=testing_steps, endpoint="lotse")
 
 
 class TestMultiStepFlowInit(unittest.TestCase):
@@ -132,7 +139,7 @@ class TestMultiStepFlowHandle(unittest.TestCase):
                                         next_url="Next", submit_url="Submit", overview_url="Overview"), expected_data))):
             self.flow.handle(MockRenderStep.name)
 
-            update_fun.assert_called_once_with(expected_data)
+            update_fun.assert_called_once_with(expected_data, session_data_identifier='form_data')
 
     def test_yes_no_field_content_overriden_if_empty(self):
         steps = [MockYesNoStep, MockFinalStep]
@@ -484,3 +491,13 @@ class TestDeleteDependentData(unittest.TestCase):
     def test_non_matching_prefixes_not_deleted(self):
         returned_data = MultiStepFlow._delete_dependent_data(['plant'], self.example_data.copy())
         self.assertEqual(self.example_data, returned_data)
+
+
+class TestMultiStepFlowOverrideSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_override_session_data_called_then_session_override_function_called_with_correct_params(self, test_multistep_flow):
+        with patch('app.forms.flows.multistep_flow.override_session_data') as patched_override:
+            test_multistep_flow._override_session_data(stored_data={'name': 'Ash'})
+
+        assert patched_override.call_args == call({'name': 'Ash'}, session_data_identifier='form_data')
