@@ -11,7 +11,7 @@ from app.forms.cookie_data import get_data_from_cookie, override_data_in_cookie
 
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
-from flask import request, url_for
+from flask import request
 
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, \
     ElsterRequestAlreadyRevoked

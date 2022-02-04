@@ -12,7 +12,8 @@ from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
 from app.forms.flows.multistep_flow import MultiStepFlow, RenderInfo
-from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data
+from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data, \
+    get_session_data
 
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, MockForm, \
     MockRenderStep, MockFormWithInputStep, MockYesNoStep
@@ -125,9 +126,8 @@ class TestMultiStepFlowHandle(unittest.TestCase):
 
         session = self.run_handle(self.app, flow, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(self.app, flow, MockRenderStep.name, method='GET', session=session)
-        session = self.run_handle(self.app, flow, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(
-            set(deserialize_session_data(session['form_data'], self.app.config['PERMANENT_SESSION_LIFETIME']))))
+        self.run_handle(self.app, flow, MockFormStep.name, method='GET', session=session)
+        self.assertTrue(set(original_data).issubset(flow._get_session_data()))
 
     def test_update_session_data_is_called(self):
         expected_data = {'brother: Luigi'}
@@ -144,9 +144,8 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         steps = [MockYesNoStep, MockFinalStep]
         flow_with_yes_no_field = MultiStepFlow('No_maybe', endpoint=self.endpoint_correct, steps=steps)
         resulting_session = self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {'yes_no_field': 'yes'})
-        resulting_session = self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {}, resulting_session)
-        self.assertEqual({'yes_no_field': None}, deserialize_session_data(resulting_session['form_data'],
-                                                                        self.app.config['PERMANENT_SESSION_LIFETIME']))
+        self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {}, resulting_session)
+        self.assertEqual({'yes_no_field': None}, get_session_data('form_data'))
 
     @staticmethod
     def run_handle(app, flow, step_name, method='GET', form_data=None, session=None):

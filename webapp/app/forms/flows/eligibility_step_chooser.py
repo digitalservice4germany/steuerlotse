@@ -1,7 +1,6 @@
 from flask_babel import _
 
 from app.forms.cookie_data import get_data_from_cookie
-from app.forms.session_data import get_session_data
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     IncomeOtherDecisionEligibilityInputFormSteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, \

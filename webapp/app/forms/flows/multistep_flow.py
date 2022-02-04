@@ -7,7 +7,7 @@ from wtforms import Form
 
 # The RenderInfo is provided to all templates
 from app.config import Config
-from app.forms.session_data import deserialize_session_data, override_session_data, get_session_data
+from app.forms.session_data import override_session_data, get_session_data
 from app.forms.steps.step import FormStep
 
 logger = logging.getLogger(__name__)

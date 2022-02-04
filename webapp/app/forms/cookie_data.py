@@ -1,6 +1,6 @@
 import logging
 from typing import Optional
-from flask import session, json
+from flask import session
 
 from app.forms.session_data import deserialize_session_data, serialize_session_data
 
@@ -13,6 +13,7 @@ def get_data_from_cookie(cookie_data_identifier, ttl: Optional[int] = None, defa
 
     :param cookie_data_identifier: A string used to identify what data should be taken from the cookie
     :param ttl: The time to live for the cookie
+    :param default_data: Default data that will be used to replace missing data points
     """
     serialized_session = session.get(cookie_data_identifier, b"")
 
@@ -41,6 +42,3 @@ def _serialize_cookie_data(data):
 
 def _deserialize_cookie_data(serialized_session, ttl: Optional[int] = None):
     return deserialize_session_data(serialized_session, ttl)
-
-
-

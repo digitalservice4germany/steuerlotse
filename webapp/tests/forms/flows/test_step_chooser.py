@@ -7,7 +7,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import deserialize_session_data
+from app.forms.session_data import deserialize_session_data, get_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
@@ -302,9 +302,8 @@ class TestInteractionBetweenSteps(unittest.TestCase):
 
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(self.app, step_chooser, MockRenderStep.name, method='GET', session=session)
-        session = self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(
-            set(deserialize_session_data(session[session_data_identifier], self.app.config['PERMANENT_SESSION_LIFETIME']))))
+        self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
+        self.assertTrue(set(original_data).issubset(get_session_data(session_data_identifier)))
 
     def test_if_form_step_after_form_step_then_keep_data_from_newer_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
@@ -320,8 +319,7 @@ class TestInteractionBetweenSteps(unittest.TestCase):
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=adapted_data, session=session)
         session = self.run_handle(self.app, step_chooser, MockRenderStep.name, method='GET', session=session)
         session = self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(adapted_data).issubset(
-            set(deserialize_session_data(session[session_data_identifier], self.app.config['PERMANENT_SESSION_LIFETIME']))))
+        self.assertTrue(set(original_data).issubset(get_session_data(session_data_identifier)))
 
     @staticmethod
     def run_handle(app: Flask, step_chooser: StepChooser, step_name, method='GET', form_data=None, session=None):

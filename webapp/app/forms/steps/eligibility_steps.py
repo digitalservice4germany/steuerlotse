@@ -6,7 +6,6 @@ from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.cookie_data import override_data_in_cookie
-from app.forms.session_data import override_session_data
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
     ForeignCountrySuccessEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
