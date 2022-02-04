@@ -302,8 +302,9 @@ class TestInteractionBetweenSteps(unittest.TestCase):
 
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(self.app, step_chooser, MockRenderStep.name, method='GET', session=session)
-        self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(get_session_data(session_data_identifier)))
+        session = self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
+        self.assertTrue(set(original_data).issubset(
+            set(deserialize_session_data(session[session_data_identifier], self.app.config['PERMANENT_SESSION_LIFETIME']))))
 
     def test_if_form_step_after_form_step_then_keep_data_from_newer_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
@@ -319,7 +320,8 @@ class TestInteractionBetweenSteps(unittest.TestCase):
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=adapted_data, session=session)
         session = self.run_handle(self.app, step_chooser, MockRenderStep.name, method='GET', session=session)
         session = self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(get_session_data(session_data_identifier)))
+        self.assertTrue(set(adapted_data).issubset(
+            set(deserialize_session_data(session[session_data_identifier], self.app.config['PERMANENT_SESSION_LIFETIME']))))
 
     @staticmethod
     def run_handle(app: Flask, step_chooser: StepChooser, step_name, method='GET', form_data=None, session=None):
