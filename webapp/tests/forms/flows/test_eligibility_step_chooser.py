@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, call
 
 import pytest
 
@@ -27,6 +27,11 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
     EligibilityMaybeDisplaySteuerlotseStep
+
+
+@pytest.fixture
+def test_eligibility_step_chooser():
+    return EligibilityStepChooser('eligibility')
 
 
 class TestEligibilityChooserInit(unittest.TestCase):
@@ -151,3 +156,13 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
             prev_step = self.step_chooser.determine_prev_step(given_step_name, {})
 
         self.assertEqual('step-0', prev_step.name)
+
+
+class TestEligibilityStepChooserGetSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_get_session_data_called_then_get_cookie_data_function_called_with_correct_params(self, test_eligibility_step_chooser):
+        with patch('app.forms.flows.eligibility_step_chooser.get_data_from_cookie') as patched_get_cookie_data:
+            test_eligibility_step_chooser._get_session_data(session_data_identifier="catche_em_all", default_data={'name': 'Ash'})
+
+        assert patched_get_cookie_data.call_args == call(cookie_data_identifier="catche_em_all", default_data={'name': 'Ash'})

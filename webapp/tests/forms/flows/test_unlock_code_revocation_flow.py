@@ -1,6 +1,6 @@
 import os
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 import pytest
 from flask import json, make_response
@@ -311,3 +311,28 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                     self.input_step, self.render_info_input_step, self.session_data)
 
             self.assertEqual(self.failure_url, render_info.next_url)
+
+
+@pytest.fixture
+def unlock_code_revocation_flow():
+    return UnlockCodeRevocationMultiStepFlow(endpoint="unlock_code_revocation")
+
+
+class TestUnlockCodeActivationGetSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_get_session_data_called_then_get_cookie_data_function_called_with_correct_params(self, unlock_code_revocation_flow):
+        with patch('app.forms.flows.unlock_code_revocation_flow.get_data_from_cookie') as patched_get_cookie_data:
+            unlock_code_revocation_flow._get_session_data(ttl=2)
+
+        assert patched_get_cookie_data.call_args == call('form_data', 2)
+
+
+class TestUnlockCodeActivationOverrideSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_override_session_data_called_then_cookie_override_function_called_with_correct_params(self, unlock_code_revocation_flow):
+        with patch('app.forms.flows.unlock_code_revocation_flow.override_data_in_cookie') as patched_override:
+            unlock_code_revocation_flow._override_session_data(stored_data={'name': 'Ash'})
+
+        assert patched_override.call_args == call(data_to_store={'name': 'Ash'}, cookie_data_identifier='form_data')

@@ -712,6 +712,16 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
         assert render_info.stored_data == {'yes_no_field': None}
 
 
+class TestFormSteuerlotseStepOverrideSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_override_session_data_called_then_session_override_function_called_with_same_params(self):
+        with patch('app.forms.steps.steuerlotse_step.override_session_data') as patched_override:
+            MockFormWithInputStep(endpoint='lotse')._override_session_data(stored_data={'name': 'Ash'}, session_data_identifier='catch_em_all')
+
+        assert patched_override.call_args == call({'name': 'Ash'}, 'catch_em_all')
+
+
 class TestFormSteuerlotseStepDeleteDependentData(unittest.TestCase):
 
     def setUp(self):

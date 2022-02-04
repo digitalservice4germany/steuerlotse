@@ -5,6 +5,7 @@ from wtforms import RadioField
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
+from app.forms.cookie_data import override_data_in_cookie
 from app.forms.session_data import override_session_data
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
@@ -133,6 +134,9 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
         else:
             return True
 
+    def _override_session_data(self, stored_data, session_data_identifier=None):
+        override_data_in_cookie(stored_data, session_data_identifier)
+
     def delete_not_dependent_data(self):
         """ Delete the data that is not (recursively) part of the first model in the list of next step data models. """
         self.stored_data = dict(
@@ -165,8 +169,11 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         super()._main_handle()
         # Remove all eligibility data as the flow is restarting
         stored_data = {}
-        override_session_data(stored_data, session_data_identifier=self.session_data_identifier)
+        self._override_session_data(stored_data, session_data_identifier=self.session_data_identifier)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
+
+    def _override_session_data(self, stored_data, session_data_identifier=None):
+        override_data_in_cookie(stored_data, session_data_identifier)
 
 
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
