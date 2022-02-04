@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-02 16:09+0100\n"
+"POT-Creation-Date: 2022-02-04 09:29+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -4535,9 +4535,8 @@ msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
 msgid "info-stl.card-partner.p1-content"
 msgstr ""
 "Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft "
-"leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Wenn "
-"Sie Ihre Steuererklärung gemeinsam als Paar machen möchten, muss sich "
-"trotzdem nur eine Person registrieren."
+"leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es "
+"reicht in diesem Fall aus, wenn sich eine Person registriert."
 
 #: app/templates/content/howitworks.html:56
 msgid "info-stl.elster.heading"
@@ -5031,79 +5030,90 @@ msgstr "<a href=\"mailto:kontakt@steuerlotse-rente.de\">Schreiben Sie uns!</a>"
 msgid "info.heading-accordeon-home"
 msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 
-#: app/templates/content/landing_page.html:56
+#: app/templates/content/landing_page.html:47
+msgid "info-stl.card-zusammenveranlagung.heading"
+msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
+
+#: app/templates/content/landing_page.html:49
+msgid "info-stl.card-zusammenveranlagung.p1-content"
+msgstr ""
+"Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft "
+"leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es "
+"reicht in diesem Fall aus, wenn sich eine Person registriert."
+
+#: app/templates/content/landing_page.html:63
 msgid "landing.hero-title"
 msgstr ""
 "Mit dem Steuerlotsen können Rentner:innen und Pensionär:innen ihre "
 "Steuererklärung online machen!"
 
-#: app/templates/content/landing_page.html:57
+#: app/templates/content/landing_page.html:64
 msgid "landing.hero-desc"
 msgstr ""
 "Der Steuerlotse bietet Rentner:innen und Pensionär:innen ohne weitere "
 "Einkünfte die Möglichkeit, ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen zu machen."
 
-#: app/templates/content/landing_page.html:59
+#: app/templates/content/landing_page.html:66
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:60
+#: app/templates/content/landing_page.html:67
 msgid "landing.hero-list-item-2"
 msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
 
-#: app/templates/content/landing_page.html:61
+#: app/templates/content/landing_page.html:68
 msgid "landing.hero-list-item-3"
 msgstr "kostenlos und ohne Download"
 
-#: app/templates/content/landing_page.html:74
+#: app/templates/content/landing_page.html:81
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:84
+#: app/templates/content/landing_page.html:91
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:85
+#: app/templates/content/landing_page.html:92
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:92
+#: app/templates/content/landing_page.html:99
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:93
+#: app/templates/content/landing_page.html:100
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:100
+#: app/templates/content/landing_page.html:107
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:101
+#: app/templates/content/landing_page.html:108
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
-#: app/templates/content/landing_page.html:117
+#: app/templates/content/landing_page.html:124
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:118
+#: app/templates/content/landing_page.html:125
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:119
+#: app/templates/content/landing_page.html:126
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
