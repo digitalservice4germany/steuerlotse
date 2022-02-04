@@ -1,15 +1,13 @@
 import datetime
 
 import pytest
-from flask.sessions import SecureCookieSession
 from flask_babel import ngettext, lazy_gettext as _l
 from pydantic import ValidationError
 from werkzeug.datastructures import ImmutableMultiDict, MultiDict
 
-from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
+from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.merkzeichen import StepMerkzeichenPersonA, StepMerkzeichenPersonB, \
     HasMerkzeichenPersonAPrecondition, HasMerkzeichenPersonBPrecondition
-from tests.utils import create_session_form_data
 
 _POSITIVE_CHECKBOX_VALUE = 'on'  # The value in standard checkboxes is 'on'.
 
@@ -219,13 +217,6 @@ class TestStepMerkzeichenPersonATexts:
 
 def new_merkzeichen_person_b_step(form_data):
     return LotseStepChooser().get_correct_step(StepMerkzeichenPersonB.name, True, ImmutableMultiDict(form_data))
-
-
-@pytest.fixture
-def test_request_context_with_person_b_disability(app):
-    with app.test_request_context(method="POST") as req:
-        req.session = SecureCookieSession({_LOTSE_DATA_KEY: create_session_form_data({'person_b_has_disability': 'yes'})})
-        yield req
 
 
 @pytest.mark.usefixtures('test_request_context_with_person_b_disability')

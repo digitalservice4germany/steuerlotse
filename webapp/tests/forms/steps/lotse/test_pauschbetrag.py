@@ -229,10 +229,10 @@ class TestPauschbetragPersonAGetPauschbetrag:
             'person_a_disability_degree': 25,
             'person_a_has_merkzeichen_bl': True,
             'person_a_has_merkzeichen_tbl': True,
-            'person_a_has_merkzeichen_h': True
+            'person_a_has_merkzeichen_h': True,
+            'person_a_requests_pauschbetrag': 'yes',
         })
         form_data = MultiDict({
-            'person_a_requests_pauschbetrag': 'yes',
         })
         with new_test_request_context(stored_data=stored_data, form_data=form_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
@@ -332,10 +332,10 @@ class TestPauschbetragPersonBGetPauschbetrag:
             'person_b_disability_degree': 25,
             'person_b_has_merkzeichen_bl': True,
             'person_b_has_merkzeichen_tbl': True,
-            'person_b_has_merkzeichen_h': True
+            'person_b_has_merkzeichen_h': True,
+            'person_b_requests_pauschbetrag': 'yes',
         })
         form_data = MultiDict({
-            'person_b_requests_pauschbetrag': 'yes',
         })
         with new_test_request_context(stored_data=stored_data, form_data=form_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
@@ -355,8 +355,8 @@ class TestPauschbetragPersonBGetPauschbetrag:
 class TestPauschbetragPersonAValidation:
 
     def test_if_person_a_requests_pauschbetrag_is_given_then_validation_should_be_success(self, new_test_request_context):
-        form_data = {'person_a_requests_pauschbetrag': 'no'}
-        stored_data = {'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
+        form_data = {'person_a_requests_pauschbetrag': 'no', 'person_a_has_disability': 'yes', 'person_a_has_pflegegrad': 'yes'}
+        stored_data = {}
         with new_test_request_context(form_data=form_data, stored_data=stored_data, method='POST'):
             step = LotseStepChooser().get_correct_step(
                 StepPauschbetragPersonA.name, True, ImmutableMultiDict(form_data))

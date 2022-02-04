@@ -87,7 +87,7 @@ class TestStepSteuernummer:
         form = new_step_with_bufa_choices(form_data=data).render_info.form
         assert form.validate() is True
 
-    def test_if_multiple_users_then_show_multiple_text(self, app):
+    def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context):
         session_data = {
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
@@ -101,9 +101,7 @@ class TestStepSteuernummer:
         expected_request_new_tax_number_label = ngettext('form.lotse.steuernummer.request_new_tax_number',
                                                          'form.lotse.steuernummer.request_new_tax_number',
                                                          num=expected_number_of_users)
-        with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+        with new_test_request_context(method='GET', form_data=session_data):
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepSteuernummer.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()
@@ -251,7 +249,7 @@ class TestStepSteuernummerValidate:
 
 
 class TestStepPersonATexts:
-    def test_if_multiple_users_then_show_multiple_text(self, app):
+    def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context):
         session_data = {
             'familienstand': 'married',
             'familienstand_date': datetime.date(2000, 1, 31),
@@ -264,9 +262,7 @@ class TestStepPersonATexts:
         expected_step_intro = _(
             'form.lotse.person-a-intro') if expected_number_of_users > 1 else None
 
-        with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(session_data)})
+        with new_test_request_context(method='GET', form_data=session_data) as req:
             step = LotseStepChooser(endpoint='lotse').get_correct_step(StepPersonA.name, False,
                                                                        ImmutableMultiDict({}))
             step._pre_handle()

@@ -9,7 +9,6 @@ from app.forms.session_data import get_session_data, serialize_session_data, des
 CURRENT_USER = "app.forms.session_data.current_user"
 
 
-@pytest.mark.usefixtures('testing_database', 'testing_current_user')
 class TestGetSessionData:
 
     def test_if_session_data_then_return_session_data(self):
@@ -51,7 +50,6 @@ class TestGetSessionData:
         assert original_default_data is not session_data
 
 
-@pytest.mark.usefixtures('testing_database', 'testing_current_user')
 class TestOverrideSessionData:
 
     def test_data_is_saved_as_new_form_data(self):

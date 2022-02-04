@@ -1,12 +1,10 @@
 import pytest
-from flask.sessions import SecureCookieSession
 from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
 
-from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
+from app.forms.flows.lotse_step_chooser import LotseStepChooser
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonA, StepDisabilityPersonB, \
     HasDisabilityPersonAPrecondition, HasDisabilityPersonBPrecondition
-from tests.utils import create_session_form_data
 
 
 class TestHasDisabilityPersonAPrecondition:
@@ -75,9 +73,7 @@ class TestStepDisabilityPersonBValidation:
             'person_b_has_disability': 'no'
         })
 
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+        with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
@@ -91,9 +87,7 @@ class TestStepDisabilityPersonBValidation:
             'person_a_has_disability': 'no',
         })
 
-        with new_test_request_context(form_data=data) as req:
-            req.session = SecureCookieSession(
-                {_LOTSE_DATA_KEY: create_session_form_data(data)})
+        with new_test_request_context(form_data=data):
             step = LotseStepChooser().get_correct_step(
                 StepDisabilityPersonB.name, True, ImmutableMultiDict(data))
             form = step.render_info.form
