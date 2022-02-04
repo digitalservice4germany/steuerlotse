@@ -1,6 +1,6 @@
 from flask_babel import _
 
-from app.forms.session_data import get_session_data
+from app.forms.cookie_data import get_data_from_cookie
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     IncomeOtherDecisionEligibilityInputFormSteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, \
@@ -96,3 +96,6 @@ class EligibilityStepChooser(StepChooser):
             if possible_previous_step.is_previous_step(current_step_name, stored_data):
                 return possible_previous_step
         return self.steps[self.step_order[0]]
+
+    def _get_session_data(self, session_data_identifier, default_data):
+        return get_data_from_cookie(cookie_data_identifier=session_data_identifier, default_data=default_data)

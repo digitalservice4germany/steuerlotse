@@ -164,7 +164,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         return cls.InputForm(form_data, **prefilled_data)
 
     def _post_handle(self):
-        override_session_data(self.stored_data, self.session_data_identifier)
+        self._override_session_data(self.stored_data, self.session_data_identifier)
 
         redirection = self._handle_redirects()
         if redirection:
@@ -175,6 +175,9 @@ class FormSteuerlotseStep(SteuerlotseStep):
             logger.info(f"Redirect to next Step {self.render_info.next_url}")
             return redirect(self.render_info.next_url)
         return self.render()
+
+    def _override_session_data(self, stored_data, session_data_identifier=None):
+        override_session_data(stored_data, session_data_identifier)
 
     def render(self, **kwargs):
         """
