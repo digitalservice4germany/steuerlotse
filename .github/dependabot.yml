@@ -5,22 +5,8 @@ updates:
     schedule:
       interval: "daily"
 
-  - package-ecosystem: "pip"
-    directory: "/erica_app"
-    schedule:
-      interval: "daily"
-    ignore:
-      # For boto3, ignore all patch updates
-      - dependency-name: "boto3"
-        update-types: ["version-update:semver-patch"]
-
   - package-ecosystem: "docker"
     directory: "/webapp"
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "docker"
-    directory: "/erica_app"
     schedule:
       interval: "daily"
 
