@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 
 def get_session_data(session_data_identifier, ttl: Optional[int] = None, default_data=None):
     key = create_key_identifier_with_user_id(session_data_identifier)
+    if not key:
+        return None
     try:
         form_data = FormDataController().get_from_redis(key)
     except MissingError:
@@ -53,6 +55,8 @@ def deserialize_session_data(serialized_session, ttl: Optional[int] = None):
 
 def override_session_data(stored_data, session_data_identifier='form_data'):
     key = create_key_identifier_with_user_id(session_data_identifier)
+    if not key:
+        return
     FormDataController().save_to_redis(key, serialize_session_data(stored_data))
 
 
@@ -60,5 +64,8 @@ def create_key_identifier_with_user_id(identifier):
     default_identifier = 'default'
     if identifier is None:
         identifier = default_identifier
+
+    if not hasattr(current_user, 'idnr_hashed'):
+        return None
 
     return current_user.idnr_hashed + '_' + identifier

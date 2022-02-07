@@ -72,6 +72,12 @@ class TestGetSessionData:
 
         assert {} == session_data
 
+    def test_if_create_key_returns_none_then_return_none(self):
+        with patch('app.forms.session_data.create_key_identifier_with_user_id', MagicMock(return_value=None)):
+            session_data = get_session_data("form_data")
+
+        assert session_data is None
+
 
 class TestOverrideSessionData:
 
@@ -101,6 +107,16 @@ class TestOverrideSessionData:
         with patch(CURRENT_USER, MagicMock(idnr_hashed="0123456789")):
             form_data = get_session_data('form_data')
         assert new_data == form_data
+
+    @pytest.mark.usefixtures('testing_current_user')
+    def test_if_create_key_returns_none_then_do_not_overwrite_session_data(self):
+        with patch('app.forms.session_data.create_key_identifier_with_user_id', MagicMock(return_value=None)):
+            other_data = {'enemy': 'Bowser'}
+            override_session_data(other_data, 'form_data')
+
+        session_data = get_session_data('form_data')
+
+        assert session_data == {}
 
 
 class TestSerializeSessionData:
@@ -196,3 +212,12 @@ class TestCreateIdentifierWithKey:
         created_identifier = create_key_identifier_with_user_id(identifier)
 
         assert created_identifier == expected_identifier
+
+    def test_if_current_user_has_no_idnr_hashed_then_return_none(self):
+        mock_current_user_without_idnr_hashed = MagicMock()
+        del mock_current_user_without_idnr_hashed.idnr_hashed
+
+        with patch("app.forms.session_data.current_user", mock_current_user_without_idnr_hashed):
+            created_identifier = create_key_identifier_with_user_id('alohomora')
+
+        assert created_identifier is None
