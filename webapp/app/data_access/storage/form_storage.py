@@ -15,13 +15,6 @@ class FormStorage(ABC):
 
     @abstractmethod
     def get_data(self, data_identifier, ttl: Optional[int] = None, default_data=None):
-        """
-        Gets data that is associated with the current data_identifier. The data is return deserialized.
-
-        :param data_identifier: A string used to identify what data should be taken
-        :param ttl: The time to live for the data
-        :param default_data: Default data that will be used to replace missing data points
-        """
         pass
 
 
