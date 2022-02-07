@@ -17,11 +17,10 @@ class FormStorage(ABC):
     def get_data(self, data_identifier, ttl: Optional[int] = None, default_data=None):
         pass
 
-
     @abstractmethod
     def override_data(self, data_to_store, data_identifier):
         pass
-    
+
     @staticmethod
     def serialize_data(data):
         json_bytes = json.dumps(data).encode()
@@ -29,7 +28,6 @@ class FormStorage(ABC):
         encrypted = encrypt(compressed)
 
         return encrypted
-
 
     @staticmethod
     def deserialize_data(serialized_session, ttl: Optional[int] = None):
