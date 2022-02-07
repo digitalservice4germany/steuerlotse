@@ -159,8 +159,9 @@ jobs:
         -e KUBECONFIG_BASE64='${{ secrets.CI_KUBECONFIG_B64 }}' \
         -e IMAGE_TAG='${{ env.IMAGE_TAG }}' \
         -e NAMESPACE='${{ env.NAMESPACE }}' \
-        # The deployment image offers different targets. Use the one for steuerlotse here. You can find the deployment specification in our internal repos
         ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment steuerlotse
+        # ^ The deployment image offers different targets. Use the one for steuerlotse here.
+        # You can find the deployment specification in our internal repos
       shell: bash
 
     - name: Logout of docker container
