@@ -38,7 +38,8 @@ jobs:
       run: |
         docker run \
         -e KUBECONFIG_BASE64='${{ secrets.CI_KUBECONFIG_B64 }}' \
-        -e NAMESPACE='${{ env.NAMESPACE }}' -e DEPLOYMENT_NAME='${{ github.event.inputs.deployment }}' \
+        -e NAMESPACE='${{ env.NAMESPACE }}' \
+        -e DEPLOYMENT_NAME='${{ github.event.inputs.deployment }}' \
         ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment restart-deployment
       shell: bash
 

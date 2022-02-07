@@ -71,13 +71,15 @@ The two main components are the webapp and erica.
 
 The webapp handles user input, renders html and connects to the PostgreSQL database.
 
-Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the ELSTER APIs. Part of Erica is Pyeric, a Python wrapper for ERiC.
+Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the ELSTER APIs.
+Erica has been moved to its own repository here: https://github.com/digitalservice4germany/erica.
 
 ### Run directly
 
-For developing, we suggest running both webapp and erica locally. See here for instructions:
+For developing, we suggest running both webapp and erica locally. 
+See the following readmes for instructions:
 - [webapp/README.md](webapp/README.md)
-- [erica_app/README.md](erica_app/README.md)
+- [erica_app/README.md](https://github.com/digitalservice4germany/erica/blob/main/README.md)
 
 ### Run with docker-compose
 

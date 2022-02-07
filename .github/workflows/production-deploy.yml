@@ -9,7 +9,6 @@ on:
 
 env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-  ERICA_HOST: ${{ secrets.ERICA_HOST_PRODUCTION }}
 
 jobs:
   deploy-production:
@@ -36,14 +35,10 @@ jobs:
       run: |
         docker run \
         -e DOCKER_REGISTRY='${{ env.DOCKER_REGISTRY }}' \
-        -e REGISTRY_PWD='${{ secrets.REGISTRY_PWD }}' \
-        -e CERT_PIN='${{ secrets.CERT_PIN_PRODUCTION }}' \
         -e KUBECONFIG_BASE64='${{ secrets.CI_KUBECONFIG_B64 }}' \
-        -e ERICA_HOST='${{ env.ERICA_HOST }}' \
-        -e ERICA_SSH_KEY='${{ secrets.CI_ERICA_SSH_KEY }}' \
         -e IMAGE_TAG='${{ env.IMAGE_TAG }}' \
         -e NAMESPACE='${{ env.NAMESPACE }}' \
-        ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment
+        ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment steuerlotse
       shell: bash
 
     - name: Logout of docker container
