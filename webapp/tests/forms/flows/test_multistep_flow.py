@@ -12,9 +12,7 @@ from werkzeug.routing import BuildError
 from werkzeug.utils import redirect
 
 from app.forms.flows.multistep_flow import MultiStepFlow, RenderInfo
-from app.forms.session_data import serialize_session_data, deserialize_session_data, override_session_data, \
-    get_session_data
-
+from app.data_access.storage.session_storage import SessionStorage
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormStep, MockForm, \
     MockRenderStep, MockFormWithInputStep, MockYesNoStep
 from tests.utils import create_session_form_data
@@ -109,7 +107,7 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name,
                 method='GET'):
-            override_session_data(self.session_data, 'form_data')
+            SessionStorage().override_data(self.session_data, 'form_data')
 
             response = self.flow.handle(MockRenderStep.name)
 
@@ -128,25 +126,25 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         session = self.run_handle(self.app, flow, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(self.app, flow, MockRenderStep.name, method='GET', session=session)
         self.run_handle(self.app, flow, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(flow._get_session_data()))
+        self.assertTrue(set(original_data).issubset(flow._get_storage_data()))
 
     def test_update_session_data_is_called(self):
         expected_data = {'brother: Luigi'}
-        with patch('app.forms.flows.multistep_flow.override_session_data') as update_fun, \
+        with patch('app.data_access.storage.session_storage.SessionStorage.override_data') as update_fun, \
                 patch('app.forms.flows.multistep_flow.MultiStepFlow._handle_specifics_for_step',
                     MagicMock(return_value=(
                             RenderInfo(step_title="Any", step_intro="Introduction", form=MockForm, prev_url="Prev",
                                         next_url="Next", submit_url="Submit", overview_url="Overview"), expected_data))):
             self.flow.handle(MockRenderStep.name)
 
-            update_fun.assert_called_once_with(expected_data, session_data_identifier='form_data')
+            update_fun.assert_called_once_with(expected_data, data_identifier='form_data')
 
     def test_yes_no_field_content_overriden_if_empty(self):
         steps = [MockYesNoStep, MockFinalStep]
         flow_with_yes_no_field = MultiStepFlow('No_maybe', endpoint=self.endpoint_correct, steps=steps)
         resulting_session = self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {'yes_no_field': 'yes'})
         self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {}, resulting_session)
-        self.assertEqual({'yes_no_field': None}, get_session_data('form_data'))
+        self.assertEqual({'yes_no_field': None}, SessionStorage().get_data('form_data'))
 
     @staticmethod
     def run_handle(app, flow, step_name, method='GET', form_data=None, session=None):
@@ -285,9 +283,9 @@ class TestMultiStepFlowGetSessionData(unittest.TestCase):
         self.session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
 
     def test_if_session_data_then_return_session_data(self):
-        with patch("app.forms.flows.multistep_flow.get_session_data", MagicMock(return_value=(self.session_data))):
+        with patch("app.data_access.storage.session_storage.SessionStorage.get_data", MagicMock(return_value=(self.session_data))):
 
-            session_data = self.flow._get_session_data()
+            session_data = self.flow._get_storage_data()
 
         self.assertEqual(self.session_data, session_data)
 
@@ -295,37 +293,37 @@ class TestMultiStepFlowGetSessionData(unittest.TestCase):
         default_data = {"brother": "Luigi"}
         expected_data = {**self.session_data, **default_data}
         with patch("app.forms.flows.multistep_flow.MultiStepFlow.default_data", MagicMock(return_value=(None, default_data))), \
-            patch("app.forms.flows.multistep_flow.get_session_data", MagicMock(return_value=(self.session_data))):
+            patch("app.data_access.storage.session_storage.SessionStorage.get_data", MagicMock(return_value=(self.session_data))):
 
-            session_data = self.flow._get_session_data()
+            session_data = self.flow._get_storage_data()
 
             self.assertEqual(expected_data, session_data)
 
     def test_if_no_form_data_in_session_then_return_default_data(self):
         self.req.session = SecureCookieSession({})
-        session_data = self.flow._get_session_data()
+        session_data = self.flow._get_storage_data()
 
         self.assertEqual({}, session_data)  # multistep flow has no default data
 
     def test_if_no_session_data_and_debug_data_provided_then_return_copy(self):
         original_default_data = {}
         with patch("app.forms.flows.multistep_flow.MultiStepFlow.default_data", MagicMock(return_value=(MockFormStep, original_default_data))):
-            session_data = self.flow._get_session_data()
+            session_data = self.flow._get_storage_data()
 
             self.assertIsNot(original_default_data, session_data)
 
     def test_if_no_session_data_and_no_debug_data_then_return_empty_dict(self):
         with patch("app.forms.flows.multistep_flow.MultiStepFlow.default_data", MagicMock(return_value=None)):
-            session_data = self.flow._get_session_data()
+            session_data = self.flow._get_storage_data()
 
             self.assertEqual({}, session_data)
 
     def test_if_session_data_then_keep_data_in_session(self):
-        self.req.session = SecureCookieSession({'form_data': serialize_session_data(self.session_data)})
-        self.flow._get_session_data()
+        self.req.session = SecureCookieSession({'form_data': SessionStorage().serialize_data(self.session_data)})
+        self.flow._get_storage_data()
 
         self.assertIn('form_data', self.req.session)
-        self.assertEqual(self.session_data, deserialize_session_data(self.req.session['form_data'], self.app.config['PERMANENT_SESSION_LIFETIME']))
+        self.assertEqual(self.session_data, SessionStorage().deserialize_data(self.req.session['form_data'], self.app.config['PERMANENT_SESSION_LIFETIME']))
 
 
 class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):
@@ -491,13 +489,3 @@ class TestDeleteDependentData(unittest.TestCase):
     def test_non_matching_prefixes_not_deleted(self):
         returned_data = MultiStepFlow._delete_dependent_data(['plant'], self.example_data.copy())
         self.assertEqual(self.example_data, returned_data)
-
-
-class TestMultiStepFlowOverrideSessionData:
-
-    @pytest.mark.usefixtures('test_request_context')
-    def test_if_override_session_data_called_then_session_override_function_called_with_correct_params(self, test_multistep_flow):
-        with patch('app.forms.flows.multistep_flow.override_session_data') as patched_override:
-            test_multistep_flow._override_session_data(stored_data={'name': 'Ash'})
-
-        assert patched_override.call_args == call({'name': 'Ash'}, session_data_identifier='form_data')

@@ -6,21 +6,20 @@ from app.data_access.user_controller_errors import UserNotActivatedError, WrongU
     UserNotExistingError
 from app.elster_client import elster_client
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
-from app.forms.cookie_data import get_data_from_cookie, override_data_in_cookie
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
 from flask import request, url_for
 
-from app.forms.session_data import get_session_data, override_session_data
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
-
+from app.data_access.storage.session_storage import SessionStorage
+from app.data_access.storage.cookie_storage import CookieStorage
 
 logger = logging.getLogger(__name__)
 
 
 def _store_id_in_server_session(idnr):
-    override_session_data({'idnr': idnr}, 'form_data')
+    SessionStorage().override_data({'idnr': idnr}, 'form_data')
 
 
 class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
@@ -43,6 +42,7 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
                 UnlockCodeActivationFailureStep
             ],
             endpoint=endpoint,
+            form_storage=CookieStorage()
         )
 
     # TODO: Use inheritance to clean up this method
@@ -83,9 +83,3 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
             elster_client.send_unlock_code_activation_with_elster(request_form, request_id, request.remote_addr)
             activate_user(idnr, unlock_code)    # If no error is thrown, this result in a problem
             verify_and_login(idnr, unlock_code)
-
-    def _get_session_data(self, ttl: Optional[int] = None):
-        return get_data_from_cookie('form_data', ttl)
-
-    def _override_session_data(self, stored_data):
-        override_data_in_cookie(data_to_store=stored_data, cookie_data_identifier="form_data")

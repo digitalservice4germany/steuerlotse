@@ -11,11 +11,10 @@ from app.data_access.user_controller import user_exists, create_user
 from app.data_access.user_controller_errors import UserAlreadyExistsError
 from app.elster_client import elster_client
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
-from app.forms.cookie_data import get_data_from_cookie, override_data_in_cookie
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.unlock_code_request_steps import UnlockCodeRequestInputStep, UnlockCodeRequestSuccessStep, \
     UnlockCodeRequestFailureStep
-
+from app.data_access.storage.cookie_storage import CookieStorage
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +44,7 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                 UnlockCodeRequestSuccessStep
             ],
             endpoint=endpoint,
+            form_storage=CookieStorage()
         )
 
     # TODO: Use inheritance to clean up this method
@@ -97,9 +97,3 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
         request_id = escape(response['elster_request_id'])
 
         create_user(idnr, request_form['dob'].strftime("%d.%m.%Y"), request_id)
-
-    def _get_session_data(self, ttl: Optional[int] = None):
-        return get_data_from_cookie('form_data', ttl)
-
-    def _override_session_data(self, stored_data):
-        override_data_in_cookie(data_to_store=stored_data, cookie_data_identifier="form_data")

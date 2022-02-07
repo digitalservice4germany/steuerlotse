@@ -44,7 +44,7 @@ CURRENT_USER_IDNR = "0123456789"
 
 @pytest.fixture(autouse=True)
 def testing_current_user(monkeypatch):
-    monkeypatch.setattr("app.forms.session_data.current_user", MagicMock(idnr_hashed=CURRENT_USER_IDNR))
+    monkeypatch.setattr("app.data_access.storage.session_storage.current_user", MagicMock(idnr_hashed=CURRENT_USER_IDNR))
 
 
 @pytest.fixture(autouse=True)
@@ -75,12 +75,12 @@ def new_test_request_context(app):
 def new_test_request_context_with_data_in_session(app, new_test_request_context):
     @contextmanager
     def _new_test_request_context(method='GET', form_data=None, session_data=None, session_identifier='form_data'):
-        from app.forms.session_data import serialize_session_data
+        from app.data_access.storage.form_storage import FormStorage
         from app.data_access.form_data_controller import FormDataController
         with new_test_request_context(method=method, form_data=form_data) as req:
             if session_data:
                 FormDataController().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
-                                               serialize_session_data(session_data))
+                                               FormStorage.serialize_data(session_data))
             yield req
     return _new_test_request_context
 

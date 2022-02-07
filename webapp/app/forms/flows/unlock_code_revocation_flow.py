@@ -7,7 +7,6 @@ from app.data_access.db_model.user import User
 from app.data_access.user_controller import user_exists, check_dob, delete_user
 from app.data_access.user_controller_errors import UserNotExistingError, WrongDateOfBirthError
 from app.elster_client import elster_client
-from app.forms.cookie_data import get_data_from_cookie, override_data_in_cookie
 
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
@@ -18,6 +17,7 @@ from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRe
 from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationInputStep, UnlockCodeRevocationSuccessStep, \
     UnlockCodeRevocationFailureStep
 
+from app.data_access.storage.cookie_storage import CookieStorage
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +43,7 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                 UnlockCodeRevocationSuccessStep
             ],
             endpoint=endpoint,
+            form_storage=CookieStorage()
         )
 
     # TODO: Use inheritance to clean up this method
@@ -90,9 +91,3 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
             logger.info("Could not revoke unlock code for user", exc_info=True)
             pass
         delete_user(idnr)
-
-    def _get_session_data(self, ttl: Optional[int] = None):
-        return get_data_from_cookie('form_data', ttl)
-
-    def _override_session_data(self, stored_data):
-        override_data_in_cookie(data_to_store=stored_data, cookie_data_identifier="form_data")
