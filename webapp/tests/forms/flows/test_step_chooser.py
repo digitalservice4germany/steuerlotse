@@ -1,22 +1,24 @@
-import datetime
 import unittest
-from copy import deepcopy
-from decimal import Decimal
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, call
 
 import pytest
-from flask import Flask, get_flashed_messages, session
-from flask.sessions import SecureCookieSession
+from flask import Flask, session
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import deserialize_session_data
+from app.forms.session_data import deserialize_session_data, get_session_data
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
     MockRenderStep, MockFormStep, MockYesNoStep, MockStepWithPrecondition, \
     MockStepWithPreconditionAndMessage, MockSecondPreconditionModelWithMessage
+
+
+@pytest.fixture
+def test_step_chooser():
+    testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
+    return StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint="lotse")
 
 
 class TestStepChooserInit(unittest.TestCase):
@@ -333,3 +335,13 @@ class TestInteractionBetweenSteps(unittest.TestCase):
             step_chooser.get_correct_step(step_name, method == 'POST', req.request.form).handle()
 
             return req.session
+
+
+class TestStepChooserGetSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_get_session_data_called_then_get_session_data_function_called_with_correct_params(self, test_step_chooser):
+        with patch('app.forms.flows.step_chooser.get_session_data') as patched_get_session_data:
+            test_step_chooser._get_session_data(session_data_identifier="catche_em_all", default_data={'name': 'Ash'})
+
+        assert patched_get_session_data.call_args == call(session_data_identifier="catche_em_all", default_data={'name': 'Ash'})

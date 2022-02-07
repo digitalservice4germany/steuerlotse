@@ -93,6 +93,39 @@ docker-compose exec web pipenv run flask populate-database
 
 Visit the application by pointing your browser at http://localhost.
 
+### Run with docker-compose for development
+Copy env file
+```bash
+cp .env.example .env
+```
+
+Start our needed services for development
+(migrations, testdata and translations will be automatically populated)
+```bash
+docker-compose -f docker-compose.development.yml up
+```
+
+Run database migrations, create test data and translations:
+```bash
+docker-compose -f docker-compose.development.yml up migrations
+```
+
+Start frontend client app
+```bash
+cd ./webapp/client
+yarn start
+```
+
+Start frontend storybook client
+```bash
+cd ./webapp/client
+yarn storybook
+```
+
+When docker services are running you can configure IDE(e.g. Pycharm) 
+to use this docker compose services as python interpreter to debug.
+(see .run/Flask (autoapp).run.xml)
+
 ### Enviroments
 We support four different environments with different configurations:
 - Testing
@@ -101,3 +134,15 @@ We support four different environments with different configurations:
 - Production
 
 In the testing environment a mocked version of Erica and the hashing algorithm is used.
+
+### Architecture Decision Records
+We will document architecture decision records going forward. If you want to add a new ADR you can use [adr-tools](https://github.com/npryce/adr-tools):
+```bash
+adr new <title of adr>
+```
+or the [python version](https://pypi.org/project/adr-tools-python/):
+```bash
+pipenv run adr-new create <title of adr>
+```
+
+Both commands create a new file in doc/adr. Make sure to edit this file to explain the decision.

@@ -2,12 +2,12 @@ import logging
 from collections import namedtuple
 from typing import Optional
 
-from flask import redirect, request, url_for, session, abort
+from flask import redirect, request, url_for, abort
 from wtforms import Form
 
 # The RenderInfo is provided to all templates
 from app.config import Config
-from app.forms.session_data import deserialize_session_data, override_session_data
+from app.forms.session_data import override_session_data, get_session_data
 from app.forms.steps.step import FormStep
 
 logger = logging.getLogger(__name__)
@@ -96,7 +96,7 @@ class MultiStepFlow:
                 self.overview_step.name) if self.has_link_overview and self.overview_step else None)
 
         render_info, stored_data = self._handle_specifics_for_step(step, render_info, stored_data)
-        override_session_data(stored_data)
+        self._override_session_data(stored_data)
 
         if render_info.redirect_url:
             logger.info(f"Redirect to {render_info.redirect_url}")
@@ -131,11 +131,13 @@ class MultiStepFlow:
                        **values)
 
     def _get_session_data(self, ttl: Optional[int] = None):
-        serialized_session = session.get('form_data', b"")
-        session_data = deserialize_session_data(serialized_session, ttl)
+        form_data = get_session_data('form_data', ttl)
         if self.default_data():
-            session_data = self.default_data()[1] | session_data  # updates session_data only with non_existent values
-        return session_data
+            form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
+        return form_data
+
+    def _override_session_data(self, stored_data):
+        override_session_data(stored_data, session_data_identifier="form_data")
 
     def _load_step(self, step_name):
         step_names, step_types = list(self.steps.keys()), list(self.steps.values())

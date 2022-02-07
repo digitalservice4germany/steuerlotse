@@ -1,11 +1,8 @@
-from typing import Dict
-
 from werkzeug.datastructures import ImmutableMultiDict
-from flask import flash
 from werkzeug.exceptions import abort
 
 from app.config import Config
-from app.forms.session_data import get_session_data, deserialize_session_data
+from app.forms.session_data import get_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
 
@@ -49,7 +46,7 @@ class StepChooser:
 
     def get_correct_step(self, step_name: str, should_update_data: bool, form_data: ImmutableMultiDict) -> SteuerlotseStep:
 
-        stored_data = get_session_data(self.session_data_identifier, default_data=self.default_data())
+        stored_data = self._get_session_data(self.session_data_identifier, default_data=self.default_data())
 
         if redirected_step_name := self._get_possible_redirect(step_name, stored_data):
             return RedirectSteuerlotseStep(redirected_step_name, endpoint=self.endpoint)
@@ -110,3 +107,6 @@ class StepChooser:
             return self._DEBUG_DATA
         else:
             return {}
+
+    def _get_session_data(self, session_data_identifier, default_data):
+        return get_session_data(session_data_identifier=session_data_identifier, default_data=default_data)

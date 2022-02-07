@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, call
 
 import pytest
 from flask.sessions import SecureCookieSession
@@ -225,24 +225,31 @@ class TestEligibilityInputFormSteuerlotseStepIsPreviousStep(unittest.TestCase):
         self.assertFalse(return_value)
 
 
-class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, app):
-        self.app = app
+class TestEligibilityInputFormSteuerlotseStepOverrideSessionData:
 
-    def test_sets_correct_session_data_to_empty_dict(self):
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_override_session_data_called_then_cookie_override_function_called_with_same_params(self):
+        with patch('app.forms.steps.eligibility_steps.override_data_in_cookie') as patched_override:
+            MockDecisionEligibilityInputFormSteuerlotseStep(endpoint='eligibility')._override_session_data(stored_data={'name': 'Ash'}, session_data_identifier='catch_em_all')
+
+        assert patched_override.call_args == call({'name': 'Ash'}, 'catch_em_all')
+
+
+class TestEligibilityStartDisplaySteuerlotseStep:
+
+    def test_sets_correct_session_data_to_empty_dict(self, new_test_request_context):
         session_data = {
             _ELIGIBILITY_DATA_KEY: create_session_form_data({'marital_status_eligibility': 'single'})
         }
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual({}, deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert {} == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
 
-    def test_does_not_change_other_session_data(self):
+    def test_does_not_change_other_session_data(self, new_test_request_context):
         other_session_key = 'OTHER_SESSION_KEY'
         other_session_data = {'Galileo': 'Figaro - magnificoo'}
         another_session_key = 'ANOTHER_SESSION_KEY'
@@ -253,56 +260,70 @@ class TestEligibilityStartDisplaySteuerlotseStep(unittest.TestCase):
             another_session_key: create_session_form_data(another_session_data)
         }
 
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual(other_session_data, deserialize_session_data(req.session[other_session_key]))
-            self.assertEqual(another_session_data, deserialize_session_data(req.session[another_session_key]))
+            assert other_session_data == deserialize_session_data(req.session[other_session_key])
+            assert another_session_data == deserialize_session_data(req.session[another_session_key])
 
-    def test_does_not_add_data_to_empty_session_data(self):
+    def test_does_not_add_data_to_empty_session_data(self, new_test_request_context):
         session_data = {}
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual({}, deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert {} == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
 
-    def test_leaves_session_data_without_correct_key_untouched(self):
+    def test_leaves_session_data_without_correct_key_untouched(self, new_test_request_context):
         other_session_key = 'OTHER_SESSION_KEY'
         other_session_data = {'Galileo': 'Figaro - magnificoo'}
         session_data = {
             other_session_key: create_session_form_data(other_session_data)
         }
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession(session_data)
             step = EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual(other_session_data, deserialize_session_data(req.session[other_session_key]))
+            assert other_session_data == deserialize_session_data(req.session[other_session_key])
 
 
-@pytest.mark.usefixtures("test_request_context")
-class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, app):
-        self.app = app
+@pytest.fixture
+def eligibility_start_step():
+    return EligibilityStepChooser('eligibility').get_correct_step(EligibilityStartDisplaySteuerlotseStep.name,
+                                                                          False, ImmutableMultiDict({}))
 
-    def test_if_post_and_married_then_set_next_step_correct(self):
-        with self.app.test_request_context(method='POST'):
+
+class TestEligibilityStartDisplaySteuerlotseStepOverrideSessionData:
+
+    @pytest.mark.usefixtures('test_request_context')
+    def test_if_override_session_data_called_then_cookie_override_function_called_with_same_params(self, eligibility_start_step):
+
+        with patch('app.forms.steps.eligibility_steps.override_data_in_cookie') as patched_override:
+            eligibility_start_step._override_session_data(stored_data={'name': 'Ash'}, session_data_identifier='catch_em_all')
+
+        assert patched_override.call_args == call({'name': 'Ash'}, 'catch_em_all')
+
+
+class TestMaritalStatusInputFormSteuerlotseStep:
+
+    def test_if_post_and_married_then_set_next_step_correct(self, new_test_request_context):
+        with new_test_request_context(method='POST'):
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
                                                                           True, form_data=ImmutableMultiDict(
                     {'marital_status_eligibility': 'married'}))
             expected_url = step.url_for_step(SeparatedEligibilityInputFormSteuerlotseStep.name)
             step.handle()
 
-        self.assertEqual(expected_url, step.render_info.next_url)
+        assert expected_url == step.render_info.next_url
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_widowed_then_set_next_step_correct(self):
         step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name, True,
                                                                       form_data=ImmutableMultiDict(
@@ -310,8 +331,9 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
         expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
-        self.assertEqual(expected_url, step.render_info.next_url)
+        assert expected_url == step.render_info.next_url
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_single_then_set_next_step_correct(self):
         step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name, True,
                                                                       form_data=ImmutableMultiDict(
@@ -319,8 +341,9 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
         expected_url = step.url_for_step(SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
-        self.assertEqual(expected_url, step.render_info.next_url)
+        assert expected_url, step.render_info.next_url
 
+    @pytest.mark.usefixtures('test_request_context')
     def test_if_post_and_divorced_then_set_next_step_correct(self):
         step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name, True,
                                                                       form_data=ImmutableMultiDict(
@@ -328,50 +351,48 @@ class TestMaritalStatusInputFormSteuerlotseStep(unittest.TestCase):
         expected_url = step.url_for_step(DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name)
         step.handle()
 
-        self.assertEqual(expected_url, step.render_info.next_url)
+        assert expected_url == step.render_info.next_url
 
-    def test_set_prev_input_step_correctly(self):
-        with self.app.test_request_context(method='GET'):
+    @pytest.mark.usefixtures('test_request_context')
+    def test_set_prev_input_step_correctly(self, new_test_request_context):
+        with new_test_request_context(method='GET'):
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             expected_url = step.url_for_step(EligibilityStartDisplaySteuerlotseStep.name)
             step.handle()
-        self.assertEqual(expected_url, step.render_info.prev_url)
+        assert expected_url == step.render_info.prev_url
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
+    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self, new_test_request_context):
         session_data = {'marital_status_eligibility': 'single', }
         session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
                 {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert session_data == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
 
-    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
+    def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self, new_test_request_context):
         session_data = {'marital_status_eligibility': 'single', }
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data)})
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert session_data == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
 
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
+    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self, new_test_request_context):
         only_necessary_data = {'marital_status_eligibility': 'single', }
-        with self.app.test_request_context(method='GET') as req:
+        with new_test_request_context(method='GET') as req:
             req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+            assert only_necessary_data == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
 
 
 class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
