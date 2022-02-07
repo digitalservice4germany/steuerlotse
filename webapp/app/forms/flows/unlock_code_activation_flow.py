@@ -11,11 +11,16 @@ from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
 from flask import request, url_for
 
+from app.forms.session_data import get_session_data, override_session_data
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
 
 
 logger = logging.getLogger(__name__)
+
+
+def _store_id_in_server_session(idnr):
+    override_session_data({'idnr': idnr}, 'form_data')
 
 
 class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
@@ -51,6 +56,10 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
                     self._login_or_activate_user(stored_data)
                     # prevent going to failure page as in normal flow
                     render_info.next_url = url_for('lotse', step='start')
+
+                    # set idnr also in session
+                    _store_id_in_server_session(stored_data['idnr'])
+
                 except (UserNotExistingError, WrongUnlockCodeError, ElsterProcessNotSuccessful):
                     logger.info("Could not activate unlock code for user", exc_info=True)
                     pass  # go to failure step

@@ -10,14 +10,24 @@ from werkzeug.utils import redirect
 from app.data_access.user_controller import create_user, find_user
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow
+from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow, _store_id_in_server_session
+from app.forms.session_data import get_session_data
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationFailureStep, UnlockCodeActivationInputStep
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockUnlockCodeActivationFailureStep, MockUnlockCodeActivationInputStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
 
-class UnlockCodeActivationInit(unittest.TestCase):
+class TestUnlockCodeActivationStoreIdInSession:
+
+    def test_if_id_given_then_store_id_in_server_side_session(self):
+        idnr = "007"
+        _store_id_in_server_session(idnr)
+
+        assert get_session_data('form_data')['idnr'] == idnr
+
+
+class TestUnlockCodeActivationInit(unittest.TestCase):
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, transactional_session, test_request_context):
         self.session = transactional_session

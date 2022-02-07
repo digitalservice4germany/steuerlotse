@@ -1,4 +1,4 @@
-describe("FahrtkostenpauschalePersonA", () => {
+describe("FahrtkostenpauschalePersonB", () => {
   beforeEach(() => {
     cy.login();
   });
