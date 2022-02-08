@@ -15,10 +15,23 @@ class FormStorage(ABC):
 
     @abstractmethod
     def get_data(self, data_identifier, ttl: Optional[int] = None, default_data=None):
+        """
+        Gets data from a storage that is associated with the currect session. The data is return deserialized.
+
+        :param data_identifier: A string used to identify what data should be taken from the cookie
+        :param ttl: The time to live for the cookie
+        :param default_data: Default data that will be used to replace missing data points
+        """
         pass
 
     @abstractmethod
     def override_data(self, data_to_store, data_identifier):
+        """
+        Stores data in a storage that is associated with the currect session. The data is serialized before it is stored.
+
+        :param data_to_store: The data that is overriding the existing data in the cookie
+        :param cookie_data_identifier: A string used to identify what data should be taken from the cookie
+        """
         pass
 
     @staticmethod
