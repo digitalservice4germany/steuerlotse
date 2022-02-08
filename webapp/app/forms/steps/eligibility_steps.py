@@ -172,7 +172,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
 
     def _override_storage_data(self, stored_data, data_identifier=None):
-        CookieStorage().override_data(stored_data, data_identifier)
+        self.form_storage.override_data(stored_data, data_identifier)
 
 
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
