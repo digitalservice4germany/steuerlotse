@@ -79,9 +79,7 @@ class SteuerlotseStep(object):
         return self.render()
 
     def _override_storage_data(self, stored_data, data_identifier=None):
-        if data_identifier is None:
-            data_identifier = self.data_identifier
-        self.form_storage.override_data(stored_data, data_identifier)
+        self.form_storage.override_data(stored_data, data_identifier or self.data_identifier)
 
     def _handle_redirects(self):
         if self.render_info.redirect_url:

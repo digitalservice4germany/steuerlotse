@@ -1,7 +1,7 @@
 import copy
 import unittest
 import datetime as dt
-from unittest.mock import patch, call
+from unittest.mock import MagicMock, patch, call
 
 import pytest
 from flask import json, make_response
@@ -314,6 +314,7 @@ class TestUnlockCodeActivationOverrideSessionData:
     @pytest.mark.usefixtures('test_request_context')
     def test_if_override_storage_data_called_then_cookie_override_function_called_with_correct_params(self, unlock_code_request_flow):
         with patch('app.data_access.storage.cookie_storage.CookieStorage.override_data') as patched_override:
-            unlock_code_request_flow._override_storage_data(stored_data={'name': 'Ash'})
+            with patch('app.data_access.storage.cookie_storage.CookieStorage.get_data', MagicMock(return_value={'name': 'Ash'})) as patched_get:
+                unlock_code_request_flow.handle('data_input')
 
         assert patched_override.call_args == call({'name': 'Ash'}, data_identifier='form_data')
