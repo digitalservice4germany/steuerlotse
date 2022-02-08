@@ -9,7 +9,7 @@ def gen_random_key(length=32):
 
 
 def create_session_form_data(data):
-    return SessionStorage().serialize_data(data)
+    return SessionStorage.serialize_data(data)
 
 
 def create_and_activate_user(idnr, dob, request_id, unlock_code):

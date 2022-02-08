@@ -63,7 +63,7 @@ class MultiStepFlow:
     """
     _DEBUG_DATA = None
 
-    def __init__(self, title, steps, endpoint, form_storage=SessionStorage(), overview_step=None):
+    def __init__(self, title, steps, endpoint, form_storage=SessionStorage, overview_step=None):
         """Creates a new MultistepFlow for the given configuration.
 
         The steps are a list of `FormStep` subclasses.

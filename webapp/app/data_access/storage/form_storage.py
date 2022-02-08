@@ -5,16 +5,15 @@ import zlib
 from cryptography.fernet import InvalidToken
 from flask import json
 from typing import Optional
-from abc import ABC, abstractmethod
 
 from app.crypto.encryption import encrypt, decrypt
 
 logger = logging.getLogger(__name__)
 
-class FormStorage(ABC):
+class FormStorage:
 
-    @abstractmethod
-    def get_data(self, data_identifier, ttl: Optional[int] = None, default_data=None):
+    @staticmethod
+    def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):
         """
         Gets data from a storage that is associated with the currect session. The data is return deserialized.
 
@@ -24,8 +23,8 @@ class FormStorage(ABC):
         """
         pass
 
-    @abstractmethod
-    def override_data(self, data_to_store, data_identifier):
+    @staticmethod
+    def override_data(data_to_store, data_identifier):
         """
         Stores data in a storage that is associated with the currect session. The data is serialized before it is stored.
 

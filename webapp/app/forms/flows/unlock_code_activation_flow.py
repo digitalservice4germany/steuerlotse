@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 def _store_id_in_server_session(idnr):
-    SessionStorage().override_data({'idnr': idnr}, 'form_data')
+    SessionStorage.override_data({'idnr': idnr}, 'form_data')
 
 
 class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
@@ -42,7 +42,7 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
                 UnlockCodeActivationFailureStep
             ],
             endpoint=endpoint,
-            form_storage=CookieStorage()
+            form_storage=CookieStorage
         )
 
     # TODO: Use inheritance to clean up this method

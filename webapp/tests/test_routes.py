@@ -123,7 +123,7 @@ class TestSetTestingDataRoute:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)
 
-            assert SessionStorage().get_data(identifier) == data
+            assert SessionStorage.get_data(identifier) == data
 
     @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_with_date_then_set_session_correctly(self, app):
@@ -134,7 +134,7 @@ class TestSetTestingDataRoute:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)
 
-            assert SessionStorage().get_data(identifier) == expected_data
+            assert SessionStorage.get_data(identifier) == expected_data
 
     @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_with_bool_then_set_session_correctly(self, app):
@@ -144,7 +144,7 @@ class TestSetTestingDataRoute:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)
 
-            assert SessionStorage().get_data(identifier) == data
+            assert SessionStorage.get_data(identifier) == data
 
     @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_with_int_then_set_session_correctly(self, app):
@@ -154,7 +154,7 @@ class TestSetTestingDataRoute:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)
 
-            assert SessionStorage().get_data(identifier) == data
+            assert SessionStorage.get_data(identifier) == data
 
     @pytest.mark.usefixtures("testing_current_user")
     def test_if_data_provided_but_incorrect_session_identifier_then_do_not_set_session(self, app):
@@ -164,4 +164,4 @@ class TestSetTestingDataRoute:
             req.session = SecureCookieSession({})
             app.view_functions.get('set_data')(identifier)
 
-            assert SessionStorage().get_data(identifier) == {}
+            assert SessionStorage.get_data(identifier) == {}

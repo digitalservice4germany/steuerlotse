@@ -135,7 +135,7 @@ class LotseStepChooser(StepChooser):
             ],
             endpoint=endpoint,
             overview_step=StepSummary,
-            form_storage=SessionStorage()
+            form_storage=SessionStorage
         )
 
     # TODO remove this once all steps are converted to steuerlotse steps

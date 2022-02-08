@@ -23,7 +23,7 @@ class TestGetCookieData:
 
     def test_if_cookie_data_then_return_cookie_data(self, cookie_data_identifier, prefilled_cookie_data, test_request_context):
         test_request_context.session = SecureCookieSession({cookie_data_identifier: create_session_form_data(prefilled_cookie_data)})
-        cookie_data = CookieStorage().get_data(cookie_data_identifier)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier)
 
         assert prefilled_cookie_data == cookie_data
 
@@ -33,7 +33,7 @@ class TestGetCookieData:
 
         test_request_context.session = SecureCookieSession({cookie_data_identifier: create_session_form_data(prefilled_cookie_data)})
 
-        cookie_data = CookieStorage().get_data(cookie_data_identifier, default_data=default_data)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier, default_data=default_data)
 
         assert expected_data == cookie_data
 
@@ -46,7 +46,7 @@ class TestGetCookieData:
             {cookie_data_identifier: create_session_form_data(form_data),
                 "INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier_data)})
 
-        cookie_data = CookieStorage().get_data(cookie_data_identifier)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier)
 
         assert expected_data == cookie_data
 
@@ -55,34 +55,34 @@ class TestGetCookieData:
 
         test_request_context.session = SecureCookieSession({"INCORRECT_IDENTIFIER": create_session_form_data(incorrect_identifier)})
 
-        cookie_data = CookieStorage().get_data(cookie_data_identifier)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier)
 
         assert {} == cookie_data
 
     def test_if_no_form_data_in_cookie_then_return_default_data(self, cookie_data_identifier, test_request_context):
         default_data = {"brother": "Luigi"}
         test_request_context.session = SecureCookieSession({})
-        cookie_data = CookieStorage().get_data(cookie_data_identifier, default_data=default_data)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier, default_data=default_data)
 
         assert default_data == cookie_data
 
     @pytest.mark.usefixtures("test_request_context")
     def test_if_no_cookie_data_and_debug_data_provided_then_return_copy(self, cookie_data_identifier):
         original_default_data = {}
-        cookie_data = CookieStorage().get_data(cookie_data_identifier, default_data=original_default_data)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier, default_data=original_default_data)
 
         assert original_default_data is not cookie_data
 
     @pytest.mark.usefixtures("test_request_context")
     def test_if_no_cookie_data_and_no_debug_data_then_return_empty_dict(self, cookie_data_identifier):
-        cookie_data = CookieStorage().get_data(cookie_data_identifier)
+        cookie_data = CookieStorage.get_data(cookie_data_identifier)
 
         assert {} == cookie_data
 
     def test_if_cookie_data_then_keep_data_in_cookie(self, cookie_data_identifier, prefilled_cookie_data, app, test_request_context):
         test_request_context.session = SecureCookieSession({'form_data': create_session_form_data(prefilled_cookie_data)})
 
-        CookieStorage().get_data(cookie_data_identifier)
+        CookieStorage.get_data(cookie_data_identifier)
 
         assert 'form_data' in test_request_context.session
         assert prefilled_cookie_data == FormStorage.deserialize_data(test_request_context.session['form_data'], app.config['PERMANENT_SESSION_LIFETIME'])
@@ -94,7 +94,7 @@ class TestOverrideCookieData:
         new_data = {'brother': 'Luigi'}
         with patch('app.data_access.storage.cookie_storage.CookieStorage.serialize_data', MagicMock(side_effect=lambda _: _)):
             assert 'form_data' not in test_request_context.session
-            CookieStorage().override_data(new_data)
+            CookieStorage.override_data(new_data)
             assert 'form_data' in test_request_context.session
             assert new_data == test_request_context.session['form_data']
 
@@ -103,7 +103,7 @@ class TestOverrideCookieData:
         with patch('app.data_access.storage.cookie_storage.CookieStorage.serialize_data', MagicMock(side_effect=lambda _: _)):
             test_request_context.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'}}
             assert 'form_data' in test_request_context.session
-            CookieStorage().override_data(new_data)
+            CookieStorage.override_data(new_data)
             assert 'form_data' in test_request_context.session
             assert new_data == test_request_context.session['form_data']
 
@@ -112,7 +112,7 @@ class TestOverrideCookieData:
         other_data = {'enemy': 'Bowser'}
         with patch('app.data_access.storage.cookie_storage.CookieStorage.serialize_data', MagicMock(side_effect=lambda _: _)):
             test_request_context.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'}, 'OTHER_IDENTIFIER': other_data}
-            CookieStorage().override_data(new_data, 'form_data')
+            CookieStorage.override_data(new_data, 'form_data')
             assert other_data == test_request_context.session['OTHER_IDENTIFIER']
 
     def test_if_stored_data_identifier_is_set_then_override_storage_data_in_cookie_with_that_new_identifier(self, test_request_context):
@@ -121,5 +121,5 @@ class TestOverrideCookieData:
         new_identifier = "NEW_IDENTIFIER"
         with patch('app.data_access.storage.cookie_storage.CookieStorage.serialize_data', MagicMock(side_effect=lambda _: _)):
             test_request_context.session = {'form_data': {'brother': 'Mario', 'pet': 'Yoshi'}, 'OTHER_IDENTIFIER': other_data}
-            CookieStorage().override_data(new_data, new_identifier)
+            CookieStorage.override_data(new_data, new_identifier)
             assert new_data == test_request_context.session[new_identifier]

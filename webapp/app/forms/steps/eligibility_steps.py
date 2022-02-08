@@ -75,7 +75,7 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
                                                                        render_info=render_info,
-                                                                       form_storage=CookieStorage(),
+                                                                       form_storage=CookieStorage,
                                                                        *args, **kwargs)
 
     def _main_handle(self):
@@ -97,7 +97,7 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
 
     def __init__(self, endpoint, render_info=None, *args, **kwargs):
         super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), render_info=render_info,
-                         form_storage=CookieStorage(),  *args, **kwargs)
+                         form_storage=CookieStorage,  *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -160,7 +160,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
             header_title=_('form.eligibility.header-title'),
             stored_data=stored_data,
             render_info=render_info,
-            form_storage=CookieStorage(),
+            form_storage=CookieStorage,
             *args,
             **kwargs)
 
@@ -172,7 +172,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
 
     def _override_storage_data(self, stored_data, data_identifier=None):
-        CookieStorage().override_data(stored_data, data_identifier)
+        CookieStorage.override_data(stored_data, data_identifier)
 
 
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):

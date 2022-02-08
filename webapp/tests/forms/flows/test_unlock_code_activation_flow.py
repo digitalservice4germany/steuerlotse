@@ -24,7 +24,7 @@ class TestUnlockCodeActivationStoreIdInSession:
         idnr = "007"
         _store_id_in_server_session(idnr)
 
-        assert SessionStorage().get_data('form_data')['idnr'] == idnr
+        assert SessionStorage.get_data('form_data')['idnr'] == idnr
 
 
 class TestUnlockCodeActivationInit(unittest.TestCase):

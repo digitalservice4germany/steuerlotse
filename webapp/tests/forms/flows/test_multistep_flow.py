@@ -107,7 +107,7 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         with self.app.test_request_context(
                 path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name,
                 method='GET'):
-            SessionStorage().override_data(self.session_data, 'form_data')
+            SessionStorage.override_data(self.session_data, 'form_data')
 
             response = self.flow.handle(MockRenderStep.name)
 
@@ -144,7 +144,7 @@ class TestMultiStepFlowHandle(unittest.TestCase):
         flow_with_yes_no_field = MultiStepFlow('No_maybe', endpoint=self.endpoint_correct, steps=steps)
         resulting_session = self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {'yes_no_field': 'yes'})
         self.run_handle(self.app, flow_with_yes_no_field, MockYesNoStep.name, 'POST', {}, resulting_session)
-        self.assertEqual({'yes_no_field': None}, SessionStorage().get_data('form_data'))
+        self.assertEqual({'yes_no_field': None}, SessionStorage.get_data('form_data'))
 
     @staticmethod
     def run_handle(app, flow, step_name, method='GET', form_data=None, session=None):
@@ -319,11 +319,11 @@ class TestMultiStepFlowGetSessionData(unittest.TestCase):
             self.assertEqual({}, session_data)
 
     def test_if_session_data_then_keep_data_in_session(self):
-        self.req.session = SecureCookieSession({'form_data': SessionStorage().serialize_data(self.session_data)})
+        self.req.session = SecureCookieSession({'form_data': SessionStorage.serialize_data(self.session_data)})
         self.flow._get_storage_data()
 
         self.assertIn('form_data', self.req.session)
-        self.assertEqual(self.session_data, SessionStorage().deserialize_data(self.req.session['form_data'], self.app.config['PERMANENT_SESSION_LIFETIME']))
+        self.assertEqual(self.session_data, SessionStorage.deserialize_data(self.req.session['form_data'], self.app.config['PERMANENT_SESSION_LIFETIME']))
 
 
 class TestMultiStepFlowHandleSpecificsForStep(unittest.TestCase):

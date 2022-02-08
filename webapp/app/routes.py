@@ -392,5 +392,5 @@ def register_testing_request_handlers(app):
                 return value
 
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
-        SessionStorage().override_data(data_with_dates, session_identifier)
+        SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200

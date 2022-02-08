@@ -44,7 +44,7 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                 UnlockCodeRequestSuccessStep
             ],
             endpoint=endpoint,
-            form_storage=CookieStorage()
+            form_storage=CookieStorage
         )
 
     # TODO: Use inheritance to clean up this method
