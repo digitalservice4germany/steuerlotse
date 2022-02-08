@@ -10,7 +10,7 @@ from tests.conftest import CURRENT_USER_IDNR
 CURRENT_USER = "app.data_access.storage.session_storage.current_user"
 
 
-class TestGetSessionData:
+class TestGetSessionStorage:
 
     def test_if_session_data_then_return_session_data(self):
         data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
@@ -83,7 +83,7 @@ class TestGetSessionData:
         assert session_data is None
 
 
-class TestOverrideSessionData:
+class TestOverrideSessionStorage:
 
     def test_data_is_saved_as_new_form_data(self):
         storage = SessionStorage

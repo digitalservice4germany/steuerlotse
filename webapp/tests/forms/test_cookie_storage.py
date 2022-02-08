@@ -19,7 +19,7 @@ def prefilled_cookie_data():
     return {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
 
 
-class TestGetCookieData:
+class TestGetCookieStorage:
 
     def test_if_cookie_data_then_return_cookie_data(self, cookie_data_identifier, prefilled_cookie_data, test_request_context):
         test_request_context.session = SecureCookieSession({cookie_data_identifier: create_session_form_data(prefilled_cookie_data)})
@@ -88,7 +88,7 @@ class TestGetCookieData:
         assert prefilled_cookie_data == FormStorage.deserialize_data(test_request_context.session['form_data'], app.config['PERMANENT_SESSION_LIFETIME'])
 
 
-class TestOverrideCookieData:
+class TestOverrideCookieStorage:
 
     def test_data_is_saved_to_empty_cookie(self, test_request_context):
         new_data = {'brother': 'Luigi'}
