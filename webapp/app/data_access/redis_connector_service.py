@@ -13,8 +13,9 @@ class RedisConnectorService:
         if cls._instance is None:
             cls._instance = super(RedisConnectorService, cls).__new__(cls)
         if cls._redis_connection is None:
-            cls._redis_connection = redislite.StrictRedis() if Config.USE_REDIS_LITE else redis.Redis.from_url(
-                Config.SESSION_DATA_STORAGE_URL)
+            cls._redis_connection = redislite.StrictRedis() \
+                if Config.USE_REDIS_LITE or not Config.SESSION_DATA_STORAGE_URL else redis.Redis.from_url(
+                    Config.SESSION_DATA_STORAGE_URL)
         return cls._instance
 
     def save_to_redis(self, key: str, value) -> bool:
