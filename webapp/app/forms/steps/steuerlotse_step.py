@@ -24,7 +24,7 @@ class SteuerlotseStep(object):
     preconditions = []
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                 form_storage=SessionStorage(), session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
+                 form_storage=SessionStorage, session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
         self.endpoint = endpoint
         self.header_title = header_title
         self.stored_data = stored_data if stored_data is not None else {}
@@ -79,9 +79,7 @@ class SteuerlotseStep(object):
         return self.render()
 
     def _override_storage_data(self, stored_data, data_identifier=None):
-        if data_identifier is None:
-            data_identifier = self.data_identifier
-        self.form_storage.override_data(stored_data, data_identifier)
+        self.form_storage.override_data(stored_data, data_identifier or self.data_identifier)
 
     def _handle_redirects(self):
         if self.render_info.redirect_url:
@@ -137,7 +135,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         pass
 
     def __init__(self, endpoint, header_title, stored_data=None, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier='form_data', should_update_data=False, form_storage=SessionStorage(), render_info=None, *args, **kwargs):
+                 next_step=None, session_data_identifier='form_data', should_update_data=False, form_storage=SessionStorage, render_info=None, *args, **kwargs):
         super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                          form_storage, session_data_identifier, should_update_data, render_info, *args, **kwargs)
         # TODO rename this to form_class once MultiStepFlow is obsolete

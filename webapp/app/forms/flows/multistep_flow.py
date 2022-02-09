@@ -63,7 +63,7 @@ class MultiStepFlow:
     """
     _DEBUG_DATA = None
 
-    def __init__(self, title, steps, endpoint, form_storage=SessionStorage(), overview_step=None):
+    def __init__(self, title, steps, endpoint, form_storage=SessionStorage, overview_step=None):
         """Creates a new MultistepFlow for the given configuration.
 
         The steps are a list of `FormStep` subclasses.
@@ -97,7 +97,7 @@ class MultiStepFlow:
                 self.overview_step.name) if self.has_link_overview and self.overview_step else None)
 
         render_info, stored_data = self._handle_specifics_for_step(step, render_info, stored_data)
-        self._override_storage_data(stored_data)
+        self.form_storage.override_data(stored_data, data_identifier="form_data")
 
         if render_info.redirect_url:
             logger.info(f"Redirect to {render_info.redirect_url}")
@@ -136,9 +136,6 @@ class MultiStepFlow:
         if self.default_data():
             form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
         return form_data
-
-    def _override_storage_data(self, stored_data):
-        self.form_storage.override_data(stored_data, data_identifier="form_data")
 
     def _load_step(self, step_name):
         step_names, step_types = list(self.steps.keys()), list(self.steps.values())

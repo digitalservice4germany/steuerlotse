@@ -285,7 +285,7 @@ class TestLotseHandle(unittest.TestCase):
 
     def test_if_form_step_and_not_post_then_return_render(self):
         with self.app.test_request_context(path="/" + self.endpoint_correct + "/step/" + MockRenderStep.name, method='GET'):
-            SessionStorage().override_data(self.session_data, 'form_data')
+            SessionStorage.override_data(self.session_data, 'form_data')
             response = self.flow.handle(MockRenderStep.name)
 
             self.assertEqual(200, response.status_code)
@@ -498,7 +498,7 @@ class TestLotseGetSessionData(unittest.TestCase):
         self.session_data = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
 
     def test_if_session_valid_then_return_updated_session_data(self):
-        SessionStorage().override_data(self.session_data, 'form_data')
+        SessionStorage.override_data(self.session_data, 'form_data')
         session_data = self.flow._get_storage_data()
 
         self.assertTrue(set(self.session_data).issubset(set(session_data)))

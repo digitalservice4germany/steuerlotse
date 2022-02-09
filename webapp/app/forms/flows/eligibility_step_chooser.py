@@ -80,7 +80,7 @@ class EligibilityStepChooser(StepChooser):
                 ForeignCountriesEligibilityFailureDisplaySteuerlotseStep,
             ],
             endpoint=endpoint,
-            form_storage=CookieStorage()
+            form_storage=CookieStorage
         )
 
     def determine_prev_step(self, current_step_name, stored_data):
