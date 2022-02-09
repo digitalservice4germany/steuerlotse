@@ -50,7 +50,7 @@ def testing_current_user(monkeypatch):
 @pytest.fixture(autouse=True)
 def testing_database(monkeypatch):
     fakeredis_connection = fakeredis.FakeStrictRedis()
-    monkeypatch.setattr("app.data_access.form_data_controller.RedisConnectorService._redis_connection",
+    monkeypatch.setattr("app.data_access.redis_connector_service.RedisConnectorService._redis_connection",
                         fakeredis_connection)
     yield
     fakeredis_connection.flushall()
