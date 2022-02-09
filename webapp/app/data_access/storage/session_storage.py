@@ -37,7 +37,7 @@ class SessionStorage(FormStorage):
     def override_data(stored_data, data_identifier='form_data'):
         if Config.USE_COOKIE_STORAGE:
             CookieStorage.override_data(data_to_store=stored_data, data_identifier=data_identifier)
-            pass
+            return
         
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
         if not key:
