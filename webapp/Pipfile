@@ -27,6 +27,7 @@ pydantic = "*"
 flask-static-digest = "*"
 python-dotenv = "*"
 pyhumps = "*"
+redislite = "*"
 
 [dev-packages]
 pytest = "*"
@@ -36,7 +37,6 @@ invoke = "*"
 sarge = "*"
 psutil = "*"
 fakeredis = "*"
-redislite = "*"
 
 [requires]
 python_version = "3.9"
