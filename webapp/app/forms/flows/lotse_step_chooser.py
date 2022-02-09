@@ -13,6 +13,8 @@ from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, S
 from app.forms.steps.lotse.has_disability import StepDisabilityPersonB, StepDisabilityPersonA
 from app.forms.steps.lotse.pauschbetrag import StepPauschbetragPersonA, StepPauschbetragPersonB
 from app.forms.steps.lotse.no_pauschbetrag import  StepNoPauschbetragPersonA, StepNoPauschbetragPersonB
+from app.data_access.storage.session_storage import SessionStorage
+
 _LOTSE_DATA_KEY = 'form_data'
 
 
@@ -132,7 +134,8 @@ class LotseStepChooser(StepChooser):
                 StepSummary,
             ],
             endpoint=endpoint,
-            overview_step=StepSummary
+            overview_step=StepSummary,
+            form_storage=SessionStorage
         )
 
     # TODO remove this once all steps are converted to steuerlotse steps

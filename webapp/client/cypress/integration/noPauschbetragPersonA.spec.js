@@ -15,7 +15,7 @@ describe("NoPauschbetragPage for person A", () => {
 
   context("with person a has no disability data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
@@ -28,7 +28,7 @@ describe("NoPauschbetragPage for person A", () => {
 
   context("with person a has disability but no merkzeichen set", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
       });
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
@@ -48,7 +48,7 @@ describe("NoPauschbetragPage for person A", () => {
   context("with person a has pauschbetrag claim", () => {
     // There is no possible combination to only have a fahrtkostenpauschbetrag claim.
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
         person_a_has_pflegegrad: "no",
         person_a_disability_degree: 60,
@@ -65,7 +65,7 @@ describe("NoPauschbetragPage for person A", () => {
     "with person a has pauschbetrag and fahrtkostenpauschbetrag claim",
     () => {
       beforeEach(() => {
-        cy.request("POST", "/testing/set_data/form_data", {
+        cy.request("POST", "/testing/set_session_data/form_data", {
           person_a_has_disability: "yes",
           person_a_has_pflegegrad: "no",
           person_a_disability_degree: 80,
@@ -84,7 +84,7 @@ describe("NoPauschbetragPage for person A", () => {
     "with person a has no pauschbetrag or fahrtkostenpauschbetrag claim",
     () => {
       beforeEach(() => {
-        cy.request("POST", "/testing/set_data/form_data", {
+        cy.request("POST", "/testing/set_session_data/form_data", {
           person_a_has_disability: "yes",
           person_a_has_pflegegrad: "no",
         });
@@ -107,7 +107,7 @@ describe("NoPauschbetragPage for person A", () => {
 
       context("With joint taxes", () => {
         beforeEach(() => {
-          cy.request("POST", "/testing/set_data/form_data", {
+          cy.request("POST", "/testing/set_session_data/form_data", {
             familienstand: "married",
             familienstand_date: "02.09.2000",
             familienstand_married_lived_separated: "no",

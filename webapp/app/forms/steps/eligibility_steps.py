@@ -5,7 +5,7 @@ from wtforms import RadioField
 from wtforms.validators import InputRequired
 
 from app.forms import SteuerlotseBaseForm
-from app.forms.cookie_data import override_data_in_cookie
+from app.data_access.storage.cookie_storage import CookieStorage
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
 from app.model.eligibility_data import OtherIncomeEligibilityData, \
     ForeignCountrySuccessEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
@@ -75,6 +75,7 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
                                                                        stored_data=stored_data,
                                                                        header_title=_('form.eligibility.header-title'),
                                                                        render_info=render_info,
+                                                                       form_storage=CookieStorage,
                                                                        *args, **kwargs)
 
     def _main_handle(self):
@@ -95,7 +96,8 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
         pass
 
     def __init__(self, endpoint, render_info=None, *args, **kwargs):
-        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), render_info=render_info,  *args, **kwargs)
+        super().__init__(endpoint=endpoint, header_title=_('form.eligibility.header-title'), render_info=render_info,
+                         form_storage=CookieStorage,  *args, **kwargs)
 
     def _main_handle(self):
         super()._main_handle()
@@ -133,9 +135,6 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
         else:
             return True
 
-    def _override_session_data(self, stored_data, session_data_identifier=None):
-        override_data_in_cookie(stored_data, session_data_identifier)
-
     def delete_not_dependent_data(self):
         """ Delete the data that is not (recursively) part of the first model in the list of next step data models. """
         self.stored_data = dict(
@@ -161,6 +160,7 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
             header_title=_('form.eligibility.header-title'),
             stored_data=stored_data,
             render_info=render_info,
+            form_storage=CookieStorage,
             *args,
             **kwargs)
 
@@ -168,11 +168,8 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         super()._main_handle()
         # Remove all eligibility data as the flow is restarting
         stored_data = {}
-        self._override_session_data(stored_data, session_data_identifier=self.session_data_identifier)
+        self._override_storage_data(stored_data, data_identifier=self.session_data_identifier)
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
-
-    def _override_session_data(self, stored_data, session_data_identifier=None):
-        override_data_in_cookie(stored_data, session_data_identifier)
 
 
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
@@ -745,15 +742,15 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
     def _main_handle(self):
         super()._main_handle()
-        
+
         dependent_notes = []
-            
+
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.user_b_elster_account-registration-success'))
         if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))
-                
+
         self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.next_url = None
 
@@ -764,18 +761,18 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
     intro = _l('form.eligibility.success.maybe.intro')
     template = 'eligibility/display_maybe.html'
 
-    def __init__(self, endpoint, stored_data=None, *args, **kwargs):               
+    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
         super(EligibilityMaybeDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
                                    stored_data=stored_data,
                                    header_title=_('form.eligibility.header-title'),
                                    *args,
                                    **kwargs)
 
-    def _main_handle(self):  
+    def _main_handle(self):
         super()._main_handle()
-        
+
         dependent_notes = []
-    
+
         if data_fits_data_model(UserBElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.both_elster_account-registration-maybe'))
         if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
@@ -786,4 +783,4 @@ class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuer
         self.render_info.detail = {'render_kw': {
                 'data-detail': {'title': _l('form.eligibility.result-note.when_unlock_code.title'),
                                 'text': _l('form.eligibility.result-note.when_unlock_code.description')}}
-                }  
+                }

@@ -8,7 +8,7 @@ from werkzeug.utils import redirect
 
 from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import override_session_data
+from app.data_access.storage.session_storage import SessionStorage
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class SteuerlotseStep(object):
     preconditions = []
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                 session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
+                 form_storage=SessionStorage, session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
         self.endpoint = endpoint
         self.header_title = header_title
         self.stored_data = stored_data if stored_data is not None else {}
@@ -34,6 +34,7 @@ class SteuerlotseStep(object):
         self.render_info: Optional[RenderInfo] = render_info
         self.session_data_identifier = session_data_identifier
         self.should_update_data = should_update_data
+        self.form_storage = form_storage
 
         self.default_data = default_data
 
@@ -77,10 +78,8 @@ class SteuerlotseStep(object):
             return redirection
         return self.render()
 
-    def _override_session_data(self, stored_data, session_data_identifier=None):
-        if session_data_identifier is None:
-            session_data_identifier = self.session_data_identifier
-        override_session_data(stored_data, session_data_identifier)
+    def _override_storage_data(self, stored_data, data_identifier=None):
+        self.form_storage.override_data(stored_data, data_identifier or self.data_identifier)
 
     def _handle_redirects(self):
         if self.render_info.redirect_url:
@@ -136,9 +135,9 @@ class FormSteuerlotseStep(SteuerlotseStep):
         pass
 
     def __init__(self, endpoint, header_title, stored_data=None, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
+                 next_step=None, session_data_identifier='form_data', should_update_data=False, form_storage=SessionStorage, render_info=None, *args, **kwargs):
         super().__init__(endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
-                         session_data_identifier, should_update_data, render_info, *args, **kwargs)
+                         form_storage, session_data_identifier, should_update_data, render_info, *args, **kwargs)
         # TODO rename this to form_class once MultiStepFlow is obsolete
         self.form = self.InputForm
 
@@ -164,7 +163,7 @@ class FormSteuerlotseStep(SteuerlotseStep):
         return cls.InputForm(form_data, **prefilled_data)
 
     def _post_handle(self):
-        self._override_session_data(self.stored_data, self.session_data_identifier)
+        self._override_storage_data(self.stored_data, self.session_data_identifier)
 
         redirection = self._handle_redirects()
         if redirection:
@@ -175,9 +174,6 @@ class FormSteuerlotseStep(SteuerlotseStep):
             logger.info(f"Redirect to next Step {self.render_info.next_url}")
             return redirect(self.render_info.next_url)
         return self.render()
-
-    def _override_session_data(self, stored_data, session_data_identifier=None):
-        override_session_data(stored_data, session_data_identifier)
 
     def render(self, **kwargs):
         """
@@ -210,10 +206,10 @@ class FormSteuerlotseStep(SteuerlotseStep):
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
     def __init__(self, endpoint, header_title, stored_data, overview_step=None, default_data=None, prev_step=None,
-                 next_step=None, session_data_identifier=None, should_update_data=False,
+                 next_step=None, session_data_identifier=None, should_update_data=False, form_storage=None,
                  render_info=None, *args, **kwargs):
         super(DisplaySteuerlotseStep, self).__init__(endpoint, header_title, stored_data, overview_step, default_data,
-                                                     prev_step, next_step, session_data_identifier, should_update_data,
+                                                     prev_step, next_step, form_storage, session_data_identifier, should_update_data,
                                                      render_info, *args, **kwargs)
 
     def render(self, **kwargs):

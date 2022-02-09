@@ -576,7 +576,7 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
     def test_update_session_data_is_called(self):
         next_step = MockFinalStep
         expected_data = {'brother': 'Luigi'}
-        with patch('app.forms.steps.steuerlotse_step.override_session_data') as update_fun:
+        with patch('app.data_access.storage.session_storage.SessionStorage.override_data') as update_fun:
             form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step,
                                  render_info=MockFormStep.prepare_render_info(expected_data, input_data=ImmutableMultiDict({})))
             form_step.handle()
@@ -715,9 +715,9 @@ class TestFormSteuerlotseStepPrepareRenderInfo:
 class TestFormSteuerlotseStepOverrideSessionData:
 
     @pytest.mark.usefixtures('test_request_context')
-    def test_if_override_session_data_called_then_session_override_function_called_with_same_params(self):
-        with patch('app.forms.steps.steuerlotse_step.override_session_data') as patched_override:
-            MockFormWithInputStep(endpoint='lotse')._override_session_data(stored_data={'name': 'Ash'}, session_data_identifier='catch_em_all')
+    def test_if_override_storage_data_called_then_session_override_function_called_with_same_params(self):
+        with patch('app.data_access.storage.session_storage.SessionStorage.override_data') as patched_override:
+            MockFormWithInputStep(endpoint='lotse')._override_storage_data(stored_data={'name': 'Ash'}, data_identifier='catch_em_all')
 
         assert patched_override.call_args == call({'name': 'Ash'}, 'catch_em_all')
 

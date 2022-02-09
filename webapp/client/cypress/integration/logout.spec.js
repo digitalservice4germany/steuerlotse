@@ -20,7 +20,7 @@ describe("Logout", () => {
   });
 
   it("logout to start page because of completed tax return", () => {
-    cy.request("POST", "/testing/set_data/form_data", {
+    cy.request("POST", "/testing/set_session_data/form_data", {
       idnr: "04452397687",
 
       declaration_incomes: true,

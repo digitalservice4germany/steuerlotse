@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, call
+from unittest.mock import MagicMock, patch, call
 
 import pytest
 from flask import json
@@ -10,14 +10,24 @@ from werkzeug.utils import redirect
 from app.data_access.user_controller import create_user, find_user
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow
+from app.forms.flows.unlock_code_activation_flow import UnlockCodeActivationMultiStepFlow, _store_id_in_server_session
+from app.data_access.storage.session_storage import SessionStorage
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationFailureStep, UnlockCodeActivationInputStep
 from tests.forms.mock_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockRenderStep, MockFormStep, \
     MockUnlockCodeActivationFailureStep, MockUnlockCodeActivationInputStep
 from tests.utils import create_session_form_data, create_and_activate_user
 
 
-class UnlockCodeActivationInit(unittest.TestCase):
+class TestUnlockCodeActivationStoreIdInSession:
+
+    def test_if_id_given_then_store_id_in_server_side_session(self):
+        idnr = "007"
+        _store_id_in_server_session(idnr)
+
+        assert SessionStorage.get_data('form_data')['idnr'] == idnr
+
+
+class TestUnlockCodeActivationInit(unittest.TestCase):
     @pytest.fixture(autouse=True)
     def attach_fixtures(self, transactional_session, test_request_context):
         self.session = transactional_session
@@ -253,9 +263,9 @@ def unlock_code_activation_flow():
 class TestUnlockCodeActivationGetSessionData:
 
     @pytest.mark.usefixtures('test_request_context')
-    def test_if_get_session_data_called_then_get_cookie_data_function_called_with_correct_params(self, unlock_code_activation_flow):
-        with patch('app.forms.flows.unlock_code_activation_flow.get_data_from_cookie') as patched_get_cookie_data:
-            unlock_code_activation_flow._get_session_data(ttl=2)
+    def test_if_get_storage_data_called_then_get_cookie_data_function_called_with_correct_params(self, unlock_code_activation_flow):
+        with patch('app.data_access.storage.cookie_storage.CookieStorage.get_data') as patched_get_cookie_data:
+            unlock_code_activation_flow._get_storage_data(ttl=2)
 
         assert patched_get_cookie_data.call_args == call('form_data', 2)
 
@@ -263,8 +273,9 @@ class TestUnlockCodeActivationGetSessionData:
 class TestUnlockCodeActivationOverrideSessionData:
 
     @pytest.mark.usefixtures('test_request_context')
-    def test_if_override_session_data_called_then_cookie_override_function_called_with_correct_params(self, unlock_code_activation_flow):
-        with patch('app.forms.flows.unlock_code_activation_flow.override_data_in_cookie') as patched_override:
-            unlock_code_activation_flow._override_session_data(stored_data={'name': 'Ash'})
+    def test_if_override_storage_data_called_then_cookie_override_function_called_with_correct_params(self, unlock_code_activation_flow):
+        with patch('app.data_access.storage.cookie_storage.CookieStorage.override_data') as patched_override:
+            with patch('app.data_access.storage.cookie_storage.CookieStorage.get_data', MagicMock(return_value={'name': 'Ash'})):
+                unlock_code_activation_flow.handle('data_input')
 
-        assert patched_override.call_args == call(data_to_store={'name': 'Ash'}, cookie_data_identifier='form_data')
+        assert patched_override.call_args == call({'name': 'Ash'}, data_identifier='form_data')

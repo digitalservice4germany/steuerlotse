@@ -6,6 +6,9 @@ os.environ["FLASK_ENV"] = 'testing'
 
 from contextlib import contextmanager
 
+from unittest.mock import MagicMock
+import fakeredis
+
 from flask.sessions import SecureCookieSession
 from werkzeug.datastructures import ImmutableMultiDict
 
@@ -36,6 +39,23 @@ def test_request_context(app):
         yield req
 
 
+CURRENT_USER_IDNR = "0123456789"
+
+
+@pytest.fixture(autouse=True)
+def testing_current_user(monkeypatch):
+    monkeypatch.setattr("app.data_access.storage.session_storage.current_user", MagicMock(idnr_hashed=CURRENT_USER_IDNR))
+
+
+@pytest.fixture(autouse=True)
+def testing_database(monkeypatch):
+    fakeredis_connection = fakeredis.FakeStrictRedis()
+    monkeypatch.setattr("app.data_access.redis_connector_service.RedisConnectorService._redis_connection",
+                        fakeredis_connection)
+    yield
+    fakeredis_connection.flushall()
+
+
 @pytest.fixture
 def new_test_request_context(app):
     @contextmanager
@@ -47,6 +67,20 @@ def new_test_request_context(app):
             if form_data:
                 req.request.data = ImmutableMultiDict(form_data)
                 req.request.form = ImmutableMultiDict(form_data)
+            yield req
+    return _new_test_request_context
+
+
+@pytest.fixture
+def new_test_request_context_with_data_in_session(app, new_test_request_context):
+    @contextmanager
+    def _new_test_request_context(method='GET', form_data=None, session_data=None, session_identifier='form_data'):
+        from app.data_access.storage.form_storage import FormStorage
+        from app.data_access.redis_connector_service import RedisConnectorService
+        with new_test_request_context(method=method, form_data=form_data) as req:
+            if session_data:
+                RedisConnectorService().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
+                                               FormStorage.serialize_data(session_data))
             yield req
     return _new_test_request_context
 

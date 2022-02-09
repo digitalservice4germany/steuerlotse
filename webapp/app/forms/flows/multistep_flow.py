@@ -7,7 +7,7 @@ from wtforms import Form
 
 # The RenderInfo is provided to all templates
 from app.config import Config
-from app.forms.session_data import override_session_data, get_session_data
+from app.data_access.storage.session_storage import SessionStorage
 from app.forms.steps.step import FormStep
 
 logger = logging.getLogger(__name__)
@@ -63,7 +63,7 @@ class MultiStepFlow:
     """
     _DEBUG_DATA = None
 
-    def __init__(self, title, steps, endpoint, overview_step=None):
+    def __init__(self, title, steps, endpoint, form_storage=SessionStorage, overview_step=None):
         """Creates a new MultistepFlow for the given configuration.
 
         The steps are a list of `FormStep` subclasses.
@@ -74,6 +74,7 @@ class MultiStepFlow:
         self.steps = {s.name: s for s in steps}
         self.first_step = next(iter(self.steps.values()))
         self.overview_step = overview_step
+        self.form_storage = form_storage
 
         self.endpoint = endpoint
 
@@ -82,7 +83,7 @@ class MultiStepFlow:
     def handle(self, step_name):
         if not step_name == "start" and step_name not in self.steps:
             abort(404)
-        stored_data = self._get_session_data()
+        stored_data = self._get_storage_data()
         redirected_step = self._check_step_needs_to_be_skipped(step_name, stored_data)
         if redirected_step:
             return redirect(redirected_step)
@@ -96,7 +97,7 @@ class MultiStepFlow:
                 self.overview_step.name) if self.has_link_overview and self.overview_step else None)
 
         render_info, stored_data = self._handle_specifics_for_step(step, render_info, stored_data)
-        self._override_session_data(stored_data)
+        self.form_storage.override_data(stored_data, data_identifier="form_data")
 
         if render_info.redirect_url:
             logger.info(f"Redirect to {render_info.redirect_url}")
@@ -130,14 +131,11 @@ class MultiStepFlow:
                        link_overview=_has_link_overview,
                        **values)
 
-    def _get_session_data(self, ttl: Optional[int] = None):
-        form_data = get_session_data('form_data', ttl)
+    def _get_storage_data(self, ttl: Optional[int] = None):
+        form_data = self.form_storage.get_data('form_data', ttl)
         if self.default_data():
             form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
         return form_data
-
-    def _override_session_data(self, stored_data):
-        override_session_data(stored_data, session_data_identifier="form_data")
 
     def _load_step(self, step_name):
         step_names, step_types = list(self.steps.keys()), list(self.steps.values())

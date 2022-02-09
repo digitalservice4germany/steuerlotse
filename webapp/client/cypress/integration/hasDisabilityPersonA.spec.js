@@ -16,7 +16,7 @@ describe("PersonAHasDisability", () => {
 
   context("with person_a_has_disability yes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
       });
 
@@ -44,7 +44,7 @@ describe("PersonAHasDisability", () => {
 
   context("with person_a_has_disability no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/has_disability_person_a");
@@ -66,7 +66,7 @@ describe("PersonAHasDisability", () => {
 
   context("for joint taxes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,

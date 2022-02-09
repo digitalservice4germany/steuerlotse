@@ -19,7 +19,7 @@ describe("PauschbetragPersonA", () => {
 
   context("with has disability no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "no",
       });
 
@@ -37,7 +37,7 @@ describe("PauschbetragPersonA", () => {
 
   context("with no data for merkzeichen", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
       });
 
@@ -55,7 +55,7 @@ describe("PauschbetragPersonA", () => {
 
   context("with merkzeichen data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
         person_a_has_pflegegrad: "no",
         person_a_disability_degree: "20",
@@ -91,7 +91,7 @@ describe("PauschbetragPersonA", () => {
 
   context("with person_a_requests_pauschbetrag yes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
         person_a_has_pflegegrad: "yes",
         person_a_disability_degree: "20",
@@ -126,7 +126,7 @@ describe("PauschbetragPersonA", () => {
 
   context("with person_a_requests_pauschbetrag no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
         person_a_has_pflegegrad: "yes",
         person_a_disability_degree: "20",
@@ -155,7 +155,7 @@ describe("PauschbetragPersonA", () => {
 
   context("for joint taxes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,

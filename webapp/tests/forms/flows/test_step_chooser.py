@@ -7,7 +7,8 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app.forms.flows.multistep_flow import RenderInfo
-from app.forms.session_data import deserialize_session_data, get_session_data
+from app.data_access.storage.session_storage import SessionStorage
+from app.data_access.storage.cookie_storage import CookieStorage
 from app.forms.flows.step_chooser import StepChooser
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, MockFinalStep, MockFormWithInputStep, \
@@ -17,8 +18,8 @@ from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, Mo
 
 @pytest.fixture
 def test_step_chooser():
-    testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
-    return StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint="lotse")
+    testing_steps = [MockStartStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
+    return StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint="lotse", form_storage=SessionStorage)
 
 
 class TestStepChooserInit(unittest.TestCase):
@@ -32,7 +33,7 @@ class TestStepChooserInit(unittest.TestCase):
 
     def test_set_attributes_correctly(self):
         step_chooser = StepChooser(title="Testing StepChooser", steps=self.testing_steps,
-                                    endpoint=self.endpoint_correct)
+                                    endpoint=self.endpoint_correct, form_storage=SessionStorage)
         self.assertEqual(self.testing_steps[0], step_chooser.first_step)
         self.assertEqual(self.testing_steps, list(step_chooser.steps.values()))
         self.assertEqual(self.endpoint_correct, step_chooser.endpoint)
@@ -46,7 +47,7 @@ class TestGetPossibleRedirect:
         testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockStepWithPreconditionAndMessage, MockFinalStep]
         self.endpoint_correct = "lotse"
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
-                          endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
+                          endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep, form_storage=SessionStorage)
 
     def test_if_step_not_in_step_list_then_return_404(self, step_chooser):
         with pytest.raises(NotFound):
@@ -90,69 +91,63 @@ class TestGetPossibleRedirect:
         assert '_flashes' not in session
 
 
-class TestStepChooserGetCorrectStep(unittest.TestCase):
-    @pytest.fixture(autouse=True)
-    def attach_fixtures(self, test_request_context):
-        self.req = test_request_context
+@pytest.mark.usefixtures("test_request_context", "testing_current_user")
+class TestStepChooserGetCorrectStep:
 
-    def setUp(self) -> None:
-        testing_steps = [MockStartStep, MockRenderStep, MockFormWithInputStep, MockYesNoStep, MockFinalStep]
-        self.endpoint_correct = "lotse"
-        self.step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps,
-                                        endpoint=self.endpoint_correct, overview_step=MockFormWithInputStep)
+    def test_if_correct_step_name_then_return_step_correctly_initialised(self, test_step_chooser):
+        chosen_step = test_step_chooser.get_correct_step(MockRenderStep.name, False, ImmutableMultiDict({}))
 
-    def test_if_correct_step_name_then_return_step_correctly_initialised(self):
-        chosen_step = self.step_chooser.get_correct_step(MockRenderStep.name, False, ImmutableMultiDict({}))
+        assert isinstance(chosen_step, MockRenderStep) is True
+        assert chosen_step.name == MockRenderStep.name
+        assert chosen_step.endpoint == "lotse"
+        assert chosen_step.overview_step == test_step_chooser.overview_step
+        assert chosen_step._prev_step == MockFormWithInputStep
+        assert chosen_step._next_step == MockFormStep
 
-        self.assertIsInstance(chosen_step, MockRenderStep)
-        self.assertEqual(MockRenderStep.name, chosen_step.name)
-        self.assertEqual(self.endpoint_correct, chosen_step.endpoint)
-        self.assertEqual(self.step_chooser.overview_step, chosen_step.overview_step)
-        self.assertEqual(MockStartStep, chosen_step._prev_step)
-        self.assertEqual(MockFormWithInputStep, chosen_step._next_step)
+    def test_if_incorrect_step_name_then_raise_404_exception(self, test_step_chooser):
+        with pytest.raises(NotFound):
+            test_step_chooser.get_correct_step("Incorrect Step Name", False, ImmutableMultiDict({}))
 
-    def test_if_incorrect_step_name_then_raise_404_exception(self):
-        self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False, ImmutableMultiDict({}))
+    def test_if_start_step_then_return_redirect_to_first_step(self, test_step_chooser):
+        chosen_step = test_step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
 
-    def test_if_start_step_then_return_redirect_to_first_step(self):
-        chosen_step = self.step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
+        assert isinstance(chosen_step, RedirectSteuerlotseStep) is True
+        assert test_step_chooser.first_step.name == chosen_step.redirection_step_name
 
-        self.assertIsInstance(chosen_step, RedirectSteuerlotseStep)
-        self.assertEqual(chosen_step.redirection_step_name, self.step_chooser.first_step.name)
-
-    def test_if_step_in_list_of_steps_then_return_correct_steps(self):
+    def test_if_step_in_list_of_steps_then_return_correct_steps(self, test_step_chooser):
         simple_step_chooser = StepChooser(title="Testing StepChooser",
                                             steps=[MockStartStep, MockMiddleStep, MockFinalStep],
-                                            endpoint=self.endpoint_correct)
+                                            endpoint="lotse",
+                                            form_storage=SessionStorage)
 
         chosen_step = simple_step_chooser.get_correct_step(MockStartStep.name, False, ImmutableMultiDict({}))
-        self.assertIsInstance(chosen_step, MockStartStep)
-        self.assertEqual(MockMiddleStep, chosen_step._next_step)
+        assert isinstance(chosen_step, MockStartStep) is True
+        assert chosen_step._next_step == MockMiddleStep
 
         chosen_step = simple_step_chooser.get_correct_step(MockMiddleStep.name, False, ImmutableMultiDict({}))
-        self.assertEqual(MockStartStep, chosen_step._prev_step)
-        self.assertIsInstance(chosen_step, MockMiddleStep)
-        self.assertEqual(MockFinalStep, chosen_step._next_step)
+        assert chosen_step._prev_step == MockStartStep
+        assert isinstance(chosen_step, MockMiddleStep) is True
+        assert chosen_step._next_step == MockFinalStep
 
         chosen_step = simple_step_chooser.get_correct_step(MockFinalStep.name, False, ImmutableMultiDict({}))
-        self.assertEqual(MockMiddleStep, chosen_step._prev_step)
-        self.assertIsInstance(chosen_step, MockFinalStep)
+        assert chosen_step._prev_step == MockMiddleStep
+        assert isinstance(chosen_step, MockFinalStep) is True
 
-    def test_if_step_at_ends_then_return_empty_string(self):
-        chosen_step_at_begin = self.step_chooser.get_correct_step(MockStartStep.name, False, ImmutableMultiDict({}))
-        chosen_step_at_end = self.step_chooser.get_correct_step(MockFinalStep.name, False, ImmutableMultiDict({}))
-        self.assertIsNone(chosen_step_at_begin._prev_step)
-        self.assertIsNone(chosen_step_at_end._next_step)
+    def test_if_step_at_ends_then_return_empty_string(self, test_step_chooser):
+        chosen_step_at_begin = test_step_chooser.get_correct_step(MockStartStep.name, False, ImmutableMultiDict({}))
+        chosen_step_at_end = test_step_chooser.get_correct_step(MockFinalStep.name, False, ImmutableMultiDict({}))
+        assert chosen_step_at_begin._prev_step is None
+        assert chosen_step_at_end._next_step is None
 
-    def test_if_data_given_then_call_prepare_render_info_with_correct_data(self):
+    def test_if_data_given_then_call_prepare_render_info_with_correct_data(self, test_step_chooser):
         form_data = ImmutableMultiDict({'Title': 'Happiness begins', 'Year': '2019'})
         with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info') as preparation_mock:
-            self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
+            test_step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
                                                form_data=form_data)
 
-        preparation_mock.assert_called_once_with({}, form_data, True)
+        assert preparation_mock.call_args == call({}, form_data, True)
 
-    def test_if_prepare_render_info_returns_render_info_then_set_it_correctly(self):
+    def test_if_prepare_render_info_returns_render_info_then_set_it_correctly(self, test_step_chooser):
         render_info = RenderInfo(step_title="Lines, Vines and Trying Times",
                                  step_intro="The fourth album",
                                  form=None,
@@ -161,7 +156,7 @@ class TestStepChooserGetCorrectStep(unittest.TestCase):
                                  submit_url=None,
                                  overview_url=None)
         with patch('app.forms.steps.steuerlotse_step.FormSteuerlotseStep.prepare_render_info', MagicMock(return_value=render_info)):
-            step = self.step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
+            step = test_step_chooser.get_correct_step(MockFormWithInputStep.name, should_update_data=True,
                                                form_data=ImmutableMultiDict({}))
 
         assert step.render_info == render_info
@@ -172,13 +167,15 @@ class TestDeterminePrevStep:
     def step_chooser_without_preconditions(self):
         testing_steps = [MockStartStep, MockMiddleStep, MockFormWithInputStep, MockFinalStep]
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
-                          endpoint="lotse", overview_step=MockFormWithInputStep)
+                          endpoint="lotse", overview_step=MockFormWithInputStep,
+                          form_storage=SessionStorage)
 
     @pytest.fixture
     def step_chooser_with_preconditions(self):
         testing_steps = [MockStartStep, MockStepWithPrecondition, MockFormWithInputStep, MockFinalStep]
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
-                          endpoint="lotse", overview_step=MockFormWithInputStep)
+                          endpoint="lotse", overview_step=MockFormWithInputStep,
+                          form_storage=SessionStorage)
 
     def test_if_previous_step_has_no_precondition_then_return_direct_predecessor(self, step_chooser_without_preconditions):
         expected_prev_step = MockMiddleStep
@@ -231,13 +228,15 @@ class TestDetermineNextStep:
     def step_chooser_without_preconditions(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockMiddleStep, MockFinalStep]
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
-                          endpoint="lotse", overview_step=MockFormWithInputStep)
+                          endpoint="lotse", overview_step=MockFormWithInputStep,
+                          form_storage=SessionStorage)
 
     @pytest.fixture
     def step_chooser_with_preconditions(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockStepWithPrecondition, MockFinalStep]
         yield StepChooser(title="Testing StepChooser", steps=testing_steps,
-                          endpoint="lotse", overview_step=MockFormWithInputStep)
+                          endpoint="lotse", overview_step=MockFormWithInputStep,
+                          form_storage=SessionStorage)
 
     def test_if_next_step_has_no_precondition_then_return_direct_successor(self, step_chooser_without_preconditions):
         expected_next_step = MockMiddleStep
@@ -297,14 +296,13 @@ class TestInteractionBetweenSteps(unittest.TestCase):
         session_data_identifier = 'form_data'
         original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
-        step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
+        step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct, form_storage=SessionStorage)
         step_chooser.session_data_identifier = session_data_identifier
 
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(self.app, step_chooser, MockRenderStep.name, method='GET', session=session)
-        session = self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(original_data).issubset(
-            set(deserialize_session_data(session[session_data_identifier], self.app.config['PERMANENT_SESSION_LIFETIME']))))
+        self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
+        self.assertTrue(set(original_data).issubset(SessionStorage.get_data(session_data_identifier)))
 
     def test_if_form_step_after_form_step_then_keep_data_from_newer_form_step(self):
         testing_steps = [MockStartStep, MockFormWithInputStep, MockFormWithInputStep, MockRenderStep, MockFormStep, MockFinalStep]
@@ -313,15 +311,14 @@ class TestInteractionBetweenSteps(unittest.TestCase):
         original_data = {'pet': 'Yoshi', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
         adapted_data = {'pet': 'Goomba', 'date': ['9', '7', '1981'], 'decimal': '60.000'}
 
-        step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct)
+        step_chooser = StepChooser(title="Testing StepChooser", steps=testing_steps, endpoint=endpoint_correct, form_storage=SessionStorage)
         step_chooser.session_data_identifier = session_data_identifier
 
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=original_data)
         session = self.run_handle(self.app, step_chooser, MockFormWithInputStep.name, method='POST', form_data=adapted_data, session=session)
         session = self.run_handle(self.app, step_chooser, MockRenderStep.name, method='GET', session=session)
         session = self.run_handle(self.app, step_chooser, MockFormStep.name, method='GET', session=session)
-        self.assertTrue(set(adapted_data).issubset(
-            set(deserialize_session_data(session[session_data_identifier], self.app.config['PERMANENT_SESSION_LIFETIME']))))
+        self.assertTrue(set(original_data).issubset(SessionStorage.get_data(session_data_identifier)))
 
     @staticmethod
     def run_handle(app: Flask, step_chooser: StepChooser, step_name, method='GET', form_data=None, session=None):
@@ -335,13 +332,3 @@ class TestInteractionBetweenSteps(unittest.TestCase):
             step_chooser.get_correct_step(step_name, method == 'POST', req.request.form).handle()
 
             return req.session
-
-
-class TestStepChooserGetSessionData:
-
-    @pytest.mark.usefixtures('test_request_context')
-    def test_if_get_session_data_called_then_get_session_data_function_called_with_correct_params(self, test_step_chooser):
-        with patch('app.forms.flows.step_chooser.get_session_data') as patched_get_session_data:
-            test_step_chooser._get_session_data(session_data_identifier="catche_em_all", default_data={'name': 'Ash'})
-
-        assert patched_get_session_data.call_args == call(session_data_identifier="catche_em_all", default_data={'name': 'Ash'})

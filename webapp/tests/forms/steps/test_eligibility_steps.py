@@ -9,7 +9,7 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
-from app.forms.session_data import deserialize_session_data
+from app.data_access.storage.form_storage import FormStorage
 from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
     MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
     MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, IncorrectEligibilityData, \
@@ -39,6 +39,7 @@ from app.model.recursive_data import PreviousFieldsMissingError
 from tests.forms.mock_steuerlotse_steps import MockRenderStep, MockStartStep, MockFormStep, MockFinalStep, \
     MockDecisionEligibilityInputFormSteuerlotseStep
 from tests.utils import create_session_form_data
+from app.data_access.storage.form_storage import FormStorage
 
 FULL_SESSION_DATA = {'marital_status_eligibility': 'single',
                      'separated_since_last_year_eligibility': 'no',
@@ -228,9 +229,9 @@ class TestEligibilityInputFormSteuerlotseStepIsPreviousStep(unittest.TestCase):
 class TestEligibilityInputFormSteuerlotseStepOverrideSessionData:
 
     @pytest.mark.usefixtures('test_request_context')
-    def test_if_override_session_data_called_then_cookie_override_function_called_with_same_params(self):
-        with patch('app.forms.steps.eligibility_steps.override_data_in_cookie') as patched_override:
-            MockDecisionEligibilityInputFormSteuerlotseStep(endpoint='eligibility')._override_session_data(stored_data={'name': 'Ash'}, session_data_identifier='catch_em_all')
+    def test_if_override_storage_data_called_then_cookie_override_function_called_with_same_params(self):
+        with patch('app.data_access.storage.cookie_storage.CookieStorage.override_data') as patched_override:
+            MockDecisionEligibilityInputFormSteuerlotseStep(endpoint='eligibility')._override_storage_data(stored_data={'name': 'Ash'}, data_identifier='catch_em_all')
 
         assert patched_override.call_args == call({'name': 'Ash'}, 'catch_em_all')
 
@@ -247,7 +248,7 @@ class TestEligibilityStartDisplaySteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert {} == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
+            assert {} == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
 
     def test_does_not_change_other_session_data(self, new_test_request_context):
         other_session_key = 'OTHER_SESSION_KEY'
@@ -266,8 +267,8 @@ class TestEligibilityStartDisplaySteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert other_session_data == deserialize_session_data(req.session[other_session_key])
-            assert another_session_data == deserialize_session_data(req.session[another_session_key])
+            assert other_session_data == FormStorage.deserialize_data(req.session[other_session_key])
+            assert another_session_data == FormStorage.deserialize_data(req.session[another_session_key])
 
     def test_does_not_add_data_to_empty_session_data(self, new_test_request_context):
         session_data = {}
@@ -277,7 +278,7 @@ class TestEligibilityStartDisplaySteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert {} == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
+            assert {} == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
 
     def test_leaves_session_data_without_correct_key_untouched(self, new_test_request_context):
         other_session_key = 'OTHER_SESSION_KEY'
@@ -291,7 +292,7 @@ class TestEligibilityStartDisplaySteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert other_session_data == deserialize_session_data(req.session[other_session_key])
+            assert other_session_data == FormStorage.deserialize_data(req.session[other_session_key])
 
 
 @pytest.fixture
@@ -303,10 +304,10 @@ def eligibility_start_step():
 class TestEligibilityStartDisplaySteuerlotseStepOverrideSessionData:
 
     @pytest.mark.usefixtures('test_request_context')
-    def test_if_override_session_data_called_then_cookie_override_function_called_with_same_params(self, eligibility_start_step):
+    def test_if_override_storage_data_called_then_cookie_override_function_called_with_same_params(self, eligibility_start_step):
 
-        with patch('app.forms.steps.eligibility_steps.override_data_in_cookie') as patched_override:
-            eligibility_start_step._override_session_data(stored_data={'name': 'Ash'}, session_data_identifier='catch_em_all')
+        with patch('app.data_access.storage.cookie_storage.CookieStorage.override_data') as patched_override:
+            eligibility_start_step._override_storage_data(stored_data={'name': 'Ash'}, data_identifier='catch_em_all')
 
         assert patched_override.call_args == call({'name': 'Ash'}, 'catch_em_all')
 
@@ -372,7 +373,7 @@ class TestMaritalStatusInputFormSteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert session_data == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
+            assert session_data == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self, new_test_request_context):
         session_data = {'marital_status_eligibility': 'single', }
@@ -382,7 +383,7 @@ class TestMaritalStatusInputFormSteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert session_data == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
+            assert session_data == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self, new_test_request_context):
         only_necessary_data = {'marital_status_eligibility': 'single', }
@@ -392,7 +393,7 @@ class TestMaritalStatusInputFormSteuerlotseStep:
                                                                           False, ImmutableMultiDict({}))
             step.handle()
 
-            assert only_necessary_data == deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY])
+            assert only_necessary_data == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
 
 
 class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -459,7 +460,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -471,7 +472,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -483,7 +484,7 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -551,7 +552,7 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         with self.app.test_request_context(method='GET') as req:
@@ -562,7 +563,7 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(self.correct_session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -575,7 +576,7 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -642,7 +643,7 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(self.correct_session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         with self.app.test_request_context(method='GET') as req:
@@ -653,7 +654,7 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(self.correct_session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -667,7 +668,7 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestMarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -753,7 +754,7 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -766,7 +767,7 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -779,7 +780,7 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestMarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -878,7 +879,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -892,7 +893,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -908,7 +909,7 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -1011,7 +1012,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1026,7 +1027,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1043,7 +1044,7 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -1118,7 +1119,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1134,7 +1135,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1152,7 +1153,7 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestDivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -1236,7 +1237,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1248,7 +1249,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1260,7 +1261,7 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSingleAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -1390,7 +1391,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1403,7 +1404,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1419,7 +1420,7 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -1490,7 +1491,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1504,7 +1505,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1521,7 +1522,7 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestPensionEligibilityFailureDisplaySteuerlotseStep:
@@ -1638,7 +1639,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1655,7 +1656,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1674,7 +1675,7 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -1787,7 +1788,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1805,7 +1806,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1825,7 +1826,7 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -1943,7 +1944,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -1962,7 +1963,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -1983,7 +1984,7 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -2120,7 +2121,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2140,7 +2141,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -2162,7 +2163,7 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestCheaperCheckEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -2261,7 +2262,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2282,7 +2283,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -2305,7 +2306,7 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -2452,7 +2453,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2474,7 +2475,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -2498,7 +2499,7 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -2646,7 +2647,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
@@ -2669,7 +2670,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -2694,7 +2695,7 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestIncomeOtherEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -2816,7 +2817,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         with self.app.test_request_context(method='GET') as req:
@@ -2827,7 +2828,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(self.correct_session_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
         only_necessary_data = {'marital_status_eligibility': 'single',
@@ -2853,7 +2854,7 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(only_necessary_data,
-                             deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]))
+                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -3071,7 +3072,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
-            assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == session_data
+            assert FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]) == session_data
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self, app, correct_session_data):
         with app.test_request_context(method='GET') as req:
@@ -3081,7 +3082,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
-            assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data
+            assert FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]) == correct_session_data
 
     def test_if_get_and_full_data_from_session_then_delete_no_data(self, app):
         with app.test_request_context(method='GET') as req:
@@ -3090,7 +3091,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, False, ImmutableMultiDict({}))
             step.handle()
 
-            assert deserialize_session_data(req.session[_ELIGIBILITY_DATA_KEY]) == FULL_SESSION_DATA
+            assert FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]) == FULL_SESSION_DATA
 
     def test_if_multiple_users_then_show_multiple_text(self, app):
         session_data = {'marital_status_eligibility': 'married',

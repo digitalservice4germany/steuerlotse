@@ -1,7 +1,7 @@
 import secrets
 
 from app.data_access.user_controller import create_user, find_user
-from app.forms.session_data import serialize_session_data
+from app.data_access.storage.session_storage import SessionStorage
 
 
 def gen_random_key(length=32):
@@ -9,7 +9,7 @@ def gen_random_key(length=32):
 
 
 def create_session_form_data(data):
-    return serialize_session_data(data)
+    return SessionStorage.serialize_data(data)
 
 
 def create_and_activate_user(idnr, dob, request_id, unlock_code):

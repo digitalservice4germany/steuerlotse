@@ -5,7 +5,7 @@ describe("merkzeichenPersonB", () => {
 
   context("with no disability data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -24,7 +24,7 @@ describe("merkzeichenPersonB", () => {
 
   context("with person_b_has_disability no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -45,7 +45,7 @@ describe("merkzeichenPersonB", () => {
 
   context("with person_b_has_disability yes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
@@ -66,7 +66,7 @@ describe("merkzeichenPersonB", () => {
 
   context("with person b disability data set", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_b_has_disability: "yes",
 
         person_b_has_pflegegrad: "no",

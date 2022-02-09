@@ -2,7 +2,6 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import abort
 
 from app.config import Config
-from app.forms.session_data import get_session_data
 from app.forms.steps.steuerlotse_step import SteuerlotseStep, RedirectSteuerlotseStep
 
 
@@ -15,12 +14,13 @@ class StepChooser:
     _DEBUG_DATA = None
     session_data_identifier = None
 
-    def __init__(self, title, steps, endpoint, overview_step=None):
+    def __init__(self, title, steps, endpoint, form_storage, overview_step=None):
         self.title = title
         self.steps = {s.name: s for s in steps}
         self.step_order = [s.name for s in steps]
         self.first_step = next(iter(self.steps.values()))
         self.endpoint = endpoint
+        self.form_storage = form_storage
         self.overview_step = overview_step
 
     def _is_step_name_valid(self, step_name):
@@ -46,7 +46,7 @@ class StepChooser:
 
     def get_correct_step(self, step_name: str, should_update_data: bool, form_data: ImmutableMultiDict) -> SteuerlotseStep:
 
-        stored_data = self._get_session_data(self.session_data_identifier, default_data=self.default_data())
+        stored_data = self.form_storage.get_data(self.session_data_identifier, default_data=self.default_data())
 
         if redirected_step_name := self._get_possible_redirect(step_name, stored_data):
             return RedirectSteuerlotseStep(redirected_step_name, endpoint=self.endpoint)
@@ -107,6 +107,3 @@ class StepChooser:
             return self._DEBUG_DATA
         else:
             return {}
-
-    def _get_session_data(self, session_data_identifier, default_data):
-        return get_session_data(session_data_identifier=session_data_identifier, default_data=default_data)

@@ -15,7 +15,6 @@ from app.elster_client.elster_errors import GeneralEricaError, EricaRequestTimeo
 from app.extensions import nav, login_manager, limiter, csrf
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
 from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
-from app.forms.session_data import override_session_data
 from app.forms.steps.eligibility_steps import IncorrectEligibilityData
 from app.forms.flows.logout_flow import LogoutMultiStepFlow
 from app.forms.flows.lotse_flow import LotseMultiStepFlow
@@ -27,6 +26,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
     StepSessionNote
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
+from app.data_access.storage.session_storage import SessionStorage
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -377,7 +377,7 @@ def register_testing_request_handlers(app):
         return
 
     @csrf.exempt
-    @app.route('/testing/set_data/<session_identifier>', methods=['POST'])
+    @app.route('/testing/set_session_data/<session_identifier>', methods=['POST'])
     def set_data(session_identifier):
         _ALLOWED_IDENTIFIERS = [_LOTSE_DATA_KEY, _ELIGIBILITY_DATA_KEY]
         if session_identifier not in _ALLOWED_IDENTIFIERS:
@@ -392,5 +392,5 @@ def register_testing_request_handlers(app):
                 return value
 
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
-        override_session_data(data_with_dates, session_identifier)
+        SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200

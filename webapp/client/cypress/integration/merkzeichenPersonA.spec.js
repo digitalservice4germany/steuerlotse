@@ -19,7 +19,7 @@ describe("merkzeichenPersonA", () => {
 
   context("with person_a_has_disability no", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/merkzeichen_person_a");
@@ -36,7 +36,7 @@ describe("merkzeichenPersonA", () => {
 
   context("with person_a_has_disability yes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
       });
       cy.visit("/lotse/step/merkzeichen_person_a");
@@ -53,7 +53,7 @@ describe("merkzeichenPersonA", () => {
 
   context("with person a disability data set", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         person_a_has_disability: "yes",
 
         person_a_has_pflegegrad: "no",
@@ -98,7 +98,7 @@ describe("merkzeichenPersonA", () => {
 
   context("for joint taxes", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_data/form_data", {
+      cy.request("POST", "/testing/set_session_data/form_data", {
         familienstand: "married",
         familienstand_married_lived_separated: "no",
         familienstand_confirm_zusammenveranlagung: true,
