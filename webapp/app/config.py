@@ -42,6 +42,9 @@ class BaseConfig(object):
     USE_REDIS_LITE = False
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
+    
+    # TODO: [STL-1843] Remove me after the security & data protection check
+    USE_COOKIE_STORAGE = True
 
 
 class ProductionConfig(BaseConfig):
@@ -103,6 +106,7 @@ class DevelopmentConfig(BaseConfig):
     REACT_BUNDLE_NAME = 'bundle.js'
 
     USE_REDIS_LITE = True
+    USE_COOKIE_STORAGE = False
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
@@ -140,6 +144,7 @@ class TestingConfig(BaseConfig):
     SECRET_KEY = 'dev'
 
     USE_REDIS_LITE = True
+    USE_COOKIE_STORAGE = False
 
 try:
     Config = {
