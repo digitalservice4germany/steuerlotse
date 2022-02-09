@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import MissingError
 from flask_login import current_user
 
-from app.data_access.form_data_controller import FormDataController
+from app.data_access.redis_connector_service import RedisConnectorService
 from app.data_access.storage.form_storage import FormStorage
 
 
@@ -14,7 +14,7 @@ class SessionStorage(FormStorage):
         if not key:
             return None
         try:
-            form_data = FormDataController().get_from_redis(key)
+            form_data = RedisConnectorService().get_from_redis(key)
         except MissingError:
             form_data = {}
 
@@ -31,7 +31,7 @@ class SessionStorage(FormStorage):
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
         if not key:
             return
-        FormDataController().save_to_redis(key, SessionStorage.serialize_data(stored_data))
+        RedisConnectorService().save_to_redis(key, SessionStorage.serialize_data(stored_data))
 
     @staticmethod
     def create_key_identifier_with_user_id(identifier):

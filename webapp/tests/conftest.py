@@ -50,7 +50,7 @@ def testing_current_user(monkeypatch):
 @pytest.fixture(autouse=True)
 def testing_database(monkeypatch):
     fakeredis_connection = fakeredis.FakeStrictRedis()
-    monkeypatch.setattr("app.data_access.form_data_controller.FormDataController._redis_connection",
+    monkeypatch.setattr("app.data_access.form_data_controller.RedisConnectorService._redis_connection",
                         fakeredis_connection)
     yield
     fakeredis_connection.flushall()
@@ -76,10 +76,10 @@ def new_test_request_context_with_data_in_session(app, new_test_request_context)
     @contextmanager
     def _new_test_request_context(method='GET', form_data=None, session_data=None, session_identifier='form_data'):
         from app.data_access.storage.form_storage import FormStorage
-        from app.data_access.form_data_controller import FormDataController
+        from app.data_access.redis_connector_service import RedisConnectorService
         with new_test_request_context(method=method, form_data=form_data) as req:
             if session_data:
-                FormDataController().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
+                RedisConnectorService().save_to_redis(CURRENT_USER_IDNR + '_' + session_identifier,
                                                FormStorage.serialize_data(session_data))
             yield req
     return _new_test_request_context
