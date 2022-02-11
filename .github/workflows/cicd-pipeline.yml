@@ -14,86 +14,86 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python 3.9
-      id: setup-python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
+      - name: Set up Python 3.9
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
 
-    - name: Install build requirements
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r ./webapp/requirements.build.txt
-      shell: bash
+      - name: Install build requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./webapp/requirements.build.txt
+        shell: bash
 
-    - name: Python dependencies - configure cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.local/share/virtualenvs
-        key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
+      - name: Python dependencies - configure cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
 
-    - name: Python dependencies - install
-      run: |
-        cd webapp
-        pipenv install --dev
-      shell: bash
+      - name: Python dependencies - install
+        run: |
+          cd webapp
+          pipenv install --dev
+        shell: bash
 
-    - name: Client dependencies - get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Client dependencies - get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - name: Client dependencies - configure cache
-      uses: actions/cache@v2
-      id: yarn-cache
-      with:
-        path: |
-          ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          webapp/client/node_modules
-          ~/.cache/Cypress
-        key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-${{ hashFiles('webapp/client/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-
+      - name: Client dependencies - configure cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            webapp/client/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-${{ hashFiles('webapp/client/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-
 
-    - name: Client dependencies - install
-      if: steps.yarn-cache.outputs.cache-hit != 'true'
-      run: |
-        cd webapp/client
-        yarn install --frozen-lockfile
-      shell: bash
+      - name: Client dependencies - install
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: |
+          cd webapp/client
+          yarn install --frozen-lockfile
+        shell: bash
 
-    - name: Lint
-      run: |
-        cd webapp
-        pipenv run invoke --echo lint
-      shell: bash
+      - name: Lint
+        run: |
+          cd webapp
+          pipenv run invoke --echo lint
+        shell: bash
 
-    - name: Test
-      run: |
-        cd webapp
-        pipenv run invoke --echo test | tee ../webapp-test-report.log
-      shell: bash
+      - name: Test
+        run: |
+          cd webapp
+          pipenv run invoke --echo test | tee ../webapp-test-report.log
+        shell: bash
 
-    - name: Archive test logs
-      uses: actions/upload-artifact@v1
-      with:
-        name: webapp-test-report.log
-        path: webapp-test-report.log
+      - name: Archive test logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: webapp-test-report.log
+          path: webapp-test-report.log
 
-    - name: Archive test screenshots
-      uses: actions/upload-artifact@v1
-      with:
-        name: webapp-functional-screenshots
-        path: webapp/client/cypress/screenshots
-      if: ${{ failure() }}
+      - name: Archive test screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: webapp-functional-screenshots
+          path: webapp/client/cypress/screenshots
+        if: ${{ failure() }}
 
-    - name: Archive test videos
-      uses: actions/upload-artifact@v1
-      with:
-        name: webapp-functional-videos
-        path: webapp/client/cypress/videos
-      if: ${{ failure() }}ts
+      - name: Archive test videos
+        uses: actions/upload-artifact@v1
+        with:
+          name: webapp-functional-videos
+          path: webapp/client/cypress/videos
+        if: ${{ failure() }}ts
 
   build-staging:
     needs: [test]
@@ -103,30 +103,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Build docker images
-      env:
-        DOCKER_TAG: ${{ github.run_number }}
-      run: |
-        docker-compose -f docker-compose.ci.yml build
-        docker image ls
-      shell: bash
+      - name: Build docker images
+        env:
+          DOCKER_TAG: ${{ github.run_number }}
+        run: |
+          docker-compose -f docker-compose.ci.yml build
+          docker image ls
+        shell: bash
 
-    - name: Login to container repository
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ env.DOCKER_REGISTRY }}
-        username: ${{ secrets.REGISTRY_USER }}
-        password: ${{ secrets.REGISTRY_PWD }}
+      - name: Login to container repository
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PWD }}
 
-    - name: Push images
-      run: |
-        for IMAGE in web cron; do
-          docker tag steuerlotse_${IMAGE}:${{ github.run_number }} ${{ env.DOCKER_REGISTRY }}/steuerlotse_${IMAGE}:${{ github.run_number }}
-          docker push ${{ env.DOCKER_REGISTRY }}/steuerlotse_${IMAGE}:${{ github.run_number }}
-        done
-      shell: bash
+      - name: Push images
+        run: |
+          for IMAGE in web cron; do
+            docker tag steuerlotse_${IMAGE}:${{ github.run_number }} ${{ env.DOCKER_REGISTRY }}/steuerlotse_${IMAGE}:${{ github.run_number }}
+            docker push ${{ env.DOCKER_REGISTRY }}/steuerlotse_${IMAGE}:${{ github.run_number }}
+          done
+        shell: bash
 
   deploy-staging:
     needs: [build-staging]
@@ -136,81 +136,90 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Login to container repository
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ env.DOCKER_REGISTRY }}
-        username: ${{ secrets.REGISTRY_USER }}
-        password: ${{ secrets.REGISTRY_PWD }}
+      - name: Login to container repository
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PWD }}
 
-    - name: Pull deploy image
-      run: docker pull ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment
-      shell: bash
+      - name: Pull deploy image
+        run: docker pull ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment
+        shell: bash
 
-    - name: Run deployment
-      env:
-        NAMESPACE: staging
-        IMAGE_TAG: ${{ github.run_number }}
-      run: |
-        docker run \
-        -e DOCKER_REGISTRY='${{ env.DOCKER_REGISTRY }}' \
-        -e KUBECONFIG_BASE64='${{ secrets.CI_KUBECONFIG_B64 }}' \
-        -e IMAGE_TAG='${{ env.IMAGE_TAG }}' \
-        -e NAMESPACE='${{ env.NAMESPACE }}' \
-        ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment steuerlotse
-        # ^ The deployment image offers different targets. Use the one for steuerlotse here.
-        # You can find the deployment specification in our internal repos
-      shell: bash
+      - name: Run deployment
+        env:
+          NAMESPACE: staging
+          IMAGE_TAG: ${{ github.run_number }}
+        run: |
+          docker run \
+          -e DOCKER_REGISTRY='${{ env.DOCKER_REGISTRY }}' \
+          -e KUBECONFIG_BASE64='${{ secrets.CI_KUBECONFIG_B64 }}' \
+          -e IMAGE_TAG='${{ env.IMAGE_TAG }}' \
+          -e NAMESPACE='${{ env.NAMESPACE }}' \
+          ${{ env.DOCKER_REGISTRY }}/steuerlotse_deployment steuerlotse
+          # ^ The deployment image offers different targets. Use the one for steuerlotse here.
+          # You can find the deployment specification in our internal repos
+        shell: bash
 
-    - name: Logout of docker container
-      run: docker logout ${{ env.DOCKER_REGISTRY }}
+      - name: Report Deployment
+        uses: satak/webrequest-action@v1.2.3
+        env:
+          IMAGE_TAG: ${{ github.run_number }}
+        with:
+          url: https://metrics.ds4g.dev:56780/webhook/7236d63c-d806-43a7-b8fb-540bfe2a222e
+          method: POST
+          payload: '{"project": "steuerlotse", "version_identifier": "${{ env.IMAGE_TAG }}", "environment": "staging", "link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'
+          headers: '{"Authentication": "Token ${{ secrets.METRICS_WEBHOOK_TOKEN }}"}'
 
+      - name: Logout of docker container
+        run: docker logout ${{ env.DOCKER_REGISTRY }}
 
   acceptance-test-staging:
     runs-on: ubuntu-latest
     needs: [deploy-staging]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
 
-    - name: Cache node modules
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-acceptance-test-node-modules-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('acceptance_tests/package-lock.json') }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-acceptance-test-node-modules-v${{ secrets.CACHE_VERSION }}-${{ hashFiles('acceptance_tests/package-lock.json') }}
 
-    - name: Install dependencies
-      run: cd acceptance_tests && npm install
-      shell: bash
+      - name: Install dependencies
+        run: cd acceptance_tests && npm install
+        shell: bash
 
-    - name: Run acceptance tests
-      env:
-        CYPRESS_STAGING_AUTH_PASSWORD: ${{ secrets.CYPRESS_STAGING_AUTH_PASSWORD }}
-        NO_COLOR: 1
-      run: cd acceptance_tests && npm run cy:run | tee ../acceptance-test-report.log
-      shell: bash
+      - name: Run acceptance tests
+        env:
+          CYPRESS_STAGING_AUTH_PASSWORD: ${{ secrets.CYPRESS_STAGING_AUTH_PASSWORD }}
+          NO_COLOR: 1
+        run: cd acceptance_tests && npm run cy:run | tee ../acceptance-test-report.log
+        shell: bash
 
-    - name: Archive test logs
-      uses: actions/upload-artifact@v1
-      with:
-        name: acceptance-test-report.log
-        path: acceptance-test-report.log
+      - name: Archive test logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: acceptance-test-report.log
+          path: acceptance-test-report.log
 
-    - name: Archive test screenshots
-      uses: actions/upload-artifact@v1
-      with:
-        name: screenshots
-        path: acceptance_tests/cypress/screenshots
-      if: ${{ failure() }}
+      - name: Archive test screenshots
+        uses: actions/upload-artifact@v1
+        with:
+          name: screenshots
+          path: acceptance_tests/cypress/screenshots
+        if: ${{ failure() }}
 
-    - name: Archive test videos
-      uses: actions/upload-artifact@v1
-      with:
-        name: videos
-        path: acceptance_tests/cypress/videos
-      if: ${{ failure() }}ts
+      - name: Archive test videos
+        uses: actions/upload-artifact@v1
+        with:
+          name: videos
+          path: acceptance_tests/cypress/videos
+        if: ${{ failure() }}ts
