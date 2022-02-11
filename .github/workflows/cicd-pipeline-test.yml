@@ -2,9 +2,6 @@ name: Test CI/CD Pipeline
 
 on: push
 
-env:
-  DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-
 jobs:
   test-reporting:
     if: github.event_name == 'push' && github.ref == 'refs/heads/deployment-reporting'
@@ -19,7 +16,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.run_number }}
         with:
-          url: https://metrics.ds4g.dev:56780/webhook/7236d63c-d806-43a7-b8fb-540bfe2a222e
+          url: ${{ secrets.METRICS_DEPLOYMENT_WEBHOOK_URL }}
           method: POST
           payload: '{"project": "steuerlotse", "version_identifier": "${{ env.IMAGE_TAG }}", "environment": "staging", "link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'
-          headers: '{"Authentication": "Token ${{ secrets.METRICS_WEBHOOK_TOKEN }}"}'
+          headers: '{"Authorization": "Token ${{ secrets.METRICS_WEBHOOK_TOKEN }}"}'
