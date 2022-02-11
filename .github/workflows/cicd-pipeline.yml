@@ -172,7 +172,7 @@ jobs:
           url: ${{ secrets.METRICS_DEPLOYMENT_WEBHOOK_URL }}
           method: POST
           payload: '{"project": "steuerlotse", "version_identifier": "${{ env.IMAGE_TAG }}", "environment": "staging", "link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}'
-          headers: '{"Authentication": "Token ${{ secrets.METRICS_WEBHOOK_TOKEN }}"}'
+          headers: '{"Authorization": "Token ${{ secrets.METRICS_WEBHOOK_TOKEN }}"}'
 
       - name: Logout of docker container
         run: docker logout ${{ env.DOCKER_REGISTRY }}
