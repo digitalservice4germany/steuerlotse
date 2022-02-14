@@ -4,6 +4,7 @@ from flask_login import logout_user, current_user
 
 from app.forms.flows.multistep_flow import MultiStepFlow
 from app.forms.steps.logout_steps import LogoutInputStep
+from app.data_access.storage.cookie_storage import CookieStorage
 
 
 class LogoutMultiStepFlow(MultiStepFlow):
@@ -44,4 +45,6 @@ class LogoutMultiStepFlow(MultiStepFlow):
 
     def _logout_user_and_flash_success(self):
         logout_user()
+        # Override data in cookie
+        CookieStorage.override_data({})
         flash(_('flash.logout.successful'), 'success')
