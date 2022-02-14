@@ -51,6 +51,9 @@ class MockErica:
     tax_number_is_invalid = False
     invalid_request_timeout_occurred = False
     invalid_request_connection_error_occurred = False
+    min_request_count_get_job = 5
+    deliver_fail_on_post_job = False
+    deliver_fail_on_get_job = False
 
     INVALID_ID = 'C3PO'
 
@@ -361,7 +364,7 @@ class MockErica:
 
     @staticmethod
     def post_dummy_job(*args, **kwargs):
-        if Config.MOCK_DELIVER_FAIL_ON_POST:
+        if MockErica.deliver_fail_on_post_job:
             return {"errorCode": -1, "errorMessage": "Job could not be submitted."}, 422
         else:
             request_id = str(uuid.uuid4())
@@ -371,8 +374,8 @@ class MockErica:
     @staticmethod
     def get_dummy_job(request_id):
         count = MockErica.request_id_count.get(request_id, -1) + 1
-        if count >= Config.MOCK_MIN_REQUEST_COUNT:
-            if Config.MOCK_DELIVER_FAIL_ON_GET:
+        if count >= MockErica.min_request_count_get_job:
+            if MockErica.deliver_fail_on_get_job:
                 response = {"processStatus": "failure", "errorCode": -1, "errorMessage": "ELSTER Timeout error"}
             else:
                 response = {"processStatus": "success", "payload": get_json_response('est_without_responses')}

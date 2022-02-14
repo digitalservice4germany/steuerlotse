@@ -95,12 +95,6 @@ class DevelopmentConfig(BaseConfig):
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
-    """ Use the following variables to make tests locally with the job queue dummy routes.
-    USE_MOCK_API = True
-    MOCK_MIN_REQUEST_COUNT = 5
-    MOCK_DELIVER_FAIL_ON_POST = False
-    MOCK_DELIVER_FAIL_ON_GET = False
-    """
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL') or "memory://"
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///dev.db"
     SQLALCHEMY_ENGINE_OPTIONS = {}  # Some of our settings don't work with sqlite.
@@ -154,13 +148,19 @@ class TestingConfig(BaseConfig):
     USE_REDIS_LITE = True
     USE_COOKIE_STORAGE = False
 
+
+class MockedDevelopmentConfig(DevelopmentConfig):
+    USE_MOCK_API = True
+
+
 try:
     Config = {
         'development': DevelopmentConfig,
         'functional': FunctionalTestingConfig,
         'testing': TestingConfig,
         'staging': StagingConfig,
-        'production': ProductionConfig
+        'production': ProductionConfig,
+        'mocked_development': MockedDevelopmentConfig
     }[environ['FLASK_ENV']]
 except KeyError:
     raise RuntimeError(f'Unknown FLASK_ENV "{environ["FLASK_ENV"]}"')
