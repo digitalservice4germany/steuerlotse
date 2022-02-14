@@ -5,18 +5,12 @@ from flask_login import current_user
 
 from app.data_access.redis_connector_service import RedisConnectorService
 from app.data_access.storage.form_storage import FormStorage
-#TODO: Remove this after security & data protection
-from app.data_access.storage.cookie_storage import CookieStorage
 from app.config import Config
 
 
 class SessionStorage(FormStorage):
     @staticmethod
     def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):
-        if Config.USE_COOKIE_STORAGE:
-            return CookieStorage.get_data(data_identifier=data_identifier, ttl=ttl, default_data=default_data)
-        
-        
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
         if not key:
             return None
@@ -35,10 +29,6 @@ class SessionStorage(FormStorage):
 
     @staticmethod
     def override_data(stored_data, data_identifier='form_data'):
-        if Config.USE_COOKIE_STORAGE:
-            CookieStorage.override_data(data_to_store=stored_data, data_identifier=data_identifier)
-            return
-        
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
         if not key:
             return
