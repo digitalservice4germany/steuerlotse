@@ -95,6 +95,12 @@ class DevelopmentConfig(BaseConfig):
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
+    """ Use the following variables to make tests locally with the job queue dummy routes.
+    USE_MOCK_API = True
+    MOCK_MIN_REQUEST_COUNT = 5
+    MOCK_DELIVER_FAIL_ON_POST = False
+    MOCK_DELIVER_FAIL_ON_GET = False
+    """
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL') or "memory://"
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///dev.db"
     SQLALCHEMY_ENGINE_OPTIONS = {}  # Some of our settings don't work with sqlite.
