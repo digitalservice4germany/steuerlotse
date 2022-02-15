@@ -273,6 +273,23 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
     },
   },
+  submitAcknowledge: {
+    title:
+      "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension",
+    successMessage:
+      "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!",
+    "next-steps": {
+      heading: "Wie geht es weiter?",
+      text: "Ihre Steuererklärung wird von Ihrem Finanzamt bearbeitet. Sie bekommen Ihren Steuerbescheid per Post zugeschickt.",
+    },
+    logout: {
+      heading: "Wir löschen Ihr Nutzerkonto",
+      text1:
+        "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Wenn Sie unseren Service nächstes Jahr wieder nutzen möchten, können Sie sich einfach erneut registrieren.",
+      text2:
+        "Sie haben sich Ihr Transferticket notiert und Ihre Übersicht der übermittelten Daten gespeichert oder ausgedruckt? Dann melden Sie sich ab.",
+    },
+  },
   dateField: {
     day: "Tag",
     month: "Monat",
