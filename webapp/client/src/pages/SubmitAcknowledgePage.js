@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
-import ButtonLink from "../components/ButtonLink";
+import AnchorButton from "../components/AnchorButton";
 
 // StepAck
 
@@ -22,7 +22,7 @@ export default function SubmitAcknowledgePage({ prevUrl, logoutUrl }) {
       <h2 className="mt-5">{t("submitAcknowledge.logout.heading")}</h2>
       <p>{t("submitAcknowledge.logout.text1")}</p>
       <p>{t("submitAcknowledge.logout.text2")}</p>
-      <ButtonLink url={logoutUrl} text={t("form.logout.button")} />
+      <AnchorButton url={logoutUrl} text={t("form.logout.button")} />
     </>
   );
 }
