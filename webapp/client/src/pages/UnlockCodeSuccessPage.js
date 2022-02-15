@@ -69,7 +69,7 @@ export default function UnlockCodeSuccessPage({
       <AnchorButton
         url={vorbereitungsHilfeLink}
         text={t("register.success.preparation.anchor")}
-        isDownloadLink={true}
+        isDownloadLink
       />
     </>
   );
