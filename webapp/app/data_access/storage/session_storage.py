@@ -17,18 +17,16 @@ class SessionStorage(FormStorage):
     @staticmethod
     def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):
         if Config.USE_COOKIE_STORAGE:
-            logger.debug(f"USE_COOKIE_STORAGE used!")
+            logger.warn(f"USE_COOKIE_STORAGE used!")
             return CookieStorage.get_data(data_identifier=data_identifier, ttl=ttl, default_data=default_data)
         
-        
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
-        logger.debug(f"Session Key generated for get: {key}")
+        
         if not key:
             return None
         try:
             form_data = RedisConnectorService().get_from_redis(key)
         except MissingError:
-            logger.debug(f"MissingError from redis for key {key}")
             form_data = {}
 
         if default_data:
@@ -42,12 +40,12 @@ class SessionStorage(FormStorage):
     @staticmethod
     def override_data(stored_data, data_identifier='form_data'):
         if Config.USE_COOKIE_STORAGE:
-            logger.debug(f"USE_COOKIE_STORAGE used!")
+            logger.warn(f"USE_COOKIE_STORAGE used!")
             CookieStorage.override_data(data_to_store=stored_data, data_identifier=data_identifier)
             return
         
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
-        logger.debug(f"Session Key generated for set: {key}")
+
         if not key:
             return
         RedisConnectorService().save_to_redis(key, SessionStorage.serialize_data(stored_data))
