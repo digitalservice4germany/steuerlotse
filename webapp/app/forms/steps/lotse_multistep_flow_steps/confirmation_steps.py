@@ -13,12 +13,15 @@ from app.model.components import ConfirmationProps
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
+
 class StepConfirmation(FormStep):
     name = 'confirmation'
 
     class Form(SteuerlotseBaseForm):
-        confirm_data_privacy = ConfirmationField(validators=[InputRequired(message=_l('form.lotse.confirm_data_privacy.required'))])
-        confirm_terms_of_service = ConfirmationField(validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
+        confirm_data_privacy = ConfirmationField(
+            validators=[InputRequired(message=_l('form.lotse.confirm_data_privacy.required'))])
+        confirm_terms_of_service = ConfirmationField(
+            validators=[InputRequired(message=_l('form.lotse.confirm_terms_of_service.required'))])
 
     def __init__(self, **kwargs):
         super(StepConfirmation, self).__init__(
@@ -46,10 +49,11 @@ class StepConfirmation(FormStep):
         ).camelized_dict()
 
         return render_react_template(component='ConfirmationPage',
-            props=props_dict,
-            # TODO: These are still required by base.html to set the page title.
-            form=render_info.form,
-            header_title=_('form.lotse.confirmation.header-title'))
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=render_info.form,
+                                     header_title=_('form.lotse.confirmation.header-title'),
+                                     disable_extended_footer=True)
 
 
 class StepFiling(DisplayStep):
@@ -61,13 +65,14 @@ class StepFiling(DisplayStep):
                                          **kwargs)
 
     def render(self, data, render_info):
+        render_info.additional_info['disable_extended_footer'] = True
         if render_info.additional_info['elster_data']['was_successful']:
             return render_template('lotse/display_filing_success.html', render_info=render_info,
                                    elster_data=render_info.additional_info['elster_data'],
                                    header_title=_('form.lotse.filing.header-title'),
                                    tax_number_provided=data.get('steuernummer_exists') == 'yes'
-                                                       if data.get('steuernummer_exists')
-                                                       else None)
+                                   if data.get('steuernummer_exists')
+                                   else None)
         else:
             render_info.next_url = None
             return render_template('lotse/display_filing_failure.html', render_info=render_info,
@@ -82,5 +87,6 @@ class StepAck(DisplayStep):
         super(StepAck, self).__init__(title=_('form.lotse.ack.alert.title'), **kwargs)
 
     def render(self, data, render_info):
+        render_info.additional_info['disable_extended_footer'] = True
         return render_template('lotse/display_ack.html', render_info=render_info,
                                header_title=_('form.lotse.filing.header-title'))

@@ -216,6 +216,7 @@ class DisplaySteuerlotseStep(SteuerlotseStep):
         """
         Render a display step. Use the render_info to provide all the needed data for rendering.
         """
+        self.render_info.additional_info['disable_extended_footer'] = True
         return render_template(template_name_or_list=self.template, render_info=self.render_info, **kwargs)
 
 

@@ -6,6 +6,7 @@ describe("TelephoneNumber", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/telephone_number");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link back to person a has disability page", () => {
@@ -25,6 +26,7 @@ describe("TelephoneNumber", () => {
         familienstand: "single",
       });
       cy.visit("/lotse/step/telephone_number");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link back to person a has disability page", () => {
@@ -42,6 +44,7 @@ describe("TelephoneNumber", () => {
         familienstand_confirm_zusammenveranlagung: true,
       });
       cy.visit("/lotse/step/telephone_number");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link back to person b has disability page", () => {

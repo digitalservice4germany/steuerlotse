@@ -67,7 +67,6 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
                 if field.data is not None and 0 < field.data < 20:
                     raise ValidationError(_l('form.lotse.validation-disability_degree.min20'))
 
-
     @classmethod
     def get_label(cls, data):
         return ngettext('form.lotse.merkzeichen_person_a.label',
@@ -103,9 +102,10 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='MerkzeichenPersonAPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
 
 class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
@@ -175,9 +175,10 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='MerkzeichenPersonBPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
 
 class HasMerkzeichenPersonAPrecondition(BaseModel):

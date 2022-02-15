@@ -47,10 +47,11 @@ class StepDeclarationIncomes(FormStep):
         ).camelized_dict()
 
         return render_react_template(component='DeclarationIncomesPage',
-                               props=props_dict,
-                               # TODO: These are still required by base.html to set the page title.
-                               form=render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
 
 class StepDeclarationEdaten(FormStep):
@@ -65,13 +66,13 @@ class StepDeclarationEdaten(FormStep):
             intro=_('form.lotse.declaration-edaten-intro'),
             form=self.Form,
             **kwargs)
-        
+
     class Form(SteuerlotseBaseForm):
         declaration_edaten = ConfirmationField(
             label=_l('form.lotse.field_declaration_edaten'),
             validators=[InputRequired(message=_l('form.lotse.declaration_edaten.required'))],
-            render_kw={'data_label': _l('form.lotse.field_declaration_edaten.data_label')})        
-        
+            render_kw={'data_label': _l('form.lotse.field_declaration_edaten.data_label')})
+
     def render(self, data, render_info):
         props_dict = DeclarationEDatenProps(
             step_header={
@@ -87,10 +88,11 @@ class StepDeclarationEdaten(FormStep):
         ).camelized_dict()
 
         return render_react_template(component='DeclarationEDatenPage',
-                               props=props_dict,
-                               # TODO: These are still required by base.html to set the page title.
-                               form=render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
 
 class StepSessionNote(FormStep):
@@ -116,5 +118,6 @@ class StepSessionNote(FormStep):
         ).camelized_dict()
 
         return render_react_template(component='SessionNotePage',
-                               props=props_dict,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)

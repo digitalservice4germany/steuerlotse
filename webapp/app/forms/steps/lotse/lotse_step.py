@@ -21,7 +21,7 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
 
     def _main_handle(self):
         super()._main_handle()
-
+        self.render_info.additional_info['disable_extended_footer'] = True
         # redirect in any case if overview button pressed
         if 'overview_button' in request.form:
             from app.forms.steps.lotse.confirmation import StepSummary

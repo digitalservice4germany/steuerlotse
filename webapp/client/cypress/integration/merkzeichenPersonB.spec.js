@@ -11,6 +11,7 @@ describe("merkzeichenPersonB", () => {
         familienstand_confirm_zusammenveranlagung: true,
       });
       cy.visit("/lotse/step/merkzeichen_person_b");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person b has disability page", () => {
@@ -32,6 +33,7 @@ describe("merkzeichenPersonB", () => {
         person_b_has_disability: "no",
       });
       cy.visit("/lotse/step/merkzeichen_person_b");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person b has disability page", () => {
@@ -53,6 +55,7 @@ describe("merkzeichenPersonB", () => {
         person_b_has_disability: "yes",
       });
       cy.visit("/lotse/step/merkzeichen_person_b");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should stay on page and show error when submit button clicked", () => {
@@ -79,6 +82,7 @@ describe("merkzeichenPersonB", () => {
       });
 
       cy.visit("/lotse/step/merkzeichen_person_b");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should set pflegegrad correctly", () => {

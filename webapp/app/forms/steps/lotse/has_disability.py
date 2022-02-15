@@ -47,9 +47,10 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='HasDisabilityPersonBPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
 
 class StepDisabilityPersonA(LotseFormSteuerlotseStep):
@@ -58,7 +59,7 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
 
     class InputForm(SteuerlotseBaseForm):
         person_a_has_disability = YesNoField(
-            render_kw={'data_label':  _l('form.lotse.has_disability.data_label')},
+            render_kw={'data_label': _l('form.lotse.has_disability.data_label')},
             validators=[InputRequired(_l('validate.input-required'))])
 
     @classmethod
@@ -70,7 +71,7 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
         props_dict = HasDisabilityPersonAProps(
             step_header={
                 'title': ngettext('form.lotse.has_disability.title', 'form.lotse.has_disability.title',
-                        num=get_number_of_users(self.stored_data))
+                                  num=get_number_of_users(self.stored_data))
             },
             form={
                 'action': self.render_info.submit_url,
@@ -83,9 +84,10 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='HasDisabilityPersonAPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
 
 class HasDisabilityPersonAPrecondition(BaseModel):

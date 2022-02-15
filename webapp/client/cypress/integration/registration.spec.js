@@ -1,6 +1,7 @@
 describe("Registration", () => {
   beforeEach(() => {
     cy.visit("/unlock_code_request/step/data_input");
+    cy.extended_footer_is_disabled(false);
   });
 
   it("submitting an empty form", () => {

@@ -1,6 +1,7 @@
 describe("Revocation Success", () => {
   beforeEach(() => {
     cy.visit("/unlock_code_revocation/step/unlock_code_success");
+    cy.extended_footer_is_disabled(false);
   });
 
   it("links back to revocation input page", () => {

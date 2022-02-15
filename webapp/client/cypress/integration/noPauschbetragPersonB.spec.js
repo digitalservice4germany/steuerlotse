@@ -6,6 +6,7 @@ describe("NoPauschbetragPage for person B", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/person_b_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to familienstand page", () => {
@@ -22,6 +23,7 @@ describe("NoPauschbetragPage for person B", () => {
         familienstand_confirm_zusammenveranlagung: true,
       });
       cy.visit("/lotse/step/person_b_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person b has disability page", () => {
@@ -39,6 +41,7 @@ describe("NoPauschbetragPage for person B", () => {
         person_b_has_disability: "no",
       });
       cy.visit("/lotse/step/person_b_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person b has disability page", () => {
@@ -59,6 +62,7 @@ describe("NoPauschbetragPage for person B", () => {
           person_b_disability_degree: 60,
         });
         cy.visit("/lotse/step/person_b_no_pauschbetrag");
+        cy.extended_footer_is_disabled(true);
       });
 
       it("Should redirect to person b merkzeichen page", () => {
@@ -80,6 +84,7 @@ describe("NoPauschbetragPage for person B", () => {
         person_b_disability_degree: 60,
       });
       cy.visit("/lotse/step/person_b_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person b merkzeichen page", () => {
@@ -101,6 +106,7 @@ describe("NoPauschbetragPage for person B", () => {
           person_b_disability_degree: 80,
         });
         cy.visit("/lotse/step/person_b_no_pauschbetrag");
+        cy.extended_footer_is_disabled(true);
       });
 
       it("Should redirect to person b merkzeichen page", () => {
@@ -123,6 +129,7 @@ describe("NoPauschbetragPage for person B", () => {
           person_b_has_pflegegrad: "no",
         });
         cy.visit("/lotse/step/person_b_no_pauschbetrag");
+        cy.extended_footer_is_disabled(true);
       });
 
       it("Should not redirect", () => {

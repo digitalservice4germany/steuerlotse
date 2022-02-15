@@ -6,6 +6,7 @@ describe("PauschbetragPersonA", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to has disability page", () => {
@@ -24,6 +25,7 @@ describe("PauschbetragPersonA", () => {
       });
 
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to has disability page", () => {
@@ -42,6 +44,7 @@ describe("PauschbetragPersonA", () => {
       });
 
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to merkzeichen page", () => {
@@ -63,6 +66,7 @@ describe("PauschbetragPersonA", () => {
       });
 
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should not check radio button for label yes", () => {
@@ -100,6 +104,7 @@ describe("PauschbetragPersonA", () => {
       });
 
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should check radio button for label yes", () => {
@@ -134,6 +139,7 @@ describe("PauschbetragPersonA", () => {
         person_a_requests_pauschbetrag: "no",
       });
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should check radio button for label no", () => {
@@ -166,6 +172,7 @@ describe("PauschbetragPersonA", () => {
         person_a_requests_pauschbetrag: "yes",
       });
       cy.visit("/lotse/step/person_a_requests_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link forward to fahrtkostenpauschale page", () => {

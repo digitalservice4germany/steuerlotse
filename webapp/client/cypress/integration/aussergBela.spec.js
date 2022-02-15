@@ -6,6 +6,7 @@ describe("PersonAHasDisability", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/ausserg_bela");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect back to select_stmind page", () => {
@@ -23,6 +24,7 @@ describe("PersonAHasDisability", () => {
       });
 
       cy.visit("/lotse/step/ausserg_bela");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should show standard Aufwendungs inputs", () => {
@@ -69,6 +71,7 @@ describe("PersonAHasDisability", () => {
         });
 
         cy.visit("/lotse/step/ausserg_bela");
+        cy.extended_footer_is_disabled(true);
       });
 
       it("Should not show Behinderungsbedingte Aufwendungen inputs", () => {
@@ -86,6 +89,7 @@ describe("PersonAHasDisability", () => {
       });
 
       cy.visit("/lotse/step/ausserg_bela");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should show Behinderungsbedingte Aufwendungen Summe input", () => {
@@ -107,6 +111,7 @@ describe("PersonAHasDisability", () => {
       });
 
       cy.visit("/lotse/step/ausserg_bela");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should show Behinderungsbedingte Aufwendungen inputs", () => {

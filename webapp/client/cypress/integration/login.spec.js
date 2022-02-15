@@ -2,6 +2,7 @@ describe("Login", () => {
   context("logging In", () => {
     beforeEach(() => {
       cy.visit("/unlock_code_activation/step/data_input");
+      cy.extended_footer_is_disabled(false);
       cy.fixture("user").as("user");
     });
 
@@ -49,7 +50,8 @@ describe("Login", () => {
   context("when logged in", () => {
     beforeEach(() => {
       cy.login();
-      cy.visit("/lotse/step/start");
+      cy.visit("/");
+      cy.extended_footer_is_disabled(false);
     });
 
     it("registration should be disabled", () => {

@@ -6,6 +6,7 @@ describe("PersonAHasDisability", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/has_disability_person_a");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link back to person a page", () => {
@@ -21,6 +22,7 @@ describe("PersonAHasDisability", () => {
       });
 
       cy.visit("/lotse/step/has_disability_person_a");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should check radio button for label yes", () => {
@@ -48,6 +50,7 @@ describe("PersonAHasDisability", () => {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/has_disability_person_a");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should check radio button for label no", () => {
@@ -73,6 +76,7 @@ describe("PersonAHasDisability", () => {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/merkzeichen_person_a");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link forward to person b", () => {

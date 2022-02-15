@@ -6,6 +6,7 @@ describe("NoPauschbetragPage for person A", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person a has disability page", () => {
@@ -19,6 +20,7 @@ describe("NoPauschbetragPage for person A", () => {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person a has disability page", () => {
@@ -32,6 +34,7 @@ describe("NoPauschbetragPage for person A", () => {
         person_a_has_disability: "yes",
       });
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link back to merkzeichen page", () => {
@@ -54,6 +57,7 @@ describe("NoPauschbetragPage for person A", () => {
         person_a_disability_degree: 60,
       });
       cy.visit("/lotse/step/person_a_no_pauschbetrag");
+      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person a merkzeichen page", () => {
@@ -72,6 +76,7 @@ describe("NoPauschbetragPage for person A", () => {
           person_a_has_merkzeichen_g: true,
         });
         cy.visit("/lotse/step/person_a_no_pauschbetrag");
+        cy.extended_footer_is_disabled(true);
       });
 
       it("Should redirect to person a merkzeichen page", () => {
@@ -89,6 +94,7 @@ describe("NoPauschbetragPage for person A", () => {
           person_a_has_pflegegrad: "no",
         });
         cy.visit("/lotse/step/person_a_no_pauschbetrag");
+        cy.extended_footer_is_disabled(true);
       });
 
       it("Should not redirect", () => {
@@ -116,6 +122,7 @@ describe("NoPauschbetragPage for person A", () => {
             person_a_has_pflegegrad: "no",
           });
           cy.visit("/lotse/step/person_a_no_pauschbetrag");
+          cy.extended_footer_is_disabled(true);
         });
 
         it("Should link forward to person b page", () => {
