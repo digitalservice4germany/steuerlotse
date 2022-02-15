@@ -44,7 +44,7 @@ class BaseConfig(object):
     SESSION_DATA_REDIS_TTL_HOURS = 3
 
     # TODO: [STL-1843] Remove me after the security & data protection check
-    USE_COOKIE_STORAGE = True
+    USE_COOKIE_STORAGE = False
 
 
 class ProductionConfig(BaseConfig):
@@ -82,8 +82,6 @@ class StagingConfig(BaseConfig):
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
 
-    USE_COOKIE_STORAGE = False
-
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
@@ -108,7 +106,6 @@ class DevelopmentConfig(BaseConfig):
     REACT_BUNDLE_NAME = 'bundle.js'
 
     USE_REDIS_LITE = True
-    USE_COOKIE_STORAGE = False
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
@@ -146,7 +143,6 @@ class TestingConfig(BaseConfig):
     SECRET_KEY = 'dev'
 
     USE_REDIS_LITE = True
-    USE_COOKIE_STORAGE = False
 
 try:
     Config = {
