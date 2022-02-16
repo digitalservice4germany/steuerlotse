@@ -734,19 +734,19 @@
         },
         "schwifty": {
             "hashes": [
-                "sha256:031d87641503d12a2bba882c6befc0b8c48f979fde7062973e5cf2041d08982b",
-                "sha256:26fc2c656399c042e759f98a1daab781d9391ebdc88ca60bf86e976d8189d888"
+                "sha256:00aca7f39b938b3c806453cca4154229d6ea4a9c500f9a17447962c5e70a40d2",
+                "sha256:4c9e7853ca0c413623af9a8549b0e1125b876283c37950d63d9a2cd15c610521"
             ],
             "index": "pypi",
-            "version": "==2021.10.2"
+            "version": "==2022.2.0"
         },
         "setuptools": {
             "hashes": [
-                "sha256:716f9d20b4c3513d1720245eb1dac009b40c9694c88e940e54b67b8b65d09493",
-                "sha256:d181db00651bce5268b8f559795053d5e8f645e4dbafac6d262b22d7e72e19eb"
+                "sha256:1bc2725f0b4d6eb054ee29a0e05fda9c7c0921a6bdc0cf6dd2204da746872b49",
+                "sha256:71b2b3a334d6fcd2e472fb18d0ff530dc585d62da1494e75d001058f33153257"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==60.9.0"
+            "version": "==60.9.1"
         },
         "six": {
             "hashes": [
