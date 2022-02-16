@@ -3,7 +3,7 @@ import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
-import DownloadLink from "../components/DownloadLink";
+import AnchorButton from "../components/AnchorButton";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
@@ -66,9 +66,10 @@ export default function UnlockCodeSuccessPage({
 
       <h2 className="mt-5">{t("register.success.preparation.heading")}</h2>
       <p>{t("register.success.preparation.intro")}</p>
-      <DownloadLink
+      <AnchorButton
         url={vorbereitungsHilfeLink}
         text={t("register.success.preparation.anchor")}
+        isDownloadLink
       />
     </>
   );

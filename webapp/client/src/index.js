@@ -28,6 +28,7 @@ import DeclarationEDatenPage from "./pages/DeclarationEDatenPage";
 import UnlockCodeSuccessPage from "./pages/UnlockCodeSuccessPage";
 import UnlockCodeFailurePage from "./pages/UnlockCodeFailurePage";
 import RevocationFailurePage from "./pages/RevocationFailurePage";
+import SubmitAcknowledgePage from "./pages/SubmitAcknowledgePage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -55,6 +56,7 @@ const allowedComponents = {
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
+  SubmitAcknowledgePage,
 };
 
 function mountComponent(element) {

@@ -43,15 +43,20 @@ const Anchor = styled.a`
   }
 `;
 
-export default function DownloadLink({ text, url }) {
+export default function AnchorButton({ text, url, isDownloadLink }) {
   return (
-    <Anchor href={url} download>
+    <Anchor href={url} download={isDownloadLink}>
       {text}
     </Anchor>
   );
 }
 
-DownloadLink.propTypes = {
+AnchorButton.propTypes = {
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  isDownloadLink: PropTypes.bool,
+};
+
+AnchorButton.defaultProps = {
+  isDownloadLink: false,
 };
