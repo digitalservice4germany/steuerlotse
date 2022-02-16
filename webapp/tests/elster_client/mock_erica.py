@@ -380,7 +380,7 @@ class MockErica:
             else:
                 response = {"processStatus": "success", "payload": get_json_response('est_without_responses')}
         elif count == 0:
-            response = {"errorCode": -1, "errorMessage": "Request ID not found"}, 500
+            response = {"errorCode": -1, "errorMessage": "Request ID not found"}, 404
         else:
             MockErica.request_id_count[request_id] = count
             response = {"processStatus": "processing"}
