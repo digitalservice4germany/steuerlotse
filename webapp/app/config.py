@@ -144,13 +144,19 @@ class TestingConfig(BaseConfig):
 
     USE_REDIS_LITE = True
 
+
+class MockedDevelopmentConfig(DevelopmentConfig):
+    USE_MOCK_API = True
+
+
 try:
     Config = {
         'development': DevelopmentConfig,
         'functional': FunctionalTestingConfig,
         'testing': TestingConfig,
         'staging': StagingConfig,
-        'production': ProductionConfig
+        'production': ProductionConfig,
+        'mocked_development': MockedDevelopmentConfig
     }[environ['FLASK_ENV']]
 except KeyError:
     raise RuntimeError(f'Unknown FLASK_ENV "{environ["FLASK_ENV"]}"')

@@ -1,8 +1,7 @@
+import uuid
 from typing import List, Tuple
 
-import requests
 from flask import json
-from requests import RequestException
 
 from app.config import Config
 from app.utils import VERANLAGUNGSJAHR
@@ -10,7 +9,10 @@ from tests.elster_client.json_responses.sample_responses import get_json_respons
 from tests.utils import gen_random_key
 
 _JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
-_PYERIC_API_BASE_URL = Config.ERICA_BASE_URL
+_PYERIC_API_BASE_URL_01 = Config.ERICA_BASE_URL if Config.ERICA_BASE_URL == 'ERICA' else Config.ERICA_BASE_URL[
+                                                                                         :-2] + "01"
+_PYERIC_API_BASE_URL_02 = Config.ERICA_BASE_URL if Config.ERICA_BASE_URL == 'ERICA' else Config.ERICA_BASE_URL[
+                                                                                         :-2] + "02"
 _EST_KEYS = ['est_data', 'meta_data']
 _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob",
                                          "person_a_last_name", "person_a_first_name", "person_a_religion",
@@ -49,6 +51,9 @@ class MockErica:
     tax_number_is_invalid = False
     invalid_request_timeout_occurred = False
     invalid_request_connection_error_occurred = False
+    min_request_count_get_job = 5
+    deliver_fail_on_post_job = False
+    deliver_fail_on_get_job = False
 
     INVALID_ID = 'C3PO'
 
@@ -63,23 +68,28 @@ class MockErica:
                 sent_data = None
             include_elster_responses = kwargs['params']['include_elster_responses'] if 'params' in kwargs else False
 
-            if args[0] == _PYERIC_API_BASE_URL + '/est_validations':
+            if args[0] == _PYERIC_API_BASE_URL_01 + '/est_validations':
                 response = MockErica.validate_est(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL + '/ests':
+            elif args[0] == _PYERIC_API_BASE_URL_01 + '/ests':
                 response = MockErica.send_est(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL + '/unlock_code_requests':
+            elif args[0] == _PYERIC_API_BASE_URL_01 + '/unlock_code_requests':
                 response = MockErica.request_unlock_code(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL + '/unlock_code_activations':
+            elif args[0] == _PYERIC_API_BASE_URL_01 + '/unlock_code_activations':
                 response = MockErica.activate_unlock_code(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL + '/unlock_code_revocations':
+            elif args[0] == _PYERIC_API_BASE_URL_01 + '/unlock_code_revocations':
                 response = MockErica.revoke_unlock_code(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL + '/address':
+            elif args[0] == _PYERIC_API_BASE_URL_01 + '/address':
                 response = MockErica.get_address_data(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL + '/tax_offices':
+            elif args[0] == _PYERIC_API_BASE_URL_01 + '/tax_offices':
                 response = MockErica.get_tax_offices()
-            elif _PYERIC_API_BASE_URL + '/tax_number_validity' in args[0]:
+            elif _PYERIC_API_BASE_URL_01 + '/tax_number_validity' in args[0]:
                 sub_urls = args[0].split('/')
                 response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[2], tax_number=sub_urls[3])
+            elif args[0] == _PYERIC_API_BASE_URL_02 + '/post_job':
+                return MockErica.post_dummy_job()
+            elif args[0] == _PYERIC_API_BASE_URL_02 + '/get_job':
+                request_id = kwargs['request_id'] if 'request_id' in kwargs else None
+                return MockErica.get_dummy_job(request_id)
             else:
                 return MockResponse(None, 404)
         except UnexpectedInputDataError:
@@ -220,7 +230,9 @@ class MockErica:
             return err_response
 
         # Successful case
-        if (input_data['idnr'], input_data['elster_request_id'], input_data['unlock_code']) in MockErica.available_idnrs:
+        if (
+                input_data['idnr'], input_data['elster_request_id'],
+                input_data['unlock_code']) in MockErica.available_idnrs:
             elster_request_id_for_unlock = gen_random_key()
             if show_response:
                 return get_json_response('unlock_code_activation_with_resp', idnr=input_data['idnr'],
@@ -257,7 +269,8 @@ class MockErica:
         # Successful case
         if idnr_exists:
             elster_request_id_for_revocation = gen_random_key()
-            MockErica.available_idnrs = [idnr for idnr in MockErica.available_idnrs if idnr[0] != input_data.get('idnr')]
+            MockErica.available_idnrs = [idnr for idnr in MockErica.available_idnrs if
+                                         idnr[0] != input_data.get('idnr')]
             if show_response:
                 return get_json_response('unlock_code_revocation_with_resp',
                                          elster_request_id=elster_request_id_for_revocation)
@@ -303,7 +316,8 @@ class MockErica:
             return err_response
 
         _VALID_TAX_NUMBERS = ['19811310010']
-        _VALID_STATE_ABBREVIATIONS = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'ND', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
+        _VALID_STATE_ABBREVIATIONS = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'ND', 'NW', 'RP', 'SL', 'SN',
+                                      'ST', 'SH', 'TH']
 
         if MockErica.tax_number_is_invalid \
                 or tax_number not in _VALID_TAX_NUMBERS \
@@ -345,3 +359,29 @@ class MockErica:
         # InvalidTaxNumberError
         if MockErica.invalid_tax_number_error_occurred:
             return get_json_response('invalid_tax_number')
+
+    request_id_count = {}
+
+    @staticmethod
+    def post_dummy_job(*args, **kwargs):
+        if MockErica.deliver_fail_on_post_job:
+            return {"errorCode": -1, "errorMessage": "Job could not be submitted."}, 422
+        else:
+            request_id = str(uuid.uuid4())
+            MockErica.request_id_count.setdefault(request_id, 0)
+            return "/02/get_job/" + request_id, 201
+
+    @staticmethod
+    def get_dummy_job(request_id):
+        count = MockErica.request_id_count.get(request_id, -1) + 1
+        if count >= MockErica.min_request_count_get_job:
+            if MockErica.deliver_fail_on_get_job:
+                response = {"processStatus": "failure", "errorCode": -1, "errorMessage": "ELSTER Timeout error"}
+            else:
+                response = {"processStatus": "success", "payload": get_json_response('est_without_responses')}
+        elif count == 0:
+            response = {"errorCode": -1, "errorMessage": "Request ID not found"}, 404
+        else:
+            MockErica.request_id_count[request_id] = count
+            response = {"processStatus": "processing"}
+        return response
