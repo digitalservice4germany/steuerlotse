@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-15 12:35+0100\n"
+"POT-Creation-Date: 2022-02-18 07:54+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -4217,64 +4217,76 @@ msgstr "Wie verarbeiten wir diese Daten?"
 #: app/templates/content/data_privacy.html:34
 msgid "data_privacy.processing-text"
 msgstr ""
-"Wir nutzen die im Rahmen der Übermittlung Ihrer Steuererklärung erhobenen"
-" Daten ausschließlich für die Bereitstellung der Übermittlungsfunktion "
-"für Ihre Steuererklärung und die damit verbundenen gesetzlichen "
-"Pflichten. In diesem Rahmen speichern wir bestimmte Daten für die Dauer "
-"des Vorgangs in unseren Datenbanken und geben Steuerdaten an die "
-"Finanzverwaltung weiter. Ihre personenbezogenen Daten werden nicht von "
-"uns ausgewertet oder analysiert. Für die Verarbeitung Ihrer Daten in der "
-"Finanzverwaltung beachten Sie bitte Pkt. 6.</p><p>Die Daten, die wir im "
-"Rahmen der Kontaktfunktion erheben, nutzen wir ausschließlich, um Ihr "
-"Anliegen zu bearbeiten und Ihnen eine Antwort zukommen zu lassen. Wir "
+"Wir nutzen die erhobenen Daten ausschließlich für die Bereitstellung der "
+"Übermittlungsfunktion für Ihre Steuererklärung und die damit verbundenen "
+"gesetzlichen Pflichten. In diesem Rahmen speichern wir bestimmte Daten "
+"für die Dauer des Vorgangs in unseren Datenbanken und geben Steuerdaten "
+"an die Finanzverwaltung weiter. Ihre personenbezogenen Daten werden nicht"
+" von uns ausgewertet oder analysiert. Für die Verarbeitung Ihrer Daten in"
+" der Finanzverwaltung beachten Sie bitte Pkt. 6.</p><p>Die Daten, die wir"
+" im Rahmen der Kontaktfunktion erheben, nutzen wir ausschließlich, um Ihr"
+" Anliegen zu bearbeiten und Ihnen eine Antwort zukommen zu lassen. Wir "
 "führen Kontaktdaten und Steuerdaten nicht zusammen."
 
 #: app/templates/content/data_privacy.html:38
+msgid "data_privacy.processing-base-title"
+msgstr "Auf welcher Grundlage werden die Daten verarbeitet?"
+
+#: app/templates/content/data_privacy.html:39
+msgid "data_privacy.processing-base-text"
+msgstr ""
+"Grundlage für die Datenverarbeitung bei der Registrierung und "
+"Identifizierung sowie die Übermittlung der Steuerdaten ist Art. 6 Abs. 1 "
+"lit. a der Datenschutzgrundverordnung. Für eine notwendige Archivierung "
+"der personenbezogenen Daten ist die Rechtsgrundlage Art. 6 Abs. 1 lit. b "
+"und c der Datenschutzgrundverordnung."
+
+#: app/templates/content/data_privacy.html:43
 msgid "data_privacy.disclosure-title"
 msgstr "Unter welchen Voraussetzungen dürfen wir Ihre Daten an Dritte weitergeben?"
 
-#: app/templates/content/data_privacy.html:39
+#: app/templates/content/data_privacy.html:44
 msgid "data_privacy.disclosure-text"
 msgstr ""
-"Sollten Sie eine Steuererklärung über den Dienst abschicken, übermitteln "
-"wir mittels Elster Ihre in der Steuererklärung eingegebenen Daten an die "
-"Finanzverwaltung. Diese Übermittlung ist zwingend für die Abgabe der "
-"Steuererklärung notwendig und gesetzlich geregelt. Für die auf diese "
-"Weise übermittelten Daten gelten die Unterlage „Allgemeine Informationen "
-"zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 "
-"der Datenschutz-Grundverordnung in der Steuerverwaltung“ welche Sie unter"
-" folgendem Link abrufen können: <br/><a "
+"Ihre in der Steuererklärung eingegebenen Daten übermitteln wir mittels "
+"Elster an die Finanzverwaltung. Diese Übermittlung ist zwingend für die "
+"Abgabe der Steuererklärung notwendig und gesetzlich geregelt. Für die auf"
+" diese Weise übermittelten Daten gelten die Unterlage Allgemeine "
+"Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der "
+"Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung"
+" welche Sie unter folgendem Link abrufen können: <br/><a "
 "href=\"https://www.bzst.de/SharedDocs/Downloads/DE/Informationen_zum_Datenschutz/allg_informationen_zum_Datenschutz.pdf?__blob=publicationFile&v=3\""
 " target=\"_blank\">Allgemeine Informationen zur Umsetzung der "
 "datenschutzrechtlichen Vorgaben der Datenschutz-Grundverordnung in der "
 "Steuerverwaltung</a>"
 
-#: app/templates/content/data_privacy.html:43
+#: app/templates/content/data_privacy.html:48
 msgid "data_privacy.storage-title"
 msgstr "Wie lange und wo speichern wir Ihre Daten?"
 
-#: app/templates/content/data_privacy.html:44
+#: app/templates/content/data_privacy.html:49
 msgid "data_privacy.storage-text"
 msgstr ""
 "Personenbezogene Daten, die Sie im Rahmen der Steuererklärung angeben, "
-"werden für die Dauer der aktiven Nutzung verschlüsselt gespeichert. Nach "
-"dem Verschicken der Steuererklärung ist der Zweck der Verarbeitung dieser"
-" Daten erfüllt und werden gemäß Art. 5 der Datenschutz-Grundverordnung "
-"(DSGVO) gelöscht. Personenbezogene Daten werden gemäß Art. 17 DSGVO "
-"automatisch gelöscht, falls Nutzer:innen die Software drei Stunden nicht "
-"mehr aktiv verwenden.</p><p>Daten, die wir im Rahmen der Identifizierung "
-"erheben, sind wir, gemäß §87d Abs. 2, verpflichtet 5 Jahre lang "
-"aufzubewahren. Diese Protokolldaten werden nur zu diesem Zweck und in "
-"einem gesonderten System gespeichert.</p><p>Für den Betrieb unseres "
-"Dienstes nutzen wir als Auftragsverarbeiter den Dienstleister SysEleven "
-"GmbH, Boxhagener Straße 80, 10245 Berlin. Ihre Daten werden "
+"werden für die Dauer der aktiven Nutzung verschlüsselt gespeichert. Die "
+"maximale Länge einer Session beträgt drei Stunden. Nach dem Verschicken "
+"der Steuererklärung werden die personenbezogenen Daten für 10 Minuten "
+"lang bei uns gespeichert, um Ihnen eine Zusammenfassung der übermittelten"
+" Daten bereitzustellen. Da danach der Zweck der Verarbeitung dieser Daten"
+" erfüllt ist, löschen wir sie gemäß Art. 5 der Datenschutz-"
+"Grundverordnung (DSGVO).</p><p>Daten, die wir im Rahmen der "
+"Identifizierung erheben, sind wir, gemäß §87d Abs. 2, verpflichtet 5 "
+"Jahre lang aufzubewahren. Diese Protokolldaten werden nur zu diesem Zweck"
+" und in einem gesonderten System gespeichert.</p><p>Für den Betrieb "
+"unseres Dienstes nutzen wir als Auftragsverarbeiter den Dienstleister "
+"SysEleven GmbH, Boxhagener Straße 80, 10245 Berlin. Ihre Daten werden "
 "ausschließlich in einem sicheren Rechenzentrum in Berlin gespeichert."
 
-#: app/templates/content/data_privacy.html:48
+#: app/templates/content/data_privacy.html:53
 msgid "data_privacy.analytics-cookies-title"
 msgstr "Werden Webanalyse-Dienste oder Cookies eingesetzt?"
 
-#: app/templates/content/data_privacy.html:49
+#: app/templates/content/data_privacy.html:54
 msgid "data_privacy.analytics-cookies-text"
 msgstr ""
 "Für den Betrieb unseres Dienstes setzen wir ausschließlich einen für die "
@@ -4286,22 +4298,22 @@ msgstr ""
 "Datenverarbeitung finden Sie unter <a href=\"https://plausible.io/data-"
 "policy\" target=\"_blank\">https://plausible.io/data-policy</a>."
 
-#: app/templates/content/data_privacy.html:53
+#: app/templates/content/data_privacy.html:58
 msgid "data_privacy.rights-title"
 msgstr "Welche Rechte (Auskunftsrecht, Widerspruchsrecht usw.) haben Sie?"
 
-#: app/templates/content/data_privacy.html:54
+#: app/templates/content/data_privacy.html:59
 msgid "data_privacy.rights-text"
 msgstr ""
 "Sie haben nach der Datenschutz-Grundverordnung verschiedene Rechte. "
 "Einzelheiten ergeben sich insbesondere aus Artikel 15 bis 18 und 21 der "
 "Datenschutz-Grundverordnung."
 
-#: app/templates/content/data_privacy.html:57
+#: app/templates/content/data_privacy.html:62
 msgid "data_privacy.rights-information"
 msgstr "Recht auf Auskunft"
 
-#: app/templates/content/data_privacy.html:58
+#: app/templates/content/data_privacy.html:63
 msgid "data_privacy.rights-information-text"
 msgstr ""
 "Sie können Auskunft über Ihre von uns verarbeiteten personenbezogenen "
@@ -4310,22 +4322,22 @@ msgstr ""
 "erleichtern. Daher sollten in dem Antrag möglichst Angaben zum konkreten "
 "Prozessschritt gemacht werden."
 
-#: app/templates/content/data_privacy.html:62
+#: app/templates/content/data_privacy.html:67
 msgid "data_privacy.correction-information"
 msgstr "Recht auf Berichtigung"
 
-#: app/templates/content/data_privacy.html:63
+#: app/templates/content/data_privacy.html:68
 msgid "data_privacy.correction-information-text"
 msgstr ""
 "Sollten die Sie betreffenden Angaben nicht (mehr) zutreffend sein, können"
 " Sie eine Berichtigung verlangen. Sollten Ihre Daten unvollständig sein, "
 "können Sie eine Vervollständigung verlangen."
 
-#: app/templates/content/data_privacy.html:67
+#: app/templates/content/data_privacy.html:72
 msgid "data_privacy.deletion-information"
 msgstr "Recht auf Löschung"
 
-#: app/templates/content/data_privacy.html:68
+#: app/templates/content/data_privacy.html:73
 msgid "data_privacy.deletion-information-text"
 msgstr ""
 "Sie können die Löschung Ihrer personenbezogenen Daten verlangen. Ihr "
@@ -4333,32 +4345,32 @@ msgstr ""
 " von uns zur Erfüllung unserer gesetzlichen Aufgaben noch benötigt "
 "werden."
 
-#: app/templates/content/data_privacy.html:72
+#: app/templates/content/data_privacy.html:77
 msgid "data_privacy.restriction-information"
 msgstr "Recht auf Einschränkung der Verarbeitung"
 
-#: app/templates/content/data_privacy.html:73
+#: app/templates/content/data_privacy.html:78
 msgid "data_privacy.restriction-information-text"
 msgstr ""
 "Sie haben das Recht, eine Einschränkung der Verarbeitung der Sie "
 "betreffenden Daten zu verlangen."
 
-#: app/templates/content/data_privacy.html:77
+#: app/templates/content/data_privacy.html:82
 msgid "data_privacy.objection-information"
 msgstr "Recht auf Widerspruch"
 
-#: app/templates/content/data_privacy.html:78
+#: app/templates/content/data_privacy.html:83
 msgid "data_privacy.objection-information-text"
 msgstr ""
 "Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation"
 " ergeben, jederzeit der Verarbeitung der Sie betreffenden Daten zu "
 "widersprechen."
 
-#: app/templates/content/data_privacy.html:81
+#: app/templates/content/data_privacy.html:86
 msgid "data_privacy.appeal-information"
 msgstr "Recht auf Beschwerde"
 
-#: app/templates/content/data_privacy.html:82
+#: app/templates/content/data_privacy.html:87
 msgid "data_privacy.appeal-information-text-p1"
 msgstr ""
 "Wenn Sie der Auffassung sind, dass wir Ihrem Anliegen nicht oder nicht in"
@@ -4366,21 +4378,21 @@ msgstr ""
 "Datenschutzbeauftragten sowie dem Bundesbeauftragten für Datenschutz und "
 "Informationssicherheit Beschwerde einlegen."
 
-#: app/templates/content/data_privacy.html:83
+#: app/templates/content/data_privacy.html:88
 msgid "data_privacy.appeal-information-text-p2"
 msgstr ""
 "Externer Datenschutzbeauftragter des DigitalService4Germany<br/>1000 "
 "Elephants GmbH<br/>Björn Stecher<br/><a "
 "href=\"mailto:bjoern@1000elephants.de\">bjoern@1000elephants.de</a>"
 
-#: app/templates/content/data_privacy.html:84
+#: app/templates/content/data_privacy.html:89
 msgid "data_privacy.appeal-information-text-p3"
 msgstr ""
 "Bundesbeauftragter für Datenschutz und "
 "Informationsfreiheit<br/>Graurheindorfer Str. 153 - 53117 "
 "Bonn<br/>Telefon: +49 (0)228-997799-0<br/>Fax: +49 (0)228-997799-5550"
 
-#: app/templates/content/data_privacy.html:85
+#: app/templates/content/data_privacy.html:90
 msgid "data_privacy.appeal-information-text-p4"
 msgstr ""
 "E-Mail: <a "
@@ -4890,14 +4902,7 @@ msgstr "Kontakt"
 
 #: app/templates/content/imprint.html:14
 msgid "imprint.contact-text-p1"
-msgstr "E-Mail: <a href=\"mailto:hallo@4germany.org\">hallo@4germany.org</a>"
-
-#: app/templates/content/imprint.html:15
-msgid "imprint.contact-text-p2"
-msgstr ""
-"Bei inhaltlichen Fragen zum Steuerlotsen wenden Sie sich bitte an <a "
-"href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt@steuerlotse-"
-"rente.de</a>."
+msgstr "E-Mail: <a href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt@steuerlotse-rente.de</a>"
 
 #: app/templates/content/imprint.html:16
 msgid "imprint.dispute-headline"
@@ -5436,7 +5441,4 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#~ msgid "erica_error.header-title"
-#~ msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 

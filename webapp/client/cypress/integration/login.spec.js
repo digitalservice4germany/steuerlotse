@@ -49,7 +49,7 @@ describe("Login", () => {
   context("when logged in", () => {
     beforeEach(() => {
       cy.login();
-      cy.visit("/lotse/step/start");
+      cy.visit("/");
     });
 
     it("registration should be disabled", () => {

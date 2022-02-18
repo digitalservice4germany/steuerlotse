@@ -28,7 +28,7 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.steuerminderungen.header-title')
     # TODO remove this once all steps are converted to steuerlotse steps
     prev_step = StepIban
-    
+
     label = _l('form.lotse.step_select_stmind.label')
     section_link = SectionLink('section_steuerminderung',
                                name,
@@ -66,10 +66,11 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='StmindSelectionPage',
-                               props=props_dict,
-                               # TODO: These are still required by base.html to set the page title.
-                               form=self.render_info.form,
-                               header_title=self.header_title)
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=self.render_info.form,
+                                     header_title=self.header_title,
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class ShowVorsorgePrecondition(BaseModel):
@@ -308,7 +309,8 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
 
         def validate_stmind_handwerker_summe(self, field):
-            if SteuerlotseBaseForm._list_has_entries(self.stmind_handwerker_entries) or self.stmind_handwerker_lohn_etc_summe.data:
+            if SteuerlotseBaseForm._list_has_entries(
+                    self.stmind_handwerker_entries) or self.stmind_handwerker_lohn_etc_summe.data:
                 validators.InputRequired(_l('form.lotse.validation-handwerker-summe'))(self, field)
                 NoZero()(self, field)
             else:
@@ -321,7 +323,8 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
                 validators.Optional()(self, field)
 
         def validate_stmind_handwerker_lohn_etc_summe(self, field):
-            if self.stmind_handwerker_summe.data or SteuerlotseBaseForm._list_has_entries(self.stmind_handwerker_entries):
+            if self.stmind_handwerker_summe.data or SteuerlotseBaseForm._list_has_entries(
+                    self.stmind_handwerker_entries):
                 validators.InputRequired(_l('form.lotse.validation-handwerker-lohn-etc-summe'))(self, field)
                 NoZero()(self, field)
             else:
@@ -340,7 +343,7 @@ class StepHaushaltsnaheHandwerker(LotseFormSteuerlotseStep):
                                    _l('form.lotse.steuerminderungen.details-list-item-1'),
                                    _l('form.lotse.steuerminderungen.details-list-item-2'),
                                    _l('form.lotse.steuerminderungen.details-list-item-3')
-                               ],)
+                               ], )
 
 
 class HandwerkerHaushaltsnaheSetPrecondition(BaseModel):
@@ -401,7 +404,8 @@ class StepGemeinsamerHaushalt(LotseFormSteuerlotseStep):
 
     def render(self):
         self.render_info.form.first_field = next(iter(self.render_info.form))
-        return render_template(self.template, form=self.render_info.form, render_info=self.render_info,  header_title=_('form.lotse.steuerminderungen.header-title'))
+        return render_template(self.template, form=self.render_info.form, render_info=self.render_info,
+                               header_title=_('form.lotse.steuerminderungen.header-title'))
 
 
 class StepReligion(LotseFormSteuerlotseStep):
@@ -447,7 +451,8 @@ class StepSpenden(LotseFormSteuerlotseStep):
     preconditions = [ShowSpendenPrecondition]
 
     label = _l('form.lotse.step_spenden.label')
-    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name, _l('form.lotse.section_steuerminderung.label'))
+    section_link = SectionLink('section_steuerminderung', StepSelectStmind.name,
+                               _l('form.lotse.section_steuerminderung.label'))
 
     class InputForm(SteuerlotseBaseForm):
         stmind_spenden_inland = EuroField(
