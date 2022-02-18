@@ -4902,14 +4902,7 @@ msgstr "Kontakt"
 
 #: app/templates/content/imprint.html:14
 msgid "imprint.contact-text-p1"
-msgstr "E-Mail: <a href=\"mailto:hallo@4germany.org\">hallo@4germany.org</a>"
-
-#: app/templates/content/imprint.html:15
-msgid "imprint.contact-text-p2"
-msgstr ""
-"Bei inhaltlichen Fragen zum Steuerlotsen wenden Sie sich bitte an <a "
-"href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt@steuerlotse-"
-"rente.de</a>."
+msgstr "E-Mail: <a href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt@steuerlotse-rente.de</a>"
 
 #: app/templates/content/imprint.html:16
 msgid "imprint.dispute-headline"

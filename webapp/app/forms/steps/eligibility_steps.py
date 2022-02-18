@@ -102,6 +102,7 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     def _main_handle(self):
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.back_link_text')
+        self.render_info.additional_info['disable_extended_footer'] = True
 
         if not self.should_update_data:
             self.delete_not_dependent_data()

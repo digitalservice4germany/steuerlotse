@@ -46,7 +46,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             label=_l('form.lotse.steuernummer_exists'),
             render_kw={'data_label': _l('form.lotse.steuernummer_exists.data_label'),
                        'data-detail': {'title': _l('form.lotse.steuernummer_exists.detail.title'),
-                        'text': _l('form.lotse.steuernummer_exists.detail.text')}},
+                                       'text': _l('form.lotse.steuernummer_exists.detail.text')}},
             validators=[InputRequired(_l('form.lotse.steuernummer.selection_input_required'))])
         bundesland = SelectField(
             label=_l('form.lotse.field_bundesland'),
@@ -69,7 +69,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                 ('TH', _l('form.lotse.field_bundesland_th'))
             ],
             render_kw={'data_label': _l('form.lotse.field_bundesland.data_label')},
-            validators=[InputRequired(_l('form.lotse.steuernummer.input_required'))], 
+            validators=[InputRequired(_l('form.lotse.steuernummer.input_required'))],
         )
         bufa_nr = SelectField(
             label=_l('form.lotse.bufa_nr'),
@@ -142,8 +142,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
     def _set_multiple_texts(self):
         num_of_users = 2 if show_person_b(self.stored_data) else 1
         self.render_info.form.steuernummer_exists.label.text = ngettext('form.lotse.steuernummer_exists',
-                                                                             'form.lotse.steuernummer_exists',
-                                                                             num=num_of_users)
+                                                                        'form.lotse.steuernummer_exists',
+                                                                        num=num_of_users)
         self.render_info.form.request_new_tax_number.label.text = ngettext(
             'form.lotse.steuernummer.request_new_tax_number',
             'form.lotse.steuernummer.request_new_tax_number',
@@ -167,10 +167,11 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='TaxNumberPage',
-                               props=props_dict,
-                               # TODO: These are still required by base.html to set the page title.
-                               form=self.render_info.form,
-                               header_title=self.header_title)
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=self.render_info.form,
+                                     header_title=self.header_title,
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class StepPersonA(LotseFormSteuerlotseStep):
@@ -285,7 +286,8 @@ class StepPersonB(LotseFormSteuerlotseStep):
                 validators.InputRequired()(form, field)
 
         person_b_idnr = LegacyIdNrField(
-            label=_l('form.lotse.field_person_idnr'), validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()],
+            label=_l('form.lotse.field_person_idnr'),
+            validators=[InputRequired(message=_l('validate.missing-idnr')), ValidIdNr()],
             render_kw={'data_label': _l('form.lotse.field_person_idnr.data_label')})
         person_b_dob = LegacySteuerlotseDateField(
             label=_l('form.lotse.field_person_dob'),
@@ -389,7 +391,7 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='TelephoneNumberPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
-
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=self.disable_extended_footer)
