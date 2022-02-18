@@ -22,6 +22,7 @@ class SteuerlotseStep(object):
     intro_multiple = None
     template = None
     preconditions = []
+    disable_extended_footer = False
 
     def __init__(self, endpoint, header_title, stored_data, overview_step, default_data, prev_step, next_step,
                  form_storage=SessionStorage, session_data_identifier='form_data', should_update_data=False, render_info=None, *args, **kwargs):
@@ -205,6 +206,8 @@ class FormSteuerlotseStep(SteuerlotseStep):
 
 class DisplaySteuerlotseStep(SteuerlotseStep):
 
+    disable_extended_footer = True
+
     def __init__(self, endpoint, header_title, stored_data, overview_step=None, default_data=None, prev_step=None,
                  next_step=None, session_data_identifier=None, should_update_data=False, form_storage=None,
                  render_info=None, *args, **kwargs):
@@ -216,7 +219,7 @@ class DisplaySteuerlotseStep(SteuerlotseStep):
         """
         Render a display step. Use the render_info to provide all the needed data for rendering.
         """
-        self.render_info.additional_info['disable_extended_footer'] = True
+        self.render_info.additional_info['disable_extended_footer'] = self.disable_extended_footer
         return render_template(template_name_or_list=self.template, render_info=self.render_info, **kwargs)
 
 

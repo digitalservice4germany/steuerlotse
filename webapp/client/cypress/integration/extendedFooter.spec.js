@@ -1,82 +1,82 @@
-describe("Extended footer is shown", () => {
+describe("Extended footer is not disabled", () => {
   afterEach(() => {
     cy.extended_footer_is_disabled(false);
   });
 
   context("start page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/");
     });
   });
 
   context("information page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/sofunktionierts");
     });
   });
 
   context("registration page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/unlock_code_request/step/data_input");
     });
   });
 
   context("data protection page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/datenschutz");
     });
   });
 
   context("terms and conditions page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/agb");
     });
   });
 
   context("imprint page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/impressum");
     });
   });
 
   context("accessibility page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/barrierefreiheit");
     });
   });
 
   context("contact page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/kontakt");
     });
   });
 
   context("unlock code revocation page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/unlock_code_revocation/step/data_input");
     });
   });
 
   context("about page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/ueber");
     });
   });
 
   context("digital service page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/digitalservice");
     });
   });
 
   context("unlock code activation page", () => {
-    it("Should show extended footer", () => {
+    it("Should not disable extended footer", () => {
       cy.visit("/unlock_code_activation/step/data_input");
     });
   });
 });
 
-describe("Extended footer is not shown", () => {
+describe("Extended footer is disabled", () => {
   afterEach(() => {
     cy.extended_footer_is_disabled(true);
   });
