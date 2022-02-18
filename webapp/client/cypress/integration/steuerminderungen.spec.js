@@ -6,7 +6,6 @@ describe("Steuerminderungen", () => {
 
     it("next page should be summary", () => {
       cy.visit("/lotse/step/select_stmind");
-      cy.extended_footer_is_disabled(true);
       cy.get("[name=next_button]").click();
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/summary");
@@ -15,7 +14,6 @@ describe("Steuerminderungen", () => {
 
     it("vorsorge should be skipped", () => {
       cy.visit("/lotse/step/vorsorge");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/select_stmind");
       });
@@ -24,7 +22,6 @@ describe("Steuerminderungen", () => {
 
     it("ausserg_bela should be skipped", () => {
       cy.visit("/lotse/step/ausserg_bela");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/select_stmind");
       });
@@ -33,7 +30,6 @@ describe("Steuerminderungen", () => {
 
     it("haushaltsnahe_handwerker should be skipped", () => {
       cy.visit("/lotse/step/haushaltsnahe_handwerker");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/select_stmind");
       });
@@ -42,7 +38,6 @@ describe("Steuerminderungen", () => {
 
     it("religion should be skipped", () => {
       cy.visit("/lotse/step/religion");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/select_stmind");
       });
@@ -51,7 +46,6 @@ describe("Steuerminderungen", () => {
 
     it("spenden should be skipped", () => {
       cy.visit("/lotse/step/spenden");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/select_stmind");
       });
@@ -63,7 +57,6 @@ describe("Steuerminderungen", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/select_stmind");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("correct steps displayed if only first step selected", () => {
@@ -141,7 +134,6 @@ describe("Steuerminderungen", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/select_stmind");
-      cy.extended_footer_is_disabled(true);
       cy.get("label[for=stmind_select_vorsorge]").click();
       cy.get("label[for=stmind_select_ausserg_bela]").click();
       cy.get("label[for=stmind_select_handwerker]").click();
@@ -229,7 +221,6 @@ describe("Gemeinsamer Haushalt", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/familienstand");
-      cy.extended_footer_is_disabled(true);
       cy.get("label[for=familienstand-0]").click();
       cy.get("[name=next_button]").click();
     });
@@ -237,7 +228,6 @@ describe("Gemeinsamer Haushalt", () => {
     context("when haushaltsnahe_handwerker selected", () => {
       beforeEach(() => {
         cy.visit("/lotse/step/select_stmind");
-        cy.extended_footer_is_disabled(true);
         cy.get("label[for=stmind_select_handwerker]").click();
         cy.get("[name=next_button]").click();
       });
@@ -245,7 +235,6 @@ describe("Gemeinsamer Haushalt", () => {
       context("haushaltsnahe filled", () => {
         beforeEach(() => {
           cy.visit("/lotse/step/haushaltsnahe_handwerker");
-          cy.extended_footer_is_disabled(true);
           cy.get("#stmind_haushaltsnahe_entries-div")
             .children()
             .should("have.length", 1);
@@ -260,7 +249,6 @@ describe("Gemeinsamer Haushalt", () => {
 
         it("gem_haushalt should not be skipped", () => {
           cy.visit("/lotse/step/gem_haushalt");
-          cy.extended_footer_is_disabled(true);
           cy.location().should((loc) => {
             expect(loc.pathname.toString()).to.contain(
               "/lotse/step/gem_haushalt"
@@ -272,7 +260,6 @@ describe("Gemeinsamer Haushalt", () => {
       context("handwerker filled", () => {
         beforeEach(() => {
           cy.visit("/lotse/step/haushaltsnahe_handwerker");
-          cy.extended_footer_is_disabled(true);
           cy.get("button[id=stmind_handwerker_entries-add]").click();
           cy.get("#stmind_handwerker_entries-div")
             .children()
@@ -285,7 +272,6 @@ describe("Gemeinsamer Haushalt", () => {
 
         it("gem_haushalt should not be skipped", () => {
           cy.visit("/lotse/step/gem_haushalt");
-          cy.extended_footer_is_disabled(true);
           cy.location().should((loc) => {
             expect(loc.pathname.toString()).to.contain(
               "/lotse/step/gem_haushalt"
@@ -296,7 +282,6 @@ describe("Gemeinsamer Haushalt", () => {
 
       it("gem_haushalt should be skipped", () => {
         cy.visit("/lotse/step/gem_haushalt");
-        cy.extended_footer_is_disabled(true);
         cy.location().should((loc) => {
           expect(loc.pathname.toString()).to.contain(
             "/lotse/step/haushaltsnahe_handwerker"
@@ -308,7 +293,6 @@ describe("Gemeinsamer Haushalt", () => {
 
     it("gem_haushalt should be skipped", () => {
       cy.visit("/lotse/step/gem_haushalt");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/select_stmind");
       });
@@ -319,7 +303,6 @@ describe("Gemeinsamer Haushalt", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/familienstand");
-      cy.extended_footer_is_disabled(true);
       cy.get("label[for=familienstand-1]").click();
       cy.get("#familienstand_date_1").type("1");
       cy.get("#familienstand_date_2").type("1");
@@ -333,7 +316,6 @@ describe("Gemeinsamer Haushalt", () => {
 
     it("gem_haushalt should be skipped", () => {
       cy.visit("/lotse/step/gem_haushalt");
-      cy.extended_footer_is_disabled(true);
       cy.location().should((loc) => {
         expect(loc.pathname.toString()).to.contain("/lotse/step/familienstand");
       });

@@ -2,7 +2,6 @@ describe("Confirmation", () => {
   beforeEach(() => {
     cy.login();
     cy.visit("/lotse/step/confirmation");
-    cy.extended_footer_is_disabled(true);
   });
 
   context("submitting an empty form", () => {

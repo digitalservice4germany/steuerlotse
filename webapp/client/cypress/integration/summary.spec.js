@@ -6,7 +6,6 @@ describe("Summary", () => {
 
     it("shows alert message for page", () => {
       cy.visit("/lotse/step/summary");
-      cy.extended_footer_is_disabled(true);
       cy.get("div.alert[role=alert]").should("have.length", 1);
     });
   });
@@ -15,7 +14,6 @@ describe("Summary", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/summary");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("redirects to same page", () => {
@@ -40,7 +38,6 @@ describe("Summary", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/summary");
-      cy.extended_footer_is_disabled(true);
       cy.get("label[for=confirm_complete_correct]").first().click();
     });
 

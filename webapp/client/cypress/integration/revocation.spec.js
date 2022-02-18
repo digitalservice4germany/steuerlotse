@@ -2,7 +2,6 @@ describe("Revocation", () => {
   context("Simple form input", () => {
     beforeEach(() => {
       cy.visit("/unlock_code_revocation/step/data_input");
-      cy.extended_footer_is_disabled(false);
       cy.fixture("user").as("user");
     });
 
@@ -62,7 +61,6 @@ describe("Revocation", () => {
     beforeEach(() => {
       cy.register(idnr, dob);
       cy.visit("/unlock_code_revocation/step/data_input");
-      cy.extended_footer_is_disabled(false);
     });
 
     it("should redirect to success page for correct input", function () {
@@ -97,7 +95,6 @@ describe("Revocation", () => {
 
     beforeEach(() => {
       cy.visit("/unlock_code_revocation/step/data_input");
-      cy.extended_footer_is_disabled(false);
     });
 
     it("should redirect to failure page", function () {

@@ -2,7 +2,6 @@ describe("DeclarationIncomes", () => {
   beforeEach(() => {
     cy.login();
     cy.visit("/lotse/step/decl_incomes");
-    cy.extended_footer_is_disabled(true);
   });
 
   it("submitting an empty form", () => {

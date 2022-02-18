@@ -3,7 +3,6 @@ describe("Steuernummer", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/familienstand");
-      cy.extended_footer_is_disabled(true);
       cy.get("label[for=familienstand-0]").click();
       cy.get('[name="next_button"]').click();
     });
@@ -62,7 +61,6 @@ describe("Steuernummer", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/familienstand");
-      cy.extended_footer_is_disabled(true);
       cy.get("label[for=familienstand-1]").click();
       cy.get("#familienstand_date_1").type("1");
       cy.get("#familienstand_date_2").type("1");

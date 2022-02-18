@@ -51,7 +51,7 @@ class StepDeclarationIncomes(FormStep):
                                      # TODO: These are still required by base.html to set the page title.
                                      form=render_info.form,
                                      header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=True)
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class StepDeclarationEdaten(FormStep):
@@ -92,7 +92,7 @@ class StepDeclarationEdaten(FormStep):
                                      # TODO: These are still required by base.html to set the page title.
                                      form=render_info.form,
                                      header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=True)
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class StepSessionNote(FormStep):
@@ -120,4 +120,4 @@ class StepSessionNote(FormStep):
         return render_react_template(component='SessionNotePage',
                                      props=props_dict,
                                      header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=True)
+                                     disable_extended_footer=self.disable_extended_footer)

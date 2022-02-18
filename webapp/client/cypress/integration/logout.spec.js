@@ -6,7 +6,6 @@ describe("Logout", () => {
   it("has no back link", () => {
     cy.visit("logout");
     cy.get("a").contains("Zurück").should("not.exist");
-    cy.extended_footer_is_disabled(false);
   });
 
   it("logout to login page", () => {
@@ -18,7 +17,6 @@ describe("Logout", () => {
     cy.get("div[class*=alert-success]").contains(
       "Sie haben sich erfolgreich abgemeldet."
     );
-    cy.extended_footer_is_disabled(false);
   });
 
   it("logout to start page because of completed tax return", () => {
@@ -74,6 +72,5 @@ describe("Logout", () => {
     cy.get("div[class*=alert-success]").contains(
       "Sie haben sich erfolgreich abgemeldet."
     );
-    cy.extended_footer_is_disabled(false);
   });
 });

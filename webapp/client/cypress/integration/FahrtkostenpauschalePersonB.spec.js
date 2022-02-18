@@ -6,7 +6,6 @@ describe("FahrtkostenpauschalePersonB", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to familienstand page", () => {
@@ -24,7 +23,6 @@ describe("FahrtkostenpauschalePersonB", () => {
         familienstand_confirm_zusammenveranlagung: true,
       });
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to has disability page", () => {
@@ -46,7 +44,6 @@ describe("FahrtkostenpauschalePersonB", () => {
       });
 
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to has disability page", () => {
@@ -68,7 +65,6 @@ describe("FahrtkostenpauschalePersonB", () => {
       });
 
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to merkzeichen page", () => {
@@ -92,7 +88,6 @@ describe("FahrtkostenpauschalePersonB", () => {
       });
 
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should not check radio button for label yes", () => {
@@ -138,7 +133,6 @@ describe("FahrtkostenpauschalePersonB", () => {
       });
 
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should check radio button for label yes", () => {
@@ -178,7 +172,6 @@ describe("FahrtkostenpauschalePersonB", () => {
         person_b_requests_fahrtkostenpauschale: "no",
       });
       cy.visit("/lotse/step/person_b_requests_fahrtkostenpauschale");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should check radio button for label no", () => {

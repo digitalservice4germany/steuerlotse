@@ -6,7 +6,6 @@ describe("merkzeichenPersonA", () => {
   context("with no data", () => {
     beforeEach(() => {
       cy.visit("/lotse/step/merkzeichen_person_a");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person a has disability page", () => {
@@ -24,7 +23,6 @@ describe("merkzeichenPersonA", () => {
         person_a_has_disability: "no",
       });
       cy.visit("/lotse/step/merkzeichen_person_a");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should redirect to person a has disability page", () => {
@@ -42,7 +40,6 @@ describe("merkzeichenPersonA", () => {
         person_a_has_disability: "yes",
       });
       cy.visit("/lotse/step/merkzeichen_person_a");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should stay on page and show error when submit button clicked", () => {
@@ -69,7 +66,6 @@ describe("merkzeichenPersonA", () => {
       });
 
       cy.visit("/lotse/step/merkzeichen_person_a");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should set pflegegrad correctly", () => {
@@ -113,7 +109,6 @@ describe("merkzeichenPersonA", () => {
         person_a_has_merkzeichen_bl: true,
       });
       cy.visit("/lotse/step/merkzeichen_person_a");
-      cy.extended_footer_is_disabled(true);
     });
 
     it("Should link back to person a has disability page", () => {

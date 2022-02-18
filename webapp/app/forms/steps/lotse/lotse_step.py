@@ -7,6 +7,7 @@ from app.model.form_data import FormDataDependencies
 class LotseFormSteuerlotseStep(FormSteuerlotseStep):
     template = 'basis/form_standard.html'
     header_title = None
+    disable_extended_footer = True
 
     def __init__(self, endpoint='lotse', **kwargs):
         super().__init__(endpoint=endpoint, header_title=self.header_title, **kwargs)
@@ -21,7 +22,7 @@ class LotseFormSteuerlotseStep(FormSteuerlotseStep):
 
     def _main_handle(self):
         super()._main_handle()
-        self.render_info.additional_info['disable_extended_footer'] = True
+        self.render_info.additional_info['disable_extended_footer'] = self.disable_extended_footer
         # redirect in any case if overview button pressed
         if 'overview_button' in request.form:
             from app.forms.steps.lotse.confirmation import StepSummary

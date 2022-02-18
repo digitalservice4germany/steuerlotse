@@ -2,7 +2,6 @@ describe("SessionNote with no overview button", () => {
   beforeEach(() => {
     cy.login();
     cy.visit("/lotse/step/session_note");
-    cy.extended_footer_is_disabled(true);
   });
 
   it("going to previous page", () => {
@@ -24,7 +23,6 @@ describe("SessionNote with overview button", () => {
   beforeEach(() => {
     cy.login();
     cy.visit("/lotse/step/session_note?link_overview=True");
-    cy.extended_footer_is_disabled(true);
   });
 
   it("going to previous page", () => {

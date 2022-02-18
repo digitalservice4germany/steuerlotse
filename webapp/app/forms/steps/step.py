@@ -63,6 +63,7 @@ class FormStep(Step):
     """A FormStep owns a wtform and knows how to create and render it. The template
     to use can be overidden and customised.
     """
+    disable_extended_footer = True
 
     def __init__(self, title, form, intro=None, prev_step=None, next_step=None, header_title=None,
                  template='basis/form_full_width.html'):
@@ -88,7 +89,7 @@ class FormStep(Step):
 
         Renders a Form step. Use the render_info to provide all the needed data for rendering.
         """
-        render_info.additional_info['disable_extended_footer'] = True
+        render_info.additional_info['disable_extended_footer'] = self.disable_extended_footer
         render_info.form.first_field = next(iter(render_info.form))
         return render_template(
             template_name_or_list=self.template,

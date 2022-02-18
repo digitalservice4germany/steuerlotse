@@ -70,7 +70,7 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
                                      # TODO: These are still required by base.html to set the page title.
                                      form=self.render_info.form,
                                      header_title=self.header_title,
-                                     disable_extended_footer=True)
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class ShowVorsorgePrecondition(BaseModel):

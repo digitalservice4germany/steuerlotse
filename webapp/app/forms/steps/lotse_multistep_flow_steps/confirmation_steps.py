@@ -53,7 +53,7 @@ class StepConfirmation(FormStep):
                                      # TODO: These are still required by base.html to set the page title.
                                      form=render_info.form,
                                      header_title=_('form.lotse.confirmation.header-title'),
-                                     disable_extended_footer=True)
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class StepFiling(DisplayStep):
