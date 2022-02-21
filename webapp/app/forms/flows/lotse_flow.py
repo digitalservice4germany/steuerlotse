@@ -187,17 +187,17 @@ class LotseMultiStepFlow(MultiStepFlow):
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(LotseMultiStepFlow, self)._handle_specifics_for_step(step, render_info,
                                                                                               stored_data)
-        try:
-            stored_data['idnr']
-        except KeyError:
-            logger.warning('Did not find idnr in stored_data. Log out user')
-            logout_user()
-            # Override data in cookie
-            CookieStorage.override_data({})
-            flash(_('lotse-flow.error.automatic-logout'), 'warn')
-            return render_info, stored_data
 
         if isinstance(step, StepConfirmation):
+            try:
+                stored_data['idnr']
+            except KeyError:
+                logger.warning('Did not find idnr in stored_data. Log out user')
+                logout_user()
+                # Override data in cookie
+                CookieStorage.override_data({})
+                flash(_('lotse-flow.error.automatic-logout'), 'warn')
+                return render_info, stored_data
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed data privacy', request.remote_addr,
                                                     stored_data['idnr'], 'confirm_data_privacy',
@@ -249,11 +249,29 @@ class LotseMultiStepFlow(MultiStepFlow):
                     'transfer_ticket': current_user.transfer_ticket
                 }
         elif isinstance(step, StepDeclarationIncomes):
+            try:
+                stored_data['idnr']
+            except KeyError:
+                logger.warning('Did not find idnr in stored_data. Log out user')
+                logout_user()
+                # Override data in cookie
+                CookieStorage.override_data({})
+                flash(_('lotse-flow.error.automatic-logout'), 'warn')
+                return render_info, stored_data
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed incomes', request.remote_addr,
                                                     stored_data['idnr'], 'declaration_incomes',
                                                     stored_data['declaration_incomes'])
         elif isinstance(step, StepDeclarationEdaten):
+            try:
+                stored_data['idnr']
+            except KeyError:
+                logger.warning('Did not find idnr in stored_data. Log out user')
+                logout_user()
+                # Override data in cookie
+                CookieStorage.override_data({})
+                flash(_('lotse-flow.error.automatic-logout'), 'warn')
+                return render_info, stored_data
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed edata', request.remote_addr,
                                                     stored_data['idnr'], 'declaration_edaten',
