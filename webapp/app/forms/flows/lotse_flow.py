@@ -187,6 +187,16 @@ class LotseMultiStepFlow(MultiStepFlow):
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(LotseMultiStepFlow, self)._handle_specifics_for_step(step, render_info,
                                                                                               stored_data)
+        try:
+            stored_data['idnr']
+        except KeyError:
+            logger.warning('Did not find idnr in stored_data. Log out user')
+            logout_user()
+            # Override data in cookie
+            CookieStorage.override_data({})
+            flash(_('lotse-flow.error.automatic-logout'), 'warn')
+            return render_info, stored_data
+
         if isinstance(step, StepConfirmation):
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed data privacy', request.remote_addr,
@@ -240,16 +250,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                 }
         elif isinstance(step, StepDeclarationIncomes):
             if request.method == 'POST' and render_info.form.validate():
-                try:
-                    idnr = stored_data['idnr']
-                    raise KeyError
-                except KeyError:
-                    logger.warning('Did not find idnr in stored_data. Log out user')
-                    logout_user()
-                    # Override data in cookie
-                    CookieStorage.override_data({})
-                    flash(_('lotse-flow.error.automatic-logout'), 'warn')
-
                 create_audit_log_confirmation_entry('Confirmed incomes', request.remote_addr,
                                                     stored_data['idnr'], 'declaration_incomes',
                                                     stored_data['declaration_incomes'])
