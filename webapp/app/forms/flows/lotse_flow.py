@@ -4,13 +4,14 @@ from decimal import Decimal
 
 from flask import request, flash, url_for
 from flask_babel import _, lazy_gettext as _l
-from flask_login import current_user
+from flask_login import current_user, logout_user
 from pydantic import ValidationError, MissingError
 from wtforms import SelectField, BooleanField, RadioField
 from wtforms.fields.core import UnboundField
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
+from app.data_access.storage.cookie_storage import CookieStorage
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
 from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
@@ -239,6 +240,16 @@ class LotseMultiStepFlow(MultiStepFlow):
                 }
         elif isinstance(step, StepDeclarationIncomes):
             if request.method == 'POST' and render_info.form.validate():
+                try:
+                    idnr = stored_data['idnr']
+                    raise KeyError
+                except KeyError:
+                    logger.warning('Did not find idnr in stored_data. Log out user')
+                    logout_user()
+                    # Override data in cookie
+                    CookieStorage.override_data({})
+                    flash(_('lotse-flow.error.automatic-logout'), 'warn')
+
                 create_audit_log_confirmation_entry('Confirmed incomes', request.remote_addr,
                                                     stored_data['idnr'], 'declaration_incomes',
                                                     stored_data['declaration_incomes'])

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-15 12:35+0100\n"
+"POT-Creation-Date: 2022-02-21 13:18+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -204,20 +204,26 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:135 app/forms/flows/lotse_step_chooser.py:111
+#: app/forms/flows/lotse_flow.py:136 app/forms/flows/lotse_step_chooser.py:111
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:200
+#: app/forms/flows/lotse_flow.py:201
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:322
+#: app/forms/flows/lotse_flow.py:251
+msgid "lotse-flow.error.automatic-logout"
+msgstr ""
+"Es ist ein Fehler aufgetreten und Sie mussten automatisch ausgeloggt "
+"werden. Bitte entschuldigen Sie und loggen Sie sich erneut ein."
+
+#: app/forms/flows/lotse_flow.py:333
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:371
+#: app/forms/flows/lotse_flow.py:382
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
