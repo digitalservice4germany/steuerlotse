@@ -49,7 +49,7 @@ def start_test_server(c, webapp_dir=None):
 
 @task
 def test_pytest(c):
-    c.run("pytest")
+    c.run("pytest -n auto")
 
 
 @task
