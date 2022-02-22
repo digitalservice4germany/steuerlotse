@@ -75,6 +75,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.mandatory_data.header-title')
     preconditions = [HasDisabilityPersonAPrecondition,
                      HasNoPauschbetragOrFahrtkostenpauschbetragClaimPersonAPrecondition]
+
     def _pre_handle(self):
         self._set_multiple_texts()
         super()._pre_handle()
@@ -82,8 +83,8 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
     def _set_multiple_texts(self):
         num_of_users = get_number_of_users(self.render_info.stored_data)
         self.title = ngettext('form.lotse.no_pauschbetrag.person_a.title',
-                                               'form.lotse.no_pauschbetrag.person_a.title',
-                                               num=num_of_users)
+                              'form.lotse.no_pauschbetrag.person_a.title',
+                              num=num_of_users)
 
     def render(self):
         props_dict = NoPauschbetragProps(
@@ -97,16 +98,18 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='NoPauschbetragPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=self.disable_extended_footer)
 
 
 class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
     name = 'person_b_no_pauschbetrag'
     title = _l('form.lotse.no_pauschbetrag.person_b.title')
     header_title = _l('form.lotse.mandatory_data.header-title')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasNoPauschbetragOrFahrtkostenpauschbetragClaimPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition,
+                     HasNoPauschbetragOrFahrtkostenpauschbetragClaimPersonBPrecondition]
 
     def render(self):
         props_dict = NoPauschbetragProps(
@@ -120,6 +123,7 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
         ).camelized_dict()
 
         return render_react_template(component='NoPauschbetragPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=self.disable_extended_footer)

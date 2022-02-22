@@ -79,3 +79,17 @@ Cypress.Commands.add("register", (idnr, dob) => {
     });
   });
 });
+
+// Command for testing if only the lower footer is displayed
+Cypress.Commands.add("extended_footer_is_disabled", (disabled) => {
+  Cypress.log({
+    name: "extended_footer_is_disabled",
+  });
+  cy.get("footer")
+    .children()
+    .should("have.length", disabled ? 1 : 2);
+  cy.get("span")
+    .contains("Hilfe und Kontakt")
+    .should(disabled ? "not.exist" : "exist");
+  cy.get("a").contains("Datenschutzerklärung").should("exist");
+});

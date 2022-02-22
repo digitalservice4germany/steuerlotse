@@ -20,10 +20,9 @@ from app.templates.react_template import render_react_template
 
 
 def calculate_fahrtkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
-                                  has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
-                                  has_merkzeichen_h: bool = False, has_merkzeichen_ag: bool = False,
-                                  has_merkzeichen_g: bool = False):
-
+                                   has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
+                                   has_merkzeichen_h: bool = False, has_merkzeichen_ag: bool = False,
+                                   has_merkzeichen_g: bool = False):
     if has_pflegegrad == 'yes' or has_merkzeichen_bl or has_merkzeichen_tbl or has_merkzeichen_tbl \
             or has_merkzeichen_h or has_merkzeichen_ag:
         return 4500
@@ -99,24 +98,27 @@ class StepFahrtkostenpauschalePersonA(StepFahrtkostenpauschale):
     section_link = SectionLink('mandatory_data', StepFamilienstand.name, _l(
         'form.lotse.mandatory_data.label'))
 
-    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition, HasFahrtkostenpauschaleClaimPersonAPrecondition]
+    preconditions = [HasDisabilityPersonAPrecondition, HasMerkzeichenPersonAPrecondition,
+                     HasFahrtkostenpauschaleClaimPersonAPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_a_requests_fahrtkostenpauschale = SelectField(
             choices=[('yes', 'yes'), ('no', 'no')],
-            render_kw={'data_label':  _l(
+            render_kw={'data_label': _l(
                 'form.lotse.request_fahrtkostenpauschale.data_label')},
             validators=[InputRequired(_l('validate.input-required'))])
 
     @classmethod
     def get_label(cls, data=None):
-        return ngettext('form.lotse.person_a.request_fahrtkostenpauschale.label', 'form.lotse.person_a.request_fahrtkostenpauschale.label',
+        return ngettext('form.lotse.person_a.request_fahrtkostenpauschale.label',
+                        'form.lotse.person_a.request_fahrtkostenpauschale.label',
                         num=get_number_of_users(data))
 
     def render(self):
         props_dict = FahrtkostenpauschaleProps(
             step_header={
-                'title': ngettext('form.lotse.person_a.request_fahrtkostenpauschale.title', 'form.lotse.person_a.request_fahrtkostenpauschale.title',
+                'title': ngettext('form.lotse.person_a.request_fahrtkostenpauschale.title',
+                                  'form.lotse.person_a.request_fahrtkostenpauschale.title',
                                   num=get_number_of_users(self.stored_data))
             },
             form={
@@ -130,9 +132,10 @@ class StepFahrtkostenpauschalePersonA(StepFahrtkostenpauschale):
         ).camelized_dict()
 
         return render_react_template(component='FahrtkostenpauschalePersonAPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
     def get_fahrtkostenpauschale(self, stored_data):
         return calculate_fahrtkostenpauschale(
@@ -152,12 +155,13 @@ class StepFahrtkostenpauschalePersonB(StepFahrtkostenpauschale):
         'form.lotse.mandatory_data.label'))
 
     label = _l('form.lotse.person_b.request_fahrtkostenpauschale.label')
-    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasMerkzeichenPersonBPrecondition, HasFahrtkostenpauschaleClaimPersonBPrecondition]
+    preconditions = [ShowPersonBPrecondition, HasDisabilityPersonBPrecondition, HasMerkzeichenPersonBPrecondition,
+                     HasFahrtkostenpauschaleClaimPersonBPrecondition]
 
     class InputForm(SteuerlotseBaseForm):
         person_b_requests_fahrtkostenpauschale = SelectField(
             choices=[('yes', 'yes'), ('no', 'no')],
-            render_kw={'data_label':  _l(
+            render_kw={'data_label': _l(
                 'form.lotse.request_fahrtkostenpauschale.data_label')},
             validators=[InputRequired(_l('validate.input-required'))])
 
@@ -181,9 +185,10 @@ class StepFahrtkostenpauschalePersonB(StepFahrtkostenpauschale):
         ).camelized_dict()
 
         return render_react_template(component='FahrtkostenpauschalePersonBPage',
-                               props=props_dict,
-                               form=self.render_info.form,
-                               header_title=_('form.lotse.header-title'))
+                                     props=props_dict,
+                                     form=self.render_info.form,
+                                     header_title=_('form.lotse.header-title'),
+                                     disable_extended_footer=True)
 
     def get_fahrtkostenpauschale(self, form_data):
         return calculate_fahrtkostenpauschale(
