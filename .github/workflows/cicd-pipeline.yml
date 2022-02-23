@@ -234,10 +234,10 @@ jobs:
 
       - name: Archive test screenshots
         uses: actions/upload-artifact@v1
-        if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+        if: ${{ failure() }}
 
       - name: Archive test videos
         uses: actions/upload-artifact@v1
@@ -245,6 +245,7 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
+        if: ${{ failure() }}ts
 
   build-staging:
     needs: [unit-test, frontend-test, functional-test]
