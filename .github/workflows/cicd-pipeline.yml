@@ -236,14 +236,14 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: webapp/client/cypress/screenshots
         if: ${{ failure() }}
 
       - name: Archive test videos
         uses: actions/upload-artifact@v1
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: webapp/client/cypress/videos
         if: ${{ failure() }}ts
 
   build-staging:
