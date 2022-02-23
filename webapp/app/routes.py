@@ -27,6 +27,8 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
+from app.templates.react_template import render_react_template
+from tests.elster_client.mock_erica import MockErica
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -146,6 +148,19 @@ def register_request_handlers(app):
         return EligibilityStepChooser(endpoint='eligibility') \
             .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
+
+    @app.route('/loading', methods=['GET'])
+    def get_loading_page():
+        return render_react_template(component='LoadingPage',
+                                     props={})
+
+    @app.route('/post_dummy_job', methods=['POST'])
+    def post_dummy_erica_job():
+        return MockErica.post_dummy_job()
+
+    @app.route('/post_dummy_job/<request_id>', methods=['GET'])
+    def get_dummy_erica_job(request_id):
+        return MockErica.get_dummy_job(request_id)
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
     @login_required
