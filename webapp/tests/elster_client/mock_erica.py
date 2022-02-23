@@ -373,7 +373,7 @@ class MockErica:
 
     @staticmethod
     def get_dummy_job(request_id):
-        count = MockErica.request_id_count.get(request_id, -1) + 1
+        count = MockErica.request_id_count.get(request_id, 0) + 1
         if count >= MockErica.min_request_count_get_job:
             if MockErica.deliver_fail_on_get_job:
                 response = {"processStatus": "failure", "errorCode": -1, "errorMessage": "ELSTER Timeout error"}

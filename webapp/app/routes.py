@@ -158,8 +158,8 @@ def register_request_handlers(app):
     def post_dummy_erica_job():
         return MockErica.post_dummy_job()
 
-    @app.route('/post_dummy_job/<request_id>', methods=['GET'])
-    def get_dummy_erica_job(request_id):
+    @app.route('/get_dummy_job/<request_id>', methods=['GET'])
+    def get_dummy_erica_job(request_id="test_request"):
         return MockErica.get_dummy_job(request_id)
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
