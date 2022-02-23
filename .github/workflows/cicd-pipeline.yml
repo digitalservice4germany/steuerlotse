@@ -10,7 +10,8 @@ env:
   DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
 
 jobs:
-  test:
+
+  install-dependencies:
     runs-on: ubuntu-latest
 
     steps:
@@ -63,6 +64,31 @@ jobs:
           yarn install --frozen-lockfile
         shell: bash
 
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install build requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./webapp/requirements.build.txt
+        shell: bash
+
+      - name: Python dependencies - configure cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
+
       - name: Lint
         run: |
           cd webapp
@@ -72,31 +98,156 @@ jobs:
       - name: Test
         run: |
           cd webapp
-          pipenv run invoke --echo test | tee ../webapp-test-report.log
+          pipenv run invoke --echo test-pytest | tee ../webapp-unit-test-report.log
         shell: bash
 
       - name: Archive test logs
         uses: actions/upload-artifact@v1
         with:
-          name: webapp-test-report.log
-          path: webapp-test-report.log
+          name: webapp-unit-test-report.log
+          path: webapp-unit-test-report.log
+
+  frontend-test:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install build requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./webapp/requirements.build.txt
+        shell: bash
+
+      - name: Python dependencies - configure cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
+
+      - name: Client dependencies - get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Client dependencies - configure cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            webapp/client/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-${{ hashFiles('webapp/client/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-
+
+      - name: Test
+        run: |
+          cd webapp
+          pipenv run invoke --echo test-client-unit | tee ../webapp-frontend-test-report.log
+        shell: bash
+
+      - name: Archive test logs
+        uses: actions/upload-artifact@v1
+        with:
+          name: webapp-frontend-test-report.log
+          path: webapp-frontend-test-report.log
+
+  prepare-functional-test:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    outputs:
+      integration-tests: ${{ steps.parse.outputs.integration-tests }}
+      component-tests: ${{ steps.parse.outputs.component-tests }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Parse test files for parallelization
+        id: parse
+        uses: tgamauf/cypress-parallel@v1
+        with:
+          working-directory: webapp/client
+
+  functional-test:
+    runs-on: ubuntu-latest
+    needs: prepare-functional-test
+    strategy:
+      fail-fast: false
+      matrix:
+        # Run the tests in parallel, each with one of the prepared test specs
+        spec: ${{ fromJson(needs.prepare-functional-test.outputs.integration-tests) }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install build requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r ./webapp/requirements.build.txt
+        shell: bash
+
+      - name: Python dependencies - configure cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
+
+
+      - name: Client dependencies - get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Client dependencies - configure cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            webapp/client/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-${{ hashFiles('webapp/client/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-yarn-
+
+      - name: Test
+        uses: cypress-io/github-action@v2
+        with:
+          start: pipenv run invoke --echo start-test-server --webapp-dir ../
+          wait-on: 'http://localhost:3000'
+          working-directory: webapp/client
+          spec: ${{ matrix.spec }}
 
       - name: Archive test screenshots
         uses: actions/upload-artifact@v1
         with:
-          name: webapp-functional-screenshots
+          name: cypress-screenshots
           path: webapp/client/cypress/screenshots
         if: ${{ failure() }}
 
       - name: Archive test videos
         uses: actions/upload-artifact@v1
         with:
-          name: webapp-functional-videos
+          name: cypress-videos
           path: webapp/client/cypress/videos
         if: ${{ failure() }}ts
 
   build-staging:
-    needs: [test]
+    needs: [unit-test, frontend-test, functional-test]
 
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
