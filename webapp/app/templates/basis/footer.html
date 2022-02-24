@@ -1,6 +1,11 @@
-<footer class="pt-4 pl-0 pr-0 ml-0 mr-0">
-    {% if (render_info and not render_info.additional_info['disable_extended_footer'])
-        or (not render_info and not disable_extended_footer) %}
+{% if (render_info and not render_info.additional_info['disable_extended_footer'])
+or (not render_info and not disable_extended_footer) %}
+    {% set disable_extended_footer = false %}
+{% else %}
+    {% set disable_extended_footer = true %}
+{% endif %}
+<footer class="pt-4 pl-0 pr-0 ml-0 mr-0 {{'border-0' if disable_extended_footer }}">
+    {% if not disable_extended_footer %}
     <div class="container-fluid pt-4 pb-3 pl-0 pr-0">
         <div class="footer-inner">
             <div class="row m-0">
