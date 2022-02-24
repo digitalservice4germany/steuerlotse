@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -27,6 +27,7 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
     EligibilityMaybeDisplaySteuerlotseStep
+from tests.forms.mock_steuerlotse_steps import MockStartStep, MockFirstInputStep
 
 
 @pytest.fixture
@@ -41,39 +42,39 @@ class TestEligibilityChooserInit(unittest.TestCase):
 
     def setUp(self):
         self.testing_steps = [
-                EligibilityStartDisplaySteuerlotseStep,
-                MaritalStatusInputFormSteuerlotseStep,
-                SeparatedEligibilityInputFormSteuerlotseStep,
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep,
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep,
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep,
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
-                PensionDecisionEligibilityInputFormSteuerlotseStep,
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep,
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep,
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep,
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
-                EligibilitySuccessDisplaySteuerlotseStep,
-                EligibilityMaybeDisplaySteuerlotseStep,
-                MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
-                MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
-                SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
-                PensionEligibilityFailureDisplaySteuerlotseStep,
-                TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
-                CheaperCheckEligibilityFailureDisplaySteuerlotseStep,
-                MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep,
-                IncomeOtherEligibilityFailureDisplaySteuerlotseStep,
-                ForeignCountriesEligibilityFailureDisplaySteuerlotseStep,
+            EligibilityStartDisplaySteuerlotseStep,
+            MaritalStatusInputFormSteuerlotseStep,
+            SeparatedEligibilityInputFormSteuerlotseStep,
+            SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep,
+            SeparatedJointTaxesEligibilityInputFormSteuerlotseStep,
+            MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
+            MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep,
+            UserAElsterAccountEligibilityInputFormSteuerlotseStep,
+            UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+            DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
+            SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
+            SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+            PensionDecisionEligibilityInputFormSteuerlotseStep,
+            InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+            MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+            TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+            CheaperCheckDecisionEligibilityInputFormSteuerlotseStep,
+            EmploymentDecisionEligibilityInputFormSteuerlotseStep,
+            MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep,
+            IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
+            ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
+            EligibilitySuccessDisplaySteuerlotseStep,
+            EligibilityMaybeDisplaySteuerlotseStep,
+            MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
+            MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
+            DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
+            SingleAlimonyEligibilityFailureDisplaySteuerlotseStep,
+            PensionEligibilityFailureDisplaySteuerlotseStep,
+            TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep,
+            CheaperCheckEligibilityFailureDisplaySteuerlotseStep,
+            MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep,
+            IncomeOtherEligibilityFailureDisplaySteuerlotseStep,
+            ForeignCountriesEligibilityFailureDisplaySteuerlotseStep,
         ]
         self.endpoint_correct = "eligibility"
 
@@ -152,3 +153,19 @@ class TestEligibilityStepChooserDeterminePrevStep(unittest.TestCase):
         prev_step = self.step_chooser.determine_prev_step(given_step_name, {})
 
         self.assertEqual('step-0', prev_step.name)
+
+
+@pytest.mark.usefixtures('test_request_context')
+class TestGetPossibleRedirect:
+    @pytest.fixture
+    def eligibility_step_chooser(self):
+        eligibility_step_chooser = EligibilityStepChooser(endpoint='eligibility')
+        eligibility_step_chooser.steps = {MockStartStep.name: MockStartStep,
+                                          MockFirstInputStep.name: MockFirstInputStep}
+        eligibility_step_chooser.first_step = MockStartStep
+        eligibility_step_chooser.step_order = [MockStartStep.name, MockFirstInputStep.name]
+        yield eligibility_step_chooser
+
+    def test_if_step_name_is_first_input_then_return_first_after_start(self, eligibility_step_chooser):
+        step_to_redirect_to = eligibility_step_chooser._get_possible_redirect('first_input_step', {})
+        assert step_to_redirect_to == MockFirstInputStep.name
