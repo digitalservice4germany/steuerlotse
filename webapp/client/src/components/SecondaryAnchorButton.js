@@ -37,7 +37,7 @@ const AnchorSecondary = styled.a`
     text-decoration: none;
   }
 
-  &:focus {
+  &:focus-visible {
     color: var(--focus-text-color);
     background: var(--focus-color);
     outline: none;

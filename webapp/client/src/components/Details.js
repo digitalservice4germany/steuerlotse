@@ -65,7 +65,7 @@ const DetailsCard = styled.div`
     color: var(--link-hover-color);
   }
 
-  &.details-card .card-header button:focus span {
+  &.details-card .card-header button:focus-visible span {
     color: var(--focus-text-color);
     background: var(--focus-color);
   }
