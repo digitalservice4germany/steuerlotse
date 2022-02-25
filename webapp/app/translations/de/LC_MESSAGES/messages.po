@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-23 09:26+0100\n"
+"POT-Creation-Date: 2022-02-23 11:55+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -5072,54 +5072,62 @@ msgstr "kostenlos und ohne Installation"
 msgid "landing.hero-list-item-3"
 msgstr "schnell und unkompliziert"
 
-#: app/templates/content/landing_page.html:81
+#: app/templates/content/landing_page.html:70
+msgid "landing.hero-check-use-desc"
+msgstr "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?"
+
+#: app/templates/content/landing_page.html:71
+msgid "landing.hero-check-use-button"
+msgstr "Jetzt prüfen"
+
+#: app/templates/content/landing_page.html:83
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:91
+#: app/templates/content/landing_page.html:93
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:92
+#: app/templates/content/landing_page.html:94
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:99
+#: app/templates/content/landing_page.html:101
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:100
+#: app/templates/content/landing_page.html:102
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:107
+#: app/templates/content/landing_page.html:109
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:108
+#: app/templates/content/landing_page.html:110
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
-#: app/templates/content/landing_page.html:124
+#: app/templates/content/landing_page.html:126
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:125
+#: app/templates/content/landing_page.html:127
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:126
+#: app/templates/content/landing_page.html:128
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 

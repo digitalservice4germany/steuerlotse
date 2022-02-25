@@ -17,6 +17,15 @@ class MockStartStep(SteuerlotseStep):
         super(MockStartStep, self).__init__(header_title=header_title, default_data=default_data, render_info=render_info, *args, **kwargs)
 
 
+class MockFirstInputStep(SteuerlotseStep):
+    name = 'mock_first_input_step'
+    title = 'The first input after start',
+    intro = 'The one where the empire thinks of striking'
+
+    def __init__(self, header_title=None, default_data=None, render_info=None, *args, **kwargs):
+        super(MockFirstInputStep, self).__init__(header_title=header_title, default_data=default_data, render_info=render_info, *args, **kwargs)
+
+
 class MockMiddleStep(SteuerlotseStep):
     name = 'mock_middle_step'
     title = 'The Middle',
