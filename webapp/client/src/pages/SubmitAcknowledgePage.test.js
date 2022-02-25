@@ -28,13 +28,11 @@ describe("SubmitAcknowledgePage", () => {
 });
 
 describe("SubmitAcknowledgePage translations", () => {
-  let c;
-
-  const submitAcknowledge =
+  const submitAcknowledgeTexts =
     i18n.getDataByLanguage("de").translation.submitAcknowledge;
 
   beforeEach(() => {
-    c = render(
+    render(
       <I18nextProvider i18n={i18n}>
         <SubmitAcknowledgePage {...MOCK_PROPS} />
       </I18nextProvider>
@@ -42,30 +40,42 @@ describe("SubmitAcknowledgePage translations", () => {
   });
 
   it("should render step header texts", () => {
-    expect(c.getByText(submitAcknowledge.successMessage)).toBeDefined();
+    expect(
+      screen.getByText(submitAcknowledgeTexts.successMessage)
+    ).toBeDefined();
   });
 
   it("should render next steps header", () => {
-    expect(c.getByText(submitAcknowledge["next-steps"].heading)).toBeDefined();
+    expect(
+      screen.getByText(submitAcknowledgeTexts["next-steps"].heading)
+    ).toBeDefined();
   });
 
   it("should render next steps text", () => {
-    expect(c.getByText(submitAcknowledge["next-steps"].text)).toBeDefined();
+    expect(
+      screen.getByText(submitAcknowledgeTexts["next-steps"].text)
+    ).toBeDefined();
   });
 
   it("should render recommend header", () => {
-    expect(c.getByText(submitAcknowledge.recommend.heading)).toBeDefined();
+    expect(
+      screen.getByText(submitAcknowledgeTexts.recommend.heading)
+    ).toBeDefined();
   });
 
   it("should render recommend text", () => {
-    expect(c.getByText(submitAcknowledge.recommend.text)).toBeDefined();
+    expect(
+      screen.getByText(submitAcknowledgeTexts.recommend.text)
+    ).toBeDefined();
   });
 
   it("should render logout header", () => {
-    expect(c.getByText(submitAcknowledge.logout.heading)).toBeDefined();
+    expect(
+      screen.getByText(submitAcknowledgeTexts.logout.heading)
+    ).toBeDefined();
   });
 
   it("should render logout text", () => {
-    expect(c.getByText(submitAcknowledge.logout.text)).toBeDefined();
+    expect(screen.getByText(submitAcknowledgeTexts.logout.text)).toBeDefined();
   });
 });

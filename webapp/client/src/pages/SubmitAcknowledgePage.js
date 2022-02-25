@@ -18,10 +18,10 @@ export default function SubmitAcknowledgePage({ prevUrl, logoutUrl }) {
       <StepHeaderButtons url={prevUrl} />
       <FormSuccessHeader {...stepHeader} />
       <h2 className="h4 mt-5">{t("submitAcknowledge.next-steps.heading")}</h2>
-      <p className="mb-5">{t("submitAcknowledge.next-steps.text")}</p>
-      <h2 className="h4 mt-4">{t("submitAcknowledge.recommend.heading")}</h2>
-      <p className="mb-5">{t("submitAcknowledge.recommend.text")}</p>
-      <h2 className="h4 mt-4">{t("submitAcknowledge.logout.heading")}</h2>
+      <p>{t("submitAcknowledge.next-steps.text")}</p>
+      <h2 className="h4 mt-5">{t("submitAcknowledge.recommend.heading")}</h2>
+      <p>{t("submitAcknowledge.recommend.text")}</p>
+      <h2 className="h4 mt-5">{t("submitAcknowledge.logout.heading")}</h2>
       <p className="mb-5">{t("submitAcknowledge.logout.text")}</p>
       <AnchorButton url={logoutUrl} text={t("form.logout.button")} />
     </>
