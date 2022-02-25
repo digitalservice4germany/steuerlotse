@@ -264,9 +264,10 @@ msgstr "Sie möchten wissen, ob Sie den Steuerlotsen nutzen können?"
 #: app/forms/steps/eligibility_steps.py:156
 msgid "form.eligibility.start-intro"
 msgstr ""
-"Der Steuerlotse ist auf Renten- oder Pensionsbeziehende ohne "
-"Zusatzeinkünfte zugeschnitten. Beantworten Sie paar einfache Fragen und "
-"wir sagen Ihnen, ob Sie den Steuerlotsen nutzen können."
+"Der Steuerlotse ist aktuell nur auf Renten- oder Pensionsbeziehende ohne "
+"Zusatzeinkünfte zugeschnitten. Bitte beantworten Sie ein paar einfache "
+"Fragen, damit wir Ihnen sagen können, ob Sie den Steuerlotsen nutzen "
+"können."
 
 #: app/forms/steps/eligibility_steps.py:173
 #: app/templates/eligibility/display_start.html:6
@@ -5051,16 +5052,13 @@ msgstr ""
 
 #: app/templates/content/landing_page.html:63
 msgid "landing.hero-title"
-msgstr ""
-"Mit dem Steuerlotsen können Rentner:innen und Pensionär:innen ihre "
-"Steuererklärung online machen!"
+msgstr "Die vereinfachte Steuererklärung für Menschen im Ruhestand"
 
 #: app/templates/content/landing_page.html:64
 msgid "landing.hero-desc"
 msgstr ""
-"Der Steuerlotse bietet Rentner:innen und Pensionär:innen ohne weitere "
-"Einkünfte die Möglichkeit, ihre Steuererklärung einfach und ohne "
-"besonderes Vorwissen zu machen."
+"Mit dem Steuerlotsen können Sie Ihre Steuererklärung einfach und ohne "
+"besonderes Vorwissen online machen."
 
 #: app/templates/content/landing_page.html:66
 msgid "landing.hero-list-item-1"
@@ -5068,11 +5066,11 @@ msgstr "mit Schritt-für-Schritt-Anleitung"
 
 #: app/templates/content/landing_page.html:67
 msgid "landing.hero-list-item-2"
-msgstr "vereinfachte Steuererklärung dank vorliegender Daten"
+msgstr "kostenlos und ohne Installation"
 
 #: app/templates/content/landing_page.html:68
 msgid "landing.hero-list-item-3"
-msgstr "kostenlos und ohne Download"
+msgstr "schnell und unkompliziert"
 
 #: app/templates/content/landing_page.html:70
 msgid "landing.hero-check-use-desc"
