@@ -372,13 +372,17 @@ class MockErica:
             return "/02/get_job/" + request_id, 201
 
     @staticmethod
-    def get_dummy_job(request_id):
+    def get_dummy_job(status, delay, request_id):
+        import time
+        print("Waiting " + str(int(delay)/5) + "seconds")
+        time.sleep(int(delay)/5)
+        print("Waited enough")
         count = MockErica.request_id_count.get(request_id, 0) + 1
         if count >= MockErica.min_request_count_get_job:
             if MockErica.deliver_fail_on_get_job:
                 response = {"processStatus": "failure", "errorCode": -1, "errorMessage": "ELSTER Timeout error"}
             else:
-                response = {"processStatus": "success", "payload": get_json_response('est_without_responses')}
+                response = {"processStatus": status, "payload": get_json_response('est_without_responses')}
         elif count == 0:
             response = {"errorCode": -1, "errorMessage": "Request ID not found"}, 404
         else:

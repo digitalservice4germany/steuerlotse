@@ -72,6 +72,7 @@ nav.Bar('top', [
                        deactivate_when_logged_in=True),
     SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
                        matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
+    SteuerlotseNavItem(_l('nav.loading'), 'get_loading_page', {}),
     SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
 ])
 
@@ -149,18 +150,20 @@ def register_request_handlers(app):
             .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
 
-    @app.route('/loading', methods=['GET'])
-    def get_loading_page():
+    @app.route('/loading', defaults={'status': 'success', 'delay': 5}, methods=['GET'])
+    @app.route('/loading/<status>', defaults={'delay': 5}, methods=['GET'])
+    @app.route('/loading/<status>/<delay>', methods=['GET'])
+    def get_loading_page(status, delay):
         return render_react_template(component='LoadingPage',
-                                     props={})
+                                     props={"status": status, "delay": delay})
 
     @app.route('/post_dummy_job', methods=['POST'])
     def post_dummy_erica_job():
         return MockErica.post_dummy_job()
 
-    @app.route('/get_dummy_job/<request_id>', methods=['GET'])
-    def get_dummy_erica_job(request_id="test_request"):
-        return MockErica.get_dummy_job(request_id)
+    @app.route('/get_dummy_job/<status>/<delay>/<request_id>', methods=['GET'])
+    def get_dummy_erica_job(status, delay, request_id):
+        return MockErica.get_dummy_job(status, delay, request_id)
 
     @app.route('/lotse/step/<step>', methods=['GET', 'POST'])
     @login_required
