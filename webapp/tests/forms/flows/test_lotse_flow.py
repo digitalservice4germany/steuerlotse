@@ -514,6 +514,21 @@ class TestLotseGetSessionData(unittest.TestCase):
         finally:
             Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
 
+    def test_if_some_form_data_in_session_and_debug_data_true_then_do_not_override_form_data(self):
+        initial_prefill_sample_form_data_value = Config.PREFILL_SAMPLE_FORM_DATA
+        Config.PREFILL_SAMPLE_FORM_DATA = True
+        try:
+            debug_data = self.flow._DEBUG_DATA[1]
+            debug_data_without_one_key = copy.deepcopy(debug_data)
+            debug_data_without_one_key.pop(list(debug_data_without_one_key.keys())[0])
+
+            SessionStorage.override_data(debug_data_without_one_key, 'form_data')
+            session_data = self.flow._get_storage_data()
+
+            self.assertEqual(debug_data_without_one_key, session_data)
+        finally:
+            Config.PREFILL_SAMPLE_FORM_DATA = initial_prefill_sample_form_data_value
+
 
 class TestLotseHandleSpecificsForStep(unittest.TestCase):
     @pytest.fixture(autouse=True)

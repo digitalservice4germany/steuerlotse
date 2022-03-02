@@ -10,6 +10,7 @@ from app.crypto.encryption import encrypt, decrypt
 
 logger = logging.getLogger(__name__)
 
+
 class FormStorage:
 
     @staticmethod
