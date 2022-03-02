@@ -36,11 +36,14 @@ const sharedButtonLinkStyle = css`
     border-bottom: 4px solid var(--link-hover-color);
   }
 
-  &:focus {
+  :focus {
+    background-color: var(--link-color);
+    border-bottom: 4px solid var(--link-color);
+  }
+
+  &:focus-visible {
     color: var(--focus-text-color);
-
-    background: var(--focus-color);
-
+    background-color: var(--focus-color);
     outline: none;
     box-shadow: none;
     border: 0;
@@ -90,7 +93,7 @@ const OutlineLink = styled.a`
     border: 1px solid var(--link-hover-color);
   }
 
-  :focus {
+  :focus-visible {
     color: var(--focus-color);
 
     outline: none;
@@ -125,9 +128,8 @@ const OutlineButton = styled.button`
     border: 1px solid var(--link-hover-color);
   }
 
-  :focus {
+  :focus-visible {
     color: var(--focus-color);
-
     outline: none;
     box-shadow: none;
     border: 1px solid var(--focus-border-color);

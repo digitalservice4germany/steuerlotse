@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-23 11:55+0100\n"
+"POT-Creation-Date: 2022-02-28 08:03+0000\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -187,7 +187,7 @@ msgstr "Ja"
 msgid "switch.no"
 msgstr "Nein"
 
-#: app/forms/flows/eligibility_step_chooser.py:46
+#: app/forms/flows/eligibility_step_chooser.py:47
 msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
