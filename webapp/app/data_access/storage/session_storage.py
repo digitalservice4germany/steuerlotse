@@ -7,6 +7,7 @@ from flask_login import current_user
 
 from app.data_access.redis_connector_service import RedisConnectorService
 from app.data_access.storage.form_storage import FormStorage
+
 #TODO: Remove this after security & data protection
 from app.data_access.storage.cookie_storage import CookieStorage
 from app.config import Config

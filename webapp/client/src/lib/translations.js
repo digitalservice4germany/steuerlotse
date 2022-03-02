@@ -282,12 +282,13 @@ const translations = {
       heading: "Wie geht es weiter?",
       text: "Ihre Steuererklärung wird von Ihrem Finanzamt bearbeitet. Sie bekommen Ihren Steuerbescheid per Post zugeschickt.",
     },
+    recommend: {
+      heading: "Empfehlen Sie uns weiter!",
+      text: "Wir möchten noch mehr Menschen bei Ihrer Steuererklärung helfen! Sie können uns dabei helfen, indem Sie den Steuerlotsen bekannter machen. Empfehlen Sie uns Ihren Bekannten und Freunden!",
+    },
     logout: {
       heading: "Wir löschen Ihr Nutzerkonto",
-      text1:
-        "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Wenn Sie unseren Service nächstes Jahr wieder nutzen möchten, können Sie sich einfach erneut registrieren.",
-      text2:
-        "Sie haben sich Ihr Transferticket notiert und Ihre Übersicht der übermittelten Daten gespeichert oder ausgedruckt? Dann melden Sie sich ab.",
+      text: "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Wenn Sie unseren Service nächstes Jahr wieder nutzen möchten, können Sie sich einfach erneut registrieren. Haben Sie Ihre Steuererklärung gespeichert? Dann können Sie sich abmelden.",
     },
   },
   dateField: {

@@ -14,7 +14,7 @@ const CheckBox = styled.div`
     opacity: 0;
   }
 
-  input:focus + label {
+  input:focus-visible + label {
     box-shadow: 0 0 0 3px var(--focus-color);
     background-color: var(--focus-color);
   }

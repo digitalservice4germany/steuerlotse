@@ -22,8 +22,34 @@ def wait_until_up(url, max_tries=100, delay=0.1):
 
 
 @task
+def start_test_server(c, webapp_dir=None):
+    import sarge
+
+    if webapp_dir is None:
+        webapp_dir = c.cwd
+
+    env = {
+        'FLASK_ENV': 'functional',
+        'CI': 'true',
+        'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
+    }
+
+    # Set up DB
+    sarge.run("flask db upgrade", cwd=webapp_dir, env=env)
+    sarge.run("flask populate-database", cwd=webapp_dir, env=env)
+    sarge.run("./scripts/babel_run.sh", cwd=webapp_dir, env=env)
+
+    # Run flask server
+    sarge.run("flask run", cwd=webapp_dir, env=env, async_=True)
+    wait_until_up('http://localhost:5000')
+    # Run React dev-server
+    sarge.run("yarn start", env=env, async_=True, stdout=subprocess.DEVNULL)
+    wait_until_up('http://localhost:3000')
+
+
+@task
 def test_pytest(c):
-    c.run("pytest")
+    c.run("pytest -n auto")
 
 
 @task

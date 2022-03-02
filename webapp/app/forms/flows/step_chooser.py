@@ -24,7 +24,7 @@ class StepChooser:
         self.overview_step = overview_step
 
     def _is_step_name_valid(self, step_name):
-        return step_name == "start" or step_name in self.steps
+        return step_name == "start" or step_name == "first_input_step" or step_name in self.steps
 
     def _get_possible_redirect(self, step_name, stored_data):
         """
