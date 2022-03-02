@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-23 11:55+0100\n"
+"POT-Creation-Date: 2022-03-01 12:58+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -187,7 +187,7 @@ msgstr "Ja"
 msgid "switch.no"
 msgstr "Nein"
 
-#: app/forms/flows/eligibility_step_chooser.py:46
+#: app/forms/flows/eligibility_step_chooser.py:47
 msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
@@ -3106,58 +3106,58 @@ msgstr "Direkt zum Seiteninhalt"
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
-#: app/templates/basis/footer.html:8
+#: app/templates/basis/footer.html:13
 msgid "footer.help-contact"
 msgstr "Hilfe und Kontakt"
 
-#: app/templates/basis/footer.html:11
+#: app/templates/basis/footer.html:16
 msgid "footer.information"
 msgstr "Informationen zum Service"
 
-#: app/templates/basis/footer.html:14
+#: app/templates/basis/footer.html:19
 msgid "footer.contact"
 msgstr "Kontakt und Feedback"
 
-#: app/templates/basis/footer.html:18 app/templates/basis/footer.html:20
+#: app/templates/basis/footer.html:23 app/templates/basis/footer.html:25
 msgid "footer.revocation"
 msgstr "Freischaltcode Stornierung"
 
-#: app/templates/basis/footer.html:27
+#: app/templates/basis/footer.html:32
 msgid "footer.about-product"
 msgstr "Über das Produkt"
 
-#: app/templates/basis/footer.html:30
+#: app/templates/basis/footer.html:35
 msgid "footer.about-steuerlotse"
 msgstr "Über den Steuerlotsen"
 
-#: app/templates/basis/footer.html:33
+#: app/templates/basis/footer.html:38
 msgid "footer.about-ds"
 msgstr "Über den Digital Service"
 
-#: app/templates/basis/footer.html:42
+#: app/templates/basis/footer.html:47
 msgid "ds4g_logo"
 msgstr "DigitalService4Germany"
 
-#: app/templates/basis/footer.html:46
+#: app/templates/basis/footer.html:51
 msgid "footer.about-steuerlotse-text"
 msgstr ""
 "Der Steuerlotse wurde von der DigitalService4Germany GmbH umgesetzt. Wir "
 "entwickeln digitale Lösungen für und mit der Bundesverwaltung. Im Zentrum"
 " stehen die Bedürfnisse der Nutzerinnen und Nutzer."
 
-#: app/templates/basis/footer.html:59
+#: app/templates/basis/footer.html:64
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:60
+#: app/templates/basis/footer.html:65
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:61
+#: app/templates/basis/footer.html:66
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:62
+#: app/templates/basis/footer.html:67
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 
@@ -5384,38 +5384,6 @@ msgstr ""
 #: app/templates/lotse/display_filing_failure.html:14
 msgid "form.filing.failure.text-us"
 msgstr "Schreiben Sie uns"
-
-#: app/templates/lotse/display_filing_success.html:6
-msgid "form.lotse.filing.transfer_ticket.heading"
-msgstr "Transferticket"
-
-#: app/templates/lotse/display_filing_success.html:8
-msgid "form.lotse.filing.transfer_ticket.text"
-msgstr ""
-"Mit dem Transferticket wird die erfolgreiche Übermittlung Ihrer Daten "
-"durch die Finanzverwaltung bestätigt. Notieren Sie sich Ihr "
-"Transferticket, damit Sie nachweisen können, dass Ihre Daten erfolgreich "
-"übermittelt wurden."
-
-#: app/templates/lotse/display_filing_success.html:10
-msgid "form.lotse.filing.transfer_ticket"
-msgstr "Ihr Transferticket:"
-
-#: app/templates/lotse/display_filing_success.html:15
-msgid "form.lotse.filing.pdf.heading"
-msgstr "Übersicht Ihrer übermittelten Angaben"
-
-#: app/templates/lotse/display_filing_success.html:16
-msgid "form.lotse.filing.pdf.text"
-msgstr ""
-"Sie finden in der Übersicht Ihrer übermittelten Angaben alle Daten, die "
-"an Ihre Finanzverwaltung gesendet wurden. So können Sie jederzeit "
-"nachsehen, was Sie angegeben haben. Die Übersicht hilft Ihnen zum "
-"Beispiel dabei, Ihren Steuerbescheid zu kontrollieren."
-
-#: app/templates/lotse/display_filing_success.html:18
-msgid "form.lotse.ack-pdf-download-button"
-msgstr "Übersicht speichern"
 
 #: app/templates/lotse/form_familienstand.html:31
 msgid "form.lotse.familienstand.zusammenveranlagung-clause"
