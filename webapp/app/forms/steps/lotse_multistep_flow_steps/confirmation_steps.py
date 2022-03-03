@@ -87,6 +87,7 @@ class StepAck(DisplayStep):
         super(StepAck, self).__init__(title=_('form.lotse.ack.alert.title'), **kwargs)
 
     def render(self, data, render_info):
-        render_info.additional_info['disable_extended_footer'] = True
-        return render_template('lotse/display_ack.html', render_info=render_info,
-                               header_title=_('form.lotse.filing.header-title'))
+        return render_react_template(component='SubmitAcknowledgePage',
+                                     props=data,
+                                     header_title=_('form.lotse.filing.header-title'),
+                                     disable_extended_footer=True)
