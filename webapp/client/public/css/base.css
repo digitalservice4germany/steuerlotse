@@ -120,7 +120,7 @@ input.form-control:hover {
   border: 2px solid var(--hover-border-color);
 }
 
-input.form-control:focus {
+input.form-control:focus-visible {
   border: 2px solid var(--border-color);
   box-shadow: 0 0 0 2px var(--focus-color);
 }
@@ -142,7 +142,7 @@ input.form-control.field-error-found {
   min-height: 55px;
 }
 
-.steuerlotse-select:focus {
+.steuerlotse-select:focus-visible {
   border: 2px solid var(--focus-border-color);
   box-shadow: 0 0 0 2px var(--focus-color);
 }
@@ -281,6 +281,12 @@ ol li::before {
          move the style definition to assorted.css. */
 .list-unstyled li a {
   color: var(--text-color);
+}
+
+.btn:focus, .btn-primary:focus, .btn-secondary:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-secondary:not(:disabled):not(.disabled).active:focus {
+  box-shadow: none;
 }
 
 .btn-outline-secondary {

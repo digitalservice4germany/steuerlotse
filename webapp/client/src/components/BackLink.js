@@ -16,7 +16,7 @@ const Anchor = styled.a`
     margin-right: 5px;
   }
 
-  &:focus {
+  &:focus-visible {
     span:last-child {
       background-color: var(--focus-color);
       border-bottom: 1px solid var(--text-color);
