@@ -43,9 +43,6 @@ class BaseConfig(object):
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
 
-    # TODO: [STL-1843] Remove me after the security & data protection check
-    USE_COOKIE_STORAGE = False
-
 
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
