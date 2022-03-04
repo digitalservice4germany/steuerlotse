@@ -10,7 +10,7 @@ from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
-from app.model.components import ConfirmationProps, FilingSuccessProps
+from app.model.components import ConfirmationProps, FilingSuccessProps, FilingFailureProps
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
@@ -61,8 +61,7 @@ class StepFiling(DisplayStep):
     name = 'filing'
 
     def __init__(self, **kwargs):
-        super(StepFiling, self).__init__(title=_('form.lotse.filing.title'),
-                                         intro=_('form.lotse.filing.intro'),
+        super(StepFiling, self).__init__(title=_('form.lotse.filing.success.header-title'),
                                          **kwargs)
 
     def render(self, data, render_info):
@@ -81,28 +80,20 @@ class StepFiling(DisplayStep):
                                          props=props_dict,
                                          # TODO: These are still required by base.html to set the page title.
                                          form=render_info.form,
-                                         header_title=_('form.lotse.filing.title'),
+                                         header_title=_('form.lotse.filing.success.header-title'),
                                          disable_extended_footer=True)
         else:
-            render_info.next_url = None
-            return render_template('lotse/display_filing_failure.html', render_info=render_info,
-                                   elster_data=render_info.additional_info['elster_data'],
-                                   header_title=_('form.lotse.filing.failure.header-title'))
-
-    # def render(self, data, render_info):
-    #     render_info.additional_info['disable_extended_footer'] = True
-    #     if render_info.additional_info['elster_data']['was_successful']:
-    #         return render_template('lotse/display_filing_success.html', render_info=render_info,
-    #                                elster_data=render_info.additional_info['elster_data'],
-    #                                header_title=_('form.lotse.filing.header-title'),
-    #                                tax_number_provided=data.get('steuernummer_exists') == 'yes'
-    #                                if data.get('steuernummer_exists')
-    #                                else None)
-    #     else:
-    #         render_info.next_url = None
-    #         return render_template('lotse/display_filing_failure.html', render_info=render_info,
-    #                                elster_data=render_info.additional_info['elster_data'],
-    #                                header_title=_('form.lotse.filing.failure.header-title'))
+            props_dict = FilingFailureProps(
+                error_details=render_info.additional_info['elster_data'][
+                    'validation_problems'] if 'validation_problems' in render_info.additional_info[
+                    'elster_data'] else []
+            ).camelized_dict()
+            return render_react_template(component='FilingFailurePage',
+                                         props=props_dict,
+                                         # TODO: These are still required by base.html to set the page title.
+                                         form=render_info.form,
+                                         header_title=_('form.lotse.filing.failure.header-title'),
+                                         disable_extended_footer=True)
 
 
 class StepAck(DisplayStep):

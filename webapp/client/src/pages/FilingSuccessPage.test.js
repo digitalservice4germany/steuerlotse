@@ -31,7 +31,7 @@ describe("FilingSuccessPage", () => {
 
 describe("FilingSuccessPage translations", () => {
   const filingSuccessTexts =
-    i18n.getDataByLanguage("de").translation.filingSuccess;
+    i18n.getDataByLanguage("de").translation.filing.success;
 
   beforeEach(() => {
     render(

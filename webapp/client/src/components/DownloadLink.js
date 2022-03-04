@@ -62,5 +62,9 @@ export default function DownloadLink({ text, url, large }) {
 DownloadLink.propTypes = {
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  large: PropTypes.bool.isRequired,
+  large: PropTypes.bool,
+};
+
+DownloadLink.defaultProps = {
+  large: false,
 };

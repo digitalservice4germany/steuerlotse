@@ -150,7 +150,7 @@ class MockErica:
             raise UnexpectedInputDataError()
 
         # ValidationError
-        if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID:
+        if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID or 'produce_validation_error' in input_data['est_data']:
             if show_response:
                 return get_json_response('validation_error_with_resp')
             else:

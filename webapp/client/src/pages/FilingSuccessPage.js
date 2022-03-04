@@ -15,8 +15,8 @@ export default function FilingSuccessPage({
 }) {
   const { t } = useTranslation();
   const stepHeader = {
-    title: t("filingSuccess.title"),
-    intro: t("filingSuccess.intro"),
+    title: t("filing.success.title"),
+    intro: t("filing.success.intro"),
   };
 
   // Add custom plausible goal if tax number provided and plausible domain active
@@ -41,18 +41,14 @@ export default function FilingSuccessPage({
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <h2 className="h4 mt-5">{t("filingSuccess.transfer_ticket.heading")}</h2>
-      <p>{t("filingSuccess.transfer_ticket.text")}</p>
+      <h2 className="h4 mt-5">{t("filing.success.transfer_ticket.heading")}</h2>
+      <p>{t("filing.success.transfer_ticket.text")}</p>
       <span className="font-weight-bolder">
-        {t("filingSuccess.transfer_ticket.your")} {transferTicket}
+        {t("filing.success.transfer_ticket.your")} {transferTicket}
       </span>
-      <h2 className="h4 mt-5">{t("filingSuccess.pdf.heading")}</h2>
-      <p className="mb-4">{t("filingSuccess.pdf.text")}</p>
-      <DownloadLink
-        text={t("filingSuccess.pdf.download")}
-        url={downloadUrl}
-        large={false}
-      />
+      <h2 className="h4 mt-5">{t("filing.success.pdf.heading")}</h2>
+      <p className="mb-4">{t("filing.success.pdf.text")}</p>
+      <DownloadLink text={t("filing.success.pdf.download")} url={downloadUrl} />
       <StepNavButtons nextUrl={nextUrl} isForm={false} />
     </>
   );

@@ -132,6 +132,10 @@ class FilingSuccessProps(ComponentProps):
     plausibleDomain: Union[str, None]
 
 
+class FilingFailureProps(ComponentProps):
+    error_details: list
+
+
 class TaxNumberStepFormProps(StepFormProps):
     tax_office_list: List[Dict]
     number_of_users: int
