@@ -12,8 +12,10 @@ export default function DisplayFailureIcon({ title, errorDetails }) {
         </div>
         <div className="col-12 col-sm-10">
           <h1 className="headline">{title}</h1>
-          {errorDetails.map((errorDetail) => (
-            <p className="result-text">{errorDetail}</p>
+          {errorDetails.map((errorDetail, i) => (
+            <p key={i} className="result-text">
+              {errorDetail}
+            </p>
           ))}
         </div>
       </div>

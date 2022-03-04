@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { ReactComponent as DownloadIcon } from "../assets/icons/download_icon.svg";
 
 const Anchor = styled.a`
   --total-line-height: var(--lineheight-l);
@@ -35,10 +36,6 @@ const LinkElement = styled.span`
   text-align: center;
   font-weight: var(--font-bold);
   color: var(--text-color);
-
-  background: var(--icon-default-color) url("/icons/download_icon.svg")
-    no-repeat center/var(--size);
-
   border-radius: 50%;
 
   ${({ large }) =>
@@ -53,7 +50,9 @@ const LinkElement = styled.span`
 export default function DownloadLink({ text, url, large }) {
   return (
     <Anchor large={large} href={url}>
-      <LinkElement large={large} />
+      <LinkElement large={large}>
+        <DownloadIcon />
+      </LinkElement>
       {text}
     </Anchor>
   );

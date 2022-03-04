@@ -24,20 +24,6 @@
       </a>
 {%- endmacro %}
 
-{% macro downloadLink(text, url, large=False) -%}
-    {% if large %}
-        <a href="{{ url }}" download class='download-link download-link-l'>
-            <span class="download-link-icon download-link-l"></span>
-            {{text}}
-        </a>
-    {% else %}
-        <a href="{{ url }}" download class='download-link'>
-            <span class="download-link-icon"></span>
-            {{text}}
-        </a>
-    {% endif %}
-{%- endmacro %}
-
 {% macro render_detail(field) %}
     {%- set detail = field.render_kw['data-detail'] -%}
     {%- if detail %}
