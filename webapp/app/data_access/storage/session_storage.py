@@ -15,6 +15,7 @@ from app.config import Config
 
 logger = logging.getLogger(__name__)
 
+
 class SessionStorage(FormStorage):
     @staticmethod
     def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):        
@@ -27,11 +28,10 @@ class SessionStorage(FormStorage):
         except MissingError:
             form_data = {}
 
-        if default_data:
+        stored_data = SessionStorage.deserialize_data(form_data, ttl)
+        if default_data and not set(default_data).intersection(set(stored_data)):
             # updates session_data only with non_existent values
-            stored_data = default_data | SessionStorage.deserialize_data(form_data, ttl)
-        else:
-            stored_data = SessionStorage.deserialize_data(form_data, ttl)
+            stored_data = default_data | stored_data
 
         return stored_data
 
