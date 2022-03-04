@@ -75,25 +75,22 @@ class StepFiling(DisplayStep):
                 else None,
                 plausibleDomain=Config.PLAUSIBLE_DOMAIN
             ).camelized_dict()
-
-            return render_react_template(component='FilingSuccessPage',
-                                         props=props_dict,
-                                         # TODO: These are still required by base.html to set the page title.
-                                         form=render_info.form,
-                                         header_title=_('form.lotse.filing.success.header-title'),
-                                         disable_extended_footer=True)
+            component = 'FilingSuccessPage'
+            header_title = _('form.lotse.filing.success.header-title')
         else:
             props_dict = FilingFailureProps(
                 error_details=render_info.additional_info['elster_data'][
                     'validation_problems'] if 'validation_problems' in render_info.additional_info[
                     'elster_data'] else []
             ).camelized_dict()
-            return render_react_template(component='FilingFailurePage',
-                                         props=props_dict,
-                                         # TODO: These are still required by base.html to set the page title.
-                                         form=render_info.form,
-                                         header_title=_('form.lotse.filing.failure.header-title'),
-                                         disable_extended_footer=True)
+            component = 'FilingFailurePage'
+            header_title = _('form.lotse.filing.failure.header-title')
+        return render_react_template(component=component,
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=render_info.form,
+                                     header_title=header_title,
+                                     disable_extended_footer=True)
 
 
 class StepAck(DisplayStep):
@@ -105,4 +102,4 @@ class StepAck(DisplayStep):
     def render(self, data, render_info):
         render_info.additional_info['disable_extended_footer'] = True
         return render_template('lotse/display_ack.html', render_info=render_info,
-                               header_title=_('form.lotse.filing.header-title'))
+                               header_title=_('form.lotse.filing.success.header-title'))

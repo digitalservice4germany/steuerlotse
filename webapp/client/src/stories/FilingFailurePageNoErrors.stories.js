@@ -2,7 +2,7 @@ import React from "react";
 import FilingFailurePage from "../pages/FilingFailurePage";
 
 export default {
-  title: "Pages/FilingFailurePage",
+  title: "Pages/FilingFailurePageNoErrors",
   component: FilingFailurePage,
 };
 

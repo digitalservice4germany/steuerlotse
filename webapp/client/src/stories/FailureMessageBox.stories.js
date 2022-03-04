@@ -1,13 +1,13 @@
 import React from "react";
-import DisplayFailureIcon from "../components/DisplayFailureIcon";
+import FailureMessageBox from "../components/FailureMessageBox";
 
 export default {
-  title: "Anchor Elements/DisplayFailureIcon",
-  component: DisplayFailureIcon,
+  title: "Forms/FailureMessageBox",
+  component: FailureMessageBox,
 };
 
 function Template(args) {
-  return <DisplayFailureIcon {...args} />;
+  return <FailureMessageBox {...args} />;
 }
 
 export const Default = Template.bind({});

@@ -129,11 +129,11 @@ class FilingSuccessProps(ComponentProps):
     transferTicket: str
     downloadUrl: str
     taxNumberProvided: bool
-    plausibleDomain: Union[str, None]
+    plausibleDomain: Optional[str]
 
 
 class FilingFailureProps(ComponentProps):
-    error_details: list
+    error_details: List[str]
 
 
 class TaxNumberStepFormProps(StepFormProps):

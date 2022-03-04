@@ -23,16 +23,9 @@ export default function FilingSuccessPage({
   // Hook is called after component is rendered and will only run once after component is rendered
   useEffect(() => {
     if (taxNumberProvided !== null && plausibleDomain !== null) {
-      const addPlausibleGoal = () => {
-        window.plausible("summary_submitted", {
-          props: { tax_number_provided: { taxNumberProvided } },
-        });
-      };
-      document.addEventListener("DOMContentLoaded", addPlausibleGoal);
-      // remove listener once the component unmounts
-      return () => {
-        document.removeEventListener("DOMContentLoaded", addPlausibleGoal);
-      };
+      window.plausible("summary_submitted", {
+        props: { tax_number_provided: { taxNumberProvided } },
+      });
     }
     return null;
   }, [taxNumberProvided, plausibleDomain]);

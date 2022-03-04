@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as FailureIcon } from "../assets/icons/failure_icon.svg";
 
-export default function DisplayFailureIcon({ title, errorDetails }) {
+export default function FailureMessageBox({ title, errorDetails }) {
   const { t } = useTranslation();
   return (
     <div className="section-intro panel simple-card">
@@ -23,11 +23,11 @@ export default function DisplayFailureIcon({ title, errorDetails }) {
   );
 }
 
-DisplayFailureIcon.propTypes = {
+FailureMessageBox.propTypes = {
   title: PropTypes.string.isRequired,
   errorDetails: PropTypes.array,
 };
 
-DisplayFailureIcon.defaultProps = {
+FailureMessageBox.defaultProps = {
   errorDetails: [],
 };

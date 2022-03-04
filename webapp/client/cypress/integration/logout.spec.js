@@ -20,7 +20,7 @@ describe("Logout", () => {
   });
 
   it("logout to start page because of completed tax return", () => {
-    cy.fixture("est_data").then((est_data) => {
+    cy.fixture("est_sample_data_single_user").then((est_data) => {
       cy.request("POST", "/testing/set_session_data/form_data", est_data);
     });
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import DisplayFailureIcon from "./DisplayFailureIcon";
+import FailureMessageBox from "./FailureMessageBox";
 
 describe("Display failure icon", () => {
   beforeEach(() => {
-    render(<DisplayFailureIcon title="This is not my sandwich" />);
+    render(<FailureMessageBox title="This is not my sandwich" />);
   });
 
   it("should render the download link text", () => {

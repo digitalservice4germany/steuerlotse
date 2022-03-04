@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import AnchorButton from "../components/AnchorButton";
-import DisplayFailureIcon from "../components/DisplayFailureIcon";
+import FailureMessageBox from "../components/FailureMessageBox";
 
 export default function FilingFailurePage({ errorDetails }) {
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ export default function FilingFailurePage({ errorDetails }) {
   return (
     <>
       <StepHeaderButtons />
-      <DisplayFailureIcon
+      <FailureMessageBox
         title={t("filing.failure.alert.title")}
         errorDetails={errorDetails}
       />
@@ -36,7 +36,5 @@ FilingFailurePage.propTypes = {
 };
 
 FilingFailurePage.defaultProps = {
-  errorDetails: [
-    "Das Geburtsjahr liegt nach dem Veranlagungszeitraum (steuerpflichtige Person / Ehemann / Person A).",
-  ],
+  errorDetails: [],
 };

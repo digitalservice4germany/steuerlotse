@@ -5,27 +5,23 @@ describe("Filing", () => {
 
   context("success", () => {
     beforeEach(() => {
-      cy.fixture("est_data").then((est_data) => {
+      cy.fixture("est_sample_data_single_user").then((est_data) => {
         cy.request("POST", "/testing/set_session_data/form_data", est_data);
       });
       cy.visit("/lotse/step/filing");
     });
 
     it("downloading pdf is possible", () => {
-      cy.window()
-        .document()
-        .then(function (doc) {
-          doc.addEventListener("click", () => {
-            setTimeout(function () {
-              doc.location.reload();
-            }, 1000);
-          });
-          // Downloads folder is automatically cleared
-          cy.get("a").contains("Übersicht speichern").click();
-          cy.readFile("cypress/downloads/AngabenSteuererklaerung.pdf").should(
-            "exist"
-          );
+      cy.get("a")
+        .contains("Übersicht speichern")
+        .should("have.attr", "href")
+        .and("include", "download_pdf/print.pdf")
+        .then((href) => {
+          cy.request(href).its("body").should("not.be.empty");
         });
+      cy.readFile("cypress/downloads/AngabenSteuererklaerung.pdf").should(
+        "exist"
+      );
     });
 
     it("going to next step is possible", () => {
@@ -36,7 +32,7 @@ describe("Filing", () => {
 
   context("failure", () => {
     beforeEach(() => {
-      cy.fixture("est_data").then((est_data) => {
+      cy.fixture("est_sample_data_single_user").then((est_data) => {
         est_data["produce_validation_error"] = true;
         cy.request("POST", "/testing/set_session_data/form_data", est_data);
       });

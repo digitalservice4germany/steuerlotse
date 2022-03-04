@@ -2473,11 +2473,6 @@ msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:108
-#, fuzzy
-msgid "form.lotse.filing.header-title"
-msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
-
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:19
 msgid "form.lotse.declaration_incomes.label"
 msgstr "Angabe zu weiteren Einkünften"
