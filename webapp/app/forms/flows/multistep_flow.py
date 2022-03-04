@@ -133,7 +133,9 @@ class MultiStepFlow:
 
     def _get_storage_data(self, ttl: Optional[int] = None):
         form_data = self.form_storage.get_data('form_data', ttl)
-        if self.default_data():
+
+        # We do only want to update
+        if self.default_data() and not set(self.default_data()[1]).intersection(set(form_data)):
             form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
         return form_data
 
