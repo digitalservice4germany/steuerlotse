@@ -44,7 +44,7 @@ const Radio = styled.div`
     background: url(${radioButtonCheckedHover}) no-repeat center;
   }
 
-  input[type="radio"]:not(:checked):focus + label::before {
+  input[type="radio"]:not(:checked):focus-visible + label::before {
     background: url(${radioButtonFocus}) no-repeat center;
   }
 
@@ -52,7 +52,7 @@ const Radio = styled.div`
     background: url(${radioButtonHover}) no-repeat center;
   }
 
-  input[type="radio"]:checked:focus + label::before {
+  input[type="radio"]:checked:focus-visible + label::before {
     background: url(${radioButtonCheckedFocus}) no-repeat center;
   }
 

@@ -5,7 +5,7 @@ services:
     env_file:
       - ".env"
     build:
-      context: "./erica_app"
+      context: "https://github.com/digitalservice4germany/erica.git#docker-dev"
       dockerfile: "Development.Dockerfile"
       args:
         - ERICA_BUCKET_NAME=$ERICA_BUCKET_NAME
@@ -14,8 +14,6 @@ services:
         - ENDPOINT_URL=$ENDPOINT_URL
         - ELSTER_DATENLIEFERANT=$ELSTER_DATENLIEFERANT
         - ELSTER_HERSTELLER_ID=$ELSTER_HERSTELLER_ID
-    volumes:
-      - "./erica_app:/app"
     expose:
       - 8000
     ports:
@@ -33,7 +31,6 @@ services:
     links:
       - postgres
       - redis
-      - erica
 
   migrations:
     env_file:

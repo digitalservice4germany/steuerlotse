@@ -10,7 +10,7 @@ from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
-from app.model.components import ConfirmationProps, FilingSuccessProps, FilingFailureProps
+from app.model.components import ConfirmationProps, FilingSuccessProps, FilingFailureProps, StepSubmitAcknowledgeProps
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
@@ -99,6 +99,11 @@ class StepAck(DisplayStep):
         super(StepAck, self).__init__(title=_('form.lotse.ack.alert.title'), **kwargs)
 
     def render(self, data, render_info):
-        render_info.additional_info['disable_extended_footer'] = True
-        return render_template('lotse/display_ack.html', render_info=render_info,
-                               header_title=_('form.lotse.filing.success.header-title'))
+        prop_dicts = StepSubmitAcknowledgeProps(
+            prev_url=render_info.prev_url,
+            logout_url=render_info.next_url
+        ).camelized_dict()
+        return render_react_template(component='SubmitAcknowledgePage',
+                                     props=prop_dicts,
+                                     header_title=_('form.lotse.filing.header-title'),
+                                     disable_extended_footer=True)

@@ -53,6 +53,16 @@ class TestGetSessionStorage:
         session_data = SessionStorage.get_data('form_data', default_data=original_default_data)
         assert original_default_data is not session_data
 
+    def test_if_some_cookie_set_data_then_do_not_change_with_debug_data(self, app, test_request_context):
+        cookie_data_without_all_keys = {"name": "Peach", "sister": "Daisy", "husband": "Mario"}
+        default_data = {"brother": "Luigi", "husband": "Mario"}
+
+        test_request_context.session = SessionStorage.override_data(cookie_data_without_all_keys, 'form_data')
+
+        found_data = SessionStorage.get_data('form_data', default_data=default_data)
+
+        assert found_data == cookie_data_without_all_keys
+
     def test_if_session_data_in_incorrect_identifier_then_return_only_data_from_correct_identifier(self):
         form_data = {"brother": "Luigi"}
         incorrect_identifier_data = {"enemy": "Bowser"}

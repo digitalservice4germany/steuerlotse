@@ -1,3 +1,4 @@
+import copy
 import unittest
 from unittest.mock import patch, MagicMock
 
@@ -86,6 +87,16 @@ class TestGetCookieStorage:
 
         assert 'form_data' in test_request_context.session
         assert prefilled_cookie_data == FormStorage.deserialize_data(test_request_context.session['form_data'], app.config['PERMANENT_SESSION_LIFETIME'])
+
+    def test_if_some_cookie_data_then_do_not_change_with_debug_data(self, cookie_data_identifier, prefilled_cookie_data, app, test_request_context):
+        cookie_data_without_all_keys = copy.deepcopy(prefilled_cookie_data)
+        cookie_data_without_all_keys.pop(list(cookie_data_without_all_keys.keys())[0])
+
+        test_request_context.session = SecureCookieSession({'form_data': create_session_form_data(cookie_data_without_all_keys)})
+
+        found_data = CookieStorage.get_data(cookie_data_identifier, default_data={"brother": "Luigi", "husband": "Mario"})
+
+        assert found_data == cookie_data_without_all_keys
 
 
 class TestOverrideCookieStorage:
