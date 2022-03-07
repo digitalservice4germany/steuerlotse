@@ -291,7 +291,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=is_user_account_holder]').first().click()
-                cy.get('#iban').type(taxReturnData.iban)
+                cy.get('#iban').type(taxReturnData.iban, { delay: 50 })
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
@@ -347,7 +347,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=is_user_account_holder]').first().click()
-                cy.get('#iban').type(taxReturnData.iban)
+                cy.get('#iban').type(taxReturnData.iban, { delay: 50 })
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
@@ -459,7 +459,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=account_holder-0]').first().click()
-                cy.get('#iban').type(taxReturnData.iban)
+                cy.get('#iban').type(taxReturnData.iban, { delay: 50 })
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
