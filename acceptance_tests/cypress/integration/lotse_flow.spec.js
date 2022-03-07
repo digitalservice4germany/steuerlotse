@@ -215,40 +215,6 @@ context('Acceptance tests', () => {
             cy.get('div[id=familienstand_zusammenveranlagung_field]').should('not.be.visible')
         })
 
-        it('Enter different tax number data ', () => {
-            cy.visit('/lotse/step/steuernummer?link_overview=True')
-
-            // Tax number exists
-            cy.get('label[for=steuernummer_exists-yes]').click()
-            cy.get('#steuernummer').should('not.exist');
-            cy.get('select[id=bufa_nr]').should('not.exist')
-            cy.get('label[for=request_new_tax_number]').should('not.exist')
-
-            // Select state
-            cy.get('select[id=bundesland]').select('BY')
-            cy.get('#steuernummer').should('be.visible')
-            cy.get('select[id=bufa_nr]').should('not.exist')
-            cy.get('label[for=request_new_tax_number]').should('not.exist')
-
-            // Tax number does not exist
-            cy.get('label[for=steuernummer_exists-no]').click()
-            cy.get('select[id=bundesland]').should('be.visible').and('have.value', 'BY')
-            cy.get('select[id=bufa_nr]').should('be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.exist')
-            cy.get('#steuernummer').should('not.exist');
-
-            // Select state
-            cy.get('select[id=bundesland]').select('BY')
-            cy.get('select[id=bufa_nr]').should('be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.exist')
-            cy.get('#steuernummer').should('not.exist');
-
-            //Select bufa_nr
-            cy.get('select[id=bufa_nr]').select('9203')
-            cy.get('label[for=request_new_tax_number]').should('be.visible')
-            cy.get('label[for=request_new_tax_number]').should('not.be.checked')
-        })
-
         context('Submitting tax returns', () => {
             beforeEach(() => {
                 // Step 1: accept opt-ins
@@ -291,7 +257,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=is_user_account_holder]').first().click()
-                cy.get('#iban').type(taxReturnData.iban)
+                cy.get('#iban').type(taxReturnData.iban, { delay: 50 })
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
@@ -347,7 +313,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=is_user_account_holder]').first().click()
-                cy.get('#iban').type(taxReturnData.iban)
+                cy.get('#iban').type(taxReturnData.iban, { delay: 50 })
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
@@ -459,7 +425,7 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 cy.get('label[for=account_holder-0]').first().click()
-                cy.get('#iban').type(taxReturnData.iban)
+                cy.get('#iban').type(taxReturnData.iban, { delay: 50 })
                 cy.get(submitBtnSelector).click()
 
                 // Step 3
