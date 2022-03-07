@@ -104,6 +104,8 @@ describe("FilingSuccessPage with tax number provided and plausible domain", () =
   });
 
   it("should add plausible goal", () => {
-    expect(window.plausible).toHaveBeenCalled();
+    expect(window.plausible).toHaveBeenCalledWith("summary_submitted", {
+      props: { tax_number_provided: MOCK_PROPS.taxNumberProvided },
+    });
   });
 });

@@ -24,7 +24,7 @@ export default function FilingSuccessPage({
   useEffect(() => {
     if (taxNumberProvided !== null && plausibleDomain !== null) {
       window.plausible("summary_submitted", {
-        props: { tax_number_provided: { taxNumberProvided } },
+        props: { tax_number_provided: taxNumberProvided },
       });
     }
     return null;
