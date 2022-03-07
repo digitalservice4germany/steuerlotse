@@ -282,7 +282,7 @@ const translations = {
       transfer_ticket: {
         heading: "Transferticket",
         text: "Mit dem Transferticket wird die erfolgreiche Übermittlung Ihrer Daten durch die Finanzverwaltung bestätigt. Notieren Sie sich Ihr Transferticket, damit Sie nachweisen können, dass Ihre Daten erfolgreich übermittelt wurden.",
-        your: "Ihr Transferticket:",
+        your_heading: "Ihr Transferticket:",
       },
       pdf: {
         heading: "Übersicht Ihrer übermittelten Angaben",
@@ -296,12 +296,8 @@ const translations = {
       },
       nextStep: {
         heading: "Wie geht es weiter?",
-        text: {
-          before: "Bitte wenden Sie sich mit einer E-Mail an ",
-          mail: "kontakt@steuerlotse-rente.de",
-          after:
-            " und schildern Sie uns das Problem. Vermeiden Sie aber unbedingt, uns persönliche Daten, wie Ihren Freischaltcode oder Ihre Steuer-Identifikationsnummer zu senden.",
-        },
+        text: "Bitte wenden Sie sich mit einer E-Mail an  <anchormail>kontakt@steuerlotse-rente.de</anchormail>  und schildern Sie uns das Problem. Vermeiden Sie aber unbedingt, uns persönliche Daten, wie Ihren Freischaltcode oder Ihre Steuer-Identifikationsnummer zu senden.",
+        mailto: "mailto:kontakt@steuerlotse-rente.de",
       },
       textUs: "Schreiben Sie uns",
       icon_alt: "Weißes Kreuzzeichen auf rotem Kreis",

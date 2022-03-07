@@ -65,10 +65,10 @@ describe("FilingSuccessPage with default props", () => {
       ).toBeDefined();
     });
 
-    it('should render transfer ticket your"', () => {
+    it('should render transfer ticket your heading"', () => {
       expect(
         screen.getByText(
-          filingSuccessTexts.transfer_ticket.your +
+          filingSuccessTexts.transfer_ticket.your_heading +
             " " +
             MOCK_PROPS_DEFAULT.transferTicket
         )
@@ -97,4 +97,13 @@ describe("FilingSuccessPage with tax number provided and plausible domain", () =
     taxNumberProvided: true,
     plausibleDomain: "http://localhost:3000",
   };
+
+  beforeEach(() => {
+    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    render(<FilingSuccessPage {...MOCK_PROPS} />);
+  });
+
+  it("should add plausible goal", () => {
+    expect(window.plausible).toHaveBeenCalled();
+  });
 });

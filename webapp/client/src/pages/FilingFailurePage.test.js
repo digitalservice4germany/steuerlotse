@@ -47,17 +47,19 @@ describe("FilingFailurePage translations", () => {
     expect(screen.getByText(filingFailureTexts.nextStep.heading)).toBeDefined();
   });
 
-  it("should render next step text", () => {
-    const text =
-      filingFailureTexts.nextStep.text.before +
-      filingFailureTexts.nextStep.text.mail +
-      filingFailureTexts.nextStep.text.after;
+  it("should render a element", () => {
     expect(
-      screen.getByText((content, node) => {
-        const hasText = (node) => node.textContent === text;
-        return hasText(node);
-      })
-    ).toBeTruthy();
+      screen.getByText("kontakt@steuerlotse-rente.de").closest("a")
+    ).toHaveAttribute(
+      "href",
+      expect.stringContaining("mailto:kontakt@steuerlotse-rente.de")
+    );
+  });
+
+  it("should render next step text", () => {
+    expect(
+      screen.getByText("kontakt@steuerlotse-rente.de").closest("p")
+    ).toContain(screen.getByText(filingFailureTexts.nextStep.text));
   });
 
   it("should render button text", () => {

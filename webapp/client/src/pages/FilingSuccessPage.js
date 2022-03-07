@@ -37,7 +37,7 @@ export default function FilingSuccessPage({
       <h2 className="h4 mt-5">{t("filing.success.transfer_ticket.heading")}</h2>
       <p>{t("filing.success.transfer_ticket.text")}</p>
       <span className="font-weight-bolder">
-        {t("filing.success.transfer_ticket.your")} {transferTicket}
+        {t("filing.success.transfer_ticket.your_heading")} {transferTicket}
       </span>
       <h2 className="h4 mt-5">{t("filing.success.pdf.heading")}</h2>
       <p className="mb-4">{t("filing.success.pdf.text")}</p>

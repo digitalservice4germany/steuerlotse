@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import AnchorButton from "../components/AnchorButton";
 import FailureMessageBox from "../components/FailureMessageBox";
 
 export default function FilingFailurePage({ errorDetails }) {
   const { t } = useTranslation();
-  const mail = t("filing.failure.nextStep.text.mail");
-  const mailto = `mailto:${mail}`;
+  const mailto = t("filing.failure.nextStep.mailto");
   return (
     <>
       <StepHeaderButtons />
@@ -19,9 +18,14 @@ export default function FilingFailurePage({ errorDetails }) {
       <div className="spacing-b-04">
         <h2 className="h4 mt-5">{t("filing.failure.nextStep.heading")}</h2>
         <p className="mb-4 result-text">
-          {t("filing.failure.nextStep.text.before")}
-          <a href={mailto}>{mail}</a>
-          {t("filing.failure.nextStep.text.after")}
+          <Trans
+            t={t}
+            i18nKey="filing.failure.nextStep.text"
+            components={{
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              anchormail: <a href={mailto} />,
+            }}
+          />
         </p>
       </div>
       <div className="spacing-b-11 row m-0">

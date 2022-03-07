@@ -70,9 +70,8 @@ class StepFiling(DisplayStep):
                 next_url=render_info.next_url,
                 transferTicket=render_info.additional_info['elster_data']['transfer_ticket'],
                 downloadUrl=url_for("download_pdf"),
-                taxNumberProvided=data.get('steuernummer_exists') == 'yes'
-                if data.get('steuernummer_exists')
-                else None,
+                # This ternary operator is needed so that we catch the case of users going directly to the filing page with incorrent data and not going through the actual flow.
+                taxNumberProvided=data.get('steuernummer_exists') == 'yes' if data.get('steuernummer_exists') else None,
                 plausibleDomain=Config.PLAUSIBLE_DOMAIN
             ).camelized_dict()
             component = 'FilingSuccessPage'
