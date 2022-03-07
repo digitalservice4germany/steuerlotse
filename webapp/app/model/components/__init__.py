@@ -177,3 +177,8 @@ class SelectStMindProps(StepFormProps):
 class StepSessionNoteProps(ComponentProps):
     prev_url: Optional[str]
     form: FormProps
+
+
+class StepSubmitAcknowledgeProps(ComponentProps):
+    prev_url: str
+    logout_url: str

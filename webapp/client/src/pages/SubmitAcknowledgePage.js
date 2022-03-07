@@ -23,7 +23,11 @@ export default function SubmitAcknowledgePage({ prevUrl, logoutUrl }) {
       <p>{t("submitAcknowledge.recommend.text")}</p>
       <h2 className="h4 mt-5">{t("submitAcknowledge.logout.heading")}</h2>
       <p className="mb-5">{t("submitAcknowledge.logout.text")}</p>
-      <AnchorButton url={logoutUrl} text={t("form.logout.button")} />
+      <AnchorButton
+        url={logoutUrl}
+        text={t("form.logout.button")}
+        name="next_button"
+      />
     </>
   );
 }
