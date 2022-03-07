@@ -6,7 +6,7 @@
     "2.3811c58d.iframe.bundle.js": "./2.3811c58d.iframe.bundle.js",
     "3.8a6c65f2.iframe.bundle.js": "./3.8a6c65f2.iframe.bundle.js",
     "main.css": "./static/css/main.4d5914f4.chunk.css",
-    "main.js": "./main.9c31b8b4.iframe.bundle.js",
+    "main.js": "./main.8673e9d2.iframe.bundle.js",
     "main.css.map": "./static/css/main.4d5914f4.chunk.css.map",
     "runtime~main.js": "./runtime~main.368e5d10.iframe.bundle.js",
     "vendors~main.css": "./static/css/vendors~main.ee3effd0.chunk.css",
@@ -28,6 +28,8 @@
     "static/media/details_arrow_right.84679e4c.svg": "./static/media/details_arrow_right.84679e4c.svg",
     "static/media/details_arrow_right_focus.374b09ad.svg": "./static/media/details_arrow_right_focus.374b09ad.svg",
     "static/media/details_arrow_right_hover.680a8f87.svg": "./static/media/details_arrow_right_hover.680a8f87.svg",
+    "static/media/download_icon.a515f530.svg": "./static/media/download_icon.a515f530.svg",
+    "static/media/failure_icon.2adc3ed3.svg": "./static/media/failure_icon.2adc3ed3.svg",
     "static/media/handwerker_icon.c0ad71fa.svg": "./static/media/handwerker_icon.c0ad71fa.svg",
     "static/media/radio_button_checked.241216ce.svg": "./static/media/radio_button_checked.241216ce.svg",
     "static/media/radio_button_checked_focus.28e4f015.svg": "./static/media/radio_button_checked_focus.28e4f015.svg",
@@ -46,6 +48,6 @@
     "static/css/vendors~main.ee3effd0.chunk.css",
     "vendors~main.a5323c73.iframe.bundle.js",
     "static/css/main.4d5914f4.chunk.css",
-    "main.9c31b8b4.iframe.bundle.js"
+    "main.8673e9d2.iframe.bundle.js"
   ]
 }
