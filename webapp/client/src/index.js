@@ -29,6 +29,8 @@ import UnlockCodeSuccessPage from "./pages/UnlockCodeSuccessPage";
 import UnlockCodeFailurePage from "./pages/UnlockCodeFailurePage";
 import RevocationFailurePage from "./pages/RevocationFailurePage";
 import SubmitAcknowledgePage from "./pages/SubmitAcknowledgePage";
+import FilingSuccessPage from "./pages/FilingSuccessPage";
+import FilingFailurePage from "./pages/FilingFailurePage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -56,6 +58,8 @@ const allowedComponents = {
   TelephoneNumberPage,
   StmindSelectionPage,
   ConfirmationPage,
+  FilingSuccessPage,
+  FilingFailurePage,
   SubmitAcknowledgePage,
 };
 

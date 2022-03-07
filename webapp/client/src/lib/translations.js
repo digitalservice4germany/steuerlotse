@@ -273,6 +273,36 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
     },
   },
+  filing: {
+    success: {
+      title:
+        "Ihre Informationen wurden erfolgreich verschickt. Speichern Sie Ihre Nachweise für Ihre Unterlagen.",
+      intro:
+        "Ihre Informationen wurden erfolgreich an Ihre Finanzverwaltung übermittelt. Bewahren Sie Ihre Nachweise für Nachfragen gut auf.",
+      transfer_ticket: {
+        heading: "Transferticket",
+        text: "Mit dem Transferticket wird die erfolgreiche Übermittlung Ihrer Daten durch die Finanzverwaltung bestätigt. Notieren Sie sich Ihr Transferticket, damit Sie nachweisen können, dass Ihre Daten erfolgreich übermittelt wurden.",
+        your_heading: "Ihr Transferticket:",
+      },
+      pdf: {
+        heading: "Übersicht Ihrer übermittelten Angaben",
+        text: "Sie finden in der Übersicht Ihrer übermittelten Angaben alle Daten, die an Ihre Finanzverwaltung gesendet wurden. So können Sie jederzeit nachsehen, was Sie angegeben haben. Die Übersicht hilft Ihnen zum Beispiel dabei, Ihren Steuerbescheid zu kontrollieren.",
+        download: "Übersicht speichern",
+      },
+    },
+    failure: {
+      alert: {
+        title: "Ihre Steuererklärung kann nicht übermittelt werden.",
+      },
+      nextStep: {
+        heading: "Wie geht es weiter?",
+        text: "Bitte wenden Sie sich mit einer E-Mail an  <anchormail>kontakt@steuerlotse-rente.de</anchormail>  und schildern Sie uns das Problem. Vermeiden Sie aber unbedingt, uns persönliche Daten, wie Ihren Freischaltcode oder Ihre Steuer-Identifikationsnummer zu senden.",
+        mailto: "mailto:kontakt@steuerlotse-rente.de",
+      },
+      textUs: "Schreiben Sie uns",
+      icon_alt: "Weißes Kreuzzeichen auf rotem Kreis",
+    },
+  },
   submitAcknowledge: {
     title:
       "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension",

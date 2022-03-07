@@ -124,6 +124,18 @@ class ConfirmationProps(StepFormProps):
     data_privacy_link: str
 
 
+class FilingSuccessProps(ComponentProps):
+    next_url: str
+    transferTicket: str
+    downloadUrl: str
+    taxNumberProvided: bool
+    plausibleDomain: Optional[str]
+
+
+class FilingFailureProps(ComponentProps):
+    error_details: List[str]
+
+
 class TaxNumberStepFormProps(StepFormProps):
     tax_office_list: List[Dict]
     number_of_users: int
