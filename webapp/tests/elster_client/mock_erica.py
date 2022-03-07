@@ -84,7 +84,7 @@ class MockErica:
                 response = MockErica.get_tax_offices()
             elif _PYERIC_API_BASE_URL_01 + '/tax_number_validity' in args[0]:
                 sub_urls = args[0].split('/')
-                response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[2], tax_number=sub_urls[3])
+                response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[len(sub_urls)-2], tax_number=sub_urls[len(sub_urls)-1])
             elif args[0] == _PYERIC_API_BASE_URL_02 + '/post_job':
                 return MockErica.post_dummy_job()
             elif args[0] == _PYERIC_API_BASE_URL_02 + '/get_job':
