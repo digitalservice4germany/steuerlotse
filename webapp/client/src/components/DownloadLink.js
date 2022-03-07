@@ -37,14 +37,6 @@ const LinkElement = styled.span`
   font-weight: var(--font-bold);
   color: var(--text-color);
   border-radius: 50%;
-
-  ${({ large }) =>
-    large &&
-    `
-        --adjust-position: -0.2;
-        --margin-right: 14px;
-        --font-size: var(--text-xl);
-    `}
 `;
 
 export default function DownloadLink({ text, url, large }) {
