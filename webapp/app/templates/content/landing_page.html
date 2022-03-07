@@ -68,7 +68,7 @@
                             <li class="mt-1">{{ _('landing.hero-list-item-3') }}</li>
                         </ul>
                         <p class="mt-4 font-weight-bold">{{ _('landing.hero-check-use-desc') }}</p>
-                        {{ components.primaryButton( text=_('landing.hero-check-use-button'), url=url_for('eligibility', step='first_input_step')) }}
+                        {{ components.primaryButtonWithTracking( text=_('landing.hero-check-use-button'), url=url_for('eligibility', step='first_input_step'), target=_('internal-linking.source.target.eligibility'), source=_('internal-linking.source.landing.cta')) }}
                     </div>
                         <div class="hero__inner_image">
                             <picture>

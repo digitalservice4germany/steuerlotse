@@ -5,6 +5,10 @@
       <a class="{% if  float_right %} float-right {% endif %} btn btn-primary" href="{{ url }}">{{ text }}</a>
 {%- endmacro %}
 
+{% macro primaryButtonWithTracking(text, url, target, source, float_right=False) -%}
+      <a class="{% if  float_right %} float-right {% endif %} btn btn-primary" href="{{ url }}" onclick="plausible('{{ url_target }}', {props: {method: '{{ source }}'}})">{{ text }}</a>
+{%- endmacro %}
+
 {% macro primaryButtonWithIcon(text, url, icon, target) -%}
     <a class="btn btn-primary" href="{{ url}}" target="{{target | default('_blank', true)}}">{{ text }} {{icon}}</a>
 {%- endmacro %}
