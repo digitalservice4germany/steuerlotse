@@ -19,9 +19,6 @@ describe("Filing", () => {
         .then((href) => {
           cy.request(href).its("body").should("not.be.empty");
         });
-      cy.readFile("cypress/downloads/AngabenSteuererklaerung.pdf").should(
-        "exist"
-      );
     });
 
     it("going to next step is possible", () => {
