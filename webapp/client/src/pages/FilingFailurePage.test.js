@@ -56,12 +56,6 @@ describe("FilingFailurePage translations", () => {
     );
   });
 
-  it("should render next step text", () => {
-    expect(
-      screen.getByText("kontakt@steuerlotse-rente.de").closest("p")
-    ).toContain(screen.getByText(filingFailureTexts.nextStep.text));
-  });
-
   it("should render button text", () => {
     expect(screen.getByText(filingFailureTexts.textUs)).toBeDefined();
   });
