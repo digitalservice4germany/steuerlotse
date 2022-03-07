@@ -30,7 +30,7 @@ describe("Filing", () => {
   context("failure", () => {
     beforeEach(() => {
       cy.fixture("est_sample_data_single_user").then((est_data) => {
-        est_data["produce_validation_error"] = true;
+        est_data["person_a_dob"] = "2052-12-01";
         cy.request("POST", "/testing/set_session_data/form_data", est_data);
       });
       cy.visit("/lotse/step/filing");

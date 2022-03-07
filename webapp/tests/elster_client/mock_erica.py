@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 from typing import List, Tuple
 
 from flask import json
@@ -117,7 +118,7 @@ class MockErica:
             return get_json_response('validation_invalid_year')
 
         # ValidationError
-        if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID:
+        if MockErica._is_input_data_invalid(input_data):
             if show_response:
                 return get_json_response('validation_error_with_resp')
             else:
@@ -150,7 +151,7 @@ class MockErica:
             raise UnexpectedInputDataError()
 
         # ValidationError
-        if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID or 'produce_validation_error' in input_data['est_data']:
+        if MockErica._is_input_data_invalid(input_data):
             if show_response:
                 return get_json_response('validation_error_with_resp')
             else:
@@ -385,3 +386,8 @@ class MockErica:
             MockErica.request_id_count[request_id] = count
             response = {"processStatus": "processing"}
         return response
+
+    @staticmethod
+    def _is_input_data_invalid(input_data):
+        return input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID or \
+               datetime.strptime(input_data['est_data']['person_a_dob'], '%Y-%m-%d').date().year > VERANLAGUNGSJAHR
