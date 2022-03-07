@@ -129,10 +129,12 @@ const OutlineButton = styled.button`
   }
 
   :focus-visible {
-    color: var(--focus-color);
+    color: var(--focus-text-color);
+    background-color: var(--focus-color);
     outline: none;
     box-shadow: none;
-    border: 1px solid var(--focus-border-color);
+    border: 0;
+    border-bottom: 4px solid var(--focus-border-color);
   }
 `;
 
