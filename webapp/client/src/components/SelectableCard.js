@@ -29,7 +29,7 @@ const CardLabel = styled.label`
     overflow: hidden;
   }
 
-  input:focus-visible + .checkmark {
+  input:focus + .checkmark {
     box-shadow: 0 0 0 3px var(--focus-color);
     background-color: var(--focus-color);
   }

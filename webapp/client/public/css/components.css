@@ -16,11 +16,6 @@
     border-bottom: 4px solid var(--link-color);
 }
 
-.btn-primary:not(:disabled):not(.disabled):active:focus {
-    outline: none;
-    box-shadow: none;
-    background-color: var(--link-color);
-}
 
 .btn-primary:not(:disabled):not(.disabled):active, a.btn-primary:not(:disabled):not(.disabled):active{
     background: var(--link-color) !important;
@@ -36,9 +31,13 @@
     border-bottom: 4px solid var(--link-hover-color);
 }
 
-.btn-primary:focus-visible, a.btn-primary:focus-visible{
+
+
+.btn-primary:focus, a.btn-primary:focus{
     color: var(--focus-text-color);
+
     background: var(--focus-color);
+
     outline: none;
     box-shadow: none;
     border: 0;
@@ -74,36 +73,34 @@
     border: 1px solid var(--link-hover-color);
 }
 
-.btn-outline-primary:focus-visible, a.btn-outline-primary:focus-visible {
+.btn-outline-primary:focus, a.btn-outline-primary:focus{
     color: var(--focus-color);
+
     outline:none;
     box-shadow: none;
     border: 1px solid var(--focus-border-color);
 }
 
-.btn-help {
+
+.btn-help  {
     background: var(--link-color);
     color: var(--inverse-text-color) !important;
     text-decoration: none;
 }
 
-.btn-help:hover {
+.btn-help:hover  {
     background: var(--link-hover-color);
     color: var(--inverse-text-color) !important;
     text-decoration: none;
 }
 
-.btn-help:focus {
-    box-shadow: none;
-}
-
-.btn-help:focus-visible {
+.btn-help:focus  {
     background: var(--focus-color);
     color: var(--text-color) !important;
     text-decoration: none;
 }
 
-.remove-button {
+.remove-button{
     cursor: pointer;
     margin-left: 5px;
     padding: .375rem .75rem;
@@ -120,7 +117,7 @@
     background: var(--link-hover-color);
 }
 
-.remove-button:focus-visible{
+.remove-button:focus{
     text-decoration: none;
     color: var(--text-color) !important;
     background: var(--focus-color);
@@ -165,7 +162,7 @@
     display: inline;
 }
 
-.accordion .card-header:focus-within button:focus-visible span {
+.accordion .card-header:focus-within button span {
     color: var(--text-color);
     background: var(--focus-color);
     border-bottom: 4px solid var(--focus-border-color);
@@ -248,9 +245,11 @@
     color: var(--link-hover-color);
 }
 
-.details-card .card-header button:focus-visible span {
+.details-card .card-header button:focus span {
     color: var(--focus-text-color);
+
     background: var(--focus-color);
+
     outline:none;
     box-shadow: none;
     border: 0;
@@ -480,7 +479,7 @@ a.back-link:focus a.back-link:active{
     opacity: 0;
 }
 
-.checkbox input:focus-visible + label {
+.checkbox input:focus + label {
     box-shadow: 0 0 0 3px var(--focus-color);
     background-color: var(--focus-color);
 }
@@ -514,7 +513,7 @@ a.back-link:focus a.back-link:active{
     border: 1px solid var(--border-color) !important;
 }
 
-.switch-yes:focus-visible, .switch-no:focus-visible {
+.switch-yes:focus, .switch-no:focus {
     color: var(--focus-text-color) !important;
     background: var(--focus-color) !important;
 
@@ -530,7 +529,8 @@ a.back-link:focus a.back-link:active{
     border: 1px solid var(--link-color) !important;
 }
 
-.switch-yes.active:focus-visible, .switch-no.active:focus-visible {
+.switch-yes:active, .switch-no:active,
+.switch-yes.active:focus, .switch-no.active:focus {
     box-shadow: 0 0 0 3px var(--focus-color) !important;
 }
 
@@ -539,6 +539,7 @@ a.back-link:focus a.back-link:active{
     background: var(--link-hover-color) !important;
     border: 1px solid var(--link-hover-color) !important;
 }
+
 
 /* RADIO BUTTONS */
 input[type="radio"] {
@@ -572,11 +573,11 @@ input[type="radio"]:checked + label:hover::before {
     background: url("/icons/radio_button_checked_hover.svg") no-repeat center;
 }
 
-input[type="radio"]:not(:checked):focus-visible + label::before {
+input[type="radio"]:not(:checked):focus + label::before {
     background: url("/icons/radio_button_focus.svg") no-repeat center;
 }
 
-input[type="radio"]:checked:focus-visible + label::before {
+input[type="radio"]:checked:focus + label::before {
     background: url("/icons/radio_button_checked_focus.svg") no-repeat center;
 }
 
