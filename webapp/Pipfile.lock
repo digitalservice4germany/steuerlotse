@@ -768,11 +768,11 @@
         },
         "schwifty": {
             "hashes": [
-                "sha256:00aca7f39b938b3c806453cca4154229d6ea4a9c500f9a17447962c5e70a40d2",
-                "sha256:4c9e7853ca0c413623af9a8549b0e1125b876283c37950d63d9a2cd15c610521"
+                "sha256:21807258c9ef94f04b8fb0e4e01632723d73573680784f0ccdaf75b6a7bc8996",
+                "sha256:b1ea28f0dac618c646494f593265497a1c416f65fec381ddb89c663323058a2e"
             ],
             "index": "pypi",
-            "version": "==2022.2.0"
+            "version": "==2022.3.1"
         },
         "setuptools": {
             "hashes": [
