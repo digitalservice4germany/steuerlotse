@@ -1,6 +1,7 @@
 from flask_wtf.csrf import generate_csrf
 from wtforms.validators import InputRequired
 
+from app.config import Config
 from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.fields import ConfirmationField
@@ -9,7 +10,7 @@ from flask import render_template, url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
-from app.model.components import ConfirmationProps, StepSubmitAcknowledgeProps
+from app.model.components import ConfirmationProps, FilingSuccessProps, FilingFailureProps, StepSubmitAcknowledgeProps
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
@@ -60,24 +61,35 @@ class StepFiling(DisplayStep):
     name = 'filing'
 
     def __init__(self, **kwargs):
-        super(StepFiling, self).__init__(title=_('form.lotse.filing.title'),
-                                         intro=_('form.lotse.filing.intro'),
+        super(StepFiling, self).__init__(title=_('form.lotse.filing.success.header-title'),
                                          **kwargs)
 
     def render(self, data, render_info):
-        render_info.additional_info['disable_extended_footer'] = True
         if render_info.additional_info['elster_data']['was_successful']:
-            return render_template('lotse/display_filing_success.html', render_info=render_info,
-                                   elster_data=render_info.additional_info['elster_data'],
-                                   header_title=_('form.lotse.filing.header-title'),
-                                   tax_number_provided=data.get('steuernummer_exists') == 'yes'
-                                   if data.get('steuernummer_exists')
-                                   else None)
+            props_dict = FilingSuccessProps(
+                next_url=render_info.next_url,
+                transferTicket=render_info.additional_info['elster_data']['transfer_ticket'],
+                downloadUrl=url_for("download_pdf"),
+                # This ternary operator is needed so that we catch the case of users going directly to the filing page with incorrent data and not going through the actual flow.
+                taxNumberProvided=data.get('steuernummer_exists') == 'yes' if data.get('steuernummer_exists') else None,
+                plausibleDomain=Config.PLAUSIBLE_DOMAIN
+            ).camelized_dict()
+            component = 'FilingSuccessPage'
+            header_title = _('form.lotse.filing.success.header-title')
         else:
-            render_info.next_url = None
-            return render_template('lotse/display_filing_failure.html', render_info=render_info,
-                                   elster_data=render_info.additional_info['elster_data'],
-                                   header_title=_('form.lotse.filing.failure.header-title'))
+            props_dict = FilingFailureProps(
+                error_details=render_info.additional_info['elster_data'][
+                    'validation_problems'] if 'validation_problems' in render_info.additional_info[
+                    'elster_data'] else []
+            ).camelized_dict()
+            component = 'FilingFailurePage'
+            header_title = _('form.lotse.filing.failure.header-title')
+        return render_react_template(component=component,
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=render_info.form,
+                                     header_title=header_title,
+                                     disable_extended_footer=True)
 
 
 class StepAck(DisplayStep):

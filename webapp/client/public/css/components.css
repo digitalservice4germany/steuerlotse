@@ -421,45 +421,6 @@ a.back-link:focus a.back-link:active{
     text-decoration: none;
 }
 
-.download-link{
-    --total-line-height: var(--lineheight-l);
-    --font-size: var(--text-base);
-    position: relative;
-
-    font-weight: var(--font-bold);
-    font-size: var(--font-size);
-    line-height: var(--total-line-height);
-}
-.download-link-icon{
-    --total-line-height: var(--lineheight-l);
-    --size: 1.6em;
-    --adjust-position: -0.4;
-    --margin-right: 6px;
-    content: "";
-    display: inline-block;
-    margin: 0 var(--margin-right) calc(var(--adjust-position) * var(--size)) 0;
-    top: 0;
-
-    line-height: var(--total-line-height);
-    width: var(--size);
-    height: var(--size);
-
-    text-align: center;
-    font-weight: var(--font-bold);
-    color: var(--text-color);
-
-    background: var(--icon-default-color) url("/icons/download_icon.svg") no-repeat center/var(--size);
-
-    border-radius: 50%;
-
-}
-
-.download-link-l{
-    --adjust-position: -0.2;
-    --margin-right: 14px;
-    --font-size: var(--text-xl);
-}
-
 /* CHECKBOX / CONSENT-BOX */
 
 .checkbox {

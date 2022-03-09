@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 from typing import List, Tuple
 
 from flask import json
@@ -84,7 +85,7 @@ class MockErica:
                 response = MockErica.get_tax_offices()
             elif _PYERIC_API_BASE_URL_01 + '/tax_number_validity' in args[0]:
                 sub_urls = args[0].split('/')
-                response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[2], tax_number=sub_urls[3])
+                response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[len(sub_urls)-2], tax_number=sub_urls[len(sub_urls)-1])
             elif args[0] == _PYERIC_API_BASE_URL_02 + '/post_job':
                 return MockErica.post_dummy_job()
             elif args[0] == _PYERIC_API_BASE_URL_02 + '/get_job':
@@ -117,7 +118,7 @@ class MockErica:
             return get_json_response('validation_invalid_year')
 
         # ValidationError
-        if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID:
+        if MockErica._is_input_data_invalid(input_data):
             if show_response:
                 return get_json_response('validation_error_with_resp')
             else:
@@ -150,7 +151,7 @@ class MockErica:
             raise UnexpectedInputDataError()
 
         # ValidationError
-        if input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID:
+        if MockErica._is_input_data_invalid(input_data):
             if show_response:
                 return get_json_response('validation_error_with_resp')
             else:
@@ -385,3 +386,8 @@ class MockErica:
             MockErica.request_id_count[request_id] = count
             response = {"processStatus": "processing"}
         return response
+
+    @staticmethod
+    def _is_input_data_invalid(input_data):
+        return input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID or \
+               datetime.strptime(input_data['est_data']['person_a_dob'], '%Y-%m-%d').date().year > VERANLAGUNGSJAHR

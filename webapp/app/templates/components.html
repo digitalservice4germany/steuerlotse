@@ -5,6 +5,14 @@
       <a class="{% if  float_right %} float-right {% endif %} btn btn-primary" href="{{ url }}">{{ text }}</a>
 {%- endmacro %}
 
+{% macro primaryButtonWithTracking(text, url, target, source, plausible_domain_set=False, float_right=False) -%}
+    {% if plausible_domain_set %}
+      <a class="{% if  float_right %} float-right {% endif %} btn btn-primary" href="{{ url }}" onclick="plausible('{{ target }}', {props: {method: '{{ source }}'}})">{{ text }}</a>
+    {% else %}
+        {{ primaryButton(text, url, float_right) }}
+    {% endif %}
+{%- endmacro %}
+
 {% macro primaryButtonWithIcon(text, url, icon, target) -%}
     <a class="btn btn-primary" href="{{ url}}" target="{{target | default('_blank', true)}}">{{ text }} {{icon}}</a>
 {%- endmacro %}
@@ -22,20 +30,6 @@
           <span class="back-link-element back-link-icon"></span>
           <span class="back-link-element">{{text}}</span>
       </a>
-{%- endmacro %}
-
-{% macro downloadLink(text, url, large=False) -%}
-    {% if large %}
-        <a href="{{ url }}" download class='download-link download-link-l'>
-            <span class="download-link-icon download-link-l"></span>
-            {{text}}
-        </a>
-    {% else %}
-        <a href="{{ url }}" download class='download-link'>
-            <span class="download-link-icon"></span>
-            {{text}}
-        </a>
-    {% endif %}
 {%- endmacro %}
 
 {% macro render_detail(field) %}
