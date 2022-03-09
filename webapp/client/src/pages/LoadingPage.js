@@ -20,6 +20,13 @@ export default function LoadingPage({ status, delay }) {
   function loadFailure() {
     document.getElementById("failed").click();
   }
+
+  function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
   useEffect(() => {
     async function fetchData() {
       console.log(
@@ -38,6 +45,7 @@ export default function LoadingPage({ status, delay }) {
           break;
         case "success":
           setProgress(100);
+          await sleep(500);
           loadSuccess();
           break;
         case "failure":
