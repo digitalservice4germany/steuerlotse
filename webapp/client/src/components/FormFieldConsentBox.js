@@ -21,7 +21,7 @@ const ConsentBox = styled.div`
     opacity: 0;
   }
 
-  &.checkbox input:focus-visible + label {
+  &.checkbox input:focus + label {
     box-shadow: 0 0 0 3px var(--focus-color);
     background-color: var(--focus-color);
   }

@@ -29,7 +29,7 @@ const Anchor = styled.a`
     text-decoration: none;
   }
 
-  &:focus-visible {
+  &:focus {
     color: var(--focus-text-color);
     background: var(--focus-color);
     outline: none;

@@ -15,7 +15,7 @@ const DropDown = styled.select`
     min-height: 55px;
   }
 
-  .steuerlotse-select:focus-visible {
+  .steuerlotse-select:focus {
     border: 2px solid var(--focus-border-color);
     box-shadow: 0 0 0 2px var(--focus-color);
   }
