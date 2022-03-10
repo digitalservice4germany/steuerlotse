@@ -4062,7 +4062,7 @@ msgid "contact.service-mail-note"
 msgstr ""
 "Bitte verwenden Sie in Ihrer E-Mail einen passenden Betreff. Das "
 "erleichtert uns die Bearbeitung der Anfragen. Ihre E-Mail wird "
-"ausschließlich zur Beantwortung ihrer Anfrage verarbeitet und "
+"ausschließlich zur Beantwortung Ihrer Anfrage verarbeitet und "
 "gespeichert."
 
 #: app/templates/content/contact.html:13
