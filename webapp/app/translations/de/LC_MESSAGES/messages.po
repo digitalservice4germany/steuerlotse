@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-03-07 11:32+0100\n"
+"POT-Creation-Date: 2022-03-11 15:52+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2461,15 +2461,16 @@ msgid "form.lotse.confirmation.header-title"
 msgstr "Steuerformular - Versand - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:64
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:83
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:78
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:109
 msgid "form.lotse.filing.success.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:95
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:86
 msgid "form.lotse.filing.failure.header-title"
 msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:103
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:99
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
@@ -3030,31 +3031,31 @@ msgstr ""
 "Bitte prüfen Sie die Steuer-Identifikationsnummer. Die Angabe muss mit "
 "der Nummer identisch sein, die Sie zum Anmelden eingegeben haben."
 
-#: app/templates/components.html:20
+#: app/templates/components.html:24
 msgid "form.lotse.summary-button-edit"
 msgstr "Ändern"
 
-#: app/templates/components.html:118 app/templates/components.html:126
+#: app/templates/components.html:108 app/templates/components.html:116
 msgid "form.optional"
 msgstr "optional"
 
-#: app/templates/components.html:143
+#: app/templates/components.html:133
 msgid "errors.warning-image.aria-label"
 msgstr "Fehlermeldung"
 
-#: app/templates/components.html:173
+#: app/templates/components.html:163
 msgid "plus.alt.text"
 msgstr "Plus-Zeichen"
 
-#: app/templates/components.html:176
+#: app/templates/components.html:166
 msgid "minus.alt.text"
 msgstr "Minus-Zeichen"
 
-#: app/templates/components.html:250
+#: app/templates/components.html:240
 msgid "button.help"
 msgstr "Weitere Informationen"
 
-#: app/templates/components.html:259
+#: app/templates/components.html:249
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
@@ -5392,4 +5393,9 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "form.lotse.filing.header-title"
+#~ msgstr ""
+#~ "Steuerformular - Abgabebestätigung - Der "
+#~ "Steuerlotse für Rente und Pension"
 

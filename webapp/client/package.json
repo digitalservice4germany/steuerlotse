@@ -28,10 +28,12 @@
     "react-app-rewire-styled-components": "^3.0.2",
     "react-app-rewired": "^2.2.1",
     "react-bootstrap": "^1.6.4",
+    "react-device-detect": "^2.1.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.15.5",
     "react-imask": "^6.4.2",
     "react-scripts": "^4.0.3",
+    "react-social-icons": "^5.11.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

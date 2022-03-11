@@ -182,3 +182,4 @@ class StepSessionNoteProps(ComponentProps):
 class StepSubmitAcknowledgeProps(ComponentProps):
     prev_url: str
     logout_url: str
+    plausibleDomain: Optional[str]

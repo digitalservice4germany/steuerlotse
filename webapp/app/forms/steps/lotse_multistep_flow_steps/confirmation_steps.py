@@ -6,7 +6,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.fields import ConfirmationField
 
-from flask import render_template, url_for
+from flask import url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
@@ -101,9 +101,10 @@ class StepAck(DisplayStep):
     def render(self, data, render_info):
         prop_dicts = StepSubmitAcknowledgeProps(
             prev_url=render_info.prev_url,
-            logout_url=render_info.next_url
+            logout_url=render_info.next_url,
+            plausibleDomain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
         return render_react_template(component='SubmitAcknowledgePage',
                                      props=prop_dicts,
-                                     header_title=_('form.lotse.filing.header-title'),
+                                     header_title=_('form.lotse.filing.success.header-title'),
                                      disable_extended_footer=True)
