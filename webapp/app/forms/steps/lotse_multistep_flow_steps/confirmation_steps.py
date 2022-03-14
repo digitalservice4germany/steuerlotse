@@ -68,11 +68,11 @@ class StepFiling(DisplayStep):
         if render_info.additional_info['elster_data']['was_successful']:
             props_dict = FilingSuccessProps(
                 next_url=render_info.next_url,
-                transferTicket=render_info.additional_info['elster_data']['transfer_ticket'],
-                downloadUrl=url_for("download_pdf"),
+                transfer_ticket=render_info.additional_info['elster_data']['transfer_ticket'],
+                download_url=url_for("download_pdf"),
                 # This ternary operator is needed so that we catch the case of users going directly to the filing page with incorrent data and not going through the actual flow.
-                taxNumberProvided=data.get('steuernummer_exists') == 'yes' if data.get('steuernummer_exists') else None,
-                plausibleDomain=Config.PLAUSIBLE_DOMAIN
+                taxNumber_provided=data.get('steuernummer_exists') == 'yes' if data.get('steuernummer_exists') else None,
+                plausible_domain=Config.PLAUSIBLE_DOMAIN
             ).camelized_dict()
             component = 'FilingSuccessPage'
             header_title = _('form.lotse.filing.success.header-title')
@@ -102,7 +102,7 @@ class StepAck(DisplayStep):
         prop_dicts = StepSubmitAcknowledgeProps(
             prev_url=render_info.prev_url,
             logout_url=render_info.next_url,
-            plausibleDomain=Config.PLAUSIBLE_DOMAIN
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
         return render_react_template(component='SubmitAcknowledgePage',
                                      props=prop_dicts,

@@ -55,7 +55,6 @@ export default function ShareIcons({
     mailSubject
   )}&body=${encodeURIComponent(shareText)}`;
   const whatsappText = `https://wa.me?text=${shareText}`;
-  console.log(`isMobile=${isMobile}`);
   return (
     <div>
       <FacebookIcon
