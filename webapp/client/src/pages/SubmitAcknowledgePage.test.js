@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import SubmitAcknowledgePage from "./SubmitAcknowledgePage";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
+import { fireEvent } from "@testing-library/dom";
 
 const MOCK_PROPS = {
   prevUrl: "/some/prev/path",
@@ -10,8 +11,11 @@ const MOCK_PROPS = {
 };
 
 describe("SubmitAcknowledgePage", () => {
-  it("should link to the previous page", () => {
+  beforeEach(() => {
     render(<SubmitAcknowledgePage {...MOCK_PROPS} />);
+  });
+
+  it("should link to the previous page", () => {
     expect(screen.getByText("Zurück").closest("a")).toHaveAttribute(
       "href",
       expect.stringContaining(MOCK_PROPS.prevUrl)
@@ -19,11 +23,18 @@ describe("SubmitAcknowledgePage", () => {
   });
 
   it("should link to logout in text", () => {
-    render(<SubmitAcknowledgePage {...MOCK_PROPS} />);
     expect(screen.getByText("Abmelden").closest("a")).toHaveAttribute(
       "href",
       expect.stringContaining(MOCK_PROPS.logoutUrl)
     );
+  });
+
+  it("should render facebook icon", () => {
+    expect(screen.getByLabelText("facebook")).toBeInTheDocument();
+  });
+
+  it("should render email icon", () => {
+    expect(screen.getByLabelText("email")).toBeInTheDocument();
   });
 });
 
@@ -77,5 +88,32 @@ describe("SubmitAcknowledgePage translations", () => {
 
   it("should render logout text", () => {
     expect(screen.getByText(submitAcknowledgeTexts.logout.text)).toBeDefined();
+  });
+});
+
+describe("SubmitAcknowledgePage with plausible domain", () => {
+  const MOCK_PROPS_PLAUSIBLE = {
+    prevUrl: "/some/prev/path",
+    logoutUrl: "/some/link/path",
+    plausibleDomain: "http://localhost:3000",
+  };
+
+  beforeEach(() => {
+    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    render(<SubmitAcknowledgePage {...MOCK_PROPS_PLAUSIBLE} />);
+  });
+
+  it("should add plausible goal for facebook click", () => {
+    fireEvent.click(screen.getByLabelText("facebook"));
+    expect(window.plausible).toHaveBeenCalledWith("Facebook icon clicked", {
+      method: "submitAcknowledge",
+    });
+  });
+
+  it("should add plausible goal for email click", () => {
+    fireEvent.click(screen.getByLabelText("email"));
+    expect(window.plausible).toHaveBeenCalledWith("Email icon clicked", {
+      method: "submitAcknowledge",
+    });
   });
 });
