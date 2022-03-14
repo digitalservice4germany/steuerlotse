@@ -106,14 +106,14 @@ describe("SubmitAcknowledgePage with plausible domain", () => {
   it("should add plausible goal for facebook click", () => {
     fireEvent.click(screen.getByLabelText("facebook"));
     expect(window.plausible).toHaveBeenCalledWith("Facebook icon clicked", {
-      props: { method: "submitAcknowledge" },
+      method: "submitAcknowledge",
     });
   });
 
   it("should add plausible goal for email click", () => {
     fireEvent.click(screen.getByLabelText("email"));
     expect(window.plausible).toHaveBeenCalledWith("Email icon clicked", {
-      props: { method: "submitAcknowledge" },
+      method: "submitAcknowledge",
     });
   });
 });
