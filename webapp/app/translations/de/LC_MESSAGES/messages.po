@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-03-11 15:52+0100\n"
+"POT-Creation-Date: 2022-03-14 15:48+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -5393,9 +5393,4 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#~ msgid "form.lotse.filing.header-title"
-#~ msgstr ""
-#~ "Steuerformular - Abgabebestätigung - Der "
-#~ "Steuerlotse für Rente und Pension"
 

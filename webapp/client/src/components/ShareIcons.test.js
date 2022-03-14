@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import ShareIcons from "./ShareIcons";
-import { fireEvent } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 
 describe("ShareIcons no plausible", () => {
   const MOCK_PROPS_DEFAULT = {
@@ -43,14 +43,14 @@ describe("ShareIcons with plausible", () => {
   });
 
   it("should add plausible goal for facebook icon", () => {
-    fireEvent.click(screen.getByLabelText("facebook"));
+    userEvent.click(screen.getByLabelText("facebook"));
     expect(window.plausible).toHaveBeenCalledWith("Facebook icon clicked", {
       method: MOCK_PROPS_PLAUSIBLE.sourcePage,
     });
   });
 
   it("should add plausible goal for email icon", () => {
-    fireEvent.click(screen.getByLabelText("email"));
+    userEvent.click(screen.getByLabelText("email"));
     expect(window.plausible).toHaveBeenCalledWith("Email icon clicked", {
       method: MOCK_PROPS_PLAUSIBLE.sourcePage,
     });
