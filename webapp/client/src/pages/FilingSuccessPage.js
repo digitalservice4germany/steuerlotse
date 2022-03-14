@@ -5,6 +5,7 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormHeader from "../components/FormHeader";
 import DownloadLink from "../components/DownloadLink";
 import StepNavButtons from "../components/StepNavButtons";
+import addPlausibleGoal from "../lib/helpers";
 
 export default function FilingSuccessPage({
   nextUrl,
@@ -23,8 +24,8 @@ export default function FilingSuccessPage({
   // Hook is called after component is rendered and will only run once after component is rendered
   useEffect(() => {
     if (taxNumberProvided !== null && plausibleDomain !== null) {
-      window.plausible("summary_submitted", {
-        props: { tax_number_provided: taxNumberProvided },
+      addPlausibleGoal(plausibleDomain, "summary_submitted", {
+        tax_number_provided: taxNumberProvided,
       });
     }
     return null;
