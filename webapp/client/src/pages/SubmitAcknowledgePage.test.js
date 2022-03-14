@@ -92,7 +92,7 @@ describe("SubmitAcknowledgePage translations", () => {
 });
 
 describe("SubmitAcknowledgePage with plausible domain", () => {
-  const MOCK_PROPS = {
+  const MOCK_PROPS_PLAUSIBLE = {
     prevUrl: "/some/prev/path",
     logoutUrl: "/some/link/path",
     plausibleDomain: "http://localhost:3000",
@@ -100,7 +100,7 @@ describe("SubmitAcknowledgePage with plausible domain", () => {
 
   beforeEach(() => {
     window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
-    render(<SubmitAcknowledgePage {...MOCK_PROPS} />);
+    render(<SubmitAcknowledgePage {...MOCK_PROPS_PLAUSIBLE} />);
   });
 
   it("should add plausible goal for facebook click", () => {

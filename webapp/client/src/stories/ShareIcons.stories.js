@@ -13,9 +13,9 @@ function Template(args) {
 export const Default = Template.bind({});
 
 Default.args = {
-  promoteUrl: "http://crossdivisions.com/",
+  promoteUrl: "https://steuerlotse-rente.de",
   shareText:
-    "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. ",
-  mailSubject: "Get hypnotized and relax",
-  sourcePage: "Bible",
+    "Tipp: Mit dem Steuerlotse für Rente und Pension kannst du deine Steuererklärung einfach und unkompliziert machen. Ich habe es selbst ausprobiert!",
+  mailSubject: "Hallo, schau dir das mal an: Steuerlotse für Rente und Pension",
+  sourcePage: "Story",
 };
