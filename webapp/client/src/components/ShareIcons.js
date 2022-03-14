@@ -3,6 +3,7 @@ import { SocialIcon } from "react-social-icons";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import addPlausibleGoal from "../lib/helpers";
 
 const FacebookIcon = styled(SocialIcon)`
   // This is needed for the hover effect on the background when going over the icon
@@ -35,14 +36,6 @@ const EmailIcon = styled(SocialIcon)`
   }
 `;
 
-function sendGoal(plausibleDomain, iconName, sourcePage) {
-  if (plausibleDomain !== null) {
-    window.plausible(`${iconName} icon clicked`, {
-      props: { method: sourcePage },
-    });
-  }
-}
-
 export default function ShareIcons({
   promoteUrl,
   shareText,
@@ -62,20 +55,32 @@ export default function ShareIcons({
         network="facebook"
         url={facebookFeedUrl}
         target="_blank"
-        onClick={() => sendGoal(plausibleDomain, "Facebook", sourcePage)}
+        onClick={() =>
+          addPlausibleGoal(plausibleDomain, "Facebook icon clicked", {
+            method: sourcePage,
+          })
+        }
       />
       {isMobile && (
         <WhatsappIcon
           className="mr-2"
           network="whatsapp"
           url={whatsappText}
-          onClick={() => sendGoal(plausibleDomain, "Whatsapp", sourcePage)}
+          onClick={() =>
+            addPlausibleGoal(plausibleDomain, "Whatsapp icon clicked", {
+              method: sourcePage,
+            })
+          }
         />
       )}
       <EmailIcon
         network="email"
         url={mailto}
-        onClick={() => sendGoal(plausibleDomain, "Email", sourcePage)}
+        onClick={() =>
+          addPlausibleGoal(plausibleDomain, "Email icon clicked", {
+            method: sourcePage,
+          })
+        }
       />
     </div>
   );
