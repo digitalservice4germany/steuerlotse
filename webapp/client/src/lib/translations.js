@@ -316,7 +316,7 @@ const translations = {
       heading: "Empfehlen Sie uns weiter!",
       text: "Wir möchten noch mehr Menschen bei Ihrer Steuererklärung helfen! Sie können uns dabei helfen, indem Sie den Steuerlotsen bekannter machen. Empfehlen Sie uns Ihren Bekannten und Freunden!",
       share_text:
-        "Tipp: Mit dem Steuerlotse für Rente und Pension kannst du deine Steuererklärung einfach und unkompliziert machen. Ich habe es selbst ausprobiert! Hier der Link: https://www.steuerlotse-rente.de/",
+        "Tipp: Mit dem Steuerlotsen für Rente und Pension kannst du deine Steuererklärung einfach und unkompliziert machen. Ich habe es selbst ausprobiert! Hier der Link: https://www.steuerlotse-rente.de/",
       mail_subject:
         "Hallo, schau dir das mal an: Steuerlotse für Rente und Pension",
       promote_url: "https://www.steuerlotse-rente.de/",
