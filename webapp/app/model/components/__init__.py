@@ -182,3 +182,6 @@ class StepSessionNoteProps(ComponentProps):
 class StepSubmitAcknowledgeProps(ComponentProps):
     prev_url: str
     logout_url: str
+
+class InfoTaxReturnForPensionersProps(ComponentProps):
+    plausible_domain: Optional[str]

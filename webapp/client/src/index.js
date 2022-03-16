@@ -31,6 +31,7 @@ import RevocationFailurePage from "./pages/RevocationFailurePage";
 import SubmitAcknowledgePage from "./pages/SubmitAcknowledgePage";
 import FilingSuccessPage from "./pages/FilingSuccessPage";
 import FilingFailurePage from "./pages/FilingFailurePage";
+import InfoTaxReturnForPensionersPage from "./pages/InfoTaxReturnForPensionersPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -61,6 +62,7 @@ const allowedComponents = {
   FilingSuccessPage,
   FilingFailurePage,
   SubmitAcknowledgePage,
+  InfoTaxReturnForPensionersPage,
 };
 
 function mountComponent(element) {
