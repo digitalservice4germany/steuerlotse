@@ -5,6 +5,12 @@ import AnchorButton from "./AnchorButton";
 const MOCK_PROPS = {
   text: "anchor text",
   url: "/some/link/path",
+  name: "/some/link/path",
+  isDownloadLink: "/some/link/path",
+  isSecondaryButton: "/some/link/path",
+  plausibleName: "/some/link/path",
+  className: "/some/link/path",
+  plausibleDomain: "/some/link/path",
 };
 
 describe("AnchorButton", () => {
