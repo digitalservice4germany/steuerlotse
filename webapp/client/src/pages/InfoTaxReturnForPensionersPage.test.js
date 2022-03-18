@@ -6,6 +6,9 @@ import InfoTaxReturnForPensionersPage from "./InfoTaxReturnForPensionersPage";
 
 const MOCK_PROPS = {
   plausibleDomain: "/plausibleDomain/path",
+  url: "/eligibility/step/marital_status?link_overview=False",
+  contactUsUrl: "mailto:kontakt@steuerlotse-rente.de",
+  howItWorksLink: "/sofunktionierts",
 };
 
 describe("InfoTaxReturnForPensionersPage", () => {
@@ -17,23 +20,36 @@ describe("InfoTaxReturnForPensionersPage", () => {
     render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
   });
 
-  it("should pass the Plausible Domain", () => {
-    expect(screen.getByText("Fragebogen starten")).toHaveAttribute(
-      "plausibleDomain",
-      expect.stringContaining(MOCK_PROPS.plausibleDomain)
+  // it("should pass with the Plausible Domain", () => {
+  //   expect(screen.getByText("Fragebogen starten")).toHaveAttribute(
+  //     "plausibleDomain",
+  //     expect.stringContaining(MOCK_PROPS.plausibleDomain)
+  //   );
+  // });
+
+  it("should render Start Questionnaire button with Link", () => {
+    expect(screen.getByText("Fragebogen starten")).toBeInTheDocument();
+    expect(screen.getByText("Fragebogen starten").closest("a")).toHaveAttribute(
+      "href",
+      expect.stringContaining(MOCK_PROPS.url)
     );
   });
 
-  it("should render Start Questionnaire button", () => {
-    expect(screen.getByText("Fragebogen starten")).toBeInTheDocument();
-  });
-
-  it("should render Contact Us button", () => {
+  it("should render Contact Us button with Link", () => {
     expect(screen.getByText("Kontaktieren Sie uns")).toBeInTheDocument();
+    expect(
+      screen.getByText("Kontaktieren Sie uns").closest("a")
+    ).toHaveAttribute("href", expect.stringContaining(MOCK_PROPS.contactUsUrl));
   });
 
   it("should render more information tax guide button", () => {
     expect(screen.getByText("Häufig gestellte Fragen")).toBeInTheDocument();
+    expect(
+      screen.getByText("Häufig gestellte Fragen").closest("a")
+    ).toHaveAttribute(
+      "href",
+      expect.stringContaining(MOCK_PROPS.howItWorksLink)
+    );
   });
 });
 
@@ -223,9 +239,9 @@ describe("InfoTaxReturnForPensionersPage without plausible", () => {
   });
 });
 
-// test the questions box buttons
-// test the links
-// test plausible
-// test the component renders with props
-// testing the parameters are given
-// test translations
+// test the questions box buttons are there - test text is found DONE
+// test the button links to a url - test the URL prop is there cannot be attribute DONE
+// test the component renders with props - DONE
+// test translations - DONE
+
+// test the button has a plausibleName prop

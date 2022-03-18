@@ -7,9 +7,9 @@ const MOCK_PROPS = {
   url: "/some/link/path",
   name: "/some/link/path",
   isDownloadLink: "/some/link/path",
-  isSecondaryButton: "/some/link/path",
-  plausibleName: "/some/link/path",
-  className: "/some/link/path",
+  isSecondaryButton: "true",
+  plausibleName: "plausibleName",
+  className: "className",
   plausibleDomain: "/some/link/path",
 };
 
