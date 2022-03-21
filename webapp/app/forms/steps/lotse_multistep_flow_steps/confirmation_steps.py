@@ -6,7 +6,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.fields import ConfirmationField
 
-from flask import render_template, url_for
+from flask import url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
@@ -68,11 +68,11 @@ class StepFiling(DisplayStep):
         if render_info.additional_info['elster_data']['was_successful']:
             props_dict = FilingSuccessProps(
                 next_url=render_info.next_url,
-                transferTicket=render_info.additional_info['elster_data']['transfer_ticket'],
-                downloadUrl=url_for("download_pdf"),
+                transfer_ticket=render_info.additional_info['elster_data']['transfer_ticket'],
+                download_url=url_for("download_pdf"),
                 # This ternary operator is needed so that we catch the case of users going directly to the filing page with incorrent data and not going through the actual flow.
-                taxNumberProvided=data.get('steuernummer_exists') == 'yes' if data.get('steuernummer_exists') else None,
-                plausibleDomain=Config.PLAUSIBLE_DOMAIN
+                taxNumber_provided=data.get('steuernummer_exists') == 'yes' if data.get('steuernummer_exists') else None,
+                plausible_domain=Config.PLAUSIBLE_DOMAIN
             ).camelized_dict()
             component = 'FilingSuccessPage'
             header_title = _('form.lotse.filing.success.header-title')
@@ -101,9 +101,10 @@ class StepAck(DisplayStep):
     def render(self, data, render_info):
         prop_dicts = StepSubmitAcknowledgeProps(
             prev_url=render_info.prev_url,
-            logout_url=render_info.next_url
+            logout_url=render_info.next_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
         return render_react_template(component='SubmitAcknowledgePage',
                                      props=prop_dicts,
-                                     header_title=_('form.lotse.filing.header-title'),
+                                     header_title=_('form.lotse.filing.success.header-title'),
                                      disable_extended_footer=True)

@@ -126,10 +126,10 @@ class ConfirmationProps(StepFormProps):
 
 class FilingSuccessProps(ComponentProps):
     next_url: str
-    transferTicket: str
-    downloadUrl: str
-    taxNumberProvided: bool
-    plausibleDomain: Optional[str]
+    transfer_ticket: str
+    download_url: str
+    taxNumber_provided: bool
+    plausible_domain: Optional[str]
 
 
 class FilingFailureProps(ComponentProps):
@@ -182,6 +182,7 @@ class StepSessionNoteProps(ComponentProps):
 class StepSubmitAcknowledgeProps(ComponentProps):
     prev_url: str
     logout_url: str
+    plausible_domain: Optional[str]
 
 class InfoTaxReturnForPensionersProps(ComponentProps):
     plausible_domain: Optional[str]

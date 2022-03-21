@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-03-09 15:26+0100\n"
+"POT-Creation-Date: 2022-03-14 15:48+0100\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2462,6 +2462,7 @@ msgstr "Steuerformular - Versand - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:64
 #: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:78
+#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:109
 msgid "form.lotse.filing.success.header-title"
 msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
 
