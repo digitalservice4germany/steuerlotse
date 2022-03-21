@@ -103,7 +103,6 @@ export default function AnchorButton({
   const onClickPlausible = () => {
     addPlausibleGoal(plausibleDomain, plausibleName);
   };
-  console.log(plausibleName);
   return !isSecondaryButton ? (
     <Anchor
       href={url}
