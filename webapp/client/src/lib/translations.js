@@ -62,7 +62,7 @@ const translations = {
     confirmation: {
       fieldRegistrationConfirmDataPrivacy: {
         labelText:
-          "Ich habe die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> inklusive der <taxGdprLink>Allgemeinen Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung</taxGdprLink> zur Kenntnis genommen und akzeptiere diese.",
+          "Ich habe die <dataPrivacyLink href='http://test.de'>Datenschutzerklärung</dataPrivacyLink> inklusive der <taxGdprLink>Allgemeinen Informationen zur Umsetzung der datenschutzrechtlichen Vorgaben der Artikel 12 bis 14 der Datenschutz-Grundverordnung in der Steuerverwaltung</taxGdprLink> zur Kenntnis genommen und akzeptiere diese.",
       },
       fieldRegistrationConfirmTermsOfService: {
         labelText:
@@ -398,6 +398,63 @@ const translations = {
       Yes: "Ja",
       No: "Nein",
     },
+  },
+  infoTaxReturnPensioners: {
+    intro: {
+      heading:
+        "Vereinfachte Steuererklärung für Rentner - wie Sie in wenigen Minuten Ihre Steuererklärung kostenlos online machen können",
+      paragraphOne:
+        "Dank des neuen vereinfachten Online-Steuerformulars für Menschen im Ruhestand, das wir im Auftrag des Bundesfinanzministeriums entwickelt haben, können Sie jetzt Ihre Steuererklärung schnell, unkompliziert und kostenlos online einreichen. Ganz ohne Vorwissen und lästigen Papierkram.",
+      paragraphTwo:
+        "Was viele nicht wissen: Auch Rentner sind grundsätzlich steuerpflichtig - wenn ihre Alterseinkünfte eine gewisse Grenze überschreiten. Und weil die <statistaLink>Renten seit Jahren angepasst</statistaLink> werden, rutschen immer mehr Ruheständler in die Steuerpflicht. Aktuell zählt das Statistische Bundesamt insgesamt <destatisLink>6,8 Millionen steuerpflichtige Rentnerinnen und Rentner</destatisLink> in Deutschland. Tendenz steigend. ",
+    },
+    section_two: {
+      heading:
+        "Die vereinfachte Steuererklärung wurde speziell für Menschen im Ruhestand entwickelt",
+      paragraph:
+        "Wenn Sie also zu denen gehören, denen unerwartet ein Brief vom Finanzamt ins Haus flattert, können Sie erstmal beruhigt sein. Denn mit dem Steuerlotsen für Rente und Pension schrumpft die Steuererklärung zu einer kleinen Pflicht, die Sie in wenigen Minuten erledigen können. Der Steuerlotse führt Sie Schritt-für-Schritt mit einfachen Erklärungen durch die vereinfachte Steuererklärung. Außerdem müssen Sie viel weniger Angaben machen als bei üblichen Steuerformularen. Die Daten zu Ihren Einkünften werden direkt via E-Daten an das Finanzamt übermittelt. Ihre Steuererklärung beschränkt sich damit auf persönliche Angaben und die Beiträge, die Sie absetzen möchten. Was Sie alles absetzen können, erfahren Sie in unserem <downloadPreparationLink>Vorbereitungs-PDF</downloadPreparationLink>. Das spart enorm Zeit und Nerven und vereinfacht den gesamten Prozess. ",
+    },
+    section_three: {
+      heading: "Wie finde ich heraus, ob ich als Rentner steuerpflichtig bin? ",
+      paragraphOne:
+        "Ob Sie den Steuerlotsen nutzen können, hängt natürlich davon ab, ob Sie steuerpflichtig sind. Wenn Sie bereits wissen, dass dies bei Ihnen der Fall ist, weil Sie zum Beispiel ein Schreiben vom Finanzamt erhalten haben, können Sie direkt zum Abschnitt „So funktioniert der Steuerlotse“ springen.",
+      paragraphTwo:
+        "Wenn Sie jedoch noch unsicher sind, ob Sie überhaupt eine Steuererklärung abgeben müssen, dann können Sie mit dem <incomeCalculatorLink>Alterseinkünfte-Rechner</incomeCalculatorLink> des Bayerischen Landesamts für Steuern kostenlos kalkulieren, wie hoch eine mögliche Einkommensteuer bei Ihnen ausfällt. Außerdem finden Sie weitere Informationen zur Besteuerung der Rente auf der Seite der <pensionersInsuranceLink>Deutschen Rentenversicherung.</pensionersInsuranceLink>",
+    },
+    section_four: {
+      heading:
+        "So funktioniert der Steuerlotse für Rente und Pension in 4 Schritten",
+      paragraph:
+        "Ist die Frage der Steuerpflicht geklärt, dann geht es mit dem Steuerlotsen in 4 Schritten zur fertigen Steuererklärung.",
+    },
+    section_five: {
+      listItemOneHeading: "Schritt 1: Nutzung prüfen",
+      listItemOne:
+        "Im ersten Schritt müssen Sie auf der <eligibilityLink>Webseite des Steuerlotsen prüfen</eligibilityLink>, ob Sie den Steuerlotsen in seiner aktuellen Entwicklungsform nutzen können. Denn zur Zeit richtet sich der Steuerlotse nur an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben. Trifft dies zu, können Sie im zweiten Schritt mit der Registrierung fortfahren.",
+      listItemTwoHeading: "Schritt 2: Registrieren",
+      listItemTwo:
+        "Wenn Sie den Steuerlotsen nutzen können, registrieren Sie sich im nächsten Schritt. Bei der <registrationLink>Registrierung</registrationLink> wird automatisch ein Freischaltcode bei Ihrer Finanzverwaltung beantragt. Den Freischaltcode wird Ihnen per Brief innerhalb von zwei Wochen nach erfolgreicher Beantragung zugesendet. Übrigens: auch eine Zusammenveranlagung ist möglich. Hierfür muss sich nur eine Person registrieren.",
+      listItemThreeHeading: "Schritt 3: Vorbereiten",
+
+      listItemThree:
+        "Nach der erfolgreichen Registrierung ist es wichtig, dass Sie sich gut vorbereiten. Stellen Sie daher sicher, alle erforderlichen Informationen, wie zum Beispiel Belege, vorliegen zu haben. Damit Sie nichts vergessen und perfekt vorbereitet sind, haben wir eine nützliche Kontrollliste mit allen wichtigen Informationen zum <downloadPreparationLink>Herunterladen</downloadPreparationLink> für Sie angefertigt.",
+      listItemFourHeading: "Schritt 4: Steuererklärung ausfüllen",
+
+      listItemFour:
+        "Nach Erhalt des Freischaltcodes können Sie mit der <activationLink>Steuererklärung</activationLink> beginnen. Dafür melden Sie sich auf der Webseite unter „Ihre Steuererklärung“ mit den entsprechenden Daten an. Aber aufgepasst: bevor Sie mit der vereinfachten Steuererklärung loslegen, sollten Sie alle erforderlichen Informationen, wie zum Beispiel Belege, vorliegen haben. Und damit Sie nichts vergessen und perfekt vorbereitet sind, gibt es noch eine nützliche Checkliste zum Herunterladen.",
+    },
+    section_six: {
+      text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
+    },
+  },
+  taxGuideQuestionBox: {
+    canIUseTaxGuide:
+      "Kann ich den Steuerlotsen für meine Steuererklärung nutzen?",
+    startQuestionnaire: "Fragebogen starten",
+    moreInformationTaxGuide:
+      "Wo finde ich mehr Informationen zum Steuerlotsen?",
+    faq: "Häufig gestellte Fragen",
+    contactUs: "Kontaktieren Sie uns",
   },
 };
 

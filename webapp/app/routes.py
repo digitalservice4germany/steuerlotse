@@ -27,6 +27,8 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
+from app.templates.react_template import render_react_template
+from app.model.components import InfoTaxReturnForPensionersProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -292,6 +294,7 @@ def register_request_handlers(app):
                                header_title=_('agb.header-title'),
                                js_needed=False)
 
+
     @app.route('/interviews')
     @add_caching_headers
     def interviews():
@@ -316,6 +319,13 @@ def register_request_handlers(app):
         return send_file('static/files/Steuerlotse-Vorbereitungshilfe.pdf', mimetype='application/pdf',
                          attachment_filename='SteuerlotseVorbereitungshilfe.pdf',
                          as_attachment=True)
+
+    @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
+    @add_caching_headers
+    def infotax():
+        return render_react_template(
+            props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
+            component='InfoTaxReturnForPensionersPage')
 
     @app.route('/ping')
     def ping():

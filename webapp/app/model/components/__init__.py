@@ -19,6 +19,9 @@ class FormProps(ComponentProps):
     csrf_token: str
     show_overview_button: bool
     next_button_label: Optional[str]
+    
+class ComponentPlausibleProps(ComponentProps):
+    plausible_domain: Optional[str]
 
 
 class FormPropsNoOverview(ComponentProps):
@@ -124,12 +127,11 @@ class ConfirmationProps(StepFormProps):
     data_privacy_link: str
 
 
-class FilingSuccessProps(ComponentProps):
+class FilingSuccessProps(ComponentPlausibleProps):
     next_url: str
     transfer_ticket: str
     download_url: str
     taxNumber_provided: bool
-    plausible_domain: Optional[str]
 
 
 class FilingFailureProps(ComponentProps):
@@ -179,7 +181,9 @@ class StepSessionNoteProps(ComponentProps):
     form: FormProps
 
 
-class StepSubmitAcknowledgeProps(ComponentProps):
+class StepSubmitAcknowledgeProps(ComponentPlausibleProps):
     prev_url: str
     logout_url: str
-    plausible_domain: Optional[str]
+
+class InfoTaxReturnForPensionersProps(ComponentPlausibleProps):
+    pass

@@ -100,7 +100,7 @@ a:visited {
   max-width: var(--input-width-25);
 }
 
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -137,8 +137,7 @@ input.form-control.field-error-found {
 .steuerlotse-select {
   border: 2px solid var(--border-color);
   border-radius: 0;
-  background: #fff url("/icons/select_icon.svg") no-repeat right 0.75rem
-    center;
+  background: #fff url("/icons/select_icon.svg") no-repeat right 0.75rem center;
   min-height: 55px;
 }
 
