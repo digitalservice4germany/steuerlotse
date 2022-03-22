@@ -43,16 +43,3 @@ describe("InfoTaxReturnForPensionersPage", () => {
     );
   });
 });
-
-describe("InfoTaxReturnForPensionersPage without plausible", () => {
-  beforeEach(() => {
-    render(<InfoTaxReturnForPensionersPage />);
-  });
-
-  it("should pass without Plausible Domain", () => {
-    expect(screen.getByText("Fragebogen starten")).not.toHaveAttribute(
-      "plausibleDomain",
-      expect.stringContaining(MOCK_PROPS.plausibleDomain)
-    );
-  });
-});
