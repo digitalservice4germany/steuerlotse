@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Trans, useTranslation } from "react-i18next";
 import AnchorButton from "../components/AnchorButton";
+import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
 
 const QuestionBox = styled.div`
   padding: 50px 0;
@@ -23,7 +24,6 @@ const QuestionBoxBackground = styled.div`
   }
 
   @media (max-width: 1024px) {
-    // left: calc(-50vw + 85%);
     left: -1.75rem;
     width: 100vw;
   }
@@ -222,17 +222,15 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
                 {trans("taxGuideQuestionBox.moreInformationTaxGuide")}
               </ParagraphTextMedium>
               <QuestionBoxAnchorButtons>
-                <AnchorButton
+                <SecondaryAnchorButton
                   url="/sofunktionierts"
                   text={t("taxGuideQuestionBox.faq")}
-                  isSecondaryButton
                   plausibleName="contentPage_faq_clicked"
                   plausibleDomain={plausibleDomain}
                 />
-                <AnchorButton
+                <SecondaryAnchorButton
                   url="mailto:kontakt@steuerlotse-rente.de"
                   text={t("taxGuideQuestionBox.contactUs")}
-                  isSecondaryButton
                   plausibleName="contentPage_contactUs_clicked"
                   plausibleDomain={plausibleDomain}
                   className="mt-4 mt-md-0"

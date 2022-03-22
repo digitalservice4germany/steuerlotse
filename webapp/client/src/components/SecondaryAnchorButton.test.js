@@ -1,27 +1,26 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AnchorButton from "./AnchorButton";
+import SecondaryAnchorButton from "./SecondaryAnchorButton";
 
-describe("AnchorButton", () => {
+describe("SecondaryAnchorButton", () => {
   const MOCK_PROPS = {
     text: "anchor text",
     url: "url/some/link/path",
     name: "name/some/link/path",
     isDownloadLink: false,
-    isSecondaryButton: false,
     plausibleName: "plausibleName",
     className: "className",
     plausibleDomain: "domain/some/link/path",
   };
 
   it("should render the text", () => {
-    render(<AnchorButton {...MOCK_PROPS} />);
+    render(<SecondaryAnchorButton {...MOCK_PROPS} />);
     expect(screen.getByText(MOCK_PROPS.text)).toBeInTheDocument();
   });
 
   it("should have a href attribute", () => {
-    render(<AnchorButton {...MOCK_PROPS} />);
+    render(<SecondaryAnchorButton {...MOCK_PROPS} />);
     expect(screen.getByText(MOCK_PROPS.text).closest("a")).toHaveAttribute(
       "href",
       expect.stringContaining(MOCK_PROPS.url)
@@ -30,7 +29,7 @@ describe("AnchorButton", () => {
 
   it("should not have a download attribute", () => {
     const PROPS_DATA = { ...MOCK_PROPS, isDownloadLink: false };
-    render(<AnchorButton {...PROPS_DATA} />);
+    render(<SecondaryAnchorButton {...PROPS_DATA} />);
 
     expect(screen.getByText(MOCK_PROPS.text).closest("a")).not.toHaveAttribute(
       "download"
@@ -39,7 +38,7 @@ describe("AnchorButton", () => {
 
   it("should have a download attribute", () => {
     const PROPS_DATA = { ...MOCK_PROPS, isDownloadLink: true };
-    render(<AnchorButton {...PROPS_DATA} />);
+    render(<SecondaryAnchorButton {...PROPS_DATA} />);
 
     expect(screen.getByText(MOCK_PROPS.text).closest("a")).toHaveAttribute(
       "download"
@@ -47,7 +46,7 @@ describe("AnchorButton", () => {
   });
 });
 
-describe("Anchor add plausible", () => {
+describe("Secondary Button add plausible", () => {
   const MOCK_PROPS = {
     text: "anchor text",
     url: "url/some/link/path",
@@ -58,7 +57,7 @@ describe("Anchor add plausible", () => {
 
   beforeEach(() => {
     window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
-    render(<AnchorButton {...MOCK_PROPS} />);
+    render(<SecondaryAnchorButton {...MOCK_PROPS} />);
   });
 
   it("should run the plausible function on click button", () => {

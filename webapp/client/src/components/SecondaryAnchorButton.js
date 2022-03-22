@@ -2,27 +2,34 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import addPlausibleGoal from "../lib/helpers";
 
-const Anchor = styled.a`
-  padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem;
-  margin-right: var(--spacing-05);
+const AnchorSecondary = styled.a`
+  padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
   font-size: var(--text-base);
+  font-weight: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
-  color: var(--inverse-text-color);
-  background: var(--link-color);
-  display: inline-block;
-  position: relative;
-  border: none;
+  color: var(--text-color);
+  width: fit-content;
+
+  margin-right: var(--spacing-05);
+
+  background: white;
+  background-clip: padding-box;
+
+  border: 0;
   border-radius: 0;
-  border-bottom: 4px solid var(--link-color);
+  border: 1px solid var(--border-color);
 
   &:not(:disabled):not(.disabled):active {
-    background: var(--link-color) !important;
-    border: none !important;
-    border-bottom: 4px solid var(--link-color) !important;
+    color: var(--link-active-color);
+    background-color: inherit;
+    border: 1px solid var(--link-active-color);
   }
 
   &:hover {
+    color: var(--link-hover-color);
+    border: 1px solid var(--link-hover-color);
+
     background: var(--link-hover-color);
     border: none;
     border-bottom: 4px solid var(--link-hover-color);
@@ -38,13 +45,9 @@ const Anchor = styled.a`
     border: 0;
     border-bottom: 4px solid var(--focus-border-color);
   }
-
-  &:visited {
-    color: var(--inverse-text-color);
-  }
 `;
 
-export default function AnchorButton({
+export default function SecondaryAnchorButton({
   text,
   url,
   name,
@@ -57,7 +60,7 @@ export default function AnchorButton({
     addPlausibleGoal(plausibleDomain, plausibleName);
   };
   return (
-    <Anchor
+    <AnchorSecondary
       href={url}
       download={isDownloadLink}
       name={name}
@@ -65,11 +68,11 @@ export default function AnchorButton({
       className={className}
     >
       {text}
-    </Anchor>
+    </AnchorSecondary>
   );
 }
 
-AnchorButton.propTypes = {
+SecondaryAnchorButton.propTypes = {
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   name: PropTypes.string,
@@ -79,7 +82,7 @@ AnchorButton.propTypes = {
   plausibleDomain: PropTypes.string,
 };
 
-AnchorButton.defaultProps = {
+SecondaryAnchorButton.defaultProps = {
   name: undefined,
   isDownloadLink: false,
   plausibleName: null,
