@@ -3,7 +3,7 @@ import styled from "styled-components";
 import addPlausibleGoal from "../lib/helpers";
 
 const AnchorSecondary = styled.a`
-  padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
+  padding: 18px 24px 18px 24px;
   font-size: var(--text-base);
   font-weight: var(--font-bold);
   letter-spacing: var(--tracking-wide);

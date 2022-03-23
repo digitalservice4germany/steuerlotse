@@ -402,7 +402,7 @@ const translations = {
   infoTaxReturnPensioners: {
     intro: {
       heading:
-        "Vereinfachte Steuererklärung für Rentner - wie Sie in wenigen Minuten Ihre Steuererklärung kostenlos online machen können",
+        "Vereinfachte Steuererklärung für Rentner — wie Sie in wenigen Minuten Ihre Steuererklärung kostenlos online machen können",
       paragraphOne:
         "Dank des neuen vereinfachten Online-Steuerformulars für Menschen im Ruhestand, das wir im Auftrag des Bundesfinanzministeriums entwickelt haben, können Sie jetzt Ihre Steuererklärung schnell, unkompliziert und kostenlos online einreichen. Ganz ohne Vorwissen und lästigen Papierkram.",
       paragraphTwo:
@@ -441,7 +441,7 @@ const translations = {
       listItemFourHeading: "Schritt 4: Steuererklärung ausfüllen",
 
       listItemFour:
-        "Nach Erhalt des Freischaltcodes können Sie mit der <activationLink>Steuererklärung</activationLink> beginnen. Dafür melden Sie sich auf der Webseite unter „Ihre Steuererklärung“ mit den entsprechenden Daten an. Aber aufgepasst: bevor Sie mit der vereinfachten Steuererklärung loslegen, sollten Sie alle erforderlichen Informationen, wie zum Beispiel Belege, vorliegen haben. Und damit Sie nichts vergessen und perfekt vorbereitet sind, gibt es noch eine nützliche Checkliste zum Herunterladen.",
+        "Nach Erhalt des Freischaltcodes können Sie mit der Steuererklärung beginnen. Dafür melden Sie sich auf der Webseite unter <activationLink>„Ihre Steuererklärung“</activationLink> mit den entsprechenden Daten an.",
     },
     section_six: {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
