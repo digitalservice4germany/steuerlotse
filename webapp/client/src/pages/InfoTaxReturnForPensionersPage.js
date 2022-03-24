@@ -1,153 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
 import { Trans, useTranslation } from "react-i18next";
 import AnchorButton from "../components/AnchorButton";
 import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
-
-const QuestionBox = styled.div`
-  padding: 50px 0;
-`;
-
-const QuestionBoxBackground = styled.div`
-  background: var(--bg-highlight-color);
-  height: 459px;
-  width: calc(100vw - 220px);
-  position: relative;
-  left: calc(-50vw + 82%);
-  display: flex;
-  justify-content: center;
-
-  @media (max-width: 1042px) {
-    left: calc(-50vw + 85.2%);
-  }
-
-  @media (max-width: 1024px) {
-    left: -1.75rem;
-    width: 100vw;
-  }
-
-  @media (max-width: 900px) {
-    left: -1rem;
-    width: 100vw;
-  }
-
-  @media (max-width: 360px) {
-    height: 615px;
-  }
-`;
-
-const HeadingText = styled.h1`
-  font-size: 2.25rem;
-  width: 832px;
-  @media (width: 320px) {
-    font-size: 2.25rem;
-  }
-  @media (width: 1024px) {
-    width: 811px;
-  }
-  @media (width: 768px) {
-    width: 636px;
-  }
-  @media (width: 360px) {
-    width: 320px;
-  }
-`;
-const ParagraphHeadingText = styled.p`
-  font-size: 1.75rem;
-  width: 832px;
-  @media (width: 320px) {
-    font-size: 2.25rem;
-  }
-  @media (width: 1024px) {
-    width: 811px;
-  }
-  @media (width: 768px) {
-    width: 636px;
-  }
-  @media (width: 360px) {
-    width: 320px;
-  }
-  @media (width: 320px) {
-    font-size: 1.5rem;
-  }
-`;
-const ParagraphTextLarger = styled.p`
-  font-size: 1.5rem;
-
-  @media (max-width: 320px) {
-    font-size: 1.25rem;
-  }
-`;
-
-const ParagraphTextMedium = styled.p`
-  font-size: 1.25rem;
-`;
-
-const QuestionBoxLayer = styled.div`
-  padding-left: var(--spacing-03);
-  padding-right: var(--spacing-03);
-  margin: auto;
-  flex: 1;
-  width: 100%;
-  max-width: var(--main-max-width);
-`;
-
-const ContentTopSpacing = styled.div`
-  margin-top: 9.375rem;
-  position: relative;
-
-  & img {
-    width: 930px;
-
-    @media (width: 1280px) {
-      width: 843px;
-    }
-    @media (width: 1024px) {
-      width: 813px;
-    }
-    @media (width: 768px) {
-      width: 728px;
-    }
-    @media (width: 475px) {
-      width: 385px;
-    }
-    @media (width: 360px) {
-      width: 320px;
-    }
-  }
-`;
-
-const QuestionBoxAnchorButtons = styled.div`
-  @media (max-width: 605px) {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-const ListBox = styled.div`
-  background: var(--bg-highlight-color);
-  padding: 32px;
-  list-style-type: none;
-  width: 736px;
-
-  & ParagraphTextLarger {
-    width: 668px;
-  }
-
-  @media (max-width: 320px) {
-    padding: 16px;
-  }
-`;
-
-const ContentText = styled.div`
-  width: 800px;
-
-  & ParagraphTextLarger {
-    width: 738px;
-    background: blue;
-  }
-`;
+import {
+  ContentTopSpacing,
+  HeadingText,
+  ParagraphIntroText,
+  ContentText,
+  ParagraphTextLarger,
+  ParagraphHeadingText,
+  ListBox,
+  ListBoxText,
+  QuestionBoxBackground,
+  QuestionBoxLayer,
+  QuestionBox,
+  ParagraphTextMedium,
+  QuestionBoxAnchorButtons,
+} from "../components/ContentPageStyles";
 
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();
@@ -202,59 +72,59 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
       <HeadingText className="h1 mt-5 mb-4">
         {t("infoTaxReturnPensioners.intro.heading")}
       </HeadingText>
-      <ParagraphHeadingText>
+      <ParagraphIntroText>
         {trans("infoTaxReturnPensioners.intro.paragraphOne")}
-      </ParagraphHeadingText>
+      </ParagraphIntroText>
       <ContentText>
         <ParagraphTextLarger className=" mt-5">
           {trans("infoTaxReturnPensioners.intro.paragraphTwo")}
         </ParagraphTextLarger>
-        <ParagraphTextLarger className="mt-5 mb-3  font-weight-bold">
+        <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
           {t("infoTaxReturnPensioners.section_two.heading")}
-        </ParagraphTextLarger>
+        </ParagraphHeadingText>
         <ParagraphTextLarger>
           {trans("infoTaxReturnPensioners.section_two.paragraph")}
         </ParagraphTextLarger>
-        <ParagraphTextLarger className="h4 mt-5 mb-3  font-weight-bold">
+        <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
           {t("infoTaxReturnPensioners.section_three.heading")}
-        </ParagraphTextLarger>
+        </ParagraphHeadingText>
         <ParagraphTextLarger>
           {trans("infoTaxReturnPensioners.section_three.paragraphOne")}
         </ParagraphTextLarger>
         <ParagraphTextLarger>
           {trans("infoTaxReturnPensioners.section_three.paragraphTwo")}
         </ParagraphTextLarger>
-        <ParagraphTextLarger className="h4 mt-5 mb-3  font-weight-bold">
+        <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
           {t("infoTaxReturnPensioners.section_four.heading")}
-        </ParagraphTextLarger>
+        </ParagraphHeadingText>
         <ParagraphTextLarger>
           {trans("infoTaxReturnPensioners.section_four.paragraph")}
         </ParagraphTextLarger>
         <ListBox className="my-5">
-          <ParagraphTextLarger className="h4 mt-1 mb-3  font-weight-bold">
+          <ListBoxText className="h4 mt-1 mb-3  font-weight-bold">
             {t("infoTaxReturnPensioners.section_five.listItemOneHeading")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger>
+          </ListBoxText>
+          <ListBoxText>
             {trans("infoTaxReturnPensioners.section_five.listItemOne")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger className="h4 mt-5 mb-3  font-weight-bold">
+          </ListBoxText>
+          <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
             {t("infoTaxReturnPensioners.section_five.listItemTwoHeading")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger>
+          </ListBoxText>
+          <ListBoxText>
             {trans("infoTaxReturnPensioners.section_five.listItemTwo")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger className="h4 mt-5 mb-3  font-weight-bold">
+          </ListBoxText>
+          <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
             {t("infoTaxReturnPensioners.section_five.listItemThreeHeading")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger>
+          </ListBoxText>
+          <ListBoxText>
             {trans("infoTaxReturnPensioners.section_five.listItemThree")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger className="h4 mt-5 mb-3  font-weight-bold">
+          </ListBoxText>
+          <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
             {t("infoTaxReturnPensioners.section_five.listItemFourHeading")}
-          </ParagraphTextLarger>
-          <ParagraphTextLarger>
+          </ListBoxText>
+          <ListBoxText>
             {trans("infoTaxReturnPensioners.section_five.listItemFour")}
-          </ParagraphTextLarger>
+          </ListBoxText>
         </ListBox>
         <ParagraphTextLarger className="mb-5 ">
           {trans("infoTaxReturnPensioners.section_six.text")}

@@ -422,8 +422,7 @@ const translations = {
         "Wenn Sie jedoch noch unsicher sind, ob Sie überhaupt eine Steuererklärung abgeben müssen, dann können Sie mit dem <incomeCalculatorLink>Alterseinkünfte-Rechner</incomeCalculatorLink> des Bayerischen Landesamts für Steuern kostenlos kalkulieren, wie hoch eine mögliche Einkommensteuer bei Ihnen ausfällt. Außerdem finden Sie weitere Informationen zur Besteuerung der Rente auf der Seite der <pensionersInsuranceLink>Deutschen Rentenversicherung.</pensionersInsuranceLink>",
     },
     section_four: {
-      heading:
-        "So funktioniert der Steuerlotse für Rente und Pension in 4 Schritten",
+      heading: "So funktioniert der Steuerlotse für Rente und Pension",
       paragraph:
         "Ist die Frage der Steuerpflicht geklärt, dann geht es mit dem Steuerlotsen in 4 Schritten zur fertigen Steuererklärung.",
     },
