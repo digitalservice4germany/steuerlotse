@@ -29,6 +29,8 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template
 from app.model.components import InfoTaxReturnForPensionersProps
+from app.model.components import AmbassadorInfoMaterialProps
+
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -326,6 +328,13 @@ def register_request_handlers(app):
         return render_react_template(
             props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
             component='InfoTaxReturnForPensionersPage')
+
+    @app.route('/botschafter', methods=['GET'])
+    @add_caching_headers
+    def ambassadorMaterial():
+        return render_react_template(
+            props=AmbassadorInfoMaterialProps().camelized_dict(), 
+            component='AmbassadorInfoMaterialPage')
 
     @app.route('/ping')
     def ping():
