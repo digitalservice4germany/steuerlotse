@@ -10,26 +10,21 @@ const AnchorSecondary = styled.a`
   text-decoration: none;
   color: var(--text-color);
   width: fit-content;
-
+  outline: 1px solid var(--border-color);
   margin-right: var(--spacing-05);
-
   background: white;
   background-clip: padding-box;
-
   border: 0;
   border-radius: 0;
-  border: 1px solid var(--border-color);
 
   &:not(:disabled):not(.disabled):active {
     color: var(--link-active-color);
     background-color: inherit;
-    border: 1px solid var(--link-active-color);
+    outline: 1px solid var(--link-active-color);
   }
 
   &:hover {
-    color: var(--link-hover-color);
-    border: 1px solid var(--link-hover-color);
-
+    outline: 1px solid var(--link-hover-color);
     background: var(--link-hover-color);
     border: none;
     border-bottom: 4px solid var(--link-hover-color);

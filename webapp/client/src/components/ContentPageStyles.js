@@ -13,8 +13,18 @@ export const ContentTopSpacing = styled.div`
     @media (max-width: 1024px) {
       width: 813px;
     }
+
+    @media (max-width: 830px) {
+      width: 785px;
+    }
     @media (max-width: 768px) {
       width: 728px;
+    }
+    @media (max-width: 735px) {
+      width: 700px;
+    }
+    @media (max-width: 600px) {
+      width: 660px;
     }
     @media (max-width: 475px) {
       width: 611px;
@@ -130,8 +140,13 @@ export const QuestionBoxBackground = styled.div`
     margin-top: 5rem;
   }
 
+  @media (max-width: 600px) {
+    width: 700px;
+  }
+
   @media (max-width: 360px) {
     height: 615px;
+    width: 100vw;
   }
 `;
 export const QuestionBoxLayer = styled.div`
