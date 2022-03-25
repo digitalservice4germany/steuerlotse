@@ -45,7 +45,7 @@
     "@storybook/react": "^6.4.13",
     "husky": "^7.0.2",
     "lint-staged": "^12.3.7",
-    "prettier": "2.6.0"
+    "prettier": "2.6.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
