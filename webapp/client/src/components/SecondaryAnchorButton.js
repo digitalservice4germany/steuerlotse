@@ -3,33 +3,28 @@ import styled from "styled-components";
 import addPlausibleGoal from "../lib/helpers";
 
 const AnchorSecondary = styled.a`
-  padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
+  padding: 18px 24px 18px 24px;
   font-size: var(--text-base);
   font-weight: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
   color: var(--text-color);
   width: fit-content;
-
+  outline: 1px solid var(--border-color);
   margin-right: var(--spacing-05);
-
   background: white;
   background-clip: padding-box;
-
   border: 0;
   border-radius: 0;
-  border: 1px solid var(--border-color);
 
   &:not(:disabled):not(.disabled):active {
     color: var(--link-active-color);
     background-color: inherit;
-    border: 1px solid var(--link-active-color);
+    outline: 1px solid var(--link-active-color);
   }
 
   &:hover {
-    color: var(--link-hover-color);
-    border: 1px solid var(--link-hover-color);
-
+    outline: 1px solid var(--link-hover-color);
     background: var(--link-hover-color);
     border: none;
     border-bottom: 4px solid var(--link-hover-color);
