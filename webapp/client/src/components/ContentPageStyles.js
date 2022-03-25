@@ -14,9 +14,6 @@ export const ContentTopSpacing = styled.div`
       width: 813px;
     }
 
-    @media (max-width: 830px) {
-      width: 785px;
-    }
     @media (max-width: 768px) {
       width: 728px;
     }
@@ -29,7 +26,7 @@ export const ContentTopSpacing = styled.div`
     @media (max-width: 475px) {
       width: 611px;
     }
-    @media (max-width: 360px) {
+    @media (max-width: 425px) {
       width: 320px;
     }
   }
@@ -43,7 +40,7 @@ export const HeadingText = styled.h1`
   @media (max-width: 768px) {
     width: 636px;
   }
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     width: 320px;
   }
   @media (max-width: 320px) {
@@ -59,7 +56,7 @@ export const ParagraphIntroText = styled.p`
   @media (max-width: 768px) {
     width: 636px;
   }
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     width: 320px;
     font-size: 1.5rem;
   }
@@ -76,7 +73,7 @@ export const ParagraphTextLarger = styled.p`
     width: 600px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     font-size: 1.25rem;
     width: 320px;
   }
@@ -89,7 +86,7 @@ export const ParagraphHeadingText = styled.p`
     width: 600px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     font-size: 1.25rem;
     width: 320px;
   }
@@ -100,8 +97,12 @@ export const ListBox = styled.div`
   list-style-type: none;
   width: fit-content;
 
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     width: 320px;
+  }
+
+  @media (max-width: 360px) {
+    width: fit-content;
   }
 `;
 export const ListBoxText = styled(ParagraphTextLarger)`
@@ -111,7 +112,7 @@ export const ListBoxText = styled(ParagraphTextLarger)`
     width: 536px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     width: 100%;
   }
 `;
@@ -144,7 +145,7 @@ export const QuestionBoxBackground = styled.div`
     width: 700px;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 425px) {
     height: 615px;
     width: 100vw;
   }
