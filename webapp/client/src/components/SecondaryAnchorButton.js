@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import addPlausibleGoal from "../lib/helpers";
+import { ReactComponent as PlayIcon } from "../assets/icons/play_icon.svg";
 
 const AnchorSecondary = styled.a`
   padding: 18px 24px 18px 24px;
@@ -42,6 +43,10 @@ const AnchorSecondary = styled.a`
   }
 `;
 
+const SecondaryButtonContainer = styled.div`
+  display: flex;
+`;
+
 export default function SecondaryAnchorButton({
   text,
   url,
@@ -67,14 +72,17 @@ export default function SecondaryAnchorButton({
       {text}
     </AnchorSecondary>
   ) : (
-    <AnchorSecondary
-      href={url}
-      name={name}
-      onClick={onClickPlausible}
-      className={className}
-    >
-      {text}
-    </AnchorSecondary>
+    <SecondaryButtonContainer>
+      <AnchorSecondary
+        href={url}
+        name={name}
+        onClick={onClickPlausible}
+        className={className}
+      >
+        <PlayIcon className="mr-2" />
+        {text}
+      </AnchorSecondary>
+    </SecondaryButtonContainer>
   );
 }
 
