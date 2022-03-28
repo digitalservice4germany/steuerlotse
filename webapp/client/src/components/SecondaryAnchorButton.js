@@ -50,14 +50,25 @@ export default function SecondaryAnchorButton({
   plausibleName,
   plausibleDomain,
   className,
+  isLinkingOutLink,
 }) {
   const onClickPlausible = () => {
     addPlausibleGoal(plausibleDomain, plausibleName);
   };
-  return (
+
+  return !isLinkingOutLink ? (
     <AnchorSecondary
       href={url}
       download={isDownloadLink}
+      name={name}
+      onClick={onClickPlausible}
+      className={className}
+    >
+      {text}
+    </AnchorSecondary>
+  ) : (
+    <AnchorSecondary
+      href={url}
       name={name}
       onClick={onClickPlausible}
       className={className}
@@ -75,6 +86,7 @@ SecondaryAnchorButton.propTypes = {
   plausibleName: PropTypes.string,
   className: PropTypes.string,
   plausibleDomain: PropTypes.string,
+  isLinkingOutLink: PropTypes.bool,
 };
 
 SecondaryAnchorButton.defaultProps = {
@@ -83,4 +95,5 @@ SecondaryAnchorButton.defaultProps = {
   plausibleName: null,
   className: undefined,
   plausibleDomain: null,
+  isLinkingOutLink: false,
 };

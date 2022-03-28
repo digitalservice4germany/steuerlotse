@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ContentTopSpacing = styled.div`
   margin-top: 9.375rem;
   position: relative;
+  width: fit-content;
 
   & img {
     width: 930px;
@@ -31,6 +32,11 @@ export const ContentTopSpacing = styled.div`
     }
   }
 `;
+
+export const TopSpacing = styled.div`
+  margin-top: 9.375rem;
+`;
+
 export const HeadingText = styled.h1`
   font-size: 2.25rem;
   width: 832px;
@@ -173,6 +179,7 @@ export const QuestionBoxAnchorButtons = styled.div`
 
 export default {
   ContentTopSpacing,
+  TopSpacing,
   HeadingText,
   ParagraphIntroText,
   ContentText,
