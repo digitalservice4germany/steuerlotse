@@ -27,7 +27,6 @@ pydantic = "*"
 flask-static-digest = "*"
 python-dotenv = "*"
 pyhumps = "*"
-redislite = "*"
 pytest-xdist = "*"
 
 [dev-packages]

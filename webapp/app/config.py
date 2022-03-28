@@ -39,7 +39,6 @@ class BaseConfig(object):
 
     USE_LRU_CACHE = True
 
-    USE_REDIS_LITE = False
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
 
@@ -86,6 +85,15 @@ class DevelopmentConfig(BaseConfig):
     PREFILL_SAMPLE_FORM_DATA = True
     ALLOW_RESEND_FOR_TEST_USER = True
     SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
+    
+    #########
+    
+    DEBUG = False
+    ALLOW_TESTING_ROUTES = True
+    PREFILL_SAMPLE_FORM_DATA = False
+    USE_MOCK_API = True
+    
+    #########
 
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
@@ -101,8 +109,8 @@ class DevelopmentConfig(BaseConfig):
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
-
-    USE_REDIS_LITE = True
+    
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://redis:6379'
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
@@ -114,8 +122,7 @@ class FunctionalTestingConfig(DevelopmentConfig):
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
-
-    USE_REDIS_LITE = True
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://redis:6379'
 
 
 class TestingConfig(BaseConfig):
@@ -138,8 +145,8 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
-
-    USE_REDIS_LITE = True
+    
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://redis:6379'
 
 
 class MockedDevelopmentConfig(DevelopmentConfig):
