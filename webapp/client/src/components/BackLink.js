@@ -16,7 +16,7 @@ const Anchor = styled.a`
     margin-right: 5px;
   }
 
-  &:focus {
+  &:focus-visible {
     outline: none;
 
     span:last-child {
