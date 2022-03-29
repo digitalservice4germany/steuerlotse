@@ -31,6 +31,18 @@ services:
     links:
       - postgres
       - redis
+  node:
+    env_file:
+      - ".env"
+    build:
+      context: "./webapp"
+      dockerfile: "node.Development.Dockerfile"
+    volumes:
+      - "./webapp:/app"
+    ports:
+      - "3000:3000"
+    links:
+      - web:webapp
 
   migrations:
     env_file:
