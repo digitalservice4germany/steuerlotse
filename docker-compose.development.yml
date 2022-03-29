@@ -4,21 +4,12 @@ services:
   erica:
     env_file:
       - ".env"
-    build:
-      context: "https://github.com/digitalservice4germany/erica.git#docker-dev"
-      dockerfile: "Development.Dockerfile"
-      args:
-        - ERICA_BUCKET_NAME=$ERICA_BUCKET_NAME
-        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-        - ENDPOINT_URL=$ENDPOINT_URL
-        - ELSTER_DATENLIEFERANT=$ELSTER_DATENLIEFERANT
-        - ELSTER_HERSTELLER_ID=$ELSTER_HERSTELLER_ID
+    image: steuerlotse_erica
     expose:
       - 8000
     ports:
       - "8000:8000"
-  web:
+  webapp:
     env_file:
       - ".env"
     build:
@@ -31,6 +22,7 @@ services:
     links:
       - postgres
       - redis
+      - erica
   node:
     env_file:
       - ".env"
@@ -42,8 +34,7 @@ services:
     ports:
       - "3000:3000"
     links:
-      - web:webapp
-
+      - webapp
   migrations:
     env_file:
       - ".env"

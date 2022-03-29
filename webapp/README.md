@@ -11,6 +11,9 @@ For developing you can use our docker compose. You have to install docker: [get 
 # Add the needed parameter values to the copied .env file
 cp .env.example .env
 
+# Login on our docker registry
+docker login $DOCKER_REGISTRY
+
 # Start docker compose
 docker-compose -f docker-compose.development.yml up
 
