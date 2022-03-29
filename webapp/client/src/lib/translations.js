@@ -432,7 +432,7 @@ const translations = {
         "Im ersten Schritt müssen Sie auf der <eligibilityLink>Webseite des Steuerlotsen prüfen</eligibilityLink>, ob Sie den Steuerlotsen in seiner aktuellen Entwicklungsform nutzen können. Denn zur Zeit richtet sich der Steuerlotse nur an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben. Trifft dies zu, können Sie im zweiten Schritt mit der Registrierung fortfahren.",
       listItemTwoHeading: "Schritt 2: Registrieren",
       listItemTwo:
-        "Wenn Sie den Steuerlotsen nutzen können, registrieren Sie sich im nächsten Schritt. Bei der <registrationLink>Registrierung</registrationLink> wird automatisch ein Freischaltcode bei Ihrer Finanzverwaltung beantragt. Den Freischaltcode wird Ihnen per Brief innerhalb von zwei Wochen nach erfolgreicher Beantragung zugesendet. Übrigens: auch eine Zusammenveranlagung ist möglich. Hierfür muss sich nur eine Person registrieren.",
+        "Wenn Sie den Steuerlotsen nutzen können, registrieren Sie sich im nächsten Schritt. Bei der <registrationLink>Registrierung</registrationLink> wird automatisch ein Freischaltcode bei Ihrer Finanzverwaltung beantragt. Der Freischaltcode wird Ihnen per Brief innerhalb von zwei Wochen nach erfolgreicher Beantragung zugesendet. Übrigens: auch eine Zusammenveranlagung ist möglich. Hierfür muss sich nur eine Person registrieren.",
       listItemThreeHeading: "Schritt 3: Vorbereiten",
 
       listItemThree:
@@ -443,7 +443,7 @@ const translations = {
         "Nach Erhalt des Freischaltcodes können Sie mit der Steuererklärung beginnen. Dafür melden Sie sich auf der Webseite unter <activationLink>„Ihre Steuererklärung“</activationLink> mit den entsprechenden Daten an.",
     },
     section_six: {
-      text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
+      text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
     },
   },
   taxGuideQuestionBox: {
