@@ -32,11 +32,9 @@ export const ContentTopSpacing = styled.div`
     }
   }
 `;
-
 export const TopSpacing = styled.div`
   margin-top: 9.375rem;
 `;
-
 export const HeadingText = styled.h1`
   font-size: 2.25rem;
   width: 832px;
@@ -53,6 +51,9 @@ export const HeadingText = styled.h1`
     font-size: 2.25rem;
   }
 `;
+export const HeroImage = styled.img`
+  height: 477px;
+`;
 export const ParagraphIntroText = styled.p`
   font-size: 1.75rem;
   width: 832px;
@@ -66,6 +67,11 @@ export const ParagraphIntroText = styled.p`
     width: 320px;
     font-size: 1.5rem;
   }
+`;
+export const ContentSection = styled.div`
+  margin-top: var(--spacing-09);
+  display: flex;
+  flex-direction: column;
 `;
 export const ContentText = styled.div`
   width: fit-content;
@@ -122,6 +128,12 @@ export const ListBoxText = styled(ParagraphTextLarger)`
     width: 100%;
   }
 `;
+export const ParagraphHeading = styled.div`
+  font-size: var(--text-2xl);
+  margin-bottom: var(--spacing-03);
+  width: 778px;
+  max-width: 778px;
+`;
 export const QuestionBoxBackground = styled.div`
   background: var(--bg-highlight-color);
   height: 459px;
@@ -176,6 +188,17 @@ export const QuestionBoxAnchorButtons = styled.div`
     flex-direction: column;
   }
 `;
+export const SectionIntro = styled.div`
+  width: 832px;
+  max-width: 832px;
+  margin-bottom: var(--spacing-08);
+`;
+export const SubHeadingText = styled.div`
+  font-size: 28px;
+`;
+export const TextContent = styled.div`
+  font-size: 24px;
+`;
 
 export default {
   ContentTopSpacing,
@@ -192,4 +215,10 @@ export default {
   QuestionBox,
   ParagraphTextMedium,
   QuestionBoxAnchorButtons,
+  SubHeadingText,
+  SectionIntro,
+  ParagraphHeading,
+  ContentSection,
+  TextContent,
+  HeroImage,
 };
