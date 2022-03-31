@@ -322,6 +322,23 @@ def register_request_handlers(app):
                          attachment_filename='SteuerlotseVorbereitungshilfe.pdf',
                          as_attachment=True)
 
+    @app.route('/download_informationsbroschure_pdf', methods=['GET'])
+    @limiter.limit('15 per minute')
+    @limiter.limit('1000 per day')
+    def download_informationsbroschure_pdf():
+        return send_file('static/files/Info-Broschüre_Steuerlotse_für_Rente_und_Pension.pdf', mimetype='application/pdf',
+                         attachment_filename='Info-Broschüre_Steuerlotse_für_Rente_und_Pension.pdf',
+                         as_attachment=True)  
+
+    @app.route('/download_steuerlotsen_flyer.pdf', methods=['GET'])
+    @limiter.limit('15 per minute')
+    @limiter.limit('1000 per day')
+    def download_steuerlotsen_flyer_pdf():
+        return send_file('static/files/STL-Flyer_A6-doppelseitig.pdf', mimetype='application/pdf',
+                         attachment_filename='STL-Flyer_A6-doppelseitig.pdf',
+                         as_attachment=True)                         
+                                                                
+
     @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
     @add_caching_headers
     def infotax():

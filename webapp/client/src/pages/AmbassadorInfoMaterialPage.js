@@ -60,14 +60,14 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         </ParagraphHeading>
         <DownloadLink
           text={t("AmbassadorMaterial.Paragraph.InfoBroshureDownloadLink")}
-          url="/download_pf/print.pdf"
+          url="/download_informationsbroschure_pdf"
           plausibleDomain={plausibleDomain}
           plausibleName="Download Informationsbroschüre"
           className="mb-3"
         />
         <DownloadLink
           text={t("AmbassadorMaterial.Paragraph.SteuerlotsenFlyerLink")}
-          url="/download_pf/print.pdf"
+          url="/download_steuerlotsen_flyer.pdf"
           plausibleDomain={plausibleDomain}
           plausibleName="Download Steuerlotsen-Flyer"
         />
