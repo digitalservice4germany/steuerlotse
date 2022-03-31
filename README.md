@@ -13,7 +13,7 @@ a simplified tax return in paper form for pensioners. Based on the paper form a
 2020. The fellowship is organized by [DigitalService4Germany GmbH](https://digitalservice4germany.com).
 
 🇩🇪 Dies ist das Quellcodearchiv des [_Steuerlotse_ ](https://steuerlotse-rente.de) vom DigitalService4Germany.
-Du kannst den Code unter den Bedingungen der angegeben Lizenz nutzen.
+Du kannst den Code unter den Bedingungen der angegebenen Lizenz nutzen.
 Der _Steuerlotse_ ist verfügbar unter: https://steuerlotse-rente.de
 
 Mit dem _Steuerlotsen_ können steuerpflichtige Rentner:innen und Pensionär:innen ihre 
@@ -34,12 +34,12 @@ research in the future in this repository.
 
 🇩🇪
 Der _Steuerlotse_ wird aktiv weiterentwickelt. Wir planen, in Zukunft neue Funktionen und Updates basierend auf 
-Benutzerforschung in diesem Repository zu veröffentlichen.
+Nutzerforschung in diesem Repository zu veröffentlichen.
 
 ## Contributing
 
 🇬🇧
-Everyone is welcome to contribute the development of the _Steuerlotse_. You can contribute by opening pull request, 
+Everyone is welcome to contribute the development of the _Steuerlotse_. You can contribute by opening pull requests, 
 providing documentation or answering questions or giving feedback. Please always follow the guidelines and our 
 [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -50,11 +50,11 @@ Bitte befolge immer die Richtlinien und unseren [Verhaltenskodex](CODE_OF_CONDUC
 
 ### Contributing code
 🇬🇧 
-Open a pull request with your changes and it will be reviewed by someone from the team. When you submit a pull request, 
+Open a pull request with your changes, and it will be reviewed by someone from the team. When you submit a pull request, 
 you declare that you have the right to license your contribution to the DigitalService4Germany and the community. 
 By submitting the patch, you agree that your contributions are licensed under the MIT license.
 
-Please make sure that your changes have been tested befor submitting a pull request.
+Please make sure that your changes have been tested before submitting a pull request.
 
 🇩🇪  
 Nach dem Erstellen eines Pull Requests wird dieser von einer Person aus dem Team überprüft. Wenn du einen Pull-Request 
@@ -69,7 +69,7 @@ Bitte stelle sicher, dass deine Änderungen getestet wurden, bevor du einen Pull
 ### Overview
 The two main components are the webapp and erica.
 
-The webapp handles user input, renders html and connects to the PostgreSQL database.
+The webapp handles user input, renders html and connects to the PostgresSQL database.
 
 Erica provides an internal API to connect via ERiC (ELSTER Rich Client) with the ELSTER APIs.
 Erica has been moved to its own repository here: https://github.com/digitalservice4germany/erica.
@@ -110,7 +110,7 @@ Run database migrations, create test data and translations:
 docker-compose -f docker-compose.development.yml up migrations
 ```
 
-Start frontend client app
+Start frontend app client
 ```bash
 cd ./webapp/client
 yarn start
