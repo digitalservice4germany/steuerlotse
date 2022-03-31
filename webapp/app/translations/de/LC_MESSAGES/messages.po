@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-03-14 15:48+0100\n"
+"POT-Creation-Date: 2022-03-31 09:48+0000\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,109 +18,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:66
+#: app/routes.py:68
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:67
+#: app/routes.py:69
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:68
+#: app/routes.py:70
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:69
+#: app/routes.py:71
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:71
+#: app/routes.py:73
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:73
+#: app/routes.py:75
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:77
+#: app/routes.py:79
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:172
+#: app/routes.py:174
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:173
+#: app/routes.py:175
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:216
+#: app/routes.py:218
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:217
+#: app/routes.py:219
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:230 app/routes.py:343
+#: app/routes.py:232 app/routes.py:353
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:250 app/templates/basis/base.html:37
+#: app/routes.py:252 app/templates/basis/base.html:37
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:257
+#: app/routes.py:259
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:264
+#: app/routes.py:266
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:271
+#: app/routes.py:273
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:278
+#: app/routes.py:280
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:285
+#: app/routes.py:287
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:292
+#: app/routes.py:294
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:304
+#: app/routes.py:307
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:309
+#: app/routes.py:312
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:334 app/routes.py:364 app/routes.py:371
+#: app/routes.py:344 app/routes.py:374 app/routes.py:381
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:339 app/routes.py:347
+#: app/routes.py:349 app/routes.py:357
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:352
+#: app/routes.py:362
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:358
+#: app/routes.py:368
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -2474,10 +2474,6 @@ msgstr "Steuerformular - Abgabebefehler - Der Steuerlotse für Rente und Pension
 msgid "form.lotse.ack.alert.title"
 msgstr "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
 
-#: app/forms/steps/lotse_multistep_flow_steps/confirmation_steps.py:108
-msgid "form.lotse.filing.header-title"
-msgstr "Steuerformular - Abgabebestätigung - Der Steuerlotse für Rente und Pension"
-
 #: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:19
 msgid "form.lotse.declaration_incomes.label"
 msgstr "Angabe zu weiteren Einkünften"
@@ -4548,23 +4544,28 @@ msgstr ""
 "reicht in diesem Fall aus, wenn sich eine Person registriert."
 
 #: app/templates/content/howitworks.html:56
+#: app/templates/content/landing_page.html:54
 msgid "info-stl.elster.heading"
 msgstr "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?"
 
 #: app/templates/content/howitworks.html:58
+#: app/templates/content/landing_page.html:56
 msgid "info-stl.elster.p1-content"
 msgstr ""
-"Nein. In der aktuellen Version können Sie den Steuerlotsen nicht nutzen, "
-"wenn Sie ein Konto bei ELSTER haben."
+"Sie können den Steuerlotsen vielleicht nutzen. Der Steuerlotse ist nur "
+"mit dem Briefersatzverfahren für den Datenabruf von ELSTER nutzbar."
 
 #: app/templates/content/howitworks.html:59
+#: app/templates/content/landing_page.html:57
 msgid "info-stl.elster.p2-content"
 msgstr ""
-"Für die Überprüfung Ihrer Identität braucht unser Service einen "
-"Freischaltcode. Diesen erhalten Sie nur, wenn Sie noch kein Konto bei "
-"ELSTER haben."
+"Wenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für"
+" den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente "
+"nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von "
+"ELSTER. "
 
 #: app/templates/content/howitworks.html:60
+#: app/templates/content/landing_page.html:58
 msgid "info-stl.elster.p3-content"
 msgstr ""
 "ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
@@ -5045,92 +5046,92 @@ msgstr ""
 "leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es "
 "reicht in diesem Fall aus, wenn sich eine Person registriert."
 
-#: app/templates/content/landing_page.html:63
+#: app/templates/content/landing_page.html:72
 msgid "landing.hero-title"
 msgstr "Die vereinfachte Steuererklärung für Menschen im Ruhestand"
 
-#: app/templates/content/landing_page.html:64
+#: app/templates/content/landing_page.html:73
 msgid "landing.hero-desc"
 msgstr ""
 "Mit dem Steuerlotsen können Sie Ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen online machen."
 
-#: app/templates/content/landing_page.html:66
+#: app/templates/content/landing_page.html:75
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:67
+#: app/templates/content/landing_page.html:76
 msgid "landing.hero-list-item-2"
 msgstr "kostenlos und ohne Installation"
 
-#: app/templates/content/landing_page.html:68
+#: app/templates/content/landing_page.html:77
 msgid "landing.hero-list-item-3"
 msgstr "schnell und unkompliziert"
 
-#: app/templates/content/landing_page.html:70
+#: app/templates/content/landing_page.html:79
 msgid "landing.hero-check-use-desc"
 msgstr "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?"
 
-#: app/templates/content/landing_page.html:71
+#: app/templates/content/landing_page.html:80
 msgid "landing.hero-check-use-button"
 msgstr "Jetzt prüfen"
 
-#: app/templates/content/landing_page.html:71
+#: app/templates/content/landing_page.html:80
 msgid "internal-linking.source.target.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/templates/content/landing_page.html:71
+#: app/templates/content/landing_page.html:80
 msgid "internal-linking.source.landing.cta"
 msgstr "Landingpage CTA"
 
-#: app/templates/content/landing_page.html:83
+#: app/templates/content/landing_page.html:92
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:93
+#: app/templates/content/landing_page.html:102
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:94
+#: app/templates/content/landing_page.html:103
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:101
+#: app/templates/content/landing_page.html:110
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:102
+#: app/templates/content/landing_page.html:111
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:109
+#: app/templates/content/landing_page.html:118
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:110
+#: app/templates/content/landing_page.html:119
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
-#: app/templates/content/landing_page.html:126
+#: app/templates/content/landing_page.html:135
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:127
+#: app/templates/content/landing_page.html:136
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:128
+#: app/templates/content/landing_page.html:137
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
@@ -5399,4 +5400,9 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "form.lotse.filing.header-title"
+#~ msgstr ""
+#~ "Steuerformular - Abgabebestätigung - Der "
+#~ "Steuerlotse für Rente und Pension"
 
