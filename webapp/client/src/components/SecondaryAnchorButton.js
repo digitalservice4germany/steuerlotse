@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import addPlausibleGoal from "../lib/helpers";
 import { ReactComponent as DefaultStatePlayIcon } from "../assets/icons/DefaultStatePlayIcon.svg";
+import { ReactComponent as PlayIcon } from "../assets/icons/play_icon.svg";
 
 const AnchorSecondary = styled.a`
   padding: 18px 24px 18px 24px;
@@ -51,6 +52,32 @@ const AnchorSecondaryPlayer = styled(AnchorSecondary)`
   -ms-transform: translate(-50%, -50%);
   font-size: var(--text-medium);
   outline: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 269px;
+`;
+
+const IconDefault = styled.div`
+  position: absolute;
+  top: -10%;
+
+  ${AnchorSecondaryPlayer}:hover & {
+    display: none;
+  }
+`;
+
+const IconHover = styled.div`
+  position: absolute;
+  display: none;
+  top: -10%;
+
+  ${AnchorSecondaryPlayer}:hover & {
+    display: block;
+  }
+`;
+
+const Div = styled.div`
+  position: relative;
 `;
 
 export default function SecondaryAnchorButton({
@@ -84,7 +111,14 @@ export default function SecondaryAnchorButton({
       onClick={onClickPlausible}
       className={className}
     >
-      <DefaultStatePlayIcon className="mr-3" />
+      <Div className="mr-3">
+        <IconDefault>
+          <DefaultStatePlayIcon className="mr-3" />
+        </IconDefault>
+        <IconHover>
+          <PlayIcon className="mr-3" />
+        </IconHover>
+      </Div>
       {text}
     </AnchorSecondaryPlayer>
   );

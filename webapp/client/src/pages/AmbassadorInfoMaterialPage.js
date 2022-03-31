@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useTranslation, Trans } from "react-i18next";
 import {
   TopSpacing,
-  HeadingText,
+  IntroHeading,
   SectionIntro,
   SubHeadingText,
   HeroImage,
@@ -19,6 +19,17 @@ const HowItWorksVideoContainer = styled.div`
   position: relative;
   max-width: 930px;
   width: 930px;
+  @media (max-width: 1042px) {
+    width: 75vw;
+  }
+
+  @media (max-width: 1024px) {
+    width: 85vw;
+  }
+
+  @media (max-width: 900px) {
+    width: 90vw;
+  }
 `;
 
 const HowItWorksImage = styled.img`
@@ -45,9 +56,9 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
   return (
     <TopSpacing>
       <SectionIntro>
-        <HeadingText className="font-weight-bold my-4 h1">
+        <IntroHeading className="font-weight-bold my-4 h1">
           {t("AmbassadorMaterial.Heading")}
-        </HeadingText>
+        </IntroHeading>
         <SubHeadingText>{t("AmbassadorMaterial.SubHeading")}</SubHeadingText>
       </SectionIntro>
       <HeroImage

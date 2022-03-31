@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const ContentTopSpacing = styled.div`
   margin-top: 9.375rem;
   position: relative;
-  width: fit-content;
 
   & img {
     width: 930px;
@@ -11,7 +10,7 @@ export const ContentTopSpacing = styled.div`
     @media (max-width: 1280px) {
       width: 843px;
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 1042px) {
       width: 813px;
     }
 
@@ -36,10 +35,10 @@ export const TopSpacing = styled.div`
   margin-top: 9.375rem;
 `;
 export const HeadingText = styled.h1`
-  font-size: 2.25rem;
+  font-size: var(--text-4xl);
   width: 832px;
-  @media (max-width: 1024px) {
-    width: 811px;
+  @media (max-width: 1042px) {
+    width: 800px;
   }
   @media (max-width: 768px) {
     width: 636px;
@@ -51,8 +50,37 @@ export const HeadingText = styled.h1`
     font-size: 2.25rem;
   }
 `;
+
+export const IntroHeading = styled.div`
+  font-size: 2.25rem;
+  width: 832px;
+  @media (max-width: 1042px) {
+    width: 70vw;
+  }
+  @media (max-width: 1024px) {
+    width: 85vw;
+  }
+  @media (max-width: 800px) {
+    width: 90vw;
+  }
+  @media (max-width: 320px) {
+    width: 95vw;
+  }
+`;
+
 export const HeroImage = styled.img`
-  height: 477px;
+  width: 930px;
+  @media (max-width: 1042px) {
+    width: 75vw;
+  }
+
+  @media (max-width: 1024px) {
+    width: 85vw;
+  }
+
+  @media (max-width: 900px) {
+    width: 90vw;
+  }
 `;
 export const ParagraphIntroText = styled.p`
   font-size: 1.75rem;
@@ -133,6 +161,12 @@ export const ParagraphHeading = styled.div`
   margin-bottom: var(--spacing-03);
   width: 778px;
   max-width: 778px;
+  @media (max-width: 800px) {
+    width: 90vw;
+  }
+  @media (max-width: 425px) {
+    font-size: var(--text-xl);
+  }
 `;
 export const QuestionBoxBackground = styled.div`
   background: var(--bg-highlight-color);
@@ -192,12 +226,38 @@ export const SectionIntro = styled.div`
   width: 832px;
   max-width: 832px;
   margin-bottom: var(--spacing-08);
+
+  @media (max-width: 1042px) {
+    width: 70vw;
+  }
 `;
 export const SubHeadingText = styled.div`
   font-size: 28px;
+
+  @media (max-width: 1042px) {
+    width: 771px;
+  }
+
+  @media (max-width: 800px) {
+    width: 95vw;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 24px;
+  }
+
+  @media (max-width: 360px) {
+    width: 85vw;
+  }
+  @media (max-width: 320px) {
+    width: 95vw;
+  }
 `;
 export const TextContent = styled.div`
   font-size: 24px;
+  @media (max-width: 425px) {
+    font-size: var(--text-xl);
+  }
 `;
 
 export default {
@@ -221,4 +281,5 @@ export default {
   ContentSection,
   TextContent,
   HeroImage,
+  IntroHeading,
 };
