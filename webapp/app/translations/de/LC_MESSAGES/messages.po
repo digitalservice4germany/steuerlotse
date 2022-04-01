@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-03-29 14:32+0000\n"
+"POT-Creation-Date: 2022-03-31 09:48+0000\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -4544,23 +4544,28 @@ msgstr ""
 "reicht in diesem Fall aus, wenn sich eine Person registriert."
 
 #: app/templates/content/howitworks.html:56
+#: app/templates/content/landing_page.html:54
 msgid "info-stl.elster.heading"
 msgstr "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?"
 
 #: app/templates/content/howitworks.html:58
+#: app/templates/content/landing_page.html:56
 msgid "info-stl.elster.p1-content"
 msgstr ""
-"Nein. In der aktuellen Version können Sie den Steuerlotsen nicht nutzen, "
-"wenn Sie ein Konto bei ELSTER haben."
+"Sie können den Steuerlotsen vielleicht nutzen. Der Steuerlotse ist nur "
+"mit dem Briefersatzverfahren für den Datenabruf von ELSTER nutzbar."
 
 #: app/templates/content/howitworks.html:59
+#: app/templates/content/landing_page.html:57
 msgid "info-stl.elster.p2-content"
 msgstr ""
-"Für die Überprüfung Ihrer Identität braucht unser Service einen "
-"Freischaltcode. Diesen erhalten Sie nur, wenn Sie noch kein Konto bei "
-"ELSTER haben."
+"Wenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für"
+" den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente "
+"nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von "
+"ELSTER. "
 
 #: app/templates/content/howitworks.html:60
+#: app/templates/content/landing_page.html:58
 msgid "info-stl.elster.p3-content"
 msgstr ""
 "ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
@@ -5041,92 +5046,92 @@ msgstr ""
 "leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es "
 "reicht in diesem Fall aus, wenn sich eine Person registriert."
 
-#: app/templates/content/landing_page.html:63
+#: app/templates/content/landing_page.html:72
 msgid "landing.hero-title"
 msgstr "Die vereinfachte Steuererklärung für Menschen im Ruhestand"
 
-#: app/templates/content/landing_page.html:64
+#: app/templates/content/landing_page.html:73
 msgid "landing.hero-desc"
 msgstr ""
 "Mit dem Steuerlotsen können Sie Ihre Steuererklärung einfach und ohne "
 "besonderes Vorwissen online machen."
 
-#: app/templates/content/landing_page.html:66
+#: app/templates/content/landing_page.html:75
 msgid "landing.hero-list-item-1"
 msgstr "mit Schritt-für-Schritt-Anleitung"
 
-#: app/templates/content/landing_page.html:67
+#: app/templates/content/landing_page.html:76
 msgid "landing.hero-list-item-2"
 msgstr "kostenlos und ohne Installation"
 
-#: app/templates/content/landing_page.html:68
+#: app/templates/content/landing_page.html:77
 msgid "landing.hero-list-item-3"
 msgstr "schnell und unkompliziert"
 
-#: app/templates/content/landing_page.html:70
+#: app/templates/content/landing_page.html:79
 msgid "landing.hero-check-use-desc"
 msgstr "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?"
 
-#: app/templates/content/landing_page.html:71
+#: app/templates/content/landing_page.html:80
 msgid "landing.hero-check-use-button"
 msgstr "Jetzt prüfen"
 
-#: app/templates/content/landing_page.html:71
+#: app/templates/content/landing_page.html:80
 msgid "internal-linking.source.target.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/templates/content/landing_page.html:71
+#: app/templates/content/landing_page.html:80
 msgid "internal-linking.source.landing.cta"
 msgstr "Landingpage CTA"
 
-#: app/templates/content/landing_page.html:83
+#: app/templates/content/landing_page.html:92
 msgid "landing.hero-image.alt-text"
 msgstr ""
 "Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen "
 "Steuererklärung."
 
-#: app/templates/content/landing_page.html:93
+#: app/templates/content/landing_page.html:102
 msgid "landing.card1.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/landing_page.html:94
+#: app/templates/content/landing_page.html:103
 msgid "landing.card1.desc"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/landing_page.html:101
+#: app/templates/content/landing_page.html:110
 msgid "landing.card2.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/landing_page.html:102
+#: app/templates/content/landing_page.html:111
 msgid "landing.card2.desc"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird "
 "Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung "
 "zugeschickt. "
 
-#: app/templates/content/landing_page.html:109
+#: app/templates/content/landing_page.html:118
 msgid "landing.card3.title"
 msgstr "Mit Freischaltcode anmelden und Steuererklärung machen"
 
-#: app/templates/content/landing_page.html:110
+#: app/templates/content/landing_page.html:119
 msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
-#: app/templates/content/landing_page.html:126
+#: app/templates/content/landing_page.html:135
 msgid "landing.interviews-headline"
 msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
 
-#: app/templates/content/landing_page.html:127
+#: app/templates/content/landing_page.html:136
 msgid "landing.interviews-text"
 msgstr ""
 "Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
 " wie gut Ihnen unser Service hilft und was wir noch verbessern können."
 
-#: app/templates/content/landing_page.html:128
+#: app/templates/content/landing_page.html:137
 msgid "landing.interviews-link"
 msgstr "Mehr erfahren"
 
@@ -5395,4 +5400,9 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "form.lotse.filing.header-title"
+#~ msgstr ""
+#~ "Steuerformular - Abgabebestätigung - Der "
+#~ "Steuerlotse für Rente und Pension"
 
