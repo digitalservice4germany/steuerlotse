@@ -59,6 +59,7 @@ instance/
 env
 .venv
 .env
+.erica.env
 source_env
 env/
 venv/
