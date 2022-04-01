@@ -5,6 +5,7 @@ import FormFieldTextInput from "./FormFieldTextInput";
 
 describe("FormFieldTextInput", () => {
   let props;
+  const user = userEvent.setup();
 
   describe("When default props used", () => {
     beforeEach(() => {
@@ -20,20 +21,23 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should set focus on field on tab", () => {
-      userEvent.tab();
+    it("Should set focus on field on tab", async () => {
+      await user.tab();
+
       expect(screen.getByRole("textbox")).toHaveFocus();
     });
 
-    it("Should enter keyboard input into input after pressing tab", () => {
-      userEvent.tab();
-      userEvent.keyboard("Helloo");
+    it("Should enter keyboard input into input after pressing tab", async () => {
+      await user.tab();
+      await user.keyboard("Helloo");
+
       expect(screen.getByLabelText("Label")).toHaveValue("Helloo");
     });
 
-    it("Should unset focus on field when pressing tab two times", () => {
-      userEvent.tab();
-      userEvent.tab();
+    it("Should unset focus on field when pressing tab two times", async () => {
+      await user.tab();
+      await user.tab();
+
       expect(screen.getByRole("textbox")).not.toHaveFocus();
     });
   });
@@ -53,11 +57,12 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should not limit input of values", () => {
-      userEvent.type(
+    it("Should not limit input of values", async () => {
+      await user.type(
         screen.getByLabelText("Label"),
         "Supercalifragilisticexpialidocious"
       );
+
       expect(screen.getByLabelText("Label")).toHaveValue(
         "Supercalifragilisticexpialidocious"
       );
@@ -83,11 +88,12 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should limit input of values", () => {
-      userEvent.type(
+    it("Should limit input of values", async () => {
+      await user.type(
         screen.getByLabelText("Label"),
         "Supercalifragilisticexpialidocious"
       );
+
       expect(screen.getByLabelText("Label")).toHaveValue("Super");
     });
 
@@ -95,9 +101,10 @@ describe("FormFieldTextInput", () => {
       expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
     });
 
-    it("Should enter keyboard input into input after pressing tab", () => {
-      userEvent.tab();
-      userEvent.keyboard("Helloo");
+    it("Should enter keyboard input into input after pressing tab", async () => {
+      await user.tab();
+      await user.keyboard("Helloo");
+
       expect(screen.getByLabelText("Label")).toHaveValue("Hello");
     });
   });

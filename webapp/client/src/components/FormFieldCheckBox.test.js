@@ -3,17 +3,18 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import FormFieldCheckBox from "./FormFieldCheckBox";
 
+const MOCK_PROPS = {
+  fieldName: "fooName",
+  fieldId: "fooId",
+  labelText: "foo",
+  errors: [],
+};
+
 describe("When FormFieldCheckBox with default values", () => {
-  let props;
+  const user = userEvent.setup();
 
   beforeEach(() => {
-    props = {
-      fieldName: "fooName",
-      fieldId: "fooId",
-      labelText: "foo",
-      errors: [],
-    };
-    render(<FormFieldCheckBox {...props} />);
+    render(<FormFieldCheckBox {...MOCK_PROPS} />);
   });
 
   it("Should show checkBox", () => {
@@ -28,42 +29,39 @@ describe("When FormFieldCheckBox with default values", () => {
     expect(screen.getByLabelText("foo")).not.toBeChecked();
   });
 
-  it("Should select checkBox on click", () => {
-    userEvent.click(screen.getByLabelText("foo"));
+  it("Should select checkBox on click", async () => {
+    await user.click(screen.getByLabelText("foo"));
+
     expect(screen.getByLabelText("foo")).toBeChecked();
   });
 
-  it("Should focus checkBox when using tab", () => {
-    userEvent.tab();
+  it("Should focus checkBox when using tab", async () => {
+    await user.tab();
+
     expect(screen.getByLabelText("foo")).toHaveFocus();
   });
 
-  it("Should select checkBox when using tab and pressing space", () => {
-    userEvent.tab();
-    userEvent.keyboard(" ");
+  it("Should select checkBox when using tab and pressing space", async () => {
+    await user.tab();
+    await user.keyboard(" ");
+
     expect(screen.getByLabelText("foo")).toBeChecked();
   });
 
-  it("Should deselect checkBox when using tab and pressing space twice", () => {
-    userEvent.tab();
-    userEvent.keyboard(" ");
-    userEvent.keyboard(" ");
+  it("Should deselect checkBox when using tab and pressing space twice", async () => {
+    await user.tab();
+    await user.keyboard(" ");
+    await user.keyboard(" ");
+
     expect(screen.getByLabelText("foo")).not.toBeChecked();
   });
 });
 
 describe("When preselected FormFieldCheckBox", () => {
-  let props;
+  const MOCK_PROPS_CHECKED = { ...MOCK_PROPS, checked: true };
 
   beforeEach(() => {
-    props = {
-      fieldName: "fooName",
-      fieldId: "fooId",
-      labelText: "foo",
-      errors: [],
-      checked: true,
-    };
-    render(<FormFieldCheckBox {...props} />);
+    render(<FormFieldCheckBox {...MOCK_PROPS_CHECKED} />);
   });
 
   it("Should show checkBox", () => {
@@ -76,16 +74,13 @@ describe("When preselected FormFieldCheckBox", () => {
 });
 
 describe("When FormFieldCheckBox with errors", () => {
-  let props;
+  const MOCK_PROPS_ERRORS = {
+    ...MOCK_PROPS,
+    errors: ["fooError1", "fooError2"],
+  };
 
   beforeEach(() => {
-    props = {
-      fieldName: "fooName",
-      fieldId: "fooId",
-      labelText: "foo",
-      errors: ["fooError1", "fooError2"],
-    };
-    render(<FormFieldCheckBox {...props} />);
+    render(<FormFieldCheckBox {...MOCK_PROPS_ERRORS} />);
   });
 
   it("Should show errors", () => {

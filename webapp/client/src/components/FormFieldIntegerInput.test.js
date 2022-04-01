@@ -5,6 +5,7 @@ import FormFieldIntegerInput from "./FormFieldIntegerInput";
 
 describe("FormFieldIntegerInput", () => {
   let props;
+  const user = userEvent.setup();
 
   describe("When default props used", () => {
     beforeEach(() => {
@@ -20,30 +21,35 @@ describe("FormFieldIntegerInput", () => {
       render(<FormFieldIntegerInput {...props} />);
     });
 
-    it("Should not allow input of text", () => {
-      userEvent.type(screen.getByRole("textbox"), "Hello World");
+    it("should not allow input of text", async () => {
+      await user.type(screen.getByRole("textbox"), "Hello World");
+
       expect(screen.getByLabelText("Label")).toHaveValue("");
     });
 
-    it("Should not allow input of comma", () => {
-      userEvent.type(screen.getByRole("textbox"), "123,45");
+    it("should not allow input of comma", async () => {
+      await user.type(screen.getByRole("textbox"), "123,45");
+
       expect(screen.getByLabelText("Label")).toHaveValue("12345");
     });
 
-    it("Should set focus on field on tab", () => {
-      userEvent.tab();
+    it("should set focus on field on tab", async () => {
+      await user.tab();
+
       expect(screen.getByRole("textbox")).toHaveFocus();
     });
 
-    it("Should enter keyboard input into input after pressing tab", () => {
-      userEvent.tab();
-      userEvent.keyboard("12345");
+    it("should enter keyboard input into input after pressing tab", async () => {
+      await user.tab();
+      await user.keyboard("12345");
+
       expect(screen.getByLabelText("Label")).toHaveValue("12345");
     });
 
-    it("Should unset focus on field when pressing tab two times", () => {
-      userEvent.tab();
-      userEvent.tab();
+    it("should unset focus on field when pressing tab two times", async () => {
+      await user.tab();
+      await user.tab();
+
       expect(screen.getByRole("textbox")).not.toHaveFocus();
     });
   });
@@ -63,8 +69,9 @@ describe("FormFieldIntegerInput", () => {
       render(<FormFieldIntegerInput {...props} />);
     });
 
-    it("Should not limit input of values", () => {
-      userEvent.type(screen.getByLabelText("Label"), "12345678910");
+    it("should not limit input of values", async () => {
+      await user.type(screen.getByLabelText("Label"), "12345678910");
+
       expect(screen.getByLabelText("Label")).toHaveValue("12345678910");
     });
 
@@ -88,8 +95,9 @@ describe("FormFieldIntegerInput", () => {
       render(<FormFieldIntegerInput {...props} />);
     });
 
-    it("Should limit input of values", () => {
-      userEvent.type(screen.getByLabelText("Label"), "12345678910");
+    it("should limit input of values", async () => {
+      await user.type(screen.getByLabelText("Label"), "12345678910");
+
       expect(screen.getByLabelText("Label")).toHaveValue("12345");
     });
 
@@ -97,9 +105,10 @@ describe("FormFieldIntegerInput", () => {
       expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
     });
 
-    it("Should limit input of values when using keyboard", () => {
-      userEvent.tab();
-      userEvent.keyboard("123456");
+    it("should limit input of values when using keyboard", async () => {
+      await user.tab();
+      await user.keyboard("123456");
+
       expect(screen.getByLabelText("Label")).toHaveValue("12345");
     });
   });
