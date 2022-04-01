@@ -46,9 +46,9 @@ def start_test_server(c, webapp_dir=None):
         # Run flask server
         sarge.run("flask run", cwd=webapp_dir, env=env, async_=True)
         wait_until_up('http://localhost:5000')
-        # Run React dev-server
-        sarge.run("yarn start", env=env, async_=True, stdout=subprocess.DEVNULL)
         wait_until_up('http://localhost:3000')
+        # Run React dev-server
+        sarge.run("yarn start", env=env, async_=False, stdout=subprocess.DEVNULL)
     finally:
         # Stop redis
         c.run("docker stop $(docker ps -q --filter ancestor=redis)", env=env)
