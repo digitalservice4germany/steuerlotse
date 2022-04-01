@@ -38,13 +38,20 @@ def start_test_server(c, webapp_dir=None):
     sarge.run("flask db upgrade", cwd=webapp_dir, env=env)
     sarge.run("flask populate-database", cwd=webapp_dir, env=env)
     sarge.run("./scripts/babel_run.sh", cwd=webapp_dir, env=env)
-
-    # Run flask server
-    sarge.run("flask run", cwd=webapp_dir, env=env, async_=True)
-    wait_until_up('http://localhost:5000')
-    # Run React dev-server
-    sarge.run("yarn start", env=env, async_=True, stdout=subprocess.DEVNULL)
-    wait_until_up('http://localhost:3000')
+    
+    # Set up Redis
+    c.run("docker run --name redis -p 6379:6379 -d redis", env=env)
+        
+    try:        
+        # Run flask server
+        sarge.run("flask run", cwd=webapp_dir, env=env, async_=True)
+        wait_until_up('http://localhost:5000')
+        # Run React dev-server
+        sarge.run("yarn start", env=env, async_=True, stdout=subprocess.DEVNULL)
+        wait_until_up('http://localhost:3000')
+    finally:
+        # Stop redis
+        c.run("docker stop $(docker ps -q --filter ancestor=redis)", env=env)
 
 
 @task
@@ -83,6 +90,9 @@ def test_functional(c, mode):
     c.run("flask db upgrade", env=env)
     c.run("flask populate-database", env=env)
     c.run("./scripts/babel_run.sh", env=env)
+    
+    # Set up Redis
+    c.run("docker run --name redis -p 6379:6379 -d redis", env=env)
 
     try:
         # Run flask server
@@ -110,6 +120,9 @@ def test_functional(c, mode):
 
         # Delete test database
         c.run("rm ./app/functional-testing.db")
+        
+        # Stop redis
+        c.run("docker stop $(docker ps -q --filter ancestor=redis)", env=env)
 
 
 @task(test_pytest, test_client_unit, test_functional_run)
