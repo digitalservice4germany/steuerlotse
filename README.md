@@ -39,7 +39,7 @@ Nutzerforschung in diesem Repository zu veröffentlichen.
 ## Contributing
 
 🇬🇧
-Everyone is welcome to contribute the development of the _Steuerlotse_. You can contribute by opening pull requests, 
+Everyone is welcome to contribute to the development of the _Steuerlotse_. You can contribute by opening pull requests, 
 providing documentation or answering questions or giving feedback. Please always follow the guidelines and our 
 [Code of Conduct](CODE_OF_CONDUCT.md).
 
