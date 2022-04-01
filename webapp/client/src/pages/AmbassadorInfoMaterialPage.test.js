@@ -4,7 +4,7 @@ import AmbassadorInfoMaterialPage from "./AmbassadorInfoMaterialPage";
 
 const MOCK_PROPS = {
   plausibleDomain: "/plausibleDomain/path",
-  downloadBroshureUrl: "/download_informationsbroschure_pdf",
+  downloadBroschureUrl: "/download_informationsbroschure_pdf",
   downloadFlyerUrl: "/download_steuerlotsen_flyer.pdf",
   PlayerUrl: "https://www.youtube.com/watch?v=vP--fwSWtLE",
 };
@@ -26,7 +26,7 @@ describe("AmbassadorInfoMaterialPage", () => {
       screen.getByText("Informationsbroschüre (PDF) speichern").closest("a")
     ).toHaveAttribute(
       "href",
-      expect.stringContaining(MOCK_PROPS.downloadBroshureUrl)
+      expect.stringContaining(MOCK_PROPS.downloadBroschureUrl)
     );
   });
 

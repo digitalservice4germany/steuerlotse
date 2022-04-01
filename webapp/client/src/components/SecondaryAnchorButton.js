@@ -20,9 +20,10 @@ const AnchorSecondary = styled.a`
   border-radius: 0;
 
   &:not(:disabled):not(.disabled):active {
-    color: var(--link-active-color);
-    background-color: inherit;
-    outline: 1px solid var(--link-active-color);
+    color: var(--inverse-text-color);
+    background-color: var(--link-color);
+    outline: 0;
+    border-bottom: 4px solid var(--link-color);
   }
 
   &:hover {
@@ -64,6 +65,10 @@ const IconDefault = styled.div`
   ${AnchorSecondaryPlayer}:hover & {
     display: none;
   }
+
+  ${AnchorSecondaryPlayer}:active & {
+    display: none;
+  }
 `;
 
 const IconHover = styled.div`
@@ -88,13 +93,13 @@ export default function SecondaryAnchorButton({
   plausibleName,
   plausibleDomain,
   className,
-  isLinkingOutLink,
+  isExternalLink,
 }) {
   const onClickPlausible = () => {
     addPlausibleGoal(plausibleDomain, plausibleName);
   };
 
-  return !isLinkingOutLink ? (
+  return !isExternalLink ? (
     <AnchorSecondary
       href={url}
       download={isDownloadLink}
@@ -110,6 +115,8 @@ export default function SecondaryAnchorButton({
       name={name}
       onClick={onClickPlausible}
       className={className}
+      target="_blank"
+      rel="noopener"
     >
       <Div className="mr-3">
         <IconDefault>
@@ -132,7 +139,7 @@ SecondaryAnchorButton.propTypes = {
   plausibleName: PropTypes.string,
   className: PropTypes.string,
   plausibleDomain: PropTypes.string,
-  isLinkingOutLink: PropTypes.bool,
+  isExternalLink: PropTypes.bool,
 };
 
 SecondaryAnchorButton.defaultProps = {
@@ -141,5 +148,5 @@ SecondaryAnchorButton.defaultProps = {
   plausibleName: null,
   className: undefined,
   plausibleDomain: null,
-  isLinkingOutLink: false,
+  isExternalLink: false,
 };

@@ -96,7 +96,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
             text="Auf Youtube abspielen"
             url="https://www.youtube.com/watch?v=vP--fwSWtLE"
             className="outline-0"
-            isLinkingOutLink
+            isExternalLink
             plausibleDomain={plausibleDomain}
             plausibleName="Youtube-Link clicked"
           />

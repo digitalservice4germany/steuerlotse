@@ -232,9 +232,9 @@ export const SectionIntro = styled.div`
   }
 `;
 export const SubHeadingText = styled.div`
-  font-size: 28px;
+  font-size: 1.75rem;
 
-  @media (max-width: 1042px) {
+  @media (max-width: 1042px) {font
     width: 771px;
   }
 
@@ -243,7 +243,7 @@ export const SubHeadingText = styled.div`
   }
 
   @media (max-width: 425px) {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   @media (max-width: 360px) {
@@ -254,7 +254,7 @@ export const SubHeadingText = styled.div`
   }
 `;
 export const TextContent = styled.div`
-  font-size: 24px;
+  font-size: 1.5rem;
   @media (max-width: 425px) {
     font-size: var(--text-xl);
   }
