@@ -64,7 +64,7 @@ jobs:
         shell: bash
 
       - name: Install redis
-        run: docker run --name redis -p 6379:6379 -d redis
+        run: docker run --name redis -p 6379:6379 --link redis:redis -d redis
         shell: bash
 
   unit-test:
