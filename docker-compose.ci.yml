@@ -1,5 +1,5 @@
 # Note: this docker-compose file is used for building staging/production images on GitHub Actions.
-version: '3.8'
+version: "3.8"
 
 services:
   web:

@@ -39,7 +39,7 @@ class BaseConfig(object):
 
     USE_LRU_CACHE = True
 
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://redis:6379'
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
 
 
@@ -86,7 +86,6 @@ class DevelopmentConfig(BaseConfig):
     ALLOW_RESEND_FOR_TEST_USER = True
     SET_SECURITY_HTTP_HEADERS = False  # Required for React hot module replacement to work
 
-
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
@@ -101,6 +100,8 @@ class DevelopmentConfig(BaseConfig):
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
+    
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://redis:6379'
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
@@ -134,6 +135,7 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://redis:6379'
 
 
 class MockedDevelopmentConfig(DevelopmentConfig):
