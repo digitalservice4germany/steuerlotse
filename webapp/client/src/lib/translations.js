@@ -446,6 +446,21 @@ const translations = {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
     },
   },
+  AmbassadorMaterial: {
+    Heading: "Werden Sie Digital-Botschafter:in für den Steuerlotsen",
+    SubHeading:
+      "Wir wollen so viele Menschen im Ruhestand wie möglich erreichen. Unterstützen Sie uns dabei! Hier finden Sie Informationsmaterialien zum Download und ein Erklärvideo zum Steuerlotsen.",
+    Paragraph: {
+      DownloadInformationText: "Informationsmaterialien zum Download",
+      InfoBroshureDownloadLink: "Informationsbroschüre (PDF) speichern",
+      SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
+      HowItWorks:
+        "So funktioniert der Steuerlotsen für Rente und Pension (Video, 30 Min)",
+      AnyOtherQuestions: "Haben Sie noch weitere Fragen zum Steuerlotsen?",
+      ContactUs:
+        "Schreiben Sie uns: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
+    },
+  },
   taxGuideQuestionBox: {
     canIUseTaxGuide:
       "Kann ich den Steuerlotsen für meine Steuererklärung nutzen?",

@@ -187,3 +187,6 @@ class StepSubmitAcknowledgeProps(ComponentPlausibleProps):
 
 class InfoTaxReturnForPensionersProps(ComponentPlausibleProps):
     pass
+
+class AmbassadorInfoMaterialProps(ComponentPlausibleProps):
+    pass

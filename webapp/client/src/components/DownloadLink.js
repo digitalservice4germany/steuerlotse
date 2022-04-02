@@ -39,9 +39,9 @@ const LinkElement = styled.span`
   border-radius: 50%;
 `;
 
-export default function DownloadLink({ text, url, large }) {
+export default function DownloadLink({ text, url, large, className }) {
   return (
-    <Anchor large={large} href={url}>
+    <Anchor large={large} href={url} className={className}>
       <LinkElement large={large}>
         <DownloadIcon />
       </LinkElement>
@@ -54,8 +54,10 @@ DownloadLink.propTypes = {
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   large: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 DownloadLink.defaultProps = {
   large: false,
+  className: undefined,
 };
