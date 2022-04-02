@@ -18,16 +18,13 @@ import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
 const HowItWorksVideoContainer = styled.div`
   position: relative;
   max-width: 930px;
-  width: 930px;
-  @media (max-width: 1042px) {
-    width: 75vw;
-  }
+  width: 75vw;
 
   @media (max-width: 1024px) {
     width: 85vw;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 425px) {
     width: 90vw;
   }
 `;

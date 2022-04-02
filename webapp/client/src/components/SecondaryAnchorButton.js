@@ -56,11 +56,21 @@ const AnchorSecondaryPlayer = styled(AnchorSecondary)`
   display: flex;
   justify-content: space-between;
   width: 269px;
+
+  @media (max-width: 425px) {
+    font-size: var(--text-base);
+    padding: 14px 18px 14px 18px;
+    width: 240px;
+  }
 `;
 
 const IconDefault = styled.div`
   position: absolute;
   top: -10%;
+
+  @media (max-width: 425px) {
+    top: -25%;
+  }
 
   ${AnchorSecondaryPlayer}:hover & {
     display: none;
