@@ -6,7 +6,7 @@
     "2.3811c58d.iframe.bundle.js": "./2.3811c58d.iframe.bundle.js",
     "3.8a6c65f2.iframe.bundle.js": "./3.8a6c65f2.iframe.bundle.js",
     "main.css": "./static/css/main.4d5914f4.chunk.css",
-    "main.js": "./main.18b5c60c.iframe.bundle.js",
+    "main.js": "./main.5387e860.iframe.bundle.js",
     "main.css.map": "./static/css/main.4d5914f4.chunk.css.map",
     "runtime~main.js": "./runtime~main.4c50bf7c.iframe.bundle.js",
     "vendors~main.css": "./static/css/vendors~main.ee3effd0.chunk.css",
@@ -21,6 +21,7 @@
     "8.275a7306.iframe.bundle.js.LICENSE.txt": "./8.275a7306.iframe.bundle.js.LICENSE.txt",
     "iframe.html": "./iframe.html",
     "static/media/base.css": "./static/media/select_icon.a5ea5463.svg",
+    "static/media/DefaultStatePlayIcon.470189e4.svg": "./static/media/DefaultStatePlayIcon.470189e4.svg",
     "static/media/arrow_back.de2a35ad.svg": "./static/media/arrow_back.de2a35ad.svg",
     "static/media/ausserg_bela_icon.729d14a0.svg": "./static/media/ausserg_bela_icon.729d14a0.svg",
     "static/media/checked.svg": "./static/media/checked.2b1182a8.svg",
@@ -31,6 +32,7 @@
     "static/media/download_icon.a515f530.svg": "./static/media/download_icon.a515f530.svg",
     "static/media/failure_icon.2adc3ed3.svg": "./static/media/failure_icon.2adc3ed3.svg",
     "static/media/handwerker_icon.c0ad71fa.svg": "./static/media/handwerker_icon.c0ad71fa.svg",
+    "static/media/play_icon.af240107.svg": "./static/media/play_icon.af240107.svg",
     "static/media/radio_button_checked.241216ce.svg": "./static/media/radio_button_checked.241216ce.svg",
     "static/media/radio_button_checked_focus.28e4f015.svg": "./static/media/radio_button_checked_focus.28e4f015.svg",
     "static/media/radio_button_checked_hover.e9309326.svg": "./static/media/radio_button_checked_hover.e9309326.svg",
@@ -48,6 +50,6 @@
     "static/css/vendors~main.ee3effd0.chunk.css",
     "vendors~main.014f541a.iframe.bundle.js",
     "static/css/main.4d5914f4.chunk.css",
-    "main.18b5c60c.iframe.bundle.js"
+    "main.5387e860.iframe.bundle.js"
   ]
 }
