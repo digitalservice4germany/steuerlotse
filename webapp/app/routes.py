@@ -326,7 +326,7 @@ def register_request_handlers(app):
     @limiter.limit('15 per minute')
     @limiter.limit('1000 per day')
     def download_informationsbroschure_pdf():
-        return send_file('static/files/Info-Broschüre_Steuerlotse_für_Rente_und_Pension.pdf', mimetype='application/pdf',
+        return send_file('static/files/InfoBroschureSteuerlotse.pdf', mimetype='application/pdf',
                          attachment_filename='Info-Broschüre_Steuerlotse_für_Rente_und_Pension.pdf',
                          as_attachment=True)  
 

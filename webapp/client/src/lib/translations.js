@@ -452,7 +452,7 @@ const translations = {
       "Wir wollen so viele Menschen im Ruhestand wie möglich erreichen. Unterstützen Sie uns dabei! Hier finden Sie Informationsmaterialien zum Download und ein Erklärvideo zum Steuerlotsen.",
     Paragraph: {
       DownloadInformationText: "Informationsmaterialien zum Download",
-      InfoBroshureDownloadLink: "Informationsbroschüre (PDF) speichern",
+      InfoBroschureDownloadLink: "Informationsbroschüre (PDF) speichern",
       SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
       HowItWorks:
         "So funktioniert der Steuerlotsen für Rente und Pension (Video, 30 Min)",

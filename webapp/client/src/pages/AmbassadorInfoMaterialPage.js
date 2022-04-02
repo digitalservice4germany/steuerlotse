@@ -67,7 +67,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
           {t("AmbassadorMaterial.Paragraph.DownloadInformationText")}
         </ParagraphHeading>
         <DownloadLink
-          text={t("AmbassadorMaterial.Paragraph.InfoBroshureDownloadLink")}
+          text={t("AmbassadorMaterial.Paragraph.InfoBroschureDownloadLink")}
           url="/download_informationsbroschure_pdf"
           plausibleDomain={plausibleDomain}
           plausibleName="Download Informationsbroschüre"
