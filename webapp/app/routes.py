@@ -350,7 +350,7 @@ def register_request_handlers(app):
     @add_caching_headers
     def ambassadorMaterial():
         return render_react_template(
-            props=AmbassadorInfoMaterialProps().camelized_dict(), 
+            props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
             component='AmbassadorInfoMaterialPage')
 
     @app.route('/ping')
