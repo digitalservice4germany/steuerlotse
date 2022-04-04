@@ -2,29 +2,6 @@
 
 ## Getting started 🛠
 
-### Docker
-
-For developing you can use our docker compose. You have to install docker: [get docker](https://docs.docker.com/get-docker/)
-
-```bash
-
-# Add the needed parameter values to the copied .env file
-cp .env.example .env
-cp .erica.env.example .erica.env
-
-# Login on our docker registry
-docker login $DOCKER_REGISTRY
-
-# Start docker compose
-docker-compose -f docker-compose.development.yml up
-
-# Shut down docker
-docker-compose -f docker-compose.development.yml down
-
-```
-
-### Manually
-
 For developing, we suggest running the Flask app locally. Assuming that you are on a UNIX-like OS, the following
 commands should get you up and running:
 
