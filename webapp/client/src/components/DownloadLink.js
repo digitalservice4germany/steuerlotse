@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import addPlausibleGoal from "../lib/helpers";
 import { ReactComponent as DownloadIcon } from "../assets/icons/download_icon.svg";
 
 const Anchor = styled.a`
@@ -39,9 +40,24 @@ const LinkElement = styled.span`
   border-radius: 50%;
 `;
 
-export default function DownloadLink({ text, url, large }) {
+export default function DownloadLink({
+  text,
+  url,
+  large,
+  className,
+  plausibleName,
+  plausibleDomain,
+}) {
+  const onClickPlausible = () => {
+    addPlausibleGoal(plausibleDomain, plausibleName);
+  };
   return (
-    <Anchor large={large} href={url}>
+    <Anchor
+      large={large}
+      href={url}
+      onClick={onClickPlausible}
+      className={className}
+    >
       <LinkElement large={large}>
         <DownloadIcon />
       </LinkElement>
@@ -54,8 +70,14 @@ DownloadLink.propTypes = {
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   large: PropTypes.bool,
+  className: PropTypes.string,
+  plausibleName: PropTypes.string,
+  plausibleDomain: PropTypes.string,
 };
 
 DownloadLink.defaultProps = {
   large: false,
+  className: undefined,
+  plausibleName: null,
+  plausibleDomain: null,
 };
