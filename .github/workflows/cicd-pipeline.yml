@@ -89,6 +89,12 @@ jobs:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
 
+      - name: Python dependencies - install
+        run: |
+          cd webapp
+          pipenv install --dev
+        shell: bash
+
       - name: Lint
         run: |
           cd webapp
@@ -131,6 +137,12 @@ jobs:
         with:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
+      
+      - name: Python dependencies - install
+        run: |
+          cd webapp
+          pipenv install --dev
+        shell: bash
 
       - name: Client dependencies - get yarn cache directory path
         id: yarn-cache-dir-path
@@ -206,6 +218,12 @@ jobs:
         with:
           path: ~/.local/share/virtualenvs
           key: ${{ runner.os }}-webapp-v${{ secrets.CACHE_VERSION }}-python-${{ steps.setup-python.outputs.python-version }}-pipenv-${{ hashFiles('webapp/Pipfile.lock') }}
+      
+      - name: Python dependencies - install
+        run: |
+          cd webapp
+          pipenv install --dev
+        shell: bash
 
 
       - name: Client dependencies - get yarn cache directory path
