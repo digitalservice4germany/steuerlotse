@@ -68,9 +68,7 @@ describe("FilingSuccessPage with default props", () => {
     it('should render transfer ticket your heading"', () => {
       expect(
         screen.getByText(
-          filingSuccessTexts.transfer_ticket.your_heading +
-            " " +
-            MOCK_PROPS_DEFAULT.transferTicket
+          `${filingSuccessTexts.transfer_ticket.your_heading} ${MOCK_PROPS_DEFAULT.transferTicket}`
         )
       ).toBeDefined();
     });

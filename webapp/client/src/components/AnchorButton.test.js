@@ -61,8 +61,11 @@ describe("Anchor add plausible", () => {
     render(<AnchorButton {...MOCK_PROPS} />);
   });
 
-  it("should run the plausible function on click button", () => {
-    userEvent.click(screen.getByText(MOCK_PROPS.text));
+  it("should run the plausible function on click button", async () => {
+    const user = userEvent.setup();
+
+    await user.click(screen.getByText(MOCK_PROPS.text));
+
     expect(window.plausible).toHaveBeenCalledWith("plausible_name", undefined);
   });
 });
