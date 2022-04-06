@@ -27,7 +27,7 @@ describe("FormFieldRadioGroup", () => {
     render(<FormFieldRadioGroup {...props} />);
   });
 
-  it("correct input is selected, hen label is clicked", async () => {
+  it("correct input is selected, when label is clicked", async () => {
     await user.click(screen.getByText("Vulcan"));
 
     expect(screen.getByLabelText("Vulcan").checked).toEqual(true);
@@ -38,9 +38,9 @@ describe("FormFieldRadioGroup", () => {
   it("should only select second option", async () => {
     await user.click(screen.getByLabelText("Terra"));
 
-    expect(screen.getByRole("radio", { name: "Vulcan" }).checked).toBe(false);
-    expect(screen.getByRole("radio", { name: "Terra" }).checked).toBe(true);
-    expect(screen.getByRole("radio", { name: "Earth" }).checked).toBe(false);
+    expect(screen.getByRole("radio", { name: "Vulcan" })).not.toBeChecked();
+    expect(screen.getByRole("radio", { name: "Terra" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Earth" })).not.toBeChecked();
   });
 
   it("should call the change handler with B, when second option has been selected", async () => {
