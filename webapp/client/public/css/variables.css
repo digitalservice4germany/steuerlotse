@@ -29,6 +29,14 @@
   --error-color: #c0003c;
   --error-bg-color: #f9e5eb;
 
+  /* Font Settings */
+
+  --font-fallback: 'Arial Narrow', 'Arial Nova', sans-serif;
+  --font-main: "BundesSansWeb", var(--font-fallback);
+  --font-regular-italic: "BundesSansWeb Italic", var(--font-fallback);
+  --font-bold-italic: "BundesSansWeb Bold Italic", var(--font-fallback);
+  --font-bold: "BundesSansWeb Bold", var(--font-fallback);
+
   /* Font Size */
   --text-sm: 0.785rem;
   --text-s: 0.9rem;
@@ -41,7 +49,6 @@
 
   /* Font Weight */
   --font-normal: 400;
-  --font-bold: 700;
 
   /* Letter Spacing */
   --tracking-tight: -0.02em;
