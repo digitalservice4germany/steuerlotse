@@ -7,7 +7,7 @@ import { ReactComponent as PlayIcon } from "../assets/icons/play_icon.svg";
 const AnchorSecondary = styled.a`
   padding: 18px 24px 18px 24px;
   font-size: var(--text-base);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
   color: var(--text-color);

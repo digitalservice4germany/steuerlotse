@@ -5,7 +5,7 @@ import { ReactComponent as BackArrow } from "../assets/icons/arrow_back.svg";
 const Anchor = styled.a`
   display: inline-flex;
   align-items: center;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: var(--tracking-extra-wide);

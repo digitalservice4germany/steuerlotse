@@ -20,7 +20,7 @@ const SeparatedFieldLabel = styled.label`
   &.sub-field-label {
     margin-bottom: 0 !important;
     font-size: var(--text-sm);
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
   }
 `;
 
