@@ -275,7 +275,7 @@ ol li::before {
 }
 
 .bold {
-  font-weight: var(--font-bold);
+  font-weight: 700;
 }
 
 /* From here on: somewhat unorganised styles that used to live in the original base.css. */
