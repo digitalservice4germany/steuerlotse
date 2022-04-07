@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pyhumps = "*"
+install = "*"
+werkzeug = "==2.0.0"
 
 [dev-packages]
 adr-tools-python = "*"
