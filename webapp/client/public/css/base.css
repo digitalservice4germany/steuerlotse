@@ -170,7 +170,7 @@ input.form-control.field-error-found {
   margin-left: -2px;
   padding: 0 1.25rem 0 1.25rem;
 
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 
   background-color: var(--bg-highlight-color);
@@ -181,7 +181,7 @@ input.form-control.field-error-found {
 /* ERRORS */
 .invalid-feedback {
   font-size: var(--text-sm);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--error-color);
 }
 img.invalid-feedback {
@@ -225,7 +225,7 @@ ol li::before {
   top: 0;
 
   text-align: center;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 
   background: var(--icon-default-color);
@@ -311,7 +311,7 @@ ol li::before {
 .text-input-field-label {
   margin-top: var(--spacing-07);
   font-size: var(--text-medium);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
 }
 
 .optional-hint {
@@ -522,7 +522,7 @@ img.icon {
   margin-bottom: var(--spacing-01);
   border: none;
   font-size: var(--text-base);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 }
 

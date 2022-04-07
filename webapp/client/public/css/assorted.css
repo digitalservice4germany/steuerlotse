@@ -334,7 +334,7 @@
 }
 
 .nav .active .nav-link {
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 
   border-left: 4px solid var(--text-color);
@@ -444,5 +444,5 @@ footer a{
 
 .explanatory-button-text a {
   color: var(--text-color);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
 }
