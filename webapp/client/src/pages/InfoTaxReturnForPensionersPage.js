@@ -140,7 +140,7 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
               <AnchorButton
                 url="/eligibility/step/marital_status?link_overview=False"
                 text={t("taxGuideQuestionBox.startQuestionnaire")}
-                plausibleName="contentPage_startQuestionnaire_clicked"
+                plausibleGoal="contentPage_startQuestionnaire_clicked"
                 plausibleDomain={plausibleDomain}
               />
             </div>

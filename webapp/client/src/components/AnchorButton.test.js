@@ -52,7 +52,7 @@ describe("AnchorButton with plausible", () => {
   it("should call plausible with goal", () => {
     const { buttonText } = setup({
       plausibleDomain: "domain/some/link/path",
-      plausibleName: "plausible_goal",
+      plausibleGoal: "plausible_goal",
     });
     const EXPECTED_PLAUSIBLE_GOAL = "plausible_goal";
 
@@ -68,7 +68,7 @@ describe("AnchorButton with plausible", () => {
   it("should call plausible with goal and props", async () => {
     const { buttonText } = setup({
       plausibleDomain: "domain/some/link/path",
-      plausibleName: "plausible_goal",
+      plausibleGoal: "plausible_goal",
       plausibleProps: { method: "unlockCodeSuccess" },
     });
     const EXPECTED_PLAUSIBLE_GOAL = "plausible_goal";

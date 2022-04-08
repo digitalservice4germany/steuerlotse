@@ -49,20 +49,20 @@ export default function AnchorButton({
   url,
   name,
   isDownloadLink,
-  plausibleName,
+  plausibleGoal,
   plausibleDomain,
   plausibleProps,
   className,
 }) {
-  const onClickPlausible = () => {
-    addPlausibleGoal(plausibleDomain, plausibleName, { props: plausibleProps });
+  const handleClick = () => {
+    addPlausibleGoal(plausibleDomain, plausibleGoal, { props: plausibleProps });
   };
   return (
     <Anchor
       href={url}
       download={isDownloadLink}
       name={name}
-      onClick={onClickPlausible}
+      onClick={handleClick}
       className={className}
     >
       {text}
@@ -75,7 +75,7 @@ AnchorButton.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string,
   isDownloadLink: PropTypes.bool,
-  plausibleName: PropTypes.string,
+  plausibleGoal: PropTypes.string,
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
   className: PropTypes.string,
   plausibleDomain: PropTypes.string,
@@ -84,7 +84,7 @@ AnchorButton.propTypes = {
 AnchorButton.defaultProps = {
   name: undefined,
   isDownloadLink: false,
-  plausibleName: null,
+  plausibleGoal: null,
   plausibleProps: undefined,
   plausibleDomain: null,
   className: undefined,

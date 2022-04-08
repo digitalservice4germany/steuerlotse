@@ -22,7 +22,7 @@ export default function UnlockCodeSuccessPage({
   };
   const plausiblePropsAnchor = { method: "CTA Vorbereitungshilfe" };
   const plausibleGoal = "Vorbereitungshilfe";
-  const onClickPlausible = () => {
+  const handleClick = () => {
     addPlausibleGoal(plausibleDomain, plausibleGoal, {
       props: plausiblePropsAnchor,
     });
@@ -49,9 +49,9 @@ export default function UnlockCodeSuccessPage({
             i18nKey="register.success.next-steps.step-2"
             components={{
               // The anchors get content in the translation file
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
               vorbereitungsHilfeLink: (
-                <a href={vorbereitungsHilfeLink} onClick={onClickPlausible} />
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                <a href={vorbereitungsHilfeLink} onClick={handleClick} />
               ),
             }}
           />
@@ -85,7 +85,7 @@ export default function UnlockCodeSuccessPage({
         text={t("register.success.preparation.anchor")}
         isDownloadLink
         plausibleDomain={plausibleDomain}
-        plausibleName={plausibleGoal}
+        plausibleGoal={plausibleGoal}
         plausibleProps={plausiblePropsButton}
       />
     </>
