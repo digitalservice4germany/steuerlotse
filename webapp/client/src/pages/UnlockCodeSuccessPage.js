@@ -4,16 +4,28 @@ import { Trans, useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
 import AnchorButton from "../components/AnchorButton";
+import addPlausibleGoal from "../lib/helpers";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
   steuerErklaerungLink,
   vorbereitungsHilfeLink,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
   const stepHeader = {
     title: t("register.success.next-steps.header.title"),
     intro: t("register.success.next-steps.header.intro"),
+  };
+  const plausiblePropsButton = {
+    method: "CTA Vorbereitungshilfe herunterladen",
+  };
+  const plausiblePropsAnchor = { method: "CTA Vorbereitungshilfe" };
+  const plausibleGoal = "Vorbereitungshilfe";
+  const onClickPlausible = () => {
+    addPlausibleGoal(plausibleDomain, plausibleGoal, {
+      props: plausiblePropsAnchor,
+    });
   };
 
   return (
@@ -38,7 +50,9 @@ export default function UnlockCodeSuccessPage({
             components={{
               // The anchors get content in the translation file
               // eslint-disable-next-line jsx-a11y/anchor-has-content
-              vorbereitungsHilfeLink: <a href={vorbereitungsHilfeLink} />,
+              vorbereitungsHilfeLink: (
+                <a href={vorbereitungsHilfeLink} onClick={onClickPlausible} />
+              ),
             }}
           />
         </li>
@@ -70,6 +84,9 @@ export default function UnlockCodeSuccessPage({
         url={vorbereitungsHilfeLink}
         text={t("register.success.preparation.anchor")}
         isDownloadLink
+        plausibleDomain={plausibleDomain}
+        plausibleName={plausibleGoal}
+        plausibleProps={plausiblePropsButton}
       />
     </>
   );
@@ -79,4 +96,9 @@ UnlockCodeSuccessPage.propTypes = {
   prevUrl: PropTypes.string.isRequired,
   steuerErklaerungLink: PropTypes.string.isRequired,
   vorbereitungsHilfeLink: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+UnlockCodeSuccessPage.defaultProps = {
+  plausibleDomain: null,
 };
