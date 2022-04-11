@@ -455,7 +455,7 @@ const translations = {
       InfoBroschureDownloadLink: "Informationsbroschüre (PDF) speichern",
       SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
       HowItWorks:
-        "So funktioniert der Steuerlotsen für Rente und Pension (Video, 30 Min)",
+        "So funktioniert der Steuerlotse für Rente und Pension (Video, 30 Min)",
       AnyOtherQuestions: "Haben Sie noch weitere Fragen zum Steuerlotsen?",
       ContactUs:
         "Schreiben Sie uns: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",

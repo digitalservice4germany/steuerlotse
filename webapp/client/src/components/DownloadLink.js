@@ -7,7 +7,7 @@ const Anchor = styled.a`
   --total-line-height: var(--lineheight-l);
   --font-size: var(--text-base);
   position: relative;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   font-size: var(--font-size);
   line-height: var(--total-line-height);
 
@@ -35,7 +35,7 @@ const LinkElement = styled.span`
   height: var(--size);
 
   text-align: center;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
   border-radius: 50%;
 `;

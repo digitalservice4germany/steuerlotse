@@ -10,7 +10,7 @@ const Help = styled.button`
   border-radius: 11px !important;
   padding: 0;
   font-size: 0.9em;
-  font-weight: bold;
+  font-family: bold;
   display: inline-flex;
   align-items: center;
   justify-content: center;

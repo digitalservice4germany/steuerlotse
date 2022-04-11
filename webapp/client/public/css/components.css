@@ -48,7 +48,7 @@
 .btn-outline-primary, a.btn-outline-primary{
     padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
 
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
     letter-spacing: var(--tracking-wide);
     text-decoration: none;
     color: var(--link-color);
@@ -160,7 +160,7 @@
 
 .accordion .card-header button span {
     font-size: var(--text-medium);
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
 
     display: inline;
 }
@@ -377,7 +377,7 @@
 .back-link{
   display: inline-flex;
   align-items: center;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: var(--tracking-extra-wide);
@@ -418,7 +418,7 @@ a.back-link:focus a.back-link:active{
 }
 
 .edit-button {
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
     text-decoration: none;
 }
 
@@ -556,7 +556,7 @@ input[type="radio"]:checked:focus-visible + label::before {
 .sub-field-label {
     margin-bottom: 0 !important;
     font-size: var(--text-sm);
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
 }
 
 /* ALERTS */
