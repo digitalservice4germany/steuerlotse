@@ -1,4 +1,5 @@
 import base64
+import json
 import logging
 from os import environ
 
@@ -153,6 +154,6 @@ try:
         'mocked_development': MockedDevelopmentConfig
     }[environ['FLASK_ENV']]
     
-    logger.info(Config)
+    logger.info(json.dumps(Config))
 except KeyError:
     raise RuntimeError(f'Unknown FLASK_ENV "{environ["FLASK_ENV"]}"')
