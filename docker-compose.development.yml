@@ -4,7 +4,7 @@ services:
   erica:
     env_file:
       - ".erica.env"
-    image: steuerlotse_erica
+    image: scr.syseleven.de/steuerlotse-stack-main/steuerlotse_erica
     expose:
       - 8000
     ports:
