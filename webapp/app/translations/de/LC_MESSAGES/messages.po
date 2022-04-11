@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-04-06 18:54+0200\n"
+"POT-Creation-Date: 2022-04-11 10:42+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -5207,6 +5207,14 @@ msgstr "Bitte beachten Sie"
 #: app/templates/eligibility/display_success.html:42
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
+
+#: app/templates/eligibility/display_success.html:42
+msgid "tracking.eligibility.success.goal"
+msgstr "Registrierung"
+
+#: app/templates/eligibility/display_success.html:42
+msgid "tracking.eligibility.success.method"
+msgstr "Registrierung CTA positiv NP"
 
 #: app/templates/eligibility/form_marital_status_input.html:7
 msgid "eligibility.marital_status.widowed_note"
