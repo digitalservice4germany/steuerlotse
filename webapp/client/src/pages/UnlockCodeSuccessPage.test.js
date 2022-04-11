@@ -16,8 +16,9 @@ function setup(optionalProps) {
   const downloadAnchor = screen.getByText("Vorbereitungshilfe");
   const downloadButton = screen.getByText("Vorbereitungshilfe herunterladen");
   const zurueckButton = screen.getByText("Zurück");
+  const user = userEvent.setup();
 
-  return { ...utils, downloadAnchor, downloadButton, zurueckButton };
+  return { ...utils, downloadAnchor, downloadButton, zurueckButton, user };
 }
 
 describe("UnlockCodeSuccessPage", () => {
@@ -62,7 +63,7 @@ describe("UnlockCodeSuccessPage", () => {
   });
 
   it("should call plausible with name and props, when user clicks on download button", async () => {
-    const { downloadButton } = setup({
+    const { downloadButton, user } = setup({
       plausibleDomain: "http://localhost:3000",
     });
 
@@ -73,7 +74,7 @@ describe("UnlockCodeSuccessPage", () => {
 
     window.plausible = jest.fn();
 
-    await userEvent.click(downloadButton);
+    await user.click(downloadButton);
 
     expect(window.plausible).toHaveBeenCalledWith(
       EXPECTED_PLAUSIBLE_GOAL,
@@ -82,7 +83,7 @@ describe("UnlockCodeSuccessPage", () => {
   });
 
   it("should call plausible with name and props, when user clicks on download link", async () => {
-    const { downloadAnchor } = setup({
+    const { downloadAnchor, user } = setup({
       plausibleDomain: "http://localhost:3000",
     });
 
@@ -93,7 +94,7 @@ describe("UnlockCodeSuccessPage", () => {
 
     window.plausible = jest.fn();
 
-    await userEvent.click(downloadAnchor);
+    await user.click(downloadAnchor);
 
     expect(window.plausible).toHaveBeenCalledWith(
       EXPECTED_PLAUSIBLE_GOAL,
@@ -102,15 +103,15 @@ describe("UnlockCodeSuccessPage", () => {
   });
 
   it("should not call plausible if no plausible domain given", async () => {
-    const { downloadButton, downloadAnchor } = setup();
+    const { downloadButton, downloadAnchor, user } = setup();
 
     window.plausible = jest.fn();
 
-    await userEvent.click(downloadButton);
+    await user.click(downloadButton);
 
     expect(window.plausible).not.toHaveBeenCalled();
 
-    await userEvent.click(downloadAnchor);
+    await user.click(downloadAnchor);
 
     expect(window.plausible).not.toHaveBeenCalled();
   });
