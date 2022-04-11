@@ -1,6 +1,8 @@
 import base64
+import logging
 from os import environ
 
+logger = logging.getLogger(__name__)
 
 class BaseConfig(object):
     ALLOW_TESTING_ROUTES = False
@@ -150,5 +152,7 @@ try:
         'production': ProductionConfig,
         'mocked_development': MockedDevelopmentConfig
     }[environ['FLASK_ENV']]
+    
+    logger.info(Config)
 except KeyError:
     raise RuntimeError(f'Unknown FLASK_ENV "{environ["FLASK_ENV"]}"')
