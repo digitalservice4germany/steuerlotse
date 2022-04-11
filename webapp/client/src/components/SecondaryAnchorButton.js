@@ -105,7 +105,7 @@ export default function SecondaryAnchorButton({
   className,
   isExternalLink,
 }) {
-  const onClickPlausible = () => {
+  const handleClick = () => {
     addPlausibleGoal(plausibleDomain, plausibleName);
   };
 
@@ -114,7 +114,7 @@ export default function SecondaryAnchorButton({
       href={url}
       download={isDownloadLink}
       name={name}
-      onClick={onClickPlausible}
+      onClick={handleClick}
       className={className}
     >
       {text}
@@ -123,7 +123,7 @@ export default function SecondaryAnchorButton({
     <AnchorSecondaryPlayer
       href={url}
       name={name}
-      onClick={onClickPlausible}
+      onClick={handleClick}
       className={className}
       target="_blank"
       rel="noopener"

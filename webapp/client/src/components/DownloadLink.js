@@ -48,14 +48,14 @@ export default function DownloadLink({
   plausibleName,
   plausibleDomain,
 }) {
-  const onClickPlausible = () => {
+  const handleClick = () => {
     addPlausibleGoal(plausibleDomain, plausibleName);
   };
   return (
     <Anchor
       large={large}
       href={url}
-      onClick={onClickPlausible}
+      onClick={handleClick}
       className={className}
     >
       <LinkElement large={large}>
