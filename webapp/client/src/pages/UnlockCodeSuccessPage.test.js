@@ -71,7 +71,7 @@ describe("UnlockCodeSuccessPage", () => {
       props: { method: "CTA Vorbereitungshilfe herunterladen" },
     };
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
 
     await userEvent.click(downloadButton);
 
@@ -91,7 +91,7 @@ describe("UnlockCodeSuccessPage", () => {
       props: { method: "CTA Vorbereitungshilfe" },
     };
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
 
     await userEvent.click(downloadAnchor);
 
@@ -104,7 +104,7 @@ describe("UnlockCodeSuccessPage", () => {
   it("should not call plausible if no plausible domain given", async () => {
     const { downloadButton, downloadAnchor } = setup();
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
 
     await userEvent.click(downloadButton);
 

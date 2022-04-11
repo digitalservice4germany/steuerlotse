@@ -58,7 +58,7 @@ describe("Secondary Button add plausible", () => {
   it("should run the plausible function on click button", async () => {
     const user = userEvent.setup();
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
     render(<SecondaryAnchorButton {...MOCK_PROPS} />);
 
     await user.click(screen.getByText(MOCK_PROPS.text));
