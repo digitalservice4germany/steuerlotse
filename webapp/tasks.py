@@ -42,7 +42,6 @@ def start_test_server(c, webapp_dir=None):
     
     # Set up Redis
     c.run("docker run --name redis -p 6379:6379 -d redis", env=env)
-    c.run("docker ps", env=env)
         
     # Run flask server
     sarge.run("flask run", cwd=webapp_dir, env=env, async_=True)

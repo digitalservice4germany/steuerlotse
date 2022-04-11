@@ -138,7 +138,6 @@ class MultiStepFlow:
         if self.default_data() and not set(self.default_data()[1]).intersection(set(form_data)):
             form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
             
-        logger.info(f"multistep get form data: {form_data}")
         return form_data
 
     def _load_step(self, step_name):

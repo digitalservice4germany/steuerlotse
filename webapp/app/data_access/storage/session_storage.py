@@ -1,5 +1,3 @@
-import logging
-
 from typing import Optional
 
 from pydantic import MissingError
@@ -13,14 +11,11 @@ from app.data_access.storage.cookie_storage import CookieStorage
 from app.config import Config
 
 
-logger = logging.getLogger(__name__)
-
-
 class SessionStorage(FormStorage):
     @staticmethod
-    def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):        
+    def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
-        
+
         if not key:
             return None
         try:
@@ -32,16 +27,12 @@ class SessionStorage(FormStorage):
         if default_data and not set(default_data).intersection(set(stored_data)):
             # updates session_data only with non_existent values
             stored_data = default_data | stored_data
-            
-        logger.info(f"get session data: {stored_data}" )
 
         return stored_data
 
     @staticmethod
-    def override_data(stored_data, data_identifier='form_data'):        
+    def override_data(stored_data, data_identifier='form_data'):
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
-
-        logger.info(f"set session data: {stored_data}" )
 
         if not key:
             return
