@@ -12,7 +12,7 @@ class CookieStorage(FormStorage):
         if default_data and not set(default_data).intersection(set(stored_data)):
             # updates session_data only with non_existent values
             stored_data = default_data | stored_data
-            
+
         return stored_data
 
     @staticmethod

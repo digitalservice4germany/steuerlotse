@@ -6,7 +6,7 @@ from pydantic import MissingError
 class RedisConnectorService:
     _instance = None
     _redis_connection = None
-    
+
     def __new__(cls):
         """Singleton creation so that the redis connection is not recreated."""
         if cls._instance is None:
