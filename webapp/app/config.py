@@ -101,7 +101,6 @@ class DevelopmentConfig(BaseConfig):
     REACT_BUNDLE_NAME = 'bundle.js'
     
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
-    USE_FAKE_REDIS = True
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
@@ -112,7 +111,6 @@ class FunctionalTestingConfig(DevelopmentConfig):
 
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
-    USE_FAKE_REDIS = True
 
 class TestingConfig(BaseConfig):
     DEBUG = True
