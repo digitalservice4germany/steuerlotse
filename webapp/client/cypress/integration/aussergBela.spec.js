@@ -3,12 +3,8 @@ describe("PersonAHasDisability", () => {
     cy.login();
   });
 
-  context("with no aussergBela selected", () => {
+  context("with no data", () => {
     beforeEach(() => {
-      cy.request("POST", "/testing/set_session_data/form_data", {
-        stmind_select_ausserg_bela: false,
-      });
-
       cy.visit("/lotse/step/ausserg_bela");
     });
 
