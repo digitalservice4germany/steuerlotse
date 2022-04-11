@@ -134,7 +134,7 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://127.0.0.1:6379'
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
 
 
 class MockedDevelopmentConfig(DevelopmentConfig):

@@ -32,7 +32,7 @@ def start_test_server(c, webapp_dir=None):
         'FLASK_ENV': 'functional',
         'CI': 'true',
         'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
-        'SESSION_DATA_STORAGE_URL': 'redis:127.0.0.1:6379'
+        'SESSION_DATA_STORAGE_URL': 'redis://127.0.0.1:6379'
     }
 
     # Set up DB
@@ -81,7 +81,7 @@ def test_functional(c, mode):
         'FLASK_ENV': 'functional',
         'CI': 'true',
         'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
-        'SESSION_DATA_STORAGE_URL': 'redis:127.0.0.1:6379'
+        'SESSION_DATA_STORAGE_URL': 'redis://127.0.0.1:6379'
     }
 
     # Set up DB
