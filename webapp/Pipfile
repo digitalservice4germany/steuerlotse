@@ -28,6 +28,7 @@ flask-static-digest = "*"
 python-dotenv = "*"
 pyhumps = "*"
 pytest-xdist = "*"
+jinja2 = "3.0.3"
 
 [dev-packages]
 pytest = "*"
