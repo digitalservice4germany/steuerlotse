@@ -112,7 +112,7 @@ class FunctionalTestingConfig(DevelopmentConfig):
 
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///dev.db"
+    SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
 
 class TestingConfig(BaseConfig):
     DEBUG = True
