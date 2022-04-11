@@ -2,7 +2,8 @@ from typing import Optional
 from flask import session
 
 from app.data_access.storage.form_storage import FormStorage
-
+import logging
+logger = logging.getLogger(__name__)
 
 class CookieStorage(FormStorage):
     @staticmethod
@@ -13,7 +14,8 @@ class CookieStorage(FormStorage):
         if default_data and not set(default_data).intersection(set(stored_data)):
             # updates session_data only with non_existent values
             stored_data = default_data | stored_data
-
+            
+        logger.info(f"get form data: {stored_data}")
         return stored_data
 
     @staticmethod
