@@ -6,6 +6,7 @@ import FormFieldDropDown from "./FormFieldDropDown";
 describe("FormFieldDropDown", () => {
   let props;
   const onChangeHandler = jest.fn();
+  const user = userEvent.setup();
 
   beforeEach(() => {
     props = {
@@ -25,71 +26,50 @@ describe("FormFieldDropDown", () => {
     render(<FormFieldDropDown {...props} />);
   });
 
-  describe("When second option has been selected", () => {
-    beforeEach(() => {
-      userEvent.selectOptions(screen.getByRole("combobox"), ["B"]);
-    });
+  it("should select second option", async () => {
+    await user.selectOptions(screen.getByRole("combobox"), ["B"]);
 
-    it("Only second option should be selected", () => {
-      expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(
-        false
-      );
-      expect(screen.getByRole("option", { name: "Terra" }).selected).toBe(true);
-      expect(screen.getByRole("option", { name: "Earth" }).selected).toBe(
-        false
-      );
-    });
-
-    it("Should call the change handler with B", () => {
-      expect(onChangeHandler).toHaveBeenCalled();
-
-      const changeEvent = onChangeHandler.mock.calls[0][0];
-      expect(changeEvent.target.value).toEqual("B");
-    });
-
-    describe("When third option has been selected", () => {
-      beforeEach(() => {
-        userEvent.selectOptions(screen.getByRole("combobox"), ["C"]);
-      });
-
-      it("Only third option should be selected", () => {
-        expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(
-          false
-        );
-        expect(screen.getByRole("option", { name: "Terra" }).selected).toBe(
-          false
-        );
-        expect(screen.getByRole("option", { name: "Earth" }).selected).toBe(
-          true
-        );
-      });
-
-      it("Should call the change handler with C", () => {
-        expect(onChangeHandler).toHaveBeenCalled();
-
-        const changeEvent = onChangeHandler.mock.calls[0][0];
-        expect(changeEvent.target.value).toEqual("C");
-      });
-    });
+    expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(false);
+    expect(screen.getByRole("option", { name: "Terra" }).selected).toBe(true);
+    expect(screen.getByRole("option", { name: "Earth" }).selected).toBe(false);
   });
 
-  describe("When pressing tab", () => {
-    beforeEach(() => {
-      userEvent.tab();
-    });
+  it("should call the change handler with B", async () => {
+    await user.selectOptions(screen.getByRole("combobox"), ["B"]);
 
-    it("Should set focus on dropDown", () => {
-      expect(screen.getByRole("combobox")).toHaveFocus();
-    });
+    expect(onChangeHandler).toHaveBeenCalled();
 
-    describe("When pressing tab again", () => {
-      beforeEach(() => {
-        userEvent.tab();
-      });
+    const changeEvent = onChangeHandler.mock.calls[0][0];
+    expect(changeEvent.target.value).toEqual("B");
+  });
 
-      it("Should not set focus on dropDown", () => {
-        expect(screen.getByRole("combobox")).not.toHaveFocus();
-      });
-    });
+  it("should select third option", async () => {
+    await user.selectOptions(screen.getByRole("combobox"), ["C"]);
+
+    expect(screen.getByRole("option", { name: "Vulcan" }).selected).toBe(false);
+    expect(screen.getByRole("option", { name: "Terra" }).selected).toBe(false);
+    expect(screen.getByRole("option", { name: "Earth" }).selected).toBe(true);
+  });
+
+  it("should call the change handler with C", async () => {
+    await user.selectOptions(screen.getByRole("combobox"), ["C"]);
+
+    expect(onChangeHandler).toHaveBeenCalled();
+
+    const changeEvent = onChangeHandler.mock.calls[0][0];
+    expect(changeEvent.target.value).toEqual("C");
+  });
+
+  it("should set focus on dropDown when pressing tab", async () => {
+    await user.tab();
+
+    expect(screen.getByRole("combobox")).toHaveFocus();
+  });
+
+  it("should remove focus from dropDown when pressing tab two times", async () => {
+    await user.tab();
+    await user.tab();
+
+    expect(screen.getByRole("combobox")).not.toHaveFocus();
   });
 });

@@ -6,6 +6,7 @@ import FormFieldTaxNumber from "./FormFieldTaxNumber";
 describe("FormFieldTaxNumber has splitType_0", () => {
   let props;
   const exampleInput = "exampleInput";
+  const user = userEvent.setup();
 
   beforeEach(() => {
     props = {
@@ -30,28 +31,49 @@ describe("FormFieldTaxNumber has splitType_0", () => {
     expect(screen.queryByText("exampleInput")).toBeNull();
   });
 
+  it("should set focus on second input field after pressing tab two times", async () => {
+    await user.tab();
+    await user.tab();
+
+    expect(screen.getAllByRole("textbox")[1]).toHaveFocus();
+  });
+
+  it("should set focus on third input field after pressing tab three times", async () => {
+    await user.tab();
+    await user.tab();
+    await user.tab();
+
+    expect(screen.getAllByRole("textbox")[2]).toHaveFocus();
+  });
+
   describe("When typing 12 characters into each input", () => {
     const inputCharacters = "123456789012";
 
-    beforeEach(() => {
-      userEvent.type(screen.getAllByRole("textbox")[0], inputCharacters);
-      userEvent.type(screen.getAllByRole("textbox")[1], inputCharacters);
-      userEvent.type(screen.getAllByRole("textbox")[2], inputCharacters);
-    });
+    it("should only contain first 2 characters in first input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
 
-    it("First input should only contain first 2 characters", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveValue(
         inputCharacters.slice(0, 2)
       );
     });
 
-    it("Second input should only contain first 3 characters", () => {
+    it("should only contain first 3 characters in second input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
+
       expect(screen.getAllByRole("textbox")[1]).toHaveValue(
         inputCharacters.slice(0, 3)
       );
     });
 
-    it("Third input should only contain first 5 characters", () => {
+    it("should only contain first 5 characters in third input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
+
       expect(screen.getAllByRole("textbox")[2]).toHaveValue(
         inputCharacters.slice(0, 5)
       );
@@ -59,37 +81,21 @@ describe("FormFieldTaxNumber has splitType_0", () => {
   });
 
   describe("When pressing tab", () => {
-    beforeEach(() => {
-      userEvent.tab();
-    });
+    it("should set focus on first input field", async () => {
+      await user.tab();
 
-    it("Should focus on first input field", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveFocus();
     });
 
-    describe("When typing", () => {
+    it("Should enter letters into first input field", async () => {
       const inputCharacters = "123456789012";
 
-      beforeEach(() => {
-        userEvent.keyboard(inputCharacters);
-      });
+      await user.tab();
+      await user.keyboard(inputCharacters);
 
-      it("Should enter letters into first input field", () => {
-        expect(screen.getAllByRole("textbox")[0]).toHaveValue(
-          inputCharacters.slice(0, 2)
-        );
-      });
-    });
-
-    it("Should set focus on second input field after second tab", () => {
-      userEvent.tab();
-      expect(screen.getAllByRole("textbox")[1]).toHaveFocus();
-    });
-
-    it("Should set focus on third input field after third tab", () => {
-      userEvent.tab();
-      userEvent.tab();
-      expect(screen.getAllByRole("textbox")[2]).toHaveFocus();
+      expect(screen.getAllByRole("textbox")[0]).toHaveValue(
+        inputCharacters.slice(0, 2)
+      );
     });
   });
 });
@@ -113,36 +119,43 @@ describe("FormFieldTaxNumber has splitType_1", () => {
     render(<FormFieldTaxNumber {...props} />);
   });
 
-  it("Should show three input fields", () => {
+  it("should show three input fields", () => {
     expect(screen.getAllByRole("textbox")).toHaveLength(3);
   });
 
-  it("Should not show example input", () => {
+  it("should not show example input", () => {
     expect(screen.queryByText("exampleInput")).toBeNull();
   });
 
   describe("When typing 12 characters into each input", () => {
     const inputCharacters = "123456789012";
+    const user = userEvent.setup();
 
-    beforeEach(() => {
-      userEvent.type(screen.getAllByRole("textbox")[0], inputCharacters);
-      userEvent.type(screen.getAllByRole("textbox")[1], inputCharacters);
-      userEvent.type(screen.getAllByRole("textbox")[2], inputCharacters);
-    });
+    it("should only contain first 3 characters in first input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
 
-    it("First input should only contain first 3 characters", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveValue(
         inputCharacters.slice(0, 3)
       );
     });
 
-    it("Second input should only contain first 3 characters", () => {
+    it("should only contain first 2 characters in second input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
+
       expect(screen.getAllByRole("textbox")[1]).toHaveValue(
         inputCharacters.slice(0, 3)
       );
     });
 
-    it("Third input should only contain first 5 characters", () => {
+    it("Third input should only contain first 5 characters", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
+
       expect(screen.getAllByRole("textbox")[2]).toHaveValue(
         inputCharacters.slice(0, 5)
       );
@@ -179,26 +192,33 @@ describe("FormFieldTaxNumber has splitType_2", () => {
 
   describe("When typing 12 characters into each input", () => {
     const inputCharacters = "123456789012";
+    const user = userEvent.setup();
 
-    beforeEach(() => {
-      userEvent.type(screen.getAllByRole("textbox")[0], inputCharacters);
-      userEvent.type(screen.getAllByRole("textbox")[1], inputCharacters);
-      userEvent.type(screen.getAllByRole("textbox")[2], inputCharacters);
-    });
+    it("should only contain first 3 characters in first input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
 
-    it("First input should only contain first 3 characters", () => {
       expect(screen.getAllByRole("textbox")[0]).toHaveValue(
         inputCharacters.slice(0, 3)
       );
     });
 
-    it("Second input should only contain first 4 characters", () => {
+    it("should only contain first 4 characters in second input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
+
       expect(screen.getAllByRole("textbox")[1]).toHaveValue(
         inputCharacters.slice(0, 4)
       );
     });
 
-    it("Third input should only contain first 4 characters", () => {
+    it("should only contain first 4 characters in third input", async () => {
+      await user.type(screen.getAllByRole("textbox")[0], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[1], inputCharacters);
+      await user.type(screen.getAllByRole("textbox")[2], inputCharacters);
+
       expect(screen.getAllByRole("textbox")[2]).toHaveValue(
         inputCharacters.slice(0, 4)
       );
@@ -209,6 +229,8 @@ describe("FormFieldTaxNumber has splitType_2", () => {
 describe("FormFieldTaxNumber is not split", () => {
   let props;
   const exampleInput = "exampleInput";
+  const inputCharacters = "123456789012";
+  const user = userEvent.setup();
 
   beforeEach(() => {
     props = {
@@ -237,38 +259,23 @@ describe("FormFieldTaxNumber is not split", () => {
     expect(screen.queryByText("exampleInput")).toBeNull();
   });
 
-  describe("When typing 12 characters into input", () => {
-    const inputCharacters = "123456789012";
+  it("should contain all 12 characters, when typing 12 characters into input", async () => {
+    await user.type(screen.getByRole("textbox"), inputCharacters);
 
-    beforeEach(() => {
-      userEvent.type(screen.getByRole("textbox"), inputCharacters);
-    });
-
-    it("Input should contain all 12 characters", () => {
-      expect(screen.getByRole("textbox")).toHaveValue(inputCharacters);
-    });
+    expect(screen.getByRole("textbox")).toHaveValue(inputCharacters);
   });
 
-  describe("When pressing tab", () => {
-    beforeEach(() => {
-      userEvent.tab();
-    });
+  it("should set focus on input field, when pressing tab", async () => {
+    await user.tab();
 
-    it("Should set focus on input field", () => {
-      expect(screen.getByRole("textbox")).toHaveFocus();
-    });
+    expect(screen.getByRole("textbox")).toHaveFocus();
+  });
 
-    describe("When typing", () => {
-      const inputCharacters = "123456789012";
+  it("should enter letters into input field, when pressing tab", async () => {
+    await user.tab();
+    await user.keyboard(inputCharacters);
 
-      beforeEach(() => {
-        userEvent.keyboard(inputCharacters);
-      });
-
-      it("Should enter letters into input field", () => {
-        expect(screen.getByRole("textbox")).toHaveValue(inputCharacters);
-      });
-    });
+    expect(screen.getByRole("textbox")).toHaveValue(inputCharacters);
   });
 });
 
