@@ -32,13 +32,17 @@ def start_test_server(c, webapp_dir=None):
         'FLASK_ENV': 'functional',
         'CI': 'true',
         'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
+        'SESSION_DATA_STORAGE_URL': 'redis://0.0.0.0:6379'
     }
 
     # Set up DB
     sarge.run("flask db upgrade", cwd=webapp_dir, env=env)
     sarge.run("flask populate-database", cwd=webapp_dir, env=env)
     sarge.run("./scripts/babel_run.sh", cwd=webapp_dir, env=env)
-
+    
+    # Set up Redis
+    c.run("docker run --name redis -p 6379:6379 -d redis", env=env)
+        
     # Run flask server
     sarge.run("flask run", cwd=webapp_dir, env=env, async_=True)
     wait_until_up('http://localhost:5000')
@@ -77,12 +81,16 @@ def test_functional(c, mode):
         'FLASK_ENV': 'functional',
         'CI': 'true',
         'BROWSER': 'none',  # stop `yarn start` from trying to open a browser window
+        'SESSION_DATA_STORAGE_URL': 'redis://0.0.0.0:6379'
     }
 
     # Set up DB
     c.run("flask db upgrade", env=env)
     c.run("flask populate-database", env=env)
     c.run("./scripts/babel_run.sh", env=env)
+    
+    # Set up Redis
+    c.run("docker run --name redis -p 6379:6379 -d redis", env=env)
 
     try:
         # Run flask server
@@ -110,6 +118,9 @@ def test_functional(c, mode):
 
         # Delete test database
         c.run("rm ./app/functional-testing.db")
+        
+        # Stop redis
+        c.run("docker stop $(docker ps -q --filter ancestor=redis)", env=env)
 
 
 @task(test_pytest, test_client_unit, test_functional_run)

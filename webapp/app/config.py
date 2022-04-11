@@ -1,7 +1,6 @@
 import base64
 from os import environ
 
-
 class BaseConfig(object):
     ALLOW_TESTING_ROUTES = False
     DEBUG = False
@@ -39,7 +38,6 @@ class BaseConfig(object):
 
     USE_LRU_CACHE = True
 
-    USE_REDIS_LITE = False
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
 
@@ -101,8 +99,8 @@ class DevelopmentConfig(BaseConfig):
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
-
-    USE_REDIS_LITE = True
+    
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
@@ -114,8 +112,6 @@ class FunctionalTestingConfig(DevelopmentConfig):
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
-
-    USE_REDIS_LITE = True
 
 
 class TestingConfig(BaseConfig):
@@ -138,8 +134,7 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
-
-    USE_REDIS_LITE = True
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
 
 
 class MockedDevelopmentConfig(DevelopmentConfig):

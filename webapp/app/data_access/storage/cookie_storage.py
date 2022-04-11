@@ -3,7 +3,6 @@ from flask import session
 
 from app.data_access.storage.form_storage import FormStorage
 
-
 class CookieStorage(FormStorage):
     @staticmethod
     def get_data(data_identifier, ttl: Optional[int] = None, default_data=None):
