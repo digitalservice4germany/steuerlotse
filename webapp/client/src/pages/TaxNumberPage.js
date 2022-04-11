@@ -187,8 +187,10 @@ export default function TaxNumberPage({
   prevUrl,
   taxOfficeList,
   numberOfUsers,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = { method: "CTA Steuernummer" };
 
   const [taxNumberPageData, changeTaxNumberPageData] = useReducer(
     reduceTaxNumberPageData,
@@ -316,7 +318,11 @@ export default function TaxNumberPage({
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormRowCentered>
           <FormFieldYesNo
             fieldName="steuernummer_exists"
@@ -378,4 +384,9 @@ TaxNumberPage.propTypes = {
     })
   ).isRequired,
   numberOfUsers: PropTypes.number.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+TaxNumberPage.defaultProps = {
+  plausibleDomain: null,
 };

@@ -12,8 +12,10 @@ export default function DeclarationEDatenPage({
   form,
   fields,
   prevUrl,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = { method: "CTA Übernahme vorliegender Daten" };
 
   return (
     <>
@@ -25,7 +27,11 @@ export default function DeclarationEDatenPage({
           t("lotse.declarationEdaten.intro2"),
         ]}
       />
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormFieldConsentBox
           autofocus
           required
@@ -54,4 +60,9 @@ DeclarationEDatenPage.propTypes = {
     declarationEdaten: checkboxPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+DeclarationEDatenPage.defaultProps = {
+  plausibleDomain: null,
 };

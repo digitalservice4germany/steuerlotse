@@ -17,6 +17,8 @@ from app.forms.steps.lotse.has_disability import HasDisabilityPersonAPreconditio
 from app.model.disability_data import DisabilityModel
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 def calculate_pauschbetrag(has_pflegegrad=None, disability_degree=None, has_merkzeichen_bl=False,
                            has_merkzeichen_tbl=False, has_merkzeichen_h=False):
@@ -139,7 +141,8 @@ class StepPauschbetragPersonA(LotseFormSteuerlotseStep):
             },
             pauschbetrag=self.get_pauschbetrag(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='PauschbetragPersonAPage',
@@ -201,7 +204,8 @@ class StepPauschbetragPersonB(LotseFormSteuerlotseStep):
             },
             pauschbetrag=self.get_pauschbetrag(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='PauschbetragPersonBPage',

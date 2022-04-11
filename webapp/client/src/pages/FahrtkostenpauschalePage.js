@@ -17,6 +17,8 @@ export default function FahrtkostenpauschalePage({
   fields,
   prevUrl,
   fahrtkostenpauschaleAmount,
+  plausibleDomain,
+  plausibleProps,
 }) {
   const { t } = useTranslation();
 
@@ -44,7 +46,11 @@ export default function FahrtkostenpauschalePage({
           components={{ bold: <b /> }}
         />
       </DetailsSeparated>
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormFieldRadioGroup
           fieldName={fields.requestsFahrtkostenpauschale.name}
           fieldId={fields.requestsFahrtkostenpauschale.name}
@@ -83,4 +89,11 @@ FahrtkostenpauschalePage.propTypes = {
   }).isRequired,
   fahrtkostenpauschaleAmount: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
+};
+
+FahrtkostenpauschalePage.defaultProps = {
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };

@@ -8,6 +8,9 @@ export default function StepForm({
   explanatoryButtonText,
   showOverviewButton,
   nextButtonLabel,
+  plausibleGoal,
+  plausibleDomain,
+  plausibleProps,
 }) {
   return (
     <form noValidate method="POST" action={action}>
@@ -17,6 +20,9 @@ export default function StepForm({
         explanatoryButtonText={explanatoryButtonText}
         showOverviewButton={showOverviewButton}
         nextButtonLabel={nextButtonLabel}
+        plausibleGoal={plausibleGoal}
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
       />
     </form>
   );
@@ -32,8 +38,14 @@ StepForm.propTypes = {
     PropTypes.element,
   ]),
   nextButtonLabel: PropTypes.string,
+  plausibleGoal: PropTypes.string,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
 };
 
 StepForm.defaultProps = {
   ...StepNavButtons.defaultProps,
+  plausibleGoal: null,
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };

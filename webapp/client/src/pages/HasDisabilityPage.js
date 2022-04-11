@@ -14,6 +14,8 @@ export default function HasDisabilityPage({
   stepHeader,
   headerIntro,
   prevUrl,
+  plausibleDomain,
+  plausibleProps,
 }) {
   const { t } = useTranslation();
 
@@ -24,7 +26,11 @@ export default function HasDisabilityPage({
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormHeader title={stepHeader.title} intro={headerIntro} />
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <DetailsSeparated
           title={t("lotse.hasDisability.details.title")}
           detailsId={`${fields.hasDisability.name}_detail`}
@@ -69,4 +75,11 @@ HasDisabilityPage.propTypes = {
     hasDisability: extendedFieldPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
+};
+
+HasDisabilityPage.defaultProps = {
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };

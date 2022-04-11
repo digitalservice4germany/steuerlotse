@@ -9,8 +9,12 @@ export default function HasDisabilityPersonBPage({
   form,
   fields,
   prevUrl,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = {
+    method: "Behinderung oder Pflegebedürftigkeit für Person B",
+  };
 
   const translationBold = function translationBold(key) {
     return <Trans t={t} i18nKey={key} components={{ bold: <b /> }} />;
@@ -18,6 +22,8 @@ export default function HasDisabilityPersonBPage({
 
   return (
     <HasDisabilityPage
+      plausibleDomain={plausibleDomain}
+      plausibleProps={plausibleProps}
       {...{ stepHeader, form, prevUrl }}
       headerIntro={translationBold("lotse.hasDisability.intro_person_b")}
       fields={{
@@ -44,4 +50,9 @@ HasDisabilityPersonBPage.propTypes = {
     personBHasDisability: fieldPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+HasDisabilityPersonBPage.defaultProps = {
+  plausibleDomain: null,
 };

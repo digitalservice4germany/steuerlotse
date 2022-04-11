@@ -92,11 +92,10 @@ class RegistrationProps(StepFormProps):
     data_privacy_link: str
 
 
-class UnlockCodeSuccessProps(ComponentProps):
+class UnlockCodeSuccessProps(ComponentProps, ComponentPlausibleProps):
     prev_url: Optional[str]
     steuer_erklaerung_link: str
     vorbereitungs_hilfe_link: str
-    plausible_domain: Optional[str]
 
 
 class UnlockCodeFailureProps(ComponentProps):
@@ -115,11 +114,11 @@ class RevocationFailureProps(ComponentProps):
     prev_url: Optional[str]
 
 
-class DeclarationIncomesProps(StepFormProps):
+class DeclarationIncomesProps(StepFormProps, ComponentPlausibleProps):
     pass
 
 
-class DeclarationEDatenProps(StepFormProps):
+class DeclarationEDatenProps(StepFormProps, ComponentPlausibleProps):
     prev_url: str
 
 
@@ -139,24 +138,24 @@ class FilingFailureProps(ComponentProps):
     error_details: List[str]
 
 
-class TaxNumberStepFormProps(StepFormProps):
+class TaxNumberStepFormProps(StepFormProps, ComponentPlausibleProps):
     tax_office_list: List[Dict]
     number_of_users: int
 
 
-class HasDisabilityPersonAProps(StepFormProps):
+class HasDisabilityPersonAProps(StepFormProps, ComponentPlausibleProps):
     num_users: int
 
 
-class HasDisabilityPersonBProps(StepFormProps):
+class HasDisabilityPersonBProps(StepFormProps, ComponentPlausibleProps):
     pass
 
 
-class MerkzeichenProps(StepFormProps):
+class MerkzeichenProps(StepFormProps, ComponentPlausibleProps):
     pass
 
 
-class PauschbetragProps(StepFormProps):
+class PauschbetragProps(StepFormProps, ComponentPlausibleProps):
     pauschbetrag: str
 
 
@@ -165,15 +164,15 @@ class NoPauschbetragProps(StepDisplayProps):
     overviewUrl: str
 
 
-class FahrtkostenpauschaleProps(StepFormProps):
+class FahrtkostenpauschaleProps(StepFormProps, ComponentPlausibleProps):
     fahrtkostenpauschale_amount: int
 
 
-class TelephoneNumberProps(StepFormProps):
+class TelephoneNumberProps(StepFormProps, ComponentPlausibleProps):
     pass
 
 
-class SelectStMindProps(StepFormProps):
+class SelectStMindProps(StepFormProps, ComponentPlausibleProps):
     pass
 
 
