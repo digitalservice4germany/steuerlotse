@@ -33,13 +33,15 @@ class SessionStorage(FormStorage):
             # updates session_data only with non_existent values
             stored_data = default_data | stored_data
             
-        logger.info(stored_data)
+        logger.info(f"get session data: {stored_data}" )
 
         return stored_data
 
     @staticmethod
     def override_data(stored_data, data_identifier='form_data'):        
         key = SessionStorage.create_key_identifier_with_user_id(data_identifier)
+
+        logger.info(f"set session data: {stored_data}" )
 
         if not key:
             return
