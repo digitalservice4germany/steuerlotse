@@ -154,6 +154,6 @@ try:
         'mocked_development': MockedDevelopmentConfig
     }[environ['FLASK_ENV']]
     
-    logger.info(json.dumps(Config))
+    logger.info(f'Redis Session URL: "{Config.SESSION_DATA_STORAGE_URL}"')
 except KeyError:
     raise RuntimeError(f'Unknown FLASK_ENV "{environ["FLASK_ENV"]}"')
