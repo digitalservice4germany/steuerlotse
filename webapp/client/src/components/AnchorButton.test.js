@@ -12,7 +12,7 @@ function setup(optionalProps) {
   const utils = render(<AnchorButton {...REQUIRED_PROPS} {...optionalProps} />);
   const buttonText = screen.getByText("anchor text");
 
-  return { ...utils, buttonText };
+  return { ...utils, button: buttonText };
 }
 
 describe("AnchorButton", () => {
@@ -23,28 +23,28 @@ describe("AnchorButton", () => {
   });
 
   it("should have a href attribute", () => {
-    const { buttonText } = setup();
+    const { button } = setup();
 
-    expect(buttonText.closest("a")).toHaveAttribute(
+    expect(button.closest("a")).toHaveAttribute(
       "href",
       expect.stringContaining(REQUIRED_PROPS.url)
     );
   });
 
   it("should not have a download attribute if isDownloadLink is false", () => {
-    const { buttonText } = setup({
+    const { button } = setup({
       isDownloadLink: false,
     });
 
-    expect(buttonText.closest("a")).not.toHaveAttribute("download");
+    expect(button.closest("a")).not.toHaveAttribute("download");
   });
 
   it("should have a download attribute if isDownloadLink is true", () => {
-    const { buttonText } = setup({
+    const { button } = setup({
       isDownloadLink: true,
     });
 
-    expect(buttonText.closest("a")).toHaveAttribute("download");
+    expect(button.closest("a")).toHaveAttribute("download");
   });
 });
 
@@ -52,15 +52,15 @@ describe("AnchorButton with plausible", () => {
   const user = userEvent.setup();
 
   it("should call plausible with goal", async () => {
-    const { buttonText } = setup({
+    const { button } = setup({
       plausibleDomain: "domain/some/link/path",
       plausibleGoal: "plausible_goal",
     });
     const EXPECTED_PLAUSIBLE_GOAL = "plausible_goal";
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
 
-    await user.click(buttonText);
+    await user.click(button);
 
     expect(window.plausible).toHaveBeenCalledWith(EXPECTED_PLAUSIBLE_GOAL, {
       props: undefined,
@@ -68,17 +68,17 @@ describe("AnchorButton with plausible", () => {
   });
 
   it("should call plausible with goal and props", async () => {
-    const { buttonText } = setup({
+    const { button } = setup({
       plausibleDomain: "domain/some/link/path",
       plausibleGoal: "plausible_goal",
-      plausibleProps: { method: "unlockCodeSuccess" },
+      plausibleProps: { method: "plausible_props" },
     });
     const EXPECTED_PLAUSIBLE_GOAL = "plausible_goal";
-    const EXPECTED_PLAUSIBLE_PROPS = { props: { method: "unlockCodeSuccess" } };
+    const EXPECTED_PLAUSIBLE_PROPS = { props: { method: "plausible_props" } };
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
 
-    await user.click(buttonText);
+    await user.click(button);
 
     expect(window.plausible).toHaveBeenCalledWith(
       EXPECTED_PLAUSIBLE_GOAL,
@@ -87,11 +87,11 @@ describe("AnchorButton with plausible", () => {
   });
 
   it("should not call plausible without domain given", async () => {
-    const { buttonText } = setup();
+    const { button } = setup();
 
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
 
-    await user.click(buttonText);
+    await user.click(button);
 
     expect(window.plausible).not.toHaveBeenCalled();
   });

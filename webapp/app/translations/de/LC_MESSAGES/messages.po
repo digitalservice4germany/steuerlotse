@@ -5208,6 +5208,14 @@ msgstr "Bitte beachten Sie"
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
+#: app/templates/eligibility/display_success.html:42
+msgid "tracking.eligibility.success.goal"
+msgstr "Registrierung"
+
+#: app/templates/eligibility/display_success.html:42
+msgid "tracking.eligibility.success.method"
+msgstr "Registrierung CTA positiv NP"
+
 #: app/templates/eligibility/form_marital_status_input.html:7
 msgid "eligibility.marital_status.widowed_note"
 msgstr ""
