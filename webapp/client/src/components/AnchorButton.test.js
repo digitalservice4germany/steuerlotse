@@ -11,8 +11,9 @@ const REQUIRED_PROPS = {
 function setup(optionalProps) {
   const utils = render(<AnchorButton {...REQUIRED_PROPS} {...optionalProps} />);
   const buttonText = screen.getByText("anchor text");
+  const user = userEvent.setup();
 
-  return { ...utils, button: buttonText };
+  return { ...utils, button: buttonText, user };
 }
 
 describe("AnchorButton", () => {
@@ -49,10 +50,8 @@ describe("AnchorButton", () => {
 });
 
 describe("AnchorButton with plausible", () => {
-  const user = userEvent.setup();
-
   it("should call plausible with goal", async () => {
-    const { button } = setup({
+    const { button, user } = setup({
       plausibleDomain: "domain/some/link/path",
       plausibleGoal: "plausible_goal",
     });
@@ -68,7 +67,7 @@ describe("AnchorButton with plausible", () => {
   });
 
   it("should call plausible with goal and props", async () => {
-    const { button } = setup({
+    const { button, user } = setup({
       plausibleDomain: "domain/some/link/path",
       plausibleGoal: "plausible_goal",
       plausibleProps: { method: "plausible_props" },
@@ -87,7 +86,7 @@ describe("AnchorButton with plausible", () => {
   });
 
   it("should not call plausible without domain given", async () => {
-    const { button } = setup();
+    const { button, user } = setup();
 
     window.plausible = jest.fn();
 
