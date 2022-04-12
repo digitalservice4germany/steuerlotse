@@ -208,12 +208,11 @@
         },
         "flask-limiter": {
             "hashes": [
-                "sha256:41490ae6ae49f96569fa4bdd32112e5ee180fef197b68d1503d74fe17cb1ff5d",
-                "sha256:46cc74e79801dca98c1a2135c52e6c5af5a55de33f5ae6f7b866f40c2f4f2ab1",
-                "sha256:52ab35c78ccf67329f54a7e4d66036bc83537d5e4b6d434df3571c1136d97bc5"
+                "sha256:a0a15f7c3365d1ab0e0b72bfc890ecbc1911d9d66f5496be17d32b33b110b270",
+                "sha256:dba3d9f9ed42bb905e64318b62649531ff474dccb3e29a68db42d0da86503ed9"
             ],
             "index": "pypi",
-            "version": "==2.2.0"
+            "version": "==2.3.0"
         },
         "flask-login": {
             "hashes": [
@@ -732,6 +731,14 @@
             ],
             "index": "pypi",
             "version": "==2022.4.0"
+        },
+        "setuptools": {
+            "hashes": [
+                "sha256:26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8",
+                "sha256:47c7b0c0f8fc10eec4cf1e71c6fdadf8decaa74ffa087e68cd1c20db7ad6a592"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==62.1.0"
         },
         "six": {
             "hashes": [
