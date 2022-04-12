@@ -45,7 +45,4 @@ StepForm.propTypes = {
 
 StepForm.defaultProps = {
   ...StepNavButtons.defaultProps,
-  plausibleGoal: null,
-  plausibleProps: undefined,
-  plausibleDomain: null,
 };
