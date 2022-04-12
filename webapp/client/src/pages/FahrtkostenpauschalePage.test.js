@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import FahrtkostenpauschalePage from "./FahrtkostenpauschalePage";
-import avoidSubmitForm from "../lib/submitFormTestHelper";
+import avoidNotImplementedFormSubmitError from "../test-helper/submitFormTestHelper";
 
 const defaultProps = {
   stepHeader: {
@@ -33,7 +33,7 @@ function setup(optionalProps) {
 }
 
 describe("FahrtkostenpauschalePage default", () => {
-  avoidSubmitForm();
+  avoidNotImplementedFormSubmitError();
 
   it("should render step title text", () => {
     setup();

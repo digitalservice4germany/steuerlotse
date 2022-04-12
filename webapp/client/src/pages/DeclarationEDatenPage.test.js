@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { configure } from "@testing-library/dom";
 import userEvent from "@testing-library/user-event";
 import DeclarationEDatenPage from "./DeclarationEDatenPage";
-import avoidSubmitForm from "../lib/submitFormTestHelper";
+import avoidNotImplementedFormSubmitError from "../test-helper/submitFormTestHelper";
 
 configure({ testIdAttribute: "id" });
 
@@ -34,7 +34,7 @@ function setup(optionalProps) {
 }
 
 describe("DeclarationEDatenPage", () => {
-  avoidSubmitForm();
+  avoidNotImplementedFormSubmitError();
 
   it("should render step title text", () => {
     setup();

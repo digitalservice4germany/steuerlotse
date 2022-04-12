@@ -1,4 +1,6 @@
-export default function avoidSubmitForm() {
+// avoid Error: Not implemented: HTMLFormElement.prototype.submit
+
+export default function avoidNotImplementedFormSubmitError() {
   let emit;
 
   beforeAll(() => {
