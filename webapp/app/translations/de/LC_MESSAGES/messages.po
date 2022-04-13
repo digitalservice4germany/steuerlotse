@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-04-11 10:42+0200\n"
+"POT-Creation-Date: 2022-04-13 22:05+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -221,12 +221,56 @@ msgstr "Keine Angabe"
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
+#: app/forms/flows/multistep_flow.py:191
+msgid "plausible.target.goal"
+msgstr "Zurück zur Übersicht"
+
+#: app/forms/flows/multistep_flow.py:196
+msgid "plausible.source.step.familienstand"
+msgstr "CTA Familienstand"
+
+#: app/forms/flows/multistep_flow.py:200
+msgid "plausible.source.step.iban"
+msgstr "CTA Bankverbindung"
+
+#: app/forms/flows/multistep_flow.py:204
+msgid "plausible.source.step.person_a"
+msgstr "CTA Person A"
+
+#: app/forms/flows/multistep_flow.py:208
+msgid "plausible.source.step.person_b"
+msgstr "CTA Person B"
+
+#: app/forms/flows/multistep_flow.py:212
+msgid "plausible.source.step.vorsorge"
+msgstr "CTA Vorsorgeaufwendungen"
+
+#: app/forms/flows/multistep_flow.py:216
+msgid "plausible.source.step.ausserg_bela"
+msgstr "CTA Krankheitskosten und weitere außergewöhnliche Belastungen"
+
+#: app/forms/flows/multistep_flow.py:220
+msgid "plausible.source.step.haushaltsnahe_handwerker"
+msgstr "CTA Haushaltsnahe Dienstleistungen und Handwerkerleistungen"
+
+#: app/forms/flows/multistep_flow.py:224
+msgid "plausible.source.step.gem_haushalt"
+msgstr "CTA Familienstand"
+
+#: app/forms/flows/multistep_flow.py:228
+msgid "plausible.source.step.religion"
+msgstr "CTA Steuern für Ihre Religionsgemeinschaft"
+
+#: app/forms/flows/multistep_flow.py:232
+msgid "plausible.source.step.spenden"
+msgstr "CTA Spenden und Mitgliedsbeiträge"
+
 #: app/forms/flows/unlock_code_activation_flow.py:39
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
 #: app/forms/flows/unlock_code_request_flow.py:55
-#: app/forms/steps/unlock_code_request_steps.py:48
+#: app/forms/steps/unlock_code_request_steps.py:50
 msgid "form.register"
 msgstr "Registrieren"
 
@@ -945,7 +989,7 @@ msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 #: app/forms/steps/lotse/personal_data.py:191
 #: app/forms/steps/lotse/personal_data.py:290
 #: app/forms/steps/unlock_code_activation_steps.py:20
-#: app/forms/steps/unlock_code_request_steps.py:21
+#: app/forms/steps/unlock_code_request_steps.py:23
 #: app/forms/steps/unlock_code_revocation_steps.py:22
 msgid "validate.missing-idnr"
 msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
@@ -973,47 +1017,47 @@ msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
-#: app/forms/steps/unlock_code_request_steps.py:22
+#: app/forms/steps/unlock_code_request_steps.py:24
 msgid "validation-date-of-birth-missing"
 msgstr "Geben Sie Ihr Geburtsdatum ein."
 
-#: app/forms/steps/unlock_code_request_steps.py:25
+#: app/forms/steps/unlock_code_request_steps.py:27
 msgid "form.unlock-code-request.confirm_data_privacy.required"
 msgstr ""
 "Bestätigen Sie, dass Sie mit den Datenschutzrichtlinien einverstanden "
 "sind, um fortfahren zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:27
+#: app/forms/steps/unlock_code_request_steps.py:29
 msgid "form.unlock-code-request.confirm_terms_of_service.required"
 msgstr ""
 "Bestätigen Sie, dass Sie den Nutzungbedingungen zustimmen, um fortfahren "
 "zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:29
+#: app/forms/steps/unlock_code_request_steps.py:31
 msgid "form.unlock-code-request.confirm_eligibility.required"
 msgstr ""
 "Bestätigen Sie, dass Sie die Voraussetzungen zur Nutzung des Steuerlotsen"
 " erfüllen, um fortfahren zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:31
+#: app/forms/steps/unlock_code_request_steps.py:33
 msgid "form.unlock-code-request.confirm_e_data.required"
 msgstr "Bestätigen Sie, dass Sie einverstanden sind, um fortfahren zu können."
 
-#: app/forms/steps/unlock_code_request_steps.py:35
+#: app/forms/steps/unlock_code_request_steps.py:37
 msgid "form.unlock-code-request.input-title"
 msgstr "Registrieren und persönlichen Freischaltcode beantragen"
 
-#: app/forms/steps/unlock_code_request_steps.py:61
-#: app/forms/steps/unlock_code_request_steps.py:81
-#: app/forms/steps/unlock_code_request_steps.py:99
+#: app/forms/steps/unlock_code_request_steps.py:63
+#: app/forms/steps/unlock_code_request_steps.py:84
+#: app/forms/steps/unlock_code_request_steps.py:102
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_request_steps.py:69
+#: app/forms/steps/unlock_code_request_steps.py:71
 msgid "form.unlock-code-request.success-title"
 msgstr "Ihre Registrierung war erfolgreich!"
 
-#: app/forms/steps/unlock_code_request_steps.py:70
+#: app/forms/steps/unlock_code_request_steps.py:72
 msgid "form.unlock-code-request.success-intro"
 msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
@@ -1021,11 +1065,11 @@ msgstr ""
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie"
 " Ihren Brief erhalten."
 
-#: app/forms/steps/unlock_code_request_steps.py:89
+#: app/forms/steps/unlock_code_request_steps.py:92
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:90
+#: app/forms/steps/unlock_code_request_steps.py:93
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie "
@@ -3063,11 +3107,12 @@ msgstr "Schließen"
 msgid "form.back"
 msgstr "Zurück"
 
-#: app/templates/macros.html:121 app/templates/macros.html:136
+#: app/templates/macros.html:123 app/templates/macros.html:129
+#: app/templates/macros.html:149 app/templates/macros.html:152
 msgid "form.back_to_overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/templates/macros.html:127 app/templates/macros.html:143
+#: app/templates/macros.html:137 app/templates/macros.html:160
 msgid "form.next"
 msgstr "Weiter"
 
@@ -5204,15 +5249,15 @@ msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
 #: app/templates/eligibility/display_maybe.html:48
-#: app/templates/eligibility/display_success.html:42
+#: app/templates/eligibility/display_success.html:43
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
-#: app/templates/eligibility/display_success.html:42
+#: app/templates/eligibility/display_success.html:45
 msgid "tracking.eligibility.success.goal"
 msgstr "Registrierung"
 
-#: app/templates/eligibility/display_success.html:42
+#: app/templates/eligibility/display_success.html:46
 msgid "tracking.eligibility.success.method"
 msgstr "Registrierung CTA positiv NP"
 

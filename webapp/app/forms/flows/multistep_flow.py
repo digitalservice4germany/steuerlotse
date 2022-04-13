@@ -3,6 +3,7 @@ from collections import namedtuple
 from typing import Optional
 
 from flask import redirect, request, url_for, abort
+from flask_babel import lazy_gettext as _l
 from wtforms import Form
 
 # The RenderInfo is provided to all templates
@@ -14,7 +15,8 @@ logger = logging.getLogger(__name__)
 
 
 class RenderInfo(object):
-    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None, stored_data=None, data_is_valid=False):
+    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None,
+                 stored_data=None, data_is_valid=False, plausible_data=None):
         self.step_title = step_title
         self.step_intro = step_intro
         self.header_title = None
@@ -29,6 +31,7 @@ class RenderInfo(object):
         self.additional_info = {}
         self.stored_data = stored_data
         self.data_is_valid = data_is_valid
+        self.plausible_data = plausible_data
 
     def __eq__(self, other):
         if isinstance(other, RenderInfo):
@@ -89,8 +92,10 @@ class MultiStepFlow:
             return redirect(redirected_step)
 
         prev_step, step, next_step = self._generate_steps(step_name)
+        plausible_data = self._get_plausible_data(step_name)
 
         render_info = RenderInfo(step_title=step.title, step_intro=step.intro, form=None,
+                                 plausible_data=plausible_data,
                                  prev_url=self.url_for_step(prev_step.name) if prev_step else None,
                                  next_url=self.url_for_step(next_step.name) if next_step else None,
                                  submit_url=self.url_for_step(step.name), overview_url=self.url_for_step(
@@ -137,7 +142,7 @@ class MultiStepFlow:
         # We do only want to update
         if self.default_data() and not set(self.default_data()[1]).intersection(set(form_data)):
             form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
-            
+
         return form_data
 
     def _load_step(self, step_name):
@@ -179,4 +184,50 @@ class MultiStepFlow:
                 stored_data.pop(field)
         return stored_data
 
+    @staticmethod
+    def _get_plausible_data(step_name):
+        plausible_data = {
+            'plausible_domain': Config.PLAUSIBLE_DOMAIN,
+            'plausible_target': _l('plausible.target.goal'),
+            'plausible_source': ''
+        }
 
+        if step_name == 'familienstand':
+            plausible_data['plausible_source'] = _l('plausible.source.step.familienstand')
+            return plausible_data
+
+        if step_name == 'iban':
+            plausible_data['plausible_source'] = _l('plausible.source.step.iban')
+            return plausible_data
+
+        if step_name == 'person_a':
+            plausible_data['plausible_source'] = _l('plausible.source.step.person_a')
+            return plausible_data
+
+        if step_name == 'person_b':
+            plausible_data['plausible_source'] = _l('plausible.source.step.person_b')
+            return plausible_data
+
+        if step_name == 'vorsorge':
+            plausible_data['plausible_source'] = _l('plausible.source.step.vorsorge')
+            return plausible_data
+
+        if step_name == 'ausserg_bela':
+            plausible_data['plausible_source'] = _l('plausible.source.step.ausserg_bela')
+            return plausible_data
+
+        if step_name == 'haushaltsnahe_handwerker':
+            plausible_data['plausible_source'] = _l('plausible.source.step.haushaltsnahe_handwerker')
+            return plausible_data
+
+        if step_name == 'gem_haushalt':
+            plausible_data['plausible_source'] = _l('plausible.source.step.gem_haushalt')
+            return plausible_data
+
+        if step_name == 'religion':
+            plausible_data['plausible_source'] = _l('plausible.source.step.religion')
+            return plausible_data
+
+        if step_name == 'spenden':
+            plausible_data['plausible_source'] = _l('plausible.source.step.spenden')
+            return plausible_data
