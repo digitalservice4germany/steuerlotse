@@ -4,23 +4,26 @@
 /* GENERAL */
 @font-face {
   font-family: "BundesSansWeb";
-  src: url("./BundesSansWeb-Regular.ttf");
+  src: url("./BundesSans-Web-Regular.woff2"),
+    url("./BundesSans-Web-Regular.woff");
+  font-weight: 400;
 }
 @font-face {
-  font-family: "BundesSansWeb";
-  src: url("./BundesSansWeb-Bold.ttf");
-  font-weight: bold;
+  font-family: "BundesSansWeb Bold";
+  src: url("./BundesSans-Web-Bold.woff2"), url("./BundesSans-Web-Bold.woff");
+  font-weight: 700;
 }
 @font-face {
-  font-family: "BundesSansWeb";
-  src: url("./BundesSansWeb-Italic.ttf");
-  font-style: italic;
+  font-family: "BundesSansWeb Italic";
+  src: url("./BundesSans-Web-RegularItalic.woff2"),
+    url("./BundesSans-Web-RegularItalic.woff");
+  font-weight: 400;
 }
 @font-face {
-  font-family: "BundesSansWeb";
-  src: url("./BundesSansWeb-BoldItalic.ttf");
-  font-weight: bold;
-  font-style: italic;
+  font-family: "BundesSansWeb Bold Italic";
+  src: url("./BundesSans-Web-BoldItalic.woff2"),
+    url("./BundesSans-Web-BoldItalic.woff");
+  font-weight: 700;
 }
 
 html {
@@ -31,7 +34,7 @@ html,
 body {
   margin: 0 !important;
   padding: 0 !important;
-  font-family: "BundesSansWeb", sans-serif;
+  font-family: var(--font-main);
 }
 
 body {
@@ -152,38 +155,13 @@ input.form-control.field-error-found {
   margin-left: -2px;
   padding: 0 1.25rem 0 1.25rem;
 
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 
   background-color: var(--bg-highlight-color);
   border: 2px solid var(--border-color);
   border-radius: 0;
 }
-
-/* ERRORS */
-/* .invalid-feedback {
-  font-size: var(--text-sm);
-  font-weight: var(--font-bold);
-  color: var(--error-color);
-}
-img.invalid-feedback {
-  display: inline;
-  vertical-align: middle;
-  height: 2em;
-  width: 2em;
-  margin-right: 9px;
-}
-
-.example-input {
-  color: var(--secondary-text-color);
-  margin-bottom: var(--spacing-01);
-}
-
-.error-found-line {
-  margin-left: var(--spacing-02);
-  padding-left: var(--spacing-04) !important;
-  border-left: 2px solid var(--error-color);
-} */
 
 /* LISTS */
 ol {
@@ -207,7 +185,7 @@ ol li::before {
   top: 0;
 
   text-align: center;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 
   background: var(--icon-default-color);
@@ -257,7 +235,7 @@ ol li::before {
 }
 
 .bold {
-  font-weight: var(--font-bold);
+  font-weight: 700;
 }
 
 /* From here on: somewhat unorganised styles that used to live in the original base.css. */
@@ -269,64 +247,19 @@ ol li::before {
   border-radius: 0;
 }
 
-/* .btn-help {
-  width: 22px !important;
-  height: 22px !important;
-  border-radius: 11px !important;
-  padding: 0;
-  font-size: 0.9em;
-  font-weight: bold;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-} */
-
 .text-input-field-label {
   margin-top: var(--spacing-07);
   font-size: var(--text-medium);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
 }
-
-/* .optional-hint {
-  font-size: var(--text-medium);
-  font-weight: var(--font-normal);
-} */
-
-/* .nav-button-row {
-  margin-top: var(--spacing-09);
-} */
-
-/* .form-row-center {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  margin-top: var(--spacing-03); */
-/* This moved the border further outside to allow for the children to fill that space with margin,
-  allowing the children to have space between them. See the bootstrap row/column technique. */
-/* margin-left: calc(-1 * var(--spacing-02));
-  margin-right: calc(-1 * var(--spacing-02));
-} */
-
-/* .separated-field {
-  flex-wrap: nowrap;
-  margin-top: 0;
-} */
 
 .entries-field {
   flex-wrap: nowrap;
 }
-/*
-.form-row-center > * {
-  margin: 0 var(--spacing-02);
-} */
 
 .grouped-input-fields {
   width: 100%;
 }
-
-/* .grouped-input-fields > .form-row-center {
-  margin-top: 0;
-} */
 
 .grouped-input-fields .text-input-field-label {
   margin-top: var(--spacing-06);
@@ -341,7 +274,7 @@ ol li::before {
 h1,
 h2,
 h3 {
-  font-weight: var(--font-bold) !important;
+  font-family: var(--font-bold);
 }
 
 h1 {
@@ -418,7 +351,6 @@ ul.reasons-success li.and {
 
 .simple-card .field-label {
   font-size: var(--text-medium);
-  font-weight: var(--font-normal);
 }
 
 img.icon {
@@ -459,13 +391,13 @@ img.icon {
 
 .step-active small {
   color: #007bff;
-  font-weight: bold;
+  font-family: var(--font-bold);
 }
 
 .step-active .steps-number {
   background-color: #007bff;
   color: var(--inverse-text-color);
-  font-weight: bold;
+  font-family: var(--font-bold);
 }
 
 .cursor-pointer {
@@ -495,7 +427,7 @@ img.icon {
   margin-bottom: var(--spacing-01);
   border: none;
   font-size: var(--text-base);
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   color: var(--text-color);
 }
 

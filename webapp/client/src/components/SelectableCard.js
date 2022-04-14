@@ -65,7 +65,7 @@ const CardLabel = styled.label`
 
 const Title = styled.span`
   display: block;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   font-size: var(--text-xl);
 `;
 

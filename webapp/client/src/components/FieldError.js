@@ -7,7 +7,7 @@ import warningIcon from "../assets/icons/warning.svg";
 const Error = styled.div`
   &.invalid-feedback {
     font-size: var(--text-sm);
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
     color: var(--error-color);
   }
 

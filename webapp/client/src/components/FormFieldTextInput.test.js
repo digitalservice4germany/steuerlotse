@@ -7,6 +7,8 @@ describe("FormFieldTextInput", () => {
   let props;
 
   describe("When default props used", () => {
+    const user = userEvent.setup();
+
     beforeEach(() => {
       props = {
         fieldId: "text-input",
@@ -20,25 +22,30 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should set focus on field on tab", () => {
-      userEvent.tab();
+    it("should set focus on field when pressing tab", async () => {
+      await user.tab();
+
       expect(screen.getByRole("textbox")).toHaveFocus();
     });
 
-    it("Should enter keyboard input into input after pressing tab", () => {
-      userEvent.tab();
-      userEvent.keyboard("Helloo");
+    it("should enter keyboard input into input after pressing tab", async () => {
+      await user.tab();
+      await user.keyboard("Helloo");
+
       expect(screen.getByLabelText("Label")).toHaveValue("Helloo");
     });
 
-    it("Should unset focus on field when pressing tab two times", () => {
-      userEvent.tab();
-      userEvent.tab();
+    it("Should remove focus from field when pressing tab two times", async () => {
+      await user.tab();
+      await user.tab();
+
       expect(screen.getByRole("textbox")).not.toHaveFocus();
     });
   });
 
   describe("When fieldWidth given", () => {
+    const user = userEvent.setup();
+
     beforeEach(() => {
       props = {
         fieldId: "text-input",
@@ -53,11 +60,12 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should not limit input of values", () => {
-      userEvent.type(
+    it("should not limit input of values", async () => {
+      await user.type(
         screen.getByLabelText("Label"),
         "Supercalifragilisticexpialidocious"
       );
+
       expect(screen.getByLabelText("Label")).toHaveValue(
         "Supercalifragilisticexpialidocious"
       );
@@ -69,6 +77,8 @@ describe("FormFieldTextInput", () => {
   });
 
   describe("When maxLength given", () => {
+    const user = userEvent.setup();
+
     beforeEach(() => {
       props = {
         fieldId: "text-input",
@@ -83,11 +93,12 @@ describe("FormFieldTextInput", () => {
       render(<FormFieldTextInput {...props} />);
     });
 
-    it("Should limit input of values", () => {
-      userEvent.type(
+    it("should limit input of values", async () => {
+      await user.type(
         screen.getByLabelText("Label"),
         "Supercalifragilisticexpialidocious"
       );
+
       expect(screen.getByLabelText("Label")).toHaveValue("Super");
     });
 
@@ -95,9 +106,10 @@ describe("FormFieldTextInput", () => {
       expect(screen.getByLabelText("Label")).not.toHaveClass("input-width-5");
     });
 
-    it("Should enter keyboard input into input after pressing tab", () => {
-      userEvent.tab();
-      userEvent.keyboard("Helloo");
+    it("should enter keyboard input into input after pressing tab", async () => {
+      await user.tab();
+      await user.keyboard("Helloo");
+
       expect(screen.getByLabelText("Label")).toHaveValue("Hello");
     });
   });

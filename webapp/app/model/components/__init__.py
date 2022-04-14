@@ -96,6 +96,7 @@ class UnlockCodeSuccessProps(ComponentProps):
     prev_url: Optional[str]
     steuer_erklaerung_link: str
     vorbereitungs_hilfe_link: str
+    plausible_domain: Optional[str]
 
 
 class UnlockCodeFailureProps(ComponentProps):

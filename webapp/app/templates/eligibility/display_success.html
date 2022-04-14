@@ -39,6 +39,13 @@
     {% endif %}
 
     <div class="spacing-b-11 row m-0">
-        {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
+        {{ components.primaryButtonWithTracking(
+                text=_('form.eligibility.use-register-button'),
+                url=url_for('unlock_code_request'),
+                target=_('tracking.eligibility.success.goal'),
+                source=_('tracking.eligibility.success.method'),
+                plausible_domain_set=plausible_domain is not none
+                )
+        }}
     </div>
 {% endblock %}

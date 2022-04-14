@@ -13,6 +13,8 @@ from app.model.components import RegistrationProps, UnlockCodeSuccessProps, Unlo
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 class UnlockCodeRequestInputStep(FormStep):
     name = 'data_input'
@@ -55,10 +57,10 @@ class UnlockCodeRequestInputStep(FormStep):
         ).camelized_dict()
 
         return render_react_template(component='RegistrationPage',
-                               props=props_dict,
-                               # TODO: These are still required by base.html to set the page title.
-                               form=render_info.form,
-                               header_title=_('form.unlock-code-request.header-title'))
+                                     props=props_dict,
+                                     # TODO: These are still required by base.html to set the page title.
+                                     form=render_info.form,
+                                     header_title=_('form.unlock-code-request.header-title'))
 
 
 class UnlockCodeRequestSuccessStep(DisplayStep):
@@ -74,11 +76,12 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
             prev_url=url_for('unlock_code_request', step='data_input'),
             steuer_erklaerung_link=url_for('unlock_code_activation', step='start'),
             vorbereitungs_hilfe_link=url_for('download_preparation'),
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='UnlockCodeSuccessPage',
-                               props=props_dict,
-                               header_title=_('form.unlock-code-request.header-title'))
+                                     props=props_dict,
+                                     header_title=_('form.unlock-code-request.header-title'))
 
 
 class UnlockCodeRequestFailureStep(DisplayStep):
@@ -95,5 +98,5 @@ class UnlockCodeRequestFailureStep(DisplayStep):
         ).camelized_dict()
 
         return render_react_template(component='UnlockCodeFailurePage',
-                               props=props_dict,
-                               header_title=_('form.unlock-code-request.header-title'))
+                                     props=props_dict,
+                                     header_title=_('form.unlock-code-request.header-title'))

@@ -10,11 +10,14 @@ from app.config import Config
 from app.data_access.storage.session_storage import SessionStorage
 from app.forms.steps.step import FormStep
 
+from app.helper.plausible_helper import get_plausible_data
+
 logger = logging.getLogger(__name__)
 
 
 class RenderInfo(object):
-    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None, stored_data=None, data_is_valid=False):
+    def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None,
+                 stored_data=None, data_is_valid=False, plausible_data=None):
         self.step_title = step_title
         self.step_intro = step_intro
         self.header_title = None
@@ -29,6 +32,7 @@ class RenderInfo(object):
         self.additional_info = {}
         self.stored_data = stored_data
         self.data_is_valid = data_is_valid
+        self.plausible_data = plausible_data
 
     def __eq__(self, other):
         if isinstance(other, RenderInfo):
@@ -91,6 +95,7 @@ class MultiStepFlow:
         prev_step, step, next_step = self._generate_steps(step_name)
 
         render_info = RenderInfo(step_title=step.title, step_intro=step.intro, form=None,
+                                 plausible_data=get_plausible_data(step_name, Config.PLAUSIBLE_DOMAIN),
                                  prev_url=self.url_for_step(prev_step.name) if prev_step else None,
                                  next_url=self.url_for_step(next_step.name) if next_step else None,
                                  submit_url=self.url_for_step(step.name), overview_url=self.url_for_step(
@@ -137,6 +142,7 @@ class MultiStepFlow:
         # We do only want to update
         if self.default_data() and not set(self.default_data()[1]).intersection(set(form_data)):
             form_data = self.default_data()[1] | form_data  # updates form_data only with non_existent values
+
         return form_data
 
     def _load_step(self, step_name):
@@ -177,5 +183,4 @@ class MultiStepFlow:
             if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
                 stored_data.pop(field)
         return stored_data
-
 

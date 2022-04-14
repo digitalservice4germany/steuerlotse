@@ -38,7 +38,7 @@ const DetailsCard = styled.div`
     margin: 0 var(--spacing-01);
     height: var(--lineheight-default);
     font-size: var(--text-medium);
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
   }
 
   @media (max-width: 1024px) {

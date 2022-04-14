@@ -55,13 +55,14 @@ describe("Secondary Button add plausible", () => {
     plausibleName: "plausible_name",
   };
 
-  beforeEach(() => {
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
-    render(<SecondaryAnchorButton {...MOCK_PROPS} />);
-  });
+  it("should run the plausible function on click button", async () => {
+    const user = userEvent.setup();
 
-  it("should run the plausible function on click button", () => {
-    userEvent.click(screen.getByText(MOCK_PROPS.text));
+    window.plausible = jest.fn();
+    render(<SecondaryAnchorButton {...MOCK_PROPS} />);
+
+    await user.click(screen.getByText(MOCK_PROPS.text));
+
     expect(window.plausible).toHaveBeenCalledWith("plausible_name", undefined);
   });
 });

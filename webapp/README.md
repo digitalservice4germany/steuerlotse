@@ -2,7 +2,7 @@
 
 ## Getting started 🛠
 
-For developing, we suggest running the Flask app locally. Assuming that you are on a UNIX-like OS, the following 
+For developing, we suggest running the Flask app locally. Assuming that you are on a UNIX-like OS, the following
 commands should get you up and running:
 
 ```bash
@@ -12,7 +12,7 @@ cd webapp/
 pipenv install
 
 # Install client-side dependencies
-cd client/ && yarn install && yarn prepare && cd ..
+cd client/ && yarn install && yarn prepare && npm install && cd ..
 
 # Ensure required environment variables are set
 cp .flaskenv.example .flaskenv
@@ -57,6 +57,7 @@ cd webapp/
 ```
 
 ### Using the Erica Mock service
+
 A large amount of functionality in the app also requires a local erica service to be running.
 
 If you _do not want to run erica_ at the same time, you can set `USE_MOCK_API = True` in the `DevelopmentConfig` in the webapp's `config.py`.
@@ -64,6 +65,7 @@ If you _do not want to run erica_ at the same time, you can set `USE_MOCK_API = 
 ## Testing 📃
 
 You can run tests as follows:
+
 ```bash
 cd webapp/
 pipenv run invoke test
@@ -73,12 +75,13 @@ pipenv run invoke test
 
 For database migration and upgrades, we use Flask-Migrate. Make sure that you are in the pipenv shell and then do:
 
-````bash
+```bash
 cd webapp/
 # After model has been changed
 flask db migrate  # Creates a new migration script in migrate/versions
 flask db upgrade  # Updates the database using the migration script
-````
+```
+
 ⚠️ Flask-Migrate uses Alembic. Alembic does not detect all changes to the model (especially renaming tables or columns).
-Therefore re-check the migration script. You can find a list of Alembic's limitations 
+Therefore re-check the migration script. You can find a list of Alembic's limitations
 [here](http://alembic.zzzcomputing.com/en/latest/autogenerate.html#what-does-autogenerate-detect-and-what-does-it-not-detect).

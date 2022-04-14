@@ -3,66 +3,96 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AnchorButton from "./AnchorButton";
 
-describe("AnchorButton", () => {
-  const MOCK_PROPS = {
-    text: "anchor text",
-    url: "url/some/link/path",
-    name: "name/some/link/path",
-    isDownloadLink: false,
-    isSecondaryButton: false,
-    plausibleName: "plausibleName",
-    className: "className",
-    plausibleDomain: "domain/some/link/path",
-  };
+const REQUIRED_PROPS = {
+  text: "anchor text",
+  url: "url/some/link/path",
+};
 
-  it("should render the text", () => {
-    render(<AnchorButton {...MOCK_PROPS} />);
-    expect(screen.getByText(MOCK_PROPS.text)).toBeInTheDocument();
+function setup(optionalProps) {
+  const utils = render(<AnchorButton {...REQUIRED_PROPS} {...optionalProps} />);
+  const buttonText = screen.getByText("anchor text");
+
+  return { ...utils, button: buttonText };
+}
+
+describe("AnchorButton", () => {
+  it("should render the button text", () => {
+    setup();
+
+    expect(screen.getByText(REQUIRED_PROPS.text)).toBeInTheDocument();
   });
 
   it("should have a href attribute", () => {
-    render(<AnchorButton {...MOCK_PROPS} />);
-    expect(screen.getByText(MOCK_PROPS.text).closest("a")).toHaveAttribute(
+    const { button } = setup();
+
+    expect(button.closest("a")).toHaveAttribute(
       "href",
-      expect.stringContaining(MOCK_PROPS.url)
+      expect.stringContaining(REQUIRED_PROPS.url)
     );
   });
 
-  it("should not have a download attribute", () => {
-    const PROPS_DATA = { ...MOCK_PROPS, isDownloadLink: false };
-    render(<AnchorButton {...PROPS_DATA} />);
+  it("should not have a download attribute if isDownloadLink is false", () => {
+    const { button } = setup({
+      isDownloadLink: false,
+    });
 
-    expect(screen.getByText(MOCK_PROPS.text).closest("a")).not.toHaveAttribute(
-      "download"
-    );
+    expect(button.closest("a")).not.toHaveAttribute("download");
   });
 
-  it("should have a download attribute", () => {
-    const PROPS_DATA = { ...MOCK_PROPS, isDownloadLink: true };
-    render(<AnchorButton {...PROPS_DATA} />);
+  it("should have a download attribute if isDownloadLink is true", () => {
+    const { button } = setup({
+      isDownloadLink: true,
+    });
 
-    expect(screen.getByText(MOCK_PROPS.text).closest("a")).toHaveAttribute(
-      "download"
-    );
+    expect(button.closest("a")).toHaveAttribute("download");
   });
 });
 
-describe("Anchor add plausible", () => {
-  const MOCK_PROPS = {
-    text: "anchor text",
-    url: "url/some/link/path",
-    name: "name/some/link/path",
-    plausibleDomain: "domain/some/link/path",
-    plausibleName: "plausible_name",
-  };
+describe("AnchorButton with plausible", () => {
+  const user = userEvent.setup();
 
-  beforeEach(() => {
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
-    render(<AnchorButton {...MOCK_PROPS} />);
+  it("should call plausible with goal", async () => {
+    const { button } = setup({
+      plausibleDomain: "domain/some/link/path",
+      plausibleGoal: "plausible_goal",
+    });
+    const EXPECTED_PLAUSIBLE_GOAL = "plausible_goal";
+
+    window.plausible = jest.fn();
+
+    await user.click(button);
+
+    expect(window.plausible).toHaveBeenCalledWith(EXPECTED_PLAUSIBLE_GOAL, {
+      props: undefined,
+    });
   });
 
-  it("should run the plausible function on click button", () => {
-    userEvent.click(screen.getByText(MOCK_PROPS.text));
-    expect(window.plausible).toHaveBeenCalledWith("plausible_name", undefined);
+  it("should call plausible with goal and props", async () => {
+    const { button } = setup({
+      plausibleDomain: "domain/some/link/path",
+      plausibleGoal: "plausible_goal",
+      plausibleProps: { method: "plausible_props" },
+    });
+    const EXPECTED_PLAUSIBLE_GOAL = "plausible_goal";
+    const EXPECTED_PLAUSIBLE_PROPS = { props: { method: "plausible_props" } };
+
+    window.plausible = jest.fn();
+
+    await user.click(button);
+
+    expect(window.plausible).toHaveBeenCalledWith(
+      EXPECTED_PLAUSIBLE_GOAL,
+      EXPECTED_PLAUSIBLE_PROPS
+    );
+  });
+
+  it("should not call plausible without domain given", async () => {
+    const { button } = setup();
+
+    window.plausible = jest.fn();
+
+    await user.click(button);
+
+    expect(window.plausible).not.toHaveBeenCalled();
   });
 });

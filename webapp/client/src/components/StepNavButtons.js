@@ -68,7 +68,7 @@ const OutlineLink = styled.a`
 
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
 
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
 
@@ -106,7 +106,7 @@ const OutlineLink = styled.a`
 const OutlineButton = styled.button`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
 
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
   color: var(--link-color);
@@ -144,7 +144,7 @@ const ExplanatoryText = styled.small`
 
   & a {
     color: var(--text-color);
-    font-weight: var(--font-bold);
+    font-family: var(--font-bold);
   }
 `;
 

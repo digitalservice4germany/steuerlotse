@@ -18,11 +18,11 @@
     "default": {
         "pyhumps": {
             "hashes": [
-                "sha256:2433eef13d1c258227a0bd5de9660ba17dd6a307e1255d2d20ec9287f8626d96",
-                "sha256:55e37f16846eaab26057200924cbdadd2152bf0a5d49175a42358464fa881c73"
+                "sha256:0ecf7fee84503b45afdd3841ec769b529d32dfaed855e07046ff8babcc0ab831",
+                "sha256:8d7e9865d6ddb6e64a2e97d951b78b5cc827d3d66cda1297310fc83b2ddf51dc"
             ],
             "index": "pypi",
-            "version": "==3.5.0"
+            "version": "==3.5.3"
         }
     },
     "develop": {
