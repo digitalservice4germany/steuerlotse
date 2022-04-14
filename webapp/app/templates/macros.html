@@ -14,7 +14,7 @@
     <div class="section-intro">
         <h1 class="my-4">{{ title }}</h1>
         {%- if intro and not hide_intro %}
-            <p>{{intro}}</p>
+            <p>{{ intro }}</p>
         {% endif -%}
     </div>
 {%- endmacro %}
@@ -88,24 +88,25 @@
             {% set classes = classes + " field-error-found" %}
         {% endif %}
 
-        {% if d_block %}<div class="d-block">{% endif %}
-            {% if field.type == 'ConfirmationField' %}
-                {{ components.consent_box(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'BooleanField' %}
-                {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'RadioField' %}
-                {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'LegacyYesNoField' %}
-                {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
-            {% elif field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
-                {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
+        {% if d_block %}
+            <div class="d-block">{% endif %}
+        {% if field.type == 'ConfirmationField' %}
+            {{ components.consent_box(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
+        {% elif field.type == 'BooleanField' %}
+            {{ components.checkbox(field, classes=classes, position_details_after=position_details_after, first_field=first_field) }}
+        {% elif field.type == 'RadioField' %}
+            {{ components.radio_field(field, position_details_after=position_details_after, first_field=first_field) }}
+        {% elif field.type == 'LegacyYesNoField' %}
+            {{ components.yes_no_field(field, position_details_after=position_details_after, first_field=first_field) }}
+        {% elif field.type == 'LegacyIdNrField' or field.type == 'LegacySteuerlotseDateField' %}
+            {{ components.separated_field(field, position_details_after=position_details_after, first_field=first_field) }}
+        {% else %}
+            {% if first_field or field.errors %}
+                {{ field(class=classes, autofocus=True) }}
             {% else %}
-                {% if first_field or field.errors %}
-                    {{ field(class=classes, autofocus=True) }}
-                {% else %}
-                    {{ field(class=classes) }}
-                {% endif %}
+                {{ field(class=classes) }}
             {% endif %}
+        {% endif %}
         {% if d_block %}</div>{% endif %}
         {% if not hide_errors %}{{ field_errors(field) }}{% endif %}
     </div>
@@ -116,9 +117,18 @@
 {% macro form_nav_buttons(render_info) -%}
     <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
-            <button type="submit"
-                    class="btn btn-outline-primary mr-2"
-                    name="overview_button">{{ _('form.back_to_overview') }}</button>
+            {% if render_info.plausible_data.plausible_domain %}
+                <button type="submit"
+                        class="btn btn-outline-primary mr-2"
+                        name="overview_button">{{ _('form.back_to_overview') }}
+                        onclick="plausible('{{ render_info.plausible_data.plausible_target }}', {props: {method: '{{ render_info.plausible_data.plausible_source }}'}})"
+                </button>
+            {% else %}
+                <button type="submit"
+                        class="btn btn-outline-primary mr-2"
+                        name="overview_button">{{ _('form.back_to_overview') }}
+                </button>
+            {% endif %}
         {% endif %}
         {% if render_info.additional_info.next_button_label %}
             <button type="submit" class="btn btn-primary"
@@ -132,8 +142,15 @@
 {% macro form_display_nav_buttons(render_info) -%}
     <div class="form-row mt-4">
         {% if render_info.overview_url %}
-            <a class="btn btn-outline-primary mr-2"
-               href="{{ render_info.overview_url }}">{{ _('form.back_to_overview') }}</a>
+            {% if render_info.plausible_data.plausible_domain %}
+                <a
+                        class="btn btn-outline-secondary"
+                        href="{{ url }}"
+                        onclick="plausible('{{ render_info.plausible_data.plausible_target }}', {props: {method: '{{ render_info.plausible_data.plausible_source }}'}})">{{ _('form.back_to_overview') }}
+                </a>
+            {% else %}
+                <a class="btn btn-outline-secondary" href="{{ url }}">{{ _('form.back_to_overview') }}</a>
+            {% endif %}
         {% endif %}
         {% if render_info.additional_info.next_button_label %}
             <a class="btn btn-primary {% if not render_info.next_url %}invisible{% endif %}" name="next_button"

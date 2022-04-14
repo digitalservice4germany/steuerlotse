@@ -10,6 +10,10 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
 from app.data_access.storage.session_storage import SessionStorage
 
+from app.helper.plausible_helper import get_plausible_data
+
+from app.config import Config
+
 logger = logging.getLogger(__name__)
 
 
@@ -67,6 +71,7 @@ class SteuerlotseStep(object):
             next_url=None,
             submit_url=None,
             header_title=None,
+            plausible_data=get_plausible_data(cls.name, Config.PLAUSIBLE_DOMAIN),
             overview_url=None)
 
     def _main_handle(self):
