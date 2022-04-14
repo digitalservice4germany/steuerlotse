@@ -93,10 +93,9 @@ class MultiStepFlow:
             return redirect(redirected_step)
 
         prev_step, step, next_step = self._generate_steps(step_name)
-        plausible_data = get_plausible_data(step_name, Config.PLAUSIBLE_DOMAIN)
 
         render_info = RenderInfo(step_title=step.title, step_intro=step.intro, form=None,
-                                 plausible_data=plausible_data,
+                                 plausible_data=get_plausible_data(step_name, Config.PLAUSIBLE_DOMAIN),
                                  prev_url=self.url_for_step(prev_step.name) if prev_step else None,
                                  next_url=self.url_for_step(next_step.name) if next_step else None,
                                  submit_url=self.url_for_step(step.name), overview_url=self.url_for_step(

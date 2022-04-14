@@ -1,9 +1,9 @@
 from flask_babel import lazy_gettext as _l
 
 
-def get_plausible_data(step_name, config):
+def get_plausible_data(step_name, domain):
     plausible_data = {
-        'plausible_domain': config,
+        'plausible_domain': domain,
         'plausible_target': _l('plausible.target.goal'),
         'plausible_source': ''
     }

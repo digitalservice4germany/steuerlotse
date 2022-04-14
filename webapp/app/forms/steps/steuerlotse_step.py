@@ -60,7 +60,6 @@ class SteuerlotseStep(object):
 
     @classmethod
     def prepare_render_info(cls, stored_data, *args, **kwargs):
-        plausible_data = get_plausible_data(cls.name, Config.PLAUSIBLE_DOMAIN)
         return RenderInfo(
             step_title=ngettext(cls.title, cls.title_multiple, num=cls.number_of_users(stored_data))
             if cls.title_multiple else cls.title,
@@ -72,7 +71,7 @@ class SteuerlotseStep(object):
             next_url=None,
             submit_url=None,
             header_title=None,
-            plausible_data=plausible_data,
+            plausible_data=get_plausible_data(cls.name, Config.PLAUSIBLE_DOMAIN),
             overview_url=None)
 
     def _main_handle(self):
