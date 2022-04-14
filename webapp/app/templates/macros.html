@@ -117,13 +117,13 @@
 {% macro form_nav_buttons(render_info) -%}
     <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
-            {% if render_info.plausible_data.plausible_domain %}
+            {% set plausible_data = render_info.additional_info['section_plausible_data'].get(render_info.step_name) %}
+            {% if plausible_data.plausible_domain %}
                 <button
                         type="submit"
                         class="btn btn-outline-primary mr-2"
                         name="overview_button"
-                        onclick="plausible('{{ render_info.plausible_data.plausible_target }}',
-                                {props: {method: '{{ render_info.plausible_data.plausible_source }}'}})">
+                        onclick="plausible('{{ plausible_data.target }}',{props: {method: '{{ plausible_data.source }}'}})">
                     {{ _('form.back_to_overview') }}
                 </button>
             {% else %}
@@ -145,11 +145,12 @@
 {% macro form_display_nav_buttons(render_info) -%}
     <div class="form-row mt-4">
         {% if render_info.overview_url %}
-            {% if render_info.plausible_data.plausible_domain %}
+            {% set plausible_data = render_info.additional_info['section_plausible_data'].get(render_info.step_name) %}
+            {% if plausible_data.plausible_domain %}
                 <a
                         class="btn btn-outline-secondary"
                         href="{{ url }}"
-                        onclick="plausible('{{ render_info.plausible_data.plausible_target }}', {props: {method: '{{ render_info.plausible_data.plausible_source }}'}})">{{ _('form.back_to_overview') }}
+                        onclick="plausible('{{ plausible_data.target }}',{props: {method: '{{ plausible_data.source }}'}})">
                 </a>
             {% else %}
                 <a class="btn btn-outline-secondary" href="{{ url }}">{{ _('form.back_to_overview') }}</a>

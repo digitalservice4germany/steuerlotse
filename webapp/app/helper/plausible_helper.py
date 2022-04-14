@@ -1,49 +1,163 @@
-from flask_babel import lazy_gettext as _l
+from app.config import Config
 
+aendern = 'ändern'
+uebersicht = 'Zurück zur Übersicht'
+domain = Config.PLAUSIBLE_DOMAIN
 
-def get_plausible_data(step_name, domain):
-    plausible_data = {
-        'plausible_domain': domain,
-        'plausible_target': _l('plausible.target.goal'),
-        'plausible_source': ''
-    }
-
-    if step_name == 'familienstand':
-        plausible_data['plausible_source'] = _l('plausible.source.step.familienstand')
-        return plausible_data
-
-    if step_name == 'iban':
-        plausible_data['plausible_source'] = _l('plausible.source.step.iban')
-        return plausible_data
-
-    if step_name == 'person_a':
-        plausible_data['plausible_source'] = _l('plausible.source.step.person_a')
-        return plausible_data
-
-    if step_name == 'person_b':
-        plausible_data['plausible_source'] = _l('plausible.source.step.person_b')
-        return plausible_data
-
-    if step_name == 'vorsorge':
-        plausible_data['plausible_source'] = _l('plausible.source.step.vorsorge')
-        return plausible_data
-
-    if step_name == 'ausserg_bela':
-        plausible_data['plausible_source'] = _l('plausible.source.step.ausserg_bela')
-        return plausible_data
-
-    if step_name == 'haushaltsnahe_handwerker':
-        plausible_data['plausible_source'] = _l('plausible.source.step.haushaltsnahe_handwerker')
-        return plausible_data
-
-    if step_name == 'gem_haushalt':
-        plausible_data['plausible_source'] = _l('plausible.source.step.gem_haushalt')
-        return plausible_data
-
-    if step_name == 'religion':
-        plausible_data['plausible_source'] = _l('plausible.source.step.religion')
-        return plausible_data
-
-    if step_name == 'spenden':
-        plausible_data['plausible_source'] = _l('plausible.source.step.spenden')
-        return plausible_data
+plausible_data_cta = {
+    'decl_incomes_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Eingabe zu weiteren Einkünften'
+    },
+    'decl_edaten_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Übernahme vorliegender Daten'
+    },
+    'steuernummer_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Steuernummer'
+    },
+    'familienstand': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Familienstand'
+    },
+    'familienstand_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Familienstand'
+    },
+    'iban': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Bankverbindung'
+    },
+    'iban_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Bankverbindung'
+    },
+    'person_a': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Person A'
+    },
+    'person_a_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Person A'
+    },
+    'has_disability_person_a_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'Behinderung oder Pflegebedürftigkeit für Person A'
+    },
+    'merkzeichen_person_a_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person A'
+    },
+    'person_a_requests_pauschbetrag_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Pauschbetrag für Menschen mit Behinderung für Person A'
+    },
+    'person_a_requests_fahrtkostenpauschale_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Behinderungsbedingte Fahrtkostenpauschale für Person A'
+    },
+    'person_b': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Person B'
+    },
+    'person_b_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Person B'
+    },
+    'has_disability_person_b_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'Behinderung oder Pflegebedürftigkeit für Person B'
+    },
+    'merkzeichen_person_b_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person B'
+    },
+    'person_b_requests_pauschbetrag_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Pauschbetrag für Menschen mit Behinderung für Person B'
+    },
+    'person_b_requests_fahrtkostenpauschale_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Behinderungsbedingte Fahrtkostenpauschale für Person B'
+    },
+    'vorsorge': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Vorsorgeaufwendungen'
+    },
+    'vorsorge_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Vorsorgeaufwendungen'
+    },
+    'ausserg_bela': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Krankheitskosten und weitere außergewöhnliche Belastungen'
+    },
+    'ausserg_bela_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Krankheitskosten und weitere außergewöhnliche Belastungen'
+    },
+    'haushaltsnahe_handwerker': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Haushaltsnahe Dienstleistungen und Handwerkerleistungen'
+    },
+    'haushaltsnahe_handwerker_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Haushaltsnahe Dienstleistungen und Handwerkerleistungen'
+    },
+    'religion': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Steuern für Ihre Religionsgemeinschaft'
+    },
+    'religion_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Steuern für Ihre Religionsgemeinschaft'
+    },
+    'spenden': {
+        'domain': domain,
+        'target': uebersicht,
+        'source': 'CTA Spenden und Mitgliedsbeiträge'
+    },
+    'spenden_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Spenden und Mitgliedsbeiträge'
+    },
+    'telefonnummer_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Telefonnummer für Rückfragen'
+    },
+    'select_stmind_summary': {
+        'domain': domain,
+        'target': aendern,
+        'source': 'CTA Steuermindernde Aufwendungen'
+    },
+}

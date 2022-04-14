@@ -19,6 +19,8 @@ from tests.forms.mock_steuerlotse_steps import MockStartStep, MockMiddleStep, Mo
     MockStepWithPreconditionAndMessage, MockSecondPreconditionModelWithMessage
 from tests.utils import create_session_form_data
 
+from app.helper.plausible_helper import plausible_data_cta
+
 
 class TestSteuerlotseStepInit(unittest.TestCase):
     @pytest.fixture(autouse=True)
@@ -234,7 +236,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
                                             next_url=None, submit_url=url_for(endpoint=correct_endpoint,
                                                                             step=steuerlotse_step.name,
                                                                             link_overview=steuerlotse_step.has_link_overview),
-                                            overview_url=None)
+                                            overview_url=None, step_name=steuerlotse_step.name)
+        expected_render_info.additional_info['section_plausible_data'] = plausible_data_cta
 
         self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
@@ -261,7 +264,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
                                             submit_url=url_for(endpoint=correct_endpoint,
                                                                 step=steuerlotse_step.name,
                                                                 link_overview=steuerlotse_step.has_link_overview),
-                                            overview_url=None)
+                                            overview_url=None, step_name=steuerlotse_step.name)
+        expected_render_info.additional_info['section_plausible_data'] = plausible_data_cta
 
         self.assertEqual(expected_render_info, steuerlotse_step.render_info)
 
@@ -281,7 +285,8 @@ class TestSteuerlotseStepPreHandle(unittest.TestCase):
                                             next_url=None, submit_url=url_for(endpoint=correct_endpoint,
                                                                             step=steuerlotse_step.name,
                                                                             link_overview=steuerlotse_step.has_link_overview),
-                                            overview_url=overview_url)
+                                            overview_url=overview_url, step_name=steuerlotse_step.name)
+        expected_render_info.additional_info['section_plausible_data'] = plausible_data_cta
 
         steuerlotse_step._pre_handle()
 

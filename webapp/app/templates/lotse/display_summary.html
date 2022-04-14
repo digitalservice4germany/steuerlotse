@@ -4,34 +4,40 @@
 
 {# TODO Restructure how the summary is displayed #}
 {% block form_content %}
-{% for section in render_info.additional_info.section_steps.values() -%}
-  <h2 class="mb-0 mt-5 h5 text-uppercase">{{ section.label }}</h2>
-  {% for step in section.data.values() -%}
-    <div class="my-4 px-0">
-      <div class="card">
-        <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center">
-          <h3 class="mb-0 h5 bold">{{ step.label }}</h3>
-          {{ components.editButton(url=step.url) }}
-        </div>
-        <div class="card-body pt-2">
-          <ul class="list-unstyled mb-0 margin-only-between">
-              {% if step.data -%}
-                {% for label, value in step.data.items() -%}
-                {% if value is not none %}
-                    <li class="row">
-                      <div class="col-sm-6 bold">{{ label }}:</div>
-                      <div class="col-sm ">{{ value }} </div>
-                    </li>
-                {% endif %}
-                {% endfor %}
-              {% else -%}
-              {% endif -%}
-          </ul>
-        </div>
-      </div>
-    </div>
-  {% endfor -%}
-{% endfor -%}
+    {% for section in render_info.additional_info.section_steps.values() -%}
+        <h2 class="mb-0 mt-5 h5 text-uppercase">{{ section.label }}</h2>
+        {% for step in section.data.values() -%}
+            <div class="my-4 px-0">
+                <div class="card">
+                    <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center">
+                        <h3 class="mb-0 h5 bold">{{ step.label }}</h3>
+                        {% set set_name = step.name ~ '_summary' %}
+                        {% if set_name in render_info.additional_info['section_plausible_data'] %}
+                            {% set plausible_data = render_info.additional_info['section_plausible_data'].get(set_name) %}
+                            {{ components.editButtonWithTracking(url=step.url,plausible_data=plausible_data) }}
+                        {% else %}
+                            {{ components.editButton(url=step.url) }}
+                        {% endif %}
+                    </div>
+                    <div class="card-body pt-2">
+                        <ul class="list-unstyled mb-0 margin-only-between">
+                            {% if step.data -%}
+                                {% for label, value in step.data.items() -%}
+                                    {% if value is not none %}
+                                        <li class="row">
+                                            <div class="col-sm-6 bold">{{ label }}:</div>
+                                            <div class="col-sm ">{{ value }} </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else -%}
+                            {% endif -%}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor -%}
+    {% endfor -%}
 
     {{ macros.render_field(form.confirm_complete_correct) }}
 
