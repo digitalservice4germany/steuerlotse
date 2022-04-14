@@ -2,9 +2,10 @@ import datetime
 import logging
 from typing import Optional
 
-from flask import request
+from flask import request, flash
 from flask_babel import _
 from markupsafe import escape
+from requests import RequestException
 
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
 from app.data_access.user_controller import user_exists, create_user
@@ -70,9 +71,16 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                     self._register_user(stored_data)
                     # prevent going to failure page as in normal flow
                     render_info.next_url = self.url_for_step(UnlockCodeRequestSuccessStep.name)
-                except (UserAlreadyExistsError, ElsterProcessNotSuccessful):
+                except (UserAlreadyExistsError ):
                     logger.info("Could not request unlock code for user", exc_info=True)
-                    pass  # go to failure step
+                    render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
+                    flash(_('form.unlock-code-request.failure-intro'), 'warn')
+                    pass
+                except (ElsterProcessNotSuccessful,RequestException ):    
+                    logger.info("Could not request unlock code for user", exc_info=True)
+                    render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
+                    flash(_('flash.erica.dataConnectionError'), 'warn')
+                    pass
         elif isinstance(step, UnlockCodeRequestFailureStep):
             render_info.next_url = None
         elif isinstance(step, UnlockCodeRequestSuccessStep):

@@ -8,7 +8,8 @@ from app.elster_client import elster_client
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
-from flask import request, url_for
+from flask import request, url_for, flash
+from requests import RequestException
 
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
     UnlockCodeActivationFailureStep
@@ -59,8 +60,12 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
 
                     # set idnr also in session
                     _store_id_in_server_session(stored_data['idnr'])
-
-                except (UserNotExistingError, WrongUnlockCodeError, ElsterProcessNotSuccessful):
+                except (RequestException,ElsterProcessNotSuccessful):
+                    render_info.next_url = self.url_for_step(UnlockCodeActivationInputStep.name)
+                    flash(_('flash.erica.dataConnectionError'), 'warn')
+                    logger.info("Data Connection Error", exc_info=True)
+                    pass
+                except (UserNotExistingError, WrongUnlockCodeError):
                     logger.info("Could not activate unlock code for user", exc_info=True)
                     pass  # go to failure step
         elif isinstance(step, UnlockCodeActivationFailureStep):

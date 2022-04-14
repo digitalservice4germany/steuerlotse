@@ -6,6 +6,7 @@ from flask import json
 from flask.sessions import SecureCookieSession
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
+from flask_babel import _
 
 from app.data_access.user_controller import create_user, find_user
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
@@ -159,6 +160,9 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
                                                     submit_url=self.flow.url_for_step(self.input_step.name),
                                                     overview_url="Overview URL")
 
+        self.flash_url = '/' + self.endpoint_correct + '/step/' + self.input_step.name + \
+                               '?link_overview=' + str(self.flow.has_link_overview)
+
     def test_if_user_inactive_and_unlock_code_request_got_through_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
         create_user(existing_idnr, '1985-01-01', '0000')
@@ -185,21 +189,25 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
                     self.input_step, self.render_info_input_step, self.session_data)
                 self.assertTrue(find_user(existing_idnr).is_active)
 
-    def test_if_unlock_code_request_did_not_get_through_then_next_url_is_failure_step(self):
+    def test_if_unlock_code_request_did_not_get_through_then_flash_should_be_called_once(self):
         existing_idnr = '04452397687'
         create_user(existing_idnr, '1985-01-01', '0000')
         with self.app.test_request_context(method='POST',
                                            data={'idnr': existing_idnr,
                                                  'unlock_code': '0000-0000-0000'}):
-            with patch(
-                    "app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") \
-                    as fun_unlock_code_activation:
+            with (
+                patch( "app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") as fun_unlock_code_activation,
+                patch("app.forms.flows.unlock_code_activation_flow.flash") as mock_flash,
+            ):
+                  
                 fun_unlock_code_activation.side_effect = ElsterProcessNotSuccessful()
 
-                render_info, _ = self.flow._handle_specifics_for_step(
+                render_info, stored_data = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
-                self.assertEqual(self.failure_url, render_info.next_url)
+                self.assertEqual(self.flash_url, render_info.next_url)
                 fun_unlock_code_activation.assert_called_once()
+                mock_flash.assert_called_once_with(
+                _('flash.erica.dataConnectionError'), 'warn')
 
     def test_if_user_is_active_then_send_no_request_to_elster(self):
         existing_idnr = '04452397687'

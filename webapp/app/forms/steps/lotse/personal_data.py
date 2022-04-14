@@ -1,6 +1,7 @@
 from flask import flash, Markup
 from flask_wtf.csrf import generate_csrf
 from pydantic import ValidationError, root_validator
+from requests import RequestException
 from wtforms import validators, SelectField, RadioField
 from wtforms.validators import InputRequired, ValidationError as WTFormsValidationError
 
@@ -89,13 +90,19 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            tax_offices = request_tax_offices()
-            self.tax_offices = tax_offices
-            choices = []
-            for county in tax_offices:
-                choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
-                            county.get('tax_offices')]
-            self.bufa_nr.choices = choices
+            
+            try:
+                tax_offices = request_tax_offices()
+                self.tax_offices = tax_offices
+                choices = []
+                for county in tax_offices:
+                    choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
+                                county.get('tax_offices')]
+                self.bufa_nr.choices = choices
+            except (RequestException):
+                self.tax_offices = []
+                self.bufa_nr.choices = []
+                
 
         def validate_bundesland(form, field):
             if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
@@ -129,6 +136,9 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
             try:
                 ValidTaxNumber()(self, self.steuernummer)
+            except (RequestException):
+                flash(_('flash.steuernummer.connectionError'),'warn')
+                return False
             except WTFormsValidationError:
                 flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')
                 return False

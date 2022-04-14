@@ -50,6 +50,16 @@ a {
   background-clip: border-box;
 }
 
+.banner-link {
+  color: var(--inverse-text-color);
+  text-decoration-color: var(--inverse-text-color);
+}
+
+.banner-link:hover {
+  color: var(--inverse-text-color);
+  text-decoration-color: var(--inverse-text-color);
+}
+
 a:hover {
   text-decoration-color: var(--link-hover-color);
   color: var(--link-hover-color);
@@ -282,7 +292,9 @@ ol li::before {
   color: var(--text-color);
 }
 
-.btn:focus, .btn-primary:focus, .btn-secondary:focus,
+.btn:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
 .btn-primary:not(:disabled):not(.disabled):active:focus,
 .btn-secondary:not(:disabled):not(.disabled).active:focus {
   box-shadow: none;
