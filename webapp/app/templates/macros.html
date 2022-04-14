@@ -118,10 +118,13 @@
     <div class="form-row nav-button-row">
         {% if render_info.overview_url %}
             {% if render_info.plausible_data.plausible_domain %}
-                <button type="submit"
+                <button
+                        type="submit"
                         class="btn btn-outline-primary mr-2"
-                        name="overview_button">{{ _('form.back_to_overview') }}
-                        onclick="plausible('{{ render_info.plausible_data.plausible_target }}', {props: {method: '{{ render_info.plausible_data.plausible_source }}'}})"
+                        name="overview_button"
+                        onclick="plausible('{{ render_info.plausible_data.plausible_target }}',
+                                {props: {method: '{{ render_info.plausible_data.plausible_source }}'}})">
+                    {{ _('form.back_to_overview') }}
                 </button>
             {% else %}
                 <button type="submit"
