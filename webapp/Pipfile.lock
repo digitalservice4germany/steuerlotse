@@ -208,11 +208,11 @@
         },
         "flask-limiter": {
             "hashes": [
-                "sha256:a0a15f7c3365d1ab0e0b72bfc890ecbc1911d9d66f5496be17d32b33b110b270",
-                "sha256:dba3d9f9ed42bb905e64318b62649531ff474dccb3e29a68db42d0da86503ed9"
+                "sha256:8df2731da1ae2769ef51c38c1166d3d761ae9c175641018bc00b9c2e96b8c235",
+                "sha256:d5af0f4f1036689ccd0b808ce1f3532a7ebfd2b38704accf0f701aae4efb38bd"
             ],
             "index": "pypi",
-            "version": "==2.3.0"
+            "version": "==2.3.1"
         },
         "flask-login": {
             "hashes": [
@@ -379,11 +379,11 @@
         },
         "limits": {
             "hashes": [
-                "sha256:21b9d7ddebbe90ad23cce724c9f3e8ad62f132cef6051ec910249421679cb4db",
-                "sha256:8e22b63df26310207a77b75bd474599f0a4613a7d9163650ed3a428e9cc7ae35"
+                "sha256:0048269951a3c9a0b12215b27a00b23bd49b15ab1dd0bfc70500406e9ed30445",
+                "sha256:8d85e86f259c4bd5633025f68abc685fd850d686b832d0bfd1f8b64320153405"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.4.0"
+            "version": "==2.5.0"
         },
         "mako": {
             "hashes": [
