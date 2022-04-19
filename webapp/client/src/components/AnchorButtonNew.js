@@ -20,6 +20,12 @@ const Anchor = styled.a`
     border: none;
     padding: 0;
 
+    &.outline {
+      color: var(--text-color);
+      background-color: var(--inverse-text-color);
+      border: 1px solid var(--border-color);
+    }
+
     &:hover {
       color: var(--inverse-text-color);
       background-color: var(--link-hover-color);
@@ -40,7 +46,20 @@ const Anchor = styled.a`
 
 const AnchorButtonText = styled.span`
    {
-    padding: 0 16px;
+    padding: 0 24px;
+  }
+`;
+
+const AnchorButtonIcon = styled.span`
+   {
+    padding: 12px 0 12px 24px;
+
+    svg {
+      display: block;
+      margin: auto;
+      height: 36px;
+      width: 36px;
+    }
   }
 `;
 
@@ -50,18 +69,17 @@ export default function AnchorButtonNew({
   url,
   name,
   download,
+  variant,
 }) {
   return (
     <Anchor
-      className="anchor-btn"
+      className={variant}
       href={url}
       name={name}
       download={download}
       onClick={onClick}
     >
-      <AnchorButtonText className="anchor-btn__text">
-        {children}
-      </AnchorButtonText>
+      {children}
     </Anchor>
   );
 }
@@ -72,10 +90,32 @@ AnchorButtonNew.propTypes = {
   url: PropTypes.string.isRequired,
   name: PropTypes.string,
   download: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 AnchorButtonNew.defaultProps = {
   onClick: null,
   name: null,
   download: false,
+  variant: null,
 };
+
+function Text({ text }) {
+  return (
+    <AnchorButtonText className="anchor-btn__text">{text}</AnchorButtonText>
+  );
+}
+Text.propTypes = {
+  text: PropTypes.string.isRequired,
+};
+AnchorButtonNew.Text = Text;
+
+function Icon({ children }) {
+  return (
+    <AnchorButtonIcon className="anchor-btn__icon">{children}</AnchorButtonIcon>
+  );
+}
+Icon.propTypes = {
+  children: PropTypes.elementType.isRequired,
+};
+AnchorButtonNew.Icon = Icon;
