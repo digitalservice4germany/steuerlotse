@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-04-19 15:26+0200\n"
+"POT-Creation-Date: 2022-04-19 16:41+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -4542,14 +4542,15 @@ msgid "info-stl.card-partner.heading"
 msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
 
 #: app/templates/content/howitworks.html:51
-msgid "info-stl.card-partner.p1-content"
+#: app/templates/content/landing_page.html:49
+msgid "info-stl.card-zusammenveranlagung.p1-content"
 msgstr ""
 "Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft "
 "leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es "
 "reicht in diesem Fall aus, wenn sich nur eine Person registriert und "
 "unter \"Ihre Steuererklärung\" für die gemeinsame Steuererklärung "
-"anmeldet. Im Steuerformular können Sie dann zusätzlich zu Ihren Angaben "
-"auch die Daten zur Ihrem Partner oder ihrer Partnerin eintragen."
+"anmeldet. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben,"
+" auch die Daten zu Ihrem Partner oder Ihrer Partnerin eintragen."
 
 #: app/templates/content/howitworks.html:56
 #: app/templates/content/landing_page.html:54
@@ -5063,16 +5064,6 @@ msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 #: app/templates/content/landing_page.html:47
 msgid "info-stl.card-zusammenveranlagung.heading"
 msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
-
-#: app/templates/content/landing_page.html:49
-msgid "info-stl.card-zusammenveranlagung.p1-content"
-msgstr ""
-"Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft "
-"leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es "
-"reicht in diesem Fall aus, wenn sich nur eine Person registriert und "
-"unter \"Ihre Steuererklärung\" für die gemeinsame Steuererklärung "
-"anmeldet. Im Steuerformular können Sie dann zusätzlich zu Ihren Angaben "
-"auch die Daten zur Ihrem Partner oder ihrer Partnerin eintragen."
 
 #: app/templates/content/landing_page.html:79
 msgid "landing.hero-title"
