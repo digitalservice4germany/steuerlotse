@@ -17,6 +17,8 @@ export default function PauschbetragPage({
   fields,
   pauschbetrag,
   prevUrl,
+  plausibleDomain,
+  plausibleProps,
 }) {
   const { t } = useTranslation();
 
@@ -59,7 +61,11 @@ export default function PauschbetragPage({
           <p key={4}>{t("lotse.pauschbetrag.details.p4")}</p>,
         ]}
       </DetailsSeparated>
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormFieldRadioGroup
           fieldName={fields.requestsPauschbetrag.name}
           fieldId={fields.requestsPauschbetrag.name}
@@ -103,4 +109,11 @@ PauschbetragPage.propTypes = {
   }).isRequired,
   pauschbetrag: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
+};
+
+PauschbetragPage.defaultProps = {
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };

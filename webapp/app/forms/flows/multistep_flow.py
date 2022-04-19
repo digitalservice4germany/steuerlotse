@@ -10,14 +10,14 @@ from app.config import Config
 from app.data_access.storage.session_storage import SessionStorage
 from app.forms.steps.step import FormStep
 
-from app.helper.plausible_helper import get_plausible_data
+from app.helper.plausible_helper import plausible_data_cta
 
 logger = logging.getLogger(__name__)
 
 
 class RenderInfo(object):
     def __init__(self, step_title, step_intro, form, prev_url, next_url, submit_url, overview_url, header_title=None,
-                 stored_data=None, data_is_valid=False, plausible_data=None):
+                 stored_data=None, data_is_valid=False, step_name=None):
         self.step_title = step_title
         self.step_intro = step_intro
         self.header_title = None
@@ -32,7 +32,7 @@ class RenderInfo(object):
         self.additional_info = {}
         self.stored_data = stored_data
         self.data_is_valid = data_is_valid
-        self.plausible_data = plausible_data
+        self.step_name = step_name
 
     def __eq__(self, other):
         if isinstance(other, RenderInfo):
@@ -95,12 +95,12 @@ class MultiStepFlow:
         prev_step, step, next_step = self._generate_steps(step_name)
 
         render_info = RenderInfo(step_title=step.title, step_intro=step.intro, form=None,
-                                 plausible_data=get_plausible_data(step_name, Config.PLAUSIBLE_DOMAIN),
+                                 step_name=step_name,
                                  prev_url=self.url_for_step(prev_step.name) if prev_step else None,
                                  next_url=self.url_for_step(next_step.name) if next_step else None,
                                  submit_url=self.url_for_step(step.name), overview_url=self.url_for_step(
                 self.overview_step.name) if self.has_link_overview and self.overview_step else None)
-
+        render_info.additional_info['section_plausible_data'] = plausible_data_cta
         render_info, stored_data = self._handle_specifics_for_step(step, render_info, stored_data)
         self.form_storage.override_data(stored_data, data_identifier="form_data")
 

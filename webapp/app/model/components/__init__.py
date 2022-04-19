@@ -19,7 +19,8 @@ class FormProps(ComponentProps):
     csrf_token: str
     show_overview_button: bool
     next_button_label: Optional[str]
-    
+
+
 class ComponentPlausibleProps(ComponentProps):
     plausible_domain: Optional[str]
 
@@ -116,11 +117,12 @@ class RevocationFailureProps(ComponentProps):
 
 
 class DeclarationIncomesProps(StepFormProps):
-    pass
+    plausible_domain: Optional[str]
 
 
 class DeclarationEDatenProps(StepFormProps):
     prev_url: str
+    plausible_domain: Optional[str]
 
 
 class ConfirmationProps(StepFormProps):
@@ -142,22 +144,25 @@ class FilingFailureProps(ComponentProps):
 class TaxNumberStepFormProps(StepFormProps):
     tax_office_list: List[Dict]
     number_of_users: int
+    plausible_domain: Optional[str]
 
 
 class HasDisabilityPersonAProps(StepFormProps):
     num_users: int
+    plausible_domain: Optional[str]
 
 
 class HasDisabilityPersonBProps(StepFormProps):
-    pass
+    plausible_domain: Optional[str]
 
 
 class MerkzeichenProps(StepFormProps):
-    pass
+    plausible_domain: Optional[str]
 
 
 class PauschbetragProps(StepFormProps):
     pauschbetrag: str
+    plausible_domain: Optional[str]
 
 
 class NoPauschbetragProps(StepDisplayProps):
@@ -167,14 +172,15 @@ class NoPauschbetragProps(StepDisplayProps):
 
 class FahrtkostenpauschaleProps(StepFormProps):
     fahrtkostenpauschale_amount: int
+    plausible_domain: Optional[str]
 
 
 class TelephoneNumberProps(StepFormProps):
-    pass
+    plausible_domain: Optional[str]
 
 
 class SelectStMindProps(StepFormProps):
-    pass
+    plausible_domain: Optional[str]
 
 
 class StepSessionNoteProps(ComponentProps):
@@ -186,8 +192,10 @@ class StepSubmitAcknowledgeProps(ComponentPlausibleProps):
     prev_url: str
     logout_url: str
 
+
 class InfoTaxReturnForPensionersProps(ComponentPlausibleProps):
     pass
+
 
 class AmbassadorInfoMaterialProps(ComponentPlausibleProps):
     pass

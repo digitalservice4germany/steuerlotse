@@ -12,6 +12,8 @@ from app.model.components import DeclarationIncomesProps, DeclarationEDatenProps
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 class StepDeclarationIncomes(FormStep):
     name = 'decl_incomes'
@@ -44,6 +46,7 @@ class StepDeclarationIncomes(FormStep):
                 'show_overview_button': bool(render_info.overview_url),
             },
             fields=form_fields_dict(render_info.form),
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='DeclarationIncomesPage',
@@ -85,6 +88,7 @@ class StepDeclarationEdaten(FormStep):
             },
             prev_url=render_info.prev_url,
             fields=form_fields_dict(render_info.form),
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='DeclarationEDatenPage',

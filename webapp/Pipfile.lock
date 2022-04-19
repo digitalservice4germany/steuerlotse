@@ -208,11 +208,11 @@
         },
         "flask-limiter": {
             "hashes": [
-                "sha256:a0a15f7c3365d1ab0e0b72bfc890ecbc1911d9d66f5496be17d32b33b110b270",
-                "sha256:dba3d9f9ed42bb905e64318b62649531ff474dccb3e29a68db42d0da86503ed9"
+                "sha256:b460377e68d7f7093a87434bd8508862adb3217088b73896a110391ed52384f7",
+                "sha256:c7dcff91fcebc24dc002135aaf4f1782a76dd8007bedae4345071383892402eb"
             ],
             "index": "pypi",
-            "version": "==2.3.0"
+            "version": "==2.3.2"
         },
         "flask-login": {
             "hashes": [
@@ -379,11 +379,11 @@
         },
         "limits": {
             "hashes": [
-                "sha256:21b9d7ddebbe90ad23cce724c9f3e8ad62f132cef6051ec910249421679cb4db",
-                "sha256:8e22b63df26310207a77b75bd474599f0a4613a7d9163650ed3a428e9cc7ae35"
+                "sha256:8345e38efb7497c6aa6cb59550f0fc6d4d1d42799a139adf584849fb90bfa33e",
+                "sha256:c9553d66227be6eb6fabbb49240c433a9aa4e2f8a5ed8f9f27cb5bb3dc64c837"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.4.0"
+            "version": "==2.5.2"
         },
         "mako": {
             "hashes": [
@@ -800,11 +800,11 @@
         },
         "typing-extensions": {
             "hashes": [
-                "sha256:1a9462dcc3347a79b1f1c0271fbe79e844580bb598bafa1ed208b94da3cdcd42",
-                "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"
+                "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708",
+                "sha256:f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"
             ],
-            "markers": "python_version >= '3.6'",
-            "version": "==4.1.1"
+            "markers": "python_version >= '3.7'",
+            "version": "==4.2.0"
         },
         "urllib3": {
             "hashes": [

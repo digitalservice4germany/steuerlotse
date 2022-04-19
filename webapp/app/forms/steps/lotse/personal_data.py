@@ -26,6 +26,8 @@ from app.model.components.helpers import form_fields_dict
 from app.model.form_data import show_person_b, FamilienstandModel, JointTaxesModel
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
     name = 'steuernummer'
@@ -172,7 +174,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url,
             tax_office_list=self.render_info.form.tax_offices,
-            number_of_users=2 if show_person_b(self.stored_data) else 1
+            number_of_users=2 if show_person_b(self.stored_data) else 1,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='TaxNumberPage',
@@ -397,6 +400,7 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
             },
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='TelephoneNumberPage',

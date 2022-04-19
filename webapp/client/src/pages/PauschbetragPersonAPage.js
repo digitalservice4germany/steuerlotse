@@ -9,9 +9,16 @@ export default function PauschbetragPersonAPage({
   fields,
   pauschbetrag,
   prevUrl,
+  plausibleDomain,
 }) {
+  const plausibleProps = {
+    method: "CTA Pauschbetrag für Menschen mit Behinderung für Person A",
+  };
+
   return (
     <PauschbetragPage
+      plausibleDomain={plausibleDomain}
+      plausibleProps={plausibleProps}
       {...{ stepHeader, form, pauschbetrag, prevUrl }}
       fields={{
         requestsPauschbetrag: {
@@ -36,4 +43,9 @@ PauschbetragPersonAPage.propTypes = {
   }).isRequired,
   pauschbetrag: PropTypes.string.isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+PauschbetragPersonAPage.defaultProps = {
+  plausibleDomain: null,
 };

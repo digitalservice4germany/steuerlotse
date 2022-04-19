@@ -21,9 +21,15 @@
     <a class="btn btn-outline-secondary" href="{{ url}}">{{ text }}</a>
 {%- endmacro %}
 
+{% macro editButtonWithTracking(url, plausible_data, text=_('form.lotse.summary-button-edit'), float_right=False) -%}
+      <a class="{% if  float_right %} float-right {% endif %} edit-button" href="{{ url }}"
+         onclick="plausible('{{ plausible_data.target }}', {props: {method: '{{plausible_data.source }}'}})">{{ text }}</a>
+{%- endmacro %}
+
 {% macro editButton(url, text=_('form.lotse.summary-button-edit'), float_right=False) -%}
       <a class="{% if  float_right %} float-right {% endif %} edit-button" href="{{ url }}">{{ text }}</a>
 {%- endmacro %}
+
 
 {% macro backLink(text, url) -%}
       <a class='back-link' href="{{ url }}">

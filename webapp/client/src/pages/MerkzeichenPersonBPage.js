@@ -9,11 +9,18 @@ export default function MerkzeichenPersonBPage({
   form,
   fields,
   prevUrl,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = {
+    method:
+      "CTA Angaben zur festgestellten Behinderung oder Pflegebedürftigkeit Person B",
+  };
 
   return (
     <MerkzeichenPage
+      plausibleDomain={plausibleDomain}
+      plausibleProps={plausibleProps}
       {...{ stepHeader, form, prevUrl }}
       fields={{
         hasPflegegrad: {
@@ -92,4 +99,9 @@ MerkzeichenPersonBPage.propTypes = {
     personBHasMerkzeichenAg: checkboxPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+MerkzeichenPersonBPage.defaultProps = {
+  plausibleDomain: null,
 };

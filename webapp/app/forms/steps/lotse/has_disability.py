@@ -15,6 +15,8 @@ from app.model.components import HasDisabilityPersonBProps, HasDisabilityPersonA
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 class StepDisabilityPersonB(LotseFormSteuerlotseStep):
     name = 'has_disability_person_b'
@@ -43,7 +45,8 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
                 'show_overview_button': bool(self.render_info.overview_url),
             },
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='HasDisabilityPersonBPage',
@@ -80,7 +83,8 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
             },
             num_users=get_number_of_users(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='HasDisabilityPersonAPage',

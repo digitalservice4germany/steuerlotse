@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import styled, { css } from "styled-components";
+import addPlausibleGoal from "../lib/helpers";
 
 const Row = styled.div`
   margin-top: var(--spacing-09);
@@ -155,11 +156,16 @@ export default function StepNavButtons({
   nextButtonLabel,
   nextUrl,
   isForm,
+  plausibleGoal,
+  plausibleDomain,
+  plausibleProps,
 }) {
   const { t } = useTranslation();
-
   const overviewLabel = t("form.backToOverview");
   const nextLabel = nextButtonLabel || t("form.next");
+  const handleClick = () => {
+    addPlausibleGoal(plausibleDomain, plausibleGoal, { props: plausibleProps });
+  };
 
   return (
     <Row className="form-row">
@@ -168,6 +174,7 @@ export default function StepNavButtons({
           type="submit"
           className="btn mr-2"
           name="overview_button"
+          onClick={handleClick}
         >
           {overviewLabel}
         </OutlineButton>
@@ -178,6 +185,7 @@ export default function StepNavButtons({
           href={overviewUrl}
           className="btn mr-2"
           name="overview_link"
+          onClick={handleClick}
         >
           {overviewLabel}
         </OutlineLink>
@@ -211,6 +219,9 @@ StepNavButtons.propTypes = {
   ]),
   nextUrl: PropTypes.string,
   isForm: PropTypes.bool,
+  plausibleGoal: PropTypes.string,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
 };
 
 StepNavButtons.defaultProps = {
@@ -220,4 +231,7 @@ StepNavButtons.defaultProps = {
   explanatoryButtonText: undefined,
   nextUrl: undefined,
   isForm: true,
+  plausibleGoal: "Zurück zur Übersicht",
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };

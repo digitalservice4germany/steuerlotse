@@ -13,14 +13,25 @@ import FormFieldIntegerInput from "../components/FormFieldIntegerInput";
 import FormFieldCheckBox from "../components/FormFieldCheckBox";
 import FieldLabelForSeparatedFields from "../components/FieldLabelForSeparatedFields";
 
-export default function MerkzeichenPage({ stepHeader, form, fields, prevUrl }) {
+export default function MerkzeichenPage({
+  stepHeader,
+  form,
+  fields,
+  prevUrl,
+  plausibleDomain,
+  plausibleProps,
+}) {
   const { t } = useTranslation();
 
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormFieldYesNo
           fieldName={fields.hasPflegegrad.name}
           fieldId={fields.hasPflegegrad.name}
@@ -112,4 +123,11 @@ MerkzeichenPage.propTypes = {
     hasMerkzeichenAg: extendedCheckboxPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
+};
+
+MerkzeichenPage.defaultProps = {
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };
