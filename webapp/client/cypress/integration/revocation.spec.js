@@ -97,7 +97,7 @@ describe("Revocation", () => {
       cy.visit("/unlock_code_revocation/step/data_input");
     });
 
-    it("should redirect to failure page", function () {
+    it("should redirect to same page", function () {
       cy.get("input[id=idnr_1]").clear().type(idnr[0]);
       cy.get("input[id=idnr_2]").clear().type(idnr[1]);
       cy.get("input[id=idnr_3]").clear().type(idnr[2]);
@@ -108,7 +108,7 @@ describe("Revocation", () => {
         .clear()
         .type(dob.year + "{enter}");
 
-      // we should be redirected
+      // should keep user on the page
       cy.url().should("include", "/unlock_code_revocation/step/data_input");
 
       // and our cookie should be set

@@ -99,10 +99,9 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                     choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
                                 county.get('tax_offices')]
                 self.bufa_nr.choices = choices
-            except (RequestException):
+            except RequestException:
                 self.tax_offices = []
                 self.bufa_nr.choices = []
-                
 
         def validate_bundesland(form, field):
             if form.steuernummer_exists.data == 'yes' or form.steuernummer_exists.data == 'no':
@@ -136,8 +135,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
             try:
                 ValidTaxNumber()(self, self.steuernummer)
-            except (RequestException):
-                flash(_('flash.steuernummer.connectionError'),'warn')
+            except RequestException:
+                flash(_('flash.steuernummer.connectionError'), 'warn')
                 return False
             except WTFormsValidationError:
                 flash(Markup(_('form.lotse.tax-number.invalid-tax-number-error')), 'warn')

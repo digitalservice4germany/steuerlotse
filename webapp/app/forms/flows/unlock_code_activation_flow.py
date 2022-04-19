@@ -60,7 +60,7 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
 
                     # set idnr also in session
                     _store_id_in_server_session(stored_data['idnr'])
-                except (RequestException,ElsterProcessNotSuccessful):
+                except (RequestException, ElsterProcessNotSuccessful):
                     render_info.next_url = self.url_for_step(UnlockCodeActivationInputStep.name)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
                     logger.info("Data Connection Error", exc_info=True)
