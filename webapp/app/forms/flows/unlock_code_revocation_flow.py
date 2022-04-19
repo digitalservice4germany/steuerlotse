@@ -10,7 +10,9 @@ from app.elster_client import elster_client
 
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
-from flask import request
+from flask import request, flash
+from requests import RequestException
+
 
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful, ElsterRequestIdUnkownError, \
     ElsterRequestAlreadyRevoked
@@ -56,8 +58,15 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     self._cancel_user(stored_data)
                     # prevent going to failure page as in normal flow
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationSuccessStep.name)
-                except (UserNotExistingError, WrongDateOfBirthError, ElsterProcessNotSuccessful):
+                except (UserNotExistingError, WrongDateOfBirthError):
+                    render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
                     logger.info("Could not revoke unlock code for user", exc_info=True)
+                    flash(_('form.unlock-code-revocation.failure-intro'), 'warn')
+                    pass  # go to failure step
+                except (RequestException, ElsterProcessNotSuccessful):
+                    render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
+                    logger.info("Data Connection Error", exc_info=True)
+                    flash(_('flash.erica.dataConnectionError'), 'warn')
                     pass  # go to failure step
         elif isinstance(step, UnlockCodeRevocationFailureStep):
             render_info.next_url = None

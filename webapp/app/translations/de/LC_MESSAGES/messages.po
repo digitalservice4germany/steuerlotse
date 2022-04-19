@@ -57,70 +57,70 @@ msgstr ""
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:220
+#: app/routes.py:219
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:221
+#: app/routes.py:220
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:234 app/routes.py:379
+#: app/routes.py:233 app/routes.py:378
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:254 app/templates/basis/base.html:37
+#: app/routes.py:253 app/templates/basis/base.html:37
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:261
+#: app/routes.py:260
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:268
+#: app/routes.py:267
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:275
+#: app/routes.py:274
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:282
+#: app/routes.py:281
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:289
+#: app/routes.py:288
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:296
+#: app/routes.py:295
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:309
+#: app/routes.py:308
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:314
+#: app/routes.py:313
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:370 app/routes.py:400 app/routes.py:407
+#: app/routes.py:369 app/routes.py:399 app/routes.py:406
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:375 app/routes.py:383
+#: app/routes.py:374 app/routes.py:382
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:388
+#: app/routes.py:387
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:394
+#: app/routes.py:393
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -192,7 +192,7 @@ msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
 #: app/forms/flows/logout_flow.py:21
-#: app/forms/flows/unlock_code_request_flow.py:40
+#: app/forms/flows/unlock_code_request_flow.py:41
 msgid "form.auth-request.title"
 msgstr "Anforderung des Freischaltcodes"
 
@@ -221,18 +221,46 @@ msgstr "Keine Angabe"
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
-#: app/forms/flows/unlock_code_activation_flow.py:39
+#: app/forms/flows/unlock_code_activation_flow.py:40
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
-#: app/forms/flows/unlock_code_request_flow.py:55
-#: app/forms/steps/unlock_code_request_steps.py:50
+#: app/forms/flows/unlock_code_activation_flow.py:65
+#: app/forms/flows/unlock_code_request_flow.py:82
+#: app/forms/flows/unlock_code_revocation_flow.py:69
+msgid "flash.erica.dataConnectionError"
+msgstr ""
+" Ihre Angaben konnten nicht übermittelt werden. Bitte versuchen Sie es "
+"erneut. <br/><br/> Falls das Problem weiterhin besteht, versuchen Sie es "
+"zu einem späteren Zeitpunkt oder wenden Sie sich an <a "
+"href=\"mailto:kontakt@steuerlotse-rente.de\"  class=\"banner-"
+"link\">kontakt@steuerlotse-rente.de</a>"
+
+#: app/forms/flows/unlock_code_request_flow.py:56
+#: app/forms/steps/unlock_code_request_steps.py:48
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:39
+#: app/forms/flows/unlock_code_request_flow.py:77
+#: app/forms/steps/unlock_code_request_steps.py:90
+msgid "form.unlock-code-request.failure-intro"
+msgstr ""
+"Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie "
+"sich nicht erneut registrieren und bekommen einen Brief mit Ihrem "
+"persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt."
+
+#: app/forms/flows/unlock_code_revocation_flow.py:41
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
+
+#: app/forms/flows/unlock_code_revocation_flow.py:64
+#: app/forms/steps/unlock_code_revocation_steps.py:86
+msgid "form.unlock-code-revocation.failure-intro"
+msgstr ""
+"Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können"
+" Sie Ihren Freischaltcode nicht stornieren. <br/><br/> Haben Sie Ihre "
+"Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren "
+"Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun."
 
 #: app/forms/steps/eligibility_steps.py:70
 msgid "form.eligibility.failure.title"
@@ -1577,7 +1605,17 @@ msgstr[1] ""
 msgid "form.lotse.steuernummer.request_new_tax_number.data_label"
 msgstr "Neue Steuernummer beantragen"
 
-#: app/forms/steps/lotse/personal_data.py:135
+#: app/forms/steps/lotse/personal_data.py:104
+#: app/forms/steps/lotse/personal_data.py:143
+msgid "flash.steuernummer.connectionError"
+msgstr ""
+" Ihre Angaben zur Steuernummer konnten nicht übermittelt werden. Bitte "
+"versuchen Sie es erneut. <br/><br/> Falls das Problem weiterhin besteht, "
+"versuchen Sie es zu einem späteren Zeitpunkt oder wenden Sie sich an <a "
+"href=\"mailto:kontakt@steuerlotse-rente.de\" class=\"banner-"
+"link\">kontakt@steuerlotse-rente.de</a>"
+
+#: app/forms/steps/lotse/personal_data.py:146
 msgid "form.lotse.tax-number.invalid-tax-number-error"
 msgstr ""
 "Die Steuernummer ist nicht korrekt. Prüfen Sie:<ul><li>ob es sich bei der"

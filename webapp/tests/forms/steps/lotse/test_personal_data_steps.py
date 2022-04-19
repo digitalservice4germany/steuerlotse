@@ -2,16 +2,19 @@ import datetime
 from unittest.mock import patch, MagicMock
 
 import pytest
+import requests
+
 from flask.sessions import SecureCookieSession
 from flask_babel import ngettext, _
 from pydantic import ValidationError
 from werkzeug.datastructures import MultiDict, ImmutableMultiDict
-
 from app.forms.steps.lotse.personal_data import StepSteuernummer, StepPersonA, StepPersonB, ShowPersonBPrecondition, \
     StepTelephoneNumber
 from app.forms.flows.lotse_step_chooser import _LOTSE_DATA_KEY, LotseStepChooser
 from tests.elster_client.mock_erica import MockErica
 from tests.utils import create_session_form_data
+from tests.elster_client.mock_erica import MockErica, MockResponse
+
 
 
 class SummaryStep:
@@ -247,6 +250,38 @@ class TestStepSteuernummerValidate:
 
         mock_flash.assert_not_called()
 
+    @pytest.mark.usefixtures("test_request_context")
+    def test_if_validtaxnumber_raise_a_connection_error_then_flash_should_be_called_once(self, app):
+        bundesland_abbreviation = 'BY'
+        steuernummer = '19811310010'
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        with (
+            patch('app.forms.steps.lotse.personal_data.flash') as mock_flash,
+            patch('app.forms.steps.lotse.personal_data.ValidTaxNumber', side_effect=requests.RequestException(response=MockResponse(None, '500')))
+        ):
+            StepSteuernummer.prepare_render_info(
+                stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+
+        mock_flash.assert_called_once_with(
+            _('flash.steuernummer.connectionError'), 'warn')
+
+    @pytest.mark.usefixtures("test_request_context")
+    def test_if_validtaxnumber_succeded_then_flash_should_not_be_called_once(self, app):
+        bundesland_abbreviation = 'BY'
+        steuernummer = '19811310010'
+        input_data = {'steuernummer_exists': 'yes',
+                      'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
+
+        with (
+            patch('app.forms.steps.lotse.personal_data.flash') as mock_flash,
+            patch('app.forms.steps.lotse.personal_data.ValidTaxNumber')
+        ):
+            StepSteuernummer.prepare_render_info(
+                stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
+
+        mock_flash.assert_not_called()
 
 class TestStepPersonATexts:
     def test_if_multiple_users_then_show_multiple_text(self, app, new_test_request_context_with_data_in_session):

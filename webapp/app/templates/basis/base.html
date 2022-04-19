@@ -61,11 +61,11 @@
                     {% for category, message in get_flashed_messages(with_categories=True) %}
                         {% if category == 'success' %}
                             <div class="alert alert-success" role="alert">
-                                {{ message }}
+                                {{ message|safe}}
                             </div>
                         {% else %}
                             <div class="alert alert-warning" role="alert">
-                                {{ message }}
+                                {{ message|safe }}
                             </div>
                         {% endif %}
                     {% endfor %}

@@ -7,6 +7,7 @@ from flask import json, make_response
 from flask.sessions import SecureCookieSession
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
+from flask_babel import _
 
 from app.data_access.user_controller import create_user, find_user
 from app.data_access.user_controller_errors import UserNotExistingError
@@ -166,6 +167,9 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                                                     submit_url=self.flow.url_for_step(self.input_step.name),
                                                     overview_url="Overview URL")
 
+        self.flash_url = '/' + self.endpoint_correct + '/step/' + self.input_step.name + \
+                            '?link_overview=' + str(self.flow.has_link_overview)
+
     def test_if_user_exists_and_dob_correct_and_unlock_code_revocation_got_through_then_next_url_is_success_step(self):
         existing_idnr = '04452397687'
         correct_dob = ['1', '1', '1985']
@@ -252,21 +256,25 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                     self.input_step, self.render_info_input_step, self.session_data)
                 self.assertRaises(UserNotExistingError, find_user, existing_idnr)
 
-    def test_if_unlock_code_revocation_did_not_get_through_then_next_url_is_failure_step(self):
+    def test_if_unlock_code_revocation_did_not_get_through_then_flash_should_be_called_once(self):
         existing_idnr = '04452397687'
         correct_dob = ['1', '1', '1985']
         create_user(existing_idnr, '01.01.1985', '0000')
         with self.app.test_request_context(method='POST',
                                            data={'idnr': existing_idnr,
                                                  'dob': correct_dob}):
-            with patch(
-                    "app.forms.flows.unlock_code_revocation_flow.elster_client.send_unlock_code_revocation_with_elster") \
-                    as fun_unlock_code_revocation:
+            with (
+                patch( "app.forms.flows.unlock_code_revocation_flow.elster_client.send_unlock_code_revocation_with_elster") as fun_unlock_code_revocation,
+                patch("app.forms.flows.unlock_code_revocation_flow.flash") as mock_flash,
+            ):
+
                 fun_unlock_code_revocation.side_effect = ElsterProcessNotSuccessful()
-                render_info, _ = self.flow._handle_specifics_for_step(
+                render_info, stored_data = self.flow._handle_specifics_for_step(
                         self.input_step, self.render_info_input_step, self.session_data)
-                self.assertEqual(self.failure_url, render_info.next_url)
+                self.assertEqual(self.flash_url, render_info.next_url)
                 fun_unlock_code_revocation.assert_called_once()
+                mock_flash.assert_called_once_with(
+                _('flash.erica.dataConnectionError'), 'warn')
 
     def test_if_unlock_code_revocation_did_not_get_through_then_user_is_not_deleted(self):
         existing_idnr = '04452397687'
@@ -287,17 +295,23 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                     self.fail('User was deleted unexpectedly.')
                 fun_unlock_code_revocation.assert_called_once()
 
-    def test_if_user_not_existing_then_next_url_is_failure_step(self):
+    def test_if_user_not_existing_then_flash_should_be_called_once(self):
         not_existing_idnr = '04452397687'
 
         with self.app.test_request_context(method='POST',
                                            data={'idnr': not_existing_idnr,
                                                  'dob': 'INCORRECT'}):
-            with patch("app.forms.steps.step.FormStep.create_form"):
-                render_info, _ = self.flow._handle_specifics_for_step(
+            with (
+                patch("app.forms.steps.step.FormStep.create_form"),
+                patch("app.forms.flows.unlock_code_revocation_flow.flash") as mock_flash,
+            ):
+
+                render_info, stored_data = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
 
-                self.assertEqual(self.failure_url, render_info.next_url)
+                self.assertEqual(self.flash_url, render_info.next_url)
+                mock_flash.assert_called_once_with(
+                _('form.unlock-code-revocation.failure-intro'), 'warn')   
 
     def test_if_user_exists_and_date_of_birth_incorrect_then_next_url_is_failure_step(self):
         existing_idnr = '04452397687'
