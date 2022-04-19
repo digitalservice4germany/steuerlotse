@@ -109,10 +109,7 @@ describe("Revocation", () => {
         .type(dob.year + "{enter}");
 
       // we should be redirected
-      cy.url().should(
-        "include",
-        "/unlock_code_revocation/step/unlock_code_failure"
-      );
+      cy.url().should("include", "/unlock_code_revocation/step/data_input");
 
       // and our cookie should be set
       cy.getCookie("session").should("exist");
