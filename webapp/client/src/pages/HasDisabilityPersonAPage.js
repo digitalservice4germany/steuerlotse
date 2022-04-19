@@ -10,8 +10,12 @@ export default function HasDisabilityPersonAPage({
   fields,
   prevUrl,
   numUsers,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = {
+    method: "Behinderung oder Pflegebedürftigkeit für Person A",
+  };
 
   const translationBold = function translationBold(key) {
     return <Trans t={t} i18nKey={key} components={{ bold: <b /> }} />;
@@ -25,6 +29,8 @@ export default function HasDisabilityPersonAPage({
 
   return (
     <HasDisabilityPage
+      plausibleDomain={plausibleDomain}
+      plausibleProps={plausibleProps}
       {...{ stepHeader, form, prevUrl }}
       headerIntro={headerIntro}
       fields={{
@@ -52,4 +58,9 @@ HasDisabilityPersonAPage.propTypes = {
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
   numUsers: PropTypes.number.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+HasDisabilityPersonAPage.defaultProps = {
+  plausibleDomain: null,
 };

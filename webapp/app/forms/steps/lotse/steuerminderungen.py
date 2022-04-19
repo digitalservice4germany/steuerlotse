@@ -20,6 +20,8 @@ from app.model.components.helpers import form_fields_dict
 from app.model.form_data import FamilienstandModel, JointTaxesModel
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 class StepSelectStmind(LotseFormSteuerlotseStep):
     name = 'select_stmind'
@@ -62,7 +64,8 @@ class StepSelectStmind(LotseFormSteuerlotseStep):
                 'show_overview_button': bool(self.render_info.overview_url)
             },
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='StmindSelectionPage',

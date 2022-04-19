@@ -26,8 +26,14 @@ const IntroList = styled.ul`
   }
 `;
 
-export default function DeclarationIncomesPage({ stepHeader, form, fields }) {
+export default function DeclarationIncomesPage({
+  stepHeader,
+  form,
+  fields,
+  plausibleDomain,
+}) {
   const { t } = useTranslation();
+  const plausibleProps = { method: "CTA Eingabe zu weiteren Einkünften" };
 
   return (
     <>
@@ -38,7 +44,11 @@ export default function DeclarationIncomesPage({ stepHeader, form, fields }) {
         <li>{t("lotse.declarationIncomes.listItem2")}</li>
         <li>{t("lotse.declarationIncomes.listItem3")}</li>
       </IntroList>
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormFieldConsentBox
           autofocus
           required
@@ -67,4 +77,9 @@ DeclarationIncomesPage.propTypes = {
   fields: PropTypes.exact({
     declarationIncomes: checkboxPropType,
   }).isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+DeclarationIncomesPage.defaultProps = {
+  plausibleDomain: null,
 };

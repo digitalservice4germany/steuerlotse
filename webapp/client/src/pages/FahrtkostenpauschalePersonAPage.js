@@ -9,9 +9,16 @@ export default function FahrtkostenpauschalePersonAPage({
   fields,
   prevUrl,
   fahrtkostenpauschaleAmount,
+  plausibleDomain,
 }) {
+  const plausibleProps = {
+    method: "CTA Behinderungsbedingte Fahrtkostenpauschale für Person A",
+  };
+
   return (
     <FahrtkostenpauschalePage
+      plausibleDomain={plausibleDomain}
+      plausibleProps={plausibleProps}
       {...{ stepHeader, form, prevUrl, fahrtkostenpauschaleAmount }}
       fields={{
         requestsFahrtkostenpauschale: {
@@ -36,4 +43,9 @@ FahrtkostenpauschalePersonAPage.propTypes = {
   }).isRequired,
   fahrtkostenpauschaleAmount: PropTypes.number.isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+FahrtkostenpauschalePersonAPage.defaultProps = {
+  plausibleDomain: null,
 };

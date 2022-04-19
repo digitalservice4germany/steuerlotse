@@ -12,14 +12,20 @@ export default function TelephoneNumberPage({
   form,
   fields,
   prevUrl,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = { method: "CTA Telefonnummer für Rückfragen" };
 
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <FormFieldTextInput
           fieldName="telephone_number"
           fieldId="telephone_number"
@@ -50,4 +56,9 @@ TelephoneNumberPage.propTypes = {
     telephoneNumber: fieldPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+TelephoneNumberPage.defaultProps = {
+  plausibleDomain: null,
 };

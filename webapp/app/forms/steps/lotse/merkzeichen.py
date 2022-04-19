@@ -19,6 +19,8 @@ from app.model.components import MerkzeichenProps
 from app.model.components.helpers import form_fields_dict
 from app.templates.react_template import render_react_template
 
+from app.config import Config
+
 
 class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
     name = 'merkzeichen_person_a'
@@ -99,6 +101,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
             },
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='MerkzeichenPersonAPage',
@@ -172,6 +175,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
             },
             fields=form_fields_dict(self.render_info.form),
             prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='MerkzeichenPersonBPage',

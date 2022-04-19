@@ -1,15 +1,17 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import FahrtkostenpauschalePage from "./FahrtkostenpauschalePage";
-import { Default as StepFormDefault } from "../stories/StepForm.stories";
+import avoidNotImplementedFormSubmitError from "../test-helper/submitFormTestHelper";
 
-const props = {
+const defaultProps = {
   stepHeader: {
     title: "Title",
     intro: "Intro",
   },
   form: {
-    ...StepFormDefault.args,
+    action: "#form-submit",
+    csrfToken: "abc123imacsrftoken",
   },
   fields: {
     requestsFahrtkostenpauschale: {
@@ -21,35 +23,54 @@ const props = {
   prevUrl: "/some/prev/path",
 };
 
+function setup(optionalProps) {
+  const utils = render(
+    <FahrtkostenpauschalePage {...defaultProps} {...optionalProps} />
+  );
+  const user = userEvent.setup();
+
+  return { ...utils, user };
+}
+
 describe("FahrtkostenpauschalePage default", () => {
-  beforeEach(() => {
-    render(<FahrtkostenpauschalePage {...props} />);
-  });
+  avoidNotImplementedFormSubmitError();
 
   it("should render step title text", () => {
+    setup();
+
     expect(screen.getByText("Title")).toBeInTheDocument();
   });
 
   it("should ignore step intro text", () => {
+    setup();
+
     expect(screen.queryByText("Intro")).not.toBeInTheDocument();
   });
 
   it("should ignore field option texts", () => {
+    setup();
+
     expect(screen.queryByLabelText("Ja")).not.toBeInTheDocument();
     expect(screen.queryByLabelText("Nein")).not.toBeInTheDocument();
   });
 
   it("should render yes no fields", () => {
+    setup();
+
     expect(screen.getByDisplayValue("yes")).toBeInTheDocument();
     expect(screen.getByDisplayValue("no")).toBeInTheDocument();
   });
 
   it("should render fahrtkosten choice fields", () => {
+    setup();
+
     expect(screen.getByText("Pauschale beantragen")).toBeInTheDocument();
     expect(screen.getByText("Pauschale nicht beantragen")).toBeInTheDocument();
   });
 
   it("should link to the previous page", () => {
+    setup();
+
     expect(screen.getByText("Zurück").closest("a")).toHaveAttribute(
       "href",
       expect.stringContaining("/some/prev/path")
@@ -57,62 +78,76 @@ describe("FahrtkostenpauschalePage default", () => {
   });
 });
 
-describe("With yes preselected", () => {
-  beforeEach(() => {
-    const yesProps = {
-      ...props,
-      fields: {
-        requestsFahrtkostenpauschale: {
-          selectedValue: "yes",
-          options: [
-            {
-              value: "yes",
-              displayName: "Ja",
-            },
-            {
-              value: "no",
-              displayName: "Nein",
-            },
-          ],
-          errors: [],
-          name: "requests_fahrtkostenpauschale",
-        },
+it("should render with preselected value yes checked", () => {
+  setup({
+    fields: {
+      requestsFahrtkostenpauschale: {
+        selectedValue: "yes",
+        options: [
+          {
+            value: "yes",
+            displayName: "Ja",
+          },
+          {
+            value: "no",
+            displayName: "Nein",
+          },
+        ],
+        errors: [],
+        name: "requests_fahrtkostenpauschale",
       },
-    };
-    render(<FahrtkostenpauschalePage {...yesProps} />);
+    },
   });
-  it("should render selected value yes", () => {
-    expect(screen.getByDisplayValue("yes").checked).toBe(true);
-    expect(screen.getByDisplayValue("no").checked).toBe(false);
-  });
+
+  expect(screen.getByDisplayValue("yes").checked).toBe(true);
+  expect(screen.getByDisplayValue("no").checked).toBe(false);
 });
 
-describe("With no preselected", () => {
-  beforeEach(() => {
-    const noProps = {
-      ...props,
-      fields: {
-        requestsFahrtkostenpauschale: {
-          selectedValue: "no",
-          options: [
-            {
-              value: "yes",
-              displayName: "Ja",
-            },
-            {
-              value: "no",
-              displayName: "Nein",
-            },
-          ],
-          errors: [],
-          name: "requests_fahrtkostenpauschale",
-        },
+it("should render with pre selected value no checked", () => {
+  setup({
+    fields: {
+      requestsFahrtkostenpauschale: {
+        selectedValue: "no",
+        options: [
+          {
+            value: "yes",
+            displayName: "Ja",
+          },
+          {
+            value: "no",
+            displayName: "Nein",
+          },
+        ],
+        errors: [],
+        name: "requests_fahrtkostenpauschale",
       },
-    };
-    render(<FahrtkostenpauschalePage {...noProps} />);
+    },
   });
-  it("should render selected value no", () => {
-    expect(screen.getByDisplayValue("yes").checked).toBe(false);
-    expect(screen.getByDisplayValue("no").checked).toBe(true);
+
+  expect(screen.getByDisplayValue("yes").checked).toBe(false);
+  expect(screen.getByDisplayValue("no").checked).toBe(true);
+});
+
+it("should call plausible on showOverviewButton click with default goal", async () => {
+  const { user } = setup({
+    form: {
+      action: "#form-submit",
+      csrfToken: "abc123imacsrftoken",
+      showOverviewButton: true,
+    },
+    plausibleDomain: "domain/some/link/path",
   });
+  const EXPECTED_PLAUSIBLE_GOAL = "Zurück zur Übersicht";
+  const EXPECTED_PLAUSIBLE_PROPS = {
+    props: undefined,
+  };
+
+  window.plausible = jest.fn();
+
+  await user.click(screen.getByText(/Zurück zur Übersicht/));
+
+  expect(window.plausible).toHaveBeenCalledWith(
+    EXPECTED_PLAUSIBLE_GOAL,
+    EXPECTED_PLAUSIBLE_PROPS
+  );
 });

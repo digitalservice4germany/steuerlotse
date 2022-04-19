@@ -17,14 +17,20 @@ export default function StmindSelectionPage({
   form,
   fields,
   prevUrl,
+  plausibleDomain,
 }) {
   const { t } = useTranslation();
+  const plausibleProps = { method: "CTA Steuermindernde Aufwendungen" };
 
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
+        {...form}
+      >
         <SelectableCard
           autofocus
           fieldName="stmind_select_vorsorge"
@@ -96,4 +102,9 @@ StmindSelectionPage.propTypes = {
     stmindSelectReligion: checkboxPropType,
   }).isRequired,
   prevUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+StmindSelectionPage.defaultProps = {
+  plausibleDomain: null,
 };

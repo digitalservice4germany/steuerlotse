@@ -18,6 +18,7 @@ from app.forms.steps.lotse.lotse_step import LotseFormSteuerlotseStep
 from app.model.disability_data import DisabilityModel
 from app.templates.react_template import render_react_template
 
+from app.config import Config
 
 def calculate_fahrtkostenpauschale(has_pflegegrad: str = None, disability_degree: int = None,
                                    has_merkzeichen_bl: bool = False, has_merkzeichen_tbl: bool = False,
@@ -128,7 +129,8 @@ class StepFahrtkostenpauschalePersonA(StepFahrtkostenpauschale):
             },
             fahrtkostenpauschale_amount=self.get_fahrtkostenpauschale(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='FahrtkostenpauschalePersonAPage',
@@ -181,7 +183,8 @@ class StepFahrtkostenpauschalePersonB(StepFahrtkostenpauschale):
             },
             fahrtkostenpauschale_amount=self.get_fahrtkostenpauschale(self.stored_data),
             fields=form_fields_dict(self.render_info.form),
-            prev_url=self.render_info.prev_url
+            prev_url=self.render_info.prev_url,
+            plausible_domain=Config.PLAUSIBLE_DOMAIN
         ).camelized_dict()
 
         return render_react_template(component='FahrtkostenpauschalePersonBPage',
