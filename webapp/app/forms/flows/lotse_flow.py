@@ -304,14 +304,14 @@ class LotseMultiStepFlow(MultiStepFlow):
 
                 curr_section.data[curr_step.name] = Section(curr_step.get_label(stored_data),
                                                             self.url_for_step(curr_step.name, _has_link_overview=True),
-                                                            step_data)
+                                                            step_data, name=curr_step.name)
 
         return sections
 
     def _create_section_from_section_link(self, section_link, data=None, _has_link_overview=True):
         return Section(section_link.label,
                        self.url_for_step(section_link.beginning_step,
-                                         _has_link_overview=_has_link_overview),
+                                         _has_link_overview=_has_link_overview, name=None),
                        data)
 
     @staticmethod

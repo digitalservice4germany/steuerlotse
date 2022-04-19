@@ -8,7 +8,8 @@ SectionLink = namedtuple(
 
 Section = namedtuple(
     typename='Section',
-    field_names=['label', 'url', 'data']
+    field_names=['label', 'url', 'data', 'name'],
+    defaults=(None, None, None, None,)
 )
 
 

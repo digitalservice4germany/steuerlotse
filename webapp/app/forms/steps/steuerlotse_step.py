@@ -10,9 +10,8 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.flows.multistep_flow import RenderInfo
 from app.data_access.storage.session_storage import SessionStorage
 
-from app.helper.plausible_helper import get_plausible_data
 
-from app.config import Config
+from app.helper.plausible_helper import plausible_data_cta
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +56,7 @@ class SteuerlotseStep(object):
         self.render_info.overview_url = self.url_for_step(self.overview_step.name) \
             if self.has_link_overview and self.overview_step else None
         self.render_info.header_title = self.header_title
+        self.render_info.additional_info['section_plausible_data'] = plausible_data_cta
 
     @classmethod
     def prepare_render_info(cls, stored_data, *args, **kwargs):
@@ -71,7 +71,7 @@ class SteuerlotseStep(object):
             next_url=None,
             submit_url=None,
             header_title=None,
-            plausible_data=get_plausible_data(cls.name, Config.PLAUSIBLE_DOMAIN),
+            step_name=cls.name,
             overview_url=None)
 
     def _main_handle(self):
