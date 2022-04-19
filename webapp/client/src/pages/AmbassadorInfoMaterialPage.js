@@ -81,6 +81,14 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         />
       </ContentSection>
       <ContentSection>
+        <ParagraphHeading className="h2 font-weight-bold my-3">
+          {t("AmbassadorMaterial.Paragraph.FreeFlyerHeading")}
+        </ParagraphHeading>
+        <TextContent>
+          {trans("AmbassadorMaterial.Paragraph.FreeFlyerText")}
+        </TextContent>
+      </ContentSection>
+      <ContentSection>
         <ParagraphHeading className="font-weight-bold">
           {t("AmbassadorMaterial.Paragraph.HowItWorks")}
         </ParagraphHeading>
