@@ -447,10 +447,15 @@ const translations = {
     },
   },
   AmbassadorMaterial: {
-    Heading: "Werden Sie Digital-Botschafter:in für den Steuerlotsen",
+    Heading:
+      "Info-Materialien zum Steuerlotsen für Digital-Botschafter und Seniorenbüros",
     SubHeading:
       "Wir wollen so viele Menschen im Ruhestand wie möglich erreichen. Unterstützen Sie uns dabei! Hier finden Sie Informationsmaterialien zum Download und ein Erklärvideo zum Steuerlotsen.",
     Paragraph: {
+      FreeFlyerHeading:
+        "Sie möchten kostenlos Flyer zugeschickt bekommen? Schreiben Sie uns!",
+      FreeFlyerText:
+        "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder weitergeben in der Seniorengruppe zu. Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
       DownloadInformationText: "Informationsmaterialien zum Download",
       InfoBroschureDownloadLink: "Informationsbroschüre (PDF) speichern",
       SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
