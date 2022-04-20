@@ -90,7 +90,10 @@ function Text({ children }) {
 }
 
 Text.propTypes = {
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 function Icon({ children, hoverVariant }) {
@@ -102,7 +105,10 @@ function Icon({ children, hoverVariant }) {
 }
 
 Icon.propTypes = {
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   hoverVariant: PropTypes.oneOf(["translate-x"]),
 };
 Icon.defaultProps = {
@@ -137,7 +143,10 @@ ButtonAnchor.Text = Text;
 ButtonAnchor.Icon = Icon;
 
 ButtonAnchor.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   onClick: PropTypes.func,
   url: PropTypes.string.isRequired,
   name: PropTypes.string,

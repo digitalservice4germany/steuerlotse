@@ -35,6 +35,7 @@ Download.args = {
 export const Narrow = Template.bind({});
 Narrow.args = {
   style: "narrow",
+  children: "Facebook",
 };
 
 export const High = Template.bind({});
