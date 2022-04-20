@@ -172,13 +172,18 @@ export const QuestionBoxAnchorButtons = styled.div`
 export const TopSpacing = styled.div`
   margin-top: 9.375rem;
 `;
-export const IntroHeading = styled.div`
+export const IntroHeading = styled.h1`
   font-size: 2.25rem;
-  max-width: 832px;
+  max-width: 926px;
   width: 70vw;
+  font-weight: var(--font-bold);
 
   @media (max-width: 1024px) {
     width: 85vw;
+  }
+
+  @media (max-width: 768px) {
+    width: 90vw;
   }
 
   @media (max-width: 320px) {
@@ -232,7 +237,7 @@ export const ContentSection = styled.div`
   display: flex;
   flex-direction: column;
 `;
-export const TextContent = styled.div`
+export const TextContent = styled.p`
   font-size: 1.5rem;
   @media (max-width: 425px) {
     font-size: var(--text-xl);
@@ -241,17 +246,19 @@ export const TextContent = styled.div`
     font-size: 1.125rem;
   }
 `;
-export const ParagraphHeading = styled.div`
+export const ParagraphHeading = styled.h3`
   font-size: var(--text-2xl);
   margin-bottom: var(--spacing-03);
   max-width: 778px;
   width: 65vw;
+  font-weight: var(--font-bold);
 
   @media (max-width: 768px) {
     width: 80vw;
   }
   @media (max-width: 425px) {
     font-size: var(--text-xl);
+    width: 90vw;
   }
 
   @media (max-width: 375px) {

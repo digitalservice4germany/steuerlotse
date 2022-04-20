@@ -19,9 +19,6 @@ or (not render_info and not disable_extended_footer) %}
                             <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
                         </li>
                         <li class="text-nowrap mt-2">
-                          <a href="{{ url_for('ambassadorMaterial') }}">{{ _('footer.botschafter') }}</a>
-                        </li>
-                        <li class="text-nowrap mt-2">
                             {% if current_user.is_authenticated %}
                             <span class="inactive">{{ _('footer.revocation') }}</span>
                             {% else %}
@@ -38,6 +35,9 @@ or (not render_info and not disable_extended_footer) %}
                         </li>
                         <li class="text-nowrap mt-2">
                             <a href="{{ url_for('about_digitalservice') }}">{{ _('footer.about-ds') }}</a>
+                        </li>
+                        <li class="text-nowrap mt-2">
+                            <a href="{{ url_for('ambassadorMaterial') }}">{{ _('footer.botschafter') }}</a>
                         </li>
                     </ul>
                 </div>
