@@ -53,7 +53,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
   return (
     <TopSpacing>
       <SectionIntro>
-        <IntroHeading className="font-weight-bold my-4 h1">
+        <IntroHeading className="my-4">
           {t("AmbassadorMaterial.Heading")}
         </IntroHeading>
         <SubHeadingText>{t("AmbassadorMaterial.SubHeading")}</SubHeadingText>
@@ -63,7 +63,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         alt="Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen Steuererklärung"
       />
       <ContentSection>
-        <ParagraphHeading className="h2 font-weight-bold my-3">
+        <ParagraphHeading className="my-3">
           {t("AmbassadorMaterial.Paragraph.DownloadInformationText")}
         </ParagraphHeading>
         <DownloadLink
@@ -81,7 +81,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         />
       </ContentSection>
       <ContentSection>
-        <ParagraphHeading className="h2 font-weight-bold my-3">
+        <ParagraphHeading className="my-3">
           {t("AmbassadorMaterial.Paragraph.FreeFlyerHeading")}
         </ParagraphHeading>
         <TextContent>
@@ -89,7 +89,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         </TextContent>
       </ContentSection>
       <ContentSection>
-        <ParagraphHeading className="font-weight-bold">
+        <ParagraphHeading>
           {t("AmbassadorMaterial.Paragraph.HowItWorks")}
         </ParagraphHeading>
         <HowItWorksVideoContainer>
@@ -108,7 +108,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         </HowItWorksVideoContainer>
       </ContentSection>
       <ContentSection>
-        <ParagraphHeading className="font-weight-bold">
+        <ParagraphHeading>
           {t("AmbassadorMaterial.Paragraph.AnyOtherQuestions")}
         </ParagraphHeading>
         <TextContent>
