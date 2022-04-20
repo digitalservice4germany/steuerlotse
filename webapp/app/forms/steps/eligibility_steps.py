@@ -198,6 +198,7 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
     def _main_handle(self):
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.marital_status.back_link_text')
+        self.render_info.prev_url = None
 
 
 class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
