@@ -1,42 +1,30 @@
 import React from "react";
-import { SocialIcon } from "react-social-icons";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import addPlausibleGoal from "../lib/helpers";
+import ButtonAnchor from "./ButtonAnchor";
 
-const FacebookIcon = styled(SocialIcon)`
-  // This is needed for the hover effect on the background when going over the icon
-  .social-svg-icon:hover + .social-svg-mask {
-    fill: #2f4779 !important;
+const ButtonGroup = styled.div`
+  .anchor-btn {
+    margin-right: 8px;
+    margin-bottom: 8px;
   }
 
-  .social-svg-mask:hover {
-    fill: #2f4779 !important;
-  }
-`;
-
-const WhatsappIcon = styled(SocialIcon)`
-  .social-svg-icon:hover + .social-svg-mask {
-    fill: #25c05f !important;
+  .facebook {
+    background-color: var(--facebook-color);
   }
 
-  .social-svg-mask:hover {
-    fill: #25c05f !important;
-  }
-`;
-
-const EmailIcon = styled(SocialIcon)`
-  .social-svg-icon:hover + .social-svg-mask {
-    fill: #6b6b6d !important;
+  .whatsapp {
+    background-color: var(--whatsapp-color);
   }
 
-  .social-svg-mask:hover {
-    fill: #6b6b6d !important;
+  .email {
+    background-color: var(--email-color);
   }
 `;
 
-export default function ShareIcons({
+export default function ShareButtons({
   promoteUrl,
   shareText,
   mailSubject,
@@ -48,11 +36,19 @@ export default function ShareIcons({
     mailSubject
   )}&body=${encodeURIComponent(shareText)}`;
   const whatsappText = `https://wa.me?text=${shareText}`;
+  const onClickHandler = () => {
+    navigator.clipboard.writeText(window.location.href);
+    addPlausibleGoal(plausibleDomain, "Link copied clicked", {
+      method: sourcePage,
+    });
+  };
+  const { Text } = ButtonAnchor;
+
   return (
-    <div>
-      <FacebookIcon
-        className="mr-2"
-        network="facebook"
+    <ButtonGroup>
+      <ButtonAnchor
+        buttonStyle="narrow"
+        additionalClass="facebook"
         url={facebookFeedUrl}
         target="_blank"
         onClick={() =>
@@ -60,33 +56,47 @@ export default function ShareIcons({
             method: sourcePage,
           })
         }
-      />
+      >
+        <Text>Auf Facebook teilen</Text>
+      </ButtonAnchor>
       {isMobile && (
-        <WhatsappIcon
-          className="mr-2"
-          network="whatsapp"
+        <ButtonAnchor
+          buttonStyle="narrow"
+          additionalClass="whatsapp"
           url={whatsappText}
           onClick={() =>
             addPlausibleGoal(plausibleDomain, "Whatsapp icon clicked", {
               method: sourcePage,
             })
           }
-        />
+        >
+          <Text>In Whatsapp senden</Text>
+        </ButtonAnchor>
       )}
-      <EmailIcon
-        network="email"
+      <ButtonAnchor
+        buttonStyle="narrow"
+        additionalClass="email"
         url={mailto}
         onClick={() =>
           addPlausibleGoal(plausibleDomain, "Email icon clicked", {
             method: sourcePage,
           })
         }
-      />
-    </div>
+      >
+        <Text>E-Mail schreiben</Text>
+      </ButtonAnchor>
+      <ButtonAnchor
+        buttonStyle="narrow"
+        variant="outline"
+        onClick={onClickHandler}
+      >
+        <Text>Link kopieren</Text>
+      </ButtonAnchor>
+    </ButtonGroup>
   );
 }
 
-ShareIcons.propTypes = {
+ShareButtons.propTypes = {
   promoteUrl: PropTypes.string.isRequired,
   shareText: PropTypes.string.isRequired,
   mailSubject: PropTypes.string.isRequired,
@@ -94,6 +104,6 @@ ShareIcons.propTypes = {
   plausibleDomain: PropTypes.string,
 };
 
-ShareIcons.defaultProps = {
+ShareButtons.defaultProps = {
   plausibleDomain: null,
 };

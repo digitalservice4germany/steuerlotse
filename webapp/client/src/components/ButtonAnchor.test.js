@@ -7,7 +7,6 @@ const { Text, Icon } = ButtonAnchor;
 
 const REQUIRED_PROPS = {
   children: "anchor text",
-  url: "url/some/link/path",
 };
 
 function setup(optionalProps) {
@@ -23,11 +22,13 @@ function ChildComponent() {
 
 describe("ButtonAnchor", () => {
   it("should render a default anchor button with text and href", () => {
-    setup();
+    setup({
+      url: "url/some/link/path",
+    });
     const buttonAnchor = screen.getByText("anchor text");
 
     expect(buttonAnchor).toBeInTheDocument();
-    expect(buttonAnchor).toHaveAttribute("href", REQUIRED_PROPS.url);
+    expect(buttonAnchor).toHaveAttribute("href", "url/some/link/path");
   });
 
   it("should render a outline anchor button", () => {
@@ -41,7 +42,7 @@ describe("ButtonAnchor", () => {
 
   it("should render a narrow anchor button", () => {
     setup({
-      style: "narrow",
+      buttonStyle: "narrow",
     });
     const buttonAnchor = screen.getByText("anchor text");
 
@@ -50,11 +51,20 @@ describe("ButtonAnchor", () => {
 
   it("should render a high anchor button", () => {
     setup({
-      style: "high",
+      buttonStyle: "high",
     });
     const buttonAnchor = screen.getByText("anchor text");
 
     expect(buttonAnchor).toHaveClass("high");
+  });
+
+  it("should render additional class", () => {
+    setup({
+      additionalClass: "additional-class",
+    });
+    const buttonAnchor = screen.getByText("anchor text");
+
+    expect(buttonAnchor).toHaveClass("additional-class");
   });
 
   it("should render a default anchor button with component as text children", () => {
@@ -84,6 +94,7 @@ describe("ButtonAnchor", () => {
   it("should not have a download attribute if download is false", () => {
     setup({
       download: false,
+      url: "url/some/link/path",
     });
     const buttonAnchor = screen.getByText("anchor text");
 
@@ -93,6 +104,7 @@ describe("ButtonAnchor", () => {
   it("should have a download attribute if download is true", () => {
     setup({
       download: true,
+      url: "url/some/link/path",
     });
     const buttonAnchor = screen.getByText("anchor text");
 

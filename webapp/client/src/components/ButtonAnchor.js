@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Anchor = styled.a`
+const baseStyles = css`
    {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -26,7 +26,7 @@ const Anchor = styled.a`
     &.outline {
       color: var(--text-color);
       background-color: var(--inverse-text-color);
-      border: 1px solid var(--border-color);
+      outline: 1px solid var(--border-color);
     }
 
     &.narrow {
@@ -62,6 +62,13 @@ const Anchor = styled.a`
       );
     }
   }
+`;
+
+const Anchor = styled.a`
+  ${baseStyles}
+`;
+const Button = styled.button`
+  ${baseStyles}
 `;
 
 const AnchorButtonText = styled.span`
@@ -122,20 +129,28 @@ export default function ButtonAnchor({
   name,
   download,
   variant,
-  style,
+  buttonStyle,
+  additionalClass,
 }) {
-  const btnClasses = `anchor-btn ${variant} ${style}`;
+  const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${additionalClass}`;
 
+  if (url) {
+    return (
+      <Anchor
+        className={btnClasses}
+        href={url}
+        name={name}
+        download={download}
+        onClick={onClick}
+      >
+        {children}
+      </Anchor>
+    );
+  }
   return (
-    <Anchor
-      className={btnClasses}
-      href={url}
-      name={name}
-      download={download}
-      onClick={onClick}
-    >
+    <Button className={btnClasses} name={name} onClick={onClick}>
       {children}
-    </Anchor>
+    </Button>
   );
 }
 
@@ -148,17 +163,20 @@ ButtonAnchor.propTypes = {
     PropTypes.node,
   ]).isRequired,
   onClick: PropTypes.func,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   name: PropTypes.string,
   download: PropTypes.bool,
-  style: PropTypes.oneOf(["default", "narrow", "high"]),
+  buttonStyle: PropTypes.oneOf(["default", "narrow", "high"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
+  additionalClass: PropTypes.string,
 };
 
 ButtonAnchor.defaultProps = {
+  url: null,
   onClick: null,
   name: null,
   download: false,
   variant: "primary",
-  style: "default",
+  buttonStyle: "default",
+  additionalClass: null,
 };

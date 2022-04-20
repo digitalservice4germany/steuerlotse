@@ -34,13 +34,13 @@ Download.args = {
 
 export const Narrow = Template.bind({});
 Narrow.args = {
-  style: "narrow",
+  buttonStyle: "narrow",
   children: "Facebook",
 };
 
 export const High = Template.bind({});
 High.args = {
-  style: "high",
+  buttonStyle: "high",
 };
 
 export const WithIcon = Template.bind({});

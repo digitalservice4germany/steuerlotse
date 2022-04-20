@@ -30,6 +30,10 @@
   --error-color: #c0003c;
   --error-bg-color: #f9e5eb;
 
+  --facebook-color: #3B5998;
+  --whatsapp-color: #25D366;
+  --email-color: #656565;
+
   /* Font Settings */
 
   --font-fallback: 'Arial Narrow', 'Arial Nova', sans-serif;

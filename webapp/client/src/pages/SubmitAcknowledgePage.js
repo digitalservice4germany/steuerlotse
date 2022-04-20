@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
 import AnchorButton from "../components/AnchorButton";
-import ShareIcons from "../components/ShareIcons";
+import ShareButtons from "../components/ShareButtons";
 
 // StepAck
 
@@ -26,7 +26,7 @@ export default function SubmitAcknowledgePage({
       <p>{t("submitAcknowledge.next-steps.text")}</p>
       <h2 className="h4 mt-5">{t("submitAcknowledge.recommend.heading")}</h2>
       <p>{t("submitAcknowledge.recommend.text")}</p>
-      <ShareIcons
+      <ShareButtons
         promoteUrl={t("submitAcknowledge.recommend.promote_url")}
         shareText={t("submitAcknowledge.recommend.share_text")}
         mailSubject={t("submitAcknowledge.recommend.mail_subject")}
