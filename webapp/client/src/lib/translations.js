@@ -455,7 +455,7 @@ const translations = {
       FreeFlyerHeading:
         "Sie möchten kostenlos Flyer zugeschickt bekommen? Schreiben Sie uns!",
       FreeFlyerText:
-        "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder weitergeben in der Seniorengruppe zu. Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
+        "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu. Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
       DownloadInformationText: "Informationsmaterialien zum Download",
       InfoBroschureDownloadLink: "Informationsbroschüre (PDF) speichern",
       SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
