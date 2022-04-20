@@ -176,7 +176,7 @@ export const IntroHeading = styled.h1`
   font-size: 2.25rem;
   max-width: 926px;
   width: 70vw;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
 
   @media (max-width: 1024px) {
     width: 85vw;
@@ -251,7 +251,7 @@ export const ParagraphHeading = styled.h3`
   margin-bottom: var(--spacing-03);
   max-width: 778px;
   width: 65vw;
-  font-weight: var(--font-bold);
+  font-family: var(--font-bold);
 
   @media (max-width: 768px) {
     width: 80vw;
