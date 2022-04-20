@@ -12,6 +12,7 @@
   --link-hover-color: #003b52;
   --link-visited-color: #100052;
   --link-active-color: #0b0c0c;
+  --link-active-hover-color: #7EA8B9;
   --link-underline-color: rgba(10, 10, 25, 0.2); /* original #0A0A19, 20%; */
 
   --icon-default-color: #e3d9ce;
@@ -95,4 +96,9 @@
   --header-navigation-height: var(--spacing-09);
 
   --button-height: 56px;
+  --button-height-narrow: 36px;
+  --button-height-high: 64px;
+
+  --transition-behaviour: 0.25s;
+  --transition-time: ease-in-out;
 }

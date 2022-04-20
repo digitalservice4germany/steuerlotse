@@ -18,7 +18,10 @@ const Anchor = styled.a`
     cursor: pointer;
     text-decoration: none;
     border: none;
-    padding: 0;
+    padding: 18px 16px;
+    transition: color var(--transition-behaviour) var(--transition-time),
+      background-color var(--transition-behaviour) var(--transition-time),
+      background var(--transition-behaviour) var(--transition-time);
 
     &.outline {
       color: var(--text-color);
@@ -26,10 +29,27 @@ const Anchor = styled.a`
       border: 1px solid var(--border-color);
     }
 
+    &.narrow {
+      height: var(--button-height-narrow);
+    }
+
+    &.high {
+      height: var(--button-height-high);
+    }
+
     &:hover {
       color: var(--inverse-text-color);
       background-color: var(--link-hover-color);
       text-decoration: none;
+
+      .anchor-btn__icon.translate-x {
+        transform: translatex(10%);
+      }
+
+      &:active,
+      &.active {
+        background-color: var(--link-active-hover-color);
+      }
     }
 
     &:focus-visible {
@@ -46,34 +66,63 @@ const Anchor = styled.a`
 
 const AnchorButtonText = styled.span`
    {
-    padding: 0 24px;
+    padding: 0 8px;
   }
 `;
 
 const AnchorButtonIcon = styled.span`
    {
-    padding: 12px 0 12px 24px;
+    padding: 0 8px;
 
     svg {
       display: block;
       margin: auto;
-      height: 36px;
-      width: 36px;
+      max-height: 36px;
+      max-width: 36px;
     }
   }
 `;
 
-export default function AnchorButtonNew({
+function Text({ children }) {
+  return (
+    <AnchorButtonText className="anchor-btn__text">{children}</AnchorButtonText>
+  );
+}
+
+Text.propTypes = {
+  children: PropTypes.elementType.isRequired,
+};
+
+function Icon({ children, hoverVariant }) {
+  const iconClasses = `anchor-btn__icon ${hoverVariant}`;
+
+  return (
+    <AnchorButtonIcon className={iconClasses}>{children}</AnchorButtonIcon>
+  );
+}
+
+Icon.propTypes = {
+  children: PropTypes.elementType.isRequired,
+  hoverVariant: PropTypes.oneOf(["translate-x"]),
+};
+Icon.defaultProps = {
+  hoverVariant: null,
+};
+
+export default function ButtonAnchor({
   children,
   onClick,
   url,
   name,
   download,
   variant,
+  style,
 }) {
+  const btnClasses = `anchor-btn ${variant} ${style}`;
+
   return (
     <Anchor
-      className={variant}
+      className={btnClasses}
       href={url}
       name={name}
       download={download}
@@ -84,38 +133,23 @@ export default function AnchorButtonNew({
   );
 }
 
-AnchorButtonNew.propTypes = {
-  children: PropTypes.elementType.isRequired,
+ButtonAnchor.Text = Text;
+ButtonAnchor.Icon = Icon;
+
+ButtonAnchor.propTypes = {
+  children: PropTypes.element.isRequired,
   onClick: PropTypes.func,
   url: PropTypes.string.isRequired,
   name: PropTypes.string,
   download: PropTypes.bool,
-  variant: PropTypes.string,
+  style: PropTypes.oneOf(["default", "narrow", "high"]),
+  variant: PropTypes.oneOf(["primary", "outline"]),
 };
 
-AnchorButtonNew.defaultProps = {
+ButtonAnchor.defaultProps = {
   onClick: null,
   name: null,
   download: false,
-  variant: null,
+  variant: "primary",
+  style: "default",
 };
-
-function Text({ text }) {
-  return (
-    <AnchorButtonText className="anchor-btn__text">{text}</AnchorButtonText>
-  );
-}
-Text.propTypes = {
-  text: PropTypes.string.isRequired,
-};
-AnchorButtonNew.Text = Text;
-
-function Icon({ children }) {
-  return (
-    <AnchorButtonIcon className="anchor-btn__icon">{children}</AnchorButtonIcon>
-  );
-}
-Icon.propTypes = {
-  children: PropTypes.elementType.isRequired,
-};
-AnchorButtonNew.Icon = Icon;
