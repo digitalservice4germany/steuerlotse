@@ -31,8 +31,16 @@
   --error-bg-color: #f9e5eb;
 
   --facebook-color: #3B5998;
+  --facebook-hover-color: #2F4779;
+  --facebook-active-hover-color: var(--facebook-color);
   --whatsapp-color: #25D366;
+  --whatsapp-hover-color: #25C05F;
+  --whatsapp-active-hover-color: var(--whatsapp-color);
   --email-color: #656565;
+  --email-hover-color: #545454;
+  --email-active-hover-color: var(--email-color);
+  --copy-hover-active-color: #005576;
+
 
   /* Font Settings */
 

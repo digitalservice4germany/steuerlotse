@@ -6,6 +6,10 @@ import addPlausibleGoal from "../lib/helpers";
 import ButtonAnchor from "./ButtonAnchor";
 
 const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   .anchor-btn {
     margin-right: 8px;
     margin-bottom: 8px;
@@ -13,14 +17,57 @@ const ButtonGroup = styled.div`
 
   .facebook {
     background-color: var(--facebook-color);
+
+    &:hover {
+      background-color: var(--facebook-hover-color);
+      text-decoration: none;
+
+      &:active,
+      &.active {
+        background-color: var(--facebook-active-hover-color);
+      }
+    }
   }
 
   .whatsapp {
     background-color: var(--whatsapp-color);
+
+    &:hover {
+      background-color: var(--whatsapp-hover-color);
+      text-decoration: none;
+
+      &:active,
+      &.active {
+        background-color: var(--whatsapp-active-hover-color);
+      }
+    }
   }
 
   .email {
     background-color: var(--email-color);
+
+    &:hover {
+      background-color: var(--email-hover-color);
+      text-decoration: none;
+
+      &:active,
+      &.active {
+        background-color: var(--email-active-hover-color);
+      }
+    }
+  }
+
+  .copy {
+    &:hover {
+      &:active,
+      &.active {
+        background-color: var(--copy-active-hover-color);
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    display: block;
   }
 `;
 
@@ -87,6 +134,7 @@ export default function ShareButtons({
       </ButtonAnchor>
       <ButtonAnchor
         buttonStyle="narrow"
+        additionalClass="copy"
         variant="outline"
         onClick={onClickHandler}
       >

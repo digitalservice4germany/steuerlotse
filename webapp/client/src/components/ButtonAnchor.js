@@ -11,8 +11,8 @@ const baseStyles = css`
     justify-content: center;
     height: var(--button-height);
     font-size: var(--text-medium);
+    font-family: var(--font-bold);
     line-height: 1;
-    letter-spacing: 0.01em;
     color: var(--inverse-text-color);
     background-color: var(--link-color);
     cursor: pointer;
@@ -131,6 +131,7 @@ export default function ButtonAnchor({
   variant,
   buttonStyle,
   additionalClass,
+  target,
 }) {
   const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${additionalClass}`;
 
@@ -141,6 +142,7 @@ export default function ButtonAnchor({
         href={url}
         name={name}
         download={download}
+        target={target}
         onClick={onClick}
       >
         {children}
@@ -166,6 +168,7 @@ ButtonAnchor.propTypes = {
   url: PropTypes.string,
   name: PropTypes.string,
   download: PropTypes.bool,
+  target: PropTypes.string,
   buttonStyle: PropTypes.oneOf(["default", "narrow", "high"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
   additionalClass: PropTypes.string,
@@ -176,6 +179,7 @@ ButtonAnchor.defaultProps = {
   onClick: null,
   name: null,
   download: false,
+  target: "_self",
   variant: "primary",
   buttonStyle: "default",
   additionalClass: null,

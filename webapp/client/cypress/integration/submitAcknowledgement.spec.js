@@ -32,34 +32,38 @@ describe("StepAck", () => {
     });
   });
 
-  context("desktop icons", () => {
+  context("desktop buttons", () => {
     beforeEach(() => {
       cy.login();
       cy.visit("/lotse/step/ack");
     });
     it("posting to facebook is possible", () => {
-      cy.get(`[aria-label="facebook"]`)
+      cy.contains("Auf Facebook teilen")
+        .closest("a")
         .should("have.attr", "href")
         .and("include", "facebook");
     });
 
     it("posting to facebook in new tab possible", () => {
       // https://docs.cypress.io/guides/references/trade-offs#Multiple-tabs
-      cy.get(`[aria-label="facebook"]`).should("have.attr", "target", "_blank");
+      cy.contains("Auf Facebook teilen")
+        .closest("a")
+        .should("have.attr", "target", "_blank");
     });
 
     it("posting to email is possible", () => {
-      cy.get(`[aria-label="email"]`)
+      cy.contains("E-Mail schreiben")
+        .closest("a")
         .should("have.attr", "href")
         .and("include", "mailto");
     });
 
-    it("whatsapp icon does not exist", () => {
-      cy.get(`[aria-label="whatsapp"]`).should("not.exist");
+    it("whatsapp button does not exist", () => {
+      cy.get(".whatsapp").should("not.exist");
     });
   });
 
-  context("mobile icons", () => {
+  context("mobile buttons", () => {
     beforeEach(() => {
       cy.viewport(390, 844); // iphone 12 Pro, just visualization
       cy.login();
@@ -74,16 +78,9 @@ describe("StepAck", () => {
       });
     });
 
-    it("facebook icon exists", () => {
-      cy.get(`[aria-label="facebook"]`).should("exist");
-    });
-
-    it("email icon exists", () => {
-      cy.get(`[aria-label="email"]`).should("exist");
-    });
-
     it("posting to whatsapp is possible", () => {
-      cy.get(`[aria-label="whatsapp"]`)
+      cy.contains("In Whatsapp senden")
+        .closest("a")
         .should("have.attr", "href")
         .and("include", "wa.me");
     });
