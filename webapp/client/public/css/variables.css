@@ -12,6 +12,7 @@
   --link-hover-color: #003b52;
   --link-visited-color: #100052;
   --link-active-color: #0b0c0c;
+  --link-active-hover-color: #7EA8B9;
   --link-underline-color: rgba(10, 10, 25, 0.2); /* original #0A0A19, 20%; */
 
   --icon-default-color: #e3d9ce;
@@ -29,6 +30,18 @@
   --error-color: #c0003c;
   --error-bg-color: #f9e5eb;
 
+  --facebook-color: #3B5998;
+  --facebook-hover-color: #2F4779;
+  --facebook-active-hover-color: var(--facebook-color);
+  --whatsapp-color: #25D366;
+  --whatsapp-hover-color: #25C05F;
+  --whatsapp-active-hover-color: var(--whatsapp-color);
+  --email-color: #656565;
+  --email-hover-color: #545454;
+  --email-active-hover-color: var(--email-color);
+  --copy-hover-active-color: #005576;
+
+
   /* Font Settings */
 
   --font-fallback: 'Arial Narrow', 'Arial Nova', sans-serif;
@@ -42,6 +55,7 @@
   --text-s: 0.9rem;
   --text-base: 1rem;
   --text-medium: 1.125rem;
+  --text-medium-big: 1.25rem;
   --text-xl: 1.375rem;
   --text-2xl: 1.625rem;
   --text-3xl: 1.875rem;
@@ -93,4 +107,11 @@
   --main-max-width: 1000px;
   --back-link-size: 1.5rem;
   --header-navigation-height: var(--spacing-09);
+
+  --button-height: 56px;
+  --button-height-narrow: 36px;
+  --button-height-high: 64px;
+
+  --transition-behaviour: 0.25s;
+  --transition-time: ease-in-out;
 }

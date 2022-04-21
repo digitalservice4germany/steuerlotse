@@ -88,12 +88,12 @@ class TestEligibilityStepChooser(unittest.TestCase):
     def test_if_incorrect_step_name_then_raise_404_exception(self):
         self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False, ImmutableMultiDict({}))
 
-    def test_if_start_step_then_return_redirect_step(self):
+    def test_if_start_step_then_return_second_step(self):
         self.step_chooser.default_data = lambda: None
         response_step = self.step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
 
         self.assertIsInstance(response_step, RedirectSteuerlotseStep)
-        self.assertEqual(response_step.redirection_step_name, MockStartStep.name)
+        self.assertEqual(response_step.redirection_step_name, MockRenderStep.name)
         self.assertEqual(response_step.endpoint, self.endpoint_correct)
 
 
@@ -355,13 +355,12 @@ class TestMaritalStatusInputFormSteuerlotseStep:
         assert expected_url == step.render_info.next_url
 
     @pytest.mark.usefixtures('test_request_context')
-    def test_set_prev_input_step_correctly(self, new_test_request_context):
+    def test_set_prev_input_step_to_none(self, new_test_request_context):
         with new_test_request_context(method='GET'):
             step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
-            expected_url = step.url_for_step(EligibilityStartDisplaySteuerlotseStep.name)
             step.handle()
-        assert expected_url == step.render_info.prev_url
+        assert step.render_info.prev_url is None
 
     def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self, new_test_request_context):
         session_data = {'marital_status_eligibility': 'single', }

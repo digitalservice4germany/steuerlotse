@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
-import { fireEvent } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 import SubmitAcknowledgePage from "./SubmitAcknowledgePage";
 
 const MOCK_PROPS = {
@@ -30,11 +30,11 @@ describe("SubmitAcknowledgePage", () => {
   });
 
   it("should render facebook icon", () => {
-    expect(screen.getByLabelText("facebook")).toBeInTheDocument();
+    expect(screen.getByText("Auf Facebook teilen")).toBeInTheDocument();
   });
 
   it("should render email icon", () => {
-    expect(screen.getByLabelText("email")).toBeInTheDocument();
+    expect(screen.getByText("E-Mail schreiben")).toBeInTheDocument();
   });
 });
 
@@ -99,19 +99,23 @@ describe("SubmitAcknowledgePage with plausible domain", () => {
   };
 
   beforeEach(() => {
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
+    window.plausible = jest.fn();
     render(<SubmitAcknowledgePage {...MOCK_PROPS_PLAUSIBLE} />);
   });
 
-  it("should add plausible goal for facebook click", () => {
-    fireEvent.click(screen.getByLabelText("facebook"));
+  it("should add plausible goal for facebook click", async () => {
+    const user = userEvent.setup();
+
+    await user.click(screen.getByText("Auf Facebook teilen"));
     expect(window.plausible).toHaveBeenCalledWith("Facebook icon clicked", {
       method: "submitAcknowledge",
     });
   });
 
-  it("should add plausible goal for email click", () => {
-    fireEvent.click(screen.getByLabelText("email"));
+  it("should add plausible goal for email click", async () => {
+    const user = userEvent.setup();
+
+    await user.click(screen.getByText("E-Mail schreiben"));
     expect(window.plausible).toHaveBeenCalledWith("Email icon clicked", {
       method: "submitAcknowledge",
     });
