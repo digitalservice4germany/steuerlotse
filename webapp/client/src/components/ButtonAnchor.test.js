@@ -111,13 +111,14 @@ describe("ButtonAnchor", () => {
     expect(buttonAnchor.closest("a")).toHaveAttribute("download");
   });
 
-  it("should render an rel attribute if target is _blank", () => {
+  it("should render target and rel attributes if is external link", () => {
     setup({
-      target: "_blank",
+      external: true,
       url: "url/some/link/path",
     });
     const buttonAnchor = screen.getByText("anchor text");
 
+    expect(buttonAnchor.closest("a")).toHaveAttribute("target", "_blank");
     expect(buttonAnchor.closest("a")).toHaveAttribute("rel", "noopener");
   });
 

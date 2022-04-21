@@ -117,7 +117,7 @@ export default function ShareButtons({
         buttonStyle="narrow"
         additionalClass="facebook"
         url={facebookFeedUrl}
-        target="_blank"
+        external
         onClick={() =>
           addPlausibleGoal(plausibleDomain, "Facebook icon clicked", {
             method: sourcePage,

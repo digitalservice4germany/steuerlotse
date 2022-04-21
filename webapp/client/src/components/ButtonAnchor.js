@@ -137,11 +137,13 @@ export default function ButtonAnchor({
   variant,
   buttonStyle,
   additionalClass,
-  target,
+  external,
 }) {
   const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${additionalClass}`;
   const relation = [];
-  if (target === "_blank") {
+  let target = false;
+  if (external) {
+    target = "_blank";
     relation.push("noopener");
   }
 
@@ -152,7 +154,8 @@ export default function ButtonAnchor({
         href={url}
         name={name}
         download={download}
-        target={target}
+        external={external}
+        target={target || undefined}
         rel={relation}
         onClick={onClick}
       >
@@ -179,19 +182,19 @@ ButtonAnchor.propTypes = {
   url: PropTypes.string,
   name: PropTypes.string,
   download: PropTypes.bool,
-  target: PropTypes.oneOf(["_self", "_blank"]),
+  external: PropTypes.bool,
   buttonStyle: PropTypes.oneOf(["default", "narrow", "high"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
   additionalClass: PropTypes.string,
 };
 
 ButtonAnchor.defaultProps = {
-  url: null,
-  onClick: null,
-  name: null,
+  url: undefined,
+  onClick: undefined,
+  name: undefined,
   download: false,
-  target: "_self",
+  external: false,
   variant: "primary",
   buttonStyle: "default",
-  additionalClass: null,
+  additionalClass: undefined,
 };
