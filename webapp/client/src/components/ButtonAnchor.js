@@ -37,6 +37,12 @@ const baseStyles = css`
       height: var(--button-height-high);
     }
 
+    &:active,
+    &.active {
+      background-color: var(--link-active-hover-color);
+      color: var(--inverse-text-color);
+    }
+
     &:hover {
       color: var(--inverse-text-color);
       background-color: var(--link-hover-color);
@@ -134,6 +140,10 @@ export default function ButtonAnchor({
   target,
 }) {
   const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${additionalClass}`;
+  const relation = [];
+  if (target === "_blank") {
+    relation.push("noopener");
+  }
 
   if (url) {
     return (
@@ -143,6 +153,7 @@ export default function ButtonAnchor({
         name={name}
         download={download}
         target={target}
+        rel={relation}
         onClick={onClick}
       >
         {children}
@@ -168,7 +179,7 @@ ButtonAnchor.propTypes = {
   url: PropTypes.string,
   name: PropTypes.string,
   download: PropTypes.bool,
-  target: PropTypes.string,
+  target: PropTypes.oneOf(["_self", "_blank"]),
   buttonStyle: PropTypes.oneOf(["default", "narrow", "high"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
   additionalClass: PropTypes.string,

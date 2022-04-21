@@ -111,6 +111,16 @@ describe("ButtonAnchor", () => {
     expect(buttonAnchor.closest("a")).toHaveAttribute("download");
   });
 
+  it("should render an rel attribute if target is _blank", () => {
+    setup({
+      target: "_blank",
+      url: "url/some/link/path",
+    });
+    const buttonAnchor = screen.getByText("anchor text");
+
+    expect(buttonAnchor.closest("a")).toHaveAttribute("rel", "noopener");
+  });
+
   it("should call a click handler", async () => {
     let isClicked = false;
 
