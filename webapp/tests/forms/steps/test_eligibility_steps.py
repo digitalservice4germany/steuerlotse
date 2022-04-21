@@ -88,7 +88,7 @@ class TestEligibilityStepChooser(unittest.TestCase):
     def test_if_incorrect_step_name_then_raise_404_exception(self):
         self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False, ImmutableMultiDict({}))
 
-    def test_if_start_step_then_return_second_step_step(self):
+    def test_if_start_step_then_return_second_step(self):
         self.step_chooser.default_data = lambda: None
         response_step = self.step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
 
