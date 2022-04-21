@@ -7,6 +7,16 @@ h1.my-4{
     margin-top: 0 !important;
 }
 
+.pre-intro-header{
+    font-family: var(--font-bold);
+    font-size: var(--text-medium-big);
+    color: var(--secondary-text-color);
+}
+
+.pre-intro-div{
+    margin-bottom: var(--spacing-08);
+}
+
 @media (min-width: 320px) {
     h1 {
         font-size: var(--text-3xl);
