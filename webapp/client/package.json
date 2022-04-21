@@ -17,7 +17,7 @@
     "eslint-plugin-jest": "^26.1.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-storybook": "^0.5.10",
+    "eslint-plugin-storybook": "^0.5.11",
     "http-proxy-middleware": "^2.0.4",
     "i18next": "^21.6.15",
     "jquery": "3.6.0",
