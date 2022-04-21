@@ -1,13 +1,13 @@
 import React from "react";
-import ShareIcons from "../components/ShareIcons";
+import ShareButtons from "../components/ShareButtons";
 
 export default {
-  title: "Anchor Elements/Share Icons",
-  component: ShareIcons,
+  title: "Anchor Elements/Share Button Group",
+  component: ShareButtons,
 };
 
 function Template(args) {
-  return <ShareIcons {...args} />;
+  return <ShareButtons {...args} />;
 }
 
 export const Default = Template.bind({});
