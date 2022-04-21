@@ -104,7 +104,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                     choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
                                 county.get('tax_offices')]
                 self.bufa_nr.choices = choices
-            except RequestException:
+            except RequestException as e:
                 logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                 self.tax_offices = []
                 self.bufa_nr.choices = []
