@@ -232,7 +232,8 @@ class LotseMultiStepFlow(MultiStepFlow):
                         'was_successful': False,
                         'eric_response': e.eric_response,
                         'server_response': e.server_response}
-                except RequestException:
+                except RequestException as e:
+                    logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
                     render_info.redirect_url = self.url_for_step(StepConfirmation.name)
             else:
@@ -376,7 +377,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             elif attr in stored_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation &
-                #  get_overview_value_representation     
+                #  get_overview_value_representation
                 label, value = self._generate_value_representation(field, stored_data.get(attr))
                 value = step.get_overview_value_representation(value, stored_data)
                 if value is not None:
