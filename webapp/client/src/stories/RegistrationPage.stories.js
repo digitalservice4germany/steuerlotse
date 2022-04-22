@@ -2,10 +2,12 @@ import React from "react";
 
 import RegistrationPage from "../pages/RegistrationPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/Registration",
   component: RegistrationPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

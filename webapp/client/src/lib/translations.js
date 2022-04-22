@@ -466,6 +466,49 @@ const translations = {
         "Schreiben Sie uns: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
     },
   },
+  Krankheitskosten: {
+    Paragraph1: {
+      heading: "Krankheitskosten",
+      text:
+        "Krankheitskosten sind durch Krankheit verursachte besondere Kosten und gehören zur Kategorie der " +
+        "außergewöhnlichen Belastungen. Hierunter zählen aber nur solche Aufwendungen, die der Heilung oder Linderung " +
+        "einer Krankheit dienen.",
+    },
+    Paragraph2: {
+      heading: "Bespiele für absetzbare Krankheitskosten",
+      list: {
+        item1:
+          "Selbstgetragene Arztkosten/Behandlungskosten und Zuzahlungen zum Beispiel von Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen oder Psychotherapeut:innen ",
+        item2: "Rezeptgebühren ",
+        item3:
+          "Notwendige Hilfsmittel wie Brillen, Hörgeräte oder spezielle Schuheinlagen",
+        item4: "Verschriebene Heilkuren, Massagen, Bäder und Einläufe",
+        item5: "Eigenanteil bei Zahnersatz",
+        item6: "Fahrtkosten zum Arzt",
+      },
+    },
+    Paragraph3: {
+      heading: "Nachweise",
+      text:
+        "Für die steuerliche Anerkennung der Krankheitskosten brauchen Sie eine ärztliche Verordnung, ein Rezept " +
+        "oder ein amtsärztliches Gutachten als Nachweis für eine medizinische Indikation der Behandlung. " +
+        "Das amtsärztliche Gutachten muss vor Behandlungsbeginn ausgestellt worden sein. " +
+        "Bei einer andauernden Erkrankung mit anhaltendem Verbrauch bestimmter Medikamente, reicht die einmalige " +
+        "Vorlage " +
+        "einer solchen Verordnung aus.",
+    },
+    Paragraph4: {
+      heading: "Die zumutbare Belastung",
+      text:
+        "Die Absetzbarkeit von Krankheitskosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare " +
+        "Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus. " +
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt " +
+        "automatisch berechnet.",
+    },
+    Paragraph5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   taxGuideQuestionBox: {
     canIUseTaxGuide:
       "Kann ich den Steuerlotsen für meine Steuererklärung nutzen?",

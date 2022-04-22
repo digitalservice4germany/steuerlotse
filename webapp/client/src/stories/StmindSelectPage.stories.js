@@ -2,10 +2,12 @@ import React from "react";
 
 import StmindSelectionPage from "../pages/StmindSelectionPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/StmindSelectionPage",
   component: StmindSelectionPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {
