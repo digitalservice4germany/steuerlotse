@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
+import anchorList from "../lib/contentPagesAnchorList";
 
 const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
@@ -37,15 +38,14 @@ const Paragraph = styled.p`
   margin: 0;
 `;
 
-export default function KrankheitsKostenInfoPage({
-  fscRequestUrl,
-  anchorList,
-}) {
-  const anchorListItemsMap = anchorList.map((anchor) => (
-    <AnchorListItem key={anchor.text}>
-      <a href={anchor.url}>{anchor.text}</a>
-    </AnchorListItem>
-  ));
+export default function KrankheitsKostenInfoPage({ fscRequestUrl }) {
+  const anchorListItemsMap = anchorList
+    .filter((item) => item.text !== "Krankheitskosten")
+    .map((anchor) => (
+      <AnchorListItem key={anchor.text}>
+        <a href={anchor.url}>{anchor.text}</a>
+      </AnchorListItem>
+    ));
   const list = [
     {
       text: "Selbstgetragene Arztkosten/Behandlungskosten und Zuzahlungen zum Beispiel von Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen oder Psychotherapeut:innen",
@@ -91,10 +91,4 @@ export default function KrankheitsKostenInfoPage({
 
 KrankheitsKostenInfoPage.propTypes = {
   fscRequestUrl: PropTypes.string.isRequired,
-  anchorList: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string,
-      url: PropTypes.string,
-    })
-  ).isRequired,
 };
