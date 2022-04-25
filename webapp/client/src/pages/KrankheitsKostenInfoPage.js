@@ -76,13 +76,13 @@ export default function KrankheitsKostenInfoPage({ fscRequestUrl }) {
         <Headline1>{t("Krankheitskosten.Paragraph1.heading")}</Headline1>
         <Paragraph>{t("Krankheitskosten.Paragraph1.text")}</Paragraph>
         <Headline2>{t("Krankheitskosten.Paragraph2.heading")}</Headline2>
-        <List>{listItemsMap}</List>
+        <List aria-label="simple-list">{listItemsMap}</List>
         <Headline2>{t("Krankheitskosten.Paragraph3.heading")}</Headline2>
         <Paragraph>{t("Krankheitskosten.Paragraph3.text")}</Paragraph>
         <Headline2>{t("Krankheitskosten.Paragraph4.heading")}</Headline2>
         <Paragraph>{t("Krankheitskosten.Paragraph4.text")}</Paragraph>
         <Headline2>{t("Krankheitskosten.Paragraph5.heading")}</Headline2>
-        <List>{anchorListItemsMap}</List>
+        <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
       <InfoBox fscRequestUrl={fscRequestUrl} />
     </>

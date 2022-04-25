@@ -6,8 +6,8 @@ const REQUIRED_PROPS = {
   fscRequestUrl: "url/some/link/path",
 };
 
-function setup(optionalProps) {
-  const utils = render(<InfoBox {...REQUIRED_PROPS} {...optionalProps} />);
+function setup() {
+  const utils = render(<InfoBox {...REQUIRED_PROPS} />);
 
   return { ...utils };
 }
