@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-04-25 11:22+0200\n"
+"POT-Creation-Date: 2022-04-25 13:59+0000\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,109 +18,109 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: app/routes.py:70
+#: app/routes.py:69
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:71
+#: app/routes.py:70
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:72
+#: app/routes.py:71
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:73
+#: app/routes.py:72
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:75
+#: app/routes.py:74
 msgid "nav.lotse-form"
 msgstr "Ihre Steuererklärung"
 
-#: app/routes.py:77
+#: app/routes.py:76
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:81
+#: app/routes.py:80
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:176
+#: app/routes.py:175
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:177
+#: app/routes.py:176
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:220
+#: app/routes.py:219
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:221
+#: app/routes.py:220
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:234 app/routes.py:379
+#: app/routes.py:233 app/routes.py:385
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:254 app/templates/basis/base.html:37
+#: app/routes.py:253 app/templates/basis/base.html:37
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:261
+#: app/routes.py:260
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:268
+#: app/routes.py:267
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:275
+#: app/routes.py:274
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:282
+#: app/routes.py:281
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:289
+#: app/routes.py:288
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:296
+#: app/routes.py:295
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:309
+#: app/routes.py:308
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:314
+#: app/routes.py:313
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:370 app/routes.py:400 app/routes.py:407
+#: app/routes.py:376 app/routes.py:406 app/routes.py:413
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:375 app/routes.py:383
+#: app/routes.py:381 app/routes.py:389
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:388
+#: app/routes.py:394
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:394
+#: app/routes.py:400
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 

@@ -13,28 +13,27 @@ const ContentWrapper = styled.div`
 `;
 const List = styled.ul`
   margin: 0;
-  padding: 0 0 var(--spacing-09) 0;
+  padding: var(--spacing-06) 0 0;
 `;
 const AnchorListItem = styled.li`
-  padding-bottom: var(--spacing-01);
+  padding-top: var(--spacing-01);
   list-style: none;
 `;
 const ListItem = styled.li`
-  padding-bottom: var(--spacing-01);
+  padding-top: var(--spacing-01);
   list-style-position: inside;
   padding-left: 1.28571429em;
   text-indent: -1.28571429em;
 `;
 const Headline1 = styled.h1`
-  padding-bottom: var(--spacing-06);
   margin: 0;
 `;
 const Headline2 = styled.h2`
-  padding-bottom: var(--spacing-06);
+  padding-top: var(--spacing-09);
   margin: 0;
 `;
 const Paragraph = styled.p`
-  padding-bottom: var(--spacing-09);
+  padding-top: var(--spacing-06);
   margin: 0;
 `;
 
