@@ -10,6 +10,13 @@ jest.mock("../components/InfoBox", () => ({
   },
 }));
 
+jest.mock("../components/StepHeaderButtons", () => ({
+  __esModule: true,
+  default: function StepHeaderButtons() {
+    return <div>StepHeaderButtons</div>;
+  },
+}));
+
 const REQUIRED_PROPS = {
   fscRequestUrl: "url/some/link/path",
 };
@@ -69,5 +76,11 @@ describe("KrankheitsKostenInfoPage", () => {
     setup();
 
     expect(screen.getByText("info box")).toBeInTheDocument();
+  });
+
+  it("should render the StepHeaderButtons component", () => {
+    setup();
+
+    expect(screen.getByText("StepHeaderButtons")).toBeInTheDocument();
   });
 });

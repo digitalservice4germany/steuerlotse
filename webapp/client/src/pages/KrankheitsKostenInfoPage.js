@@ -3,7 +3,9 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
-import anchorList from "../lib/contentPagesAnchorList";
+// eslint-disable-next-line import/named
+import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
+import StepHeaderButtons from "../components/StepHeaderButtons";
 
 const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
@@ -72,6 +74,7 @@ export default function KrankheitsKostenInfoPage({ fscRequestUrl }) {
   return (
     <>
       <ContentWrapper>
+        <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
         <Headline1>{t("Krankheitskosten.Paragraph1.heading")}</Headline1>
         <Paragraph>{t("Krankheitskosten.Paragraph1.text")}</Paragraph>
         <Headline2>{t("Krankheitskosten.Paragraph2.heading")}</Headline2>
