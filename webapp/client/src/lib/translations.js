@@ -12,6 +12,11 @@ const translations = {
       ariaLabel: "Schließen",
     },
   },
+  anchorButton: {
+    anmelden: {
+      text: "Jetzt anmelden",
+    },
+  },
   dropDown: {
     defaultOption: "Bitte auswählen",
   },
@@ -508,6 +513,10 @@ const translations = {
     Paragraph5: {
       heading: "Weitere Ausgaben, die Sie absetzen können",
     },
+  },
+  InfoBox: {
+    heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
+    text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
   },
   taxGuideQuestionBox: {
     canIUseTaxGuide:

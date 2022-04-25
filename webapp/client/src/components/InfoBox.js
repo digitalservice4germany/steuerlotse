@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { t } from "i18next";
 import ButtonAnchor from "./ButtonAnchor";
 
 const Box = styled.div`
@@ -55,14 +56,11 @@ export default function InfoBox({ fscRequestUrl }) {
     <Box>
       <InnerBox>
         <TextBox className="info-box__text">
-          <BoxHeadline>
-            Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?
-          </BoxHeadline>
-          <BoxText>
-            Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten
-            Sie mit Ihrer Steuererklärung.
-          </BoxText>
-          <ButtonAnchor url={fscRequestUrl}>Jetzt anmelden</ButtonAnchor>
+          <BoxHeadline>{t("InfoBox.heading")}</BoxHeadline>
+          <BoxText>{t("InfoBox.text")}</BoxText>
+          <ButtonAnchor url={fscRequestUrl}>
+            {t("anchorButton.anmelden.text")}
+          </ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">
           <img src="images/teaser-image.png" alt="teaser img" />
