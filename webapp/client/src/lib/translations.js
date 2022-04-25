@@ -475,7 +475,7 @@ const translations = {
         "einer Krankheit dienen.",
     },
     Paragraph2: {
-      heading: "Bespiele für absetzbare Krankheitskosten",
+      heading: "Beispiele für absetzbare Krankheitskosten",
       list: {
         item1:
           "Selbstgetragene Arztkosten/Behandlungskosten und Zuzahlungen zum Beispiel von Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen oder Psychotherapeut:innen ",

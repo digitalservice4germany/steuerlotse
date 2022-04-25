@@ -8,7 +8,7 @@ export default {
   decorators: contentPageDecorator,
   args: {
     fscRequestUrl: "/unlock_code_request/step/data_input?link_overview=False",
-    linkList: [
+    anchorList: [
       {
         text: "Vorsorgeaufwendungen",
         url: "#",

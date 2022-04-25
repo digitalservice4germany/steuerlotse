@@ -5,36 +5,84 @@ import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
 
 const ContentWrapper = styled.div`
-  padding: var(--spacing-06) var(--spacing-12) 0 var(--spacing-09);
+  padding-left: var(--spacing-03);
+  padding-right: var(--spacing-03);
+  margin: 0 auto;
+  max-width: var(--main-max-width);
 `;
-const LinkList = styled.ul`
+const List = styled.ul`
   margin: 0;
-  padding: 0;
+  padding: 0 0 var(--spacing-09) 0;
+`;
+const AnchorListItem = styled.li`
+  padding-bottom: var(--spacing-01);
+  list-style: none;
 `;
 const ListItem = styled.li`
-  list-style: none;
   padding-bottom: var(--spacing-01);
+  list-style-position: inside;
+  padding-left: 1.28571429em;
+  text-indent: -1.28571429em;
+`;
+const Headline1 = styled.h1`
+  padding-bottom: var(--spacing-06);
+  margin: 0;
+`;
+const Headline2 = styled.h2`
+  padding-bottom: var(--spacing-06);
+  margin: 0;
+`;
+const Paragraph = styled.p`
+  padding-bottom: var(--spacing-09);
+  margin: 0;
 `;
 
-export default function KrankheitsKostenInfoPage({ fscRequestUrl, linkList }) {
-  const listItems = linkList.map((link) => (
-    <ListItem>
-      <a href={link.url}>{link.text}</a>
-    </ListItem>
+export default function KrankheitsKostenInfoPage({
+  fscRequestUrl,
+  anchorList,
+}) {
+  const anchorListItemsMap = anchorList.map((anchor) => (
+    <AnchorListItem key={anchor.text}>
+      <a href={anchor.url}>{anchor.text}</a>
+    </AnchorListItem>
+  ));
+  const list = [
+    {
+      text: "Selbstgetragene Arztkosten/Behandlungskosten und Zuzahlungen zum Beispiel von Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen oder Psychotherapeut:innen",
+    },
+    {
+      text: "Rezeptgebühren",
+    },
+    {
+      text: "Notwendige Hilfsmittel wie Brillen, Hörgeräte oder spezielle Schuheinlagen",
+    },
+    {
+      text: "Verschriebene Heilkuren, Massagen, Bäder und Einläufe",
+    },
+    {
+      text: "Eigenanteil bei Zahnersatz",
+    },
+    {
+      text: "Fahrtkosten zum Arzt",
+    },
+  ];
+  const listItemsMap = list.map((item) => (
+    <ListItem key={item.text}>{item.text}</ListItem>
   ));
 
   return (
     <>
       <ContentWrapper>
-        <h1>{t("Krankheitskosten.Paragraph1.heading")}</h1>
-        <p>{t("Krankheitskosten.Paragraph1.text")}</p>
-        <h2>{t("Krankheitskosten.Paragraph2.heading")}</h2>
-        <h2>{t("Krankheitskosten.Paragraph3.heading")}</h2>
-        <p>{t("Krankheitskosten.Paragraph3.text")}</p>
-        <h2>{t("Krankheitskosten.Paragraph4.heading")}</h2>
-        <p>{t("Krankheitskosten.Paragraph4.text")}</p>
-        <h2>{t("Krankheitskosten.Paragraph5.heading")}</h2>
-        <LinkList>{listItems}</LinkList>
+        <Headline1>{t("Krankheitskosten.Paragraph1.heading")}</Headline1>
+        <Paragraph>{t("Krankheitskosten.Paragraph1.text")}</Paragraph>
+        <Headline2>{t("Krankheitskosten.Paragraph2.heading")}</Headline2>
+        <List>{listItemsMap}</List>
+        <Headline2>{t("Krankheitskosten.Paragraph3.heading")}</Headline2>
+        <Paragraph>{t("Krankheitskosten.Paragraph3.text")}</Paragraph>
+        <Headline2>{t("Krankheitskosten.Paragraph4.heading")}</Headline2>
+        <Paragraph>{t("Krankheitskosten.Paragraph4.text")}</Paragraph>
+        <Headline2>{t("Krankheitskosten.Paragraph5.heading")}</Headline2>
+        <List>{anchorListItemsMap}</List>
       </ContentWrapper>
       <InfoBox fscRequestUrl={fscRequestUrl} />
     </>
@@ -43,5 +91,5 @@ export default function KrankheitsKostenInfoPage({ fscRequestUrl, linkList }) {
 
 KrankheitsKostenInfoPage.propTypes = {
   fscRequestUrl: PropTypes.string.isRequired,
-  linkList: PropTypes.arrayOf(object).isRequired,
+  anchorList: PropTypes.arrayOf(object).isRequired,
 };

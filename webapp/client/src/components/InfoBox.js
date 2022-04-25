@@ -4,15 +4,22 @@ import ButtonAnchor from "./ButtonAnchor";
 
 const Box = styled.div`
   background-color: var(--beige-200);
+  padding-top: var(--spacing-09);
+  margin-top: var(--spacing-09);
+`;
+const InnerBox = styled.div`
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-09) var(--spacing-07) 0 var(--spacing-09);
-  margin-top: var(--spacing-09);
+  padding-left: var(--spacing-03);
+  padding-right: var(--spacing-03);
+  margin: 0 auto;
+  max-width: var(--main-max-width);
 
   @media (min-width: 768px) {
     flex-direction: row;
   }
 `;
+
 const TextBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,19 +53,21 @@ const Figure = styled.figure`
 export default function InfoBox({ fscRequestUrl }) {
   return (
     <Box>
-      <TextBox className="info-box__text">
-        <BoxHeadline>
-          Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?
-        </BoxHeadline>
-        <BoxText>
-          Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten
-          Sie mit Ihrer Steuererklärung.
-        </BoxText>
-        <ButtonAnchor url={fscRequestUrl}>Jetzt anmelden</ButtonAnchor>
-      </TextBox>
-      <Figure className="info-box__figure">
-        <img src="images/teaser-image.png" alt="teaser img" />
-      </Figure>
+      <InnerBox>
+        <TextBox className="info-box__text">
+          <BoxHeadline>
+            Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?
+          </BoxHeadline>
+          <BoxText>
+            Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten
+            Sie mit Ihrer Steuererklärung.
+          </BoxText>
+          <ButtonAnchor url={fscRequestUrl}>Jetzt anmelden</ButtonAnchor>
+        </TextBox>
+        <Figure className="info-box__figure">
+          <img src="images/teaser-image.png" alt="teaser img" />
+        </Figure>
+      </InnerBox>
     </Box>
   );
 }
