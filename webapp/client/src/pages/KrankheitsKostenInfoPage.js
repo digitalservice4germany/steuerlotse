@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes, { object } from "prop-types";
+import PropTypes from "prop-types";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
 
@@ -91,5 +91,10 @@ export default function KrankheitsKostenInfoPage({
 
 KrankheitsKostenInfoPage.propTypes = {
   fscRequestUrl: PropTypes.string.isRequired,
-  anchorList: PropTypes.arrayOf(object).isRequired,
+  anchorList: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      url: PropTypes.string,
+    })
+  ).isRequired,
 };
