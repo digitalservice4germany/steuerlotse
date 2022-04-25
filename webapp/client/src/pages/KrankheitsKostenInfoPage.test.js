@@ -17,12 +17,8 @@ jest.mock("../components/StepHeaderButtons", () => ({
   },
 }));
 
-const REQUIRED_PROPS = {
-  fscRequestUrl: "url/some/link/path",
-};
-
 function setup() {
-  const utils = render(<KrankheitsKostenInfoPage {...REQUIRED_PROPS} />);
+  const utils = render(<KrankheitsKostenInfoPage />);
 
   return { ...utils };
 }

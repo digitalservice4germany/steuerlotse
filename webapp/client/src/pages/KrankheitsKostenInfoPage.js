@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
 // eslint-disable-next-line import/named
@@ -39,7 +38,7 @@ const Paragraph = styled.p`
   margin: 0;
 `;
 
-export default function KrankheitsKostenInfoPage({ fscRequestUrl }) {
+export default function KrankheitsKostenInfoPage() {
   const anchorListItemsMap = anchorList
     .filter((item) => item.text !== "Krankheitskosten")
     .map((anchor) => (
@@ -86,11 +85,7 @@ export default function KrankheitsKostenInfoPage({ fscRequestUrl }) {
         <Headline2>{t("Krankheitskosten.Paragraph5.heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
-      <InfoBox fscRequestUrl={fscRequestUrl} />
+      <InfoBox />
     </>
   );
 }
-
-KrankheitsKostenInfoPage.propTypes = {
-  fscRequestUrl: PropTypes.string.isRequired,
-};

@@ -2,12 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import InfoBox from "./InfoBox";
 
-const REQUIRED_PROPS = {
-  fscRequestUrl: "url/some/link/path",
-};
-
 function setup() {
-  const utils = render(<InfoBox {...REQUIRED_PROPS} />);
+  const utils = render(<InfoBox />);
 
   return { ...utils };
 }
@@ -30,7 +26,7 @@ describe("InfoBox", () => {
     expect(buttonAnchor).toBeInTheDocument();
     expect(buttonAnchor.closest("a")).toHaveAttribute(
       "href",
-      REQUIRED_PROPS.fscRequestUrl
+      "/unlock_code_request/step/data_input?link_overview=False"
     );
     expect(altImg).toBeInTheDocument();
   });

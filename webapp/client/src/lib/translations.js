@@ -15,6 +15,7 @@ const translations = {
   anchorButton: {
     anmelden: {
       text: "Jetzt anmelden",
+      url: "/unlock_code_request/step/data_input?link_overview=False",
     },
   },
   anchorBackUebersicht: {

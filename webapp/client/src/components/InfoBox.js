@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { t } from "i18next";
 import ButtonAnchor from "./ButtonAnchor";
 
@@ -51,14 +50,14 @@ const Figure = styled.figure`
   }
 `;
 
-export default function InfoBox({ fscRequestUrl }) {
+export default function InfoBox() {
   return (
     <Box>
       <InnerBox>
         <TextBox className="info-box__text">
           <BoxHeadline>{t("InfoBox.heading")}</BoxHeadline>
           <BoxText>{t("InfoBox.text")}</BoxText>
-          <ButtonAnchor url={fscRequestUrl}>
+          <ButtonAnchor url={t("anchorButton.anmelden.url")}>
             {t("anchorButton.anmelden.text")}
           </ButtonAnchor>
         </TextBox>
@@ -69,7 +68,3 @@ export default function InfoBox({ fscRequestUrl }) {
     </Box>
   );
 }
-
-InfoBox.propTypes = {
-  fscRequestUrl: PropTypes.string.isRequired,
-};
