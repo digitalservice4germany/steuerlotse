@@ -49,22 +49,22 @@ export default function KrankheitsKostenInfoPage({ fscRequestUrl }) {
     ));
   const list = [
     {
-      text: "Selbstgetragene Arztkosten/Behandlungskosten und Zuzahlungen zum Beispiel von Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen oder Psychotherapeut:innen",
+      text: t("Krankheitskosten.List.item1.text"),
     },
     {
-      text: "Rezeptgebühren",
+      text: t("Krankheitskosten.List.item2.text"),
     },
     {
-      text: "Notwendige Hilfsmittel wie Brillen, Hörgeräte oder spezielle Schuheinlagen",
+      text: t("Krankheitskosten.List.item3.text"),
     },
     {
-      text: "Verschriebene Heilkuren, Massagen, Bäder und Einläufe",
+      text: t("Krankheitskosten.List.item4.text"),
     },
     {
-      text: "Eigenanteil bei Zahnersatz",
+      text: t("Krankheitskosten.List.item5.text"),
     },
     {
-      text: "Fahrtkosten zum Arzt",
+      text: t("Krankheitskosten.List.item6.text"),
     },
   ];
   const listItemsMap = list.map((item) => (

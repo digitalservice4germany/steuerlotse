@@ -559,6 +559,26 @@ const translations = {
     Paragraph5: {
       heading: "Weitere Ausgaben, die Sie absetzen können",
     },
+    List: {
+      item1: {
+        text: "Selbstgetragene Arztkosten/Behandlungskosten und Zuzahlungen zum Beispiel von Zahnärzt:innen, Logopäd:innen, Physiotherapeut:innen, Heilpraktiker:innen oder Psychotherapeut:innen",
+      },
+      item2: {
+        text: "Rezeptgebühren",
+      },
+      item3: {
+        text: "Notwendige Hilfsmittel wie Brillen, Hörgeräte oder spezielle Schuheinlagen",
+      },
+      item4: {
+        text: "Verschriebene Heilkuren, Massagen, Bäder und Einläufe",
+      },
+      item5: {
+        text: "Eigenanteil bei Zahnersatz",
+      },
+      item6: {
+        text: "Fahrtkosten zum Arzt",
+      },
+    },
   },
   InfoBox: {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
