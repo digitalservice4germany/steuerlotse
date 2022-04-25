@@ -9,7 +9,6 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import NotFound
 
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
-from app.data_access.storage.form_storage import FormStorage
 from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
     MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
     MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, IncorrectEligibilityData, \
@@ -88,12 +87,12 @@ class TestEligibilityStepChooser(unittest.TestCase):
     def test_if_incorrect_step_name_then_raise_404_exception(self):
         self.assertRaises(NotFound, self.step_chooser.get_correct_step, "Incorrect Step Name", False, ImmutableMultiDict({}))
 
-    def test_if_start_step_then_return_second_step(self):
+    def test_if_start_step_then_return_redirect_step(self):
         self.step_chooser.default_data = lambda: None
         response_step = self.step_chooser.get_correct_step("start", False, ImmutableMultiDict({}))
 
         self.assertIsInstance(response_step, RedirectSteuerlotseStep)
-        self.assertEqual(response_step.redirection_step_name, MockRenderStep.name)
+        self.assertEqual(response_step.redirection_step_name, MockStartStep.name)
         self.assertEqual(response_step.endpoint, self.endpoint_correct)
 
 

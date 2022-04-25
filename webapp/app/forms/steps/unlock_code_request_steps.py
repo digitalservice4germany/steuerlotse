@@ -51,7 +51,7 @@ class UnlockCodeRequestInputStep(FormStep):
             },
             fields=form_fields_dict(render_info.form),
             login_link=url_for('unlock_code_activation', step='start'),
-            eligibility_link=url_for('eligibility', step='start'),
+            eligibility_link=url_for('eligibility', step='first_input_step'),
             terms_of_service_link=url_for('agb'),
             data_privacy_link=url_for('data_privacy'),
         ).camelized_dict()

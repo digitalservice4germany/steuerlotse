@@ -12,7 +12,7 @@
             'paragraphs': [
                 (_('info-stl.card-who.p1-content')),
                 (_('info-stl.card-who.p2-content')),
-                (_('info-stl.card-who.p3-content', link=url_for('eligibility', step='start'))),
+                (_('info-stl.card-who.p3-content', link=url_for('eligibility', step='first_input_step'))),
             ],
             'list-items': None,
         },
@@ -22,7 +22,7 @@
                 (_('info-stl.card-process.p1-content')),
             ],
             'list-items': [
-                _('info-stl.card-process.list-item-1', link=url_for('eligibility', step='start')),
+                _('info-stl.card-process.list-item-1', link=url_for('eligibility', step='first_input_step')),
                 _('info-stl.card-process.list-item-2', link=url_for('unlock_code_request', step='start')),
                 _('info-stl.card-process.list-item-3'),
                 _('info-stl.card-process.list-item-4', link=url_for('unlock_code_activation', step='start')),
@@ -220,7 +220,7 @@
 {% block full_width_final_area %}
     <div class="landing__section pb-0 g-0">
         <div class="main-content landing__grid">
-            {{ components.teaserCard(url_for('eligibility', step='start'),
+            {{ components.teaserCard(url_for('eligibility', step='first_input_step'),
                                 _('info.teaser.eligibility.title'),
                                 _('info.teaser.eligibility.description'),
                                 img_url=static_url_for('static', filename='icons/arrow_left.svg'),

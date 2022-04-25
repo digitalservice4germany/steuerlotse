@@ -105,7 +105,7 @@ class EligibilityStepChooser(StepChooser):
     def _get_possible_redirect(self, step_name, stored_data):
         if not self._is_step_name_valid(step_name):
             abort(404)
-        if step_name in ['first_input_step', 'start']:
+        if step_name == 'first_input_step':
             dbg = self.default_data()
             if dbg:
                 return dbg[0].name
