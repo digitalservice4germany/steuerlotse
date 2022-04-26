@@ -18,17 +18,11 @@ const ButtonGroup = styled.div`
   .facebook {
     background-color: var(--facebook-color);
 
-    &:active,
-    &.active {
-      background-color: var(--facebook-active-hover-color);
-    }
-
     &:hover {
       background-color: var(--facebook-hover-color);
       text-decoration: none;
 
-      &:active,
-      &.active {
+      &:active {
         background-color: var(--facebook-active-hover-color);
       }
     }
@@ -37,17 +31,11 @@ const ButtonGroup = styled.div`
   .whatsapp {
     background-color: var(--whatsapp-color);
 
-    &:active,
-    &.active {
-      background-color: var(--whatsapp-active-hover-color);
-    }
-
     &:hover {
       background-color: var(--whatsapp-hover-color);
       text-decoration: none;
 
-      &:active,
-      &.active {
+      &:active {
         background-color: var(--whatsapp-active-hover-color);
       }
     }
@@ -56,32 +44,12 @@ const ButtonGroup = styled.div`
   .email {
     background-color: var(--email-color);
 
-    &:active,
-    &.active {
-      background-color: var(--email-active-hover-color);
-    }
-
     &:hover {
       background-color: var(--email-hover-color);
       text-decoration: none;
 
-      &:active,
-      &.active {
+      &:active {
         background-color: var(--email-active-hover-color);
-      }
-    }
-  }
-
-  .copy {
-    &:active,
-    &.active {
-      background-color: var(--copy-active-hover-color);
-    }
-
-    &:hover {
-      &:active,
-      &.active {
-        background-color: var(--copy-active-hover-color);
       }
     }
   }

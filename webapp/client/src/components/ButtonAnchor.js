@@ -57,31 +57,6 @@ const Button = styled.button`
       return "none";
     }};
 
-    &:active,
-    &.active {
-      color: ${({ variant }) => {
-        if (variant === "outline") {
-          return "var(--text-color)";
-        }
-        return "var(--inverse-text-color)";
-      }};
-      background-color: ${({ variant, disabled }) => {
-        if (variant === "outline") {
-          return "var(--inverse-text-color)";
-        }
-        if (disabled) {
-          return "var(--button-disabled-bg-color)";
-        }
-        return "var(--link-color)";
-      }};
-      outline: ${({ variant }) => {
-        if (variant === "outline") {
-          return "1px solid var(--hover-border-color)";
-        }
-        return "none";
-      }};
-    }
-
     &:hover {
       color: ${({ variant }) => {
         if (variant === "outline") {
@@ -106,13 +81,32 @@ const Button = styled.button`
       }};
       text-decoration: none;
 
-      .anchor-btn__icon.translate-x {
-        transform: translatex(10%);
+      &:active {
+        color: ${({ variant }) => {
+          if (variant === "outline") {
+            return "var(--text-color)";
+          }
+          return "var(--inverse-text-color)";
+        }};
+        background-color: ${({ variant, disabled }) => {
+          if (variant === "outline") {
+            return "var(--inverse-text-color)";
+          }
+          if (disabled) {
+            return "var(--button-disabled-bg-color)";
+          }
+          return "var(--link-active-hover-color)";
+        }};
+        outline: ${({ variant }) => {
+          if (variant === "outline") {
+            return "1px solid var(--hover-border-color)";
+          }
+          return "none";
+        }};
       }
 
-      &:active,
-      &.active {
-        background-color: var(--link-active-hover-color);
+      .anchor-btn__icon.translate-x {
+        transform: translatex(10%);
       }
     }
 

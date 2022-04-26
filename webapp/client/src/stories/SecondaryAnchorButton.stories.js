@@ -3,7 +3,7 @@ import React from "react";
 import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
 
 export default {
-  title: "Anchor Elements/Secondary Button",
+  title: "Anchor Elements/Secondary Button -deprecated-",
   component: SecondaryAnchorButton,
 };
 
