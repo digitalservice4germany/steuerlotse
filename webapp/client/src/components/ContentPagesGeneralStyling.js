@@ -31,8 +31,13 @@ export const Headline1 = styled.h1`
 export const Headline2 = styled(Headline1)``;
 
 export const Paragraph = styled.p`
-  padding-bottom: var(--spacing-09);
+  padding-bottom: ${(props) =>
+    props.spacingVariant ? 0 : "var(--spacing-09)"};
   margin: 0;
+  margin-bottom: ${(props) =>
+    !props.spacingVariant ? 0 : "var(--spacing-03)"};
+  font-size: ${(props) =>
+    props.textSizeVariant ? "var(--text-2xl)" : "var(--text-medium)"};
 `;
 
 export default {

@@ -29,8 +29,7 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-from app.model.components import VorsorgeaufwendungenProps
-from app.model.components import AmbassadorInfoMaterialProps, KrankheitsKostenInfoPageProps
+from app.model.components import AmbassadorInfoMaterialProps, KrankheitsKostenInfoPageProps, PensionExpensesProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -353,12 +352,13 @@ def register_request_handlers(app):
             props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
             component='AmbassadorInfoMaterialPage')
 
-    @app.route('/vorbereiten/vorsorgeaufwendungen', methods=['GET'])
+    @app.route('/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
-    def Vorsorgeaufwendungen():
-        return render_react_template(
-            props=VorsorgeaufwendungenProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
-            component='VorsorgeaufwendungenPage')
+    def PensionExpensesInfoPage():
+        return render_react_content_page_template(
+             props=PensionExpensesProps().camelized_dict(), 
+            component='PensionExpensesInfoPage')
+
     @app.route('/krankheitskosten', methods=['GET'])
     @add_caching_headers
     def krankheits_kosten_info():

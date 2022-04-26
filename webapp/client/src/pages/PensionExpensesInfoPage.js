@@ -1,8 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import InfoBox from "../components/InfoBox";
+// eslint-disable-next-line import/named
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import { anchorList, anchorBack } from "../lib/contentPagesAnchorList";
-// import InfoBox from "../components/InfoBox";
+import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
 import {
   ContentWrapper,
   List,
@@ -13,7 +14,7 @@ import {
   Paragraph,
 } from "../components/ContentPagesGeneralStyling";
 
-export default function VorsorgeaufwendungenPage() {
+export default function PensionExpensesInfoPage() {
   const { t } = useTranslation();
 
   const anchorListItemsMap = anchorList
@@ -73,16 +74,23 @@ export default function VorsorgeaufwendungenPage() {
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
         <Headline1>{t("Vorsorgeaufwendungen.Paragraph1.Heading")}</Headline1>
-        <Paragraph>{t("Vorsorgeaufwendungen.Paragraph1.Text")}</Paragraph>
+        <Paragraph textSizeVariant>
+          {t("Vorsorgeaufwendungen.Paragraph1.Text")}
+        </Paragraph>
         <Headline2>{t("Vorsorgeaufwendungen.Paragraph2.Heading")}</Headline2>
         <List>{listDeductablesItemsMap}</List>
         <Headline2>{t("Vorsorgeaufwendungen.Paragraph3.Heading")}</Headline2>
-        <Paragraph>{t("Vorsorgeaufwendungen.Paragraph3.Text")}</Paragraph>
-        <List>{listNonDeductablesItemsMap}</List>
+
+        <List>
+          <Paragraph spacingVariant>
+            {t("Vorsorgeaufwendungen.Paragraph3.Text")}
+          </Paragraph>
+          {listNonDeductablesItemsMap}
+        </List>
         <Headline2>{t("Vorsorgeaufwendungen.Paragraph4.Heading")}</Headline2>
         <List>{anchorListItemsMap}</List>
       </ContentWrapper>
-      {/* <InfoBox /> */}
+      <InfoBox />
     </>
   );
 }
