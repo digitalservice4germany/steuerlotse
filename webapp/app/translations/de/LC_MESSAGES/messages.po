@@ -5237,16 +5237,6 @@ msgstr "Registrierung"
 msgid "tracking.eligibility.success.method"
 msgstr "Registrierung CTA positiv NP"
 
-#: app/templates/eligibility/form_marital_status_input.html:6
-msgid "eligibility.marital_status.pre_title.header"
-msgstr "Testen Sie, ob Sie den Steuerlotsen nutzen können"
-
-#: app/templates/eligibility/form_marital_status_input.html:7
-msgid "eligibility.marital_status.pre_title.text"
-msgstr ""
-"Bitte beantworten Sie ein paar einfache Fragen, damit wir Ihnen sagen "
-"können, ob Sie den Steuerlotsen nutzen können."
-
 #: app/templates/eligibility/form_marital_status_input.html:14
 msgid "eligibility.marital_status.widowed_note"
 msgstr ""
