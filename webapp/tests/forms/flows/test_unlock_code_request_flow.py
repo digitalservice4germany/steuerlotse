@@ -207,25 +207,22 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
                 self.assertTrue(user_exists(idnr))
                 self.assertEqual(expected_elster_request_id, find_user(idnr).elster_request_id)
 
-    def test_if_unlock_code_request_did_not_get_through_then_flash_should_be_called_once(self):
-        failure_url = '/' + self.endpoint_correct + '/step/' + self.input_step.name + \
+    def test_if_unlock_code_request_did_not_get_through_then_next_url_is_failure_step(self):
+        failure_url = '/' + self.endpoint_correct + '/step/' + MockUnlockCodeRequestFailureStep.name + \
                                '?link_overview=' + str(self.flow.has_link_overview)
 
         with self.app.test_request_context(method='POST', data=self.valid_input_data):
-            with (
-                patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),
-                patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster")  as fun_unlock_code_request,
-                patch("app.forms.flows.unlock_code_request_flow.flash") as mock_flash,
-            ):
+            with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
+                    patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
+                    as fun_unlock_code_request:
                 fun_unlock_code_request.side_effect = ElsterProcessNotSuccessful()
-                
-                render_info, stored_data = self.flow._handle_specifics_for_step(
+
+                render_info, _ = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
 
                 self.assertEqual(failure_url, render_info.next_url)
                 fun_unlock_code_request.assert_called_once()
-                mock_flash.assert_called_once_with(
-                _('flash.erica.dataConnectionError'), 'warn')
+
 
     def test_if_user_already_exists_then_flash_should_be_called_once(self):
         existing_idnr = '04452397687'
