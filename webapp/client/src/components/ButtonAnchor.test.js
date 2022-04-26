@@ -31,31 +31,32 @@ describe("ButtonAnchor", () => {
     expect(buttonAnchor).toHaveAttribute("href", "url/some/link/path");
   });
 
-  it("should render a outline anchor button", () => {
+  it("should render with outline variant", () => {
     setup({
       variant: "outline",
     });
     const buttonAnchor = screen.getByText("anchor text");
 
-    expect(buttonAnchor).toHaveClass("outline");
+    expect(buttonAnchor).toBeInTheDocument();
   });
 
-  it("should render a narrow anchor button", () => {
+  it("should render disabled button", () => {
     setup({
-      buttonStyle: "narrow",
+      disabled: true,
     });
     const buttonAnchor = screen.getByText("anchor text");
 
-    expect(buttonAnchor).toHaveClass("narrow");
+    expect(buttonAnchor).toHaveAttribute("disabled");
   });
 
-  it("should render a high anchor button", () => {
+  it("should not render disabled attribute for button as anchor", () => {
     setup({
-      buttonStyle: "high",
+      disabled: true,
+      url: "url/some/link/path",
     });
     const buttonAnchor = screen.getByText("anchor text");
 
-    expect(buttonAnchor).toHaveClass("high");
+    expect(buttonAnchor).not.toHaveAttribute("disabled");
   });
 
   it("should render additional class", () => {

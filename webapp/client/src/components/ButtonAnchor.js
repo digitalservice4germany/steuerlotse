@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const baseStyles = css`
+const Button = styled.button`
    {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -9,43 +9,101 @@ const baseStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: var(--button-height);
     font-size: var(--text-medium);
     font-family: var(--font-bold);
     line-height: 1;
-    color: var(--inverse-text-color);
-    background-color: var(--link-color);
-    cursor: pointer;
     text-decoration: none;
     border: none;
-    padding: 18px 16px;
     transition: color var(--transition-behaviour) var(--transition-time),
       background-color var(--transition-behaviour) var(--transition-time),
       background var(--transition-behaviour) var(--transition-time);
-
-    &.outline {
-      color: var(--text-color);
-      background-color: var(--inverse-text-color);
-      outline: 1px solid var(--border-color);
-    }
-
-    &.narrow {
-      height: var(--button-height-narrow);
-    }
-
-    &.high {
-      height: var(--button-height-high);
-    }
+    height: ${({ buttonStyle }) => {
+      if (buttonStyle === "narrow") {
+        return "var(--button-height-narrow)";
+      }
+      return "var(--button-height)";
+    }};
+    padding: ${({ buttonStyle }) => {
+      if (buttonStyle === "narrow") {
+        return "10px 12px";
+      }
+      return "18px 20px";
+    }};
+    color: ${({ variant, disabled }) => {
+      if (variant === "outline") {
+        return "var(--text-color)";
+      }
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-color)";
+      }
+      return "var(--inverse-text-color)";
+    }};
+    background-color: ${({ variant, disabled }) => {
+      if (variant === "outline") {
+        return "var(--inverse-text-color)";
+      }
+      if (disabled) {
+        return "var(--button-disabled-bg-color)";
+      }
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-bg-color)";
+      }
+      return "var(--link-color)";
+    }};
+    outline: ${({ variant }) => {
+      if (variant === "outline") {
+        return "1px solid var(--border-color)";
+      }
+      return "none";
+    }};
 
     &:active,
     &.active {
-      background-color: var(--link-active-hover-color);
-      color: var(--inverse-text-color);
+      color: ${({ variant }) => {
+        if (variant === "outline") {
+          return "var(--text-color)";
+        }
+        return "var(--inverse-text-color)";
+      }};
+      background-color: ${({ variant, disabled }) => {
+        if (variant === "outline") {
+          return "var(--inverse-text-color)";
+        }
+        if (disabled) {
+          return "var(--button-disabled-bg-color)";
+        }
+        return "var(--link-color)";
+      }};
+      outline: ${({ variant }) => {
+        if (variant === "outline") {
+          return "1px solid var(--hover-border-color)";
+        }
+        return "none";
+      }};
     }
 
     &:hover {
-      color: var(--inverse-text-color);
-      background-color: var(--link-hover-color);
+      color: ${({ variant }) => {
+        if (variant === "outline") {
+          return "var(--text-color)";
+        }
+        return "var(--inverse-text-color)";
+      }};
+      background-color: ${({ variant, disabled }) => {
+        if (variant === "outline") {
+          return "var(--inverse-text-color)";
+        }
+        if (disabled) {
+          return "var(--button-disabled-bg-color)";
+        }
+        return "var(--link-hover-color)";
+      }};
+      outline: ${({ variant }) => {
+        if (variant === "outline") {
+          return "1px solid var(--hover-border-color)";
+        }
+        return "none";
+      }};
       text-decoration: none;
 
       .anchor-btn__icon.translate-x {
@@ -69,23 +127,14 @@ const baseStyles = css`
     }
   }
 `;
-
-const Anchor = styled.a`
-  ${baseStyles}
-`;
-const Button = styled.button`
-  ${baseStyles}
-`;
-
 const AnchorButtonText = styled.span`
    {
-    padding: 0 8px;
+    padding: 0 4px;
   }
 `;
-
 const AnchorButtonIcon = styled.span`
    {
-    padding: 0 8px;
+    padding: 0 4px;
 
     svg {
       display: block;
@@ -138,8 +187,9 @@ export default function ButtonAnchor({
   buttonStyle,
   additionalClass,
   external,
+  disabled,
 }) {
-  const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${additionalClass}`;
+  const btnClasses = `anchor-btn ${additionalClass || ""}`;
   const relation = [];
   let target = false;
   if (external) {
@@ -147,24 +197,21 @@ export default function ButtonAnchor({
     relation.push("noopener");
   }
 
-  if (url) {
-    return (
-      <Anchor
-        className={btnClasses}
-        href={url}
-        name={name}
-        download={download}
-        external={external}
-        target={target || undefined}
-        rel={relation}
-        onClick={onClick}
-      >
-        {children}
-      </Anchor>
-    );
-  }
   return (
-    <Button className={btnClasses} name={name} onClick={onClick}>
+    <Button
+      as={url ? "a" : ""}
+      className={btnClasses}
+      href={url}
+      variant={variant}
+      disabled={!url ? disabled : undefined}
+      name={name}
+      download={download}
+      external={external}
+      buttonStyle={buttonStyle}
+      target={target || undefined}
+      rel={url ? relation : undefined}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );
@@ -183,9 +230,10 @@ ButtonAnchor.propTypes = {
   name: PropTypes.string,
   download: PropTypes.bool,
   external: PropTypes.bool,
-  buttonStyle: PropTypes.oneOf(["default", "narrow", "high"]),
+  buttonStyle: PropTypes.oneOf(["default", "narrow"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
   additionalClass: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 ButtonAnchor.defaultProps = {
@@ -197,4 +245,5 @@ ButtonAnchor.defaultProps = {
   variant: "primary",
   buttonStyle: "default",
   additionalClass: undefined,
+  disabled: false,
 };
