@@ -19,7 +19,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-storybook": "^0.5.11",
     "http-proxy-middleware": "^2.0.6",
-    "i18next": "^21.6.15",
+    "i18next": "^21.6.16",
     "jquery": "3.6.0",
     "jquery-mask-plugin": "^1.14.16",
     "popper.js": "^1.16.1",
