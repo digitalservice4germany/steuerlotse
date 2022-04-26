@@ -6,14 +6,10 @@ export default {
   title: "Content Pages/KrankheitskostenPage",
   component: KrankheitsKostenInfoPage,
   decorators: contentPageDecorator,
-  layout: "padded",
-  args: {
-    fscRequestUrl: "/unlock_code_request/step/data_input?link_overview=False",
-  },
 };
 
-function Template(args) {
-  return <KrankheitsKostenInfoPage {...args} />;
+function Template() {
+  return <KrankheitsKostenInfoPage />;
 }
 
 export const Default = Template.bind({});
