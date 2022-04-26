@@ -1,13 +1,6 @@
 {% extends 'eligibility/form_full_width.html' %}
 {% import "macros.html" as macros %}
 
-{% block pre_step_intro %}
-    <div class="pre-intro-div">
-        <p class="pre-intro-header">{{ _('eligibility.marital_status.pre_title.header') }}</p>
-        <p>{{ _('eligibility.marital_status.pre_title.text') }}</p>
-    </div>
-{% endblock %}
-
 {% block form_content %}
     {{ super() }}
     <div id="marital_status_widowed_note" class="hidden mt-4">

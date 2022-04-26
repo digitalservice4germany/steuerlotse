@@ -10,7 +10,7 @@
             'paragraphs': [
                 (_('info-stl.card-who.p1-content')),
                 (_('info-stl.card-who.p2-content')),
-                (_('info-stl.card-who.p3-content', link=url_for('eligibility', step='start'))),
+                (_('info-stl.card-who.p3-content', link=url_for('eligibility', step='first_input_step'))),
             ],
             'list-items': None,
         },
@@ -20,7 +20,7 @@
                 (_('info-stl.card-process.p1-content')),
             ],
             'list-items': [
-                _('info-stl.card-process.list-item-1', link=url_for('eligibility', step='start')),
+                _('info-stl.card-process.list-item-1', link=url_for('eligibility', step='first_input_step')),
                 _('info-stl.card-process.list-item-2', link=url_for('unlock_code_request', step='start')),
                 _('info-stl.card-process.list-item-3'),
                 _('info-stl.card-process.list-item-4', link=url_for('unlock_code_activation', step='start')),
@@ -84,7 +84,7 @@
                             <li class="mt-1">{{ _('landing.hero-list-item-3') }}</li>
                         </ul>
                         <p class="mt-4 font-weight-bold">{{ _('landing.hero-check-use-desc') }}</p>
-                        {{ components.primaryButtonWithTracking( text=_('landing.hero-check-use-button'), url=url_for('eligibility', step='start'), target=_('internal-linking.source.target.eligibility'), source=_('internal-linking.source.landing.cta'), plausible_domain_set=plausible_domain is not none) }}
+                        {{ components.primaryButtonWithTracking( text=_('landing.hero-check-use-button'), url=url_for('eligibility', step='first_input_step'), target=_('internal-linking.source.target.eligibility'), source=_('internal-linking.source.landing.cta'), plausible_domain_set=plausible_domain is not none) }}
                     </div>
                         <div class="hero__inner_image">
                             <picture>
@@ -105,7 +105,7 @@
         <div class="landing__section pb-0 g-0">
             <div class="landing__grid">
                 {{ components.teaserCard(
-                    url=url_for('eligibility', step='start'),
+                    url=url_for('eligibility', step='first_input_step'),
                     title= _('landing.card1.title'),
                     description=_('landing.card1.desc'),
                     img_url=static_url_for('static', filename='icons/arrow_left.svg'),
