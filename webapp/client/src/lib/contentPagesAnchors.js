@@ -3,19 +3,19 @@ import { t } from "i18next";
 const anchorList = [
   {
     text: t("ContentPagesAnchors.Krankheitskosten.text"),
-    url: t("ContentPagesAnchors.Krankheitskosten.url"),
+    url: "/krankheitskosten",
   },
   {
     text: t("ContentPagesAnchors.Vorsorgeaufwendungen.text"),
-    url: t("ContentPagesAnchors.Vorsorgeaufwendungen.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
-    url: t("ContentPagesAnchors.Pflegekosten.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Behinderung.text"),
-    url: t("ContentPagesAnchors.Behinderung.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Bestattungskosten.text"),
@@ -23,29 +23,34 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Belastungen.text"),
-    url: t("ContentPagesAnchors.Belastungen.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Dienstleistungen.text"),
-    url: t("ContentPagesAnchors.Dienstleistungen.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Handwerkerleistungen.text"),
-    url: t("ContentPagesAnchors.Handwerkerleistungen.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Spenden.text"),
-    url: t("ContentPagesAnchors.Spenden.url"),
+    url: "/#",
   },
   {
     text: t("ContentPagesAnchors.Kirchensteuer.text"),
-    url: t("ContentPagesAnchors.Kirchensteuer.url"),
+    url: "/#",
   },
 ];
 
 const anchorBack = {
   text: t("anchorBackUebersicht.text"),
-  url: t("anchorBackUebersicht.url"),
+  url: "/#",
 };
 
-export { anchorList, anchorBack };
+const anchorAnmelden = {
+  text: t("anchorButton.anmelden.text"),
+  url: "/unlock_code_request/step/data_input?link_overview=False",
+};
+
+export { anchorList, anchorBack, anchorAnmelden };

@@ -479,43 +479,33 @@ const translations = {
   ContentPagesAnchors: {
     Krankheitskosten: {
       text: "Krankheitskosten",
-      url: "/krankheitskosten",
     },
     Vorsorgeaufwendungen: {
       text: "Vorsorgeaufwendungen",
-      url: "/#",
     },
     Pflegekosten: {
       text: "Pflegekosten",
-      url: "/#",
     },
     Behinderung: {
       text: "Kosten aufgrund einer Behinderung",
-      url: "/#",
     },
     Bestattungskosten: {
       text: "Bestattungskosten",
-      url: "/#",
     },
     Belastungen: {
       text: "Sonstige außergewöhnliche Belastungen",
-      url: "/#",
     },
     Dienstleistungen: {
       text: "Haushaltsnahe Dienstleistungen",
-      url: "/#",
     },
     Handwerkerleistungen: {
       text: "Handwerkerleistungen",
-      url: "/#",
     },
     Spenden: {
       text: "Spenden und Mitgliedsbeiträge",
-      url: "/#",
     },
     Kirchensteuer: {
       text: "Kirchensteuer",
-      url: "/#",
     },
   },
   Krankheitskosten: {

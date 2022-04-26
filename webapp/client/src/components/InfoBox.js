@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { t } from "i18next";
 import ButtonAnchor from "./ButtonAnchor";
+import { anchorAnmelden } from "../lib/contentPagesAnchors";
 
 const Box = styled.div`
   background-color: var(--beige-200);
@@ -57,8 +58,8 @@ export default function InfoBox() {
         <TextBox className="info-box__text">
           <BoxHeadline>{t("InfoBox.heading")}</BoxHeadline>
           <BoxText>{t("InfoBox.text")}</BoxText>
-          <ButtonAnchor url={t("anchorButton.anmelden.url")}>
-            {t("anchorButton.anmelden.text")}
+          <ButtonAnchor url={anchorAnmelden.url}>
+            {anchorAnmelden.text}
           </ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">
