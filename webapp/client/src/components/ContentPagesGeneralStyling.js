@@ -26,9 +26,22 @@ export const ListItem = styled.li`
 export const Headline1 = styled.h1`
   padding-bottom: var(--spacing-06);
   margin: 0;
+
+  @media (max-width: 425px) {
+    font-size: var(--text-3xl);
+  }
 `;
 
-export const Headline2 = styled(Headline1)``;
+export const Headline2 = styled(Headline1)`
+  font-size: var(--text-3xl);
+
+  @media (max-width: 768px) {
+    font-size: var(--text-2xl);
+  }
+  @media (max-width: 425px) {
+    font-size: var(--text-medium-big);
+  }
+`;
 
 export const Paragraph = styled.p`
   padding-bottom: ${(props) =>
@@ -37,7 +50,12 @@ export const Paragraph = styled.p`
   margin-bottom: ${(props) =>
     !props.spacingVariant ? 0 : "var(--spacing-03)"};
   font-size: ${(props) =>
-    props.textSizeVariant ? "var(--text-2xl)" : "var(--text-medium)"};
+    props.textSizeVariant ? "var(--text-2xl)" : "var(--text-medium-big)"};
+  max-width: ${(props) => (props.textSizeVariant ? "780px" : "730px")};
+  line-height: 158%;
+  @media (max-width: 425px) {
+    font-size: var(--text-medium-big);
+  }
 `;
 
 export default {

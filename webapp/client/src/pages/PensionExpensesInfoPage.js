@@ -77,18 +77,23 @@ export default function PensionExpensesInfoPage() {
         <Paragraph textSizeVariant>
           {t("Vorsorgeaufwendungen.Paragraph1.Text")}
         </Paragraph>
-        <Headline2>{t("Vorsorgeaufwendungen.Paragraph2.Heading")}</Headline2>
-        <List>{listDeductablesItemsMap}</List>
-        <Headline2>{t("Vorsorgeaufwendungen.Paragraph3.Heading")}</Headline2>
-
-        <List>
+        <Headline2 textSizeVariant>
+          {t("Vorsorgeaufwendungen.Paragraph2.Heading")}
+        </Headline2>
+        <List aria-label="first-list">{listDeductablesItemsMap}</List>
+        <Headline2 textSizeVariant>
+          {t("Vorsorgeaufwendungen.Paragraph3.Heading")}
+        </Headline2>
+        <List aria-label="second-list">
           <Paragraph spacingVariant>
             {t("Vorsorgeaufwendungen.Paragraph3.Text")}
           </Paragraph>
           {listNonDeductablesItemsMap}
         </List>
-        <Headline2>{t("Vorsorgeaufwendungen.Paragraph4.Heading")}</Headline2>
-        <List>{anchorListItemsMap}</List>
+        <Headline2 textSizeVariant>
+          {t("Vorsorgeaufwendungen.Paragraph4.Heading")}
+        </Headline2>
+        <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
       <InfoBox />
     </>
