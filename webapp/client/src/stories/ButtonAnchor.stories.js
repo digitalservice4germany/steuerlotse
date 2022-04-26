@@ -10,7 +10,7 @@ export default {
   title: "Anchor Elements/Button Anchor",
   component: ButtonAnchor,
   args: {
-    children: "Abmelden",
+    children: <Text>Abmelden</Text>,
   },
   decorators: baseDecorator,
 };
@@ -30,19 +30,14 @@ export const Download = Template.bind({});
 Download.args = {
   ...Outline.args,
   download: true,
-  children: "Download",
+  children: <Text>Download</Text>,
   url: "#",
 };
 
 export const Narrow = Template.bind({});
 Narrow.args = {
   buttonStyle: "narrow",
-  children: "Facebook",
-};
-
-export const High = Template.bind({});
-High.args = {
-  buttonStyle: "high",
+  children: <Text>Facebook</Text>,
 };
 
 export const WithIcon = Template.bind({});
@@ -66,10 +61,9 @@ WithTextIconAndHoverEffect.args = {
   ),
 };
 
-export const OutlineHighWithIconLeft = Template.bind({});
-OutlineHighWithIconLeft.args = {
+export const OutlineWithIconLeft = Template.bind({});
+OutlineWithIconLeft.args = {
   variant: "outline",
-  ...High,
   children: (
     <>
       <Icon>

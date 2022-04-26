@@ -113,9 +113,8 @@
   --back-link-size: 1.5rem;
   --header-navigation-height: var(--spacing-09);
 
-  --button-height: 56px;
-  --button-height-narrow: 36px;
-  --button-height-high: 64px;
+  --button-height: 64px;
+  --button-height-narrow: 48px;
 
   --transition-behaviour: 0.25s;
   --transition-time: ease-in-out;

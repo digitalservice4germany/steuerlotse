@@ -18,7 +18,7 @@ const Button = styled.button`
     cursor: pointer;
     text-decoration: none;
     border: none;
-    padding: 18px 16px;
+    padding: 18px 20px;
     transition: color var(--transition-behaviour) var(--transition-time),
       background-color var(--transition-behaviour) var(--transition-time),
       background var(--transition-behaviour) var(--transition-time);
@@ -31,10 +31,7 @@ const Button = styled.button`
 
     &.narrow {
       height: var(--button-height-narrow);
-    }
-
-    &.high {
-      height: var(--button-height-high);
+      padding: 10px 12px;
     }
 
     &:active,
@@ -71,12 +68,12 @@ const Button = styled.button`
 `;
 const AnchorButtonText = styled.span`
    {
-    padding: 0 8px;
+    padding: 0 4px;
   }
 `;
 const AnchorButtonIcon = styled.span`
    {
-    padding: 0 8px;
+    padding: 0 4px;
 
     svg {
       display: block;
@@ -170,7 +167,7 @@ ButtonAnchor.propTypes = {
   name: PropTypes.string,
   download: PropTypes.bool,
   external: PropTypes.bool,
-  buttonStyle: PropTypes.oneOf(["default", "narrow", "high"]),
+  buttonStyle: PropTypes.oneOf(["default", "narrow"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
   additionalClass: PropTypes.string,
 };
