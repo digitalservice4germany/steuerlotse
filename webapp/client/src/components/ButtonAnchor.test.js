@@ -31,33 +31,6 @@ describe("ButtonAnchor", () => {
     expect(buttonAnchor).toHaveAttribute("href", "url/some/link/path");
   });
 
-  it("should render a outline anchor button", () => {
-    setup({
-      variant: "outline",
-    });
-    const buttonAnchor = screen.getByText("anchor text");
-
-    expect(buttonAnchor).toHaveClass("outline");
-  });
-
-  it("should render a narrow anchor button", () => {
-    setup({
-      buttonStyle: "narrow",
-    });
-    const buttonAnchor = screen.getByText("anchor text");
-
-    expect(buttonAnchor).toHaveClass("narrow");
-  });
-
-  it("should render a high anchor button", () => {
-    setup({
-      buttonStyle: "high",
-    });
-    const buttonAnchor = screen.getByText("anchor text");
-
-    expect(buttonAnchor).toHaveClass("high");
-  });
-
   it("should render additional class", () => {
     setup({
       additionalClass: "additional-class",

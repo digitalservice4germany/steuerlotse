@@ -9,30 +9,31 @@ const Button = styled.button`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: var(--button-height);
+    height: ${(props) =>
+      props.buttonStyle === "narrow"
+        ? "var(--button-height-narrow)"
+        : "var(--button-height)"};
+    padding: ${(props) =>
+      props.buttonStyle === "narrow" ? "10px 12px" : "18px 20px"};
     font-size: var(--text-medium);
     font-family: var(--font-bold);
     line-height: 1;
-    color: var(--inverse-text-color);
-    background-color: var(--link-color);
+    color: ${(props) =>
+      props.variant === "outline"
+        ? "var(--text-color)"
+        : "var(--inverse-text-color)"};
+    background-color: ${(props) =>
+      props.variant === "outline"
+        ? "var(--inverse-text-color)"
+        : "var(--link-color)"};
+    outline: ${(props) =>
+      props.variant === "outline" ? "1px solid var(--border-color)" : "none"};
     cursor: pointer;
     text-decoration: none;
     border: none;
-    padding: 18px 20px;
     transition: color var(--transition-behaviour) var(--transition-time),
       background-color var(--transition-behaviour) var(--transition-time),
       background var(--transition-behaviour) var(--transition-time);
-
-    &.outline {
-      color: var(--text-color);
-      background-color: var(--inverse-text-color);
-      outline: 1px solid var(--border-color);
-    }
-
-    &.narrow {
-      height: var(--button-height-narrow);
-      padding: 10px 12px;
-    }
 
     &:active,
     &.active {
@@ -41,8 +42,18 @@ const Button = styled.button`
     }
 
     &:hover {
-      color: var(--inverse-text-color);
-      background-color: var(--link-hover-color);
+      color: ${(props) =>
+        props.variant === "outline"
+          ? "var(--text-color)"
+          : "var(--inverse-text-color)"};
+      background-color: ${(props) =>
+        props.variant === "outline"
+          ? "var(--inverse-text-color)"
+          : "var(--link-hover-color)"};
+      outline: ${(props) =>
+        props.variant === "outline"
+          ? "1px solid var(--hover-border-color)"
+          : "none"};
       text-decoration: none;
 
       .anchor-btn__icon.translate-x {
@@ -127,9 +138,7 @@ export default function ButtonAnchor({
   additionalClass,
   external,
 }) {
-  const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${
-    additionalClass || ""
-  }`;
+  const btnClasses = `anchor-btn ${additionalClass || ""}`;
   const relation = [];
   let target = false;
   if (external) {
@@ -142,9 +151,11 @@ export default function ButtonAnchor({
       as={url ? "a" : ""}
       className={btnClasses}
       href={url}
+      variant={variant}
       name={name}
       download={download}
       external={external}
+      buttonStyle={buttonStyle}
       target={target || undefined}
       rel={url ? relation : undefined}
       onClick={onClick}
@@ -168,7 +179,7 @@ ButtonAnchor.propTypes = {
   download: PropTypes.bool,
   external: PropTypes.bool,
   buttonStyle: PropTypes.oneOf(["default", "narrow"]),
-  variant: PropTypes.oneOf(["primary", "outline"]),
+  variant: PropTypes.oneOf(["primary", "outline", "disabled"]),
   additionalClass: PropTypes.string,
 };
 

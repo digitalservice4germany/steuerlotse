@@ -26,6 +26,11 @@ Outline.args = {
   variant: "outline",
 };
 
+export const Disabled = Template.bind({});
+Disabled.args = {
+  variant: "disabled",
+};
+
 export const Download = Template.bind({});
 Download.args = {
   ...Outline.args,
