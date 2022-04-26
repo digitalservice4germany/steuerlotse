@@ -1,9 +1,11 @@
 import React from "react";
 import FilingFailurePage from "../pages/FilingFailurePage";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/FilingFailurePageWithErrors",
   component: FilingFailurePage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

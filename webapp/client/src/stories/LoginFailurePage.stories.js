@@ -1,9 +1,11 @@
 import React from "react";
 import LoginFailurePage from "../pages/LoginFailurePage";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/LoginFailure",
   component: LoginFailurePage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

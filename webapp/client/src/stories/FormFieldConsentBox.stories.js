@@ -3,10 +3,12 @@ import React from "react";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Form Fields/ConsentBox",
   component: FormFieldConsentBox,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

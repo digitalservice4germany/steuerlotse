@@ -1,9 +1,11 @@
 import React from "react";
 import FilingSuccessPage from "../pages/FilingSuccessPage";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/FilingSuccessPage",
   component: FilingSuccessPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {
