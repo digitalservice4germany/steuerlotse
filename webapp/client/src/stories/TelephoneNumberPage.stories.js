@@ -2,10 +2,12 @@ import React from "react";
 
 import TelephoneNumberPage from "../pages/TelephoneNumberPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/TelephoneNumber",
   component: TelephoneNumberPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

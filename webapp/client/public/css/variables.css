@@ -1,5 +1,8 @@
 :root {
   /* Colors */
+
+  --beige-200: #F4F0EB;
+
   --text-color: #0b0c0c;
   --secondary-text-color: #545454;
   --inverse-text-color: #ffffff;
@@ -60,6 +63,7 @@
   --text-2xl: 1.625rem;
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
+  --text-5xl: 2.5rem;
 
   /* Font Weight */
   --font-normal: 400;
@@ -91,6 +95,7 @@
   --spacing-09: 3.75rem;
   --spacing-10: 5.625rem;
   --spacing-11: 7.5rem;
+  --spacing-12: 10rem;
 
   /* Input Field Widths */
   --input-width-2: 3.5rem;

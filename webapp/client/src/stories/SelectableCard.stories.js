@@ -4,10 +4,12 @@ import SelectableCard from "../components/SelectableCard";
 import StepForm from "../components/StepForm";
 import { Default as StepFormDefault } from "./StepForm.stories";
 import vorsorgeIcon from "../assets/icons/vorsorge_icon.svg";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Form Fields/SelectableCard",
   component: SelectableCard,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

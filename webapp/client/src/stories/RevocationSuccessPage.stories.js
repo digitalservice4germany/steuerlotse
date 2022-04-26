@@ -1,9 +1,11 @@
 import React from "react";
 import RevocationSuccessPage from "../pages/RevocationSuccessPage";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/RevocationSuccess",
   component: RevocationSuccessPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

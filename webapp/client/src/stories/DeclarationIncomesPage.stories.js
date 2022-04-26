@@ -2,10 +2,12 @@ import React from "react";
 
 import DeclarationIncomesPage from "../pages/DeclarationIncomesPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/DeclarationIncomes",
   component: DeclarationIncomesPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

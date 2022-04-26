@@ -1,10 +1,12 @@
 import React from "react";
 
 import FormFailureHeader from "../components/FormFailureHeader";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Forms/FailureHeader",
   component: FormFailureHeader,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

@@ -2,10 +2,12 @@ import React from "react";
 
 import HasDisabilityPersonBPage from "../pages/HasDisabilityPersonBPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/HasDisabilityPersonBPage",
   component: HasDisabilityPersonBPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {
