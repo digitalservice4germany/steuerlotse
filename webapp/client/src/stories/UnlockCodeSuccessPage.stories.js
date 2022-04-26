@@ -1,9 +1,11 @@
 import React from "react";
 import UnlockCodeSuccessPage from "../pages/UnlockCodeSuccessPage";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/UnlockCodeSuccess",
   component: UnlockCodeSuccessPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

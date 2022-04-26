@@ -34,6 +34,7 @@ import FilingFailurePage from "./pages/FilingFailurePage";
 import InfoTaxReturnForPensionersPage from "./pages/InfoTaxReturnForPensionersPage";
 import AmbassadorInfoMaterialPage from "./pages/AmbassadorInfoMaterialPage";
 import VorsorgeaufwendungenPage from "./pages/VorsorgeaufwendungenPage";
+import KrankheitsKostenInfoPage from "./pages/KrankheitsKostenInfoPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -67,6 +68,7 @@ const allowedComponents = {
   InfoTaxReturnForPensionersPage,
   AmbassadorInfoMaterialPage,
   VorsorgeaufwendungenPage,
+  KrankheitsKostenInfoPage,
 };
 
 function mountComponent(element) {

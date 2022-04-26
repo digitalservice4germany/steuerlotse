@@ -2,10 +2,12 @@ import React from "react";
 
 import ConfirmationPage from "../pages/ConfirmationPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/Confirmation",
   component: ConfirmationPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

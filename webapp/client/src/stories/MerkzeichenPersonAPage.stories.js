@@ -2,10 +2,12 @@ import React from "react";
 
 import MerkzeichenPersonAPage from "../pages/MerkzeichenPersonAPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/MerkzeichenPersonA",
   component: MerkzeichenPersonAPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

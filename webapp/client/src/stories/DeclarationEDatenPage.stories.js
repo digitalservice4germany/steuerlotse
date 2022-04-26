@@ -2,10 +2,12 @@ import React from "react";
 
 import DeclarationEDatenPage from "../pages/DeclarationEDatenPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/DeclarationEDatenPage",
   component: DeclarationEDatenPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {
