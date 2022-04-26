@@ -28,7 +28,13 @@ Outline.args = {
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  variant: "disabled",
+  disabled: true,
+};
+
+export const OutlineDisabled = Template.bind({});
+OutlineDisabled.args = {
+  ...Outline.args,
+  ...Disabled.args,
 };
 
 export const Download = Template.bind({});

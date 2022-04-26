@@ -9,51 +9,101 @@ const Button = styled.button`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: ${(props) =>
-      props.buttonStyle === "narrow"
-        ? "var(--button-height-narrow)"
-        : "var(--button-height)"};
-    padding: ${(props) =>
-      props.buttonStyle === "narrow" ? "10px 12px" : "18px 20px"};
     font-size: var(--text-medium);
     font-family: var(--font-bold);
     line-height: 1;
-    color: ${(props) =>
-      props.variant === "outline"
-        ? "var(--text-color)"
-        : "var(--inverse-text-color)"};
-    background-color: ${(props) =>
-      props.variant === "outline"
-        ? "var(--inverse-text-color)"
-        : "var(--link-color)"};
-    outline: ${(props) =>
-      props.variant === "outline" ? "1px solid var(--border-color)" : "none"};
-    cursor: pointer;
     text-decoration: none;
     border: none;
     transition: color var(--transition-behaviour) var(--transition-time),
       background-color var(--transition-behaviour) var(--transition-time),
       background var(--transition-behaviour) var(--transition-time);
+    height: ${({ buttonStyle }) => {
+      if (buttonStyle === "narrow") {
+        return "var(--button-height-narrow)";
+      }
+      return "var(--button-height)";
+    }};
+    padding: ${({ buttonStyle }) => {
+      if (buttonStyle === "narrow") {
+        return "10px 12px";
+      }
+      return "18px 20px";
+    }};
+    color: ${({ variant, disabled }) => {
+      if (variant === "outline") {
+        return "var(--text-color)";
+      }
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-color)";
+      }
+      return "var(--inverse-text-color)";
+    }};
+    background-color: ${({ variant, disabled }) => {
+      if (variant === "outline") {
+        return "var(--inverse-text-color)";
+      }
+      if (disabled) {
+        return "var(--button-disabled-bg-color)";
+      }
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-bg-color)";
+      }
+      return "var(--link-color)";
+    }};
+    outline: ${({ variant }) => {
+      if (variant === "outline") {
+        return "1px solid var(--border-color)";
+      }
+      return "none";
+    }};
 
     &:active,
     &.active {
-      background-color: var(--link-active-hover-color);
-      color: var(--inverse-text-color);
+      color: ${({ variant }) => {
+        if (variant === "outline") {
+          return "var(--text-color)";
+        }
+        return "var(--inverse-text-color)";
+      }};
+      background-color: ${({ variant, disabled }) => {
+        if (variant === "outline") {
+          return "var(--inverse-text-color)";
+        }
+        if (disabled) {
+          return "var(--button-disabled-bg-color)";
+        }
+        return "var(--link-color)";
+      }};
+      outline: ${({ variant }) => {
+        if (variant === "outline") {
+          return "1px solid var(--hover-border-color)";
+        }
+        return "none";
+      }};
     }
 
     &:hover {
-      color: ${(props) =>
-        props.variant === "outline"
-          ? "var(--text-color)"
-          : "var(--inverse-text-color)"};
-      background-color: ${(props) =>
-        props.variant === "outline"
-          ? "var(--inverse-text-color)"
-          : "var(--link-hover-color)"};
-      outline: ${(props) =>
-        props.variant === "outline"
-          ? "1px solid var(--hover-border-color)"
-          : "none"};
+      color: ${({ variant }) => {
+        if (variant === "outline") {
+          return "var(--text-color)";
+        }
+        return "var(--inverse-text-color)";
+      }};
+      background-color: ${({ variant, disabled }) => {
+        if (variant === "outline") {
+          return "var(--inverse-text-color)";
+        }
+        if (disabled) {
+          return "var(--button-disabled-bg-color)";
+        }
+        return "var(--link-hover-color)";
+      }};
+      outline: ${({ variant }) => {
+        if (variant === "outline") {
+          return "1px solid var(--hover-border-color)";
+        }
+        return "none";
+      }};
       text-decoration: none;
 
       .anchor-btn__icon.translate-x {
@@ -137,6 +187,7 @@ export default function ButtonAnchor({
   buttonStyle,
   additionalClass,
   external,
+  disabled,
 }) {
   const btnClasses = `anchor-btn ${additionalClass || ""}`;
   const relation = [];
@@ -152,6 +203,7 @@ export default function ButtonAnchor({
       className={btnClasses}
       href={url}
       variant={variant}
+      disabled={!url ? disabled : undefined}
       name={name}
       download={download}
       external={external}
@@ -179,8 +231,9 @@ ButtonAnchor.propTypes = {
   download: PropTypes.bool,
   external: PropTypes.bool,
   buttonStyle: PropTypes.oneOf(["default", "narrow"]),
-  variant: PropTypes.oneOf(["primary", "outline", "disabled"]),
+  variant: PropTypes.oneOf(["primary", "outline"]),
   additionalClass: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 ButtonAnchor.defaultProps = {
@@ -192,4 +245,5 @@ ButtonAnchor.defaultProps = {
   variant: "primary",
   buttonStyle: "default",
   additionalClass: undefined,
+  disabled: false,
 };
