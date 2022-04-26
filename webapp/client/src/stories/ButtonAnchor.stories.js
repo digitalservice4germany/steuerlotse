@@ -10,7 +10,6 @@ export default {
   title: "Anchor Elements/Button Anchor",
   component: ButtonAnchor,
   args: {
-    url: "#",
     children: "Abmelden",
   },
   decorators: baseDecorator,
@@ -32,6 +31,7 @@ Download.args = {
   ...Outline.args,
   download: true,
   children: "Download",
+  url: "#",
 };
 
 export const Narrow = Template.bind({});

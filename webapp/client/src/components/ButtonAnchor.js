@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const baseStyles = css`
+const Button = styled.button`
    {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -69,20 +69,11 @@ const baseStyles = css`
     }
   }
 `;
-
-const Anchor = styled.a`
-  ${baseStyles}
-`;
-const Button = styled.button`
-  ${baseStyles}
-`;
-
 const AnchorButtonText = styled.span`
    {
     padding: 0 8px;
   }
 `;
-
 const AnchorButtonIcon = styled.span`
    {
     padding: 0 8px;
@@ -139,7 +130,9 @@ export default function ButtonAnchor({
   additionalClass,
   external,
 }) {
-  const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${additionalClass}`;
+  const btnClasses = `anchor-btn ${variant} ${buttonStyle} ${
+    additionalClass || ""
+  }`;
   const relation = [];
   let target = false;
   if (external) {
@@ -147,24 +140,18 @@ export default function ButtonAnchor({
     relation.push("noopener");
   }
 
-  if (url) {
-    return (
-      <Anchor
-        className={btnClasses}
-        href={url}
-        name={name}
-        download={download}
-        external={external}
-        target={target || undefined}
-        rel={relation}
-        onClick={onClick}
-      >
-        {children}
-      </Anchor>
-    );
-  }
   return (
-    <Button className={btnClasses} name={name} onClick={onClick}>
+    <Button
+      as={url ? "a" : ""}
+      className={btnClasses}
+      href={url}
+      name={name}
+      download={download}
+      external={external}
+      target={target || undefined}
+      rel={url ? relation : undefined}
+      onClick={onClick}
+    >
       {children}
     </Button>
   );
