@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ShareIcons from "./ShareIcons";
+import ShareButtons from "./ShareButtons";
 
 describe("ShareIcons no plausible", () => {
   const MOCK_PROPS_DEFAULT = {
@@ -12,19 +12,23 @@ describe("ShareIcons no plausible", () => {
   };
 
   beforeEach(() => {
-    render(<ShareIcons {...MOCK_PROPS_DEFAULT} />);
+    render(<ShareButtons {...MOCK_PROPS_DEFAULT} />);
   });
 
-  it("should render facebook icon", () => {
-    expect(screen.getByLabelText("facebook")).toBeInTheDocument();
+  it("should render facebook button", () => {
+    expect(screen.getByText("Auf Facebook teilen")).toBeInTheDocument();
   });
 
-  it("should render email icon", () => {
-    expect(screen.getByLabelText("email")).toBeInTheDocument();
+  it("should render email button", () => {
+    expect(screen.getByText("E-Mail schreiben")).toBeInTheDocument();
   });
 
-  it("should not render whatsapp icon", () => {
-    expect(screen.queryByLabelText("whatsapp")).not.toBeInTheDocument();
+  it("should render copy button", () => {
+    expect(screen.getByText("Link kopieren")).toBeInTheDocument();
+  });
+
+  it("should not render whatsapp button", () => {
+    expect(screen.queryByText("In Whatsapp senden")).not.toBeInTheDocument();
   });
 });
 
@@ -39,12 +43,12 @@ describe("ShareIcons with plausible", () => {
   };
 
   beforeEach(() => {
-    window.plausible = jest.fn().mockReturnValue({ plausible: jest.fn() });
-    render(<ShareIcons {...MOCK_PROPS_PLAUSIBLE} />);
+    window.plausible = jest.fn();
+    render(<ShareButtons {...MOCK_PROPS_PLAUSIBLE} />);
   });
 
   it("should add plausible goal for facebook icon", async () => {
-    await user.click(screen.getByLabelText("facebook"));
+    await user.click(screen.getByText("Auf Facebook teilen"));
 
     expect(window.plausible).toHaveBeenCalledWith("Facebook icon clicked", {
       method: MOCK_PROPS_PLAUSIBLE.sourcePage,
@@ -52,7 +56,7 @@ describe("ShareIcons with plausible", () => {
   });
 
   it("should add plausible goal for email icon", async () => {
-    await user.click(screen.getByLabelText("email"));
+    await user.click(screen.getByText("E-Mail schreiben"));
 
     expect(window.plausible).toHaveBeenCalledWith("Email icon clicked", {
       method: MOCK_PROPS_PLAUSIBLE.sourcePage,

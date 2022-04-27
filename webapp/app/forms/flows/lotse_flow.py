@@ -8,6 +8,7 @@ from flask_login import current_user
 from pydantic import ValidationError, MissingError
 from wtforms import SelectField, BooleanField, RadioField
 from wtforms.fields.core import UnboundField
+from requests import RequestException
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
@@ -231,6 +232,10 @@ class LotseMultiStepFlow(MultiStepFlow):
                         'was_successful': False,
                         'eric_response': e.eric_response,
                         'server_response': e.server_response}
+                except RequestException as e:
+                    logger.error(f"Could not send a request to erica: {e}", exc_info=True)
+                    flash(_('flash.erica.dataConnectionError'), 'warn')
+                    render_info.redirect_url = self.url_for_step(StepConfirmation.name)
             else:
                 render_info.additional_info['elster_data'] = {
                     'was_successful': True,
@@ -372,7 +377,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             elif attr in stored_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation &
-                #  get_overview_value_representation     
+                #  get_overview_value_representation
                 label, value = self._generate_value_representation(field, stored_data.get(attr))
                 value = step.get_overview_value_representation(value, stored_data)
                 if value is not None:

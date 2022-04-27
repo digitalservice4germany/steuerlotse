@@ -3,7 +3,7 @@ import React from "react";
 import AnchorButton from "../components/AnchorButton";
 
 export default {
-  title: "Anchor Elements/Button",
+  title: "Anchor Elements/Button -deprecated-",
   component: AnchorButton,
 };
 

@@ -76,8 +76,13 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                     render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
                     flash(_('form.unlock-code-request.failure-intro'), 'warn')
                     pass
-                except (ElsterProcessNotSuccessful, RequestException ):    
+                except ElsterProcessNotSuccessful:
                     logger.info("Could not request unlock code for user", exc_info=True)
+                    render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
+                    flash(_('flash.erica.dataConnectionError'), 'warn')
+                    pass
+                except RequestException as e:
+                    logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
                     pass

@@ -2,10 +2,12 @@ import React from "react";
 
 import TaxNumberPage from "../pages/TaxNumberPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/TaxNumberPage",
   component: TaxNumberPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

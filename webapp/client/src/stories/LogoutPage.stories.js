@@ -1,10 +1,12 @@
 import React from "react";
 
 import LogoutPage from "../pages/LogoutPage";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/LogoutPage",
   component: LogoutPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

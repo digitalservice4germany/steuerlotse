@@ -2,10 +2,12 @@ import React from "react";
 
 import RevocationPage from "../pages/RevocationPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/Revocation",
   component: RevocationPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

@@ -2,10 +2,12 @@ import React from "react";
 
 import PauschbetragPersonAPage from "../pages/PauschbetragPersonAPage";
 import { Default as StepFormDefault } from "./StepForm.stories";
+import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
   title: "Pages/PauschbetragPersonA",
   component: PauschbetragPersonAPage,
+  decorators: baseDecorator,
 };
 
 function Template(args) {

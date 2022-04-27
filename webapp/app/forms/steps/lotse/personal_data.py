@@ -1,3 +1,5 @@
+import logging
+
 from flask import flash, Markup
 from flask_wtf.csrf import generate_csrf
 from pydantic import ValidationError, root_validator
@@ -28,6 +30,7 @@ from app.templates.react_template import render_react_template
 
 from app.config import Config
 
+logger = logging.getLogger(__name__)
 
 class StepSteuernummer(LotseFormSteuerlotseStep):
     name = 'steuernummer'
@@ -92,7 +95,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            
+
             try:
                 tax_offices = request_tax_offices()
                 self.tax_offices = tax_offices
@@ -101,7 +104,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                     choices += [(tax_office.get('bufa_nr'), tax_office.get('name')) for tax_office in
                                 county.get('tax_offices')]
                 self.bufa_nr.choices = choices
-            except RequestException:
+            except RequestException as e:
+                logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                 self.tax_offices = []
                 self.bufa_nr.choices = []
 
@@ -137,7 +141,8 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
 
             try:
                 ValidTaxNumber()(self, self.steuernummer)
-            except RequestException:
+            except RequestException as e:
+                logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                 flash(_('flash.steuernummer.connectionError'), 'warn')
                 return False
             except WTFormsValidationError:
