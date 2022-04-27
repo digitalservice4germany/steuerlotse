@@ -6,6 +6,7 @@ export const ContentWrapper = styled.div`
   margin: 0 auto;
   max-width: var(--main-max-width);
 `;
+
 export const List = styled.ul`
   margin: 0;
   padding: 0 0 var(--spacing-09) 0;

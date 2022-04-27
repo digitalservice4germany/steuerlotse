@@ -356,7 +356,7 @@ def register_request_handlers(app):
     @add_caching_headers
     def PensionExpensesInfoPage():
         return render_react_content_page_template(
-             props=PensionExpensesProps().camelized_dict(), 
+            props=PensionExpensesProps().camelized_dict(), 
             component='PensionExpensesInfoPage')
 
     @app.route('/krankheitskosten', methods=['GET'])
