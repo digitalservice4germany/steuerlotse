@@ -1,10 +1,9 @@
-/* import React from "react";
+import React from "react";
 import styled from "styled-components";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
 // eslint-disable-next-line import/named
 import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
-import StepHeaderButtons from "../components/StepHeaderButtons";
 import AnchorButton from "../components/AnchorButton";
 
 const ContentWrapper = styled.div`
@@ -43,7 +42,6 @@ const Paragraph2 = styled.p`
   padding-top: var(--spacing-06);
   margin: 0;
 `;
-
 
 export default function VorbereitenOverviewPage() {
   const anchorListItemsMap = anchorList
@@ -85,7 +83,7 @@ export default function VorbereitenOverviewPage() {
         <Headline2>{t("Krankheitskosten.Paragraph2.heading")}</Headline2>
         <Paragraph2>{t("Krankheitskosten.Paragraph3.text")}</Paragraph2>
 
-        <AnchorButton 
+        <AnchorButton
           isDownloadLink={true}
           url={"downloadLink"}
           text={t("Krankheitskosten.Paragraph3.text")}
@@ -104,4 +102,4 @@ export default function VorbereitenOverviewPage() {
       <InfoBox />
     </>
   );
-} */
+}
