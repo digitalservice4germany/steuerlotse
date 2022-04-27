@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { within } from "@testing-library/dom";
-import KrankheitsKostenInfoPage from "./KrankheitsKostenInfoPage";
+import MedicalExpensesInfoPage from "./MedicalExpensesInfoPage";
 
 jest.mock("../components/InfoBox", () => ({
   __esModule: true,
@@ -18,13 +18,13 @@ jest.mock("../components/StepHeaderButtons", () => ({
 }));
 
 function setup() {
-  const utils = render(<KrankheitsKostenInfoPage />);
+  const utils = render(<MedicalExpensesInfoPage />);
 
   return { ...utils };
 }
 
-describe("KrankheitsKostenInfoPage", () => {
-  it("should render KrankheitsKostenInfoPage", () => {
+describe("MedicalExpensesInfoPage", () => {
+  it("should render MedicalExpensesInfoPage", () => {
     setup();
 
     const headline1 = screen.getByText("Krankheitskosten");
@@ -45,7 +45,7 @@ describe("KrankheitsKostenInfoPage", () => {
     expect(text1).toBeInTheDocument();
   });
 
-  it("should render the list of KrankheitsKostenInfoPage", () => {
+  it("should render the list of MedicalExpensesInfoPage", () => {
     setup();
 
     const list = screen.getByRole("list", {
@@ -57,7 +57,7 @@ describe("KrankheitsKostenInfoPage", () => {
     expect(items.length).toBe(6);
   });
 
-  it("should render the anchor list of KrankheitsKostenInfoPage", () => {
+  it("should render the anchor list of MedicalExpensesInfoPage", () => {
     setup();
 
     const anchorList = screen.getByRole("list", {

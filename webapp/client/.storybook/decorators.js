@@ -15,7 +15,7 @@ export const contentPageDecorator = [
   (Story) => (
     <div className="main-content--full-width">
       <div className="mt-4">
-        <div className="pt-4 pl-0 pr-0 ml-0 mr-0">
+        <div className="pl-0 pr-0 ml-0 mr-0">
           <Story />
         </div>
       </div>
