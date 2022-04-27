@@ -48,10 +48,6 @@ const Figure = styled.figure`
   img {
     max-width: 500px;
     height: auto;
-
-    @media (max-width: 425px) {
-      max-width: 100%;
-    }
   }
 `;
 

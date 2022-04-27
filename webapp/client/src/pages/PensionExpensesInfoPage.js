@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import InfoBox from "../components/InfoBox";
-// eslint-disable-next-line import/named
 import StepHeaderButtons from "../components/StepHeaderButtons";
+// eslint-disable-next-line import/named
 import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
 import {
   ContentWrapper,
