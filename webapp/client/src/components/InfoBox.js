@@ -35,6 +35,10 @@ const BoxHeadline = styled.h2`
   margin: 0;
   font-size: var(--text-2xl);
 
+  @media (min-width: 768px) {
+    font-size: var(--text-3xl);
+  }
+
   @media (min-width: 1024px) {
     font-size: var(--text-5xl);
   }
