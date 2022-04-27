@@ -612,6 +612,30 @@ const translations = {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
+  CareCostsInfo: {
+    Paragraph1: {
+      Heading: "Pflegekosten",
+      Text: "Pflegekosten gehören zur Kategorie der außergewöhnlichen Belastungen. Hierzu zählen Kosten, die durch die Pflegebedürftigkeit entstanden sind.",
+    },
+    Paragraph2: {
+      Heading: "Beispiele für Pflegekosten",
+      ListItem1: "Unterbringung in einem Pflegeheim",
+      ListItem2: "Kosten zur Beschäftigung einer ambulanten Pflegekraft",
+    },
+    Paragraph3: {
+      Heading: "Nachweise",
+      Text: "Die Pflegebedürftigkeit muss nachgewiesen werden. Dies kann mit der Bescheinigung der Pflegekasse oder einer privaten Pflegeversicherung gemacht werden. Auch der Schwerbehindertenausweis dient als Nachweis, wenn das Merkzeichen H vorliegt.",
+    },
+    Paragraph4: {
+      Heading: "Die zumutbare Belastung",
+      Text:
+        "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+        " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
+    Paragraph5: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
 };
 
 export default translations;
