@@ -210,6 +210,7 @@ class MedicalExpensesInfoPageProps(ComponentProps):
 
 
 class CareCostsInfoPageProps(ComponentProps):
+    pass
 
 
 class FuneralExpensesInfoPageProps(ComponentProps):
