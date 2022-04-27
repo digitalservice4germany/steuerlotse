@@ -29,7 +29,11 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
+<<<<<<< HEAD
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, CareCostsInfoPageProps
+=======
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, FuneralExpensesInfoPageProps
+>>>>>>> bff7fce (feat(pages): add funeral expenses page)
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -354,14 +358,14 @@ def register_request_handlers(app):
 
     @app.route('/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
-    def PensionExpensesInfoPage():
+    def pension_expenses_info():
         return render_react_content_page_template(
             props=PensionExpensesProps().camelized_dict(), 
             component='PensionExpensesInfoPage')
 
     @app.route('/krankheitskosten', methods=['GET'])
     @add_caching_headers
-    def krankheits_kosten_info():
+    def medical_expenses_info():
         return render_react_content_page_template(
             props=MedicalExpensesInfoPageProps().camelized_dict(),
             component='MedicalExpensesInfoPage')
@@ -372,6 +376,13 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=CareCostsInfoPageProps().camelized_dict(),
             component='CareCostsInfoPage')        
+
+    @app.route('/bestattungskosten', methods=['GET'])
+    @add_caching_headers
+    def funeral_expenses_info():
+        return render_react_content_page_template(
+            props=FuneralExpensesInfoPageProps().camelized_dict(),
+            component='FuneralExpensesInfoPage')
 
     @app.route('/ping')
     def ping():

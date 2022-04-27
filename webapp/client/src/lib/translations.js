@@ -508,6 +508,47 @@ const translations = {
       text: "Kirchensteuer",
     },
   },
+  Bestattungskosten: {
+    Section1: {
+      heading: "Bestattungskosten",
+      text:
+        "Bestattungskosten zählen zur Kategorie der außergewöhnlichen Belastungen. Die Kosten können allerdings " +
+        "nur insoweit abgesetzt werden, wie diese das Erbe übersteigen.",
+    },
+    Section2: {
+      heading: "Beispiele für absetzbare Bestattungskosten",
+      text: "Sie können die Kosten angeben, die unmittelbar mit der Bestattung von Angehörigen zusammenhängen. Die entstehenden Kosten weisen Sie mithilfe der entsprechenden Rechnungen nach. Kosten, die Sie absetzen können:",
+      list: {
+        item1:
+          "Kosten für die Trauerfeier wie Gestecke, Trauerhalle, Redner*in/Pfarrer*in, Sargträger, musikalische Darbietung etc.",
+        item2: "Kosten für die Grabstätte",
+        item3:
+          "Weitere Kosten: Darlehenszinsen zur Finanzierung der Beerdigung, Zahlungsrückstände des*der Verstorbenen (Miete, Strom etc.)",
+      },
+    },
+    Section3: {
+      heading: "Nicht absetzbare Bestattungskosten",
+      text: "Folgende Angaben werden steuerlich nicht anerkannt:",
+      list: {
+        item1: "Kosten für Trauerkleidung",
+        item2: "Bewirtung der Trauergäste",
+        item3: "Reisekosten anlässlich der Bestattung",
+        item4: "Kosten für die laufende Grabpflege",
+      },
+    },
+    Section4: {
+      heading: "Die zumutbare Belastung",
+      text:
+        "Die Absetzbarkeit von Bestattungskosten hat wie alle außergewöhnlichen Belastungen eine Hürde: " +
+        "Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      text2:
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von " +
+        "Ihrem Finanzamt automatisch berechnet.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   Krankheitskosten: {
     Paragraph1: {
       heading: "Krankheitskosten",

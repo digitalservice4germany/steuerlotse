@@ -200,11 +200,17 @@ class InfoTaxReturnForPensionersProps(ComponentPlausibleProps):
 class AmbassadorInfoMaterialProps(ComponentPlausibleProps):
     pass
 
+
 class PensionExpensesProps(ComponentProps):
     pass
+
 
 class MedicalExpensesInfoPageProps(ComponentProps):
     pass
 
+
 class CareCostsInfoPageProps(ComponentProps):
+
+
+class FuneralExpensesInfoPageProps(ComponentProps):
     pass
