@@ -205,3 +205,6 @@ class PensionExpensesProps(ComponentProps):
 
 class MedicalExpensesInfoPageProps(ComponentProps):
     pass
+
+class CareCostsInfoPageProps(ComponentProps):
+    pass

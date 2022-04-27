@@ -11,7 +11,7 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
-    url: "/#",
+    url: "/pflegekosten",
   },
   {
     text: t("ContentPagesAnchors.Behinderung.text"),
