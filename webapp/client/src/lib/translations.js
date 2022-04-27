@@ -584,6 +584,34 @@ const translations = {
     faq: "Häufig gestellte Fragen",
     contactUs: "Kontaktieren Sie uns",
   },
+  Vorsorgeaufwendungen: {
+    Paragraph1: {
+      Heading: "Vorsorgeaufwendungen",
+      Text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Die Höhe der Beiträge steht in den Versicherungsunterlagen oder kann zum Beispiel Kontoauszügen entnommen werden.",
+    },
+    Paragraph2: {
+      Heading:
+        "Beispiele für absetzbare Versicherungen als Vorsorgeaufwendungen",
+      Text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Die Höhe der Beiträge steht in den Versicherungsunterlagen oder kann zum Beispiel Kontoauszügen entnommen werden.",
+      ListItem1: "Gesetzliche Krankenversicherungen",
+      ListItem2: "Pflegeversicherungen",
+      ListItem3: "Arbeitslosenversicherung",
+      ListItem4: "Haftpflichtversicherungen (auch Kfz)",
+      ListItem5: "Krankenzusatzversicherungen",
+      ListItem6: "Risikolebensversicherung",
+    },
+    Paragraph3: {
+      Heading: "Nicht absetzbare Versicherungen",
+      Text: "Nicht absetzen können Sie Sachversicherungen, die Gegenstände oder Inventar schützen. Dazu zählen:",
+      ListItem1: "Kaskoversicherungen",
+      ListItem2: "Hausratversicherungen",
+      ListItem3: "Gebäudeversicherungen und",
+      ListItem4: "Rechtsschutzversicherungen",
+    },
+    Paragraph4: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
 };
 
 export default translations;

@@ -7,7 +7,7 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Vorsorgeaufwendungen.text"),
-    url: "/#",
+    url: "/vorsorgeaufwendungen",
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
