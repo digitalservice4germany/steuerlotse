@@ -36,6 +36,7 @@ import AmbassadorInfoMaterialPage from "./pages/AmbassadorInfoMaterialPage";
 import MedicalExpensesInfoPage from "./pages/MedicalExpensesInfoPage";
 import PensionExpensesInfoPage from "./pages/PensionExpensesInfoPage";
 import CareCostsInfoPage from "./pages/CareCostsInfoPage";
+import FuneralExpensesInfoPage from "./pages/FuneralExpensesInfoPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -71,6 +72,7 @@ const allowedComponents = {
   MedicalExpensesInfoPage,
   PensionExpensesInfoPage,
   CareCostsInfoPage,
+  FuneralExpensesInfoPage,
 };
 
 function mountComponent(element) {

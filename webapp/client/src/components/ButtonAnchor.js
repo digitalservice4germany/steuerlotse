@@ -59,7 +59,7 @@ const Button = styled.button`
       if (variant === "outline") {
         return "var(--text-color)";
       }
-      return "var(--inverse-text-color)";
+      return "var(--inverse-text-color) !important"; // remove important if base css is refactored
     }};
     background-color: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
