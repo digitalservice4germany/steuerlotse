@@ -14,7 +14,7 @@ const ContentWrapper = styled.div`
 `;
 const List = styled.ul`
   margin: 0;
-  padding: var(--spacing-06) 0 0;
+  padding: var(--spacing-03) 0 0;
 `;
 const AnchorListItem = styled.li`
   padding-top: var(--spacing-01);
@@ -28,14 +28,19 @@ const ListItem = styled.li`
 `;
 const Headline1 = styled.h1`
   margin: 0;
+  padding-bottom: var(--spacing-03);
 `;
 const Headline2 = styled.h2`
   padding-top: var(--spacing-09);
   margin: 0;
 `;
 const Paragraph = styled.p`
-  padding-top: var(--spacing-06);
+  padding-top: var(--spacing-03);
   margin: 0;
+
+  &:first-of-type {
+    font-size: var(--text-medium-big);
+  }
 `;
 
 export default function KrankheitsKostenInfoPage() {

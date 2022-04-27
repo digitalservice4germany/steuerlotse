@@ -2,7 +2,6 @@ import React from "react";
 import ButtonAnchor from "../components/ButtonAnchor";
 import { ReactComponent as PlayIconInverse } from "../assets/icons/DefaultStatePlayIcon.svg";
 import { ReactComponent as VectorRight } from "../assets/icons/vector.svg";
-import { baseDecorator } from "../../.storybook/decorators";
 
 const { Text, Icon } = ButtonAnchor;
 
@@ -12,7 +11,6 @@ export default {
   args: {
     children: <Text>Abmelden</Text>,
   },
-  decorators: baseDecorator,
 };
 
 function Template(args) {
