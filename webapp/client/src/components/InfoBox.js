@@ -50,8 +50,12 @@ const Figure = styled.figure`
   margin: 0;
 
   img {
-    max-width: 500px;
+    max-width: 100%;
     height: auto;
+
+    @media (min-width: 768px) {
+      max-width: 500px;
+    }
   }
 `;
 
