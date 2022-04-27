@@ -654,6 +654,78 @@ const translations = {
       },
     },
   },
+  Spenden: {
+    Section1: {
+      heading: "Spenden und Mitgliedsbeiträge",
+      text: "Spenden und Mitgliedsbeiträge können als Sonderausgaben abgesetzt werden. Wir erklären, wie Sie Spenden absetzen können.",
+    },
+    Section2: {
+      heading: "Spenden und Beiträge für steuerbegünstigte Zwecke",
+      text: "Spenden können nur steuermindernd berücksichtigt werden, wenn sie an steuerbegünstigte Organisationen fließen. Dazu zählen z.B.",
+      list: {
+        item1: "Kirchen",
+        item2: "Stiftungen",
+        item3: "staatliche Museen",
+        item4: "Universitäten oder",
+        item5: "Vereine",
+      },
+      text2:
+        "Ob eine Organisation steuerbegünstigt ist, stellt das Finanzamt fest. Auch Mitgliedsbeiträge an " +
+        "steuerbegünstigte Organisationen können steuermindernd berücksichtigt werden, zum Beispiel Mitgliedsbeiträge " +
+        "für kulturelle Fördervereine.",
+      text3: "Nicht absetzbar sind Mitgliedsbeiträge in Freizeitvereinen wie",
+      list2: {
+        item1: "Sportklubs",
+        item2: "Gesangsvereine",
+        item3: "Vereine für Heimatpflege",
+        item4: "Vereine für Tierzucht",
+        item5: "Kleingartenvereine",
+      },
+    },
+    Section3: {
+      heading: "Spenden an politische Parteien",
+      text:
+        "Auch Spenden an politiche Parteien können Sie absetzen. Zu beachten ist jedoch, dass der Abzug nicht " +
+        "möglich ist, wenn die politische Partei von der staatlichen Parteienfinanzierung ausgeschlossen ist.",
+      text2:
+        "Spenden und Mitgliedsbeiträge an inländische politische Parteien und unabhängige Wählervereinigungen " +
+        "können Sie zu 50 % von der Steuer absetzen. Allerdings bis maximal 825 Euro pro Person bei Ausgaben in Höhe von 1.650 Euro.",
+    },
+    Section4: {
+      heading: "Nachweise",
+      text:
+        "Für einen Spendenabzug benötigen Sie grundsätzlich eine Spendenbescheinigung im Original. Diese sind aber " +
+        "nur auf Anforderung des Finanzamts nachzuweisen.",
+      text2:
+        "Bei Spenden bis 300 Euro reicht den meisten Finanzämtern eine Kopie der Abbuchung vom Kontoauszug aus.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  Kirchensteuer: {
+    Section1: {
+      heading: "Kirchensteuer",
+      text:
+        "Sie  können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben. Diese Daten finden " +
+        "Sie zum Beispiel auf ihrem Einkommensteuerbescheid und Ihrem Vorauszahlungsbescheid, sowie auf Ihrer Lohnsteuerbescheinigung.",
+    },
+    Section2: {
+      heading: "Geleistete Zahlungen",
+      text:
+        "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen. " +
+        "Dazu zählt auch gezahltes Kirchgeld oder Ortskirchensteuer.",
+    },
+    Section3: {
+      heading: "Erhaltene Erstattungen",
+      text:
+        "Haben Sie im letzten Jahr zu viel gezahlte Kirchensteuer erstattet bekommen, kann dies ebenfalls angegeben. " +
+        "Die Summe der erstatteten Kirchensteuer finden Sie zum Beispiel auf dem Steuerbescheid des Vorjahres.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   InfoBox: {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
     text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",

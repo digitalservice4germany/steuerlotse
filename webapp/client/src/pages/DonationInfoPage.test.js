@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { within } from "@testing-library/dom";
-import CraftsmanServicesInfoPage from "./CraftsmanServicesInfoPage";
+import DonationInfoPage from "./DonationInfoPage";
 
 jest.mock("../components/InfoBox", () => ({
   __esModule: true,
@@ -18,34 +18,39 @@ jest.mock("../components/StepHeaderButtons", () => ({
 }));
 
 function setup() {
-  const utils = render(<CraftsmanServicesInfoPage />);
+  const utils = render(<DonationInfoPage />);
 
   return { ...utils };
 }
 
-describe("CraftsmanServicesInfoPage", () => {
-  it("should render CraftsmanServicesInfoPage", () => {
+describe("DonationInfoPage", () => {
+  it("should render DonationInfoPage", () => {
     setup();
 
-    const headline1 = screen.getByText("Handwerkerleistungen");
-    const headline2 = screen.getByText("Beispiele für Handwerkerleistungen");
-    const headline3 = screen.getByText("Rechnungen und Zahlungsweg beachten");
+    const headline1 = screen.getByText("Spenden und Mitgliedsbeiträge");
+    const headline2 = screen.getByText(
+      "Spenden und Beiträge für steuerbegünstigte Zwecke"
+    );
+    const headline3 = screen.getByText("Spenden an politische Parteien");
+    const headline4 = screen.getByText("Nachweise");
+
     const headline5 = screen.getByText(
       "Weitere Ausgaben, die Sie absetzen können"
     );
     const text1 = screen.getByText(
-      "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können",
+      "Spenden und Mitgliedsbeiträge können als Sonderausgaben abgesetzt werden. Wir erklären, wie Sie Spenden absetzen können.",
       { exact: false }
     );
 
     expect(headline1).toBeInTheDocument();
     expect(headline2).toBeInTheDocument();
     expect(headline3).toBeInTheDocument();
+    expect(headline4).toBeInTheDocument();
     expect(headline5).toBeInTheDocument();
     expect(text1).toBeInTheDocument();
   });
 
-  it("should render the list of CraftsmanServicesInfoPage", () => {
+  it("should render the list of DonationInfoPage", () => {
     setup();
 
     const list = screen.getByRole("list", {
@@ -54,10 +59,22 @@ describe("CraftsmanServicesInfoPage", () => {
     const { getAllByRole } = within(list);
     const items = getAllByRole("listitem");
 
-    expect(items.length).toBe(9);
+    expect(items.length).toBe(5);
   });
 
-  it("should render the anchor list of CraftsmanServicesInfoPage", () => {
+  it("should render the 2th list of DonationInfoPage", () => {
+    setup();
+
+    const list = screen.getByRole("list", {
+      name: "simple-list-second",
+    });
+    const { getAllByRole } = within(list);
+    const items = getAllByRole("listitem");
+
+    expect(items.length).toBe(5);
+  });
+
+  it("should render the anchor list of DonationInfoPage", () => {
     setup();
 
     const anchorList = screen.getByRole("list", {
