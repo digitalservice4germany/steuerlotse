@@ -12,6 +12,7 @@ import {
   Headline1,
   Headline2,
   Paragraph,
+  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function CareCostsInfoPage() {
@@ -43,24 +44,14 @@ export default function CareCostsInfoPage() {
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
         <Headline1>{t("CareCostsInfo.Paragraph1.Heading")}</Headline1>
-        <Paragraph textSizeVariant>
-          {t("CareCostsInfo.Paragraph1.Text")}
-        </Paragraph>
-        <Headline2 textSizeVariant>
-          {t("CareCostsInfo.Paragraph2.Heading")}
-        </Headline2>
+        <ParagraphLarge>{t("CareCostsInfo.Paragraph1.Text")}</ParagraphLarge>
+        <Headline2>{t("CareCostsInfo.Paragraph2.Heading")}</Headline2>
         <List aria-label="simple-list">{listCareCostItemsMap}</List>
-        <Headline2 textSizeVariant>
-          {t("CareCostsInfo.Paragraph3.Heading")}
-        </Headline2>
+        <Headline2>{t("CareCostsInfo.Paragraph3.Heading")}</Headline2>
         <Paragraph>{t("CareCostsInfo.Paragraph3.Text")}</Paragraph>
-        <Headline2 textSizeVariant>
-          {t("CareCostsInfo.Paragraph4.Heading")}
-        </Headline2>
+        <Headline2>{t("CareCostsInfo.Paragraph4.Heading")}</Headline2>
         <Paragraph>{t("CareCostsInfo.Paragraph4.Text")}</Paragraph>
-        <Headline2 textSizeVariant>
-          {t("CareCostsInfo.Paragraph5.Heading")}
-        </Headline2>
+        <Headline2>{t("CareCostsInfo.Paragraph5.Heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
       <InfoBox />
