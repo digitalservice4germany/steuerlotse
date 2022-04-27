@@ -508,6 +508,48 @@ const translations = {
       text: "Kirchensteuer",
     },
   },
+  Handwerkerleistungen: {
+    Section1: {
+      heading: "Handwerkerleistungen",
+      text:
+        "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können " +
+        "zu Steuerermäßigungen führen. Die Arbeiten müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt werden.",
+    },
+    Section2: {
+      heading: "Beispiele für Handwerkerleistungen",
+      text:
+        "Viele Handwerkerleistungen bei Renovierungs-, Erhaltungs- und Modernisierungsmaßnahmen können Sie " +
+        "von der Steuer absetzen. Die Arbeitsleistung muss dabei im eigenen Haushalt erbracht worden sein.",
+      list: {
+        item1: "Reparatur in der Wohnung",
+        item2: "Reinigung von Abflussrohren",
+        item3: "Reparatur oder Austausch von Bodenbelägen",
+        item4: "Modernisierung des Badezimmers oder der Einbauküche",
+        item5:
+          "Reparatur, Wartung oder Austausch von Heizungsanlagen, Elektro-, Gas- und Wasserinstallationen",
+        item6: "Schornsteinfegerleistungen",
+        item7: "Arbeiten an Innen- und Außenwänden",
+        item8: "Reinigung von Dachrinnen",
+        item9: "Maßnahmen der Gartengestaltung",
+      },
+      text2:
+        "<bold>Achtung:</bold> Insbesondere bei Handwerkerleistungen ist zu beachten, dass nur der Arbeitslohn, nicht aber " +
+        "die Materialkosten abzugsfähig sind. Prüfen Sie, ob die Rechnungen entsprechend aufgeschlüsselt sind.",
+      text3:
+        "Der Arbeitslohn ist inklusive anfallender Umsatzsteuer abzugsfähig. Wenn in der Rechnung der Arbeitslohn " +
+        "nicht extra ausgewiesen ist, können Sie den Dienstleister bitten, eine neue, detailliertere Rechnung auszustellen.",
+    },
+    Section3: {
+      heading: "Rechnungen und Zahlungsweg beachten",
+      text:
+        "Es muss eine Rechnung vorliegen, die zum Beispiel per Überweisung oder EC-Kartenzahlung beglichen worden " +
+        "ist. Barzahlungen berücksichtigt das Finanzamt nicht! ",
+      text2: "Bewahren Sie immer die entsprechenden Kontoauszüge auf!",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   Bestattungskosten: {
     Section1: {
       heading: "Bestattungskosten",
