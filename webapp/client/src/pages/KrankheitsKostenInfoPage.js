@@ -39,7 +39,7 @@ const Paragraph = styled.p`
   margin: 0;
 
   &:first-of-type {
-    font-size: var(--text-medium-big);
+    font-size: var(--text-2xl);
   }
 `;
 
