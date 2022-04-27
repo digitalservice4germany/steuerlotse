@@ -1,49 +1,21 @@
 import React from "react";
-import styled from "styled-components";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
 // eslint-disable-next-line import/named
 import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import {
+  AnchorListItem,
+  ContentWrapper,
+  Headline1,
+  Headline2,
+  List,
+  ListItem,
+  Paragraph,
+  ParagraphLarge,
+} from "../components/ContentPagesGeneralStyling";
 
-const ContentWrapper = styled.div`
-  padding-left: var(--spacing-03);
-  padding-right: var(--spacing-03);
-  margin: 0 auto;
-  max-width: var(--main-max-width);
-`;
-const List = styled.ul`
-  margin: 0;
-  padding: var(--spacing-03) 0 0;
-`;
-const AnchorListItem = styled.li`
-  padding-top: var(--spacing-01);
-  list-style: none;
-`;
-const ListItem = styled.li`
-  padding-top: var(--spacing-01);
-  list-style-position: inside;
-  padding-left: 1.28571429em;
-  text-indent: -1.28571429em;
-`;
-const Headline1 = styled.h1`
-  margin: 0;
-  padding-bottom: var(--spacing-03);
-`;
-const Headline2 = styled.h2`
-  padding-top: var(--spacing-09);
-  margin: 0;
-`;
-const Paragraph = styled.p`
-  padding-top: var(--spacing-03);
-  margin: 0;
-
-  &:first-of-type {
-    font-size: var(--text-2xl);
-  }
-`;
-
-export default function KrankheitsKostenInfoPage() {
+export default function MedicalExpensesInfoPage() {
   const anchorListItemsMap = anchorList
     .filter((item) => item.text !== "Krankheitskosten")
     .map((anchor) => (
@@ -80,7 +52,7 @@ export default function KrankheitsKostenInfoPage() {
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
         <Headline1>{t("Krankheitskosten.Paragraph1.heading")}</Headline1>
-        <Paragraph>{t("Krankheitskosten.Paragraph1.text")}</Paragraph>
+        <ParagraphLarge>{t("Krankheitskosten.Paragraph1.text")}</ParagraphLarge>
         <Headline2>{t("Krankheitskosten.Paragraph2.heading")}</Headline2>
         <List aria-label="simple-list">{listItemsMap}</List>
         <Headline2>{t("Krankheitskosten.Paragraph3.heading")}</Headline2>

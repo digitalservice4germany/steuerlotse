@@ -12,6 +12,7 @@ import {
   Headline1,
   Headline2,
   Paragraph,
+  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function PensionExpensesInfoPage() {
@@ -74,25 +75,15 @@ export default function PensionExpensesInfoPage() {
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
         <Headline1>{t("Vorsorgeaufwendungen.Paragraph1.Heading")}</Headline1>
-        <Paragraph textSizeVariant>
+        <ParagraphLarge>
           {t("Vorsorgeaufwendungen.Paragraph1.Text")}
-        </Paragraph>
-        <Headline2 textSizeVariant>
-          {t("Vorsorgeaufwendungen.Paragraph2.Heading")}
-        </Headline2>
+        </ParagraphLarge>
+        <Headline2>{t("Vorsorgeaufwendungen.Paragraph2.Heading")}</Headline2>
         <List aria-label="first-list">{listDeductablesItemsMap}</List>
-        <Headline2 textSizeVariant>
-          {t("Vorsorgeaufwendungen.Paragraph3.Heading")}
-        </Headline2>
-        <List aria-label="second-list">
-          <Paragraph spacingVariant>
-            {t("Vorsorgeaufwendungen.Paragraph3.Text")}
-          </Paragraph>
-          {listNonDeductablesItemsMap}
-        </List>
-        <Headline2 textSizeVariant>
-          {t("Vorsorgeaufwendungen.Paragraph4.Heading")}
-        </Headline2>
+        <Headline2>{t("Vorsorgeaufwendungen.Paragraph3.Heading")}</Headline2>
+        <Paragraph>{t("Vorsorgeaufwendungen.Paragraph3.Text")}</Paragraph>
+        <List aria-label="second-list">{listNonDeductablesItemsMap}</List>
+        <Headline2>{t("Vorsorgeaufwendungen.Paragraph4.Heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
       <InfoBox />

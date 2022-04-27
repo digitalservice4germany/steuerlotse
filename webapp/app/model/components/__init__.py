@@ -203,5 +203,5 @@ class AmbassadorInfoMaterialProps(ComponentPlausibleProps):
 class PensionExpensesProps(ComponentProps):
     pass
 
-class KrankheitsKostenInfoPageProps(ComponentProps):
+class MedicalExpensesInfoPageProps(ComponentProps):
     pass
