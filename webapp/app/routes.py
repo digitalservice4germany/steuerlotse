@@ -29,11 +29,7 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-<<<<<<< HEAD
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, CareCostsInfoPageProps
-=======
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, FuneralExpensesInfoPageProps
->>>>>>> bff7fce (feat(pages): add funeral expenses page)
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
