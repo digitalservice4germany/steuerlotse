@@ -60,8 +60,8 @@ WithIcon.args = {
   ),
 };
 
-export const WithTextIconAndHoverEffect = Template.bind({});
-WithTextIconAndHoverEffect.args = {
+export const WithIconHoverEffect = Template.bind({});
+WithIconHoverEffect.args = {
   children: (
     <>
       <Text>Weiter</Text>

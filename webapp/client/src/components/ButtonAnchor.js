@@ -1,5 +1,31 @@
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+const activeStates = css`
+  &:active {
+    color: ${({ variant }) => {
+      if (variant === "outline") {
+        return "var(--text-color)";
+      }
+      return "var(--inverse-text-color)";
+    }};
+    background-color: ${({ variant, disabled }) => {
+      if (variant === "outline") {
+        return "var(--inverse-text-color)";
+      }
+      if (disabled) {
+        return "var(--button-disabled-bg-color)";
+      }
+      return "var(--link-active-hover-color)";
+    }};
+    outline: ${({ variant }) => {
+      if (variant === "outline") {
+        return "1px solid var(--hover-border-color)";
+      }
+      return "none";
+    }};
+  }
+`;
 
 const Button = styled.button`
    {
@@ -29,28 +55,28 @@ const Button = styled.button`
       }
       return "18px 20px";
     }};
-    color: ${({ variant, disabled }) => {
+    color: ${({ variant }) => {
       if (variant === "outline") {
         return "var(--text-color)";
-      }
-      if (disabled && variant === "outline") {
-        return "var(--button-disabled-outline-color)";
       }
       return "var(--inverse-text-color)";
     }};
     background-color: ${({ variant, disabled }) => {
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-bg-color)";
+      }
       if (variant === "outline") {
         return "var(--inverse-text-color)";
       }
       if (disabled) {
         return "var(--button-disabled-bg-color)";
       }
-      if (disabled && variant === "outline") {
-        return "var(--button-disabled-outline-bg-color)";
-      }
       return "var(--link-color)";
     }};
-    outline: ${({ variant }) => {
+    outline: ${({ variant, disabled }) => {
+      if (disabled && variant === "outline") {
+        return "1px solid var(--button-disabled-outline-color)";
+      }
       if (variant === "outline") {
         return "1px solid var(--border-color)";
       }
@@ -65,6 +91,9 @@ const Button = styled.button`
         return "var(--inverse-text-color)";
       }};
       background-color: ${({ variant, disabled }) => {
+        if (disabled && variant === "outline") {
+          return "var(--button-disabled-outline-bg-color)";
+        }
         if (variant === "outline") {
           return "var(--inverse-text-color)";
         }
@@ -73,7 +102,10 @@ const Button = styled.button`
         }
         return "var(--link-hover-color)";
       }};
-      outline: ${({ variant }) => {
+      outline: ${({ variant, disabled }) => {
+        if (disabled && variant === "outline") {
+          return "1px solid var(--button-disabled-outline-color)";
+        }
         if (variant === "outline") {
           return "1px solid var(--hover-border-color)";
         }
@@ -81,34 +113,14 @@ const Button = styled.button`
       }};
       text-decoration: none;
 
-      &:active {
-        color: ${({ variant }) => {
-          if (variant === "outline") {
-            return "var(--text-color)";
-          }
-          return "var(--inverse-text-color)";
-        }};
-        background-color: ${({ variant, disabled }) => {
-          if (variant === "outline") {
-            return "var(--inverse-text-color)";
-          }
-          if (disabled) {
-            return "var(--button-disabled-bg-color)";
-          }
-          return "var(--link-active-hover-color)";
-        }};
-        outline: ${({ variant }) => {
-          if (variant === "outline") {
-            return "1px solid var(--hover-border-color)";
-          }
-          return "none";
-        }};
-      }
+      ${activeStates};
 
       .anchor-btn__icon.translate-x {
         transform: translatex(10%);
       }
     }
+
+    ${activeStates};
 
     &:focus-visible {
       color: var(--focus-text-color);
