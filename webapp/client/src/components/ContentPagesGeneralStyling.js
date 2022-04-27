@@ -9,7 +9,8 @@ export const ContentWrapper = styled.div`
 
 export const List = styled.ul`
   margin: 0;
-  padding: 0 0 var(--spacing-09) 0;
+  padding: var(--spacing-03) 0 0;
+  font-size: var(--text-medium-big);
 `;
 
 export const AnchorListItem = styled.li`
@@ -25,37 +26,34 @@ export const ListItem = styled.li`
 `;
 
 export const Headline1 = styled.h1`
-  padding-bottom: var(--spacing-06);
   margin: 0;
+  padding-bottom: var(--spacing-03);
+  font-size: var(--text-3xl);
 
-  @media (max-width: 425px) {
+  @media (min-width: 768px) {
+    font-size: var(--text-4xl);
+  }
+`;
+
+export const Headline2 = styled.h2`
+  padding-top: var(--spacing-09);
+  margin: 0;
+  font-size: var(--text-2xl);
+
+  @media (min-width: 768px) {
     font-size: var(--text-3xl);
   }
 `;
 
-export const Headline2 = styled(Headline1)`
-  font-size: var(--text-3xl);
-
-  @media (max-width: 768px) {
-    font-size: var(--text-2xl);
-  }
-  @media (max-width: 425px) {
-    font-size: var(--text-medium-big);
-  }
+export const Paragraph = styled.p`
+  padding-top: var(--spacing-03);
+  margin: 0;
+  font-size: var(--text-medium-big);
 `;
 
-export const Paragraph = styled.p`
-  padding-bottom: ${(props) =>
-    props.spacingVariant ? 0 : "var(--spacing-09)"};
-  margin: 0;
-  margin-bottom: ${(props) =>
-    !props.spacingVariant ? 0 : "var(--spacing-03)"};
-  font-size: ${(props) =>
-    props.textSizeVariant ? "var(--text-2xl)" : "var(--text-medium-big)"};
-  max-width: ${(props) => (props.textSizeVariant ? "780px" : "730px")};
-  line-height: 158%;
-  @media (max-width: 425px) {
-    font-size: var(--text-medium-big);
+export const ParagraphLarge = styled(Paragraph)`
+  @media (min-width: 768px) {
+    font-size: var(--text-2xl);
   }
 `;
 
@@ -67,4 +65,5 @@ export default {
   Headline1,
   Headline2,
   Paragraph,
+  ParagraphLarge,
 };

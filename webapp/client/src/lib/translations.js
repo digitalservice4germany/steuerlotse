@@ -508,6 +508,47 @@ const translations = {
       text: "Kirchensteuer",
     },
   },
+  Bestattungskosten: {
+    Section1: {
+      heading: "Bestattungskosten",
+      text:
+        "Bestattungskosten zählen zur Kategorie der außergewöhnlichen Belastungen. Die Kosten können allerdings " +
+        "nur insoweit abgesetzt werden, wie diese das Erbe übersteigen.",
+    },
+    Section2: {
+      heading: "Beispiele für absetzbare Bestattungskosten",
+      text: "Sie können die Kosten angeben, die unmittelbar mit der Bestattung von Angehörigen zusammenhängen. Die entstehenden Kosten weisen Sie mithilfe der entsprechenden Rechnungen nach. Kosten, die Sie absetzen können:",
+      list: {
+        item1:
+          "Kosten für die Trauerfeier wie Gestecke, Trauerhalle, Redner*in/Pfarrer*in, Sargträger, musikalische Darbietung etc.",
+        item2: "Kosten für die Grabstätte",
+        item3:
+          "Weitere Kosten: Darlehenszinsen zur Finanzierung der Beerdigung, Zahlungsrückstände des*der Verstorbenen (Miete, Strom etc.)",
+      },
+    },
+    Section3: {
+      heading: "Nicht absetzbare Bestattungskosten",
+      text: "Folgende Angaben werden steuerlich nicht anerkannt:",
+      list: {
+        item1: "Kosten für Trauerkleidung",
+        item2: "Bewirtung der Trauergäste",
+        item3: "Reisekosten anlässlich der Bestattung",
+        item4: "Kosten für die laufende Grabpflege",
+      },
+    },
+    Section4: {
+      heading: "Die zumutbare Belastung",
+      text:
+        "Die Absetzbarkeit von Bestattungskosten hat wie alle außergewöhnlichen Belastungen eine Hürde: " +
+        "Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      text2:
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von " +
+        "Ihrem Finanzamt automatisch berechnet.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   Krankheitskosten: {
     Paragraph1: {
       heading: "Krankheitskosten",
@@ -652,6 +693,30 @@ const translations = {
       Text: "Sie müssen Nachweise wie eine Kopie des Behindertenausweises oder den Bescheid über die Einstufung als pflegebedürftige Person in die Pflegegrade 4 oder 5 eingereicht werden, falls diese dem Finanzamt nicht bereits vorgelegen haben. ",
     },
     Paragraph8: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  CareCostsInfo: {
+    Paragraph1: {
+      Heading: "Pflegekosten",
+      Text: "Pflegekosten gehören zur Kategorie der außergewöhnlichen Belastungen. Hierzu zählen Kosten, die durch die Pflegebedürftigkeit entstanden sind.",
+    },
+    Paragraph2: {
+      Heading: "Beispiele für Pflegekosten",
+      ListItem1: "Unterbringung in einem Pflegeheim",
+      ListItem2: "Kosten zur Beschäftigung einer ambulanten Pflegekraft",
+    },
+    Paragraph3: {
+      Heading: "Nachweise",
+      Text: "Die Pflegebedürftigkeit muss nachgewiesen werden. Dies kann mit der Bescheinigung der Pflegekasse oder einer privaten Pflegeversicherung gemacht werden. Auch der Schwerbehindertenausweis dient als Nachweis, wenn das Merkzeichen H vorliegt.",
+    },
+    Paragraph4: {
+      Heading: "Die zumutbare Belastung",
+      Text:
+        "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+        " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
+    Paragraph5: {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
