@@ -1,5 +1,5 @@
-/* import React from "react";
-import UnlockCodeFailurePage from "../pages/VorbereitenOverviewPage";
+import React from "react";
+import VorbereitenOverviewPage from "../pages/VorbereitenOverviewPage";
 
 export default {
   title: "Pages/VorbereitenOverviewPage",
@@ -11,7 +11,4 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
-Default.args = {
-  prevUrl: "/unlock_code_revocation/step/data_input",
-};
- */
+Default.args = {};

@@ -584,6 +584,39 @@ const translations = {
     faq: "Häufig gestellte Fragen",
     contactUs: "Kontaktieren Sie uns",
   },
+  vorbereitenOverview: {
+    Paragraph1: {
+      heading: "Vorbereitung auf Ihre Steuererklärung 2021",
+      text: "Wussten Sie, dass die Steuererklärung mit dem Steuerlotsen im Durchschnitt nur 24 Minuten dauert? Damit es auch bei Ihnen so schnell geht, müssen Sie einige Vorkehrungen treffen. Dafür haben wir eine nützliche Vorbereitungshilfe für Sie erstellt. ",
+    },
+    Paragraph2: {
+      heading: "Unsere Vorbereitungshilfe",
+      text: "Unsere Vorbereitungshilfe zeigt Ihnen, welche Angaben Sie in der Steuererklärung machen müssen und welche Ausgaben Sie steuerlich absetzen können. So wissen Sie genau, in welchen Unterlagen Sie nachschauen müssen und welche Belege Sie raussuchen sollten. Sie können die Vorbereitungshilfe einfach speichern und ausdrucken und sich beim Ausfüllen der Steuererklärung neben den Computer legen. ",
+    },
+    Download: "Vorbereitungshilfe speichern [PDF]",
+    Accordion: {
+      heading: "Diese Angaben müssen Sie angeben",
+      Item1: {
+        heading: "Familienstand",
+        detail:
+          "Sollten Sie nicht ledig sein, müssen Sie angeben, seit wann Sie verheiratet, geschieden oder verwitwet sind. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie die <bold>Zusammenveranlagung nutzen.</bold>",
+      },
+      Item2: {
+        heading: "Name, Geburtsdatum, Adresse und Religionszugehörigkeit",
+        detail: "TODO: REPLACE ME PLEASE!",
+      },
+      Item3: {
+        heading: "Steuer-Identifikationsnummer",
+        detail:
+          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem ltzten Steuerbescheid.",
+      },
+      Item4: {
+        heading: "Steuernummer",
+        detail:
+          "Sie finden Ihre Steuernummer <bold>auf den Briefen Ihres Finanzamtes.</bold><break>",
+      },
+    },
+  },
 };
 
 export default translations;
