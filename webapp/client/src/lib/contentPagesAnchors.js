@@ -23,7 +23,7 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Belastungen.text"),
-    url: "/#",
+    url: "/wiederbeschaffungskosten",
   },
   {
     text: t("ContentPagesAnchors.Dienstleistungen.text"),
