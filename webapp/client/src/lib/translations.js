@@ -654,22 +654,22 @@ const translations = {
     },
   },
   DisabilityCostsInfo: {
-    Paragraph1: {
+    Section1: {
       Heading: "Kosten aufgrund einer Behinderung",
       Text: "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
     },
-    Paragraph2: {
+    Section2: {
       Heading: "Wahl zwischen Pauschbetrag und Angabe Einzelkosten",
       Text: "Wenn bei Ihnen eine Behinderung vorliegt, können Sie wählen, ob Sie Ihre mit der Behinderung zusammenhängenden Aufwendungen im Einzelnen oder einen Pauschbetrag in Anspruch nehmen. ",
     },
-    Paragraph3: {
+    Section3: {
       Heading: "Pauschbetrag für Menschen mit Behinderung",
       Text: "Für die Errechnung der Höhe des möglichen Pauschbetrag, werden Sie im Steuerformular nach folgenden Angaben gefragt: ",
       ListItem1: "Grad der Behinderung",
       ListItem2: "Bescheinigte Merkzeichen",
       ListItem3: "Pflegegrad 4 oder 5",
     },
-    Paragraph4: {
+    Section4: {
       Heading: "Einige Beispiele für Kosten aufgrund einer Behinderung",
       Text: "Verzichten Sie auf den Pauschebetrag können Sie einzelne Aufwendungen, die Ihnen typischerweise durch ihre Behinderung entstehen, absetzen. Das können Aufwendungen für die Unterstützung und – teilweise – Übernahme für folgende Beispiele sein:",
       ListItem1: "Körperpflege wie Waschen, Zahnpflege, Kämmen, Rasieren",
@@ -678,21 +678,21 @@ const translations = {
       ListItem4:
         "hauswirtschaftliche Versorgung wie Einkaufen, Kochen, Reinigen der Wohnung, Spülen oder Wäschepflege",
     },
-    Paragraph5: {
+    Section5: {
       Heading: "Die zumutbare Belastung",
       Text:
         "Die Absetzbarkeit der Einzelkosten bei einer Behinderung hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
         "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
-    Paragraph6: {
+    Section6: {
       Heading: "Die behinderungsbedingte Fahrtkostenpauschale",
       Text: "Für behinderungsbedingte Fahrtkosten wurde eine Pauschbetragsregelung eingeführt – die bisherigen Einzelnachweise für solche Fahrten müssen Sie nicht mehr einreichen. Die Höhe der behinderungsbedingte Fahrtkosten und des Pauschbetrags für Menschen mit Behinderung ist von dem Grad der Behinderung beziehungsweise des Merkzeichens oder Pflegegrad abhängig.",
     },
-    Paragraph7: {
+    Section7: {
       Heading: "Nachweise",
       Text: "Sie müssen Nachweise wie eine Kopie des Behindertenausweises oder den Bescheid über die Einstufung als pflegebedürftige Person in die Pflegegrade 4 oder 5 eingereicht werden, falls diese dem Finanzamt nicht bereits vorgelegen haben. ",
     },
-    Paragraph8: {
+    Section8: {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },

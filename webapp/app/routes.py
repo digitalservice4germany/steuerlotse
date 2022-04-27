@@ -380,7 +380,7 @@ def register_request_handlers(app):
             props=FuneralExpensesInfoPageProps().camelized_dict(),
             component='FuneralExpensesInfoPage')
 
-    @app.route('/kosten-aufgrund-einer-Behinderung', methods=['GET'])
+    @app.route('/kosten-aufgrund-einer-behinderung', methods=['GET'])
     @add_caching_headers
     def diability_costs_info():
         return render_react_content_page_template(
