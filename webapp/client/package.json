@@ -20,6 +20,7 @@
     "eslint-plugin-storybook": "^0.5.11",
     "http-proxy-middleware": "^2.0.6",
     "i18next": "^21.6.16",
+    "jest-stare": "^2.4.1",
     "jquery": "3.6.0",
     "jquery-mask-plugin": "^1.14.16",
     "popper.js": "^1.16.1",
@@ -52,6 +53,7 @@
     "start": "react-app-rewired start",
     "build": "BUILD_PATH=../app/static react-app-rewired build",
     "test": "react-app-rewired test",
+    "test:with-coverage": "react-app-rewired test --coverage --watchAll=false --collectCoverageFrom 'src/{components,pages}/**/*.js' --reporters default jest-stare",
     "test:functional-run": "if curl -sfo /dev/null localhost:3000; then yarn cypress:run; else echo 'Error: are React dev-server (port 3000) and flask app (port 5000) both running?'; exit -1; fi",
     "test:functional-ui": "if curl -sfo /dev/null localhost:3000; then yarn cypress; else echo 'Error: are React dev-server (port 3000) and flask app (port 5000) both running?'; exit -1; fi",
     "lint": "yarn run eslint src/",
@@ -64,6 +66,9 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "jest-stare": {
+    "coverageLink": "../coverage/lcov-report/index.html"
   },
   "browserslist": {
     "production": [
