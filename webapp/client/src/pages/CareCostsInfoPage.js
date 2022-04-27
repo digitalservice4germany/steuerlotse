@@ -49,7 +49,7 @@ export default function CareCostsInfoPage() {
         <Headline2 textSizeVariant>
           {t("CareCostsInfo.Paragraph2.Heading")}
         </Headline2>
-        <List aria-label="first-list">{listCareCostItemsMap}</List>
+        <List aria-label="simple-list">{listCareCostItemsMap}</List>
         <Headline2 textSizeVariant>
           {t("CareCostsInfo.Paragraph3.Heading")}
         </Headline2>
