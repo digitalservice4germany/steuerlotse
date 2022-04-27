@@ -599,22 +599,32 @@ const translations = {
       Item1: {
         heading: "Familienstand",
         detail:
-          "Sollten Sie nicht ledig sein, müssen Sie angeben, seit wann Sie verheiratet, geschieden oder verwitwet sind. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie die <bold>Zusammenveranlagung nutzen.</bold>",
+          "Sollten Sie nicht ledig sein, müssen Sie angeben, seit wann Sie verheiratet, geschieden oder verwitwet sind. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie die Zusammenveranlagung nutzen.",
       },
       Item2: {
         heading: "Name, Geburtsdatum, Adresse und Religionszugehörigkeit",
-        detail: "TODO: REPLACE ME PLEASE!",
+        detail:
+          "Möchten Sie die Steuererklärung gemeinsam als Paar machen, müssen Sie die Angaben für beide Personen machen. Sollten Sie keiner Religionsgemeinschaft angehören, können Sie »nicht kirchensteuerpflichtig« auswählen.",
       },
       Item3: {
         heading: "Steuer-Identifikationsnummer",
         detail:
-          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem ltzten Steuerbescheid.",
+          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem letzten Steuerbescheid.",
       },
       Item4: {
         heading: "Steuernummer",
         detail:
-          "Sie finden Ihre Steuernummer <bold>auf den Briefen Ihres Finanzamtes.</bold><break>",
+          "Sie finden Ihre Steuernummer auf den Briefen Ihres Finanzamtes. Abhängig von dem Bundesland, in dem Sie leben, besteht Ihre Steuernummer aus 10-11 Ziffern.\nSollten Sie noch keine Steuernummer haben, können Sie mit der Abgabe der Steuererklärung eine neue Steuernummer beim zuständigen Finanzamt beantragen.",
       },
+      Item5: {
+        heading: "IBAN Ihrer Bankverbindung",
+        detail:
+          "Die IBAN besteht in Deutschland aus 22 Stellen. Sie finden die Nummer beispielsweise auf jedem Kontoauszug oder Ihrer Girocard.",
+      },
+    },
+    Paragraph3: {
+      heading: "Diese Ausgaben können Sie absetzen",
+      text: "Sie können eine Vielzahl an Ausgaben absetzen. Wir erklären Ihnen, welche Ausgaben es gibt und was diese bedeuten.",
     },
   },
 };

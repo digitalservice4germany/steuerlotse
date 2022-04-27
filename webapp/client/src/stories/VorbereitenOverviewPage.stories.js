@@ -11,4 +11,17 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
-Default.args = {};
+
+Default.args = {
+  downloadPreparationLink: "/downloadPreparationLink",
+  vorsorgeaufwendungenUrl: "/vorsorgeaufwendungenUrl",
+  krankheitskostenUrl: "/krankheitskostenUrl",
+  pflegekostenUrl: "/pflegekostenUrl",
+  angabenBeiBehinderungUrl: "/angabenBeiBehinderungUrl",
+  bestattungskostenUrl: "/bestattungskostenUrl",
+  wiederbeschaffungskostenUrl: "/wiederbeschaffungskostenUrl",
+  haushaltsnaheDienstleistungenUrl: "/haushaltsnaheDienstleistungenUrl",
+  handwerkerleistungenUrl: "/handwerkerleistungenUrl",
+  spendenUndMitgliedsbeitraegeUrl: "/spendenUndMitgliedsbeitraegeUrl",
+  kirchensteuerUrl: "/kirchensteuerUrl",
+};

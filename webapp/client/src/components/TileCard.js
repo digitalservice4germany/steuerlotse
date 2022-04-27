@@ -3,13 +3,14 @@ import styled from "styled-components";
 import arrowRight from "../assets/icons/simple_arrow_right.svg";
 
 const LinkCard = styled.a`
-  background-color: white;
   display: block;
+  background-color: white;
   color: var(--text-color);
   text-decoration: none !important;
   outline: none !important;
   text-align: center;
   height: 188px;
+  min-width: 274px;
 
   &:visited,
   &:hover,
@@ -19,6 +20,16 @@ const LinkCard = styled.a`
     text-decoration: none !important;
     outline: none !important;
   }
+
+  width: 32%;
+
+  @media screen and (max-width: 869px) {
+    width: 49%;
+  }
+
+  @media screen and (max-width: 587px) {
+    width: 100%;
+  }
 `;
 
 const Card = styled.div`
@@ -27,6 +38,8 @@ const Card = styled.div`
 `;
 
 const Icon = styled.img`
+  height: 50px;
+  width: 52px;
   margin-top: var(--spacing-05);
   margin-bottom: var(--spacing-04);
 `;
@@ -36,9 +49,9 @@ const IconArrow = styled.img`
   height: 1.2em;
 `;
 
-function TileCard({ title, icon, url }) {
+function TileCard({ title, icon, url, className }) {
   return (
-    <LinkCard href={url}>
+    <LinkCard className={className} href={url}>
       <Icon src={icon} />
       <Card>{title}</Card>
       <IconArrow src={arrowRight} />
@@ -47,9 +60,14 @@ function TileCard({ title, icon, url }) {
 }
 
 TileCard.propTypes = {
+  className: PropTypes.string,
   title: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+};
+
+TileCard.defaultProps = {
+  className: "",
 };
 
 export default TileCard;

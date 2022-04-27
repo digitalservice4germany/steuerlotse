@@ -36,6 +36,7 @@ const ExpandButton = styled.button`
 const CardBody = styled.div`
   border: 0;
   padding: 1em 1em var(--spacing-01) var(--spacing-01);
+  white-space: pre-line;
 `;
 
 const CardHeaderSpan = styled.span`
