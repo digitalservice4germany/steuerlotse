@@ -71,7 +71,7 @@ export default function InfoBox() {
           </ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">
-          <img src="images/teaser-image.png" alt="teaser img" />
+          <img src="/images/teaser-image.png" alt="teaser img" />
         </Figure>
       </InnerBox>
     </Box>
