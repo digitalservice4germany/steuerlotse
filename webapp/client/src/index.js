@@ -35,9 +35,11 @@ import InfoTaxReturnForPensionersPage from "./pages/InfoTaxReturnForPensionersPa
 import AmbassadorInfoMaterialPage from "./pages/AmbassadorInfoMaterialPage";
 import MedicalExpensesInfoPage from "./pages/MedicalExpensesInfoPage";
 import PensionExpensesInfoPage from "./pages/PensionExpensesInfoPage";
+import DisabilityCostsInfoPage from "./pages/DisabilityCostsInfoPage";
 import CareCostsInfoPage from "./pages/CareCostsInfoPage";
 import FuneralExpensesInfoPage from "./pages/FuneralExpensesInfoPage";
 import HouseholdServicesInfoPage from "./pages/HouseholdServicesInfoPage";
+import ReplacementCostsInfoPage from "./pages/ReplacementCostsInfoPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -72,9 +74,11 @@ const allowedComponents = {
   AmbassadorInfoMaterialPage,
   MedicalExpensesInfoPage,
   PensionExpensesInfoPage,
+  DisabilityCostsInfoPage,
   CareCostsInfoPage,
   FuneralExpensesInfoPage,
   HouseholdServicesInfoPage,
+  ReplacementCostsInfoPage,
 };
 
 function mountComponent(element) {
