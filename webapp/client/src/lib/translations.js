@@ -738,6 +738,49 @@ const translations = {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
+  DisabilityCostsInfo: {
+    Section1: {
+      Heading: "Kosten aufgrund einer Behinderung",
+      Text: "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
+    },
+    Section2: {
+      Heading: "Wahl zwischen Pauschbetrag und Angabe Einzelkosten",
+      Text: "Wenn bei Ihnen eine Behinderung vorliegt, können Sie wählen, ob Sie Ihre mit der Behinderung zusammenhängenden Aufwendungen im Einzelnen oder einen Pauschbetrag in Anspruch nehmen. ",
+    },
+    Section3: {
+      Heading: "Pauschbetrag für Menschen mit Behinderung",
+      Text: "Für die Errechnung der Höhe des möglichen Pauschbetrag, werden Sie im Steuerformular nach folgenden Angaben gefragt: ",
+      ListItem1: "Grad der Behinderung",
+      ListItem2: "Bescheinigte Merkzeichen",
+      ListItem3: "Pflegegrad 4 oder 5",
+    },
+    Section4: {
+      Heading: "Einige Beispiele für Kosten aufgrund einer Behinderung",
+      Text: "Verzichten Sie auf den Pauschebetrag können Sie einzelne Aufwendungen, die Ihnen typischerweise durch ihre Behinderung entstehen, absetzen. Das können Aufwendungen für die Unterstützung und – teilweise – Übernahme für folgende Beispiele sein:",
+      ListItem1: "Körperpflege wie Waschen, Zahnpflege, Kämmen, Rasieren",
+      ListItem2: "Mobilität wie An- und Auskleiden, Aufstehen und Zubettgehen",
+      ListItem3: "Nahrungsaufnahme wie mundgerechte Zubereitung",
+      ListItem4:
+        "hauswirtschaftliche Versorgung wie Einkaufen, Kochen, Reinigen der Wohnung, Spülen oder Wäschepflege",
+    },
+    Section5: {
+      Heading: "Die zumutbare Belastung",
+      Text:
+        "Die Absetzbarkeit der Einzelkosten bei einer Behinderung hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
+    Section6: {
+      Heading: "Die behinderungsbedingte Fahrtkostenpauschale",
+      Text: "Für behinderungsbedingte Fahrtkosten wurde eine Pauschbetragsregelung eingeführt – die bisherigen Einzelnachweise für solche Fahrten müssen Sie nicht mehr einreichen. Die Höhe der behinderungsbedingte Fahrtkosten und des Pauschbetrags für Menschen mit Behinderung ist von dem Grad der Behinderung beziehungsweise des Merkzeichens oder Pflegegrad abhängig.",
+    },
+    Section7: {
+      Heading: "Nachweise",
+      Text: "Sie müssen Nachweise wie eine Kopie des Behindertenausweises oder den Bescheid über die Einstufung als pflegebedürftige Person in die Pflegegrade 4 oder 5 eingereicht werden, falls diese dem Finanzamt nicht bereits vorgelegen haben. ",
+    },
+    Section8: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   CareCostsInfo: {
     Paragraph1: {
       Heading: "Pflegekosten",
@@ -759,6 +802,27 @@ const translations = {
         " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
     Paragraph5: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  ReplacementCostsInfo: {
+    Section1: {
+      Heading: "Wiederbeschaffungskosten",
+      Text: "Wiederbaschaffungskosten können unter anderem bei den sonstigen außergewöhnlichen Belastungen angegeben werden.",
+    },
+    Section2: {
+      Heading: "Was können sonstige außergewöhnliche Belastungen sein?",
+      Text: "Zu den sonstigen außergewöhnlichen Belastungen zählen zum Beispiel Kosten für Hausrat und Kleidung, die durch ein unabwendbares Ereignis (zum Beispiel Brand oder Hochwasser) verloren wurden.",
+      Text2:
+        "Vorausgesetzt ist jedoch, das keine allgemein zugängliche und übliche Versicherung möglich war. In den außergewöhnlichen Belastungen sind auch die notwendigen und angemessenen Kosten der Schadensbeseitigung enthalten.",
+    },
+    Section3: {
+      Heading: "Die zumutbare Belastung",
+      Text: "Die Absetzbarkeit von Wiederbeschaffungskosten und sonstigen außergewöhnlichen Belastungen hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      Text2:
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
+    Section4: {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },

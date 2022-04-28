@@ -216,8 +216,6 @@ class CareCostsInfoPageProps(ComponentProps):
 class FuneralExpensesInfoPageProps(ComponentProps):
     pass
 
-class DisabilityCostsInfoProps(ComponentProps):
-    pass
 
 class VorbereitenInfoProps(ComponentProps):
     download_preparation_link: str
@@ -231,3 +229,9 @@ class VorbereitenInfoProps(ComponentProps):
     handwerkerleistungen_url: str
     spenden_und_mitgliedsbeitraege_url: str
     kirchensteuer_url: str
+class ReplacementCostsInfoPageProps(ComponentProps):
+    pass
+
+class DisabilityCostsInfoProps(ComponentProps):
+    pass
+

@@ -29,7 +29,7 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, VorbereitenInfoProps
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, VorbereitenInfoProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -357,7 +357,7 @@ def register_request_handlers(app):
     @add_caching_headers
     def pension_expenses_info():
         return render_react_content_page_template(
-            props=PensionExpensesProps().camelized_dict(), 
+            props=PensionExpensesProps().camelized_dict(),
             component='PensionExpensesInfoPage')
 
     @app.route('/vorbereiten/krankheitskosten', methods=['GET'])
@@ -372,7 +372,7 @@ def register_request_handlers(app):
     def care_costs_info_page():
         return render_react_content_page_template(
             props=CareCostsInfoPageProps().camelized_dict(),
-            component='CareCostsInfoPage')        
+            component='CareCostsInfoPage')
 
     @app.route('/vorbereiten/bestattungskosten', methods=['GET'])
     @add_caching_headers
@@ -396,9 +396,25 @@ def register_request_handlers(app):
                     pflegekosten_url=url_for("care_costs_info_page"),
                     spenden_und_mitgliedsbeitraege_url="",
                     vorsorgeaufwendungen_url=url_for("pension_expenses_info"),
-                    wiederbeschaffungskosten_url=""                    
+                    wiederbeschaffungskosten_url=""
                 ).camelized_dict(),
             component='VorbereitenOverviewPage')
+
+
+    @app.route('/wiederbeschaffungskosten', methods=['GET'])
+    @add_caching_headers
+    def replacement_costs_info_page():
+        return render_react_content_page_template(
+            props=ReplacementCostsInfoPageProps().camelized_dict(),
+            component='ReplacementCostsInfoPage')
+
+    @app.route('/kosten-aufgrund-einer-behinderung', methods=['GET'])
+    @add_caching_headers
+    def diability_costs_info():
+        return render_react_content_page_template(
+            props=DisabilityCostsInfoProps().camelized_dict(),
+            component='DisabilityCostsInfoPage')
+
 
     @app.route('/ping')
     def ping():
