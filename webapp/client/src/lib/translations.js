@@ -928,6 +928,29 @@ const translations = {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
+  InfoForRelatives: {
+    Section1: {
+      Heading: "Hilfestellung für Angehörige bei der Steuererklärung",
+      Text: "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz.",
+    },
+    Section2: {
+      Heading: "Wem Sie helfen dürfen und wer Ihnen helfen darf:",
+      Text: "Für diese Angehörigen dürfen Sie die Steuerformulare ausfüllen (und umgekehrt).",
+      ListItem1: "Ehepartner",
+      ListItem2: "Verlobte",
+      ListItem3: "Eltern, Schwiegereltern, Kinder, Großeltern, Enkel",
+      ListItem4: "Geschwister (auch Halbgeschwister)",
+      ListItem5: "Nichten und Neffen",
+      ListItem6: "Schwager oder Schwägerin",
+      ListItem7: "Onkel und Tante",
+      ListItem8: "Pflegeeltern und Pflegekinder",
+      ListItem9: "geschiedene Ehepartner",
+    },
+    Section3: {
+      Heading: "Wer nicht bei der Steuererklärunge helfen darf",
+      Text: "Helfen zum Beispiel Freunde oder ehemaligen Arbeitskollege bei der Steuererklärung ist das eine Ordnungswidrigkeit – egal ob mit oder ohne Bezahlung. Wer erwischt wird, zahlt bis zu 5.000 € Strafe. Das sollten Sie daher vermeiden!",
+    },
+  },
 };
 
 export default translations;
