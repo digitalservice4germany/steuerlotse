@@ -762,6 +762,27 @@ const translations = {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
+  ReplacementCostsInfo: {
+    Section1: {
+      Heading: "Wiederbeschaffungskosten",
+      Text: "Wiederbaschaffungskosten können unter anderem bei den sonstigen außergewöhnlichen Belastungen angegeben werden.",
+    },
+    Section2: {
+      Heading: "Was können sonstige außergewöhnliche Belastungen sein?",
+      Text: "Zu den sonstigen außergewöhnlichen Belastungen zählen zum Beispiel Kosten für Hausrat und Kleidung, die durch ein unabwendbares Ereignis (zum Beispiel Brand oder Hochwasser) verloren wurden.",
+      Text2:
+        "Vorausgesetzt ist jedoch, das keine allgemein zugängliche und übliche Versicherung möglich war. In den außergewöhnlichen Belastungen sind auch die notwendigen und angemessenen Kosten der Schadensbeseitigung enthalten.",
+    },
+    Section3: {
+      Heading: "Die zumutbare Belastung",
+      Text: "Die Absetzbarkeit von Wiederbeschaffungskosten und sonstigen außergewöhnlichen Belastungen hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      Text2:
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
+    Section4: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
 };
 
 export default translations;
