@@ -15,7 +15,7 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Behinderung.text"),
-    url: "/#",
+    url: "/kosten-aufgrund-einer-behinderung",
   },
   {
     text: t("ContentPagesAnchors.Bestattungskosten.text"),
