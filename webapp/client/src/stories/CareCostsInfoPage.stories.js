@@ -1,15 +1,15 @@
 import React from "react";
-import KrankheitsKostenInfoPage from "../pages/KrankheitsKostenInfoPage";
+import CareCostsInfoPage from "../pages/CareCostsInfoPage";
 import { contentPageDecorator } from "../../.storybook/decorators";
 
 export default {
-  title: "Content Pages/KrankheitskostenPage",
-  component: KrankheitsKostenInfoPage,
+  title: "Content Pages/CareCostsInfoPage",
+  component: CareCostsInfoPage,
   decorators: contentPageDecorator,
 };
 
 function Template() {
-  return <KrankheitsKostenInfoPage />;
+  return <CareCostsInfoPage />;
 }
 
 export const Default = Template.bind({});

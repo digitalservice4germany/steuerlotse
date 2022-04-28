@@ -7,11 +7,11 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Vorsorgeaufwendungen.text"),
-    url: "/#",
+    url: "/vorsorgeaufwendungen",
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
-    url: "/#",
+    url: "/pflegekosten",
   },
   {
     text: t("ContentPagesAnchors.Behinderung.text"),
@@ -19,7 +19,7 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Bestattungskosten.text"),
-    url: t("ContentPagesAnchors.Bestattungskosten.url"),
+    url: "/bestattungskosten",
   },
   {
     text: t("ContentPagesAnchors.Belastungen.text"),
@@ -48,9 +48,9 @@ const anchorBack = {
   url: "/#",
 };
 
-const anchorAnmelden = {
+const anchorRegister = {
   text: t("anchorButton.anmelden.text"),
   url: "/unlock_code_request/step/data_input?link_overview=False",
 };
 
-export { anchorList, anchorBack, anchorAnmelden };
+export { anchorList, anchorBack, anchorRegister };

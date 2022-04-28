@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { t } from "i18next";
 import ButtonAnchor from "./ButtonAnchor";
-import { anchorAnmelden } from "../lib/contentPagesAnchors";
+import { anchorRegister } from "../lib/contentPagesAnchors";
 
 const Box = styled.div`
   background-color: var(--beige-200);
   padding-top: var(--spacing-09);
-  margin-top: var(--spacing-10);
+  margin-top: var(--spacing-11);
 `;
 const InnerBox = styled.div`
   display: flex;
@@ -35,6 +35,10 @@ const BoxHeadline = styled.h2`
   margin: 0;
   font-size: var(--text-2xl);
 
+  @media (min-width: 768px) {
+    font-size: var(--text-3xl);
+  }
+
   @media (min-width: 1024px) {
     font-size: var(--text-5xl);
   }
@@ -46,8 +50,12 @@ const Figure = styled.figure`
   margin: 0;
 
   img {
-    max-width: 500px;
+    max-width: 100%;
     height: auto;
+
+    @media (min-width: 768px) {
+      max-width: 500px;
+    }
   }
 `;
 
@@ -58,8 +66,8 @@ export default function InfoBox() {
         <TextBox className="info-box__text">
           <BoxHeadline>{t("InfoBox.heading")}</BoxHeadline>
           <BoxText>{t("InfoBox.text")}</BoxText>
-          <ButtonAnchor url={anchorAnmelden.url}>
-            {anchorAnmelden.text}
+          <ButtonAnchor url={anchorRegister.url}>
+            {anchorRegister.text}
           </ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">

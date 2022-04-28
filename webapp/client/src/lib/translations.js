@@ -508,6 +508,89 @@ const translations = {
       text: "Kirchensteuer",
     },
   },
+  Handwerkerleistungen: {
+    Section1: {
+      heading: "Handwerkerleistungen",
+      text:
+        "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können " +
+        "zu Steuerermäßigungen führen. Die Arbeiten müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt werden.",
+    },
+    Section2: {
+      heading: "Beispiele für Handwerkerleistungen",
+      text:
+        "Viele Handwerkerleistungen bei Renovierungs-, Erhaltungs- und Modernisierungsmaßnahmen können Sie " +
+        "von der Steuer absetzen. Die Arbeitsleistung muss dabei im eigenen Haushalt erbracht worden sein.",
+      list: {
+        item1: "Reparatur in der Wohnung",
+        item2: "Reinigung von Abflussrohren",
+        item3: "Reparatur oder Austausch von Bodenbelägen",
+        item4: "Modernisierung des Badezimmers oder der Einbauküche",
+        item5:
+          "Reparatur, Wartung oder Austausch von Heizungsanlagen, Elektro-, Gas- und Wasserinstallationen",
+        item6: "Schornsteinfegerleistungen",
+        item7: "Arbeiten an Innen- und Außenwänden",
+        item8: "Reinigung von Dachrinnen",
+        item9: "Maßnahmen der Gartengestaltung",
+      },
+      text2:
+        "<bold>Achtung:</bold> Insbesondere bei Handwerkerleistungen ist zu beachten, dass nur der Arbeitslohn, nicht aber " +
+        "die Materialkosten abzugsfähig sind. Prüfen Sie, ob die Rechnungen entsprechend aufgeschlüsselt sind.",
+      text3:
+        "Der Arbeitslohn ist inklusive anfallender Umsatzsteuer abzugsfähig. Wenn in der Rechnung der Arbeitslohn " +
+        "nicht extra ausgewiesen ist, können Sie den Dienstleister bitten, eine neue, detailliertere Rechnung auszustellen.",
+    },
+    Section3: {
+      heading: "Rechnungen und Zahlungsweg beachten",
+      text:
+        "Es muss eine Rechnung vorliegen, die zum Beispiel per Überweisung oder EC-Kartenzahlung beglichen worden " +
+        "ist. Barzahlungen berücksichtigt das Finanzamt nicht! ",
+      text2: "Bewahren Sie immer die entsprechenden Kontoauszüge auf!",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  Bestattungskosten: {
+    Section1: {
+      heading: "Bestattungskosten",
+      text:
+        "Bestattungskosten zählen zur Kategorie der außergewöhnlichen Belastungen. Die Kosten können allerdings " +
+        "nur insoweit abgesetzt werden, wie diese das Erbe übersteigen.",
+    },
+    Section2: {
+      heading: "Beispiele für absetzbare Bestattungskosten",
+      text: "Sie können die Kosten angeben, die unmittelbar mit der Bestattung von Angehörigen zusammenhängen. Die entstehenden Kosten weisen Sie mithilfe der entsprechenden Rechnungen nach. Kosten, die Sie absetzen können:",
+      list: {
+        item1:
+          "Kosten für die Trauerfeier wie Gestecke, Trauerhalle, Redner*in/Pfarrer*in, Sargträger, musikalische Darbietung etc.",
+        item2: "Kosten für die Grabstätte",
+        item3:
+          "Weitere Kosten: Darlehenszinsen zur Finanzierung der Beerdigung, Zahlungsrückstände des*der Verstorbenen (Miete, Strom etc.)",
+      },
+    },
+    Section3: {
+      heading: "Nicht absetzbare Bestattungskosten",
+      text: "Folgende Angaben werden steuerlich nicht anerkannt:",
+      list: {
+        item1: "Kosten für Trauerkleidung",
+        item2: "Bewirtung der Trauergäste",
+        item3: "Reisekosten anlässlich der Bestattung",
+        item4: "Kosten für die laufende Grabpflege",
+      },
+    },
+    Section4: {
+      heading: "Die zumutbare Belastung",
+      text:
+        "Die Absetzbarkeit von Bestattungskosten hat wie alle außergewöhnlichen Belastungen eine Hürde: " +
+        "Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      text2:
+        "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von " +
+        "Ihrem Finanzamt automatisch berechnet.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   Krankheitskosten: {
     Paragraph1: {
       heading: "Krankheitskosten",
@@ -625,6 +708,58 @@ const translations = {
     Paragraph3: {
       heading: "Diese Ausgaben können Sie absetzen",
       text: "Sie können eine Vielzahl an Ausgaben absetzen. Wir erklären Ihnen, welche Ausgaben es gibt und was diese bedeuten.",
+    },
+  },
+  Vorsorgeaufwendungen: {
+    Paragraph1: {
+      Heading: "Vorsorgeaufwendungen",
+      Text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Die Höhe der Beiträge steht in den Versicherungsunterlagen oder kann zum Beispiel Kontoauszügen entnommen werden.",
+    },
+    Paragraph2: {
+      Heading:
+        "Beispiele für absetzbare Versicherungen als Vorsorgeaufwendungen",
+      Text: "Viele Versicherungen, mit denen Sie für Ihre Zukunft vorsorgen, können Sie von der Steuer absetzen. Die Höhe der Beiträge steht in den Versicherungsunterlagen oder kann zum Beispiel Kontoauszügen entnommen werden.",
+      ListItem1: "Gesetzliche Krankenversicherungen",
+      ListItem2: "Pflegeversicherungen",
+      ListItem3: "Arbeitslosenversicherung",
+      ListItem4: "Haftpflichtversicherungen (auch Kfz)",
+      ListItem5: "Krankenzusatzversicherungen",
+      ListItem6: "Risikolebensversicherung",
+    },
+    Paragraph3: {
+      Heading: "Nicht absetzbare Versicherungen",
+      Text: "Nicht absetzen können Sie Sachversicherungen, die Gegenstände oder Inventar schützen. Dazu zählen:",
+      ListItem1: "Kaskoversicherungen",
+      ListItem2: "Hausratversicherungen",
+      ListItem3: "Gebäudeversicherungen und",
+      ListItem4: "Rechtsschutzversicherungen",
+    },
+    Paragraph4: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  CareCostsInfo: {
+    Paragraph1: {
+      Heading: "Pflegekosten",
+      Text: "Pflegekosten gehören zur Kategorie der außergewöhnlichen Belastungen. Hierzu zählen Kosten, die durch die Pflegebedürftigkeit entstanden sind.",
+    },
+    Paragraph2: {
+      Heading: "Beispiele für Pflegekosten",
+      ListItem1: "Unterbringung in einem Pflegeheim",
+      ListItem2: "Kosten zur Beschäftigung einer ambulanten Pflegekraft",
+    },
+    Paragraph3: {
+      Heading: "Nachweise",
+      Text: "Die Pflegebedürftigkeit muss nachgewiesen werden. Dies kann mit der Bescheinigung der Pflegekasse oder einer privaten Pflegeversicherung gemacht werden. Auch der Schwerbehindertenausweis dient als Nachweis, wenn das Merkzeichen H vorliegt.",
+    },
+    Paragraph4: {
+      Heading: "Die zumutbare Belastung",
+      Text:
+        "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+        " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
+    },
+    Paragraph5: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
 };
