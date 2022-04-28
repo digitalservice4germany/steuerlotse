@@ -29,7 +29,9 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, HouseholdServicesInfoPageProps
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
+    DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
+    HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -400,7 +402,27 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=DisabilityCostsInfoProps().camelized_dict(),
             component='DisabilityCostsInfoPage')
-   
+
+    @app.route('/handwerkerleistungen', methods=['GET'])
+    @add_caching_headers
+    def craftsman_services_info():
+        return render_react_content_page_template(
+            props=CraftsmanServicesInfoPageProps().camelized_dict(),
+            component='CraftsmanServicesInfoPage')
+
+    @app.route('/spenden-und-mitgliedsbeitraege', methods=['GET'])
+    @add_caching_headers
+    def donation_info():
+        return render_react_content_page_template(
+            props=DonationInfoPageProps().camelized_dict(),
+            component='DonationInfoPage')
+
+    @app.route('/kirchensteuer', methods=['GET'])
+    @add_caching_headers
+    def church_tax_info():
+        return render_react_content_page_template(
+            props=ChurchTaxInfoPageProps().camelized_dict(),
+            component='ChurchTaxInfoPage')
 
     @app.route('/ping')
     def ping():
