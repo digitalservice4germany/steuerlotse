@@ -739,6 +739,49 @@ const translations = {
     faq: "Häufig gestellte Fragen",
     contactUs: "Kontaktieren Sie uns",
   },
+  vorbereitenOverview: {
+    Paragraph1: {
+      heading: "Vorbereitung auf Ihre Steuererklärung 2021",
+      text: "Wussten Sie, dass die Steuererklärung mit dem Steuerlotsen im Durchschnitt nur 24 Minuten dauert? Damit es auch bei Ihnen so schnell geht, müssen Sie einige Vorkehrungen treffen. Dafür haben wir eine nützliche Vorbereitungshilfe für Sie erstellt. ",
+    },
+    Paragraph2: {
+      heading: "Unsere Vorbereitungshilfe",
+      text: "Unsere Vorbereitungshilfe zeigt Ihnen, welche Angaben Sie in der Steuererklärung machen müssen und welche Ausgaben Sie steuerlich absetzen können. So wissen Sie genau, in welchen Unterlagen Sie nachschauen müssen und welche Belege Sie raussuchen sollten. Sie können die Vorbereitungshilfe einfach speichern und ausdrucken und sich beim Ausfüllen der Steuererklärung neben den Computer legen. ",
+    },
+    Download: "Vorbereitungshilfe speichern [PDF]",
+    Accordion: {
+      heading: "Diese Angaben müssen Sie angeben",
+      Item1: {
+        heading: "Familienstand",
+        detail:
+          "Sollten Sie nicht ledig sein, müssen Sie angeben, seit wann Sie verheiratet, geschieden oder verwitwet sind. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie die Zusammenveranlagung nutzen.",
+      },
+      Item2: {
+        heading: "Name, Geburtsdatum, Adresse und Religionszugehörigkeit",
+        detail:
+          "Möchten Sie die Steuererklärung gemeinsam als Paar machen, müssen Sie die Angaben für beide Personen machen. Sollten Sie keiner Religionsgemeinschaft angehören, können Sie »nicht kirchensteuerpflichtig« auswählen.",
+      },
+      Item3: {
+        heading: "Steuer-Identifikationsnummer",
+        detail:
+          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem letzten Steuerbescheid.",
+      },
+      Item4: {
+        heading: "Steuernummer",
+        detail:
+          "Sie finden Ihre Steuernummer auf den Briefen Ihres Finanzamtes. Abhängig von dem Bundesland, in dem Sie leben, besteht Ihre Steuernummer aus 10-11 Ziffern.\nSollten Sie noch keine Steuernummer haben, können Sie mit der Abgabe der Steuererklärung eine neue Steuernummer beim zuständigen Finanzamt beantragen.",
+      },
+      Item5: {
+        heading: "IBAN Ihrer Bankverbindung",
+        detail:
+          "Die IBAN besteht in Deutschland aus 22 Stellen. Sie finden die Nummer beispielsweise auf jedem Kontoauszug oder Ihrer Girocard.",
+      },
+    },
+    Paragraph3: {
+      heading: "Diese Ausgaben können Sie absetzen",
+      text: "Sie können eine Vielzahl an Ausgaben absetzen. Wir erklären Ihnen, welche Ausgaben es gibt und was diese bedeuten.",
+    },
+  },
   Vorsorgeaufwendungen: {
     Paragraph1: {
       Heading: "Vorsorgeaufwendungen",
@@ -860,7 +903,7 @@ const translations = {
       Text2:
         "Achten Sie hierbei darauf, dass Sie nur den Teil angeben, der für Ihre Wohnung entfällt.",
     },
-    Section4: { 
+    Section4: {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },

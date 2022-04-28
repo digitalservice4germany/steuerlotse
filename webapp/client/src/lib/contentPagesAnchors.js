@@ -3,49 +3,49 @@ import { t } from "i18next";
 const anchorList = [
   {
     text: t("ContentPagesAnchors.Krankheitskosten.text"),
-    url: "/krankheitskosten",
+    url: "/vorbereiten/krankheitskosten",
   },
   {
     text: t("ContentPagesAnchors.Vorsorgeaufwendungen.text"),
-    url: "/vorsorgeaufwendungen",
+    url: "/vorbereiten/vorsorgeaufwendungen",
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
-    url: "/pflegekosten",
+    url: "/vorbereiten/pflegekosten",
   },
   {
     text: t("ContentPagesAnchors.Behinderung.text"),
-    url: "/kosten-aufgrund-einer-behinderung",
+    url: "/vorbereiten/angaben-bei-behinderung",
   },
   {
     text: t("ContentPagesAnchors.Bestattungskosten.text"),
-    url: "/bestattungskosten",
+    url: "/vorbereiten/bestattungskosten",
   },
   {
     text: t("ContentPagesAnchors.Belastungen.text"),
-    url: "/wiederbeschaffungskosten",
+    url: "/vorbereiten/wiederbeschaffungskosten",
   },
   {
     text: t("ContentPagesAnchors.Dienstleistungen.text"),
-    url: "/haushaltsnahe-dienstleistungen",
+    url: "/vorbereiten/haushaltsnahe-dienstleistungen",
   },
   {
     text: t("ContentPagesAnchors.Handwerkerleistungen.text"),
-    url: "/handwerkerleistungen",
+    url: "/vorbereiten/handwerkerleistungen",
   },
   {
     text: t("ContentPagesAnchors.Spenden.text"),
-    url: "/spenden-und-mitgliedsbeitraege",
+    url: "/vorbereiten/spenden-und-mitgliedsbeitraege",
   },
   {
     text: t("ContentPagesAnchors.Kirchensteuer.text"),
-    url: "/kirchensteuer",
+    url: "/vorbereiten/kirchensteuer",
   },
 ];
 
 const anchorBack = {
   text: t("anchorBackUebersicht.text"),
-  url: "/#",
+  url: "/vorbereiten",
 };
 
 const anchorRegister = {

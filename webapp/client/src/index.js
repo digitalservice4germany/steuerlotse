@@ -38,6 +38,7 @@ import PensionExpensesInfoPage from "./pages/PensionExpensesInfoPage";
 import DisabilityCostsInfoPage from "./pages/DisabilityCostsInfoPage";
 import CareCostsInfoPage from "./pages/CareCostsInfoPage";
 import FuneralExpensesInfoPage from "./pages/FuneralExpensesInfoPage";
+import VorbereitenOverviewPage from "./pages/VorbereitenOverviewPage";
 import HouseholdServicesInfoPage from "./pages/HouseholdServicesInfoPage";
 import ReplacementCostsInfoPage from "./pages/ReplacementCostsInfoPage";
 import DonationInfoPage from "./pages/DonationInfoPage";
@@ -80,6 +81,7 @@ const allowedComponents = {
   DisabilityCostsInfoPage,
   CareCostsInfoPage,
   FuneralExpensesInfoPage,
+  VorbereitenOverviewPage,
   HouseholdServicesInfoPage,
   ReplacementCostsInfoPage,
   DonationInfoPage,

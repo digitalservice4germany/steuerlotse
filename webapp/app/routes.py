@@ -3,7 +3,7 @@ import datetime as dt
 from functools import wraps
 import io
 
-from flask import current_app, render_template, request, send_file, session, make_response, redirect
+from flask import current_app, render_template, request, send_file, session, make_response, redirect, url_for
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.datastructures import ImmutableMultiDict
@@ -31,7 +31,8 @@ from app.templates.react_template import render_react_template, render_react_con
 from app.model.components import InfoTaxReturnForPensionersProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
-    HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps
+    HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
+    VorbereitenInfoProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -73,6 +74,7 @@ nav.Bar('top', [
     SteuerlotseNavItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'}),
     SteuerlotseNavItem(_l('nav.register'), 'unlock_code_request', {},
                        deactivate_when_logged_in=True),
+    SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {}),
     SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
                        matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
     SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
@@ -180,7 +182,7 @@ def register_request_handlers(app):
 
         flow = UnlockCodeRequestMultiStepFlow(endpoint='unlock_code_request')
         return flow.handle(step_name=step)
-  
+
     @app.route('/unlock_code_activation/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_activation/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
@@ -195,21 +197,21 @@ def register_request_handlers(app):
         current_app.logger.info('User inactive, start unlock_code_activation flow')
         flow = UnlockCodeActivationMultiStepFlow(endpoint='unlock_code_activation')
         return flow.handle(step_name=step)
-    
+
     @app.route('/relogin_unlock_code_activation/step', methods=['GET'])
     @app.route('/relogin_unlock_code_activation/step/<step>', methods=['GET'])
     def relogin_unlock_code_activation(step='start'):
         if not current_user.is_active:
             current_app.logger.info('User inactive, start relogin_unlock_code_activation flow')
-            
+
         return redirect('/unlock_code_activation/step')
-        
+
     @app.route('/refresh_unlock_code_activation/step', methods=['GET'])
     @app.route('/refresh_unlock_code_activation/step/<step>', methods=['GET'])
     def refresh_unlock_code_activation(step='start'):
         if not current_user.is_active:
             current_app.logger.info('User inactive, start refresh_unlock_code_activation flow')
-            
+
         return redirect('/unlock_code_activation/step')
 
     @app.route('/unlock_code_revocation/step/<step>', methods=['GET', 'POST'])
@@ -329,7 +331,7 @@ def register_request_handlers(app):
     def download_informationsbroschure_pdf():
         return send_file('static/files/InfoBroschureSteuerlotse.pdf', mimetype='application/pdf',
                          attachment_filename='Info-Broschüre_Steuerlotse_für_Rente_und_Pension.pdf',
-                         as_attachment=True)  
+                         as_attachment=True)
 
     @app.route('/download_steuerlotsen_flyer.pdf', methods=['GET'])
     @limiter.limit('15 per minute')
@@ -337,87 +339,107 @@ def register_request_handlers(app):
     def download_steuerlotsen_flyer_pdf():
         return send_file('static/files/STL-Flyer_A6-doppelseitig.pdf', mimetype='application/pdf',
                          attachment_filename='STL-Flyer_A6-doppelseitig.pdf',
-                         as_attachment=True)                         
-                                                                
+                         as_attachment=True)
+
 
     @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
     @add_caching_headers
     def infotax():
         return render_react_template(
-            props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
+            props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='InfoTaxReturnForPensionersPage')
 
     @app.route('/botschafter', methods=['GET'])
     @add_caching_headers
     def ambassadorMaterial():
         return render_react_template(
-            props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
+            props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='AmbassadorInfoMaterialPage')
 
-    @app.route('/vorsorgeaufwendungen', methods=['GET'])
+    @app.route('/vorbereiten/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
     def pension_expenses_info():
         return render_react_content_page_template(
-            props=PensionExpensesProps().camelized_dict(), 
+            props=PensionExpensesProps().camelized_dict(),
             component='PensionExpensesInfoPage')
 
-    @app.route('/krankheitskosten', methods=['GET'])
+    @app.route('/vorbereiten/krankheitskosten', methods=['GET'])
     @add_caching_headers
     def medical_expenses_info():
         return render_react_content_page_template(
             props=MedicalExpensesInfoPageProps().camelized_dict(),
             component='MedicalExpensesInfoPage')
 
-    @app.route('/pflegekosten', methods=['GET'])
+    @app.route('/vorbereiten/pflegekosten', methods=['GET'])
     @add_caching_headers
     def care_costs_info_page():
         return render_react_content_page_template(
             props=CareCostsInfoPageProps().camelized_dict(),
-            component='CareCostsInfoPage')        
+            component='CareCostsInfoPage')
 
-    @app.route('/bestattungskosten', methods=['GET'])
+    @app.route('/vorbereiten/bestattungskosten', methods=['GET'])
     @add_caching_headers
     def funeral_expenses_info():
         return render_react_content_page_template(
             props=FuneralExpensesInfoPageProps().camelized_dict(),
             component='FuneralExpensesInfoPage')
 
-    @app.route('/haushaltsnahe-dienstleistungen', methods=['GET'])
+    @app.route('/vorbereiten', methods=['GET'])
+    @add_caching_headers
+    def vorbereiten():
+        return render_react_content_page_template(
+            props=VorbereitenInfoProps(
+                    angaben_bei_behinderung_url=url_for("diability_costs_info"),
+                    bestattungskosten_url=url_for("funeral_expenses_info"),
+                    download_preparation_link=url_for("download_preparation"),
+                    handwerkerleistungen_url=url_for("craftsman_services_info"),
+                    haushaltsnahe_dienstleistungen_url=url_for("household_services_info"),
+                    kirchensteuer_url=url_for("church_tax_info"),
+                    krankheitskosten_url=url_for("medical_expenses_info"),
+                    pflegekosten_url=url_for("care_costs_info_page"),
+                    spenden_und_mitgliedsbeitraege_url=url_for("donation_info"),
+                    vorsorgeaufwendungen_url=url_for("pension_expenses_info"),
+                    wiederbeschaffungskosten_url=url_for("replacement_costs_info_page")
+                ).camelized_dict(),
+            component='VorbereitenOverviewPage')
+
+
+    @app.route('/vorbereiten/haushaltsnahe-dienstleistungen', methods=['GET'])
     @add_caching_headers
     def household_services_info():
         return render_react_content_page_template(
             props=HouseholdServicesInfoPageProps().camelized_dict(),
-            component='HouseholdServicesInfoPage')        
-      
-    @app.route('/wiederbeschaffungskosten', methods=['GET'])
+            component='HouseholdServicesInfoPage')
+
+    @app.route('/vorbereiten/wiederbeschaffungskosten', methods=['GET'])
     @add_caching_headers
     def replacement_costs_info_page():
         return render_react_content_page_template(
             props=ReplacementCostsInfoPageProps().camelized_dict(),
             component='ReplacementCostsInfoPage')
 
-    @app.route('/kosten-aufgrund-einer-behinderung', methods=['GET'])
+    @app.route('/vorbereiten/angaben-bei-behinderung', methods=['GET'])
     @add_caching_headers
     def diability_costs_info():
         return render_react_content_page_template(
             props=DisabilityCostsInfoProps().camelized_dict(),
             component='DisabilityCostsInfoPage')
 
-    @app.route('/handwerkerleistungen', methods=['GET'])
+    @app.route('/vorbereiten/handwerkerleistungen', methods=['GET'])
     @add_caching_headers
     def craftsman_services_info():
         return render_react_content_page_template(
             props=CraftsmanServicesInfoPageProps().camelized_dict(),
             component='CraftsmanServicesInfoPage')
 
-    @app.route('/spenden-und-mitgliedsbeitraege', methods=['GET'])
+    @app.route('/vorbereiten/spenden-und-mitgliedsbeitraege', methods=['GET'])
     @add_caching_headers
     def donation_info():
         return render_react_content_page_template(
             props=DonationInfoPageProps().camelized_dict(),
             component='DonationInfoPage')
 
-    @app.route('/kirchensteuer', methods=['GET'])
+    @app.route('/vorbereiten/kirchensteuer', methods=['GET'])
     @add_caching_headers
     def church_tax_info():
         return render_react_content_page_template(
