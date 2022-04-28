@@ -10,52 +10,50 @@ const ButtonGroup = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  .anchor-btn {
+  a,
+  button {
     margin-right: 8px;
     margin-bottom: 8px;
   }
 
-  .facebook {
-    background-color: var(--facebook-color);
-
-    &:hover {
-      background-color: var(--facebook-hover-color);
-      text-decoration: none;
-
-      &:active {
-        background-color: var(--facebook-active-hover-color);
-      }
-    }
-  }
-
-  .whatsapp {
-    background-color: var(--whatsapp-color);
-
-    &:hover {
-      background-color: var(--whatsapp-hover-color);
-      text-decoration: none;
-
-      &:active {
-        background-color: var(--whatsapp-active-hover-color);
-      }
-    }
-  }
-
-  .email {
-    background-color: var(--email-color);
-
-    &:hover {
-      background-color: var(--email-hover-color);
-      text-decoration: none;
-
-      &:active {
-        background-color: var(--email-active-hover-color);
-      }
-    }
-  }
-
   @media (min-width: 1024px) {
     display: block;
+  }
+`;
+const FacebookButton = styled(ButtonAnchor)`
+  background-color: var(--facebook-color);
+
+  &:hover {
+    background-color: var(--facebook-hover-color);
+    text-decoration: none;
+
+    &:active {
+      background-color: var(--facebook-active-hover-color);
+    }
+  }
+`;
+const WhatsappButton = styled(ButtonAnchor)`
+  background-color: var(--whatsapp-color);
+
+  &:hover {
+    background-color: var(--whatsapp-hover-color);
+    text-decoration: none;
+
+    &:active {
+      background-color: var(--whatsapp-active-hover-color);
+    }
+  }
+`;
+const MailButton = styled(ButtonAnchor)`
+  background-color: var(--email-color);
+
+  &:hover {
+    background-color: var(--email-hover-color);
+    text-decoration: none;
+
+    &:active {
+      background-color: var(--email-active-hover-color);
+    }
   }
 `;
 
@@ -81,9 +79,8 @@ export default function ShareButtons({
 
   return (
     <ButtonGroup>
-      <ButtonAnchor
+      <FacebookButton
         buttonStyle="narrow"
-        additionalClass="facebook"
         url={facebookFeedUrl}
         external
         onClick={() =>
@@ -93,11 +90,10 @@ export default function ShareButtons({
         }
       >
         <Text>Auf Facebook teilen</Text>
-      </ButtonAnchor>
+      </FacebookButton>
       {isMobile && (
-        <ButtonAnchor
+        <WhatsappButton
           buttonStyle="narrow"
-          additionalClass="whatsapp"
           url={whatsappText}
           onClick={() =>
             addPlausibleGoal(plausibleDomain, "Whatsapp icon clicked", {
@@ -106,11 +102,10 @@ export default function ShareButtons({
           }
         >
           <Text>In Whatsapp senden</Text>
-        </ButtonAnchor>
+        </WhatsappButton>
       )}
-      <ButtonAnchor
+      <MailButton
         buttonStyle="narrow"
-        additionalClass="email"
         url={mailto}
         onClick={() =>
           addPlausibleGoal(plausibleDomain, "Email icon clicked", {
@@ -119,10 +114,9 @@ export default function ShareButtons({
         }
       >
         <Text>E-Mail schreiben</Text>
-      </ButtonAnchor>
+      </MailButton>
       <ButtonAnchor
         buttonStyle="narrow"
-        additionalClass="copy"
         variant="outline"
         onClick={onClickHandler}
       >
