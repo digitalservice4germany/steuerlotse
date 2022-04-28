@@ -29,7 +29,7 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -379,6 +379,13 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=FuneralExpensesInfoPageProps().camelized_dict(),
             component='FuneralExpensesInfoPage')
+
+    @app.route('/kosten-aufgrund-einer-behinderung', methods=['GET'])
+    @add_caching_headers
+    def diability_costs_info():
+        return render_react_content_page_template(
+            props=DisabilityCostsInfoProps().camelized_dict(),
+            component='DisabilityCostsInfoPage')
 
     @app.route('/ping')
     def ping():

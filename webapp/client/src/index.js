@@ -35,6 +35,7 @@ import InfoTaxReturnForPensionersPage from "./pages/InfoTaxReturnForPensionersPa
 import AmbassadorInfoMaterialPage from "./pages/AmbassadorInfoMaterialPage";
 import MedicalExpensesInfoPage from "./pages/MedicalExpensesInfoPage";
 import PensionExpensesInfoPage from "./pages/PensionExpensesInfoPage";
+import DisabilityCostsInfoPage from "./pages/DisabilityCostsInfoPage";
 import CareCostsInfoPage from "./pages/CareCostsInfoPage";
 import FuneralExpensesInfoPage from "./pages/FuneralExpensesInfoPage";
 
@@ -71,6 +72,7 @@ const allowedComponents = {
   AmbassadorInfoMaterialPage,
   MedicalExpensesInfoPage,
   PensionExpensesInfoPage,
+  DisabilityCostsInfoPage,
   CareCostsInfoPage,
   FuneralExpensesInfoPage,
 };
