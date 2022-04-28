@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { within } from "@testing-library/dom";
-import CraftsmanServicesInfoPage from "./CraftsmanServicesInfoPage";
+import ChurchTaxInfoPage from "./ChurchTaxInfoPage";
 
 jest.mock("../components/InfoBox", () => ({
   __esModule: true,
@@ -18,23 +18,31 @@ jest.mock("../components/StepHeaderButtons", () => ({
 }));
 
 function setup() {
-  const utils = render(<CraftsmanServicesInfoPage />);
+  const utils = render(<ChurchTaxInfoPage />);
 
   return { ...utils };
 }
 
-describe("CraftsmanServicesInfoPage", () => {
-  it("should render CraftsmanServicesInfoPage", () => {
+describe("ChurchTaxInfoPage", () => {
+  it("should render ChurchTaxInfoPage", () => {
     setup();
 
-    const headline1 = screen.getByText("Handwerkerleistungen");
-    const headline2 = screen.getByText("Beispiele für Handwerkerleistungen");
-    const headline3 = screen.getByText("Rechnungen und Zahlungsweg beachten");
+    const headline1 = screen.getByText("Kirchensteuer");
+    const headline2 = screen.getByText("Geleistete Zahlungen");
+    const headline3 = screen.getByText("Erhaltene Erstattungen");
     const headline5 = screen.getByText(
       "Weitere Ausgaben, die Sie absetzen können"
     );
     const text1 = screen.getByText(
-      "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können",
+      "Sie können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben.",
+      { exact: false }
+    );
+    const text2 = screen.getByText(
+      "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen",
+      { exact: false }
+    );
+    const text3 = screen.getByText(
+      "Haben Sie im letzten Jahr zu viel gezahlte Kirchensteuer erstattet bekommen, kann dies ebenfalls angegeben",
       { exact: false }
     );
 
@@ -43,21 +51,11 @@ describe("CraftsmanServicesInfoPage", () => {
     expect(headline3).toBeInTheDocument();
     expect(headline5).toBeInTheDocument();
     expect(text1).toBeInTheDocument();
+    expect(text2).toBeInTheDocument();
+    expect(text3).toBeInTheDocument();
   });
 
-  it("should render the list of CraftsmanServicesInfoPage", () => {
-    setup();
-
-    const list = screen.getByRole("list", {
-      name: "simple-list",
-    });
-    const { getAllByRole } = within(list);
-    const items = getAllByRole("listitem");
-
-    expect(items.length).toBe(9);
-  });
-
-  it("should render the anchor list of CraftsmanServicesInfoPage", () => {
+  it("should render the anchor list of ChurchTaxInfoPage", () => {
     setup();
 
     const anchorList = screen.getByRole("list", {
