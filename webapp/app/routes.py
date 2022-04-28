@@ -386,7 +386,7 @@ def register_request_handlers(app):
     def vorbereiten():
         return render_react_content_page_template(
             props=VorbereitenInfoProps(
-                    angaben_bei_behinderung_url="",
+                    angaben_bei_behinderung_url=url_for("diability_costs_info"),
                     bestattungskosten_url=url_for("funeral_expenses_info"),
                     download_preparation_link=url_for("download_preparation"),
                     handwerkerleistungen_url="",
@@ -396,19 +396,19 @@ def register_request_handlers(app):
                     pflegekosten_url=url_for("care_costs_info_page"),
                     spenden_und_mitgliedsbeitraege_url="",
                     vorsorgeaufwendungen_url=url_for("pension_expenses_info"),
-                    wiederbeschaffungskosten_url=""
+                    wiederbeschaffungskosten_url=url_for("replacement_costs_info_page")
                 ).camelized_dict(),
             component='VorbereitenOverviewPage')
 
 
-    @app.route('/wiederbeschaffungskosten', methods=['GET'])
+    @app.route('/vorbereiten/wiederbeschaffungskosten', methods=['GET'])
     @add_caching_headers
     def replacement_costs_info_page():
         return render_react_content_page_template(
             props=ReplacementCostsInfoPageProps().camelized_dict(),
             component='ReplacementCostsInfoPage')
 
-    @app.route('/kosten-aufgrund-einer-behinderung', methods=['GET'])
+    @app.route('/vorbereiten/angaben-bei-behinderung', methods=['GET'])
     @add_caching_headers
     def diability_costs_info():
         return render_react_content_page_template(

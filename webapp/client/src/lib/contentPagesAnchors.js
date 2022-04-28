@@ -3,49 +3,49 @@ import { t } from "i18next";
 const anchorList = [
   {
     text: t("ContentPagesAnchors.Krankheitskosten.text"),
-    url: "/krankheitskosten",
+    url: "/vorbereiten/krankheitskosten",
   },
   {
     text: t("ContentPagesAnchors.Vorsorgeaufwendungen.text"),
-    url: "/vorsorgeaufwendungen",
+    url: "/vorbereiten/vorsorgeaufwendungen",
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
-    url: "/pflegekosten",
+    url: "/vorbereiten/pflegekosten",
   },
   {
     text: t("ContentPagesAnchors.Behinderung.text"),
-    url: "/kosten-aufgrund-einer-behinderung",
+    url: "/vorbereiten/angaben-bei-behinderung",
   },
   {
     text: t("ContentPagesAnchors.Bestattungskosten.text"),
-    url: "/bestattungskosten",
+    url: "/vorbereiten/bestattungskosten",
   },
   {
     text: t("ContentPagesAnchors.Belastungen.text"),
-    url: "/wiederbeschaffungskosten",
+    url: "/vorbereiten/wiederbeschaffungskosten",
   },
   {
     text: t("ContentPagesAnchors.Dienstleistungen.text"),
-    url: "/#",
+    url: "/vorbereiten/#",
   },
   {
     text: t("ContentPagesAnchors.Handwerkerleistungen.text"),
-    url: "/#",
+    url: "/vorbereiten/#",
   },
   {
     text: t("ContentPagesAnchors.Spenden.text"),
-    url: "/#",
+    url: "/vorbereiten/#",
   },
   {
     text: t("ContentPagesAnchors.Kirchensteuer.text"),
-    url: "/#",
+    url: "/vorbereiten/#",
   },
 ];
 
 const anchorBack = {
   text: t("anchorBackUebersicht.text"),
-  url: "/#",
+  url: "/vorbereiten",
 };
 
 const anchorRegister = {
