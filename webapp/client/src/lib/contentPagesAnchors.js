@@ -27,7 +27,7 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Dienstleistungen.text"),
-    url: "/#",
+    url: "/haushaltsnahe-dienstleistungen",
   },
   {
     text: t("ContentPagesAnchors.Handwerkerleistungen.text"),

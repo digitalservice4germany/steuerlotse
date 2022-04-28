@@ -215,3 +215,6 @@ class CareCostsInfoPageProps(ComponentProps):
 
 class FuneralExpensesInfoPageProps(ComponentProps):
     pass
+
+class HouseholdServicesInfoPageProps(ComponentProps):
+    pass
