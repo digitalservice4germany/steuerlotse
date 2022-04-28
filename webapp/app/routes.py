@@ -30,6 +30,7 @@ from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
 from app.model.components import AmbassadorInfoMaterialProps, KrankheitsKostenInfoPageProps
+from app.model.components import VorbereitenInfoProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -73,6 +74,7 @@ nav.Bar('top', [
                        deactivate_when_logged_in=True),
     SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
                        matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
+    SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {}),
     SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
 ])
 
@@ -178,7 +180,7 @@ def register_request_handlers(app):
 
         flow = UnlockCodeRequestMultiStepFlow(endpoint='unlock_code_request')
         return flow.handle(step_name=step)
-  
+
     @app.route('/unlock_code_activation/step', methods=['GET', 'POST'])
     @app.route('/unlock_code_activation/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
@@ -193,21 +195,21 @@ def register_request_handlers(app):
         current_app.logger.info('User inactive, start unlock_code_activation flow')
         flow = UnlockCodeActivationMultiStepFlow(endpoint='unlock_code_activation')
         return flow.handle(step_name=step)
-    
+
     @app.route('/relogin_unlock_code_activation/step', methods=['GET'])
     @app.route('/relogin_unlock_code_activation/step/<step>', methods=['GET'])
     def relogin_unlock_code_activation(step='start'):
         if not current_user.is_active:
             current_app.logger.info('User inactive, start relogin_unlock_code_activation flow')
-            
+
         return redirect('/unlock_code_activation/step')
-        
+
     @app.route('/refresh_unlock_code_activation/step', methods=['GET'])
     @app.route('/refresh_unlock_code_activation/step/<step>', methods=['GET'])
     def refresh_unlock_code_activation(step='start'):
         if not current_user.is_active:
             current_app.logger.info('User inactive, start refresh_unlock_code_activation flow')
-            
+
         return redirect('/unlock_code_activation/step')
 
     @app.route('/unlock_code_revocation/step/<step>', methods=['GET', 'POST'])
@@ -327,7 +329,7 @@ def register_request_handlers(app):
     def download_informationsbroschure_pdf():
         return send_file('static/files/InfoBroschureSteuerlotse.pdf', mimetype='application/pdf',
                          attachment_filename='Info-Broschüre_Steuerlotse_für_Rente_und_Pension.pdf',
-                         as_attachment=True)  
+                         as_attachment=True)
 
     @app.route('/download_steuerlotsen_flyer.pdf', methods=['GET'])
     @limiter.limit('15 per minute')
@@ -335,21 +337,21 @@ def register_request_handlers(app):
     def download_steuerlotsen_flyer_pdf():
         return send_file('static/files/STL-Flyer_A6-doppelseitig.pdf', mimetype='application/pdf',
                          attachment_filename='STL-Flyer_A6-doppelseitig.pdf',
-                         as_attachment=True)                         
-                                                                
+                         as_attachment=True)
+
 
     @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
     @add_caching_headers
     def infotax():
         return render_react_template(
-            props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
+            props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='InfoTaxReturnForPensionersPage')
 
     @app.route('/botschafter', methods=['GET'])
     @add_caching_headers
     def ambassadorMaterial():
         return render_react_template(
-            props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(), 
+            props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='AmbassadorInfoMaterialPage')
 
     @app.route('/krankheitskosten', methods=['GET'])
@@ -358,6 +360,13 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=KrankheitsKostenInfoPageProps().camelized_dict(),
             component='KrankheitsKostenInfoPage')
+
+    @app.route('/vorbereiten', methods=['GET'])
+    @add_caching_headers
+    def vorbereiten():
+        return render_react_content_page_template(
+            props=VorbereitenInfoProps().camelized_dict(),
+            component='VorbereitenInfoProps')
 
     @app.route('/ping')
     def ping():

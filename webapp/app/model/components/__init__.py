@@ -201,5 +201,33 @@ class AmbassadorInfoMaterialProps(ComponentPlausibleProps):
     pass
 
 
-class KrankheitsKostenInfoPageProps(ComponentProps):
+class PensionExpensesProps(ComponentProps):
     pass
+
+
+class MedicalExpensesInfoPageProps(ComponentProps):
+    pass
+
+
+class CareCostsInfoPageProps(ComponentProps):
+    pass
+
+
+class FuneralExpensesInfoPageProps(ComponentProps):
+    pass
+
+class DisabilityCostsInfoProps(ComponentProps):
+    pass
+
+class VorbereitenInfoProps(ComponentProps):
+    download_preparation_link: str
+    vorsorgeaufwendungen_url: str
+    krankheitskosten_url: str
+    pflegekosten_url: str
+    angaben_bei_behinderung_url: str
+    bestattungskosten_url: str
+    wiederbeschaffungskosten_url: str
+    haushaltsnahe_dienstleistungen_url: str
+    handwerkerleistungen_url: str
+    spenden_und_mitgliedsbeitraege_url: str
+    kirchensteuer_url: str
