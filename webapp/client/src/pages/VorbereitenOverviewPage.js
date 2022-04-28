@@ -25,6 +25,18 @@ const ContentWrapper = styled.div`
   margin: 0 auto;
   margin-top: var(--spacing-11);
   max-width: var(--main-max-width);
+
+  .tile-card {
+    width: 32%;
+
+    @media screen and (max-width: 1089px) {
+      width: 49%;
+    }
+
+    @media screen and (max-width: 587px) {
+      width: 100%;
+    }
+  }
 `;
 
 const Headline1 = styled.h1`

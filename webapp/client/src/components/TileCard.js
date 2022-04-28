@@ -20,16 +20,6 @@ const LinkCard = styled.a`
     text-decoration: none !important;
     outline: none !important;
   }
-
-  width: 32%;
-
-  @media screen and (max-width: 869px) {
-    width: 49%;
-  }
-
-  @media screen and (max-width: 587px) {
-    width: 100%;
-  }
 `;
 
 const Card = styled.div`
@@ -51,7 +41,7 @@ const IconArrow = styled.img`
 
 function TileCard({ title, icon, url, className }) {
   return (
-    <LinkCard className={className} href={url}>
+    <LinkCard className={`${className} tile-card`} href={url}>
       <Icon src={icon} />
       <Card>{title}</Card>
       <IconArrow src={arrowRight} />
