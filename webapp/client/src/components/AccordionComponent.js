@@ -31,6 +31,10 @@ const CardHeaderElement = styled.div`
 const ExpandButton = styled.button`
   border: 0;
   background: inherit;
+
+  &:focus {
+    outline: 0;
+  }
 `;
 
 const CardBody = styled.div`

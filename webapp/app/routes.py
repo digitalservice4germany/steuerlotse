@@ -3,7 +3,7 @@ import datetime as dt
 from functools import wraps
 import io
 
-from flask import current_app, render_template, request, send_file, session, make_response, redirect
+from flask import current_app, render_template, request, send_file, session, make_response, redirect, url_for
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.datastructures import ImmutableMultiDict
@@ -353,28 +353,28 @@ def register_request_handlers(app):
             props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='AmbassadorInfoMaterialPage')
 
-    @app.route('/vorsorgeaufwendungen', methods=['GET'])
+    @app.route('/vorbereiten/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
     def pension_expenses_info():
         return render_react_content_page_template(
             props=PensionExpensesProps().camelized_dict(), 
             component='PensionExpensesInfoPage')
 
-    @app.route('/krankheitskosten', methods=['GET'])
+    @app.route('/vorbereiten/krankheitskosten', methods=['GET'])
     @add_caching_headers
     def medical_expenses_info():
         return render_react_content_page_template(
             props=MedicalExpensesInfoPageProps().camelized_dict(),
             component='MedicalExpensesInfoPage')
 
-    @app.route('/pflegekosten', methods=['GET'])
+    @app.route('/vorbereiten/pflegekosten', methods=['GET'])
     @add_caching_headers
     def care_costs_info_page():
         return render_react_content_page_template(
             props=CareCostsInfoPageProps().camelized_dict(),
             component='CareCostsInfoPage')        
 
-    @app.route('/bestattungskosten', methods=['GET'])
+    @app.route('/vorbereiten/bestattungskosten', methods=['GET'])
     @add_caching_headers
     def funeral_expenses_info():
         return render_react_content_page_template(
@@ -387,15 +387,15 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=VorbereitenInfoProps(
                     angaben_bei_behinderung_url="",
-                    bestattungskosten_url="",
-                    download_preparation_link="",
+                    bestattungskosten_url=url_for("funeral_expenses_info"),
+                    download_preparation_link=url_for("download_preparation"),
                     handwerkerleistungen_url="",
                     haushaltsnahe_dienstleistungen_url="",
                     kirchensteuer_url="",
-                    krankheitskosten_url="",
-                    pflegekosten_url="",
+                    krankheitskosten_url=url_for("medical_expenses_info"),
+                    pflegekosten_url=url_for("care_costs_info_page"),
                     spenden_und_mitgliedsbeitraege_url="",
-                    vorsorgeaufwendungen_url="",
+                    vorsorgeaufwendungen_url=url_for("pension_expenses_info"),
                     wiederbeschaffungskosten_url=""                    
                 ).camelized_dict(),
             component='VorbereitenOverviewPage')

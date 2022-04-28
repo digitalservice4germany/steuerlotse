@@ -23,6 +23,7 @@ const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
   margin: 0 auto;
+  margin-top: var(--spacing-11);
   max-width: var(--main-max-width);
 `;
 
@@ -74,7 +75,6 @@ export default function VorbereitenOverviewPage({
         <Headline2>{t("vorbereitenOverview.Paragraph2.heading")}</Headline2>
         <Paragraph2>{t("vorbereitenOverview.Paragraph2.text")}</Paragraph2>
         <AnchorButton
-          isDownloadLink
           url={downloadPreparationLink}
           text={t("vorbereitenOverview.Download")}
         />
