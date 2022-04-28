@@ -71,9 +71,9 @@ nav.Bar('top', [
     SteuerlotseNavItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'}),
     SteuerlotseNavItem(_l('nav.register'), 'unlock_code_request', {},
                        deactivate_when_logged_in=True),
+    SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {}),
     SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
                        matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
-    SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {}),
     SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
 ])
 
@@ -385,8 +385,20 @@ def register_request_handlers(app):
     @add_caching_headers
     def vorbereiten():
         return render_react_content_page_template(
-            props=VorbereitenInfoProps().camelized_dict(),
-            component='VorbereitenInfoProps')
+            props=VorbereitenInfoProps(
+                    angaben_bei_behinderung_url="",
+                    bestattungskosten_url="",
+                    download_preparation_link="",
+                    handwerkerleistungen_url="",
+                    haushaltsnahe_dienstleistungen_url="",
+                    kirchensteuer_url="",
+                    krankheitskosten_url="",
+                    pflegekosten_url="",
+                    spenden_und_mitgliedsbeitraege_url="",
+                    vorsorgeaufwendungen_url="",
+                    wiederbeschaffungskosten_url=""                    
+                ).camelized_dict(),
+            component='VorbereitenOverviewPage')
 
     @app.route('/ping')
     def ping():
