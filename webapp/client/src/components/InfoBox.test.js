@@ -19,7 +19,7 @@ describe("InfoBox", () => {
       "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung."
     );
     const buttonAnchor = screen.getByText("Jetzt anmelden");
-    const altImg = screen.getByAltText("teaser img");
+    const altImg = screen.getByAltText("Tablets mit Webapp des Steuerlotsen");
 
     expect(headline).toBeInTheDocument();
     expect(text).toBeInTheDocument();

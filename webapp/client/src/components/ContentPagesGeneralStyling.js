@@ -3,8 +3,11 @@ import styled from "styled-components";
 export const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
-  margin: 0 auto;
-  max-width: var(--main-max-width);
+  margin: 0 var(--spacing-03);
+
+  @media (min-width: 1224px) {
+    margin: 0 var(--spacing-11);
+  }
 `;
 
 export const List = styled.ul`

@@ -191,11 +191,10 @@ export default function ButtonAnchor({
   download,
   variant,
   buttonStyle,
-  additionalClass,
   external,
   disabled,
+  className,
 }) {
-  const btnClasses = `anchor-btn ${additionalClass || ""}`;
   const relation = [];
   let target = false;
   if (external) {
@@ -206,7 +205,7 @@ export default function ButtonAnchor({
   return (
     <Button
       as={url ? "a" : ""}
-      className={btnClasses}
+      className={className}
       href={url}
       variant={variant}
       disabled={!url ? disabled : undefined}
@@ -238,8 +237,8 @@ ButtonAnchor.propTypes = {
   external: PropTypes.bool,
   buttonStyle: PropTypes.oneOf(["default", "narrow"]),
   variant: PropTypes.oneOf(["primary", "outline"]),
-  additionalClass: PropTypes.string,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 ButtonAnchor.defaultProps = {
@@ -250,6 +249,6 @@ ButtonAnchor.defaultProps = {
   external: false,
   variant: "primary",
   buttonStyle: "default",
-  additionalClass: undefined,
   disabled: false,
+  className: undefined,
 };

@@ -59,15 +59,6 @@ describe("ButtonAnchor", () => {
     expect(buttonAnchor).not.toHaveAttribute("disabled");
   });
 
-  it("should render additional class", () => {
-    setup({
-      additionalClass: "additional-class",
-    });
-    const buttonAnchor = screen.getByText("anchor text");
-
-    expect(buttonAnchor).toHaveClass("additional-class");
-  });
-
   it("should render a default anchor button with component as text children", () => {
     setup({
       children: (
