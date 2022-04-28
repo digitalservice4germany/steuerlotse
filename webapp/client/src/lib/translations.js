@@ -834,6 +834,36 @@ const translations = {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
+  HouseholdServicesInfo: {
+    Section1: {
+      Heading: "Haushaltsnahe Dienstleistungen ",
+      Text: "Auch Kosten für Dienstleistungen im eigenen Haushalt können zu Steuerermäßigungen führen. Voraussetzung ist unter anderem, dass die Arbeiten in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt wurden.",
+    },
+    Section2: {
+      Heading: "Beispiele für Haushaltsnahe Dienstleistungen",
+      Text: "Sie können Dienstleistungen absetzen, die Sie beauftragt haben, aber auch von einer im Haushalt lebenden Person erbracht worden sein können. Hierzu gehören zum Beispiel:",
+      ListItem1: "Reinigung der Wohnung",
+      ListItem2: "Kochen, Waschen, Bügeln durch eine Haushaltshilfe",
+      ListItem3: "Gartenpflege wie Rasenmähen, Unkraut entfernen",
+      ListItem4: "Winterdienst auf oder vor dem eigenen Grundstück",
+      ListItem5: "Zubereitung von Mahlzeiten im Haushalt",
+      ListItem6: "Fütterung und Pflege von Haustieren im Haushalt",
+      ListItem7:
+        "Pflege, Versorgung und Betreuung von kranken, alten und pflegebedürftigen Personen, auch wenn die Pflege- und Betreuungsleistungen im Haushalt der gepflegten / betreuten Person ausgeübt werden, soweit diese Aufwendungen nicht steuermindernd bei der gepflegten Person berücksichtigt wurden",
+      ListItem8: "das Hausnotrufsystem innerhalb des betreuten Wohnens",
+      Text2:
+        "Falls Sie Leistungen aus einer Nebenkostenabrechnung haben oder Leistungen selbstständig in Auftrag gegeben haben, können diese ebenfalls geltend gemacht werden.",
+    },
+    Section3: {
+      Heading: "Haushaltsnahe Dienstleistungen aus der Nebenkostenabrechnung",
+      Text: "Auch in der Nebenkostenabrechung für Ihre Wohnung verstecken sich zum Teil haushaltsnahe Dienstleistungen oder Handwerkerkosten, die in der Steuererklärung eingetragen werden können.",
+      Text2:
+        "Achten Sie hierbei darauf, dass Sie nur den Teil angeben, der für Ihre Wohnung entfällt.",
+    },
+    Section4: { 
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   ReplacementCostsInfo: {
     Section1: {
       Heading: "Wiederbeschaffungskosten",
