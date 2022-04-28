@@ -12,6 +12,7 @@ import {
   Headline1,
   Headline2,
   Paragraph,
+  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function DisabilityCostsInfoPage() {
@@ -66,7 +67,9 @@ export default function DisabilityCostsInfoPage() {
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
 
         <Headline1>{t("DisabilityCostsInfo.Section1.Heading")}</Headline1>
-        <Paragraph>{t("DisabilityCostsInfo.Section1.Text")}</Paragraph>
+        <ParagraphLarge>
+          {t("DisabilityCostsInfo.Section1.Text")}
+        </ParagraphLarge>
 
         <Headline2>{t("DisabilityCostsInfo.Section2.Heading")}</Headline2>
         <Paragraph>{t("DisabilityCostsInfo.Section2.Text")}</Paragraph>
