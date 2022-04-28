@@ -654,6 +654,78 @@ const translations = {
       },
     },
   },
+  Spenden: {
+    Section1: {
+      heading: "Spenden und Mitgliedsbeiträge",
+      text: "Spenden und Mitgliedsbeiträge können als Sonderausgaben abgesetzt werden. Wir erklären, wie Sie Spenden absetzen können.",
+    },
+    Section2: {
+      heading: "Spenden und Beiträge für steuerbegünstigte Zwecke",
+      text: "Spenden können nur steuermindernd berücksichtigt werden, wenn sie an steuerbegünstigte Organisationen fließen. Dazu zählen z.B.",
+      list: {
+        item1: "Kirchen",
+        item2: "Stiftungen",
+        item3: "staatliche Museen",
+        item4: "Universitäten oder",
+        item5: "Vereine",
+      },
+      text2:
+        "Ob eine Organisation steuerbegünstigt ist, stellt das Finanzamt fest. Auch Mitgliedsbeiträge an " +
+        "steuerbegünstigte Organisationen können steuermindernd berücksichtigt werden, zum Beispiel Mitgliedsbeiträge " +
+        "für kulturelle Fördervereine.",
+      text3: "Nicht absetzbar sind Mitgliedsbeiträge in Freizeitvereinen wie",
+      list2: {
+        item1: "Sportklubs",
+        item2: "Gesangsvereine",
+        item3: "Vereine für Heimatpflege",
+        item4: "Vereine für Tierzucht",
+        item5: "Kleingartenvereine",
+      },
+    },
+    Section3: {
+      heading: "Spenden an politische Parteien",
+      text:
+        "Auch Spenden an politiche Parteien können Sie absetzen. Zu beachten ist jedoch, dass der Abzug nicht " +
+        "möglich ist, wenn die politische Partei von der staatlichen Parteienfinanzierung ausgeschlossen ist.",
+      text2:
+        "Spenden und Mitgliedsbeiträge an inländische politische Parteien und unabhängige Wählervereinigungen " +
+        "können Sie zu 50 % von der Steuer absetzen. Allerdings bis maximal 825 Euro pro Person bei Ausgaben in Höhe von 1.650 Euro.",
+    },
+    Section4: {
+      heading: "Nachweise",
+      text:
+        "Für einen Spendenabzug benötigen Sie grundsätzlich eine Spendenbescheinigung im Original. Diese sind aber " +
+        "nur auf Anforderung des Finanzamts nachzuweisen.",
+      text2:
+        "Bei Spenden bis 300 Euro reicht den meisten Finanzämtern eine Kopie der Abbuchung vom Kontoauszug aus.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  Kirchensteuer: {
+    Section1: {
+      heading: "Kirchensteuer",
+      text:
+        "Sie  können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben. Diese Daten finden " +
+        "Sie zum Beispiel auf ihrem Einkommensteuerbescheid und Ihrem Vorauszahlungsbescheid, sowie auf Ihrer Lohnsteuerbescheinigung.",
+    },
+    Section2: {
+      heading: "Geleistete Zahlungen",
+      text:
+        "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen. " +
+        "Dazu zählt auch gezahltes Kirchgeld oder Ortskirchensteuer.",
+    },
+    Section3: {
+      heading: "Erhaltene Erstattungen",
+      text:
+        "Haben Sie im letzten Jahr zu viel gezahlte Kirchensteuer erstattet bekommen, kann dies ebenfalls angegeben. " +
+        "Die Summe der erstatteten Kirchensteuer finden Sie zum Beispiel auf dem Steuerbescheid des Vorjahres.",
+    },
+    Section5: {
+      heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
   InfoBox: {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
     text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
@@ -802,6 +874,36 @@ const translations = {
         " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
     Paragraph5: {
+      Heading: "Weitere Ausgaben, die Sie absetzen können",
+    },
+  },
+  HouseholdServicesInfo: {
+    Section1: {
+      Heading: "Haushaltsnahe Dienstleistungen ",
+      Text: "Auch Kosten für Dienstleistungen im eigenen Haushalt können zu Steuerermäßigungen führen. Voraussetzung ist unter anderem, dass die Arbeiten in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt wurden.",
+    },
+    Section2: {
+      Heading: "Beispiele für Haushaltsnahe Dienstleistungen",
+      Text: "Sie können Dienstleistungen absetzen, die Sie beauftragt haben, aber auch von einer im Haushalt lebenden Person erbracht worden sein können. Hierzu gehören zum Beispiel:",
+      ListItem1: "Reinigung der Wohnung",
+      ListItem2: "Kochen, Waschen, Bügeln durch eine Haushaltshilfe",
+      ListItem3: "Gartenpflege wie Rasenmähen, Unkraut entfernen",
+      ListItem4: "Winterdienst auf oder vor dem eigenen Grundstück",
+      ListItem5: "Zubereitung von Mahlzeiten im Haushalt",
+      ListItem6: "Fütterung und Pflege von Haustieren im Haushalt",
+      ListItem7:
+        "Pflege, Versorgung und Betreuung von kranken, alten und pflegebedürftigen Personen, auch wenn die Pflege- und Betreuungsleistungen im Haushalt der gepflegten / betreuten Person ausgeübt werden, soweit diese Aufwendungen nicht steuermindernd bei der gepflegten Person berücksichtigt wurden",
+      ListItem8: "das Hausnotrufsystem innerhalb des betreuten Wohnens",
+      Text2:
+        "Falls Sie Leistungen aus einer Nebenkostenabrechnung haben oder Leistungen selbstständig in Auftrag gegeben haben, können diese ebenfalls geltend gemacht werden.",
+    },
+    Section3: {
+      Heading: "Haushaltsnahe Dienstleistungen aus der Nebenkostenabrechnung",
+      Text: "Auch in der Nebenkostenabrechung für Ihre Wohnung verstecken sich zum Teil haushaltsnahe Dienstleistungen oder Handwerkerkosten, die in der Steuererklärung eingetragen werden können.",
+      Text2:
+        "Achten Sie hierbei darauf, dass Sie nur den Teil angeben, der für Ihre Wohnung entfällt.",
+    },
+    Section4: {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },

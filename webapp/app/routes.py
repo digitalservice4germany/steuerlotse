@@ -29,7 +29,7 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, VorbereitenInfoProps
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, HouseholdServicesInfoPageProps, VorbereitenInfoProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -390,7 +390,7 @@ def register_request_handlers(app):
                     bestattungskosten_url=url_for("funeral_expenses_info"),
                     download_preparation_link=url_for("download_preparation"),
                     handwerkerleistungen_url="",
-                    haushaltsnahe_dienstleistungen_url="",
+                    haushaltsnahe_dienstleistungen_url=url_for("household_services_info"),
                     kirchensteuer_url="",
                     krankheitskosten_url=url_for("medical_expenses_info"),
                     pflegekosten_url=url_for("care_costs_info_page"),
@@ -401,7 +401,14 @@ def register_request_handlers(app):
             component='VorbereitenOverviewPage')
 
 
-    @app.route('/vorbereiten/wiederbeschaffungskosten', methods=['GET'])
+    @app.route('/vorbereiten/haushaltsnahe-dienstleistungen', methods=['GET'])
+    @add_caching_headers
+    def household_services_info():
+        return render_react_content_page_template(
+            props=HouseholdServicesInfoPageProps().camelized_dict(),
+            component='HouseholdServicesInfoPage')
+
+    @app.route('/wiederbeschaffungskosten', methods=['GET'])
     @add_caching_headers
     def replacement_costs_info_page():
         return render_react_content_page_template(

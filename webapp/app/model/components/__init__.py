@@ -229,9 +229,15 @@ class VorbereitenInfoProps(ComponentProps):
     handwerkerleistungen_url: str
     spenden_und_mitgliedsbeitraege_url: str
     kirchensteuer_url: str
+  
+class HouseholdServicesInfoPageProps(ComponentProps):
+    pass
+
+  
 class ReplacementCostsInfoPageProps(ComponentProps):
     pass
 
+  
 class DisabilityCostsInfoProps(ComponentProps):
     pass
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { within } from "@testing-library/dom";
-import CraftsmanServicesInfoPage from "./CraftsmanServicesInfoPage";
+import HouseholdServicesInfoPage from "./HouseholdServicesInfoPage";
 
 jest.mock("../components/InfoBox", () => ({
   __esModule: true,
@@ -18,34 +18,38 @@ jest.mock("../components/StepHeaderButtons", () => ({
 }));
 
 function setup() {
-  const utils = render(<CraftsmanServicesInfoPage />);
+  const utils = render(<HouseholdServicesInfoPage />);
 
   return { ...utils };
 }
 
-describe("CraftsmanServicesInfoPage", () => {
-  it("should render CraftsmanServicesInfoPage", () => {
+describe("HouseholdServicesInfoPage", () => {
+  it("should render HouseholdServicesInfoPage", () => {
     setup();
 
-    const headline1 = screen.getByText("Handwerkerleistungen");
-    const headline2 = screen.getByText("Beispiele für Handwerkerleistungen");
-    const headline3 = screen.getByText("Rechnungen und Zahlungsweg beachten");
-    const headline5 = screen.getByText(
+    const headline1 = screen.getByText("Haushaltsnahe Dienstleistungen");
+    const headline2 = screen.getByText(
+      "Beispiele für Haushaltsnahe Dienstleistungen"
+    );
+    const headline3 = screen.getByText(
+      "Haushaltsnahe Dienstleistungen aus der Nebenkostenabrechnung"
+    );
+    const headline4 = screen.getByText(
       "Weitere Ausgaben, die Sie absetzen können"
     );
     const text1 = screen.getByText(
-      "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können",
+      "Auch Kosten für Dienstleistungen im eigenen Haushalt können zu Steuerermäßigungen führen",
       { exact: false }
     );
 
     expect(headline1).toBeInTheDocument();
     expect(headline2).toBeInTheDocument();
     expect(headline3).toBeInTheDocument();
-    expect(headline5).toBeInTheDocument();
+    expect(headline4).toBeInTheDocument();
     expect(text1).toBeInTheDocument();
   });
 
-  it("should render the list of CraftsmanServicesInfoPage", () => {
+  it("should render the list of Household Services on the HouseholdServicesInfoPage", () => {
     setup();
 
     const list = screen.getByRole("list", {
@@ -54,10 +58,10 @@ describe("CraftsmanServicesInfoPage", () => {
     const { getAllByRole } = within(list);
     const items = getAllByRole("listitem");
 
-    expect(items.length).toBe(9);
+    expect(items.length).toBe(8);
   });
 
-  it("should render the anchor list of CraftsmanServicesInfoPage", () => {
+  it("should render the anchor list of HouseholdServicesInfoPage", () => {
     setup();
 
     const anchorList = screen.getByRole("list", {
