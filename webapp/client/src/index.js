@@ -41,6 +41,9 @@ import FuneralExpensesInfoPage from "./pages/FuneralExpensesInfoPage";
 import VorbereitenOverviewPage from "./pages/VorbereitenOverviewPage";
 import HouseholdServicesInfoPage from "./pages/HouseholdServicesInfoPage";
 import ReplacementCostsInfoPage from "./pages/ReplacementCostsInfoPage";
+import DonationInfoPage from "./pages/DonationInfoPage";
+import ChurchTaxInfoPage from "./pages/ChurchTaxInfoPage";
+import CraftsmanServicesInfoPage from "./pages/CraftsmanServicesInfoPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -81,6 +84,9 @@ const allowedComponents = {
   VorbereitenOverviewPage,
   HouseholdServicesInfoPage,
   ReplacementCostsInfoPage,
+  DonationInfoPage,
+  ChurchTaxInfoPage,
+  CraftsmanServicesInfoPage,
 };
 
 function mountComponent(element) {

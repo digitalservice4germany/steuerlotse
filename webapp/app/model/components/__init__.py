@@ -237,7 +237,18 @@ class HouseholdServicesInfoPageProps(ComponentProps):
 class ReplacementCostsInfoPageProps(ComponentProps):
     pass
 
-  
+
 class DisabilityCostsInfoProps(ComponentProps):
     pass
 
+
+class DonationInfoPageProps(ComponentProps):
+    pass
+
+
+class ChurchTaxInfoPageProps(ComponentProps):
+    pass
+
+
+class CraftsmanServicesInfoPageProps(ComponentProps):
+    pass

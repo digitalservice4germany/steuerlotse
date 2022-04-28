@@ -31,15 +31,15 @@ const anchorList = [
   },
   {
     text: t("ContentPagesAnchors.Handwerkerleistungen.text"),
-    url: "/vorbereiten/#",
+    url: "/vorbereiten/handwerkerleistungen",
   },
   {
     text: t("ContentPagesAnchors.Spenden.text"),
-    url: "/vorbereiten/#",
+    url: "/vorbereiten/spenden-und-mitgliedsbeitraege",
   },
   {
     text: t("ContentPagesAnchors.Kirchensteuer.text"),
-    url: "/vorbereiten/#",
+    url: "/vorbereiten/kirchensteuer",
   },
 ];
 

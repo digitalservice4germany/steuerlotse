@@ -29,7 +29,10 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, HouseholdServicesInfoPageProps, VorbereitenInfoProps
+from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
+    DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
+    HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
+    VorbereitenInfoProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -389,12 +392,12 @@ def register_request_handlers(app):
                     angaben_bei_behinderung_url=url_for("diability_costs_info"),
                     bestattungskosten_url=url_for("funeral_expenses_info"),
                     download_preparation_link=url_for("download_preparation"),
-                    handwerkerleistungen_url="",
+                    handwerkerleistungen_url=url_for("craftsman_services_info"),
                     haushaltsnahe_dienstleistungen_url=url_for("household_services_info"),
-                    kirchensteuer_url="",
+                    kirchensteuer_url=url_for("church_tax_info"),
                     krankheitskosten_url=url_for("medical_expenses_info"),
                     pflegekosten_url=url_for("care_costs_info_page"),
-                    spenden_und_mitgliedsbeitraege_url="",
+                    spenden_und_mitgliedsbeitraege_url=url_for("donation_info"),
                     vorsorgeaufwendungen_url=url_for("pension_expenses_info"),
                     wiederbeschaffungskosten_url=url_for("replacement_costs_info_page")
                 ).camelized_dict(),
@@ -408,7 +411,7 @@ def register_request_handlers(app):
             props=HouseholdServicesInfoPageProps().camelized_dict(),
             component='HouseholdServicesInfoPage')
 
-    @app.route('/wiederbeschaffungskosten', methods=['GET'])
+    @app.route('/vorbereiten/wiederbeschaffungskosten', methods=['GET'])
     @add_caching_headers
     def replacement_costs_info_page():
         return render_react_content_page_template(
@@ -422,6 +425,26 @@ def register_request_handlers(app):
             props=DisabilityCostsInfoProps().camelized_dict(),
             component='DisabilityCostsInfoPage')
 
+    @app.route('/vorbereiten/handwerkerleistungen', methods=['GET'])
+    @add_caching_headers
+    def craftsman_services_info():
+        return render_react_content_page_template(
+            props=CraftsmanServicesInfoPageProps().camelized_dict(),
+            component='CraftsmanServicesInfoPage')
+
+    @app.route('/vorbereiten/spenden-und-mitgliedsbeitraege', methods=['GET'])
+    @add_caching_headers
+    def donation_info():
+        return render_react_content_page_template(
+            props=DonationInfoPageProps().camelized_dict(),
+            component='DonationInfoPage')
+
+    @app.route('/vorbereiten/kirchensteuer', methods=['GET'])
+    @add_caching_headers
+    def church_tax_info():
+        return render_react_content_page_template(
+            props=ChurchTaxInfoPageProps().camelized_dict(),
+            component='ChurchTaxInfoPage')
 
     @app.route('/ping')
     def ping():
