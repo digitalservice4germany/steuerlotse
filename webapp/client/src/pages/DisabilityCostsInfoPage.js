@@ -84,6 +84,7 @@ export default function DisabilityCostsInfoPage() {
 
         <Headline2>{t("DisabilityCostsInfo.Section5.Heading")}</Headline2>
         <Paragraph>{t("DisabilityCostsInfo.Section5.Text")}</Paragraph>
+        <Paragraph>{t("DisabilityCostsInfo.Section5.Text2")}</Paragraph>
 
         <Headline2>{t("DisabilityCostsInfo.Section6.Heading")}</Headline2>
         <Paragraph>{t("DisabilityCostsInfo.Section6.Text")}</Paragraph>
