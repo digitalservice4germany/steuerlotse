@@ -3,9 +3,11 @@
     /* Colors */
 
     --beige-200: #F4F0EB;
+    --beige-300: #EEE8E1;
     --grey-300: #BABABA;
     --grey-900: #545454;
     --blue-400: #7EA8B9;
+    --blue-800: #005576;
     --blue-900: #003B52;
 
     --text-color: #0b0c0c;
@@ -52,8 +54,10 @@
     /* Button Colors*/
 
     --button-disabled-bg-color: var(--blue-400);
-    --button-disabled-outline-bg-color: var(--grey-300);
-    --button-disabled-outline-color: var(--grey-900);
+    --button-disabled-outline-bg-color: var(--beige-300);
+    --button-disabled-outline-color: var(--blue-800);
+    --button-disabled-outline-font-color: var(--grey-900);
+    --button-primary-pressed-bg-color: var(--blue-800);
 
 
     /* Font Settings */
