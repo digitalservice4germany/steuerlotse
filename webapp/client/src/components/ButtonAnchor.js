@@ -214,7 +214,7 @@ export default function ButtonAnchor({
       external={external}
       buttonStyle={buttonStyle}
       target={target || undefined}
-      rel={url ? relation : undefined}
+      rel={url && !download ? relation : undefined}
       onClick={onClick}
     >
       {children}

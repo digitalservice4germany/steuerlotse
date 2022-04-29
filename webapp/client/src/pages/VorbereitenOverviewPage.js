@@ -69,7 +69,7 @@ export default function VorbereitenOverviewPage({
         </ParagraphLarge>
         <Headline2>{t("vorbereitenOverview.Paragraph2.heading")}</Headline2>
         <Paragraph>{t("vorbereitenOverview.Paragraph2.text")}</Paragraph>
-        <ButtonAnchorOverview url={downloadPreparationLink}>
+        <ButtonAnchorOverview url={downloadPreparationLink} download>
           <Text>{t("vorbereitenOverview.Download")}</Text>
         </ButtonAnchorOverview>
         <AccordionComponent
