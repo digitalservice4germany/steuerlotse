@@ -6,8 +6,20 @@ export const ContentWrapper = styled.div`
   margin: 0 auto;
   max-width: var(--content-pages-max-width);
 
-  @media (min-width: 1025px) {
+  @media (min-width: 769px) {
     margin: 0 auto;
+    padding-left: var(--spacing-06);
+    padding-right: var(--spacing-06);
+  }
+
+  @media (min-width: 1025px) {
+    padding-left: var(--spacing-08);
+    padding-right: var(--spacing-08);
+  }
+
+  @media screen and (min-width: 1136px) {
+    padding-left: 0;
+    padding-right: 0;
   }
 `;
 

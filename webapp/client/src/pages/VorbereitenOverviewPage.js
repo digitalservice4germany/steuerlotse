@@ -36,7 +36,7 @@ const TileGrid = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 1136px) {
     grid-template-columns: repeat(3, 1fr);
   }
 `;

@@ -3,22 +3,31 @@ import styled, { css } from "styled-components";
 
 const activeStates = css`
   &:active {
-    color: ${({ variant }) => {
+    color: ${({ variant, disabled }) => {
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-font-color)";
+      }
       if (variant === "outline") {
         return "var(--text-color)";
       }
       return "var(--inverse-text-color)";
     }};
     background-color: ${({ variant, disabled }) => {
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-bg-color)";
+      }
       if (variant === "outline") {
         return "var(--inverse-text-color)";
       }
       if (disabled) {
         return "var(--button-disabled-bg-color)";
       }
-      return "var(--link-active-hover-color)";
+      return "var(--button-primary-pressed-bg-color)";
     }};
-    outline: ${({ variant }) => {
+    border: ${({ variant, disabled }) => {
+      if (disabled && variant === "outline") {
+        return "1px solid var(--button-disabled-outline-color)";
+      }
       if (variant === "outline") {
         return "1px solid var(--hover-border-color)";
       }
@@ -39,7 +48,7 @@ const Button = styled.button`
     font-family: var(--font-bold);
     line-height: 1;
     text-decoration: none;
-    border: none;
+    border: transparent;
     transition: color var(--transition-behaviour) var(--transition-time),
       background-color var(--transition-behaviour) var(--transition-time),
       background var(--transition-behaviour) var(--transition-time);
@@ -55,11 +64,14 @@ const Button = styled.button`
       }
       return "18px 20px";
     }};
-    color: ${({ variant }) => {
+    color: ${({ variant, disabled }) => {
+      if (disabled && variant === "outline") {
+        return "var(--button-disabled-outline-font-color)";
+      }
       if (variant === "outline") {
         return "var(--text-color)";
       }
-      return "var(--inverse-text-color) !important"; // remove important if base css is refactored
+      return "var(--inverse-text-color) !important"; // remove if possible
     }};
     background-color: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
@@ -73,7 +85,7 @@ const Button = styled.button`
       }
       return "var(--link-color)";
     }};
-    outline: ${({ variant, disabled }) => {
+    border: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
         return "1px solid var(--button-disabled-outline-color)";
       }
@@ -84,7 +96,10 @@ const Button = styled.button`
     }};
 
     &:hover {
-      color: ${({ variant }) => {
+      color: ${({ variant, disabled }) => {
+        if (disabled && variant === "outline") {
+          return "var(--button-disabled-outline-font-color)";
+        }
         if (variant === "outline") {
           return "var(--text-color)";
         }
@@ -102,7 +117,7 @@ const Button = styled.button`
         }
         return "var(--link-hover-color)";
       }};
-      outline: ${({ variant, disabled }) => {
+      border: ${({ variant, disabled }) => {
         if (disabled && variant === "outline") {
           return "1px solid var(--button-disabled-outline-color)";
         }
@@ -123,13 +138,19 @@ const Button = styled.button`
     ${activeStates};
 
     &:focus-visible {
-      color: var(--focus-text-color);
+      color: var(--focus-text-color) !important;
       outline: none;
       box-shadow: none;
       background: linear-gradient(
         var(--focus-color) calc(100% - 4px),
         var(--focus-text-color) 4px
       );
+
+      svg {
+        path {
+          fill: var(--focus-text-color);
+        }
+      }
     }
   }
 `;

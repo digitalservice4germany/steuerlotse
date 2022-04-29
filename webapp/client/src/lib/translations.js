@@ -511,9 +511,7 @@ const translations = {
   Handwerkerleistungen: {
     Section1: {
       heading: "Handwerkerleistungen",
-      text:
-        "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können " +
-        "zu Steuerermäßigungen führen. Die Arbeiten müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt werden.",
+      text: "Auch Kosten für Dienstleistungen oder Handwerkerleistungen im eigenen Haushalt können zu Steuerermäßigungen führen. Die Arbeiten müssen in Ihren eigenen vier Wänden oder auf Ihrem Grundstück ausgeführt werden.",
     },
     Section2: {
       heading: "Beispiele für Handwerkerleistungen",
@@ -808,7 +806,7 @@ const translations = {
   },
   DisabilityCostsInfo: {
     Section1: {
-      Heading: "Kosten bei einer Behinderung",
+      Heading: "Angaben bei einer Behinderung",
       Text: "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
     },
     Section2: {
