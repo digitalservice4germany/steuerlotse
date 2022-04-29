@@ -12,7 +12,7 @@ const activeStates = css`
       }
       return "var(--inverse-text-color)";
     }};
-    background-color: ${({ variant, disabled }) => {
+    background: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
         return "var(--button-disabled-outline-bg-color)";
       }
@@ -22,7 +22,10 @@ const activeStates = css`
       if (disabled) {
         return "var(--button-disabled-bg-color)";
       }
-      return "var(--button-primary-pressed-bg-color)";
+      return (
+        "var(--button-primary-pressed-bg-color) radial-gradient(circle, transparent 1%, " +
+        "var(--button-primary-pressed-bg-color) 1%) center/15000%;"
+      );
     }};
     border: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
@@ -33,6 +36,8 @@ const activeStates = css`
       }
       return "none";
     }};
+    background-size: 100%;
+    transition: background var(--transition-time);
   }
 `;
 
@@ -127,8 +132,6 @@ const Button = styled.button`
         return "none";
       }};
       text-decoration: none;
-
-      ${activeStates};
 
       .anchor-btn__icon.translate-x {
         transform: translatex(10%);
