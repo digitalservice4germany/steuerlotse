@@ -3,11 +3,9 @@ import styled from "styled-components";
 export const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
-  margin: 0 auto;
-  max-width: var(--content-pages-max-width);
+  max-width: var(--pages-max-width);
 
   @media (min-width: 769px) {
-    margin: 0 auto;
     padding-left: var(--spacing-06);
     padding-right: var(--spacing-06);
   }
@@ -15,11 +13,6 @@ export const ContentWrapper = styled.div`
   @media (min-width: 1025px) {
     padding-left: var(--spacing-08);
     padding-right: var(--spacing-08);
-  }
-
-  @media screen and (min-width: 1136px) {
-    padding-left: 0;
-    padding-right: 0;
   }
 `;
 

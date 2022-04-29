@@ -12,7 +12,7 @@ const InnerBox = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
   margin: 0 auto;
-  max-width: var(--content-pages-max-width);
+  max-width: var(--pages-max-width);
 
   @media (min-width: 768px) {
     display: grid;
