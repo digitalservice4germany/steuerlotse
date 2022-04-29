@@ -259,14 +259,37 @@ ol li::before {
 }
 
 .main-content {
-  padding-left: var(--spacing-03);
-  padding-right: var(--spacing-03);
-  padding-bottom: var(--spacing-10);
-  flex: 1;
   margin: 0 auto;
-  width: 100%;
-  max-width: var(--main-max-width);
+  max-width: var(--content-pages-max-width);
+  padding: 1.5rem var(--spacing-03) var(--spacing-10);
 }
+
+@media (min-width: 769px) {
+  .main-content {
+     margin: 0 auto;
+    padding-left: var(--spacing-06);
+    padding-right: var(--spacing-06);
+  }
+}
+
+@media (min-width: 1025px) {
+  .main-content {
+     padding-left: var(--spacing-08);
+    padding-right: var(--spacing-08);
+  }
+}
+
+@media screen and (min-width: 1136px) {
+  .main-content{
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.main-content--full-width {
+  padding-top: 1.5rem;
+}
+
 
 .list-unstyled li a {
   color: var(--text-color);

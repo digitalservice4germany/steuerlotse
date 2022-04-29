@@ -80,7 +80,7 @@ const Figure = styled.figure`
   }
 
   img {
-    width: 100%;
+    width: 95%;
     height: auto;
     object-fit: contain;
   }
@@ -99,12 +99,12 @@ export default function InfoBox() {
         </TextBox>
         <Figure className="info-box__figure">
           <img
-            srcSet="images/InfoBox-Image-XS.png 726w,
-                                images/InfoBox-Image-S.png 794w,
-      	                        images/InfoBox-Image-M.png 1060w,
-      	                        images/InfoBox-Image-L.png 1224w"
+            srcSet="../images/InfoBox-Image-XS.png 726w,
+                                ../images/InfoBox-Image-S.png 794w,
+      	                        ../images/InfoBox-Image-M.png 1060w,
+      	                        ../images/InfoBox-Image-L.png 1224w"
             sizes="(min-width: 768px) 50vw, 100vw"
-            src="images/InfoBox-Image-XS.png"
+            src="../images/InfoBox-Image-XS.png"
             alt="Tablets mit Webapp des Steuerlotsen"
           />
         </Figure>

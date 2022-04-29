@@ -2,11 +2,7 @@
 export const baseDecorator = [
   (Story) => (
     <div className="main-content">
-      <div className="mt-4">
-        <div className="col-lg-9 col-md-10 col-xs-12 p-0">
-          <Story />
-        </div>
-      </div>
+      <Story />
     </div>
   ),
 ];
@@ -14,11 +10,7 @@ export const baseDecorator = [
 export const contentPageDecorator = [
   (Story) => (
     <div className="main-content--full-width">
-      <div className="mt-4">
-        <div className="pl-0 pr-0 ml-0 mr-0">
-          <Story />
-        </div>
-      </div>
+      <Story />
     </div>
   ),
 ];
