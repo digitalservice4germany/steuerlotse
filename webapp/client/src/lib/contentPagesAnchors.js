@@ -2,12 +2,12 @@ import { t } from "i18next";
 
 const anchorList = [
   {
-    text: t("ContentPagesAnchors.Krankheitskosten.text"),
-    url: "/vorbereiten/krankheitskosten",
-  },
-  {
     text: t("ContentPagesAnchors.Vorsorgeaufwendungen.text"),
     url: "/vorbereiten/vorsorgeaufwendungen",
+  },
+  {
+    text: t("ContentPagesAnchors.Krankheitskosten.text"),
+    url: "/vorbereiten/krankheitskosten",
   },
   {
     text: t("ContentPagesAnchors.Pflegekosten.text"),
