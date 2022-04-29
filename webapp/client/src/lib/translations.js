@@ -706,15 +706,11 @@ const translations = {
   Kirchensteuer: {
     Section1: {
       heading: "Kirchensteuer",
-      text:
-        "Sie  können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben. Diese Daten finden " +
-        "Sie zum Beispiel auf ihrem Einkommensteuerbescheid und Ihrem Vorauszahlungsbescheid, sowie auf Ihrer Lohnsteuerbescheinigung.",
+      text: "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen. Dazu zählt auch gezahltes Kirchgeld oder Ortskirchensteuer.",
     },
     Section2: {
       heading: "Geleistete Zahlungen",
-      text:
-        "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen. " +
-        "Dazu zählt auch gezahltes Kirchgeld oder Ortskirchensteuer.",
+      text: "Sie können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben. Diese Daten finden Sie zum Beispiel auf ihrem Einkommensteuerbescheid und Ihrem Vorauszahlungsbescheid, sowie auf Ihrer Lohnsteuerbescheinigung.",
     },
     Section3: {
       heading: "Erhaltene Erstattungen",
@@ -869,8 +865,8 @@ const translations = {
     },
     Paragraph4: {
       Heading: "Die zumutbare Belastung",
-      Text:
-        "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+      Text: "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      Text2:
         " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
     Paragraph5: {

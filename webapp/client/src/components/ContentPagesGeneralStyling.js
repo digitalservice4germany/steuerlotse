@@ -50,7 +50,8 @@ export const Headline2 = styled.h2`
 `;
 
 export const Paragraph = styled.p`
-  padding-top: var(--spacing-03);
+  padding-top: ${(props) =>
+    props.spacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};
   margin: 0;
   font-size: var(--text-medium-big);
 `;

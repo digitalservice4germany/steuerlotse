@@ -51,6 +51,7 @@ export default function CareCostsInfoPage() {
         <Paragraph>{t("CareCostsInfo.Paragraph3.Text")}</Paragraph>
         <Headline2>{t("CareCostsInfo.Paragraph4.Heading")}</Headline2>
         <Paragraph>{t("CareCostsInfo.Paragraph4.Text")}</Paragraph>
+        <Paragraph>{t("CareCostsInfo.Paragraph4.Text2")}</Paragraph>
         <Headline2>{t("CareCostsInfo.Paragraph5.Heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
