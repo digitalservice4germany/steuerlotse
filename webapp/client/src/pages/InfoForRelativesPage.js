@@ -10,8 +10,6 @@ import {
   Headline2,
   Paragraph,
   ParagraphLarge,
-  HeadingBox,
-  InnerContent,
 } from "../components/ContentPagesGeneralStyling";
 
 const Picture = styled.picture`
@@ -74,17 +72,11 @@ export default function InfoForRelativesPage() {
   return (
     <div>
       <ContentWrapper>
-        <InnerContent>
-          <Picture>
-            <img src="../images/info-angehoerige.jpeg" alt="to be changed" />
-          </Picture>
-          <HeadingBox>
-            <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
-            <ParagraphLarge>
-              {t("InfoForRelatives.Section1.Text")}
-            </ParagraphLarge>
-          </HeadingBox>
-        </InnerContent>
+        <Picture>
+          <img src="../images/info-angehoerige.jpeg" alt="to be changed" />
+        </Picture>
+        <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
+        <ParagraphLarge>{t("InfoForRelatives.Section1.Text")}</ParagraphLarge>
       </ContentWrapper>
       <ContentWrapper>
         <Headline2>{t("InfoForRelatives.Section2.Heading")}</Headline2>
