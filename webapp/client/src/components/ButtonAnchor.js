@@ -71,7 +71,7 @@ const Button = styled.button`
       if (variant === "outline") {
         return "var(--text-color)";
       }
-      return "var(--inverse-text-color)";
+      return "var(--inverse-text-color) !important"; // remove if possible
     }};
     background-color: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
@@ -138,7 +138,7 @@ const Button = styled.button`
     ${activeStates};
 
     &:focus-visible {
-      color: var(--focus-text-color);
+      color: var(--focus-text-color) !important;
       outline: none;
       box-shadow: none;
       background: linear-gradient(
