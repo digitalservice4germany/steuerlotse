@@ -7,7 +7,6 @@ export const ContentWrapper = styled.div`
   max-width: var(--content-pages-max-width);
 
   @media (min-width: 1025px) {
-    padding-left: var(--spacing-10);
     margin: 0 auto;
   }
 `;
