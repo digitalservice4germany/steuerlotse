@@ -803,7 +803,7 @@ const translations = {
       Text: "Nicht absetzen können Sie Sachversicherungen, die Gegenstände oder Inventar schützen. Dazu zählen:",
       ListItem1: "Kaskoversicherungen",
       ListItem2: "Hausratversicherungen",
-      ListItem3: "Gebäudeversicherungen und",
+      ListItem3: "Gebäudeversicherungen",
       ListItem4: "Rechtsschutzversicherungen",
     },
     Paragraph4: {
