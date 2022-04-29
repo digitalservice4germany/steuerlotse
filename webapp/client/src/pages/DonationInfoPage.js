@@ -74,7 +74,7 @@ export default function DonationInfoPage() {
         <Paragraph>{t("Spenden.Section2.text")}</Paragraph>
         <List aria-label="simple-list">{listItemsMap}</List>
         <Paragraph>{t("Spenden.Section2.text2")}</Paragraph>
-        <Paragraph>{t("Spenden.Section2.text3")}</Paragraph>
+        <Paragraph spacingVariant>{t("Spenden.Section2.text3")}</Paragraph>
         <List aria-label="simple-list-second">{listItemsSecondMap}</List>
         <Headline2>{t("Spenden.Section3.heading")}</Headline2>
         <Paragraph>{t("Spenden.Section3.text")}</Paragraph>

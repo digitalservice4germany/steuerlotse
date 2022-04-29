@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
-  margin: 0 var(--spacing-03);
+  margin: 0 auto;
+  max-width: var(--content-pages-max-width);
 
-  @media (min-width: 1224px) {
-    margin: 0 var(--spacing-11);
+  @media (min-width: 1025px) {
+    margin: 0 auto;
   }
 `;
 
@@ -49,7 +50,8 @@ export const Headline2 = styled.h2`
 `;
 
 export const Paragraph = styled.p`
-  padding-top: var(--spacing-03);
+  padding-top: ${(props) =>
+    props.spacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};
   margin: 0;
   font-size: var(--text-medium-big);
 `;

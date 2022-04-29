@@ -77,6 +77,7 @@ export default function FuneralExpensesInfoPage() {
         </List>
         <Headline2>{t("Bestattungskosten.Section4.heading")}</Headline2>
         <Paragraph>{t("Bestattungskosten.Section4.text")}</Paragraph>
+        <Paragraph>{t("Bestattungskosten.Section4.text2")}</Paragraph>
         <Headline2>{t("Bestattungskosten.Section5.heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>

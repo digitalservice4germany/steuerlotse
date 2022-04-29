@@ -487,13 +487,13 @@ const translations = {
       text: "Pflegekosten",
     },
     Behinderung: {
-      text: "Kosten aufgrund einer Behinderung",
+      text: "Angaben bei einer Behinderung",
     },
     Bestattungskosten: {
       text: "Bestattungskosten",
     },
     Belastungen: {
-      text: "Sonstige außergewöhnliche Belastungen",
+      text: "Wiederbeschaffungskosten",
     },
     Dienstleistungen: {
       text: "Haushaltsnahe Dienstleistungen",
@@ -706,15 +706,11 @@ const translations = {
   Kirchensteuer: {
     Section1: {
       heading: "Kirchensteuer",
-      text:
-        "Sie  können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben. Diese Daten finden " +
-        "Sie zum Beispiel auf ihrem Einkommensteuerbescheid und Ihrem Vorauszahlungsbescheid, sowie auf Ihrer Lohnsteuerbescheinigung.",
+      text: "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen. Dazu zählt auch gezahltes Kirchgeld oder Ortskirchensteuer.",
     },
     Section2: {
       heading: "Geleistete Zahlungen",
-      text:
-        "Zahlen Sie Steuern für eine Religionsgemeinschaft, können Sie diese als Sonderausgabe absetzen. " +
-        "Dazu zählt auch gezahltes Kirchgeld oder Ortskirchensteuer.",
+      text: "Sie können zum einen die Summe Ihrer im letzten Jahr gezahlten Kirchensteuer angeben. Diese Daten finden Sie zum Beispiel auf ihrem Einkommensteuerbescheid und Ihrem Vorauszahlungsbescheid, sowie auf Ihrer Lohnsteuerbescheinigung.",
     },
     Section3: {
       heading: "Erhaltene Erstattungen",
@@ -803,7 +799,7 @@ const translations = {
       Text: "Nicht absetzen können Sie Sachversicherungen, die Gegenstände oder Inventar schützen. Dazu zählen:",
       ListItem1: "Kaskoversicherungen",
       ListItem2: "Hausratversicherungen",
-      ListItem3: "Gebäudeversicherungen und",
+      ListItem3: "Gebäudeversicherungen",
       ListItem4: "Rechtsschutzversicherungen",
     },
     Paragraph4: {
@@ -812,7 +808,7 @@ const translations = {
   },
   DisabilityCostsInfo: {
     Section1: {
-      Heading: "Kosten aufgrund einer Behinderung",
+      Heading: "Kosten bei einer Behinderung",
       Text: "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
     },
     Section2: {
@@ -837,8 +833,8 @@ const translations = {
     },
     Section5: {
       Heading: "Die zumutbare Belastung",
-      Text:
-        "Die Absetzbarkeit der Einzelkosten bei einer Behinderung hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+      Text: "Die Absetzbarkeit der Einzelkosten bei einer Behinderung hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      Text2:
         "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
     Section6: {
@@ -869,8 +865,8 @@ const translations = {
     },
     Paragraph4: {
       Heading: "Die zumutbare Belastung",
-      Text:
-        "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+      Text: "Die Absetzbarkeit von Pflegekosten hat wie alle außergewöhnlichen Belastungen eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      Text2:
         " Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
     Paragraph5: {

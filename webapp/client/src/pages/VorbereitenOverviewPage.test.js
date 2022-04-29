@@ -60,15 +60,6 @@ function setup(optionalProps) {
 }
 
 describe("UnlockCodeSuccessPage", () => {
-  it("should link to download", () => {
-    const { downloadButton } = setup();
-
-    expect(downloadButton).toHaveAttribute(
-      "href",
-      expect.stringContaining(REQUIRED_PROPS.downloadPreparationLink)
-    );
-  });
-
   it("should link to Vorsorgeaufwendungen", () => {
     const { buttonVorsorgeaufwendungen } = setup();
 

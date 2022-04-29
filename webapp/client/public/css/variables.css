@@ -106,7 +106,7 @@
     --spacing-09: 3.75rem;
     --spacing-10: 5.625rem;
     --spacing-11: 7.5rem;
-    --spacing-12: 10rem;
+    --spacing-12: 9rem;
 
     /* Input Field Widths */
     --input-width-2: 3.5rem;
@@ -121,6 +121,7 @@
 
     --sidebar-width: 220px;
     --main-max-width: 1000px;
+    --content-pages-max-width: 850px;
     --back-link-size: 1.5rem;
     --header-navigation-height: var(--spacing-09);
 

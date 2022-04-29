@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { t } from "i18next";
 import PropTypes from "prop-types";
 import InfoBox from "../components/InfoBox";
-// eslint-disable-next-line import/named
-import AnchorButton from "../components/AnchorButton";
 import AccordionComponent from "../components/AccordionComponent";
 import TileCard from "../components/TileCard";
 
@@ -18,52 +16,41 @@ import HaushaltsnaheDienstleistungenIcon from "../assets/icons/haushaltsnahe_die
 import HandwerkerleistungenIcon from "../assets/icons/handwerkerleistungen.svg";
 import SpendenUndMitgliedsbeitraegeIcon from "../assets/icons/spenden_und_mitgliedsbeitraege.svg";
 import KirchensteuerIcon from "../assets/icons/kirchensteuer.svg";
+import {
+  ContentWrapper,
+  Headline1,
+  Headline2,
+  Paragraph,
+  ParagraphLarge,
+} from "../components/ContentPagesGeneralStyling";
+import ButtonAnchor from "../components/ButtonAnchor";
 
-const ContentWrapper = styled.div`
-  padding-left: var(--spacing-03);
-  padding-right: var(--spacing-03);
-  margin: 0 auto;
-  margin-top: var(--spacing-11);
-  max-width: var(--main-max-width);
+const TileGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  grid-gap: 8px;
+  padding-top: var(--spacing-06);
 
-  .tile-card {
-    width: 32%;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    @media screen and (max-width: 1089px) {
-      width: 49%;
-    }
-
-    @media screen and (max-width: 587px) {
-      width: 100%;
-    }
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
-const Headline1 = styled.h1`
-  margin: 0;
+const ButtonAnchorOverview = styled(ButtonAnchor)`
+  margin-top: var(--spacing-03);
 `;
 
-const Headline2 = styled.h2`
-  padding-top: 4rem;
-  margin: 0;
-`;
+const Headline1Overview = styled(Headline1)`
+  margin-top: var(--spacing-09);
 
-const Paragraph1 = styled.p`
-  font-size: 1.75rem;
-  padding-top: 2rem;
-  margin: 0;
-`;
-
-const Paragraph2 = styled.p`
-  padding-top: var(--spacing-03);
-  margin-bottom: var(--spacing-03);
-`;
-
-const TileGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  gap: 8px;
+  @media screen and (min-width: 1024px) {
+    margin-top: calc(var(--spacing-09) + 5rem);
+  }
 `;
 
 export default function VorbereitenOverviewPage({
@@ -79,17 +66,22 @@ export default function VorbereitenOverviewPage({
   spendenUndMitgliedsbeitraegeUrl,
   kirchensteuerUrl,
 }) {
+  const { Text } = ButtonAnchor;
+
   return (
     <>
       <ContentWrapper>
-        <Headline1>{t("vorbereitenOverview.Paragraph1.heading")}</Headline1>
-        <Paragraph1>{t("vorbereitenOverview.Paragraph1.text")}</Paragraph1>
+        <Headline1Overview>
+          {t("vorbereitenOverview.Paragraph1.heading")}
+        </Headline1Overview>
+        <ParagraphLarge>
+          {t("vorbereitenOverview.Paragraph1.text")}
+        </ParagraphLarge>
         <Headline2>{t("vorbereitenOverview.Paragraph2.heading")}</Headline2>
-        <Paragraph2>{t("vorbereitenOverview.Paragraph2.text")}</Paragraph2>
-        <AnchorButton
-          url={downloadPreparationLink}
-          text={t("vorbereitenOverview.Download")}
-        />
+        <Paragraph>{t("vorbereitenOverview.Paragraph2.text")}</Paragraph>
+        <ButtonAnchorOverview url={downloadPreparationLink} download>
+          <Text>{t("vorbereitenOverview.Download")}</Text>
+        </ButtonAnchorOverview>
         <AccordionComponent
           title={t("vorbereitenOverview.Accordion.heading")}
           items={[
@@ -116,7 +108,7 @@ export default function VorbereitenOverviewPage({
           ]}
         />
         <Headline2>{t("vorbereitenOverview.Paragraph3.heading")}</Headline2>
-        <Paragraph2>{t("vorbereitenOverview.Paragraph3.text")}</Paragraph2>
+        <Paragraph>{t("vorbereitenOverview.Paragraph3.text")}</Paragraph>
         <TileGrid>
           <TileCard
             title="Vorsorgeaufwendungen"

@@ -19,7 +19,7 @@ export default function DisabilityCostsInfoPage() {
   const { t } = useTranslation();
 
   const anchorListItemsMap = anchorList
-    .filter((item) => item.text !== "Kosten aufgrund einer Behinderung")
+    .filter((item) => item.text !== "Angaben bei einer Behinderung")
     .map((anchor) => (
       <AnchorListItem key={anchor.text}>
         <a href={anchor.url}>{anchor.text}</a>
@@ -84,6 +84,7 @@ export default function DisabilityCostsInfoPage() {
 
         <Headline2>{t("DisabilityCostsInfo.Section5.Heading")}</Headline2>
         <Paragraph>{t("DisabilityCostsInfo.Section5.Text")}</Paragraph>
+        <Paragraph>{t("DisabilityCostsInfo.Section5.Text2")}</Paragraph>
 
         <Headline2>{t("DisabilityCostsInfo.Section6.Heading")}</Headline2>
         <Paragraph>{t("DisabilityCostsInfo.Section6.Text")}</Paragraph>
