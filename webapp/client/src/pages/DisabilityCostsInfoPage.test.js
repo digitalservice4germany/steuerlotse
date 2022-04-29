@@ -27,7 +27,7 @@ describe("DisabilityCostsInfoPage", () => {
   it("should render the DisabilityCostsInfoPage", () => {
     setup();
 
-    const headline1 = screen.getByText("Kosten aufgrund einer Behinderung");
+    const headline1 = screen.getByText("Kosten bei einer Behinderung");
     const headline2 = screen.getByText(
       "Wahl zwischen Pauschbetrag und Angabe Einzelkosten"
     );
