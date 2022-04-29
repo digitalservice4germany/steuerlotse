@@ -4,6 +4,7 @@ export const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
   margin: 0 var(--spacing-03);
+  max-width: var(--main-max-width);
 
   @media (min-width: 1224px) {
     margin: 0 var(--spacing-11);
