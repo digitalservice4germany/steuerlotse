@@ -812,7 +812,7 @@ const translations = {
   },
   DisabilityCostsInfo: {
     Section1: {
-      Heading: "Kosten aufgrund einer Behinderung",
+      Heading: "Kosten bei einer Behinderung",
       Text: "Im Falle einer Behinderung oder Pflegebedürftigkeit können erhöhte Kosten für Medikamente und Betreuung anfallen. Damit diese Ausgaben Sie nicht zu sehr belasten, können Sie steuerliche Vergünstigungen in Anspruch nehmen.",
     },
     Section2: {
@@ -837,8 +837,8 @@ const translations = {
     },
     Section5: {
       Heading: "Die zumutbare Belastung",
-      Text:
-        "Die Absetzbarkeit der Einzelkosten bei einer Behinderung hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus." +
+      Text: "Die Absetzbarkeit der Einzelkosten bei einer Behinderung hat eine Hürde: Die zumutbare Belastung. Nur der Betrag, der höher ist als Ihre zumutbare Belastung, wirkt sich steuermindernd aus.",
+      Text2:
         "Die zumutbare Belastung hängt unter anderem von der Höhe Ihres Einkommens ab und wird von Ihrem Finanzamt automatisch berechnet.",
     },
     Section6: {
