@@ -45,6 +45,14 @@ const ButtonAnchorOverview = styled(ButtonAnchor)`
   margin-top: var(--spacing-03);
 `;
 
+const Headline1Overview = styled(Headline1)`
+  margin-top: var(--spacing-09);
+
+  @media screen and (min-width: 1024px) {
+    margin-top: calc(var(--spacing-09) + 5rem);
+  }
+`;
+
 export default function VorbereitenOverviewPage({
   downloadPreparationLink,
   vorsorgeaufwendungenUrl,
@@ -63,7 +71,9 @@ export default function VorbereitenOverviewPage({
   return (
     <>
       <ContentWrapper>
-        <Headline1>{t("vorbereitenOverview.Paragraph1.heading")}</Headline1>
+        <Headline1Overview>
+          {t("vorbereitenOverview.Paragraph1.heading")}
+        </Headline1Overview>
         <ParagraphLarge>
           {t("vorbereitenOverview.Paragraph1.text")}
         </ParagraphLarge>
