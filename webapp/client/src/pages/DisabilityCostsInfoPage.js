@@ -19,7 +19,7 @@ export default function DisabilityCostsInfoPage() {
   const { t } = useTranslation();
 
   const anchorListItemsMap = anchorList
-    .filter((item) => item.text !== "Kosten aufgrund einer Behinderung")
+    .filter((item) => item.text !== "Angaben bei einer Behinderung")
     .map((anchor) => (
       <AnchorListItem key={anchor.text}>
         <a href={anchor.url}>{anchor.text}</a>

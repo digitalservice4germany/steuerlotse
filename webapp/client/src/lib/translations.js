@@ -487,7 +487,7 @@ const translations = {
       text: "Pflegekosten",
     },
     Behinderung: {
-      text: "Kosten aufgrund einer Behinderung",
+      text: "Angaben bei einer Behinderung",
     },
     Bestattungskosten: {
       text: "Bestattungskosten",
