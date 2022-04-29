@@ -34,7 +34,7 @@ describe("CraftsmanServicesInfoPage", () => {
       "Weitere Ausgaben, die Sie absetzen können"
     );
     const text1 = screen.getByText(
-      "Auch Kosten für Dienstleistungen im eigenen Haushalt oder Handwerkerleistungen im eigenen Haushalt können",
+      "Auch Kosten für Dienstleistungen oder Handwerkerleistungen im eigenen Haushalt können zu Steuerermäßigungen führen",
       { exact: false }
     );
 
