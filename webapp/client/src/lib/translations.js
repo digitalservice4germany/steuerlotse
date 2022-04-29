@@ -493,7 +493,7 @@ const translations = {
       text: "Bestattungskosten",
     },
     Belastungen: {
-      text: "Sonstige außergewöhnliche Belastungen",
+      text: "Wiederbeschaffungskosten",
     },
     Dienstleistungen: {
       text: "Haushaltsnahe Dienstleistungen",

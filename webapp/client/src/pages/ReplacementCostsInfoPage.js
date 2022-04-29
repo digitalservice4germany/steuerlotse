@@ -18,7 +18,7 @@ export default function ReplacementCostsInfoPage() {
   const { t } = useTranslation();
 
   const anchorListItemsMap = anchorList
-    .filter((item) => item.text !== "Sonstige außergewöhnliche Belastungen")
+    .filter((item) => item.text !== "Wiederbeschaffungskosten")
     .map((anchor) => (
       <AnchorListItem key={anchor.text}>
         <a href={anchor.url}>{anchor.text}</a>
