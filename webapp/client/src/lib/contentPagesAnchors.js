@@ -49,8 +49,15 @@ const anchorBack = {
 };
 
 const anchorRegister = {
+  headline: t("InfoBox.heading"),
   text: t("anchorButton.anmelden.text"),
   url: "/unlock_code_request/step/data_input?link_overview=False",
 };
 
-export { anchorList, anchorBack, anchorRegister };
+const anchorPrufen = {
+  text: t("CheckNowInfoBox.button"),
+  headline: t("CheckNowInfoBox.heading"),
+  url: "/eligibility/step/marital_status?link_overview=False",
+};
+
+export { anchorList, anchorBack, anchorRegister, anchorPrufen };

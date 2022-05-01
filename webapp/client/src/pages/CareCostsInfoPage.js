@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 import InfoBox from "../components/InfoBox";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 // eslint-disable-next-line import/named
-import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
+import {
+  anchorBack,
+  anchorList,
+  anchorRegister,
+} from "../lib/contentPagesAnchors";
 import {
   ContentWrapper,
   List,
@@ -55,7 +59,11 @@ export default function CareCostsInfoPage() {
         <Headline2>{t("CareCostsInfo.Paragraph5.Heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
-      <InfoBox />
+      <InfoBox
+        boxHeadline={anchorRegister.headline}
+        boxText={t("InfoBox.text")}
+        anchor={anchorRegister}
+      />
     </>
   );
 }

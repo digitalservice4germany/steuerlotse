@@ -724,6 +724,11 @@ const translations = {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
     text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
   },
+  CheckNowInfoBox: {
+    heading: "Steuererklärung kann auch einfach sein",
+    text: "Schnell und unkompliziert – mit und für Rentenbeziehende entwickelt! Finden Sie heraus, ob Sie den Steuerlotsen nutzen können.",
+    button: "Jetzt prüfen",
+  },
   taxGuideQuestionBox: {
     canIUseTaxGuide:
       "Kann ich den Steuerlotsen für meine Steuererklärung nutzen?",

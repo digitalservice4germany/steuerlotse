@@ -9,27 +9,21 @@ import {
   Headline1,
   Headline2,
   Paragraph,
-  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
+import { anchorPrufen } from "../lib/contentPagesAnchors";
 
 const Picture = styled.picture`
-  margin: var(--spacing-09) 0 0;
-  display: block;
-
-  @media (min-width: 768px) {
-    grid-column-start: between-column;
-    grid-column-end: column-end;
-    grid-row-start: row1-end;
-    grid-row-end: row-end;
-    align-self: end;
-    margin: 0;
-  }
-
   img {
     width: 100%;
     height: auto;
     object-fit: contain;
   }
+`;
+
+const InnerHeader = styled.div``;
+
+const InnerContent = styled.div`
+  display: flex;
 `;
 
 export default function InfoForRelativesPage() {
@@ -72,11 +66,15 @@ export default function InfoForRelativesPage() {
   return (
     <div>
       <ContentWrapper>
-        <Picture>
-          <img src="../images/info-angehoerige.jpeg" alt="to be changed" />
-        </Picture>
-        <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
-        <ParagraphLarge>{t("InfoForRelatives.Section1.Text")}</ParagraphLarge>
+        <InnerContent>
+          <Picture>
+            <img src="../images/info-angehoerige.jpeg" alt="to be changed" />
+          </Picture>
+          <InnerHeader>
+            <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
+            <Paragraph>{t("InfoForRelatives.Section1.Text")}</Paragraph>
+          </InnerHeader>
+        </InnerContent>
       </ContentWrapper>
       <ContentWrapper>
         <Headline2>{t("InfoForRelatives.Section2.Heading")}</Headline2>
@@ -86,7 +84,11 @@ export default function InfoForRelativesPage() {
         <Headline2>{t("InfoForRelatives.Section3.Heading")}</Headline2>
         <Paragraph>{t("InfoForRelatives.Section3.Text")}</Paragraph>
       </ContentWrapper>
-      <InfoBox />
+      <InfoBox
+        boxHeadline={anchorPrufen.headline}
+        boxText={t("CheckNowInfoBox.text")}
+        anchor={anchorPrufen}
+      />
     </div>
   );
 }

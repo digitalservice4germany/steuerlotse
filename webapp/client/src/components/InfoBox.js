@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { t } from "i18next";
+import PropTypes from "prop-types";
 import ButtonAnchor from "./ButtonAnchor";
-import { anchorRegister } from "../lib/contentPagesAnchors";
 
 const Box = styled.div`
   background-color: var(--beige-200);
@@ -86,16 +85,14 @@ const Figure = styled.figure`
   }
 `;
 
-export default function InfoBox() {
+export default function InfoBox({ boxHeadline, boxText, anchor }) {
   return (
     <Box>
       <InnerBox>
         <TextBox className="info-box__text">
-          <BoxHeadline>{t("InfoBox.heading")}</BoxHeadline>
-          <BoxText>{t("InfoBox.text")}</BoxText>
-          <ButtonAnchor url={anchorRegister.url}>
-            {anchorRegister.text}
-          </ButtonAnchor>
+          <BoxHeadline>{boxHeadline}</BoxHeadline>
+          <BoxText>{boxText}</BoxText>
+          <ButtonAnchor url={anchor.url}>{anchor.text}</ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">
           <img
@@ -112,3 +109,15 @@ export default function InfoBox() {
     </Box>
   );
 }
+
+InfoBox.propTypes = {
+  boxHeadline: PropTypes.string,
+  boxText: PropTypes.string,
+  anchor: PropTypes.string,
+};
+
+InfoBox.defaultProps = {
+  boxHeadline: PropTypes.string,
+  boxText: PropTypes.string,
+  anchor: PropTypes.string,
+};
