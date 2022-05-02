@@ -11,8 +11,8 @@ export const ContentWrapper = styled.div`
   }
 
   @media (min-width: 1025px) {
-    padding-left: var(--spacing-08);
-    padding-right: var(--spacing-08);
+    padding-left: var(--spacing-12);
+    padding-right: var(--spacing-12);
   }
 `;
 

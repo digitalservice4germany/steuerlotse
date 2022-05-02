@@ -267,6 +267,7 @@ ol li::before {
 .main-content {
     max-width: var(--pages-max-width);
     padding: 1.5rem var(--spacing-03) var(--spacing-10);
+    flex: 1;
 }
 
 @media (min-width: 769px) {
@@ -278,8 +279,8 @@ ol li::before {
 
 @media (min-width: 1025px) {
     .main-content {
-        padding-left: var(--spacing-08);
-        padding-right: var(--spacing-08);
+        padding-left: var(--spacing-12);
+        padding-right: var(--spacing-12);
     }
 }
 
