@@ -1,61 +1,92 @@
 :root {
 
     /* Colors */
+    /* Primary Colors*/
 
-    --beige-200: #F4F0EB;
-    --beige-300: #EEE8E1;
-    --grey-300: #BABABA;
-    --grey-900: #545454;
     --blue-400: #7EA8B9;
     --blue-800: #005576;
     --blue-900: #003B52;
 
-    --text-color: #0b0c0c;
-    --secondary-text-color: #545454;
-    --inverse-text-color: #ffffff;
+    --white: #FFFFFF;
+    --black: #0B0C0C;
 
-    --border-color: var(--grey-300);
-    --hover-border-color: var(--blue-900);
-    --active-outline-color: #cdc0b1;
+    /*Neutrals*/
 
-    --link-color: #005576;
-    --link-hover-color: #003b52;
-    --link-visited-color: #100052;
-    --link-active-color: #0b0c0c;
-    --link-active-hover-color: #7EA8B9;
-    --link-underline-color: rgba(10, 10, 25, 0.2); /* original #0A0A19, 20%; */
+    --beige-100: #FDF8F4;
+    --beige-200: #F4F0EB;
+    --beige-300: #EEE8E1;
+    --beige-500: #E3D9CE;
+    --beige-800: #CDC0B1;
 
-    --icon-default-color: #e3d9ce;
-    --icon-hover-color: #cdc0b1;
+    --grey-100: #DADADA;
+    --grey-300: #BABABA;
+    --grey-800: #656565;
+    --grey-900: #545454;
 
-    --focus-color: #ffc979;
-    --focus-text-color: #0b0c0c;
-    --focus-border-color: #0b0c0c;
+    /*Secondary Colors*/
 
-    --body-color: #fdf8f4;
-    --bg-highlight-color: #eee8e1;
-    --bg-white: #ffffff;
+    --yellow-800: #FFC979;
+    --yellow-900: #FFBC57;
 
-    --success-color: #005c45;
-    --error-color: #c0003c;
-    --error-bg-color: #f9e5eb;
+    --red-100: #F9E5EB;
+    --red-300: #E9B0C2;
+    --red-900: #C0003C;
+
+    --green-900: #005C45;
+    --purple-900: #100052;
+
+    /*Social Colors*/
 
     --facebook-color: #3B5998;
     --facebook-hover-color: #2F4779;
-    --facebook-active-hover-color: var(--facebook-color);
     --whatsapp-color: #25D366;
     --whatsapp-hover-color: #25C05F;
+
+
+    /*Color Tokens*/
+
+    --text-color:var(--black);
+    --secondary-text-color: var(--grey-900);
+    --inverse-text-color: var(--white);
+
+    --border-color: var(--grey-300);
+    --hover-border-color: var(--blue-900);
+    --active-outline-color: var(--beige-800);
+
+    --link-color: var(--blue-800);
+    --link-hover-color: var(--blue-900);
+    --link-visited-color: var(--purple-900);
+    --link-active-color: var(--black);
+    --link-active-hover-color: var( --blue-400);
+    --link-underline-color: rgba(10, 10, 25, 0.2); /* original #0A0A19, 20%; */
+
+    --icon-default-color: var(--beige-500);
+    --icon-hover-color: var(--beige-800);
+
+    --focus-color: var(--yellow-800);
+    --focus-text-color:var(--black);
+    --focus-border-color: var(--black);
+
+    --body-color: var(--beige-100);
+    --bg-highlight-color: var(--beige-300);
+    --bg-white: var(--white);
+
+    --success-color: var(--green-900);
+    --error-color: var(--red-900);
+    --error-bg-color: var(--red-100);
+
+    --facebook-active-hover-color: var(--facebook-color);
     --whatsapp-active-hover-color: var(--whatsapp-color);
-    --email-color: #656565;
-    --email-hover-color: #545454;
+    --email-color: var(--grey-800);
+    --email-hover-color: var(--grey-900);
     --email-active-hover-color: var(--email-color);
-    --copy-hover-active-color: #005576;
+    --copy-hover-active-color: var(--blue-800);
 
     /* Button Colors*/
 
     --button-disabled-bg-color: var(--blue-400);
     --button-disabled-outline-bg-color: var(--beige-300);
-    --button-disabled-outline-color: var(--blue-800);
+    --button-outline-color: var(--grey-300);
     --button-disabled-outline-font-color: var(--grey-900);
     --button-primary-pressed-bg-color: var(--blue-800);
 
@@ -586,4 +617,4 @@ img.icon {
 /** END copied unorganised CSS from base.css **/
 
 
-/*# sourceMappingURL=main.59f96695.chunk.css.map*/
+/*# sourceMappingURL=main.9882d4fa.chunk.css.map*/
