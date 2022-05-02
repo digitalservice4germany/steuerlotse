@@ -44,7 +44,6 @@ const CardLabel = styled.label`
 
   .checkmark {
     display: block;
-    position: absolute;
     right: var(--spacing-04); // the card's padding
     width: 30px;
     height: 30px;
