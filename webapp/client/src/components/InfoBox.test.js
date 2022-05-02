@@ -3,7 +3,18 @@ import { render, screen } from "@testing-library/react";
 import InfoBox from "./InfoBox";
 
 function setup() {
-  const utils = render(<InfoBox />);
+  const MOCK_PROPS = {
+    boxHeadline:
+      "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
+    boxText:
+      "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
+    anchor: {
+      url: "/unlock_code_request/step/data_input?link_overview=False",
+      text: "Jetzt anmelden",
+    },
+  };
+
+  const utils = render(<InfoBox {...MOCK_PROPS} />);
 
   return { ...utils };
 }

@@ -113,11 +113,17 @@ export default function InfoBox({ boxHeadline, boxText, anchor }) {
 InfoBox.propTypes = {
   boxHeadline: PropTypes.string,
   boxText: PropTypes.string,
-  anchor: PropTypes.string,
+  anchor: {
+    url: PropTypes.string,
+    text: PropTypes.string,
+  },
 };
 
 InfoBox.defaultProps = {
-  boxHeadline: PropTypes.string,
-  boxText: PropTypes.string,
-  anchor: PropTypes.string,
+  boxHeadline: "",
+  boxText: "",
+  anchor: {
+    url: "",
+    text: "",
+  },
 };
