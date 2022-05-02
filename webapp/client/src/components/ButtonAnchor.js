@@ -25,7 +25,7 @@ const hoverStates = css`
   }};
   border: ${({ variant, disabled }) => {
     if (disabled && variant === "outline") {
-      return "1px solid var(--button-disabled-outline-color)";
+      return "1px solid var(--button-outline-color)";
     }
     if (variant === "outline") {
       return "1px solid var(--hover-border-color)";
@@ -77,7 +77,7 @@ const activeStates = css`
   }};
   border: ${({ variant, disabled }) => {
     if (disabled && variant === "outline") {
-      return "1px solid var(--button-disabled-outline-color)";
+      return "1px solid var(--button-outline-color)";
     }
     if (variant === "outline") {
       return "1px solid var(--hover-border-color)";
@@ -99,9 +99,6 @@ const Button = styled.button`
     line-height: 1;
     text-decoration: none;
     border: transparent;
-    transition: color var(--transition-behaviour) var(--transition-time),
-      background-color var(--transition-behaviour) var(--transition-time),
-      background var(--transition-behaviour) var(--transition-time);
     height: ${({ buttonStyle }) => {
       if (buttonStyle === "narrow") {
         return "var(--button-height-narrow)";
@@ -137,7 +134,7 @@ const Button = styled.button`
     }};
     border: ${({ variant, disabled }) => {
       if (disabled && variant === "outline") {
-        return "1px solid var(--button-disabled-outline-color)";
+        return "1px solid var(--button-outline-color)";
       }
       if (variant === "outline") {
         return "1px solid var(--border-color)";
