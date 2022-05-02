@@ -17,7 +17,7 @@ const ButtonGroup = styled.div`
   }
 
   @media (min-width: 1024px) {
-    display: block;
+    flex-direction: row;
   }
 `;
 const FacebookButton = styled(ButtonAnchor)`

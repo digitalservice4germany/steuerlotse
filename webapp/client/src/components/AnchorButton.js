@@ -7,6 +7,7 @@ const Anchor = styled.a`
   margin-right: var(--spacing-05);
   font-size: var(--text-base);
   letter-spacing: var(--tracking-wide);
+  font-family: var(--font-bold);
   text-decoration: none;
   color: var(--inverse-text-color);
   background: var(--link-color);

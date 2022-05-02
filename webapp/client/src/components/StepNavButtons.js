@@ -15,6 +15,7 @@ const sharedButtonLinkStyle = css`
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem;
   margin-right: var(--spacing-05);
   font-size: var(--text-base);
+  font-family: var(--font-bold);
   letter-spacing: var(--tracking-wide);
   text-decoration: none;
   color: var(--inverse-text-color);
@@ -65,7 +66,7 @@ const Link = styled.a`
 `;
 
 const OutlineLink = styled.a`
-  ${sharedButtonLinkStyle}
+  ${sharedButtonLinkStyle};
 
   padding: 1rem 1.25rem calc(1rem - 4px) 1.25rem; /* The calculation subtracts the border-bottom height. We need a border-bottom for the focus state. */
 
