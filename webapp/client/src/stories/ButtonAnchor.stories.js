@@ -1,4 +1,5 @@
 import React from "react";
+import { withDesign } from "storybook-addon-designs";
 import ButtonAnchor from "../components/ButtonAnchor";
 import { ReactComponent as PlayIconInverse } from "../assets/icons/DefaultStatePlayIcon.svg";
 import { ReactComponent as VectorRight } from "../assets/icons/vector.svg";
@@ -8,6 +9,7 @@ const { Text, Icon } = ButtonAnchor;
 export default {
   title: "Anchor Elements/Button Anchor",
   component: ButtonAnchor,
+  decorators: [withDesign],
   args: {
     children: <Text>Abmelden</Text>,
   },
@@ -18,6 +20,12 @@ function Template(args) {
 }
 
 export const Primary = Template.bind({});
+Primary.parameters = {
+  design: {
+    type: "figma",
+    url: "https://www.figma.com/file/3BFAwyOiqaAul9lsO61Nfp/Steuerlotse-Draft-%26-Handover?node-id=3463%3A38237",
+  },
+};
 
 export const Outline = Template.bind({});
 Outline.args = {

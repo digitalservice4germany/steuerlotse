@@ -5,6 +5,7 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/preset-create-react-app",
     "@storybook/addon-docs",
+    "storybook-addon-designs",
   ],
   staticDirs: ["../public"],
 };

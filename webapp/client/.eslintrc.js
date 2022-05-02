@@ -47,6 +47,13 @@ module.exports = {
         assertFunctionNames: ["expect"],
       },
     ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        devDependencies: ["**/*.stories.*", "**/.storybook/**/*.*"],
+        peerDependencies: true,
+      },
+    ],
   },
   settings: {
     react: {
