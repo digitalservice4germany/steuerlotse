@@ -80,7 +80,7 @@ export default function InfoForRelativesPage() {
           <Picture>
             <img
               src="../images/info-angehoerige.jpg"
-              alt="Frau hilft verwandten am Laptop bei ihrer Steuererklärung"
+              alt="Frau hilft Verwandten am Laptop bei ihrer Steuererklärung"
             />
           </Picture>
         </InnerContent>
