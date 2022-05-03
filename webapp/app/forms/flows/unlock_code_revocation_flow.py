@@ -63,11 +63,9 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     logger.info("Could not revoke unlock code for user", exc_info=True)
                     flash(_('form.unlock-code-revocation.failure-intro'), 'warn')
                     pass  # go to failure step
-                except ElsterProcessNotSuccessful:
-                    render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
-                    logger.info("Data Connection Error", exc_info=True)
-                    flash(_('flash.erica.dataConnectionError'), 'warn')
-                    pass  # go to failure step
+                except ElsterProcessNotSuccessful as e:
+                    logger.info("Could not revoke unlock code for user: {e}", exc_info=True)   
+                    pass  # go to failure step                 
                 except RequestException as e:
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)

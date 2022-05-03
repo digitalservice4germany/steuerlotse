@@ -195,19 +195,14 @@ class TestUnlockCodeActivationHandleSpecificsForStep(unittest.TestCase):
         with self.app.test_request_context(method='POST',
                                            data={'idnr': existing_idnr,
                                                  'unlock_code': '0000-0000-0000'}):
-            with (
-                patch("app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") as fun_unlock_code_activation,
-                patch("app.forms.flows.unlock_code_activation_flow.flash") as mock_flash,
-            ):
+            with (patch("app.forms.flows.unlock_code_activation_flow.elster_client.send_unlock_code_activation_with_elster") as fun_unlock_code_activation):
                   
                 fun_unlock_code_activation.side_effect = ElsterProcessNotSuccessful()
 
                 render_info, stored_data = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
-                self.assertEqual(self.flash_url, render_info.next_url)
+                self.assertEqual(self.failure_url, render_info.next_url)
                 fun_unlock_code_activation.assert_called_once()
-                mock_flash.assert_called_once_with(
-                _('flash.erica.dataConnectionError'), 'warn')
 
     def test_if_user_is_active_then_send_no_request_to_elster(self):
         existing_idnr = '04452397687'

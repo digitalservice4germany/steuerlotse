@@ -109,7 +109,7 @@ class TestUnlockCodeActivationStepLogin(IntegrationTest):
                 unlock_code='0000-0000-0000')
                                 )
         self.assertEqual(302, res.status_code)
-        self.assertIn("unlock_code_activation/step/data_input", res.headers[2][1])
+        self.assertIn("unlock_code_failure", res.headers[2][1])
 
     def test_if_inactive_user_then_returns_unlock_code_failure(self):
         create_user('04452397687', '1985-01-01', '0000')
@@ -118,7 +118,7 @@ class TestUnlockCodeActivationStepLogin(IntegrationTest):
             unlock_code='0000-0000-0000')
                             )
         self.assertEqual(302, res.status_code)
-        self.assertIn("unlock_code_activation/step/data_input", res.headers[2][1])
+        self.assertIn("unlock_code_failure", res.headers[2][1])
 
     def test_if_non_activated_user_with_successful_elster_request_then_returns_unlock_code_success_with_redirect_to_lotse_start(self):
         create_user('03352419681', '1985-01-01', '0000')

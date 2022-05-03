@@ -70,7 +70,7 @@ export default function ShareButtons({
   )}&body=${encodeURIComponent(shareText)}`;
   const whatsappText = `https://wa.me?text=${shareText}`;
   const onClickHandler = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(promoteUrl);
     addPlausibleGoal(plausibleDomain, "Link copied clicked", {
       method: sourcePage,
     });
