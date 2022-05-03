@@ -120,10 +120,10 @@ InfoBox.propTypes = {
 };
 
 InfoBox.defaultProps = {
-  boxHeadline: "",
-  boxText: "",
+  boxHeadline: null,
+  boxText: null,
   anchor: {
-    url: "",
-    text: "",
+    url: null,
+    text: null,
   },
 };

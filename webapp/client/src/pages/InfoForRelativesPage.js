@@ -9,6 +9,7 @@ import {
   Headline1,
   Headline2,
   Paragraph,
+  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 import { anchorPrufen } from "../lib/contentPagesAnchors";
 
@@ -20,10 +21,13 @@ const Picture = styled.picture`
   }
 `;
 
-const InnerHeader = styled.div``;
+const InnerHeader = styled.div`
+  margin-top: 9.375rem;
+  margin-bottom: var(--spacing-08);
+`;
 
 const InnerContent = styled.div`
-  display: flex;
+  display: block;
 `;
 
 export default function InfoForRelativesPage() {
@@ -67,13 +71,15 @@ export default function InfoForRelativesPage() {
     <div>
       <ContentWrapper>
         <InnerContent>
+          <InnerHeader>
+            <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
+            <ParagraphLarge>
+              {t("InfoForRelatives.Section1.Text")}
+            </ParagraphLarge>
+          </InnerHeader>
           <Picture>
             <img src="../images/info-angehoerige.jpeg" alt="to be changed" />
           </Picture>
-          <InnerHeader>
-            <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
-            <Paragraph>{t("InfoForRelatives.Section1.Text")}</Paragraph>
-          </InnerHeader>
         </InnerContent>
       </ContentWrapper>
       <ContentWrapper>
