@@ -44,6 +44,7 @@ import ReplacementCostsInfoPage from "./pages/ReplacementCostsInfoPage";
 import DonationInfoPage from "./pages/DonationInfoPage";
 import ChurchTaxInfoPage from "./pages/ChurchTaxInfoPage";
 import CraftsmanServicesInfoPage from "./pages/CraftsmanServicesInfoPage";
+import InfoForRelativesPage from "./pages/InfoForRelativesPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -87,6 +88,7 @@ const allowedComponents = {
   DonationInfoPage,
   ChurchTaxInfoPage,
   CraftsmanServicesInfoPage,
+  InfoForRelativesPage,
 };
 
 function mountComponent(element) {

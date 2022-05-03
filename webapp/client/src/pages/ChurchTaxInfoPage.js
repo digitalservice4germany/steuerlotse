@@ -2,7 +2,11 @@ import React from "react";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
 // eslint-disable-next-line import/named
-import { anchorBack, anchorList } from "../lib/contentPagesAnchors";
+import {
+  anchorBack,
+  anchorList,
+  anchorRegister,
+} from "../lib/contentPagesAnchors";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import {
   AnchorListItem,
@@ -36,7 +40,11 @@ export default function ChurchTaxInfoPage() {
         <Headline2>{t("Kirchensteuer.Section5.heading")}</Headline2>
         <List aria-label="anchor-list">{anchorListItemsMap}</List>
       </ContentWrapper>
-      <InfoBox />
+      <InfoBox
+        boxHeadline={anchorRegister.headline}
+        boxText={t("InfoBox.text")}
+        anchor={anchorRegister}
+      />
     </>
   );
 }

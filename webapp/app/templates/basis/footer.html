@@ -19,6 +19,9 @@ or (not render_info and not disable_extended_footer) %}
                             <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
                         </li>
                         <li class="text-nowrap mt-2">
+                            <a href="{{ url_for('relatives_info') }}">{{ _('footer.relatives') }}</a>
+                        </li>
+                        <li class="text-nowrap mt-2">
                             {% if current_user.is_authenticated %}
                             <span class="inactive">{{ _('footer.revocation') }}</span>
                             {% else %}

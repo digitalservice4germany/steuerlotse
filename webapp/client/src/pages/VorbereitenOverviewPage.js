@@ -24,6 +24,7 @@ import {
   ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 import ButtonAnchor from "../components/ButtonAnchor";
+import { anchorRegister } from "../lib/contentPagesAnchors";
 
 const TileGrid = styled.div`
   display: grid;
@@ -162,7 +163,11 @@ export default function VorbereitenOverviewPage({
           />
         </TileGrid>
       </ContentWrapper>
-      <InfoBox />
+      <InfoBox
+        boxHeadline={anchorRegister.headline}
+        boxText={t("InfoBox.text")}
+        anchor={anchorRegister}
+      />
     </>
   );
 }
