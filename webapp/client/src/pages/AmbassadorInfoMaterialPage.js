@@ -95,7 +95,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         <HowItWorksVideoContainer>
           <HowItWorksImage
             src="/images/How_It_Works_Video.png"
-            alt="Link to How It Works Video"
+            alt="Erklärvideo auf Youtube abspielen"
           />
           <SecondaryAnchorButton
             text="Auf Youtube abspielen"
