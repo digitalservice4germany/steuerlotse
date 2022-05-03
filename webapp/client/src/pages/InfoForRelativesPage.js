@@ -78,7 +78,10 @@ export default function InfoForRelativesPage() {
             </ParagraphLarge>
           </InnerHeader>
           <Picture>
-            <img src="../images/info-angehoerige.jpeg" alt="to be changed" />
+            <img
+              src="../images/info-angehoerige.jpg"
+              alt="Frau hilft verwandten am Laptop bei ihrer Steuererklärung"
+            />
           </Picture>
         </InnerContent>
       </ContentWrapper>
