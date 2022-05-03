@@ -89,9 +89,6 @@ export default function InfoForRelativesPage() {
         <Headline2>{t("InfoForRelatives.Section2.Heading")}</Headline2>
         <Paragraph>{t("InfoForRelatives.Section2.Text")}</Paragraph>
         <List aria-label="simple-list">{ListDependentsMap}</List>
-
-        <Headline2>{t("InfoForRelatives.Section3.Heading")}</Headline2>
-        <Paragraph>{t("InfoForRelatives.Section3.Text")}</Paragraph>
       </ContentWrapper>
       <InfoBox
         boxHeadline={anchorPrufen.headline}
