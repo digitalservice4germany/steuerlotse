@@ -30,11 +30,6 @@ const InnerBox = styled.div`
     padding-right: var(--spacing-08);
     grid-gap: 1rem;
   }
-
-  @media screen and (min-width: 1136px) {
-    padding-left: 0;
-    padding-right: 0;
-  }
 `;
 
 const TextBox = styled.div`
