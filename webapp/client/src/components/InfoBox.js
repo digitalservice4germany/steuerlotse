@@ -83,6 +83,10 @@ const Figure = styled.figure`
     width: 95%;
     height: auto;
     object-fit: contain;
+
+    @media (min-width: 768px) {
+      width: 85%;
+    }
   }
 `;
 

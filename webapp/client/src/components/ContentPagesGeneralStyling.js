@@ -10,9 +10,8 @@ export const ContentWrapper = styled.div`
     padding-right: var(--spacing-06);
   }
 
-  @media (min-width: 1025px) {
+  @media (min-width: 1280px) {
     padding-left: var(--spacing-12);
-    padding-right: var(--spacing-12);
   }
 `;
 
