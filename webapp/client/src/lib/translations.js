@@ -946,7 +946,7 @@ const translations = {
       ListItem9: "geschiedene Ehepartner",
     },
     Section3: {
-      Heading: "Wer nicht bei der Steuererklärunge helfen darf",
+      Heading: "Wer nicht bei der Steuererklärungen helfen darf",
       Text: "Helfen zum Beispiel Freunde oder ehemaligen Arbeitskollege bei der Steuererklärung ist das eine Ordnungswidrigkeit – egal ob mit oder ohne Bezahlung. Wer erwischt wird, zahlt bis zu 5.000 € Strafe. Das sollten Sie daher vermeiden!",
     },
   },
