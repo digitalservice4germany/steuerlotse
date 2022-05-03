@@ -357,8 +357,7 @@ span.nav-link.inactive, span.inactive {
 
 /* HEAD-NAVIGATION */
 .header-navigation{
-  height: var(--header-navigation-height);
-  margin-bottom: var(--spacing-09);
+  margin-bottom: calc(var(--spacing-09) + 0.5rem);
 }
 
 @media (max-width: 1024px) {
