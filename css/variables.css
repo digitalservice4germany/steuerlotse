@@ -156,7 +156,7 @@
 
     --sidebar-width: 220px;
     --main-max-width: 1000px;
-    --pages-max-width: 850px;
+    --pages-max-width: 1024px;
     --back-link-size: 1.5rem;
     --header-navigation-height: var(--spacing-09);
 
