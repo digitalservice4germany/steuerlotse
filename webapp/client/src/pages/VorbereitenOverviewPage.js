@@ -43,14 +43,14 @@ const TileGrid = styled.div`
 `;
 
 const ButtonAnchorOverview = styled(ButtonAnchor)`
-  margin-top: var(--spacing-03);
+  margin-top: var(--spacing-04);
 `;
 
 const Headline1Overview = styled(Headline1)`
   margin-top: var(--spacing-09);
 
   @media screen and (min-width: 1024px) {
-    margin-top: calc(var(--spacing-09) + 5rem);
+    margin-top: var(--spacing-11);
   }
 `;
 

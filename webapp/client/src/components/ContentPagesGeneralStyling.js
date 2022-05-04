@@ -65,14 +65,3 @@ export const ParagraphLarge = styled(Paragraph)`
     font-size: var(--text-2xl);
   }
 `;
-
-export default {
-  ContentWrapper,
-  List,
-  AnchorListItem,
-  ListItem,
-  Headline1,
-  Headline2,
-  Paragraph,
-  ParagraphLarge,
-};

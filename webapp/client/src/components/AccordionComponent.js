@@ -49,14 +49,24 @@ const CardHeaderSpan = styled.span`
   display: inline;
 `;
 
+const AccordionHeadline = styled.h2`
+  margin-bottom: 0;
+`;
+
+const AccordionStyled = styled(Accordion)`
+  padding-top: var(--spacing-03);
+`;
+
 export default function AccordionComponent({ title, intro, items }) {
   const [toggle, setToggle] = useState();
 
   return (
     <>
-      {title.length > 0 && <h2 className="mt-5">{title}</h2>}
+      {title.length > 0 && (
+        <AccordionHeadline className="mt-5">{title}</AccordionHeadline>
+      )}
       {intro.length > 0 && <p className="mt-3 pb-2">{intro}</p>}
-      <Accordion>
+      <AccordionStyled>
         {items.map((item, index) => [
           <Card key={`card-${index}`} as={CardElement} className="mt-2">
             <Card.Header as={CardHeader} className="d-sm-flex collapsed w-100">
@@ -88,7 +98,7 @@ export default function AccordionComponent({ title, intro, items }) {
             </Accordion.Collapse>
           </Card>,
         ])}
-      </Accordion>
+      </AccordionStyled>
     </>
   );
 }
