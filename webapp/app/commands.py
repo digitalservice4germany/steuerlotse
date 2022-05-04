@@ -30,7 +30,7 @@ def populate_database():
         pre_stored_idnrs = [('04452397687', 'DBNH-B8JS-9JE7'),
                             ('02259674819', 'BMVL-U2YM-AWJ4')]
         for idnr, unlock_code in pre_stored_idnrs:
-            new_user = User(idnr, '1985-01-01', '123')
+            new_user = User(idnr, '01.01.1985', '123')
             new_user.activate(unlock_code)
             try:
                 db.session.add(new_user)
