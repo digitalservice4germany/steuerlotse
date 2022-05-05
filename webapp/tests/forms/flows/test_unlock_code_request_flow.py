@@ -228,22 +228,19 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
         existing_idnr = '04452397687'
         create_user(existing_idnr, '1985-01-01', '0000')
 
-        failure_url = '/' + self.endpoint_correct + '/step/' + self.input_step.name + \
-                               '?link_overview=' + str(self.flow.has_link_overview)
+        failure_url = '/' + self.endpoint_correct + '/step/' + MockUnlockCodeRequestFailureStep.name + \
+                                '?link_overview=' + str(self.flow.has_link_overview)
 
         with self.app.test_request_context(method='POST', data=self.valid_input_data):
             with (
                 patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),
-                patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster")  as fun_unlock_code_request,
-                patch("app.forms.flows.unlock_code_request_flow.flash") as mock_flash,
+                patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster")  as fun_unlock_code_request
             ):
                 render_info, stored_data = self.flow._handle_specifics_for_step(
                         self.input_step, self.render_info_input_step, self.session_data)
 
                 self.assertEqual(failure_url, render_info.next_url)
                 fun_unlock_code_request.assert_not_called()
-                mock_flash.assert_called_once_with(
-                _('form.unlock-code-request.failure-intro'), 'warn')             
 
     def test_if_step_is_input_step_and_valid_form_then_call_create_auditlog_for_all_fields(self):
         ip_address = '127.0.0.1'

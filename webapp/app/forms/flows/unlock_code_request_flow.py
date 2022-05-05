@@ -71,12 +71,7 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                     self._register_user(stored_data)
                     # prevent going to failure page as in normal flow
                     render_info.next_url = self.url_for_step(UnlockCodeRequestSuccessStep.name)
-                except UserAlreadyExistsError:
-                    logger.info("Could not request unlock code for user", exc_info=True)
-                    render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
-                    flash(_('form.unlock-code-request.failure-intro'), 'warn')
-                    pass
-                except ElsterProcessNotSuccessful:
+                except (ElsterProcessNotSuccessful, UserAlreadyExistsError):
                     logger.info("Could not request unlock code for user", exc_info=True)
                     pass
                 except RequestException as e:

@@ -22,7 +22,6 @@ const Picture = styled.picture`
 `;
 
 const InnerHeader = styled.div`
-  margin-top: var(--spacing-09);
   margin-bottom: var(--spacing-08);
 
   @media screen and (min-width: 1024px) {

@@ -1,5 +1,12 @@
 .section-intro {
     margin-bottom: var(--spacing-08);
+    margin-top: var(--spacing-11)
+}
+
+@media(max-width: 1024px) {
+    .section-intro {
+        margin-top: var( --spacing-09);
+    }
 }
 
 h1.my-4{
