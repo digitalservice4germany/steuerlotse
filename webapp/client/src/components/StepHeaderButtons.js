@@ -4,12 +4,11 @@ import styled from "styled-components";
 import BackLink from "./BackLink";
 
 const HeaderNavigation = styled.div`
-  margin-bottom: calc(var(--spacing-09) + 0.5rem);
+  position: absolute;
+  top: var(--spacing-05);
 
   @media (max-width: 1024px) {
-    height: auto;
-    padding-bottom: var(--spacing-02);
-    margin-bottom: 0;
+    top: var(--spacing-09);
   }
 `;
 
