@@ -22,12 +22,11 @@ const Picture = styled.picture`
 `;
 
 const InnerHeader = styled.div`
-  margin-top: 9.375rem;
   margin-bottom: var(--spacing-08);
-`;
 
-const InnerContent = styled.div`
-  display: block;
+  @media screen and (min-width: 1024px) {
+    margin-top: var(--spacing-11);
+  }
 `;
 
 export default function InfoForRelativesPage() {
@@ -70,28 +69,21 @@ export default function InfoForRelativesPage() {
   return (
     <div>
       <ContentWrapper>
-        <InnerContent>
-          <InnerHeader>
-            <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
-            <ParagraphLarge>
-              {t("InfoForRelatives.Section1.Text")}
-            </ParagraphLarge>
-          </InnerHeader>
-          <Picture>
-            <img
-              src="../images/info-angehoerige.jpg"
-              alt="Frau hilft Verwandten am Laptop bei ihrer Steuererklärung"
-            />
-          </Picture>
-        </InnerContent>
+        <InnerHeader>
+          <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
+          <ParagraphLarge>{t("InfoForRelatives.Section1.Text")}</ParagraphLarge>
+        </InnerHeader>
+        <Picture>
+          <img
+            src="../images/info-angehoerige.jpg"
+            alt="Frau hilft Verwandten am Laptop bei ihrer Steuererklärung"
+          />
+        </Picture>
       </ContentWrapper>
       <ContentWrapper>
         <Headline2>{t("InfoForRelatives.Section2.Heading")}</Headline2>
         <Paragraph>{t("InfoForRelatives.Section2.Text")}</Paragraph>
         <List aria-label="simple-list">{ListDependentsMap}</List>
-
-        <Headline2>{t("InfoForRelatives.Section3.Heading")}</Headline2>
-        <Paragraph>{t("InfoForRelatives.Section3.Text")}</Paragraph>
       </ContentWrapper>
       <InfoBox
         boxHeadline={anchorPrufen.headline}

@@ -26,9 +26,7 @@ describe("InfoForRelativesPage", () => {
     const headline2 = screen.getByText(
       "Wem Sie helfen dürfen und wer Ihnen helfen darf:"
     );
-    const headline3 = screen.getByText(
-      "Wer nicht bei der Steuererklärungen helfen darf"
-    );
+
     const text1 = screen.getByText(
       "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz",
       { exact: false }
@@ -36,7 +34,6 @@ describe("InfoForRelativesPage", () => {
 
     expect(headline1).toBeInTheDocument();
     expect(headline2).toBeInTheDocument();
-    expect(headline3).toBeInTheDocument();
     expect(text1).toBeInTheDocument();
   });
 
