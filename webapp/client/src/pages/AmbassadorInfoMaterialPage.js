@@ -21,10 +21,10 @@ const HowItWorksImage = styled.img`
 `;
 
 const Headline1Ambassador = styled(Headline1)`
-  margin-top: var(--spacing-09);
+  margin-top: var(--spacing-11);
 
-  @media screen and (min-width: 1024px) {
-    margin-top: var(--spacing-11);
+  @media (max-width: 1024px) {
+    margin-top: var(--spacing-05);
   }
 `;
 

@@ -22,7 +22,6 @@ const Picture = styled.picture`
 `;
 
 const InnerHeader = styled.div`
-  margin-top: 9.375rem;
   margin-bottom: var(--spacing-08);
 `;
 
