@@ -12,7 +12,7 @@
 
 {% macro header(title, intro, hide_intro=False) -%}
     <div class="section-intro">
-        <h1 class="my-4">{{ title }}</h1>
+        <h1 class="section-title">{{ title }}</h1>
         {%- if intro and not hide_intro %}
             <p>{{ intro }}</p>
         {% endif -%}

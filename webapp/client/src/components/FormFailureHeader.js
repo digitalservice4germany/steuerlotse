@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const FailureAlertArea = styled.div`
+  margin-top: var(--spacing-11);
+
   &.alert {
     border-radius: 0;
     border: 0;

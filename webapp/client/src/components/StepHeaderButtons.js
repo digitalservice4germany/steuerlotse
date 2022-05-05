@@ -4,14 +4,8 @@ import styled from "styled-components";
 import BackLink from "./BackLink";
 
 const HeaderNavigation = styled.div`
-  height: var(--header-navigation-height);
-  margin-bottom: var(--spacing-09);
-
-  @media (max-width: 1024px) {
-    height: auto;
-    padding-bottom: var(--spacing-02);
-    margin-bottom: 0;
-  }
+  position: absolute;
+  top: var(--spacing-05);
 `;
 
 export default function StepHeaderButtons({ url, text }) {

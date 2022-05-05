@@ -356,17 +356,8 @@ span.nav-link.inactive, span.inactive {
 }
 
 /* HEAD-NAVIGATION */
-.header-navigation{
-  height: var(--header-navigation-height);
-  margin-bottom: var(--spacing-09);
-}
-
-@media (max-width: 1024px) {
-  .header-navigation {
-    height: auto;
-    padding-bottom: var(--spacing-02);
-    margin-bottom: 0;
-  }
+.header-navigation {
+  position: absolute;
 }
 
 /* Footer */

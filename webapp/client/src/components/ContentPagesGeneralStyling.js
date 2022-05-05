@@ -35,6 +35,7 @@ export const ListItem = styled.li`
 
 export const Headline1 = styled.h1`
   margin: 0;
+  margin-top: var(--spacing-11);
   padding-bottom: var(--spacing-03);
   font-size: var(--text-3xl);
 

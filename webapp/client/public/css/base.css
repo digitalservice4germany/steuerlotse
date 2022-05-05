@@ -568,3 +568,8 @@ img.icon {
 .hidden {
     display: none;
 }
+
+.section-title {
+    margin-bottom: var(--spacing-05);
+    margin-top: var(--spacing-11);
+}

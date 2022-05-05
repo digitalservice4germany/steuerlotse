@@ -58,14 +58,9 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     self._cancel_user(stored_data)
                     # prevent going to failure page as in normal flow
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationSuccessStep.name)
-                except (UserNotExistingError, WrongDateOfBirthError):
-                    render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
+                except (UserNotExistingError, WrongDateOfBirthError, ElsterProcessNotSuccessful)  as e:
                     logger.info("Could not revoke unlock code for user", exc_info=True)
-                    flash(_('form.unlock-code-revocation.failure-intro'), 'warn')
-                    pass  # go to failure step
-                except ElsterProcessNotSuccessful as e:
-                    logger.info("Could not revoke unlock code for user: {e}", exc_info=True)   
-                    pass  # go to failure step                 
+                    pass  # go to failure step             
                 except RequestException as e:
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)

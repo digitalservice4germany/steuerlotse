@@ -7,7 +7,7 @@
     {% for section in render_info.additional_info.section_steps.values() -%}
         <h2 class="mb-0 mt-5 h5 text-uppercase">{{ section.label }}</h2>
         {% for step in section.data.values() -%}
-            <div class="my-4 px-0">
+            <div class="section-title px-0">
                 <div class="card">
                     <div class="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center">
                         <h3 class="mb-0 h5 bold">{{ step.label }}</h3>
