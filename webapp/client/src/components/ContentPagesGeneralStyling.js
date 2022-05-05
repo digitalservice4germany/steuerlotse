@@ -42,6 +42,10 @@ export const Headline1 = styled.h1`
   @media (min-width: 768px) {
     font-size: var(--text-4xl);
   }
+
+  @media (max-width: 1024px) {
+    margin-top: var(--spacing-05);
+  }
 `;
 
 export const Headline2 = styled.h2`

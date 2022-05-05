@@ -14,6 +14,10 @@ const FailureAlertArea = styled.div`
     background-color: var(--error-color);
     color: var(--inverse-text-color);
   }
+
+  @media (max-width: 1024px) {
+    margin-top: var(--spacing-05);
+  }
 `;
 
 const Intro = styled.p`

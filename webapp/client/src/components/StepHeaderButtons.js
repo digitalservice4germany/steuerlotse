@@ -6,6 +6,10 @@ import BackLink from "./BackLink";
 const HeaderNavigation = styled.div`
   position: absolute;
   top: var(--spacing-05);
+
+  @media (max-width: 1024px) {
+    top: var(--spacing-09);
+  }
 `;
 
 export default function StepHeaderButtons({ url, text }) {
