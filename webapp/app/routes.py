@@ -530,3 +530,10 @@ def register_testing_request_handlers(app):
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
         SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200
+
+    @app.route('/sitemap.txt', methods=['GET'])
+    @limiter.limit('15 per minute')
+    @limiter.limit('1000 per day')
+    def download_sitemap():
+        return send_file('static/files/sitemap.txt', mimetype='text/plain',
+                         as_attachment=False)
