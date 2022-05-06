@@ -7,7 +7,6 @@ import SuccessStepsInfoBox from "../components/successStepsInfoBox";
 import OneIcon from "../assets/icons/Icon-1.svg";
 import TwoIcon from "../assets/icons/Icon-2.svg";
 import ThreeIcon from "../assets/icons/Icon-3.svg";
-// import addPlausibleGoal from "../lib/helpers";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
@@ -25,9 +24,16 @@ export default function UnlockCodeSuccessPage({
   };
 
   const image = {
-    src: "../../images/Img_Brief_1024.jpg",
+    src: "../../images/Img_Brief_500.jpg",
+    alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+    srcSet:
+      "../../images/Img_Brief_500.jpg 1155w ,  ../../images/Img_Brief_1024.jpg 2048w",
   };
 
+  const plausibleGoal = "Vorbereitungshilfe";
+  const plausiblePropsButton = {
+    method: "CTA Vorbereitungshilfe herunterladen",
+  };
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
@@ -41,6 +47,8 @@ export default function UnlockCodeSuccessPage({
         anchor={anchorInfo}
         plausibleDomain={plausibleDomain}
         icon={OneIcon}
+        plausibleGoal={plausibleGoal}
+        plausiblePropsButton={plausiblePropsButton}
       />
       <SuccessStepsInfoBox
         header={t("register.success.next-steps.howItContinues.step-2.heading")}

@@ -30,6 +30,7 @@ const InnerBoxText = styled.p`
 const Figure = styled.figure`
   margin: 0;
   align-self: end;
+  border: 1px solid var(--grey-100);
 
   @media (min-width: 768px) {
     grid-column: 2 / -1;
@@ -54,12 +55,9 @@ export default function successStepsInfoBox({
   image,
   icon,
   plausibleDomain,
+  plausibleGoal,
+  plausiblePropsButton,
 }) {
-  const plausibleGoal = "Vorbereitungshilfe";
-  const plausiblePropsButton = {
-    method: "CTA Vorbereitungshilfe herunterladen",
-  };
-
   return (
     <Box>
       {icon && <Icon src={icon} />}
@@ -80,7 +78,13 @@ export default function successStepsInfoBox({
             plausibleProps={plausiblePropsButton}
           />
         )}
-        <Figure>{image && <img src={image.src} alt="exmaple" />}</Figure>
+        {image && (
+          <Figure>
+            <picture>
+              <img src={image.src} srcSet={image.srcSet} alt={image.alt} />
+            </picture>
+          </Figure>
+        )}
       </div>
     </Box>
   );
@@ -89,15 +93,28 @@ export default function successStepsInfoBox({
 successStepsInfoBox.propTypes = {
   header: PropTypes.string,
   text: PropTypes.string,
-  image: PropTypes.string,
+  image: {
+    src: PropTypes.string,
+    srcSet: PropTypes.string,
+    alt: PropTypes.string,
+    sizes: PropTypes.string,
+  },
   anchor: {
     url: PropTypes.string,
-    text: PropTypes.string,
   },
   icon: PropTypes.string,
   plausibleDomain: PropTypes.string,
+  plausibleGoal: PropTypes.string,
+  plausiblePropsButton: PropTypes.shape({ method: PropTypes.string }),
 };
 
 successStepsInfoBox.defaultProps = {
   plausibleDomain: null,
+  plausibleGoal: null,
+  plausiblePropsButton: null,
+  header: null,
+  text: null,
+  image: null,
+  anchor: null,
+  icon: null,
 };
