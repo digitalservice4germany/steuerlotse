@@ -17,6 +17,10 @@ const Anchor = styled.a`
   border-radius: 0;
   border-bottom: 4px solid var(--link-color);
 
+  @media (max-width: 320px) {
+    margin-right: 0;
+  }
+
   &:not(:disabled):not(.disabled):active {
     background: var(--link-color) !important;
     border: none !important;

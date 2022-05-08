@@ -27,6 +27,12 @@ export default function UnlockCodeSuccessPage({
     }
   `;
 
+  const ConditionalHeader = styled.div`
+    @media (max-width: 768px) {
+      display: none;
+    }
+  `;
+
   const anchorInfo = {
     text: t("register.success.next-steps.howItContinues.step-1.buttonText"),
     url: vorbereitungsHilfeLink,
@@ -46,7 +52,9 @@ export default function UnlockCodeSuccessPage({
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <FormSuccessHeader {...stepHeader} hidden />
+      <ConditionalHeader>
+        <FormSuccessHeader {...stepHeader} hidden />
+      </ConditionalHeader>
       <Header className="mt-5">
         {t("register.success.next-steps.howItContinues.heading")}
       </Header>
