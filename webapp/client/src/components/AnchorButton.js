@@ -17,7 +17,7 @@ const Anchor = styled.a`
   border-radius: 0;
   border-bottom: 4px solid var(--link-color);
 
-  @media (max-width: 320px) {
+  @media (max-width: 360px) {
     margin-right: 0;
   }
 

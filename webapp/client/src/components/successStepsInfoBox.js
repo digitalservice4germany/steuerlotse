@@ -13,10 +13,6 @@ const Box = styled.div`
     flex-direction: column;
     padding: 0 32px 32px;
   }
-
-  @media (max-width: 360px) {
-    padding: 0 16px 16px;
-  }
 `;
 
 const InnerBox = styled.div``;
