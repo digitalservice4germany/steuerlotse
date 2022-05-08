@@ -24,13 +24,20 @@ const Intro = styled.p`
   font-size: var(--text-medium);
 `;
 
-export default function FormSuccessHeader({ title, intro, hideIntro }) {
+export default function FormSuccessHeader({ title, intro, hideIntro, hidden }) {
   return (
     <>
-      <SuccessAlertArea className="alert alert-success" role="alert">
-        <h1>{title}</h1>
-      </SuccessAlertArea>
-      {intro && !hideIntro && <Intro>{intro}</Intro>}
+      {" "}
+      {hidden ? (
+        ""
+      ) : (
+        <>
+          <SuccessAlertArea className="alert alert-success" role="alert">
+            <h1>{title}</h1>
+          </SuccessAlertArea>
+          {intro && !hideIntro && <Intro>{intro}</Intro>}
+        </>
+      )}
     </>
   );
 }
@@ -39,9 +46,11 @@ FormSuccessHeader.propTypes = {
   title: PropTypes.string.isRequired,
   intro: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   hideIntro: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 FormSuccessHeader.defaultProps = {
   intro: undefined,
   hideIntro: false,
+  hidden: false,
 };

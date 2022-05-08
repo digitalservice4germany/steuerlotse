@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
 import SuccessStepsInfoBox from "../components/successStepsInfoBox";
@@ -17,6 +18,14 @@ export default function UnlockCodeSuccessPage({
   const stepHeader = {
     title: t("register.success.next-steps.header.title"),
   };
+
+  const Header = styled.h1`
+    font-size: var(--text-3xl);
+
+    @media (max-width: 768px) {
+      visibility: hidden;
+    }
+  `;
 
   const anchorInfo = {
     text: t("register.success.next-steps.howItContinues.step-1.buttonText"),
@@ -37,10 +46,10 @@ export default function UnlockCodeSuccessPage({
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <FormSuccessHeader {...stepHeader} />
-      <h2 className="mt-5">
+      <FormSuccessHeader {...stepHeader} hidden />
+      <Header className="mt-5">
         {t("register.success.next-steps.howItContinues.heading")}
-      </h2>
+      </Header>
       <SuccessStepsInfoBox
         header={t("register.success.next-steps.howItContinues.step-1.heading")}
         text={t("register.success.next-steps.howItContinues.step-1.text")}
