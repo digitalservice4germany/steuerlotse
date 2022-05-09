@@ -23,13 +23,7 @@ export default function UnlockCodeSuccessPage({
     font-size: var(--text-3xl);
 
     @media (max-width: 768px) {
-      visibility: hidden;
-    }
-  `;
-
-  const ConditionalHeader = styled.div`
-    @media (max-width: 768px) {
-      display: none;
+      font-size: var(--text-2xl);
     }
   `;
 
@@ -52,9 +46,7 @@ export default function UnlockCodeSuccessPage({
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
-      <ConditionalHeader>
-        <FormSuccessHeader {...stepHeader} hidden />
-      </ConditionalHeader>
+      <FormSuccessHeader {...stepHeader} />
       <Header className="mt-5">
         {t("register.success.next-steps.howItContinues.heading")}
       </Header>
