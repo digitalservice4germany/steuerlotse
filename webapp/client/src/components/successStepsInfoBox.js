@@ -13,6 +13,11 @@ const Box = styled.div`
     flex-direction: column;
     padding: 0 32px 32px;
   }
+
+  @media (max-width: 320px) {
+    padding-left: var(--spacing-03);
+    padding-right: var(--spacing-03);
+  }
 `;
 
 const InnerBox = styled.div``;
@@ -119,7 +124,6 @@ successStepsInfoBox.propTypes = {
     src: PropTypes.string,
     srcSet: PropTypes.string,
     alt: PropTypes.string,
-    sizes: PropTypes.string,
   },
   anchor: {
     url: PropTypes.string,

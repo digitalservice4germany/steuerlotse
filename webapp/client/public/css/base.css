@@ -602,12 +602,6 @@ img.icon {
   }
 }
 
-@media (max-width: 360px) {
-  .steps_info_box_without_icon {
-    padding: 0 16px 16px;
-  }
-}
-
 @media (max-width: 1024px) {
   .section-title {
     margin-top: var(--spacing-05);
