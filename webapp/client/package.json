@@ -44,7 +44,7 @@
     "@storybook/node-logger": "^6.4.22",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.4.22",
-    "husky": "^7.0.2",
+    "husky": "^8.0.0",
     "lint-staged": "^12.4.1",
     "prettier": "2.6.2",
     "storybook-addon-designs": "^6.2.1"
