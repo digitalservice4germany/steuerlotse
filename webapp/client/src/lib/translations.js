@@ -347,8 +347,6 @@ const translations = {
         header: {
           title:
             "Ihr Freischaltcode wurde bei Ihrem Finanzamt beantragt und wird Ihnen per Post zugeschickt.",
-          // intro:
-          //   "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie Ihren Brief erhalten.",
         },
         howItContinues: {
           heading: "So geht es weiter",

@@ -574,34 +574,6 @@ img.icon {
   margin-top: var(--spacing-11);
 }
 
-.steps_info_box_with_icon {
-  padding: 32px 64px 48px 30px;
-}
-
-@media (max-width: 768px) {
-  .steps_info_box_with_icon {
-    padding-right: 40px;
-  }
-}
-
-@media (max-width: 425px) {
-  .steps_info_box_with_icon {
-    padding: 0 1px 1px;
-  }
-}
-
-.steps_info_box_without_icon {
-  padding: 32px 152px 48px 48px;
-}
-
-@media (max-width: 425px) {
-  .steps_info_box_without_icon {
-    flex-direction: column;
-    padding: 0;
-    padding-top: var(--spacing-03);
-  }
-}
-
 @media (max-width: 1024px) {
   .section-title {
     margin-top: var(--spacing-05);

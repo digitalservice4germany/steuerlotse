@@ -20,7 +20,20 @@ const Box = styled.div`
   }
 `;
 
-const InnerBox = styled.div``;
+const InnerBox = styled.div`
+  padding: ${(props) =>
+    props.className ? "32px 64px 48px 30px" : "32px 152px 48px 48px"};
+
+  @media (max-width: 768px) {
+    padding-right: 33px;
+  }
+
+  @media (max-width: 425px) {
+    padding: 0;
+    padding-top: ${(props) => (props.className ? "0" : "var(--spacing-03)")};
+    flex-direction: ${(props) => (props.className ? "row" : "column")};
+  }
+`;
 
 const InnerBoxHeader = styled.h2`
   font-size: var(--text-2xl);
@@ -88,11 +101,7 @@ export default function successStepsInfoBox({
   return (
     <Box>
       {icon && <Icon src={icon} />}
-      <InnerBox
-        className={
-          icon ? "steps_info_box_with_icon" : "steps_info_box_without_icon"
-        }
-      >
+      <InnerBox className={icon}>
         <InnerBoxHeader>{header}</InnerBoxHeader>
         <InnerBoxText>{text}</InnerBoxText>
         {anchor && (
