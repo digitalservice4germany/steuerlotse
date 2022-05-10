@@ -1,13 +1,13 @@
 import React from "react";
-import successStepsInfoBox from "../components/successStepsInfoBox";
+import SuccessStepsInfoBox from "../components/successStepsInfoBox";
 
 export default {
   title: "Components/StepsInfoBox",
-  component: successStepsInfoBox,
+  component: SuccessStepsInfoBox,
 };
 
 function Template(args) {
-  return <successStepsInfoBox {...args} />;
+  return <SuccessStepsInfoBox {...args} />;
 }
 
 export const Default = Template.bind({});
