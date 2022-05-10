@@ -75,7 +75,7 @@ export default function UnlockCodeSuccessPage({
       <img
         className="w-50"
         src="/images/elster_letter_example.png"
-        alt="elster_letter"
+        alt="Beispielbild der letzten Seite des Briefes mit Freischaltcode"
       />
 
       <h2 className="mt-5">{t("register.success.preparation.heading")}</h2>
