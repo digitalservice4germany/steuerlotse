@@ -1,31 +1,25 @@
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
 import BackLink from "./BackLink";
-
-const HeaderNavigation = styled.div`
-  position: absolute;
-  top: var(--spacing-05);
-
-  @media (max-width: 1024px) {
-    top: var(--spacing-09);
-  }
-`;
 
 export default function StepHeaderButtons({ url, text }) {
   const { t } = useTranslation();
 
   const linkText = text || t("form.back");
 
-  return (
-    <HeaderNavigation>
-      {url && (
+  let content = null;
+
+  if (url) {
+    content = (
+      <div className="header-navigation">
         <div className="mt-3">
           <BackLink text={linkText} url={url} />
         </div>
-      )}
-    </HeaderNavigation>
-  );
+      </div>
+    );
+  }
+
+  return content;
 }
 
 StepHeaderButtons.propTypes = {

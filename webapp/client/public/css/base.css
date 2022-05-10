@@ -571,11 +571,4 @@ img.icon {
 
 .section-title {
     margin-bottom: var(--spacing-05);
-    margin-top: var(--spacing-11);
-}
-
-@media(max-width: 1024px) {
-    .section-title {
-        margin-top: var( --spacing-05);
-    }
 }
