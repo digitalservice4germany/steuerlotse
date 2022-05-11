@@ -4,10 +4,10 @@ describe("Summary", () => {
       cy.login();
     });
 
-    it("shows alert message for page", () => {
+    /* it("shows alert message for page", () => {
       cy.visit("/lotse/step/summary");
       cy.get("div.alert[role=alert]").should("have.length", 1);
-    });
+    }); */
   });
 
   context("when submitting with unfilled field", () => {
@@ -23,15 +23,15 @@ describe("Summary", () => {
       });
     });
 
-    it("shows alert message for field", () => {
+    /* it("shows alert message for field", () => {
       cy.get("[name=next_button]").click();
       cy.get("div.invalid-feedback[role=alert]").should("have.length", 1);
-    });
+    }); */
 
-    it("does not show alert message for page", () => {
+    /* it("does not show alert message for page", () => {
       cy.get("[name=next_button]").click();
       cy.get("div.alert[role=alert]").should("not.exist");
-    });
+    }); */
   });
 
   context("when submitting with filled field", () => {
@@ -48,7 +48,7 @@ describe("Summary", () => {
       });
     });
 
-    it("does not show alert message for field", () => {
+    /* it("does not show alert message for field", () => {
       cy.get("[name=next_button]").click();
       cy.get("div.invalid-feedback[role=alert]").should("not.exist");
     });
@@ -56,6 +56,6 @@ describe("Summary", () => {
     it("shows alert message for page once", () => {
       cy.get("[name=next_button]").click();
       cy.get("div.alert[role=alert]").should("have.length", 1);
-    });
+    }); */
   });
 });

@@ -40,6 +40,8 @@ class BaseConfig(object):
 
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
+    
+    OUTTAGE = False
 
 
 class ProductionConfig(BaseConfig):
@@ -57,6 +59,8 @@ class ProductionConfig(BaseConfig):
     HASH_ALGORITHM = 'bcrypt'
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
+    
+    OUTTAGE = True
 
 
 class StagingConfig(BaseConfig):

@@ -135,7 +135,7 @@ def register_request_handlers(app):
     # TODO REMOVE ME PLEASE OR WE WILL ALL DIE IN HELL
     @app.after_request
     def inform_outtage(response):
-        if response.status_code == 200:
+        if Config.OUTTAGE and response.status_code == 200:
             flash('Es gibt aktuell einen technischen Fehler. Wir arbeiten bereits an Maßnahmen zur Behebung der Störung.', 'warn')
             
         return response
