@@ -6,7 +6,7 @@ describe("Summary", () => {
 
     it("shows alert message for page", () => {
       cy.visit("/lotse/step/summary");
-      cy.get("div.alert[role=alert]").should("have.length", 2);
+      cy.get("div.alert[role=alert]").should("have.length", 1);
     });
   });
 
@@ -48,16 +48,14 @@ describe("Summary", () => {
       });
     });
 
-    /* REVERT THIS! */
-
-    /* it("does not show alert message for field", () => {
+    it("does not show alert message for field", () => {
       cy.get("[name=next_button]").click();
       cy.get("div.invalid-feedback[role=alert]").should("not.exist");
-    }); */
+    });
 
     it("shows alert message for page once", () => {
       cy.get("[name=next_button]").click();
-      cy.get("div.alert[role=alert]").should("have.length", 2);
+      cy.get("div.alert[role=alert]").should("have.length", 1);
     });
   });
 });
