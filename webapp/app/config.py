@@ -40,9 +40,8 @@ class BaseConfig(object):
 
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
-    
-    OUTTAGE = False
 
+    OUTTAGE = False
 
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
@@ -59,8 +58,6 @@ class ProductionConfig(BaseConfig):
     HASH_ALGORITHM = 'bcrypt'
     IDNR_SALT = environ.get('IDNR_SALT')
     SECRET_KEY = environ.get('SECRET_KEY')
-    
-    OUTTAGE = True
 
 
 class StagingConfig(BaseConfig):
@@ -103,7 +100,7 @@ class DevelopmentConfig(BaseConfig):
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
-    
+
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
 
 
