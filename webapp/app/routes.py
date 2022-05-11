@@ -3,7 +3,7 @@ import datetime as dt
 from functools import wraps
 import io
 
-from flask import current_app, render_template, request, send_file, session, make_response, redirect, url_for
+from flask import current_app, flash, render_template, request, send_file, session, make_response, redirect, url_for
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
 from werkzeug.datastructures import ImmutableMultiDict
@@ -85,7 +85,6 @@ login_manager.login_message = _l('login.not-logged-in-warning')
 login_manager.login_message_category = 'warn'
 login_manager.refresh_view = 'refresh_unlock_code_activation'
 
-
 def extract_information_from_request():
     update_data = request.method == 'POST'
     form_data = request.form
@@ -131,6 +130,14 @@ def register_request_handlers(app):
     @app.before_request
     def make_session_permanent():
         session.permanent = True
+    
+    # TODO REMOVE ME PLEASE OR WE WILL ALL DIE IN HELL
+    @app.after_request
+    def inform_outtage(response):
+        if response.status_code == 200:
+            flash('Es gibt aktuell einen technischen Fehler. Wir arbeiten bereits an Maßnahmen zur Behebung der Störung.', 'warn')
+            
+        return response
 
     @app.after_request
     def add_http_header(response):
