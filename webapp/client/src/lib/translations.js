@@ -345,19 +345,25 @@ const translations = {
     success: {
       "next-steps": {
         header: {
-          title: "Ihre Registrierung war erfolgreich!",
-          intro:
-            "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie Ihren Brief erhalten.",
+          title:
+            "Ihr Freischaltcode wurde bei Ihrem Finanzamt beantragt und wird Ihnen per Post zugeschickt.",
         },
-        heading: "So geht es weiter",
-        "step-1":
-          "Sie bekommen von Ihrem Finanzamt den <bold>Brief mit Ihrem persönlichen Freischaltcode</bold> zugeschickt.",
-        "step-2":
-          "Sie können sich auf Ihre Steuererklärung vorbereiten bis Sie den Brief erhalten haben. Sammeln Sie dazu alle notwendigen Unterlagen sowie Belege. Eine Übersicht über die notwendigen Unterlagen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer <vorbereitungsHilfeLink>Vorbereitungshilfe</vorbereitungsHilfeLink>.",
-        "step-3":
-          "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf www.steuerlotse-rente.de",
-        "step-4":
-          "Wählen Sie den Menüpunkt <steuerErklaerungLink>Ihre Steuererklärung</steuerErklaerungLink> und melden sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+        howItContinues: {
+          heading: "So geht es weiter",
+          "step-1": {
+            heading: "Vorbereiten und Belege sammeln",
+            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe.",
+            buttonText: "Vorbereitungshilfe speichern ",
+          },
+          "step-2": {
+            heading: "Brief mit Freischaltcode zur Anmeldung erhalten",
+            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService4Germany als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
+          },
+          "step-3": {
+            heading: "Steuererklärung online machen",
+            text: "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Ihre Steuererklärung“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+          },
+        },
       },
       letter: {
         heading: "So sieht der Brief aus, den Sie erhalten werden",

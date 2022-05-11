@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const SuccessAlertArea = styled.div`
+  margin-top: var(--spacing-11);
+
   &.alert {
     border-radius: 0;
     border: 0;
@@ -11,6 +13,10 @@ const SuccessAlertArea = styled.div`
   &.alert-success {
     background-color: var(--success-color);
     color: var(--inverse-text-color);
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: var(--spacing-05);
   }
 `;
 

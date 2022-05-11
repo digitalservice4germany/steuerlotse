@@ -74,7 +74,8 @@ nav.Bar('top', [
     SteuerlotseNavItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'}),
     SteuerlotseNavItem(_l('nav.register'), 'unlock_code_request', {},
                        deactivate_when_logged_in=True),
-    SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {}),
+    SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {},
+                       matching_endpoint_prefixes=['vorbereiten']),
     SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
                        matching_endpoint_prefixes=['unlock_code_activation', 'lotse']),
     SteuerlotseNavItem(_l('nav.logout'), 'logout', {})
@@ -365,28 +366,28 @@ def register_request_handlers(app):
 
     @app.route('/vorbereiten/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
-    def pension_expenses_info():
+    def vorbereiten_pension_expenses_info():
         return render_react_content_page_template(
             props=PensionExpensesProps().camelized_dict(),
             component='PensionExpensesInfoPage')
 
     @app.route('/vorbereiten/krankheitskosten', methods=['GET'])
     @add_caching_headers
-    def medical_expenses_info():
+    def vorbereiten_medical_expenses_info():
         return render_react_content_page_template(
             props=MedicalExpensesInfoPageProps().camelized_dict(),
             component='MedicalExpensesInfoPage')
 
     @app.route('/vorbereiten/pflegekosten', methods=['GET'])
     @add_caching_headers
-    def care_costs_info_page():
+    def vorbereiten_care_costs_info_page():
         return render_react_content_page_template(
             props=CareCostsInfoPageProps().camelized_dict(),
             component='CareCostsInfoPage')
 
     @app.route('/vorbereiten/bestattungskosten', methods=['GET'])
     @add_caching_headers
-    def funeral_expenses_info():
+    def vorbereiten_funeral_expenses_info():
         return render_react_content_page_template(
             props=FuneralExpensesInfoPageProps().camelized_dict(),
             component='FuneralExpensesInfoPage')
@@ -396,59 +397,59 @@ def register_request_handlers(app):
     def vorbereiten():
         return render_react_content_page_template(
             props=VorbereitenInfoProps(
-                    angaben_bei_behinderung_url=url_for("diability_costs_info"),
-                    bestattungskosten_url=url_for("funeral_expenses_info"),
+                    angaben_bei_behinderung_url=url_for("vorbereiten_diability_costs_info"),
+                    bestattungskosten_url=url_for("vorbereiten_funeral_expenses_info"),
                     download_preparation_link=url_for("download_preparation"),
-                    handwerkerleistungen_url=url_for("craftsman_services_info"),
-                    haushaltsnahe_dienstleistungen_url=url_for("household_services_info"),
-                    kirchensteuer_url=url_for("church_tax_info"),
-                    krankheitskosten_url=url_for("medical_expenses_info"),
-                    pflegekosten_url=url_for("care_costs_info_page"),
-                    spenden_und_mitgliedsbeitraege_url=url_for("donation_info"),
-                    vorsorgeaufwendungen_url=url_for("pension_expenses_info"),
-                    wiederbeschaffungskosten_url=url_for("replacement_costs_info_page")
+                    handwerkerleistungen_url=url_for("vorbereiten_craftsman_services_info"),
+                    haushaltsnahe_dienstleistungen_url=url_for("vorbereiten_household_services_info"),
+                    kirchensteuer_url=url_for("vorbereiten_church_tax_info"),
+                    krankheitskosten_url=url_for("vorbereiten_medical_expenses_info"),
+                    pflegekosten_url=url_for("vorbereiten_care_costs_info_page"),
+                    spenden_und_mitgliedsbeitraege_url=url_for("vorbereiten_donation_info"),
+                    vorsorgeaufwendungen_url=url_for("vorbereiten_pension_expenses_info"),
+                    wiederbeschaffungskosten_url=url_for("vorbereiten_replacement_costs_info_page")
                 ).camelized_dict(),
             component='VorbereitenOverviewPage')
 
 
     @app.route('/vorbereiten/haushaltsnahe-dienstleistungen', methods=['GET'])
     @add_caching_headers
-    def household_services_info():
+    def vorbereiten_household_services_info():
         return render_react_content_page_template(
             props=HouseholdServicesInfoPageProps().camelized_dict(),
             component='HouseholdServicesInfoPage')
 
     @app.route('/vorbereiten/wiederbeschaffungskosten', methods=['GET'])
     @add_caching_headers
-    def replacement_costs_info_page():
+    def vorbereiten_replacement_costs_info_page():
         return render_react_content_page_template(
             props=ReplacementCostsInfoPageProps().camelized_dict(),
             component='ReplacementCostsInfoPage')
 
     @app.route('/vorbereiten/angaben-bei-behinderung', methods=['GET'])
     @add_caching_headers
-    def diability_costs_info():
+    def vorbereiten_diability_costs_info():
         return render_react_content_page_template(
             props=DisabilityCostsInfoProps().camelized_dict(),
             component='DisabilityCostsInfoPage')
 
     @app.route('/vorbereiten/handwerkerleistungen', methods=['GET'])
     @add_caching_headers
-    def craftsman_services_info():
+    def vorbereiten_craftsman_services_info():
         return render_react_content_page_template(
             props=CraftsmanServicesInfoPageProps().camelized_dict(),
             component='CraftsmanServicesInfoPage')
 
     @app.route('/vorbereiten/spenden-und-mitgliedsbeitraege', methods=['GET'])
     @add_caching_headers
-    def donation_info():
+    def vorbereiten_donation_info():
         return render_react_content_page_template(
             props=DonationInfoPageProps().camelized_dict(),
             component='DonationInfoPage')
 
     @app.route('/vorbereiten/kirchensteuer', methods=['GET'])
     @add_caching_headers
-    def church_tax_info():
+    def vorbereiten_church_tax_info():
         return render_react_content_page_template(
             props=ChurchTaxInfoPageProps().camelized_dict(),
             component='ChurchTaxInfoPage')
@@ -537,3 +538,10 @@ def register_testing_request_handlers(app):
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
         SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200
+
+    @app.route('/sitemap.txt', methods=['GET'])
+    @limiter.limit('15 per minute')
+    @limiter.limit('1000 per day')
+    def download_sitemap():
+        return send_file('static/files/sitemap.txt', mimetype='text/plain',
+                         as_attachment=False)

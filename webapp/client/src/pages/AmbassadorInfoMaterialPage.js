@@ -21,10 +21,10 @@ const HowItWorksImage = styled.img`
 `;
 
 const Headline1Ambassador = styled(Headline1)`
-  margin-top: var(--spacing-09);
+  margin-top: var(--spacing-11);
 
-  @media screen and (min-width: 1024px) {
-    margin-top: var(--spacing-11);
+  @media (max-width: 1024px) {
+    margin-top: var(--spacing-05);
   }
 `;
 
@@ -96,7 +96,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
       <HowItWorksVideoContainer>
         <HowItWorksImage
           src="/images/How_It_Works_Video.png"
-          alt="Link to How It Works Video"
+          alt="Erklärvideo auf Youtube abspielen"
         />
         <SecondaryAnchorButton
           text="Auf Youtube abspielen"

@@ -21,15 +21,12 @@
                     <p class="result-text">{{ render_info.step_intro }}</p>
                 </div>
             </div>
+            <div class="row p-0">
+                <div class="col-12 col-sm-6 mt-4 ml-2 text-center">
+                    {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
+                </div>
+            </div>
         </div>
-        <div>
-            {{ components.render_detail(render_info.detail) }}
-        </div>
-    </div>
-
-    <div class="spacing-b-09">
-        <h2>{{ _('form.eligibility.success-next-step') }}</h2>
-        <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
     </div>
 
     {% set dependent_notes =  render_info.additional_info['dependent_notes'] %}
@@ -44,7 +41,5 @@
         </div>
     {% endif %}
 
-    <div class="spacing-b-11 row m-0">
-        {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
-    </div>
+    
 {% endblock %}

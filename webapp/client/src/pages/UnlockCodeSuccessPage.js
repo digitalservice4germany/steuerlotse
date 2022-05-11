@@ -1,92 +1,74 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
-import AnchorButton from "../components/AnchorButton";
-import addPlausibleGoal from "../lib/helpers";
+import SuccessStepsInfoBox from "../components/successStepsInfoBox";
+import OneIcon from "../assets/icons/Icon-1.svg";
+import TwoIcon from "../assets/icons/Icon-2.svg";
+import ThreeIcon from "../assets/icons/Icon-3.svg";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
-  steuerErklaerungLink,
   vorbereitungsHilfeLink,
   plausibleDomain,
 }) {
   const { t } = useTranslation();
   const stepHeader = {
     title: t("register.success.next-steps.header.title"),
-    intro: t("register.success.next-steps.header.intro"),
   };
+
+  const Header = styled.h1`
+    font-size: var(--text-3xl);
+
+    @media (max-width: 768px) {
+      font-size: var(--text-2xl);
+    }
+  `;
+
+  const anchorInfo = {
+    text: t("register.success.next-steps.howItContinues.step-1.buttonText"),
+    url: vorbereitungsHilfeLink,
+  };
+
+  const image = {
+    src: "../../images/Img_Brief_500.jpg",
+    alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+    srcSet:
+      "../../images/Img_Brief_500.jpg 1155w ,  ../../images/Img_Brief_1024.jpg 2048w",
+  };
+
+  const plausibleGoal = "Vorbereitungshilfe";
   const plausiblePropsButton = {
     method: "CTA Vorbereitungshilfe herunterladen",
   };
-  const plausiblePropsAnchor = { method: "CTA Vorbereitungshilfe" };
-  const plausibleGoal = "Vorbereitungshilfe";
-  const handleClick = () => {
-    addPlausibleGoal(plausibleDomain, plausibleGoal, {
-      props: plausiblePropsAnchor,
-    });
-  };
-
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
       <FormSuccessHeader {...stepHeader} />
-      <h2 className="mt-5">{t("register.success.next-steps.heading")}</h2>
-      <ol>
-        <li>
-          <Trans
-            t={t}
-            i18nKey="register.success.next-steps.step-1"
-            components={{
-              bold: <b />,
-            }}
-          />
-        </li>
-        <li>
-          <Trans
-            t={t}
-            i18nKey="register.success.next-steps.step-2"
-            components={{
-              // The anchors get content in the translation file
-              vorbereitungsHilfeLink: (
-                // eslint-disable-next-line jsx-a11y/anchor-has-content
-                <a href={vorbereitungsHilfeLink} onClick={handleClick} />
-              ),
-            }}
-          />
-        </li>
-        <li>{t("register.success.next-steps.step-3")}</li>
-        <li>
-          <Trans
-            t={t}
-            i18nKey="register.success.next-steps.step-4"
-            components={{
-              // The anchors get content in the translation file
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              steuerErklaerungLink: <a href={steuerErklaerungLink} />,
-            }}
-          />
-        </li>
-      </ol>
-
-      <h2 className="mt-5">{t("register.success.letter.heading")}</h2>
-      <p>{t("register.success.letter.intro")}</p>
-      <img
-        className="w-50"
-        src="/images/elster_letter_example.png"
-        alt="elster_letter"
-      />
-
-      <h2 className="mt-5">{t("register.success.preparation.heading")}</h2>
-      <p>{t("register.success.preparation.intro")}</p>
-      <AnchorButton
-        url={vorbereitungsHilfeLink}
-        text={t("register.success.preparation.anchor")}
-        isDownloadLink
+      <Header className="mt-5">
+        {t("register.success.next-steps.howItContinues.heading")}
+      </Header>
+      <SuccessStepsInfoBox
+        header={t("register.success.next-steps.howItContinues.step-1.heading")}
+        text={t("register.success.next-steps.howItContinues.step-1.text")}
+        anchor={anchorInfo}
         plausibleDomain={plausibleDomain}
+        icon={OneIcon}
         plausibleGoal={plausibleGoal}
-        plausibleProps={plausiblePropsButton}
+        plausiblePropsButton={plausiblePropsButton}
+      />
+      <SuccessStepsInfoBox
+        header={t("register.success.next-steps.howItContinues.step-2.heading")}
+        text={t("register.success.next-steps.howItContinues.step-2.text")}
+        image={image}
+        icon={TwoIcon}
+      />
+      <SuccessStepsInfoBox
+        header={t("register.success.next-steps.howItContinues.step-3.heading")}
+        text={t("register.success.next-steps.howItContinues.step-3.text")}
+        icon={ThreeIcon}
       />
     </>
   );
@@ -94,7 +76,6 @@ export default function UnlockCodeSuccessPage({
 
 UnlockCodeSuccessPage.propTypes = {
   prevUrl: PropTypes.string.isRequired,
-  steuerErklaerungLink: PropTypes.string.isRequired,
   vorbereitungsHilfeLink: PropTypes.string.isRequired,
   plausibleDomain: PropTypes.string,
 };

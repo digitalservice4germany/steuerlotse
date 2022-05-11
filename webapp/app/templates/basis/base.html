@@ -49,6 +49,7 @@
 <div class="container-fluid p-0">
     {% include 'basis/mobile_nav.html' %}
     {% include 'basis/sidebar.html' %}
+    {% import "components.html" as components %}
     <main id="main" class="main">
         {% if js_needed is not defined or js_needed %}
             <noscript>
@@ -78,10 +79,14 @@
             {% endblock %}
             {% block main_content %}
                 <div class="main-content">
+                    {% if render_info and render_info.prev_url %}
                     <div class="header-navigation">
-                        {% block header_navigation %}
-                        {% endblock %}
+                        <div class="mt-3">
+                            {{ components.backLink(text=render_info.back_link_text if render_info.back_link_text else _('form.back'),
+                                                    url=render_info.prev_url) }}
+                        </div>
                     </div>
+                    {% endif %}
                     {% block content %}
                     {% endblock %}
                 </div>

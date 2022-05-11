@@ -289,23 +289,17 @@ class TestUnlockCodeRevocationHandleSpecificsForStep(unittest.TestCase):
                     self.fail('User was deleted unexpectedly.')
                 fun_unlock_code_revocation.assert_called_once()
 
-    def test_if_user_not_existing_then_flash_should_be_called_once(self):
+    def test_if_user_not_existing_then_next_url_is_failure_step(self):
         not_existing_idnr = '04452397687'
 
         with self.app.test_request_context(method='POST',
                                            data={'idnr': not_existing_idnr,
                                                  'dob': 'INCORRECT'}):
-            with (
-                patch("app.forms.steps.step.FormStep.create_form"),
-                patch("app.forms.flows.unlock_code_revocation_flow.flash") as mock_flash,
-            ):
-
-                render_info, stored_data = self.flow._handle_specifics_for_step(
+            with patch("app.forms.steps.step.FormStep.create_form"):
+                render_info, _ = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
 
-                self.assertEqual(self.flash_url, render_info.next_url)
-                mock_flash.assert_called_once_with(
-                _('form.unlock-code-revocation.failure-intro'), 'warn')   
+                self.assertEqual(self.failure_url, render_info.next_url)
 
     def test_if_user_exists_and_date_of_birth_incorrect_then_next_url_is_failure_step(self):
         existing_idnr = '04452397687'
