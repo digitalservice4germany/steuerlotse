@@ -43,8 +43,18 @@ export const Headline1 = styled.h1`
     font-size: var(--text-4xl);
   }
 
+  .header-navigation,
+  .header-navigation + & {
+    margin-top: var(--spacing-07);
+  }
+
   @media (max-width: 1024px) {
-    margin-top: var(--spacing-05);
+    margin-top: var(--spacing-09);
+
+    .header-navigation,
+    .header-navigation + & {
+      margin-top: var(--spacing-01);
+    }
   }
 `;
 

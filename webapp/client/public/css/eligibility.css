@@ -1,12 +1,20 @@
 .section-intro {
     margin-bottom: var(--spacing-08);
-    margin-top: var(--spacing-11)
+    margin-top: var(--spacing-11);
+}
+
+.header-navigation, .header-navigation + .section-intro {
+    margin-top: var(--spacing-07);
 }
 
 @media(max-width: 1024px) {
     .section-intro {
         margin-top: var( --spacing-09);
     }
+
+    .header-navigation, .header-navigation + .section-intro {
+        margin-top: var( --spacing-01);
+    }   
 }
 
 h1.my-4{
