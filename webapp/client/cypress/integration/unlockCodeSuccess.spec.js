@@ -9,11 +9,6 @@ describe("Unlock Code Success", () => {
     cy.url().should("include", "unlock_code_request/step/data_input");
   });
 
-  it("has download link", () => {
-    cy.get("a").contains("Vorbereitungshilfe").click();
-    cy.url().should("include", "download_preparation");
-  });
-
   it("has no forward link", () => {
     cy.get("a").contains("Weiter").should("not.exist");
   });
