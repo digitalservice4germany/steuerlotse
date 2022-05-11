@@ -19,11 +19,18 @@
                 <p class="result-text">{{ error_text }} {{ render_info.step_intro }}</p>
             </div>
         </div>
-    </div>
-
-    <div class="spacing-b-09">
-        <h2>{{ _('form.eligibility.success-next-step') }}</h2>
-        <p class="result-text">{{ _('form.eligibility.success-next-step-text') }}</p>
+        <div class="row ">
+            <div class="col-12 col-sm-6 mt-4 ml-2 text-center">
+                {{ components.primaryButtonWithTracking(
+                    text=_('form.eligibility.use-register-button'),
+                    url=url_for('unlock_code_request'),
+                    target=_('tracking.eligibility.success.goal'),
+                    source=_('tracking.eligibility.success.method'),
+                    plausible_domain_set=plausible_domain is not none
+                    )
+            }}
+            </div>
+        </div>
     </div>
 
     {% set dependent_notes =  render_info.additional_info['dependent_notes'] %}
@@ -37,15 +44,5 @@
             </ul>
         </div>
     {% endif %}
-
-    <div class="spacing-b-11 row m-0">
-        {{ components.primaryButtonWithTracking(
-                text=_('form.eligibility.use-register-button'),
-                url=url_for('unlock_code_request'),
-                target=_('tracking.eligibility.success.goal'),
-                source=_('tracking.eligibility.success.method'),
-                plausible_domain_set=plausible_domain is not none
-                )
-        }}
-    </div>
+    
 {% endblock %}
