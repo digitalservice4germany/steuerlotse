@@ -5,7 +5,6 @@ import UnlockCodeSuccessPage from "./UnlockCodeSuccessPage";
 
 const REQUIRED_PROPS = {
   prevUrl: "/some/prev/path",
-  steuerErklaerungLink: "/some/link/path",
   vorbereitungsHilfeLink: "/some/link/path",
 };
 
@@ -13,12 +12,11 @@ function setup(optionalProps) {
   const utils = render(
     <UnlockCodeSuccessPage {...REQUIRED_PROPS} {...optionalProps} />
   );
-  const downloadAnchor = screen.getByText("Vorbereitungshilfe");
-  const downloadButton = screen.getByText("Vorbereitungshilfe herunterladen");
+  const downloadButton = screen.getByText("Vorbereitungshilfe speichern");
   const zurueckButton = screen.getByText("Zurück");
   const user = userEvent.setup();
 
-  return { ...utils, downloadAnchor, downloadButton, zurueckButton, user };
+  return { ...utils, downloadButton, zurueckButton, user };
 }
 
 describe("UnlockCodeSuccessPage", () => {
@@ -26,13 +24,11 @@ describe("UnlockCodeSuccessPage", () => {
     setup();
 
     const EXPECTED_HEADER = {
-      title: "Ihre Registrierung war erfolgreich!",
-      intro:
-        "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie können mit Ihrer Steuererklärung beginnen, sobald Sie Ihren Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie Ihren Brief erhalten.",
+      title:
+        "Ihr Freischaltcode wurde bei Ihrem Finanzamt beantragt und wird Ihnen per Post zugeschickt.",
     };
 
     expect(screen.getByText(EXPECTED_HEADER.title)).toBeInTheDocument();
-    expect(screen.getByText(EXPECTED_HEADER.intro)).toBeInTheDocument();
   });
 
   it("should link to the previous page", () => {
@@ -44,15 +40,6 @@ describe("UnlockCodeSuccessPage", () => {
     );
   });
 
-  it("should link to download in text", () => {
-    const { downloadAnchor } = setup();
-
-    expect(downloadAnchor.closest("a")).toHaveAttribute(
-      "href",
-      expect.stringContaining(REQUIRED_PROPS.vorbereitungsHilfeLink)
-    );
-  });
-
   it("should link to download on anchor button", () => {
     const { downloadButton } = setup();
 
@@ -61,58 +48,39 @@ describe("UnlockCodeSuccessPage", () => {
       expect.stringContaining(REQUIRED_PROPS.vorbereitungsHilfeLink)
     );
   });
+});
 
-  it("should call plausible with name and props, when user clicks on download button", async () => {
-    const { downloadButton, user } = setup({
-      plausibleDomain: "http://localhost:3000",
-    });
+describe("should call plausible with name and props, when user clicks on download button", () => {
+  const user = userEvent.setup();
+  const MOCK_PROPS_DEFAULT = {
+    header: "Vorbereiten und Belege sammeln",
+    text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben.",
+    anchor: {
+      url: "/unlock_code_request/step/data_input?link_overview=False",
+      text: "Vorbereitungshilfe speichern",
+    },
+    image: {
+      src: "../../images/imageName.jpg",
+      srcSet: "../../images/imageName.jpg 1000w",
+      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+    },
+    plausibleDomain: "http://localhost:3000",
+  };
 
+  beforeEach(() => {
+    window.plausible = jest.fn();
+    render(<UnlockCodeSuccessPage {...MOCK_PROPS_DEFAULT} />);
+  });
+
+  it("should add plausible goal for download button", async () => {
+    await user.click(screen.getByText("Vorbereitungshilfe speichern"));
     const EXPECTED_PLAUSIBLE_GOAL = "Vorbereitungshilfe";
     const EXPECTED_PLAUSIBLE_PROPS = {
       props: { method: "CTA Vorbereitungshilfe herunterladen" },
     };
-
-    window.plausible = jest.fn();
-
-    await user.click(downloadButton);
-
     expect(window.plausible).toHaveBeenCalledWith(
       EXPECTED_PLAUSIBLE_GOAL,
       EXPECTED_PLAUSIBLE_PROPS
     );
-  });
-
-  it("should call plausible with name and props, when user clicks on download link", async () => {
-    const { downloadAnchor, user } = setup({
-      plausibleDomain: "http://localhost:3000",
-    });
-
-    const EXPECTED_PLAUSIBLE_GOAL = "Vorbereitungshilfe";
-    const EXPECTED_PLAUSIBLE_PROPS = {
-      props: { method: "CTA Vorbereitungshilfe" },
-    };
-
-    window.plausible = jest.fn();
-
-    await user.click(downloadAnchor);
-
-    expect(window.plausible).toHaveBeenCalledWith(
-      EXPECTED_PLAUSIBLE_GOAL,
-      EXPECTED_PLAUSIBLE_PROPS
-    );
-  });
-
-  it("should not call plausible if no plausible domain given", async () => {
-    const { downloadButton, downloadAnchor, user } = setup();
-
-    window.plausible = jest.fn();
-
-    await user.click(downloadButton);
-
-    expect(window.plausible).not.toHaveBeenCalled();
-
-    await user.click(downloadAnchor);
-
-    expect(window.plausible).not.toHaveBeenCalled();
   });
 });
