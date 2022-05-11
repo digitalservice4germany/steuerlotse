@@ -9,14 +9,8 @@ const Box = styled.div`
   margin-top: var(--spacing-03);
   border: 1px solid var(--beige-300);
 
-  @media (max-width: 425px) {
+  @media (max-width: 576px) {
     flex-direction: column;
-    padding: 0 32px 32px;
-  }
-
-  @media (max-width: 320px) {
-    padding-left: var(--spacing-03);
-    padding-right: var(--spacing-03);
   }
 `;
 
@@ -25,27 +19,20 @@ const InnerBox = styled.div`
     props.className ? "32px 64px 48px 30px" : "32px 152px 48px 48px"};
 
   @media (max-width: 768px) {
-    padding-right: 33px;
+    padding-right: 2.125rem;
+    padding-bottom: 2rem;
   }
 
-  @media (max-width: 425px) {
-    padding: 0;
-    padding-top: ${(props) => (props.className ? "0" : "var(--spacing-03)")};
-    flex-direction: ${(props) => (props.className ? "row" : "column")};
+  @media (max-width: 576px) {
+    flex-direction: column;
+    padding-top: ${(props) => (props.className ? "0.5rem" : "1.5rem")};
+    padding-left: 2rem;
   }
 `;
 
 const InnerBoxHeader = styled.h2`
   font-size: var(--text-2xl);
-  margin: 8px 0;
-
-  @media (max-width: 425px) {
-    margin-top: var(--spacing-03);
-  }
-
-  @media (max-width: 360px) {
-    font-size: var(--text-medium-big);
-  }
+  margin: 0.5rem 0;
 `;
 
 const InnerBoxText = styled.p`
@@ -56,14 +43,10 @@ const InnerBoxText = styled.p`
 const Icon = styled.img`
   height: 50px;
   width: 50px;
-  margin: 32px 0 0 48px;
+  margin: 2rem 0 0 3rem;
 
   @media (max-width: 768px) {
     margin-left: 33px;
-  }
-
-  @media (max-width: 425px) {
-    margin-left: 0;
   }
 `;
 
