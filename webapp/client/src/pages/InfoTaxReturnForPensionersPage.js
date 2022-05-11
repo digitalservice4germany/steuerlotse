@@ -18,6 +18,7 @@ import {
   ParagraphTextMedium,
   QuestionBoxAnchorButtons,
 } from "../components/ContentPageStyles";
+import SuccessStepsInfoBox from "../components/successStepsInfoBox";
 
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();
@@ -85,6 +86,15 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
         <ParagraphTextLarger>
           {trans("infoTaxReturnPensioners.section_two.paragraph")}
         </ParagraphTextLarger>
+        <SuccessStepsInfoBox
+          header={t("infoTaxReturnPensioners.ShareBox.header")}
+          text={t("infoTaxReturnPensioners.ShareBox.text")}
+          promoteUrl={t("infoTaxReturnPensioners.ShareBox.promoteUrl")}
+          shareText={t("infoTaxReturnPensioners.ShareBox.shareText")}
+          mailSubject={t("infoTaxReturnPensioners.ShareBox.mailSubject")}
+          sourcePage={t("infoTaxReturnPensioners.ShareBox.sourcePage")}
+          plausibleDomain={plausibleDomain}
+        />
         <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
           {t("infoTaxReturnPensioners.section_three.heading")}
         </ParagraphHeadingText>

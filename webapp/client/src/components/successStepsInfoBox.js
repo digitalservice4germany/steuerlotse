@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 import AnchorButton from "./AnchorButton";
+import ShareButtons from "./ShareButtons";
 
 const Box = styled.div`
   background-color: var(--white);
@@ -80,6 +81,10 @@ export default function successStepsInfoBox({
   plausibleDomain,
   plausibleGoal,
   plausiblePropsButton,
+  promoteUrl,
+  shareText,
+  mailSubject,
+  sourcePage,
 }) {
   return (
     <Box>
@@ -104,6 +109,17 @@ export default function successStepsInfoBox({
             </picture>
           </Figure>
         )}
+        {shareText && (
+          <ShareButtons
+            header={header}
+            text={text}
+            shareText={shareText}
+            mailSubject={mailSubject}
+            sourcePage={sourcePage}
+            plausibleDomain={plausibleDomain}
+            promoteUrl={promoteUrl}
+          />
+        )}
       </InnerBox>
     </Box>
   );
@@ -124,6 +140,10 @@ successStepsInfoBox.propTypes = {
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,
   plausiblePropsButton: PropTypes.shape({ method: PropTypes.string }),
+  promoteUrl: PropTypes.string,
+  shareText: PropTypes.string,
+  mailSubject: PropTypes.string,
+  sourcePage: PropTypes.string,
 };
 
 successStepsInfoBox.defaultProps = {
@@ -135,4 +155,8 @@ successStepsInfoBox.defaultProps = {
   image: null,
   anchor: null,
   icon: null,
+  promoteUrl: null,
+  shareText: null,
+  mailSubject: null,
+  sourcePage: null,
 };
