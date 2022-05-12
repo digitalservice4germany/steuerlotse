@@ -13,12 +13,12 @@ describe("StepAck", () => {
       cy.url().should("include", "/lotse/step/filing");
     });
 
-    it("success alert message is displayed", () => {
+    /*     it("success alert message is displayed", () => {
       cy.visit("/lotse/step/ack");
       cy.get("div[class*=alert-success]").contains(
         "Herzlichen Glückwunsch! Sie sind mit Ihrer Steuererklärung fertig!"
       );
-    });
+    }); */
 
     it("logout to login page", () => {
       cy.visit("/lotse/step/ack");
