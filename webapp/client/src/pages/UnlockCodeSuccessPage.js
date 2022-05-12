@@ -19,7 +19,7 @@ export default function UnlockCodeSuccessPage({
     title: t("register.success.next-steps.header.title"),
   };
 
-  const Header = styled.h1`
+  const Header = styled.h2`
     font-size: var(--text-3xl);
 
     @media (max-width: 768px) {
@@ -39,6 +39,19 @@ export default function UnlockCodeSuccessPage({
       "../../images/Img_Brief_500.jpg 1155w ,  ../../images/Img_Brief_1024.jpg 2048w",
   };
 
+  const IconOne = {
+    iconSrc: OneIcon,
+    altText: t("register.icons.iconOne.altText"),
+  };
+  const IconTwo = {
+    iconSrc: TwoIcon,
+    altText: t("register.icons.iconTwo.altText"),
+  };
+  const IconThree = {
+    iconSrc: ThreeIcon,
+    altText: t("register.icons.iconThree.altText"),
+  };
+
   const plausibleGoal = "Vorbereitungshilfe";
   const plausiblePropsButton = {
     method: "CTA Vorbereitungshilfe herunterladen",
@@ -55,7 +68,7 @@ export default function UnlockCodeSuccessPage({
         text={t("register.success.next-steps.howItContinues.step-1.text")}
         anchor={anchorInfo}
         plausibleDomain={plausibleDomain}
-        icon={OneIcon}
+        icon={IconOne}
         plausibleGoal={plausibleGoal}
         plausiblePropsButton={plausiblePropsButton}
       />
@@ -63,12 +76,13 @@ export default function UnlockCodeSuccessPage({
         header={t("register.success.next-steps.howItContinues.step-2.heading")}
         text={t("register.success.next-steps.howItContinues.step-2.text")}
         image={image}
-        icon={TwoIcon}
+        icon={IconTwo}
       />
       <SuccessStepsInfoBox
         header={t("register.success.next-steps.howItContinues.step-3.heading")}
         text={t("register.success.next-steps.howItContinues.step-3.text")}
-        icon={ThreeIcon}
+        icon={IconThree}
+        textOnly
       />
     </>
   );
