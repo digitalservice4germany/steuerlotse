@@ -7,7 +7,10 @@ import ShareButtons from "./ShareButtons";
 const Box = styled.div`
   background-color: var(--white);
   display: flex;
-  margin-top: var(--spacing-03);
+  margin-top: ${(props) =>
+    props.shareBoxSpacingVariant ? "var(--spacing-09)" : "var(--spacing-03)"};
+  margin-bottom: ${(props) =>
+    props.shareBoxSpacingVariant && "var(--spacing-09)"};
   border: 1px solid var(--beige-300);
 
   @media (max-width: 576px) {
@@ -18,6 +21,8 @@ const Box = styled.div`
 const InnerBox = styled.div`
   padding: ${(props) =>
     props.className ? "32px 64px 48px 30px" : "32px 152px 48px 48px"};
+
+  padding-right: ${(props) => props.shareBoxSpacingVariant && "131px"};
 
   @media (max-width: 768px) {
     padding-right: 2.125rem;
@@ -85,11 +90,15 @@ export default function successStepsInfoBox({
   shareText,
   mailSubject,
   sourcePage,
+  shareBoxSpacingVariant,
 }) {
   return (
-    <Box>
+    <Box shareBoxSpacingVariant={shareBoxSpacingVariant}>
       {icon && <Icon src={icon} />}
-      <InnerBox className={icon}>
+      <InnerBox
+        className={icon}
+        shareBoxSpacingVariant={shareBoxSpacingVariant}
+      >
         <InnerBoxHeader>{header}</InnerBoxHeader>
         <InnerBoxText>{text}</InnerBoxText>
         {anchor && (
@@ -144,6 +153,7 @@ successStepsInfoBox.propTypes = {
   shareText: PropTypes.string,
   mailSubject: PropTypes.string,
   sourcePage: PropTypes.string,
+  shareBoxSpacingVariant: PropTypes.bool,
 };
 
 successStepsInfoBox.defaultProps = {
@@ -159,4 +169,5 @@ successStepsInfoBox.defaultProps = {
   shareText: null,
   mailSubject: null,
   sourcePage: null,
+  shareBoxSpacingVariant: false,
 };

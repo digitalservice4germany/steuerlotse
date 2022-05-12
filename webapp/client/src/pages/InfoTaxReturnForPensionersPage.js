@@ -94,6 +94,7 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
           mailSubject={t("infoTaxReturnPensioners.ShareBox.mailSubject")}
           sourcePage={t("infoTaxReturnPensioners.ShareBox.sourcePage")}
           plausibleDomain={plausibleDomain}
+          shareBoxSpacingVariant
         />
         <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
           {t("infoTaxReturnPensioners.section_three.heading")}
