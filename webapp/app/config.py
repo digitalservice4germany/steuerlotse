@@ -40,8 +40,8 @@ class BaseConfig(object):
 
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL')
     SESSION_DATA_REDIS_TTL_HOURS = 3
-
-    OUTTAGE = False
+    
+    CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY')
 
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
@@ -102,6 +102,7 @@ class DevelopmentConfig(BaseConfig):
     REACT_BUNDLE_NAME = 'bundle.js'
 
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
+    CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
