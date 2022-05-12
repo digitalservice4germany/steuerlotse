@@ -13,6 +13,11 @@ const SuccessAlertArea = styled.div`
   &.alert-success {
     background-color: var(--success-color);
     color: var(--inverse-text-color);
+    padding: 30px 48px;
+
+    @media (max-width: 768px) {
+      padding: 32px;
+    }
   }
 
   @media (max-width: 1024px) {
