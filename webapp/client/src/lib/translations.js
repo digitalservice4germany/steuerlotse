@@ -384,6 +384,17 @@ const translations = {
           "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
       },
     },
+    icons: {
+      iconOne: {
+        altText: "Schritt 1",
+      },
+      iconTwo: {
+        altText: "Schritt 2",
+      },
+      iconThree: {
+        altText: "Schritt 3",
+      },
+    },
   },
   revocation: {
     failure: {

@@ -4,6 +4,11 @@ import styled from "styled-components";
 const SuccessAlertArea = styled.div`
   margin-top: var(--spacing-11);
 
+  .header-navigation,
+  .header-navigation + & {
+    margin-top: var(--spacing-07);
+  }
+
   &.alert {
     border-radius: 0;
     border: 0;
@@ -13,10 +18,19 @@ const SuccessAlertArea = styled.div`
   &.alert-success {
     background-color: var(--success-color);
     color: var(--inverse-text-color);
+    padding: 30px 48px;
+
+    @media (max-width: 768px) {
+      padding: 32px;
+    }
   }
 
   @media (max-width: 1024px) {
     margin-top: var(--spacing-05);
+    .header-navigation,
+    .header-navigation + & {
+      margin-top: var(--spacing-01);
+    }
   }
 `;
 
