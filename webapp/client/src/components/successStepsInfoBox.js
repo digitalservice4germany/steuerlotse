@@ -15,6 +15,11 @@ const Box = styled.div`
 
   @media (max-width: 576px) {
     flex-direction: column;
+    margin-top: ${(props) =>
+      props.shareBoxSpacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};
+    margin-bottom: ${(props) =>
+      props.shareBoxSpacingVariant && "var(--spacing-08)"};
+    border: 1px solid var(--beige-300);
   }
 `;
 
