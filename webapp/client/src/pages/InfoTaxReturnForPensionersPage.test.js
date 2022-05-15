@@ -2,19 +2,31 @@ import React from "react";
 import { render } from "@testing-library/react";
 import InfoTaxReturnForPensionersPage from "./InfoTaxReturnForPensionersPage";
 
-const MOCK_PROPS = {
-  plausibleDomain: "/plausibleDomain/path",
-  url: "/eligibility/step/marital_status?link_overview=False",
-  contactUsUrl: "mailto:kontakt@steuerlotse-rente.de",
-  howItWorksLink: "/sofunktionierts",
-};
+jest.mock("../components/ContentPageBox", () => ({
+  __esModule: true,
+  default: function ContentPageBox() {
+    return <div>Content Page Box</div>;
+  },
+}));
+
+jest.mock("../components/SuccessStepsInfoBox", () => ({
+  __esModule: true,
+  default: function SuccessStepsInfoBox() {
+    return <div>Steps Info Box</div>;
+  },
+}));
+
+function setup() {
+  const MOCK_PROPS = {
+    plausibleDomain: "/plausibleDomain/path",
+  };
+  const utils = render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
+
+  return { ...utils };
+}
 
 describe("InfoTaxReturnForPensionersPage", () => {
   it("should render the InfoTaxReturnForPensionersPage component", () => {
-    render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
-  });
-
-  beforeEach(() => {
-    render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
+    setup();
   });
 });
