@@ -137,6 +137,7 @@ export default function successStepsInfoBox({
             sourcePage={sourcePage}
             plausibleDomain={plausibleDomain}
             promoteUrl={promoteUrl}
+            variant
           />
         )}
       </InnerBox>

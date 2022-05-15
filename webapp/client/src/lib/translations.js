@@ -478,7 +478,7 @@ const translations = {
       promoteUrl:
         "https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
       shareText:
-        "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: [Link]",
+        "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
       mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
       sourcePage: "shareAcknowledged",
     },

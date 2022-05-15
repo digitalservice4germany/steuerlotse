@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
-import InfoBox from "../components/InfoBox";
+import ContentPageBox from "../components/ContentPageBox";
 import {
   ContentSpacingWrapper,
   IntroHeadingText,
@@ -43,8 +43,31 @@ const TopContent = styled.div`
 const ShareBox = styled.div`
   max-width: 738px;
 `;
+
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();
+  const buttons = {
+    eligibility: {
+      text: t("taxGuideQuestionBox.startQuestionnaire"),
+      url: "/eligibility/step/marital_status?link_overview=False",
+      plausibleGoal: "contentPage_startQuestionnaire_clicked",
+    },
+    faq: {
+      text: t("taxGuideQuestionBox.faq"),
+      url: "/sofunktionierts",
+      plausibleGoal: "contentPage_faq_clicked",
+    },
+    contact: {
+      text: t("taxGuideQuestionBox.contactUs"),
+      url: "mailto:kontakt@steuerlotse-rente.de",
+      plausibleGoal: "contentPage_contactUs_clicked",
+    },
+  };
+
+  const boxText = {
+    headerOne: t("taxGuideQuestionBox.canIUseTaxGuide"),
+    headerTwo: t("taxGuideQuestionBox.moreInformationTaxGuide"),
+  };
 
   function trans(key) {
     return (
@@ -81,6 +104,10 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
           activationLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
             <a href="/unlock_code_activation/step/data_input?link_overview=False" />
+          ),
+          shareLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/vereinfachte-steuererklärung-für-rentner" />
           ),
         }}
       />
@@ -175,45 +202,8 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
             {trans("infoTaxReturnPensioners.section_six.text")}
           </ParagraphTextLarger>
         </ContentText>
-        {/* <QuestionBoxBackground>
-          <QuestionBoxLayer>
-            <QuestionBox>
-              <div className="mb-5">
-                <ParagraphTextMedium className="h4 mb-4 font-weight-bold">
-                  {t("taxGuideQuestionBox.canIUseTaxGuide")}
-                </ParagraphTextMedium>
-                <AnchorButton
-                  url="/eligibility/step/marital_status?link_overview=False"
-                  text={t("taxGuideQuestionBox.startQuestionnaire")}
-                  plausibleGoal="contentPage_startQuestionnaire_clicked"
-                  plausibleDomain={plausibleDomain}
-                />
-              </div>
-              <div className="mt-5">
-                <ParagraphTextMedium className="mb-4">
-                  {trans("taxGuideQuestionBox.moreInformationTaxGuide")}
-                </ParagraphTextMedium>
-                <QuestionBoxAnchorButtons>
-                  <SecondaryAnchorButton
-                    url="/sofunktionierts"
-                    text={t("taxGuideQuestionBox.faq")}
-                    plausibleName="contentPage_faq_clicked"
-                    plausibleDomain={plausibleDomain}
-                  />
-                  <SecondaryAnchorButton
-                    url="mailto:kontakt@steuerlotse-rente.de"
-                    text={t("taxGuideQuestionBox.contactUs")}
-                    plausibleName="contentPage_contactUs_clicked"
-                    plausibleDomain={plausibleDomain}
-                    className="mt-4 mt-md-0"
-                  />
-                </QuestionBoxAnchorButtons>
-              </div>
-            </QuestionBox>
-          </QuestionBoxLayer>
-        </QuestionBoxBackground> */}
       </ContentSpacingWrapper>
-      <InfoBox image buttons boxText="testing" />
+      <ContentPageBox anchor={buttons} boxText={boxText} />
     </>
   );
 }
