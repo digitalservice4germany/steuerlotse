@@ -2,15 +2,24 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 import AnchorButton from "./AnchorButton";
+import ShareButtons from "./ShareButtons";
 
 const Box = styled.div`
   background-color: var(--white);
   display: flex;
-  margin-top: var(--spacing-03);
+  margin-top: ${(props) =>
+    props.shareBoxSpacingVariant ? "var(--spacing-09)" : "var(--spacing-03)"};
+  margin-bottom: ${(props) =>
+    props.shareBoxSpacingVariant && "var(--spacing-09)"};
   border: 1px solid var(--beige-300);
 
   @media (max-width: 576px) {
     flex-direction: column;
+    margin-top: ${(props) =>
+      props.shareBoxSpacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};
+    margin-bottom: ${(props) =>
+      props.shareBoxSpacingVariant && "var(--spacing-08)"};
+    border: 1px solid var(--beige-300);
   }
 `;
 
@@ -18,6 +27,8 @@ const InnerBox = styled.div`
   padding: ${(props) =>
     props.className ? "32px 64px 48px 30px" : "32px 152px 48px 48px"};
   padding-bottom: ${(props) => props.textOnly && "32px"};
+
+  padding-right: ${(props) => props.shareBoxSpacingVariant && "131px"};
 
   @media (max-width: 768px) {
     padding-right: 2.125rem;
@@ -78,7 +89,7 @@ const Figure = styled.figure`
   }
 `;
 
-export default function successStepsInfoBox({
+export default function SuccessStepsInfoBox({
   header,
   text,
   anchor,
@@ -87,10 +98,15 @@ export default function successStepsInfoBox({
   plausibleDomain,
   plausibleGoal,
   plausiblePropsButton,
+  promoteUrl,
+  shareText,
+  mailSubject,
+  sourcePage,
+  shareBoxSpacingVariant,
   textOnly,
 }) {
   return (
-    <Box>
+    <Box shareBoxSpacingVariant={shareBoxSpacingVariant}>
       {icon && <Icon src={icon.iconSrc} alt={icon.altText} />}
       <InnerBox className={icon} textOnly={textOnly}>
         <InnerBoxHeader>{header}</InnerBoxHeader>
@@ -112,12 +128,24 @@ export default function successStepsInfoBox({
             </picture>
           </Figure>
         )}
+        {shareText && (
+          <ShareButtons
+            header={header}
+            text={text}
+            shareText={shareText}
+            mailSubject={mailSubject}
+            sourcePage={sourcePage}
+            plausibleDomain={plausibleDomain}
+            promoteUrl={promoteUrl}
+            variant
+          />
+        )}
       </InnerBox>
     </Box>
   );
 }
 
-successStepsInfoBox.propTypes = {
+SuccessStepsInfoBox.propTypes = {
   header: PropTypes.string,
   text: PropTypes.string,
   image: {
@@ -132,9 +160,15 @@ successStepsInfoBox.propTypes = {
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,
   plausiblePropsButton: PropTypes.shape({ method: PropTypes.string }),
+  promoteUrl: PropTypes.string,
+  shareText: PropTypes.string,
+  mailSubject: PropTypes.string,
+  sourcePage: PropTypes.string,
+  shareBoxSpacingVariant: PropTypes.bool,
+  textOnly: PropTypes.bool,
 };
 
-successStepsInfoBox.defaultProps = {
+SuccessStepsInfoBox.defaultProps = {
   plausibleDomain: null,
   plausibleGoal: null,
   plausiblePropsButton: null,
@@ -143,4 +177,10 @@ successStepsInfoBox.defaultProps = {
   image: null,
   anchor: null,
   icon: null,
+  promoteUrl: null,
+  shareText: null,
+  mailSubject: null,
+  sourcePage: null,
+  shareBoxSpacingVariant: false,
+  textOnly: false,
 };

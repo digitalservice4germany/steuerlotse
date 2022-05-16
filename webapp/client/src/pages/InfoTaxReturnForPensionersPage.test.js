@@ -2,44 +2,61 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import InfoTaxReturnForPensionersPage from "./InfoTaxReturnForPensionersPage";
 
-const MOCK_PROPS = {
-  plausibleDomain: "/plausibleDomain/path",
-  url: "/eligibility/step/is_correct_tax_year?link_overview=False",
-  contactUsUrl: "mailto:kontakt@steuerlotse-rente.de",
-  howItWorksLink: "/sofunktionierts",
-};
+jest.mock("../components/ContentPageBox", () => ({
+  __esModule: true,
+  default: function ContentPageBox() {
+    return <div>Content Page Box</div>;
+  },
+}));
+
+jest.mock("../components/SuccessStepsInfoBox", () => ({
+  __esModule: true,
+  default: function SuccessStepsInfoBox() {
+    return <div>Steps Info Box</div>;
+  },
+}));
+
+function setup() {
+  const MOCK_PROPS = {
+    plausibleDomain: "/plausibleDomain/path",
+  };
+  const utils = render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
+
+  return { ...utils };
+}
 
 describe("InfoTaxReturnForPensionersPage", () => {
-  it("should render the InfoTaxReturnForPensionersPage component", () => {
-    render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
-  });
+  it("should render the InfoTaxReturnForPensionersPage page", () => {
+    setup();
 
-  beforeEach(() => {
-    render(<InfoTaxReturnForPensionersPage {...MOCK_PROPS} />);
-  });
-
-  it("should render Start Questionnaire button with Link", () => {
-    expect(screen.getByText("Fragebogen starten")).toBeInTheDocument();
-    expect(screen.getByText("Fragebogen starten").closest("a")).toHaveAttribute(
-      "href",
-      expect.stringContaining(MOCK_PROPS.url)
+    const headline1 = screen.getByText(
+      "Vereinfachte Steuererklärung für Rentner — wie Sie in wenigen Minuten Ihre Steuererklärung kostenlos online machen können"
     );
-  });
-
-  it("should render Contact Us button with Link", () => {
-    expect(screen.getByText("Kontaktieren Sie uns")).toBeInTheDocument();
-    expect(
-      screen.getByText("Kontaktieren Sie uns").closest("a")
-    ).toHaveAttribute("href", expect.stringContaining(MOCK_PROPS.contactUsUrl));
-  });
-
-  it("should render more information tax guide button", () => {
-    expect(screen.getByText("Häufig gestellte Fragen")).toBeInTheDocument();
-    expect(
-      screen.getByText("Häufig gestellte Fragen").closest("a")
-    ).toHaveAttribute(
-      "href",
-      expect.stringContaining(MOCK_PROPS.howItWorksLink)
+    const headline2 = screen.getByText(
+      "Die vereinfachte Steuererklärung wurde speziell für Menschen im Ruhestand entwickelt"
     );
+    const headline3 = screen.getByText(
+      "Wie finde ich heraus, ob ich als Rentner steuerpflichtig bin?"
+    );
+    const headline4 = screen.getByText(
+      "So funktioniert der Steuerlotse für Rente und Pension"
+    );
+
+    expect(headline1).toBeInTheDocument();
+    expect(headline2).toBeInTheDocument();
+    expect(headline3).toBeInTheDocument();
+    expect(headline4).toBeInTheDocument();
+  });
+
+  it("should render the ContentPageBox component", () => {
+    setup();
+
+    expect(screen.getByText("Content Page Box")).toBeInTheDocument();
+  });
+
+  it("should render the SuccessStepsInfoBox component", () => {
+    setup();
+
+    expect(screen.getByText("Steps Info Box")).toBeInTheDocument();
   });
 });

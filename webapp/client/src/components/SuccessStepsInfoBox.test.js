@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import SuccessStepsInfoBox from "./successStepsInfoBox";
+import SuccessStepsInfoBox from "./SuccessStepsInfoBox";
 
 describe("SuccessStepsInfoBox", () => {
   const MOCK_PROPS_DEFAULT = {
