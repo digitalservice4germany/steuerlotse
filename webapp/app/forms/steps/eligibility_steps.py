@@ -200,6 +200,7 @@ class TaxYearEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSte
         
     def _main_handle(self):
         super()._main_handle()
+        self.render_info.show_intro = True
         self.render_info.back_link_text = _('form.eligibility.tax_year.back_link_text')
         self.render_info.prev_url = None
 
