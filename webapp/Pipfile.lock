@@ -389,11 +389,11 @@
         },
         "limits": {
             "hashes": [
-                "sha256:6238ca7aa9f87b8bc5a14a6f000e6e613e61f173491b6636bcc144e540de5656",
-                "sha256:c5663e88eb6b9a22a6986d2763e759929831fd1f260e44a647d8bad81b7ef257"
+                "sha256:bbdad324c8c950bb3bee531b298b54e28f15fad53526c7ad444dc903fd5e1ad1",
+                "sha256:d2a3d8ee73f4aeb4837f4b7a8e1c58164c402f95a01c20b50852db947709e2ad"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==2.6.1"
+            "version": "==2.6.2"
         },
         "mako": {
             "hashes": [
@@ -758,6 +758,14 @@
             "index": "pypi",
             "version": "==2022.4.2"
         },
+        "setuptools": {
+            "hashes": [
+                "sha256:5534570b9980fc650d45c62877ff603c7aaaf24893371708736cc016bd221c3c",
+                "sha256:ca6ba73b7fd5f734ae70ece8c4c1f7062b07f3352f6428f6277e27c8f5c64237"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==62.2.0"
+        },
         "sqlalchemy": {
             "hashes": [
                 "sha256:09c606d8238feae2f360b8742ffbe67741937eb0a05b57f536948d198a3def96",
@@ -946,11 +954,11 @@
         },
         "fakeredis": {
             "hashes": [
-                "sha256:69697ffeeb09939073605eeac97f524bccabae04265757a575c7fc923087aa65",
-                "sha256:cc033ebf9af9f42bba6aa538a3e1a9f1732686b8b7e9ef50c7a44955bbc2aff8"
+                "sha256:49375c630981dd4045d9a92e2709fcd4476c91f927e0228493eefa625e705133",
+                "sha256:c4ca2be686e7e7637756ccc7dcad8472a5e4866b065431107d7a4b7a250d4e6f"
             ],
             "index": "pypi",
-            "version": "==1.7.4"
+            "version": "==1.7.5"
         },
         "flake8": {
             "hashes": [
