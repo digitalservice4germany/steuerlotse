@@ -11,7 +11,7 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     EligibilitySuccessDisplaySteuerlotseStep, EmploymentDecisionEligibilityInputFormSteuerlotseStep, \
     MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep, \
     MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, \
-    SeparatedEligibilityInputFormSteuerlotseStep, MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
+    SeparatedEligibilityInputFormSteuerlotseStep, MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, TaxYearEligibilityFailureDisplaySteuerlotseStep, TaxYearEligibilityInputFormSteuerlotseStep, \
     UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep, \
     UserAElsterAccountEligibilityInputFormSteuerlotseStep, \
     MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, \
@@ -47,6 +47,7 @@ class EligibilityStepChooser(StepChooser):
             title=_('form.eligibility.title'),
             steps=[
                 EligibilityStartDisplaySteuerlotseStep,
+                TaxYearEligibilityInputFormSteuerlotseStep,
                 MaritalStatusInputFormSteuerlotseStep,
                 SeparatedEligibilityInputFormSteuerlotseStep,
                 SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep,
@@ -69,6 +70,7 @@ class EligibilityStepChooser(StepChooser):
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
                 EligibilitySuccessDisplaySteuerlotseStep,
                 EligibilityMaybeDisplaySteuerlotseStep,
+                TaxYearEligibilityFailureDisplaySteuerlotseStep,
                 MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
                 DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,

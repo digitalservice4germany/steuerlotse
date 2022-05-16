@@ -5,6 +5,6 @@ describe("Landing page", () => {
     cy.get("a").contains("Jetzt prüfen").click();
 
     // Should redirect to first step of eligibility steps
-    cy.url().should("include", "/eligibility/step/marital_status");
+    cy.url().should("include", "/eligibility/step/is_correct_tax_year");
   });
 });
