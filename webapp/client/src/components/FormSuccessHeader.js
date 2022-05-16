@@ -6,7 +6,7 @@ const SuccessAlertArea = styled.div`
 
   .header-navigation,
   .header-navigation + & {
-    margin-top: var(--spacing-07);
+    margin-top: calc(var(--spacing-07) - 30px);
   }
 
   &.alert {
