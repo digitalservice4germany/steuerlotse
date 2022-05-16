@@ -226,10 +226,6 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
                      ],
             validators=[InputRequired(_l('validate.input-required'))])
 
-    def _main_handle(self):
-        super()._main_handle()
-        self.render_info.prev_url = TaxYearEligibilityInputFormSteuerlotseStep.name
-
 
 class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "separated"
