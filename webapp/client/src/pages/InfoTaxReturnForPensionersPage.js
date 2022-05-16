@@ -14,7 +14,7 @@ import {
   ListBoxText,
 } from "../components/ContentPageStyles";
 
-import SuccessStepsInfoBox from "../components/successStepsInfoBox";
+import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
 
 const Picture = styled.picture`
   img {

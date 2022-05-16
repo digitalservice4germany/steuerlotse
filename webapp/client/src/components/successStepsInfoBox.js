@@ -89,7 +89,7 @@ const Figure = styled.figure`
   }
 `;
 
-export default function successStepsInfoBox({
+export default function SuccessStepsInfoBox({
   header,
   text,
   anchor,
@@ -145,7 +145,7 @@ export default function successStepsInfoBox({
   );
 }
 
-successStepsInfoBox.propTypes = {
+SuccessStepsInfoBox.propTypes = {
   header: PropTypes.string,
   text: PropTypes.string,
   image: {
@@ -165,9 +165,10 @@ successStepsInfoBox.propTypes = {
   mailSubject: PropTypes.string,
   sourcePage: PropTypes.string,
   shareBoxSpacingVariant: PropTypes.bool,
+  textOnly: PropTypes.bool,
 };
 
-successStepsInfoBox.defaultProps = {
+SuccessStepsInfoBox.defaultProps = {
   plausibleDomain: null,
   plausibleGoal: null,
   plausiblePropsButton: null,
@@ -181,4 +182,5 @@ successStepsInfoBox.defaultProps = {
   mailSubject: null,
   sourcePage: null,
   shareBoxSpacingVariant: false,
+  textOnly: false,
 };
