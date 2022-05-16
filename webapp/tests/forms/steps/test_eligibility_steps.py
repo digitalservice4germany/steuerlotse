@@ -11,7 +11,7 @@ from werkzeug.exceptions import NotFound
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
 from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep, \
     MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
-    MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, IncorrectEligibilityData, \
+    MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, IncorrectEligibilityData, TaxYearEligibilityInputFormSteuerlotseStep, \
     UserAElsterAccountEligibilityInputFormSteuerlotseStep, MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep, \
     UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep, PensionDecisionEligibilityInputFormSteuerlotseStep, \
     DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
@@ -356,7 +356,7 @@ class TestMaritalStatusInputFormSteuerlotseStep:
     @pytest.mark.usefixtures('test_request_context')
     def test_set_prev_input_step_to_none(self, new_test_request_context):
         with new_test_request_context(method='GET'):
-            step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
+            step = EligibilityStepChooser('eligibility').get_correct_step(TaxYearEligibilityInputFormSteuerlotseStep.name,
                                                                           False, ImmutableMultiDict({}))
             step.handle()
         assert step.render_info.prev_url is None
