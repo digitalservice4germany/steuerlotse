@@ -5,13 +5,6 @@
 
 
 {% block step_content %}
-    {% if render_info.show_intro %}
-        <div class="pre-intro-div">
-            <span class="pre-intro-header">{{ _('eligibility.intro.header.title') }}</span>
-            <br>
-            <span class="pre-intro-header-text">{{ _('eligibility.intro.header.text') }}</span>
-        </div>
-    {% endif %}
     {% block step_intro %}
         {{ macros.form_header(render_info) }}
     {% endblock %}
