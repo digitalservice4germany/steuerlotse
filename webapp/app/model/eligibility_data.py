@@ -63,7 +63,7 @@ class DivorcedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
         return v
 
 
-class IsCorrectTaxYearEligibility(BaseModel, PotentialDataModelKeysMixin):
+class IsCorrectTaxYearEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     is_correct_tax_year: str
 
     @validator('is_correct_tax_year')

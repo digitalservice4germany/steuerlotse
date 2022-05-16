@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.data_access.storage.cookie_storage import CookieStorage
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
-from app.model.eligibility_data import IsCorrectTaxYearEligibility, OtherIncomeEligibilityData, \
+from app.model.eligibility_data import IsCorrectTaxYearEligibilityData, OtherIncomeEligibilityData, \
     ForeignCountrySuccessEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
     NoTaxedInvestmentIncome, MinimalInvestmentIncome, InvestmentIncomeEligibilityData, \
     PensionEligibilityData, SingleUserNoElsterAccountEligibilityData, AlimonyEligibilityData, \
@@ -182,7 +182,7 @@ class TaxYearEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplayS
 class TaxYearEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "is_correct_tax_year"
     next_step_data_models = [
-        (IsCorrectTaxYearEligibility, 'marital_status')
+        (IsCorrectTaxYearEligibilityData, 'marital_status')
     ]
     failure_step_name = TaxYearEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.tax_year.title')
