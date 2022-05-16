@@ -7,7 +7,6 @@ import ButtonAnchor from "./ButtonAnchor";
 
 const ButtonGroup = styled.div`
   display: flex;
-  flex-direction: column;
   flex-direction: ${(props) => (props.variant ? "row" : "column")};
   align-items: flex-start;
   flex-wrap: ${(props) => props.variant && "wrap"};
