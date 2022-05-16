@@ -97,7 +97,10 @@ export default function ContentPageBox({ boxText, anchor, plausibleDomain }) {
 }
 
 ContentPageBox.propTypes = {
-  boxText: PropTypes.string,
+  boxText: {
+    headerOne: PropTypes.string,
+    headerTwo: PropTypes.string,
+  },
   plausibleDomain: PropTypes.string,
   anchor: {
     url: PropTypes.string,
@@ -107,7 +110,10 @@ ContentPageBox.propTypes = {
 };
 
 ContentPageBox.defaultProps = {
-  boxText: null,
+  boxText: {
+    headerOne: null,
+    headerTwo: null,
+  },
   plausibleDomain: null,
   anchor: {
     url: null,
