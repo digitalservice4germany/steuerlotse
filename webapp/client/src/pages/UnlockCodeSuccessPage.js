@@ -65,7 +65,7 @@ export default function UnlockCodeSuccessPage({
         components={{
           vorbereitenLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a href="/vorbereiten" />
+            <a href="/vorbereiten" rel="noreferrer" target="_blank" />
           ),
         }}
       />
