@@ -1,5 +1,5 @@
 import React from "react";
-import SuccessStepsInfoBox from "../components/successStepsInfoBox";
+import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
 
 export default {
   title: "Components/StepsInfoBox",
