@@ -7,22 +7,9 @@
     margin-top: var(--spacing-07);
 }
 
-.pre-intro-div {    
-    margin-top: var(--spacing-11);
-    margin-bottom: 45px;
-}
-
-.pre-intro-div + .section-intro {
-    margin-top: 0;
-}
-
 @media(max-width: 1024px) {
     .section-intro {
         margin-top: var( --spacing-09);
-    }
-
-    .pre-intro-div {    
-        margin-top: var(--spacing-09);
     }
 
     .header-navigation, .header-navigation + .section-intro {
@@ -35,16 +22,6 @@ h1.my-4{
     margin-top: 0 !important;
 }
 
-.pre-intro-header{
-    font-family: var(--font-bold);
-    font-size: var(--text-medium-big);
-    color: var(--secondary-text-color);
-}
-
-.pre-intro-header-text{
-    margin-top: 11px;
-    color: var(--secondary-text-color);
-}
 
 @media (min-width: 320px) {
     h1 {
