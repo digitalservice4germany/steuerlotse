@@ -103,9 +103,21 @@ ContentPageBox.propTypes = {
   },
   plausibleDomain: PropTypes.string,
   anchor: {
-    url: PropTypes.string,
-    text: PropTypes.string,
-    plausibleGoal: PropTypes.string,
+    eligibility: {
+      url: PropTypes.string,
+      text: PropTypes.string,
+      plausibleGoal: PropTypes.string,
+    },
+    faq: {
+      url: PropTypes.string,
+      text: PropTypes.string,
+      plausibleGoal: PropTypes.string,
+    },
+    contact: {
+      url: PropTypes.string,
+      text: PropTypes.string,
+      plausibleGoal: PropTypes.string,
+    },
   },
 };
 
@@ -116,8 +128,20 @@ ContentPageBox.defaultProps = {
   },
   plausibleDomain: null,
   anchor: {
-    url: null,
-    text: null,
-    plausibleGoal: null,
+    eligibility: {
+      url: null,
+      text: null,
+      plausibleGoal: null,
+    },
+    faq: {
+      url: null,
+      text: null,
+      plausibleGoal: null,
+    },
+    contact: {
+      url: null,
+      text: null,
+      plausibleGoal: null,
+    },
   },
 };
