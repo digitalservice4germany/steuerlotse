@@ -48,7 +48,7 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
           ),
           eligibilityLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a href="/eligibility/step/marital_status?link_overview=False" />
+            <a href="/eligibility/step/is_correct_tax_year?link_overview=False" />
           ),
           registrationLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content

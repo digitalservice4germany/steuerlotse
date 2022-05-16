@@ -4,7 +4,7 @@ import InfoTaxReturnForPensionersPage from "./InfoTaxReturnForPensionersPage";
 
 const MOCK_PROPS = {
   plausibleDomain: "/plausibleDomain/path",
-  url: "/eligibility/step/marital_status?link_overview=False",
+  url: "/eligibility/step/is_correct_tax_year?link_overview=False",
   contactUsUrl: "mailto:kontakt@steuerlotse-rente.de",
   howItWorksLink: "/sofunktionierts",
 };

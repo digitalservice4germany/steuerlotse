@@ -63,6 +63,14 @@ class DivorcedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
         return v
 
 
+class IsCorrectTaxYearEligibility(BaseModel, PotentialDataModelKeysMixin):
+    is_correct_tax_year: str
+
+    @validator('is_correct_tax_year')
+    def must_be_single(cls, v):
+       return declarations_must_be_set_yes(v)
+
+
 class SeparatedEligibilityData(RecursiveDataModel):
     is_married: Optional[MarriedEligibilityData]
     separated_since_last_year_eligibility: str
