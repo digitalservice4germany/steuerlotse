@@ -326,9 +326,8 @@ const translations = {
       heading: "Empfehlen Sie uns weiter!",
       text: "Wir möchten noch mehr Menschen bei Ihrer Steuererklärung helfen! Sie können uns dabei helfen, indem Sie den Steuerlotsen bekannter machen. Empfehlen Sie uns Ihren Bekannten und Freunden!",
       share_text:
-        "Tipp: Mit dem Steuerlotsen für Rente und Pension kannst du deine Steuererklärung einfach und unkompliziert machen. Ich habe es selbst ausprobiert! Hier der Link: https://www.steuerlotse-rente.de/",
-      mail_subject:
-        "Hallo, schau dir das mal an: Steuerlotse für Rente und Pension",
+        "Mit dem Steuerlotse für Rente und Pension können Menschen im Ruhestand Ihre Steuererklärung einfach und unkompliziert machen. Die Online-Dienstleistung wurde vom Bundesfinanzministerium in Auftrag gegeben und ist kostenlos. Mehr Informationen: https://www.steuerlotse-rente.de/",
+      mail_subject: "Vereinfachte Steuererklärung für Rentner und Pensionäre",
       promote_url: "https://www.steuerlotse-rente.de/",
     },
     logout: {
