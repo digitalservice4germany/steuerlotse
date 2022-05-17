@@ -308,13 +308,6 @@ def register_request_handlers(app):
                                header_title=_('agb.header-title'),
                                js_needed=False)
 
-
-    @app.route('/interviews')
-    @add_caching_headers
-    def interviews():
-        return render_template('content/interviews.html',
-                               js_needed=False)
-
     @app.route('/ueber')
     @add_caching_headers
     def about_steuerlotse():
@@ -546,7 +539,6 @@ def register_testing_request_handlers(app):
     def download_sitemap():
         return "\n".join([
             Config.DOMAIN + url_for("index"),
-            Config.DOMAIN + url_for("interviews"),
             Config.DOMAIN + url_for("about_steuerlotse"),
             Config.DOMAIN + url_for("about_digitalservice"),
             Config.DOMAIN + url_for("download_informationsbroschure_pdf"),
