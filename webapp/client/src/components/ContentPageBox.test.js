@@ -10,15 +10,15 @@ function setup() {
     },
 
     anchor: {
-      eligibility: {
+      buttonOne: {
         url: "/eligibility/step/marital_status?link_overview=False",
         text: "Fragebogen starten",
       },
-      faq: {
+      buttonTwo: {
         url: "/sofunktionierts",
         text: "Häufig gestellte Fragen",
       },
-      contact: {
+      buttonThree: {
         url: "mailto:kontakt@steuerlotse-rente.de",
         text: "Kontaktieren Sie uns",
       },
