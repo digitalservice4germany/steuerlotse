@@ -7,7 +7,7 @@ from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser
 from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotseStep, \
     MaritalStatusInputFormSteuerlotseStep, SeparatedEligibilityInputFormSteuerlotseStep, \
     MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
-    MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, UserAElsterAccountEligibilityInputFormSteuerlotseStep, \
+    MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep, TaxYearEligibilityFailureDisplaySteuerlotseStep, TaxYearEligibilityInputFormSteuerlotseStep, UserAElsterAccountEligibilityInputFormSteuerlotseStep, \
     UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep, \
     DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep, \
     SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep, \
@@ -43,6 +43,7 @@ class TestEligibilityChooserInit(unittest.TestCase):
     def setUp(self):
         self.testing_steps = [
             EligibilityStartDisplaySteuerlotseStep,
+            TaxYearEligibilityInputFormSteuerlotseStep,
             MaritalStatusInputFormSteuerlotseStep,
             SeparatedEligibilityInputFormSteuerlotseStep,
             SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep,
@@ -65,6 +66,7 @@ class TestEligibilityChooserInit(unittest.TestCase):
             ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
             EligibilitySuccessDisplaySteuerlotseStep,
             EligibilityMaybeDisplaySteuerlotseStep,
+            TaxYearEligibilityFailureDisplaySteuerlotseStep,
             MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
             MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
             DivorcedJointTaxesEligibilityFailureDisplaySteuerlotseStep,

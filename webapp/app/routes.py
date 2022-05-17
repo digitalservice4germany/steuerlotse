@@ -354,7 +354,7 @@ def register_request_handlers(app):
     @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
     @add_caching_headers
     def infotax():
-        return render_react_template(
+        return render_react_content_page_template(
             props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='InfoTaxReturnForPensionersPage')
 

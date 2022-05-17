@@ -352,7 +352,7 @@ const translations = {
           heading: "So geht es weiter",
           "step-1": {
             heading: "Vorbereiten und Belege sammeln",
-            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe.",
+            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe oder unter dem Menüpunkt <vorbereitenLink>Vorbereiten</vorbereitenLink>.",
             buttonText: "Vorbereitungshilfe speichern ",
           },
           "step-2": {
@@ -471,6 +471,16 @@ const translations = {
     },
     section_six: {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
+    },
+    ShareBox: {
+      header: "Artikel teilen",
+      text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+      promoteUrl:
+        "https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
+      shareText:
+        "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
+      mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
+      sourcePage: "shareAcknowledged",
     },
   },
   AmbassadorMaterial: {

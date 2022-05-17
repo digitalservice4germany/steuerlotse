@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
-import SuccessStepsInfoBox from "../components/successStepsInfoBox";
+import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
 import OneIcon from "../assets/icons/Icon-1.svg";
 import TwoIcon from "../assets/icons/Icon-2.svg";
 import ThreeIcon from "../assets/icons/Icon-3.svg";
@@ -56,6 +56,22 @@ export default function UnlockCodeSuccessPage({
   const plausiblePropsButton = {
     method: "CTA Vorbereitungshilfe herunterladen",
   };
+
+  function trans(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          vorbereitenLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/vorbereiten" rel="noreferrer" target="_blank" />
+          ),
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
@@ -65,7 +81,7 @@ export default function UnlockCodeSuccessPage({
       </Header>
       <SuccessStepsInfoBox
         header={t("register.success.next-steps.howItContinues.step-1.heading")}
-        text={t("register.success.next-steps.howItContinues.step-1.text")}
+        text={trans("register.success.next-steps.howItContinues.step-1.text")}
         anchor={anchorInfo}
         plausibleDomain={plausibleDomain}
         icon={IconOne}

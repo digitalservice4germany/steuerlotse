@@ -7,9 +7,9 @@ import ButtonAnchor from "./ButtonAnchor";
 
 const ButtonGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${(props) => (props.variant ? "row" : "column")};
   align-items: flex-start;
-
+  flex-wrap: ${(props) => props.variant && "wrap"};
   a,
   button {
     margin-right: 8px;
@@ -18,6 +18,10 @@ const ButtonGroup = styled.div`
 
   @media (min-width: 1024px) {
     flex-direction: row;
+  }
+
+  @media (max-width: 576px) {
+    flex-direction: ${(props) => props.variant && "column"};
   }
 `;
 const FacebookButton = styled(ButtonAnchor)`
@@ -63,6 +67,7 @@ export default function ShareButtons({
   mailSubject,
   sourcePage,
   plausibleDomain,
+  variant,
 }) {
   const facebookFeedUrl = `https://www.facebook.com/sharer/sharer.php?u=${promoteUrl}&quote=${shareText}`;
   const mailto = `mailto:?subject= ${encodeURIComponent(
@@ -78,7 +83,7 @@ export default function ShareButtons({
   const { Text } = ButtonAnchor;
 
   return (
-    <ButtonGroup>
+    <ButtonGroup variant={variant}>
       <FacebookButton
         buttonStyle="narrow"
         url={facebookFeedUrl}
@@ -132,8 +137,10 @@ ShareButtons.propTypes = {
   mailSubject: PropTypes.string.isRequired,
   sourcePage: PropTypes.string.isRequired,
   plausibleDomain: PropTypes.string,
+  variant: PropTypes.bool,
 };
 
 ShareButtons.defaultProps = {
   plausibleDomain: null,
+  variant: null,
 };
