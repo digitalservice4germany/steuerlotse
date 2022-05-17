@@ -8,9 +8,11 @@ const Box = styled.div`
   background-color: var(--white);
   display: flex;
   margin-top: ${(props) =>
-    props.shareBoxSpacingVariant ? "var(--spacing-09)" : "var(--spacing-03)"};
+    props.shareBoxSpacingVariant
+      ? "calc(var(--spacing-09) + 4px)"
+      : "var(--spacing-03)"};
   margin-bottom: ${(props) =>
-    props.shareBoxSpacingVariant && "var(--spacing-09)"};
+    props.shareBoxSpacingVariant && "calc(var(--spacing-09) + 4px)"};
   border: 1px solid var(--beige-300);
 
   @media (max-width: 576px) {
@@ -28,6 +30,7 @@ const InnerBox = styled.div`
     props.className ? "32px 64px 48px 30px" : "32px 152px 48px 48px"};
   padding-bottom: ${(props) => props.textOnly && "32px"};
 
+  padding-bottom: ${(props) => props.shareBoxSpacingVariant && "40px"};
   padding-right: ${(props) => props.shareBoxSpacingVariant && "131px"};
 
   @media (max-width: 768px) {
@@ -108,7 +111,11 @@ export default function SuccessStepsInfoBox({
   return (
     <Box shareBoxSpacingVariant={shareBoxSpacingVariant}>
       {icon && <Icon src={icon.iconSrc} alt={icon.altText} />}
-      <InnerBox className={icon} textOnly={textOnly}>
+      <InnerBox
+        className={icon}
+        textOnly={textOnly}
+        shareBoxSpacingVariant={shareBoxSpacingVariant}
+      >
         <InnerBoxHeader>{header}</InnerBoxHeader>
         <InnerBoxText>{text}</InnerBoxText>
         {anchor && (
