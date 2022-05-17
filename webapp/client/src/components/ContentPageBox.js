@@ -68,24 +68,24 @@ export default function ContentPageBox({ boxText, anchor, plausibleDomain }) {
         <TextBox>
           <BoxText>{boxText.headerOne}</BoxText>
           <ButtonAnchor
-            url={anchor.eligibility.url}
-            plausibleGoal={anchor.eligibility.plausibleGoal}
+            url={anchor.buttonOne.url}
+            plausibleGoal={anchor.buttonOne.plausibleGoal}
             plausibleDomain={plausibleDomain}
           >
-            {anchor.eligibility.text}
+            {anchor.buttonOne.text}
           </ButtonAnchor>
           <BoxText className="mt-5">{boxText.headerTwo}</BoxText>
           <ButtonBox>
             <SecondaryAnchorButton
-              url={anchor.faq.url}
-              plausibleGoal={anchor.faq.plausibleGoal}
-              text={anchor.faq.text}
+              url={anchor.buttonTwo.url}
+              plausibleGoal={anchor.buttonTwo.plausibleGoal}
+              text={anchor.buttonTwo.text}
               plausibleDomain={plausibleDomain}
             />
             <SecondaryAnchorButton
-              url={anchor.contact.url}
-              plausibleGoal={anchor.contact.plausibleGoal}
-              text={anchor.contact.text}
+              url={anchor.buttonThree.url}
+              plausibleGoal={anchor.buttonThree.plausibleGoal}
+              text={anchor.buttonThree.text}
               plausibleDomain={plausibleDomain}
               className="mt-4 mt-md-0"
             />
@@ -103,17 +103,17 @@ ContentPageBox.propTypes = {
   },
   plausibleDomain: PropTypes.string,
   anchor: {
-    eligibility: {
+    buttonOne: {
       url: PropTypes.string,
       text: PropTypes.string,
       plausibleGoal: PropTypes.string,
     },
-    faq: {
+    buttonTwo: {
       url: PropTypes.string,
       text: PropTypes.string,
       plausibleGoal: PropTypes.string,
     },
-    contact: {
+    buttonThree: {
       url: PropTypes.string,
       text: PropTypes.string,
       plausibleGoal: PropTypes.string,
@@ -128,17 +128,17 @@ ContentPageBox.defaultProps = {
   },
   plausibleDomain: null,
   anchor: {
-    eligibility: {
+    buttonOne: {
       url: null,
       text: null,
       plausibleGoal: null,
     },
-    faq: {
+    buttonTwo: {
       url: null,
       text: null,
       plausibleGoal: null,
     },
-    contact: {
+    buttonThree: {
       url: null,
       text: null,
       plausibleGoal: null,

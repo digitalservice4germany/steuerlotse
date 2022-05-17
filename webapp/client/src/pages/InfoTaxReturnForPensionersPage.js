@@ -47,17 +47,17 @@ const ShareBox = styled.div`
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();
   const buttons = {
-    eligibility: {
+    buttonOne: {
       text: t("taxGuideQuestionBox.startQuestionnaire"),
       url: "/eligibility/step/marital_status?link_overview=False",
       plausibleGoal: "contentPage_startQuestionnaire_clicked",
     },
-    faq: {
+    buttonTwo: {
       text: t("taxGuideQuestionBox.faq"),
       url: "/sofunktionierts",
       plausibleGoal: "contentPage_faq_clicked",
     },
-    contact: {
+    buttonThree: {
       text: t("taxGuideQuestionBox.contactUs"),
       url: "mailto:kontakt@steuerlotse-rente.de",
       plausibleGoal: "contentPage_contactUs_clicked",
