@@ -85,14 +85,6 @@ const activeStates = css`
     return "none";
   }};
 `;
-const focusStates = css`
-  outline: ${({ variant }) => {
-    if (variant === "outline") {
-      return "none";
-    }
-    return "none";
-  }};
-`;
 
 const Button = styled.button`
   box-sizing: border-box;
@@ -162,7 +154,7 @@ const Button = styled.button`
   }
 
   &:focus {
-    ${focusStates}
+    outline: none;
   }
 `;
 const AnchorButtonText = styled.span`
