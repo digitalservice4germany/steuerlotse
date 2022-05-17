@@ -85,91 +85,97 @@ const activeStates = css`
     return "none";
   }};
 `;
+const focusStates = css`
+  outline: ${({ variant }) => {
+    if (variant === "outline") {
+      return "none";
+    }
+    return "none";
+  }};
+`;
 
 const Button = styled.button`
-   {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--text-medium);
-    font-family: var(--font-bold);
-    line-height: 1;
-    text-decoration: none;
-    border: transparent;
-    height: ${({ buttonStyle }) => {
-      if (buttonStyle === "narrow") {
-        return "var(--button-height-narrow)";
-      }
-      return "var(--button-height)";
-    }};
-    padding: ${({ buttonStyle }) => {
-      if (buttonStyle === "narrow") {
-        return "10px 12px";
-      }
-      return "18px 20px";
-    }};
-    color: ${({ variant, disabled }) => {
-      if (disabled && variant === "outline") {
-        return "var(--button-disabled-outline-font-color)";
-      }
-      if (variant === "outline") {
-        return "var(--text-color)";
-      }
-      return "var(--inverse-text-color) !important"; // remove if possible
-    }};
-    background-color: ${({ variant, disabled }) => {
-      if (disabled && variant === "outline") {
-        return "var(--button-disabled-outline-bg-color)";
-      }
-      if (variant === "outline") {
-        return "var(--inverse-text-color)";
-      }
-      if (disabled) {
-        return "var(--button-disabled-bg-color)";
-      }
-      return "var(--link-color)";
-    }};
-    border: ${({ variant, disabled }) => {
-      if (disabled && variant === "outline") {
-        return "1px solid var(--button-outline-color)";
-      }
-      if (variant === "outline") {
-        return "1px solid var(--border-color)";
-      }
-      return "none";
-    }};
-
-    &:hover {
-      ${hoverStates};
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-medium);
+  font-family: var(--font-bold);
+  line-height: 1;
+  text-decoration: none;
+  border: transparent;
+  height: ${({ buttonStyle }) => {
+    if (buttonStyle === "narrow") {
+      return "var(--button-height-narrow)";
     }
-
-    &:focus-visible {
-      ${focusVisibleStates};
+    return "var(--button-height)";
+  }};
+  padding: ${({ buttonStyle }) => {
+    if (buttonStyle === "narrow") {
+      return "10px 12px";
     }
-
-    &:active {
-      ${activeStates};
+    return "18px 20px";
+  }};
+  color: ${({ variant, disabled }) => {
+    if (disabled && variant === "outline") {
+      return "var(--button-disabled-outline-font-color)";
     }
+    if (variant === "outline") {
+      return "var(--text-color)";
+    }
+    return "var(--inverse-text-color) !important"; // remove if possible
+  }};
+  background-color: ${({ variant, disabled }) => {
+    if (disabled && variant === "outline") {
+      return "var(--button-disabled-outline-bg-color)";
+    }
+    if (variant === "outline") {
+      return "var(--inverse-text-color)";
+    }
+    if (disabled) {
+      return "var(--button-disabled-bg-color)";
+    }
+    return "var(--link-color)";
+  }};
+  border: ${({ variant, disabled }) => {
+    if (disabled && variant === "outline") {
+      return "1px solid var(--button-outline-color)";
+    }
+    if (variant === "outline") {
+      return "1px solid var(--border-color)";
+    }
+    return "none";
+  }};
+
+  &:hover {
+    ${hoverStates};
+  }
+
+  &:focus-visible {
+    ${focusVisibleStates};
+  }
+
+  &:active {
+    ${activeStates};
+  }
+
+  &:focus {
+    ${focusStates}
   }
 `;
 const AnchorButtonText = styled.span`
-   {
-    padding: 0 4px;
-  }
+  padding: 0 4px;
 `;
 const AnchorButtonIcon = styled.span`
-   {
-    padding: 0 4px;
+  padding: 0 4px;
 
-    svg {
-      display: block;
-      margin: auto;
-      max-height: 36px;
-      max-width: 36px;
-    }
+  svg {
+    display: block;
+    margin: auto;
+    max-height: 36px;
+    max-width: 36px;
   }
 `;
 
