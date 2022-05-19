@@ -95,25 +95,6 @@
   margin: var( --spacing-11) auto;
 }
 
-/* Homepage > Interview-Teaer */
-.interview__home{
-  margin: var( --spacing-11) auto var( --spacing-05) auto;
-  background-color: white;
-  border: 1px solid var(--bg-highlight-color);
-}
-
-.interview__home__img{
-  background-image: url("../images/home-interviews.jpg");
-  min-height: 300px;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.interview__home__text{
-  padding: var( --spacing-07);
-}
-
 /* Homepage > Teaser Section */
 .teaser-card a {
   color: #212529;
