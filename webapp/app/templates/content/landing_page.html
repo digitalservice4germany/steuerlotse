@@ -135,14 +135,5 @@
             {% endfor %}
             {{ components.primaryButton(text="Zur Informationsseite", url=url_for('howitworks')) }}
         </div>
-        <div class="interview__home col-lg-9 col-md-8 row p-0 g-0">
-            <div class="interview__home__img col-lg-6">
-            </div>
-            <div class="interview__home__text col-lg-6">
-                <h2 class="mb-4">{{ _('landing.interviews-headline') }}</h2>
-                <p class="mb-4">{{ _('landing.interviews-text') }}</p>
-                <a href="{{ url_for('interviews') }}">{{ _('landing.interviews-link') }}</a>
-            </div>
-        </div>
     </div>
 {% endblock %}

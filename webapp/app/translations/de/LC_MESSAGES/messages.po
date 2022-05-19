@@ -5102,36 +5102,6 @@ msgstr ""
 "DigitalService4Germany GmbH<br/>Frau Christina "
 "Lang<br/>Prinzessinnenstraße 8-14<br/>10969 Berlin"
 
-#: app/templates/content/interviews.html:5
-msgid "interviews.heading"
-msgstr "Helfen Sie uns, den Steuerlotsen zu verbessern"
-
-#: app/templates/content/interviews.html:6
-msgid "interviews.intro"
-msgstr ""
-"Der Steuerlotse ist ein lebendiges Produkt. Wir wollen mit Ihrer Hilfe "
-"besser werden."
-
-#: app/templates/content/interviews.html:11
-msgid "interviews.p1"
-msgstr ""
-"Zwar kann der Steuerlotse Gesetze und rechtliche Vorschriften nicht "
-"ändern, wir können Ihnen aber das Ausfüllen Ihrer Steuererklärung "
-"erleichtern. Wir möchten lernen, wie gut Ihnen unser Lotse dabei hilft "
-"und was wir noch verbessern können."
-
-#: app/templates/content/interviews.html:12
-msgid "interviews.p2"
-msgstr ""
-"Haben Sie Lust, uns dabei zu unterstützen? Wenn Sie Ihre Steuererklärung "
-"mit dem Steuerlotsen machen möchten und bereit sind, uns währenddessen "
-"daran teilhaben zu lassen, dann hilft uns das sehr bei der "
-"Weiterentwicklung des Lotsen. Wir freuen uns über Ihre Nachricht."
-
-#: app/templates/content/interviews.html:13
-msgid "interviews.button"
-msgstr "<a href=\"mailto:kontakt@steuerlotse-rente.de\">Schreiben Sie uns!</a>"
-
 #: app/templates/content/landing_page.html:6
 msgid "info.heading-accordeon-home"
 msgstr "Häufig gestellte Fragen zum Steuerlotsen"
@@ -5214,20 +5184,6 @@ msgid "landing.card3.desc"
 msgstr ""
 "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können"
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
-
-#: app/templates/content/landing_page.html:142
-msgid "landing.interviews-headline"
-msgstr "Helfen Sie uns den Steuerlotsen zu verbessern"
-
-#: app/templates/content/landing_page.html:143
-msgid "landing.interviews-text"
-msgstr ""
-"Der Steuerlotse wird kontinuierlich weiterentwickelt. Wir möchten lernen,"
-" wie gut Ihnen unser Service hilft und was wir noch verbessern können."
-
-#: app/templates/content/landing_page.html:144
-msgid "landing.interviews-link"
-msgstr "Mehr erfahren"
 
 #: app/templates/eligibility/display_failure_icon.html:15
 msgid "form.eligibility.use-elster"
