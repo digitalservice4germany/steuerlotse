@@ -7,7 +7,6 @@ const LinkCard = styled.a`
   background-color: white;
   color: var(--text-color);
   text-decoration: none !important;
-  outline: none !important;
   text-align: center;
   height: 188px;
   min-width: 274px;
@@ -18,7 +17,6 @@ const LinkCard = styled.a`
   &:focus {
     color: var(--text-color);
     text-decoration: none !important;
-    outline: none !important;
   }
 
   &:hover {
