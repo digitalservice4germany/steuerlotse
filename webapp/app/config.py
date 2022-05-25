@@ -44,6 +44,9 @@ class BaseConfig(object):
 
     OUTTAGE = False
 
+    SENDINBLUE_API_KEY = environ.get('SENDINBLUE_API_KEY') or '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'
+    SENDINBLUE_CONTACT_LIST_ID = environ.get('SENDINBLUE_CONTACT_LIST_ID') or 2
+
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
     DOMAIN = 'https://steuerlotse-rente.de'

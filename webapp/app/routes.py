@@ -6,13 +6,13 @@ import io
 from flask import current_app, flash, render_template, request, send_file, session, make_response, redirect, url_for
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
-from werkzeug.wrappers import Response
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import InternalServerError
 
 from app.config import Config
 from app.data_access.db_model.user import User
 from app.elster_client.elster_errors import GeneralEricaError, EricaRequestTimeoutError, EricaRequestConnectionError
+from app.email.client import add_user_with_doi_and_send_registration_mail
 from app.extensions import nav, login_manager, limiter, csrf
 from app.forms.flows.eligibility_step_chooser import EligibilityStepChooser, _ELIGIBILITY_DATA_KEY
 from app.forms.flows.lotse_step_chooser import LotseStepChooser, _LOTSE_DATA_KEY
@@ -29,7 +29,7 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
-from app.model.components import InfoTaxReturnForPensionersProps
+from app.model.components import InfoTaxReturnForPensionersProps, NewsletterSuccessPageProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
@@ -462,11 +462,31 @@ def register_request_handlers(app):
             props=InfoForRelativesPageProps().camelized_dict(),
             component='InfoForRelativesPage')
 
+    #TODO add csrf
+    @csrf.exempt
+    @app.route('/register_user_with_doi', methods=['POST'])
+    def register_user_with_doi():
+        json = request.json
+        result = add_user_with_doi_and_send_registration_mail(json["mail"])
+        if result["status"] == 200:
+            return '{}', 200
+        else:
+            return result['body'], result['status']
+
+    @app.route('/confirmation', methods=['GET'])
+    @add_caching_headers
+    def newsletter_confirmation():
+        return render_react_template(
+            props=NewsletterSuccessPageProps().camelized_dict(),
+            component='NewsletterSuccessPage')
+
     @app.route('/ping')
     def ping():
         """Simple route that can be used to check if the app has started.
         """
-        return 'pong'
+        return 'pong'#
+
+
 
 
 ERICA_ERROR_TEMPLATE = 'error/erica_error.html'

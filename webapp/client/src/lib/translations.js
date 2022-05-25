@@ -283,6 +283,30 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
     },
   },
+  newsletter: {
+    headline: "Bestätigung und Erinnerung per E-Mail erhalten",
+    text: "Erhalten Sie zusätzlich per E-Mail die Bestätigung Ihrer Registrierung mit Informationen zur Vorbereitung und eine Erinnerung, wenn Ihr Brief mit Freischaltcode angekommen ist.",
+    fieldEmail: {
+      label: "Ihre E-Mail Adresse",
+    },
+    button: {
+      label: "E-Mails abbonieren",
+    },
+    smallText:
+      "Mit dem Abonnieren der E-Mails nehmen Sie die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> zur Kenntnis.",
+    errors: {
+      emailEmpty: "Dieses Feld darf nicht leer sein.",
+      emailInvalid: "Die eingegebene E-Mail Adresse ist nicht gültig.",
+      emailDuplicate: "Die eingegebene E-Mail Adresse ist bereits registriert.",
+    },
+    success: {
+      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an <underscore>{{emailValue}}</underscore> geschickt.",
+    },
+    successPage: {
+      title:
+        "Vielen Dank für Ihre Bestätigung! Sie erhalten nun E-Mails vom Steuerlotsen.",
+    },
+  },
   filing: {
     success: {
       title:

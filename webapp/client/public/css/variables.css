@@ -138,11 +138,13 @@
     --spacing-05: 1.5rem;
     --spacing-06: 1.875rem;
     --spacing-07: 2.5rem;
+    --spacing-07a: 3rem;
     --spacing-08: 3.125rem;
     --spacing-09: 3.75rem;
     --spacing-10: 5.625rem;
     --spacing-11: 7.5rem;
     --spacing-12: 9rem;
+    --spacing-13: 9.5rem;
 
     /* Input Field Widths */
     --input-width-2: 3.5rem;

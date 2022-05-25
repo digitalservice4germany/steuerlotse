@@ -76,7 +76,8 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
             prev_url=url_for('unlock_code_request', step='data_input'),
             steuer_erklaerung_link=url_for('unlock_code_activation', step='start'),
             vorbereitungs_hilfe_link=url_for('download_preparation'),
-            plausible_domain=Config.PLAUSIBLE_DOMAIN
+            plausible_domain=Config.PLAUSIBLE_DOMAIN,
+            data_privacy_link=url_for('data_privacy')
         ).camelized_dict()
 
         return render_react_template(component='UnlockCodeSuccessPage',
