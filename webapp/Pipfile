@@ -29,6 +29,7 @@ python-dotenv = "*"
 pyhumps = "*"
 pytest-xdist = "*"
 jinja2 = "==3.0.3"
+sib-api-v3-sdk = "*"
 
 [dev-packages]
 pytest = "*"
