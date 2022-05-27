@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-// import { propTypes } from "react-bootstrap/esm/Image";
+// import PropTypes from "prop-types";
 
-const Box = styled.div``;
+const Box = styled.div`
+  margin-bottom: var(--spacing-05);
+`;
 const LabelBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -12,14 +14,33 @@ const LabelBox = styled.div`
 const ValueBox = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   border: 1px solid var(--border-color);
   padding: var(--spacing-04);
+  padding-top: 0.5rem;
   background-color: var(--white);
 `;
 
 const BoxText = styled.h3`
   font-size: var(--text-medium-big);
   margin: 0;
+  font-weight: 700;
+  padding: 0 15px;
+`;
+
+const BoxLabelText = styled(BoxText)`
+  padding: 0;
+`;
+
+const BoxLink = styled.a`
+  font-size: var(--text-medium-big);
+  margin: 0;
+  text-decoration: none;
+
+  &:visited {
+    text-decoration-color: var(--link-visited-color);
+    color: var(--link-visited-color);
+  }
 `;
 
 const ValueText = styled.h5`
@@ -31,30 +52,43 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
-  flex: 1;
 `;
 
-export default function SummaryComponent() {
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: var(--spacing-04);
+`;
+
+export default function SummaryComponent({ data }) {
+  const mapping =
+    data.data &&
+    Object.entries(data.data).map(([key, value]) => (
+      <Wrapper>
+        <Column>
+          <BoxText>{key}</BoxText>
+        </Column>
+        <Column>
+          <ValueText>{value}</ValueText>
+        </Column>
+      </Wrapper>
+    ));
+
   return (
     <Box>
       <LabelBox>
-        <BoxText>Angabe zu weiteren Einkünften</BoxText>
-        <BoxText>Andern</BoxText>
+        <BoxLabelText>{data.label}</BoxLabelText>
+        <BoxLink href={data.url}>Ändern</BoxLink>
       </LabelBox>
-      <ValueBox>
-        <Column>
-          <BoxText>Keine weiteren Einkünfte vorhanden:</BoxText>
-        </Column>
-        <Column>
-          <ValueText>Ja</ValueText>
-        </Column>
-      </ValueBox>
+      <ValueBox>{mapping}</ValueBox>
     </Box>
   );
 }
 
 SummaryComponent.propTypes = {
-  //   stepLabel: propTypes.string.isRequired,
+  data: {},
 };
 
-SummaryComponent.defaultProps = {};
+SummaryComponent.defaultProps = {
+  data: null,
+};

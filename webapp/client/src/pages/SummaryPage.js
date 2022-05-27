@@ -4,30 +4,49 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { ContentWrapper } from "../components/ContentPagesGeneralStyling";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-import SummaryComponent from "../components/SummaryComponent";
+// import SummaryComponent from "../components/SummaryComponent";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
+import SummaryComponent from "../components/SummaryComponent";
 
 const Headline1 = styled.h1`
   font-size: var(--text-4xl);
-  margin-bottom: var(--spacing-05);
+  margin-top: var(--spacing-05);
+  margin-bottom: 0;
 `;
 
 const Headline2 = styled.h2`
   font-size: var(--text-medium-big);
   margin-top: var(--spacing-08);
+  margin-bottom: 0;
 `;
 
-export default function SummaryPage({ plausibleDomain, form, prevUrl }) {
+export default function SummaryPage({
+  plausibleDomain,
+  form,
+  prevUrl,
+  summaryData,
+}) {
   const { t } = useTranslation();
+
   const plausibleProps = { method: "CTA Eingabe zu weiteren Einkünften" };
+
+  const mandatorySummaryData = Object.values(
+    summaryData.section_steps.mandatory_data.data
+  ).map((item) => <SummaryComponent data={item} />);
+
+  const steuerminderungSummaryData = Object.values(
+    summaryData.section_steps.section_steuerminderung.data
+  ).map((item) => <SummaryComponent data={item} />);
 
   return (
     <ContentWrapper>
       <StepHeaderButtons url={prevUrl} />
       <Headline1>{t("lotse.summary.heading")}</Headline1>
-      <Headline2>{t("lotse.summary.mandatoryHeading")}</Headline2>
-      <SummaryComponent stepLabel stepLink label value />
+      <Headline2>{t("lotse.summary.mandatorySection")}</Headline2>
+      {mandatorySummaryData}
+      <Headline2>{t("lotse.summary.steuerminderungSection")}</Headline2>
+      {steuerminderungSummaryData}
       <StepForm
         plausibleDomain={plausibleDomain}
         plausibleProps={plausibleProps}
@@ -55,6 +74,35 @@ SummaryPage.propTypes = {
   }).isRequired,
   plausibleDomain: PropTypes.string,
   prevUrl: PropTypes.string.isRequired,
+  test: PropTypes.string.isRequired,
+  summaryData: PropTypes.exact({
+    section_steps: {
+      madatory_data: {
+        data: {
+          decl_incomes: {
+            data: {},
+            label: PropTypes.string,
+            url: PropTypes.string,
+          },
+          decl_edaten: {
+            data: {},
+            label: PropTypes.string,
+            url: PropTypes.string,
+          },
+          familienstand: {
+            data: {},
+            label: PropTypes.string,
+            url: PropTypes.string,
+          },
+          steuernummer: {
+            data: {},
+            label: PropTypes.string,
+            url: PropTypes.string,
+          },
+        },
+      },
+    },
+  }).isRequired,
 };
 
 // array in prop types of the information
