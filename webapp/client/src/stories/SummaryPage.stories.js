@@ -12,7 +12,6 @@ function Template(args) {
 
 export const Default = Template.bind({});
 Default.args = {
-  test: "hello",
   summaryData: {
     section_steps: {
       mandatory_data: {
