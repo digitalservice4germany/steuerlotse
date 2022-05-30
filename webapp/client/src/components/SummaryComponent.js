@@ -65,7 +65,7 @@ export default function SummaryComponent({ data }) {
   const mapping =
     data.data &&
     Object.entries(data.data).map(([key, value]) => (
-      <Wrapper>
+      <Wrapper key={key}>
         <Column>
           <BoxText>{key}</BoxText>
         </Column>

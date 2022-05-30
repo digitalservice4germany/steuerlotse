@@ -218,4 +218,7 @@ Default.args = {
       },
     },
   },
+  fields: {
+    declarationSummary: false,
+  },
 };

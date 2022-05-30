@@ -5,6 +5,7 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
 import SummaryComponent from "../components/SummaryComponent";
+import { checkboxPropType } from "../lib/propTypes";
 import {
   ContentWrapper,
   Headline1,
@@ -14,6 +15,7 @@ import {
 export default function SummaryPage({
   plausibleDomain,
   form,
+  fields,
   prevUrl,
   summaryData,
 }) {
@@ -44,11 +46,12 @@ export default function SummaryPage({
       >
         <FormFieldConsentBox
           required
+          autofocus
           fieldName="declaration_summary"
           fieldId="declaration_summary"
-          // checked={fields.declarationIncomes.checked}
+          checked={fields.declarationSummary.checked}
           labelText={t("lotse.summary.declarationConfirmation")}
-          // errors={fields.declarationIncomes.errors}
+          errors={fields.declarationSummary.errors}
         />
       </StepForm>
     </ContentWrapper>
@@ -64,7 +67,9 @@ SummaryPage.propTypes = {
   }).isRequired,
   plausibleDomain: PropTypes.string,
   prevUrl: PropTypes.string.isRequired,
-  test: PropTypes.string.isRequired,
+  fields: PropTypes.exact({
+    declarationSummary: checkboxPropType,
+  }).isRequired,
   summaryData: PropTypes.exact({
     section_steps: {
       madatory_data: {
