@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 const Box = styled.div`
   margin-bottom: var(--spacing-05);
@@ -87,7 +87,78 @@ export default function SummaryComponent({ data }) {
 }
 
 SummaryComponent.propTypes = {
-  data: {},
+  data: {
+    decl_incomes: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    decl_edaten: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    familienstand: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    steuernummer: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    person_a: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    has_disability_person_a: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    merkzeichen_person_a: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    person_a_requests_pauschbetrag: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    steuperson_a_requests_fahrtkostenpauschaleernummer: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    person_b: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    has_disability_person_b: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    merkzeichen_person_b: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    person_b_requests_pauschbetrag: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+    iban: {
+      data: {},
+      label: PropTypes.string,
+      url: PropTypes.string,
+    },
+  },
 };
 
 SummaryComponent.defaultProps = {
