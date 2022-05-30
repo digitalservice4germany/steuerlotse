@@ -1,25 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import { ContentWrapper } from "../components/ContentPagesGeneralStyling";
 import StepHeaderButtons from "../components/StepHeaderButtons";
-// import SummaryComponent from "../components/SummaryComponent";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
 import SummaryComponent from "../components/SummaryComponent";
-
-const Headline1 = styled.h1`
-  font-size: var(--text-4xl);
-  margin-top: var(--spacing-05);
-  margin-bottom: 0;
-`;
-
-const Headline2 = styled.h2`
-  font-size: var(--text-medium-big);
-  margin-top: var(--spacing-08);
-  margin-bottom: 0;
-`;
+import {
+  ContentWrapper,
+  Headline1,
+  Headline5,
+} from "../components/ContentPagesGeneralStyling";
 
 export default function SummaryPage({
   plausibleDomain,
@@ -43,9 +33,9 @@ export default function SummaryPage({
     <ContentWrapper>
       <StepHeaderButtons url={prevUrl} />
       <Headline1>{t("lotse.summary.heading")}</Headline1>
-      <Headline2>{t("lotse.summary.mandatorySection")}</Headline2>
+      <Headline5>{t("lotse.summary.mandatorySection")}</Headline5>
       {mandatorySummaryData}
-      <Headline2>{t("lotse.summary.steuerminderungSection")}</Headline2>
+      <Headline5>{t("lotse.summary.steuerminderungSection")}</Headline5>
       {steuerminderungSummaryData}
       <StepForm
         plausibleDomain={plausibleDomain}
@@ -104,12 +94,6 @@ SummaryPage.propTypes = {
     },
   }).isRequired,
 };
-
-// array in prop types of the information
-// loop within the summary page
-// output what looks like
-// never render text in the front end for this - this has to be dynamic
-
 SummaryPage.defaultProps = {
   plausibleDomain: null,
 };

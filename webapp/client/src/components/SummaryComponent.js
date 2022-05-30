@@ -12,24 +12,22 @@ const LabelBox = styled.div`
   padding: 0 0 var(--spacing-02);
 `;
 const ValueBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   border: 1px solid var(--border-color);
-  padding: var(--spacing-04);
-  padding-top: 0.5rem;
+  padding: var(--spacing-02);
+  padding-top: 0;
   background-color: var(--white);
 `;
 
 const BoxText = styled.h3`
-  font-size: var(--text-medium-big);
+  font-size: var(--text-medium);
   margin: 0;
   font-weight: 700;
-  padding: 0 15px;
+  padding: 0 15px 0 10px;
 `;
 
 const BoxLabelText = styled(BoxText)`
   padding: 0;
+  font-size: var(--text-medium-big);
 `;
 
 const BoxLink = styled.a`
@@ -46,18 +44,21 @@ const BoxLink = styled.a`
 const ValueText = styled.h5`
   font-size: var(--text-medium);
   font-weight: 400;
+  margin: 0;
 `;
 
 const Column = styled.div`
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
+  margin-top: var(--spacing-04);
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: var(--spacing-04);
+  margin-top: 0;
+  margin-bottom: var(--spacing-02);
 `;
 
 export default function SummaryComponent({ data }) {
