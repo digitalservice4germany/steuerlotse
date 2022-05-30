@@ -87,15 +87,9 @@ export default function SummaryComponent({ data }) {
 }
 
 SummaryComponent.propTypes = {
-  data: {
-    decl_incomes: {
-      data: {},
-      label: PropTypes.string,
-      url: PropTypes.string,
-    },
-  },
-};
-
-SummaryComponent.defaultProps = {
-  data: null,
+  data: PropTypes.exact({
+    data: {},
+    label: PropTypes.string,
+    url: PropTypes.string,
+  }).isRequired,
 };
