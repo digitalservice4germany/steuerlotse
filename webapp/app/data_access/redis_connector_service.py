@@ -1,6 +1,7 @@
 import redis
 from app.config import Config
 from pydantic import MissingError
+import fakeredis
 
 
 class RedisConnectorService:
@@ -11,6 +12,8 @@ class RedisConnectorService:
         """Singleton creation so that the redis connection is not recreated."""
         if cls._instance is None:
             cls._instance = super(RedisConnectorService, cls).__new__(cls)
+        if cls._redis_connection is None and Config.USE_MOCK_REDIS:
+            cls._redis_connection = fakeredis.FakeStrictRedis()
         if cls._redis_connection is None:
             cls._redis_connection = redis.Redis.from_url(Config.SESSION_DATA_STORAGE_URL)
         return cls._instance
@@ -37,3 +40,6 @@ class RedisConnectorService:
             raise MissingError()
         else:
             return value.decode("utf-8")
+
+    def remove_from_redis(self, key: str):
+        return self._redis_connection.delete(key) > 0
