@@ -132,14 +132,6 @@ def register_request_handlers(app):
     @app.before_request
     def make_session_permanent():
         session.permanent = True
-    
-    # TODO REMOVE ME PLEASE OR WE WILL ALL DIE IN HELL
-    @app.after_request
-    def inform_outtage(response):
-        if Config.OUTTAGE and response.status_code == 200:
-            flash('Es gibt aktuell einen technischen Fehler. Wir arbeiten bereits an Maßnahmen zur Behebung der Störung.', 'warn')
-            
-        return response
 
     @app.after_request
     def add_http_header(response):
@@ -539,36 +531,3 @@ def register_testing_request_handlers(app):
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
         SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200
-
-    @app.route('/sitemap.txt', methods=['GET'])
-    @limiter.limit('15 per minute')
-    @limiter.limit('1000 per day')
-    def download_sitemap():
-        return "\n".join([
-            Config.DOMAIN + url_for("index"),
-            Config.DOMAIN + url_for("interviews"),
-            Config.DOMAIN + url_for("about_steuerlotse"),
-            Config.DOMAIN + url_for("about_digitalservice"),
-            Config.DOMAIN + url_for("download_informationsbroschure_pdf"),
-            Config.DOMAIN + url_for("download_steuerlotsen_flyer_pdf"),
-            Config.DOMAIN + url_for("howitworks"),
-            Config.DOMAIN + url_for("download_preparation"),
-            Config.DOMAIN + url_for("contact"),
-            Config.DOMAIN + url_for("relatives_info"),
-            Config.DOMAIN + url_for("data_privacy"),
-            Config.DOMAIN + url_for("agb"),
-            Config.DOMAIN + url_for("imprint"),
-            Config.DOMAIN + url_for("barrierefreiheit"),
-            Config.DOMAIN + url_for("vorbereiten"),
-            Config.DOMAIN + url_for("vorbereiten_diability_costs_info"),
-            Config.DOMAIN + url_for("vorbereiten_funeral_expenses_info"),
-            Config.DOMAIN + url_for("download_preparation"),
-            Config.DOMAIN + url_for("vorbereiten_craftsman_services_info"),
-            Config.DOMAIN + url_for("vorbereiten_household_services_info"),
-            Config.DOMAIN + url_for("vorbereiten_church_tax_info"),
-            Config.DOMAIN + url_for("vorbereiten_medical_expenses_info"),
-            Config.DOMAIN + url_for("vorbereiten_care_costs_info_page"),
-            Config.DOMAIN + url_for("vorbereiten_donation_info"),
-            Config.DOMAIN + url_for("vorbereiten_pension_expenses_info"),
-            Config.DOMAIN + url_for("vorbereiten_replacement_costs_info_page"),
-        ]), 200, {'Content-Type': 'text/plain; charset=utf-8'}
