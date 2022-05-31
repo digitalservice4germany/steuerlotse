@@ -12,6 +12,7 @@ class BaseConfig(object):
     PROMETHEUS_EXPORTER_ENABLED = False
     SET_SECURITY_HTTP_HEADERS = True
     DOMAIN = 'http://localhost:3000'
+    USE_MOCK_REDIS = False
 
     LANGUAGES = ['de']
     BABEL_DEFAULT_LOCALE = 'de'
@@ -103,8 +104,8 @@ class DevelopmentConfig(BaseConfig):
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
-
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'memory://'
+    
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
     CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
 
 
@@ -128,6 +129,7 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
     ALLOW_RESEND_FOR_TEST_USER = True
     USE_LRU_CACHE = False
+    USE_MOCK_REDIS = True
 
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_STORAGE_URL = "memory://"
@@ -139,9 +141,9 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'memory://'
-    CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
     
+    CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
 
 class MockedDevelopmentConfig(DevelopmentConfig):
     USE_MOCK_API = True
