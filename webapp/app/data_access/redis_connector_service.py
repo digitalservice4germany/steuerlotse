@@ -37,3 +37,6 @@ class RedisConnectorService:
             raise MissingError()
         else:
             return value.decode("utf-8")
+
+    def remove_from_redis(self, key: str):
+        return self._redis_connection.delete(key) > 0

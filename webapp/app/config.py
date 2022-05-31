@@ -104,7 +104,7 @@ class DevelopmentConfig(BaseConfig):
     SECRET_KEY = 'dev'
     REACT_BUNDLE_NAME = 'bundle.js'
 
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'memory://'
     CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
 
 
@@ -139,8 +139,9 @@ class TestingConfig(BaseConfig):
     HASH_ALGORITHM = 'mock'
     IDNR_SALT = "ZCgldrRxOVUEdNQLwbGDYu"  # Because of padding bits with encoding,last character should always be in [.Oeu]
     SECRET_KEY = 'dev'
-    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
-
+    SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'memory://'
+    CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
+    
 
 class MockedDevelopmentConfig(DevelopmentConfig):
     USE_MOCK_API = True
