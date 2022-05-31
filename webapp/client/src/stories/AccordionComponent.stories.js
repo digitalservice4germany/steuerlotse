@@ -24,7 +24,7 @@ Default.args = {
     {
       title: "Wie läuft die Nutzung des Steuerlotsen ab?",
       detail:
-        "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum 31. Juli 2022 beim Finanzamt sein. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
+        "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum 30. September 2022 beim Finanzamt sein. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
     },
   ],
 };
