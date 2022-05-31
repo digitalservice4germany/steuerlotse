@@ -159,9 +159,9 @@ def register_request_handlers(app):
     @app.after_request
     def inform_incident(response):        
         if response.status_code == 200:
-            incidentConfig = ConfigurationStorage.get_incident_configuration()
-            if incidentConfig is not None:
-                flash(incidentConfig['text'], 'warn')
+            incident_config = ConfigurationStorage.get_incident_configuration()
+            if incident_config is not None:
+                flash(incident_config['text'], 'warn')
 
         return response
 
