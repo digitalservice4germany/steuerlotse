@@ -87,8 +87,8 @@ export default function SummaryComponent({ data }) {
 }
 
 SummaryComponent.propTypes = {
-  data: PropTypes.exact({
-    data: {},
+  data: PropTypes.shape({
+    data: PropTypes.shape({}),
     label: PropTypes.string,
     url: PropTypes.string,
   }).isRequired,

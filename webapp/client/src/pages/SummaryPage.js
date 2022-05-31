@@ -25,11 +25,11 @@ export default function SummaryPage({
 
   const mandatorySummaryData = Object.values(
     summaryData.section_steps.mandatory_data.data
-  ).map((item) => <SummaryComponent data={item} />);
+  ).map((item, index) => <SummaryComponent key={index} data={item} />);
 
   const steuerminderungSummaryData = Object.values(
     summaryData.section_steps.section_steuerminderung.data
-  ).map((item) => <SummaryComponent data={item} />);
+  ).map((item, index) => <SummaryComponent key={index} data={item} />);
 
   return (
     <ContentWrapper>
@@ -67,21 +67,26 @@ SummaryPage.propTypes = {
   }).isRequired,
   plausibleDomain: PropTypes.string,
   prevUrl: PropTypes.string.isRequired,
-  fields: PropTypes.exact({
+  fields: PropTypes.shape({
     declarationSummary: checkboxPropType,
   }).isRequired,
-  summaryData: PropTypes.exact({
-    section_steps: {
-      madatory_data: {
-        data: {
-          data: {
-            data: {},
-            label: PropTypes.string,
-            url: PropTypes.string,
-          },
-        },
-      },
-    },
+  summaryData: PropTypes.shape({
+    section_steps: PropTypes.shape({
+      mandatory_data: PropTypes.shape({
+        data: PropTypes.shape({
+          data: PropTypes.shape({}),
+          label: PropTypes.string,
+          url: PropTypes.string,
+        }),
+      }),
+      section_steuerminderung: PropTypes.shape({
+        data: PropTypes.shape({
+          data: PropTypes.shape({}),
+          label: PropTypes.string,
+          url: PropTypes.string,
+        }),
+      }),
+    }),
   }).isRequired,
 };
 SummaryPage.defaultProps = {

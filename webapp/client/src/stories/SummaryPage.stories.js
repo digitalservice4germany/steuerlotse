@@ -1,5 +1,6 @@
 import React from "react";
 import SummaryPage from "../pages/SummaryPage";
+import { Default as StepFormDefault } from "./StepForm.stories";
 
 export default {
   title: "Pages/SummaryPage",
@@ -219,6 +220,13 @@ Default.args = {
     },
   },
   fields: {
-    declarationSummary: false,
+    declarationSummary: {
+      checked: false,
+      errors: [],
+    },
   },
+  form: {
+    ...StepFormDefault.args,
+  },
+  prevUrl: "test",
 };
