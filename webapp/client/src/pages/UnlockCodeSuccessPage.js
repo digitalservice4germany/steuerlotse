@@ -15,6 +15,7 @@ export default function UnlockCodeSuccessPage({
   vorbereitungsHilfeLink,
   plausibleDomain,
   dataPrivacyLink,
+  csrfToken,
 }) {
   const { t } = useTranslation();
   const stepHeader = {
@@ -102,7 +103,10 @@ export default function UnlockCodeSuccessPage({
         icon={IconThree}
         textOnly
       />
-      <NewsletterRegisterBox dataPrivacyLink={dataPrivacyLink} />
+      <NewsletterRegisterBox
+        dataPrivacyLink={dataPrivacyLink}
+        csrfToken={csrfToken}
+      />
     </>
   );
 }
@@ -112,6 +116,7 @@ UnlockCodeSuccessPage.propTypes = {
   vorbereitungsHilfeLink: PropTypes.string.isRequired,
   plausibleDomain: PropTypes.string,
   dataPrivacyLink: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
 };
 
 UnlockCodeSuccessPage.defaultProps = {

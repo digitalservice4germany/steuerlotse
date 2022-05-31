@@ -77,7 +77,8 @@ class UnlockCodeRequestSuccessStep(DisplayStep):
             steuer_erklaerung_link=url_for('unlock_code_activation', step='start'),
             vorbereitungs_hilfe_link=url_for('download_preparation'),
             plausible_domain=Config.PLAUSIBLE_DOMAIN,
-            data_privacy_link=url_for('data_privacy')
+            data_privacy_link=url_for('data_privacy'),
+            csrf_token=generate_csrf()
         ).camelized_dict()
 
         return render_react_template(component='UnlockCodeSuccessPage',

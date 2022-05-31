@@ -78,7 +78,7 @@ const ColumnB = styled.div`
 const errors = [];
 let emailValue = "";
 
-export default function NewsletterRegisterBox({ dataPrivacyLink }) {
+export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
   const { t } = useTranslation();
 
   function displaySuccessBox(activate) {
@@ -108,6 +108,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink }) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
         },
         body: JSON.stringify({ mail: emailValue }),
       })
@@ -192,4 +193,5 @@ export default function NewsletterRegisterBox({ dataPrivacyLink }) {
 
 NewsletterRegisterBox.propTypes = {
   dataPrivacyLink: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
 };

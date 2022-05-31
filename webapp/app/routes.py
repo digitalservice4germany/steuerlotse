@@ -462,8 +462,6 @@ def register_request_handlers(app):
             props=InfoForRelativesPageProps().camelized_dict(),
             component='InfoForRelativesPage')
 
-    #TODO add csrf
-    @csrf.exempt
     @app.route('/register_user_with_doi', methods=['POST'])
     def register_user_with_doi():
         json = request.json
