@@ -300,7 +300,7 @@ const translations = {
       emailDuplicate: "Die eingegebene E-Mail Adresse ist bereits registriert.",
     },
     success: {
-      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an <underscore>{{emailValue}}</underscore> geschickt.",
+      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an {{emailValue}} geschickt.",
     },
     successPage: {
       title:

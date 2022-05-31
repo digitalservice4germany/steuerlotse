@@ -44,7 +44,7 @@ class BaseConfig(object):
 
     OUTTAGE = False
 
-    SENDINBLUE_API_KEY = environ.get('SENDINBLUE_API_KEY') or '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'
+    SENDINBLUE_API_KEY = environ.get('SENDINBLUE_API_KEY')
     SENDINBLUE_CONTACT_LIST_ID = environ.get('SENDINBLUE_CONTACT_LIST_ID') or 2
 
 class ProductionConfig(BaseConfig):

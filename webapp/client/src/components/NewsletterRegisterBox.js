@@ -35,7 +35,7 @@ const SmallText = styled.span`
 `;
 
 const ButtonInRow = styled(ButtonAnchor)`
-  margin-top: 65px;
+  margin-top: 47px;
   width: 195px;
 `;
 
@@ -63,6 +63,14 @@ const Row = styled.div`
 const ColumnA = styled.div`
   display: inline-block;
   flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
+
+  ${({ reduceMargin }) =>
+    reduceMargin &&
+    `
+      .text-input-field-label {
+        margin-top: var(--spacing-05);
+    }
+  `}
 `;
 
 const ColumnB = styled.div`
@@ -143,7 +151,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
         <BoxHeadline>{t("newsletter.headline")}</BoxHeadline>
         <BoxText>{t("newsletter.text")}</BoxText>
         <Row>
-          <ColumnA flexBasis={61.54}>
+          <ColumnA flexBasis={61.54} reduceMargin>
             <FormFieldTextInput
               fieldName="email"
               fieldId="email"
@@ -171,7 +179,6 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
                 t={t}
                 i18nKey="newsletter.success.text"
                 values={{ emailValue }}
-                components={{ underscore: <u /> }}
               />
             </ColumnB>
           </Row>
