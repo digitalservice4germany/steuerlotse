@@ -1,26 +1,73 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Trans, useTranslation } from "react-i18next";
-import AnchorButton from "../components/AnchorButton";
-import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
+import styled from "styled-components";
+import ContentPageBox from "../components/ContentPageBox";
 import {
-  ContentTopSpacing,
-  HeadingText,
-  ParagraphIntroText,
+  ContentSpacingWrapper,
+  IntroHeadingText,
+  IntroParagraphText,
   ContentText,
   ParagraphTextLarger,
-  ParagraphHeadingText,
+  ParagraphHeadingLarger,
   ListBox,
   ListBoxText,
-  QuestionBoxBackground,
-  QuestionBoxLayer,
-  QuestionBox,
-  ParagraphTextMedium,
-  QuestionBoxAnchorButtons,
 } from "../components/ContentPageStyles";
+
+import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
+
+const Picture = styled.picture`
+  img {
+    width: 100%;
+    max-width: 930px;
+    height: auto;
+    object-fit: contain;
+  }
+`;
+
+const HeaderSection = styled.div`
+  margin-top: var(--spacing-11);
+
+  @media (max-width: 768px) {
+    margin-top: var(--spacing-09);
+  }
+`;
+
+const TopContent = styled.div`
+  max-width: 832px;
+  @media (max-width: 768px) {
+    max-width: 636px;
+  }
+`;
+
+const ShareBox = styled.div`
+  max-width: 738px;
+`;
 
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();
+  const buttons = {
+    buttonOne: {
+      text: t("taxGuideQuestionBox.startQuestionnaire"),
+      url: "/eligibility/step/marital_status?link_overview=False",
+      plausibleGoal: "contentPage_startQuestionnaire_clicked",
+    },
+    buttonTwo: {
+      text: t("taxGuideQuestionBox.faq"),
+      url: "/sofunktionierts",
+      plausibleGoal: "contentPage_faq_clicked",
+    },
+    buttonThree: {
+      text: t("taxGuideQuestionBox.contactUs"),
+      url: "mailto:kontakt@steuerlotse-rente.de",
+      plausibleGoal: "contentPage_contactUs_clicked",
+    },
+  };
+
+  const boxText = {
+    headerOne: t("taxGuideQuestionBox.canIUseTaxGuide"),
+    headerTwo: t("taxGuideQuestionBox.moreInformationTaxGuide"),
+  };
 
   function trans(key) {
     return (
@@ -48,7 +95,7 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
           ),
           eligibilityLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a href="/eligibility/step/marital_status?link_overview=False" />
+            <a href="/eligibility/step/tax_year?link_overview=False" />
           ),
           registrationLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
@@ -58,116 +105,106 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
             // eslint-disable-next-line jsx-a11y/anchor-has-content
             <a href="/unlock_code_activation/step/data_input?link_overview=False" />
           ),
+          shareLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/vereinfachte-steuererklärung-für-rentner" />
+          ),
         }}
       />
     );
   }
 
   return (
-    <ContentTopSpacing>
-      <img
-        src="/images/hero_info_tax_return_pensioners.png"
-        alt="Bild von Rentnerin und Rentner beim Ausfüllen ihrer digitalen Steuererklärung"
-      />
-      <HeadingText className="h1 mt-5 mb-4">
-        {t("infoTaxReturnPensioners.intro.heading")}
-      </HeadingText>
-      <ParagraphIntroText>
-        {trans("infoTaxReturnPensioners.intro.paragraphOne")}
-      </ParagraphIntroText>
-      <ContentText>
-        <ParagraphTextLarger className=" mt-5">
-          {trans("infoTaxReturnPensioners.intro.paragraphTwo")}
-        </ParagraphTextLarger>
-        <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
-          {t("infoTaxReturnPensioners.section_two.heading")}
-        </ParagraphHeadingText>
-        <ParagraphTextLarger>
-          {trans("infoTaxReturnPensioners.section_two.paragraph")}
-        </ParagraphTextLarger>
-        <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
-          {t("infoTaxReturnPensioners.section_three.heading")}
-        </ParagraphHeadingText>
-        <ParagraphTextLarger>
-          {trans("infoTaxReturnPensioners.section_three.paragraphOne")}
-        </ParagraphTextLarger>
-        <ParagraphTextLarger>
-          {trans("infoTaxReturnPensioners.section_three.paragraphTwo")}
-        </ParagraphTextLarger>
-        <ParagraphHeadingText className="h2 mt-5 mb-3  font-weight-bold">
-          {t("infoTaxReturnPensioners.section_four.heading")}
-        </ParagraphHeadingText>
-        <ParagraphTextLarger>
-          {trans("infoTaxReturnPensioners.section_four.paragraph")}
-        </ParagraphTextLarger>
-        <ListBox className="my-5">
-          <ListBoxText className="h4 mt-1 mb-3  font-weight-bold">
-            {t("infoTaxReturnPensioners.section_five.listItemOneHeading")}
-          </ListBoxText>
-          <ListBoxText>
-            {trans("infoTaxReturnPensioners.section_five.listItemOne")}
-          </ListBoxText>
-          <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
-            {t("infoTaxReturnPensioners.section_five.listItemTwoHeading")}
-          </ListBoxText>
-          <ListBoxText>
-            {trans("infoTaxReturnPensioners.section_five.listItemTwo")}
-          </ListBoxText>
-          <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
-            {t("infoTaxReturnPensioners.section_five.listItemThreeHeading")}
-          </ListBoxText>
-          <ListBoxText>
-            {trans("infoTaxReturnPensioners.section_five.listItemThree")}
-          </ListBoxText>
-          <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
-            {t("infoTaxReturnPensioners.section_five.listItemFourHeading")}
-          </ListBoxText>
-          <ListBoxText>
-            {trans("infoTaxReturnPensioners.section_five.listItemFour")}
-          </ListBoxText>
-        </ListBox>
-        <ParagraphTextLarger className="mb-5 ">
-          {trans("infoTaxReturnPensioners.section_six.text")}
-        </ParagraphTextLarger>
-      </ContentText>
-      <QuestionBoxBackground>
-        <QuestionBoxLayer>
-          <QuestionBox>
-            <div className="mb-5">
-              <ParagraphTextMedium className="h4 mb-4 font-weight-bold">
-                {t("taxGuideQuestionBox.canIUseTaxGuide")}
-              </ParagraphTextMedium>
-              <AnchorButton
-                url="/eligibility/step/marital_status?link_overview=False"
-                text={t("taxGuideQuestionBox.startQuestionnaire")}
-                plausibleGoal="contentPage_startQuestionnaire_clicked"
-                plausibleDomain={plausibleDomain}
-              />
-            </div>
-            <div className="mt-5">
-              <ParagraphTextMedium className="mb-4">
-                {trans("taxGuideQuestionBox.moreInformationTaxGuide")}
-              </ParagraphTextMedium>
-              <QuestionBoxAnchorButtons>
-                <SecondaryAnchorButton
-                  url="/sofunktionierts"
-                  text={t("taxGuideQuestionBox.faq")}
-                  plausibleName="contentPage_faq_clicked"
-                  plausibleDomain={plausibleDomain}
-                />
-                <SecondaryAnchorButton
-                  url="mailto:kontakt@steuerlotse-rente.de"
-                  text={t("taxGuideQuestionBox.contactUs")}
-                  plausibleName="contentPage_contactUs_clicked"
-                  plausibleDomain={plausibleDomain}
-                  className="mt-4 mt-md-0"
-                />
-              </QuestionBoxAnchorButtons>
-            </div>
-          </QuestionBox>
-        </QuestionBoxLayer>
-      </QuestionBoxBackground>
-    </ContentTopSpacing>
+    <>
+      <ContentSpacingWrapper>
+        <HeaderSection>
+          <Picture>
+            <img
+              src="/images/hero_info_tax_return_pensioners.png"
+              alt="Bild von Rentnerin und Rentner beim Ausfüllen ihrer digitalen Steuererklärung"
+            />
+          </Picture>
+          <TopContent>
+            <IntroHeadingText className="h1 mt-5 mb-4">
+              {t("infoTaxReturnPensioners.intro.heading")}
+            </IntroHeadingText>
+            <IntroParagraphText>
+              {trans("infoTaxReturnPensioners.intro.paragraphOne")}
+            </IntroParagraphText>
+          </TopContent>
+        </HeaderSection>
+        <ContentText>
+          <ParagraphTextLarger className=" mt-5">
+            {trans("infoTaxReturnPensioners.intro.paragraphTwo")}
+          </ParagraphTextLarger>
+          <ParagraphHeadingLarger className="h2 mt-5 mb-3  font-weight-bold">
+            {t("infoTaxReturnPensioners.section_two.heading")}
+          </ParagraphHeadingLarger>
+          <ParagraphTextLarger>
+            {trans("infoTaxReturnPensioners.section_two.paragraph")}
+          </ParagraphTextLarger>
+        </ContentText>
+        <ShareBox>
+          <SuccessStepsInfoBox
+            header={t("infoTaxReturnPensioners.ShareBox.header")}
+            text={t("infoTaxReturnPensioners.ShareBox.text")}
+            promoteUrl={t("infoTaxReturnPensioners.ShareBox.promoteUrl")}
+            shareText={t("infoTaxReturnPensioners.ShareBox.shareText")}
+            mailSubject={t("infoTaxReturnPensioners.ShareBox.mailSubject")}
+            sourcePage={t("infoTaxReturnPensioners.ShareBox.sourcePage")}
+            plausibleDomain={plausibleDomain}
+            shareBoxSpacingVariant
+          />
+        </ShareBox>
+        <ContentText>
+          <ParagraphHeadingLarger className="h2 mt-5 mb-3  font-weight-bold">
+            {t("infoTaxReturnPensioners.section_three.heading")}
+          </ParagraphHeadingLarger>
+          <ParagraphTextLarger>
+            {trans("infoTaxReturnPensioners.section_three.paragraphOne")}
+          </ParagraphTextLarger>
+          <ParagraphTextLarger>
+            {trans("infoTaxReturnPensioners.section_three.paragraphTwo")}
+          </ParagraphTextLarger>
+          <ParagraphHeadingLarger className="h2 mt-5 mb-3  font-weight-bold">
+            {t("infoTaxReturnPensioners.section_four.heading")}
+          </ParagraphHeadingLarger>
+          <ParagraphTextLarger>
+            {trans("infoTaxReturnPensioners.section_four.paragraph")}
+          </ParagraphTextLarger>
+          <ListBox className="my-5">
+            <ListBoxText className="h4 mt-1 mb-3  font-weight-bold">
+              {t("infoTaxReturnPensioners.section_five.listItemOneHeading")}
+            </ListBoxText>
+            <ListBoxText>
+              {trans("infoTaxReturnPensioners.section_five.listItemOne")}
+            </ListBoxText>
+            <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
+              {t("infoTaxReturnPensioners.section_five.listItemTwoHeading")}
+            </ListBoxText>
+            <ListBoxText>
+              {trans("infoTaxReturnPensioners.section_five.listItemTwo")}
+            </ListBoxText>
+            <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
+              {t("infoTaxReturnPensioners.section_five.listItemThreeHeading")}
+            </ListBoxText>
+            <ListBoxText>
+              {trans("infoTaxReturnPensioners.section_five.listItemThree")}
+            </ListBoxText>
+            <ListBoxText className="h4 mt-5 mb-3  font-weight-bold">
+              {t("infoTaxReturnPensioners.section_five.listItemFourHeading")}
+            </ListBoxText>
+            <ListBoxText>
+              {trans("infoTaxReturnPensioners.section_five.listItemFour")}
+            </ListBoxText>
+          </ListBox>
+          <ParagraphTextLarger className="mb-5 ">
+            {trans("infoTaxReturnPensioners.section_six.text")}
+          </ParagraphTextLarger>
+        </ContentText>
+      </ContentSpacingWrapper>
+      <ContentPageBox anchor={buttons} boxText={boxText} />
+    </>
   );
 }
 

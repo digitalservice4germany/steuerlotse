@@ -1,47 +1,63 @@
 import styled from "styled-components";
 
-export const ContentTopSpacing = styled.div`
-  margin-top: 9.375rem;
-  position: relative;
+export const ContentSpacingWrapper = styled.div`
+  padding-left: var(--spacing-03);
+  padding-right: var(--spacing-03);
+  max-width: var(--pages-max-width);
+
+  @media (min-width: 769px) {
+    padding-left: var(--spacing-10);
+    padding-right: var(--spacing-10);
+  }
+
+  @media (min-width: 1280px) {
+    padding-left: var(--spacing-12);
+    padding-right: var(--spacing-03);
+  }
 `;
-export const HeadingText = styled.h1`
+export const IntroHeadingText = styled.h1`
   font-size: var(--text-4xl);
 `;
-export const ParagraphIntroText = styled.p`
+export const IntroParagraphText = styled.p`
   font-size: 1.75rem;
 
-  @media (max-width: 425px) {
+  @media (max-width: 576px) {
     font-size: 1.5rem;
   }
 `;
 export const ContentText = styled.div`
-  width: fit-content;
+  max-width: 738px;
+
+  @media (max-width: 768px) {
+    max-width: 600px;
+  }
 `;
 export const ParagraphTextLarger = styled.p`
   font-size: 1.5rem;
 
-  @media (max-width: 768px) {
-    font-size: 1.25rem;
-  }
-
-  @media (max-width: 425px) {
+  @media (max-width: 576px) {
     font-size: 1.25rem;
   }
 `;
-export const ParagraphHeadingText = styled.p`
+export const ParagraphHeadingLarger = styled.p`
   font-size: var(--text-2xl);
 
-  @media (max-width: 425px) {
+  @media (max-width: 576px) {
     font-size: 1.25rem;
   }
 `;
 export const ListBox = styled.div`
   background: var(--bg-highlight-color);
-  padding: 32px;
+  padding: 32px 36px 32px 32px;
   list-style-type: none;
-  width: fit-content;
+
+  @media (max-width: 576px) {
+    padding: 16px;
+  }
 `;
+
 export const ListBoxText = styled(ParagraphTextLarger)``;
+
 export const QuestionBoxBackground = styled.div`
   background: var(--bg-highlight-color);
   position: relative;

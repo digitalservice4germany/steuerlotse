@@ -326,9 +326,8 @@ const translations = {
       heading: "Empfehlen Sie uns weiter!",
       text: "Wir möchten noch mehr Menschen bei Ihrer Steuererklärung helfen! Sie können uns dabei helfen, indem Sie den Steuerlotsen bekannter machen. Empfehlen Sie uns Ihren Bekannten und Freunden!",
       share_text:
-        "Tipp: Mit dem Steuerlotsen für Rente und Pension kannst du deine Steuererklärung einfach und unkompliziert machen. Ich habe es selbst ausprobiert! Hier der Link: https://www.steuerlotse-rente.de/",
-      mail_subject:
-        "Hallo, schau dir das mal an: Steuerlotse für Rente und Pension",
+        "Mit dem Steuerlotse für Rente und Pension können Menschen im Ruhestand Ihre Steuererklärung einfach und unkompliziert machen. Die Online-Dienstleistung wurde vom Bundesfinanzministerium in Auftrag gegeben und ist kostenlos. Mehr Informationen: https://www.steuerlotse-rente.de/",
+      mail_subject: "Vereinfachte Steuererklärung für Rentner und Pensionäre",
       promote_url: "https://www.steuerlotse-rente.de/",
     },
     logout: {
@@ -352,7 +351,7 @@ const translations = {
           heading: "So geht es weiter",
           "step-1": {
             heading: "Vorbereiten und Belege sammeln",
-            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe.",
+            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe oder unter dem Menüpunkt <vorbereitenLink>Vorbereiten</vorbereitenLink>.",
             buttonText: "Vorbereitungshilfe speichern ",
           },
           "step-2": {
@@ -382,6 +381,17 @@ const translations = {
         title: "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
         intro:
           "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+      },
+    },
+    icons: {
+      iconOne: {
+        altText: "Schritt 1",
+      },
+      iconTwo: {
+        altText: "Schritt 2",
+      },
+      iconThree: {
+        altText: "Schritt 3",
       },
     },
   },
@@ -460,6 +470,16 @@ const translations = {
     },
     section_six: {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
+    },
+    ShareBox: {
+      header: "Artikel teilen",
+      text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+      promoteUrl:
+        "https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
+      shareText:
+        "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
+      mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
+      sourcePage: "shareAcknowledged",
     },
   },
   AmbassadorMaterial: {

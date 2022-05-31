@@ -11,6 +11,7 @@ class BaseConfig(object):
     ALLOW_RESEND_FOR_TEST_USER = False
     PROMETHEUS_EXPORTER_ENABLED = False
     SET_SECURITY_HTTP_HEADERS = True
+    DOMAIN = 'http://localhost:3000'
 
     LANGUAGES = ['de']
     BABEL_DEFAULT_LOCALE = 'de'
@@ -45,6 +46,7 @@ class BaseConfig(object):
 
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
+    DOMAIN = 'https://steuerlotse-rente.de'
     PLAUSIBLE_DOMAIN = 'steuerlotse-rente.de'
 
     ERICA_BASE_URL = environ.get('ERICA_BASE_URL')
@@ -62,6 +64,7 @@ class ProductionConfig(BaseConfig):
 
 class StagingConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
+    DOMAIN = 'https://www-staging.stl.ds4g.dev'
     PLAUSIBLE_DOMAIN = 'www-staging.stl.ds4g.dev'
 
     ALLOW_RESEND_FOR_TEST_USER = True

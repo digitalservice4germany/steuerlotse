@@ -117,7 +117,7 @@ const submitBtnSelector = '[name="next_button"]'
 const overviewBtnSelector = '[name="overview_button"]'
 const login = function () {
     // Log in
-    cy.get('.nav-link').contains('Ihre Steuererklärung').click()
+    cy.get('.nav-link').contains('Steuererklärung 2021').click()
     cy.get('#idnr_1').type(taxReturnData.personA.idnr1)
     cy.get('#idnr_2').type(taxReturnData.personA.idnr2)
     cy.get('#idnr_3').type(taxReturnData.personA.idnr3)

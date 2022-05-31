@@ -68,6 +68,12 @@
             ],
             'list-items': None,
         },
+        'taxableyear': {
+            'heading': _('info-stl.taxableyear.heading'),
+            'paragraphs': [
+                _('info-stl.taxableyear.p1-content')
+            ]
+        },
     }} %}
 
 {% set accordeon_preparation = {
@@ -132,7 +138,6 @@
             ],
             'list-items': None,
         },
-
         'fsc-validity': {
             'heading': _('info-fsc.validity.heading'),
             'paragraphs': [
@@ -152,7 +157,7 @@
             'paragraphs': [
                 (_('info.card-takeover.p1-content')),
                 (_('info.card-takeover.p2-content')),
-                (_('info.card-takeover.p3-content')),
+                (_('info.card-takeover.p3-content', link=url_for('eligibility', step='first_input_step'))),
             ],
             'list-items': None,
         },
@@ -161,7 +166,7 @@
             'paragraphs': [
                 (_('info.card-advantage.p1-content')),
                 (_('info.card-advantage.p2-content')),
-                (_('info.card-advantage.p3-content')),
+                (_('info.card-advantage.p3-content', link=url_for('eligibility', step='first_input_step'))),
             ],
             'list-items': None,
         },

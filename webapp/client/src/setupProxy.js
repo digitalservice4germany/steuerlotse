@@ -12,6 +12,8 @@ function setupProxy(app) {
         "!**/*.css", // css,
         "!/{static,files,fonts,icons,images}/**", // any other static assets,
         "!/*.hot-update.json", // HMR requests
+        "!/robots.txt",
+        "!/sitemap.txt",
       ],
       {
         target: process.env.WEBAPP_URL || "http://127.0.0.1:5000",

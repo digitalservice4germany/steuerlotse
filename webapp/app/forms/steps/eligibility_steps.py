@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.data_access.storage.cookie_storage import CookieStorage
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
-from app.model.eligibility_data import OtherIncomeEligibilityData, \
+from app.model.eligibility_data import IsCorrectTaxYearEligibilityData, OtherIncomeEligibilityData, \
     ForeignCountrySuccessEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
     NoTaxedInvestmentIncome, MinimalInvestmentIncome, InvestmentIncomeEligibilityData, \
     PensionEligibilityData, SingleUserNoElsterAccountEligibilityData, AlimonyEligibilityData, \
@@ -173,6 +173,36 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
         self.render_info.additional_info['next_button_label'] = _('form.eligibility.check-now-button')
 
 
+class TaxYearEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
+    name = 'tax_year_failure'
+    eligibility_error = _l('form.eligibility.tax_year.error')
+    input_step_name = 'tax_year'
+    intro = ''
+
+class TaxYearEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
+    name = "tax_year"
+    next_step_data_models = [
+        (IsCorrectTaxYearEligibilityData, 'marital_status')
+    ]
+    failure_step_name = TaxYearEligibilityFailureDisplaySteuerlotseStep.name
+    title = _l('form.eligibility.tax_year.title')
+
+    class InputForm(SteuerlotseBaseForm):
+        tax_year = RadioField(
+            label="",
+            render_kw={'hide_label': True,
+                       'data-detail': {'title': _l('form.eligibility.tax_year.detail.title'),
+                                       'text': _l('form.eligibility.tax_year.detail.text')}},
+            choices=[('yes', _l('form.eligibility.tax_year.yes')),
+                     ('no', _l('form.eligibility.tax_year.no')),
+                     ],
+            validators=[InputRequired()])
+        
+    def _main_handle(self):
+        super()._main_handle()
+        self.render_info.back_link_text = _('form.eligibility.tax_year.back_link_text')
+        self.render_info.prev_url = None
+
 class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "marital_status"
     title = _l('form.eligibility.marital_status-title')
@@ -194,11 +224,6 @@ class MaritalStatusInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlo
                      ('widowed', _l('form.eligibility.marital_status.widowed')),
                      ],
             validators=[InputRequired(_l('validate.input-required'))])
-
-    def _main_handle(self):
-        super()._main_handle()
-        self.render_info.back_link_text = _('form.eligibility.marital_status.back_link_text')
-        self.render_info.prev_url = None
 
 
 class SeparatedEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):

@@ -6,6 +6,7 @@ import io
 from flask import current_app, flash, render_template, request, send_file, session, make_response, redirect, url_for
 from flask_babel import lazy_gettext as _l, _
 from flask_login import login_required, current_user
+from werkzeug.wrappers import Response
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.exceptions import InternalServerError
 
@@ -140,17 +141,27 @@ def register_request_handlers(app):
         config_as_json = request.json
 
         if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
-            ConfigurationStorage.set_configuration(config_as_json)
+            ConfigurationStorage.set_incident_configuration(config_as_json)
 
         return config_as_json
     
+    @csrf.exempt
+    @app.route('/configuration/incident', methods=['DELETE'])
+    def delete_configuration_incident():
+        secret = request.headers['SECRET-ACCESS-TOKEN']
+
+        is_deleted = False
+        if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
+            is_deleted = ConfigurationStorage.remove_incident_configuration()
+        
+        return str(is_deleted)
 
     @app.after_request
     def inform_incident(response):        
         if response.status_code == 200:
-            configuration = ConfigurationStorage.get_configuration()
-            if configuration is not None and configuration['incident']['active']:
-                flash(configuration['incident']['text'], configuration['incident']['level'])
+            incidentConfig = ConfigurationStorage.get_incident_configuration()
+            if incidentConfig is not None:
+                flash(incidentConfig['text'], 'warn')
 
         return response
 
@@ -159,7 +170,18 @@ def register_request_handlers(app):
         if not Config.SET_SECURITY_HTTP_HEADERS:
             return response
 
-        response.headers['X-Content-Type-Options'] = 'no-sniff'
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+        response.headers['Referrer-Policy'] = 'same-origin'
+        response.headers['Permissions-Policy'] = 'Permissions-Policy: accelerometer=(), ambient-light-sensor=(), ' \
+                                                 'autoplay=(), battery=(), camera=(), cross-origin-isolated=(), ' \
+                                                 'display-capture=(), document-domain=(), encrypted-media=(), ' \
+                                                 'execution-while-not-rendered=(), execution-while-out-of-viewport=(' \
+                                                 '), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), ' \
+                                                 'magnetometer=(), microphone=(), midi=(), navigation-override=(), ' \
+                                                 'payment=(), picture-in-picture=(), publickey-credentials-get=(), ' \
+                                                 'screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), ' \
+                                                 'xr-spatial-tracking=() '
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
             "script-src 'self' 'unsafe-inline' plausible.io; "
@@ -321,13 +343,6 @@ def register_request_handlers(app):
                                header_title=_('agb.header-title'),
                                js_needed=False)
 
-
-    @app.route('/interviews')
-    @add_caching_headers
-    def interviews():
-        return render_template('content/interviews.html',
-                               js_needed=False)
-
     @app.route('/ueber')
     @add_caching_headers
     def about_steuerlotse():
@@ -367,7 +382,7 @@ def register_request_handlers(app):
     @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
     @add_caching_headers
     def infotax():
-        return render_react_template(
+        return render_react_content_page_template(
             props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='InfoTaxReturnForPensionersPage')
 
@@ -552,10 +567,3 @@ def register_testing_request_handlers(app):
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
         SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200
-
-    @app.route('/sitemap.txt', methods=['GET'])
-    @limiter.limit('15 per minute')
-    @limiter.limit('1000 per day')
-    def download_sitemap():
-        return send_file('static/files/sitemap.txt', mimetype='text/plain',
-                         as_attachment=False)

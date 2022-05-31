@@ -23,14 +23,12 @@ const AnchorSecondary = styled.a`
     color: var(--inverse-text-color);
     background-color: var(--link-color);
     outline: 0;
-    border-bottom: 4px solid var(--link-color);
   }
 
   &:hover {
     outline: 1px solid var(--link-hover-color);
     background: var(--link-hover-color);
     border: none;
-    border-bottom: 4px solid var(--link-hover-color);
     color: var(--inverse-text-color);
     text-decoration: none;
   }
