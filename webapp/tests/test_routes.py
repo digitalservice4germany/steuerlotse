@@ -1,16 +1,21 @@
 import copy
 import datetime
+import json
+from os.path import abspath
+from unittest.mock import MagicMock, patch
 
 import pytest
 from flask import Flask
 from flask.sessions import SecureCookieSession
+from sqlalchemy import true
 from werkzeug.datastructures import ImmutableMultiDict
 
 from app.app import create_app
-from app.config import Config, ProductionConfig, FunctionalTestingConfig
+from app.config import Config, FunctionalTestingConfig, ProductionConfig
+from app.data_access.storage.configuration_storage import ConfigurationStorage
 from app.data_access.storage.session_storage import SessionStorage
-
-from app.routes import extract_information_from_request, register_testing_request_handlers
+from app.routes import (extract_information_from_request,
+                        register_testing_request_handlers)
 
 
 class TestExtractInformationFromRequest:
@@ -165,3 +170,44 @@ class TestSetTestingDataRoute:
             app.view_functions.get('set_data')(identifier)
 
             assert SessionStorage.get_data(identifier) == {}
+
+class TestConfigurationRoute:
+    
+    def test_if_configuration_incident_can_be_saved(self, app):
+        data = {
+            'text': 'Text'
+        }
+        app = create_app()
+
+        with app.app_context(), app.test_client() as c:
+            response = c.post(f'/configuration/incident', json=data, headers={'SECRET-ACCESS-TOKEN':'dev-secret', 'Content-Type': 'application/json'})
+            
+            assert response.status_code == 200
+            
+            configuration = ConfigurationStorage.get_incident_configuration()
+            assert configuration is not None
+            assert configuration['text'] == data['text']
+
+    def test_if_configuration_incident_can_be_deleted(self, app):
+        data = {
+            'text': 'Text'
+        }
+        app = create_app()
+
+        with app.app_context(), app.test_client() as c:
+            response = c.post(f'/configuration/incident', json=data, headers={'SECRET-ACCESS-TOKEN':'dev-secret', 'Content-Type': 'application/json'})
+            
+            assert response.status_code == 200
+            
+            configuration = ConfigurationStorage.get_incident_configuration()
+            assert configuration is not None
+            assert configuration['text'] == data['text']
+            
+            response = c.delete(f'/configuration/incident', headers={'SECRET-ACCESS-TOKEN':'dev-secret'})
+            
+            assert response.status_code == 200
+            assert response.text == 'True'           
+            
+            configuration = ConfigurationStorage.get_incident_configuration()
+            
+            assert configuration is None

@@ -28,6 +28,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
+from app.data_access.storage.configuration_storage import ConfigurationStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
@@ -132,6 +133,37 @@ def register_request_handlers(app):
     @app.before_request
     def make_session_permanent():
         session.permanent = True
+
+    @csrf.exempt
+    @app.route('/configuration/incident', methods=['POST'])
+    def configuration_incident():
+        secret = request.headers['SECRET-ACCESS-TOKEN']
+        config_as_json = request.json
+
+        if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
+            ConfigurationStorage.set_incident_configuration(config_as_json)
+
+        return config_as_json
+    
+    @csrf.exempt
+    @app.route('/configuration/incident', methods=['DELETE'])
+    def delete_configuration_incident():
+        secret = request.headers['SECRET-ACCESS-TOKEN']
+
+        is_deleted = False
+        if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
+            is_deleted = ConfigurationStorage.remove_incident_configuration()
+        
+        return str(is_deleted)
+
+    @app.after_request
+    def inform_incident(response):        
+        if response.status_code == 200:
+            incident_config = ConfigurationStorage.get_incident_configuration()
+            if incident_config is not None:
+                flash(incident_config['text'], 'warn')
+
+        return response
 
     @app.after_request
     def add_http_header(response):
