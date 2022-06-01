@@ -29,6 +29,7 @@ python-dotenv = "*"
 pyhumps = "*"
 pytest-xdist = "*"
 jinja2 = "==3.0.3"
+fakeredis = "*"
 
 [dev-packages]
 pytest = "*"
@@ -37,7 +38,6 @@ flake8 = "*"
 invoke = "*"
 sarge = "*"
 psutil = "*"
-fakeredis = "*"
 
 [requires]
 python_version = "3.9"
