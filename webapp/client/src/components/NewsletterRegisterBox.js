@@ -65,7 +65,10 @@ const SuccessIconSmall = styled(SuccessIcon)`
   width: 30px;
   top: 16px;
   left: 24px;
-  margin-left: var(--spacing-05);
+  @media (min-width: 577px) {
+    margin-left: var(--spacing-05);
+  }
+  margin-left: var(--spacing-03);
   margin-right: var(--spacing-03);
 `;
 
@@ -107,8 +110,11 @@ const ColumnButton = styled.div`
 `;
 
 const RowTickSuccessMessage = styled.div`
-  display: flex;
   padding-bottom: var(--spacing-03);
+  display: grid;
+  @media (min-width: 577px) {
+    display: flex;
+  }
 `;
 
 const ColumnTick = styled.div`
@@ -121,6 +127,10 @@ const ColumnSuccessMessage = styled.div`
   display: inline-block;
   flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
   margin-top: var(--spacing-03);
+  @media (max-width: 576px) {
+    margin-left: var(--spacing-03);
+    margin-right: var(--spacing-03);
+  }
 `;
 
 const errors = [];
