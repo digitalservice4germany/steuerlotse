@@ -64,9 +64,9 @@ class DivorcedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
 
 
 class IsCorrectTaxYearEligibilityData(BaseModel, PotentialDataModelKeysMixin):
-    is_correct_tax_year: str
+    tax_year: str
 
-    @validator('is_correct_tax_year')
+    @validator('tax_year')
     def must_be_single(cls, v):
        return declarations_must_be_set_yes(v)
 

@@ -68,6 +68,13 @@ export const Headline2 = styled.h2`
   }
 `;
 
+export const Headline5 = styled.h5`
+  font-size: var(--text-medium-big);
+  margin-top: var(--spacing-07);
+  margin-bottom: 0;
+  font-family: var(--font-bold);
+`;
+
 export const Paragraph = styled.p`
   padding-top: ${(props) =>
     props.spacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};

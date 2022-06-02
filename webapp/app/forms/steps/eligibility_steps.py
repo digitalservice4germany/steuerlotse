@@ -176,11 +176,11 @@ class EligibilityStartDisplaySteuerlotseStep(DisplaySteuerlotseStep):
 class TaxYearEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDisplaySteuerlotseStep):
     name = 'tax_year_failure'
     eligibility_error = _l('form.eligibility.tax_year.error')
-    input_step_name = 'is_correct_tax_year'
+    input_step_name = 'tax_year'
     intro = ''
 
 class TaxYearEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
-    name = "is_correct_tax_year"
+    name = "tax_year"
     next_step_data_models = [
         (IsCorrectTaxYearEligibilityData, 'marital_status')
     ]
@@ -188,7 +188,7 @@ class TaxYearEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSte
     title = _l('form.eligibility.tax_year.title')
 
     class InputForm(SteuerlotseBaseForm):
-        is_correct_tax_year = RadioField(
+        tax_year = RadioField(
             label="",
             render_kw={'hide_label': True,
                        'data-detail': {'title': _l('form.eligibility.tax_year.detail.title'),

@@ -229,6 +229,13 @@ const translations = {
         },
       },
     },
+    summary: {
+      heading: "Prüfen Sie Ihre Angaben",
+      mandatorySection: "PFLICHTANGABEN",
+      steuerminderungSection: "STEUERMINDERNDE AUFWENDUNGEN",
+      declarationConfirmation:
+        "Hiermit bestätige ich, dass die Angaben überprüft wurden und dass sie vollständig und richtig sind.",
+    },
   },
   unlockCodeActivation: {
     unlockCode: {
@@ -350,9 +357,8 @@ const translations = {
       heading: "Empfehlen Sie uns weiter!",
       text: "Wir möchten noch mehr Menschen bei Ihrer Steuererklärung helfen! Sie können uns dabei helfen, indem Sie den Steuerlotsen bekannter machen. Empfehlen Sie uns Ihren Bekannten und Freunden!",
       share_text:
-        "Tipp: Mit dem Steuerlotsen für Rente und Pension kannst du deine Steuererklärung einfach und unkompliziert machen. Ich habe es selbst ausprobiert! Hier der Link: https://www.steuerlotse-rente.de/",
-      mail_subject:
-        "Hallo, schau dir das mal an: Steuerlotse für Rente und Pension",
+        "Mit dem Steuerlotse für Rente und Pension können Menschen im Ruhestand Ihre Steuererklärung einfach und unkompliziert machen. Die Online-Dienstleistung wurde vom Bundesfinanzministerium in Auftrag gegeben und ist kostenlos. Mehr Informationen: https://www.steuerlotse-rente.de/",
+      mail_subject: "Vereinfachte Steuererklärung für Rentner und Pensionäre",
       promote_url: "https://www.steuerlotse-rente.de/",
     },
     logout: {
@@ -497,8 +503,8 @@ const translations = {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
     },
     ShareBox: {
-      header: "Artikel teilen",
-      text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+      header: "Artikel weiterempfehlen",
+      text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein. ",
       promoteUrl:
         "https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
       shareText:

@@ -57,7 +57,7 @@ const anchorRegister = {
 const anchorPrufen = {
   text: t("CheckNowInfoBox.button"),
   headline: t("CheckNowInfoBox.heading"),
-  url: "/eligibility/step/is_correct_tax_year?link_overview=False",
+  url: "/eligibility/step/tax_year?link_overview=False",
 };
 
 export { anchorList, anchorBack, anchorRegister, anchorPrufen };

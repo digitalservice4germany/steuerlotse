@@ -28,6 +28,7 @@ from app.forms.steps.lotse_multistep_flow_steps.declaration_steps import StepDec
 from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepFamilienstand, StepIban
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
+from app.data_access.storage.configuration_storage import ConfigurationStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
 from app.model.components import InfoTaxReturnForPensionersProps, NewsletterSuccessPageProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
@@ -132,13 +133,36 @@ def register_request_handlers(app):
     @app.before_request
     def make_session_permanent():
         session.permanent = True
+
+    @csrf.exempt
+    @app.route('/configuration/incident', methods=['POST'])
+    def configuration_incident():
+        secret = request.headers['SECRET-ACCESS-TOKEN']
+        config_as_json = request.json
+
+        if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
+            ConfigurationStorage.set_incident_configuration(config_as_json)
+
+        return config_as_json
     
-    # TODO REMOVE ME PLEASE OR WE WILL ALL DIE IN HELL
+    @csrf.exempt
+    @app.route('/configuration/incident', methods=['DELETE'])
+    def delete_configuration_incident():
+        secret = request.headers['SECRET-ACCESS-TOKEN']
+
+        is_deleted = False
+        if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
+            is_deleted = ConfigurationStorage.remove_incident_configuration()
+        
+        return str(is_deleted)
+
     @app.after_request
-    def inform_outtage(response):
-        if Config.OUTTAGE and response.status_code == 200:
-            flash('Es gibt aktuell einen technischen Fehler. Wir arbeiten bereits an Maßnahmen zur Behebung der Störung.', 'warn')
-            
+    def inform_incident(response):        
+        if response.status_code == 200:
+            incident_config = ConfigurationStorage.get_incident_configuration()
+            if incident_config is not None:
+                flash(incident_config['text'], 'warn')
+
         return response
 
     @app.after_request
@@ -146,7 +170,18 @@ def register_request_handlers(app):
         if not Config.SET_SECURITY_HTTP_HEADERS:
             return response
 
-        response.headers['X-Content-Type-Options'] = 'no-sniff'
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+        response.headers['Referrer-Policy'] = 'same-origin'
+        response.headers['Permissions-Policy'] = 'Permissions-Policy: accelerometer=(), ambient-light-sensor=(), ' \
+                                                 'autoplay=(), battery=(), camera=(), cross-origin-isolated=(), ' \
+                                                 'display-capture=(), document-domain=(), encrypted-media=(), ' \
+                                                 'execution-while-not-rendered=(), execution-while-out-of-viewport=(' \
+                                                 '), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), ' \
+                                                 'magnetometer=(), microphone=(), midi=(), navigation-override=(), ' \
+                                                 'payment=(), picture-in-picture=(), publickey-credentials-get=(), ' \
+                                                 'screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), ' \
+                                                 'xr-spatial-tracking=() '
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
             "script-src 'self' 'unsafe-inline' plausible.io; "
@@ -306,13 +341,6 @@ def register_request_handlers(app):
     def agb():
         return render_template('content/agb.html',
                                header_title=_('agb.header-title'),
-                               js_needed=False)
-
-
-    @app.route('/interviews')
-    @add_caching_headers
-    def interviews():
-        return render_template('content/interviews.html',
                                js_needed=False)
 
     @app.route('/ueber')
@@ -557,36 +585,3 @@ def register_testing_request_handlers(app):
         data_with_dates = {k: convert_date_fields_to_date(v) for k, v in data.items()}
         SessionStorage.override_data(data_with_dates, session_identifier)
         return data, 200
-
-    @app.route('/sitemap.txt', methods=['GET'])
-    @limiter.limit('15 per minute')
-    @limiter.limit('1000 per day')
-    def download_sitemap():
-        return "\n".join([
-            Config.DOMAIN + url_for("index"),
-            Config.DOMAIN + url_for("interviews"),
-            Config.DOMAIN + url_for("about_steuerlotse"),
-            Config.DOMAIN + url_for("about_digitalservice"),
-            Config.DOMAIN + url_for("download_informationsbroschure_pdf"),
-            Config.DOMAIN + url_for("download_steuerlotsen_flyer_pdf"),
-            Config.DOMAIN + url_for("howitworks"),
-            Config.DOMAIN + url_for("download_preparation"),
-            Config.DOMAIN + url_for("contact"),
-            Config.DOMAIN + url_for("relatives_info"),
-            Config.DOMAIN + url_for("data_privacy"),
-            Config.DOMAIN + url_for("agb"),
-            Config.DOMAIN + url_for("imprint"),
-            Config.DOMAIN + url_for("barrierefreiheit"),
-            Config.DOMAIN + url_for("vorbereiten"),
-            Config.DOMAIN + url_for("vorbereiten_diability_costs_info"),
-            Config.DOMAIN + url_for("vorbereiten_funeral_expenses_info"),
-            Config.DOMAIN + url_for("download_preparation"),
-            Config.DOMAIN + url_for("vorbereiten_craftsman_services_info"),
-            Config.DOMAIN + url_for("vorbereiten_household_services_info"),
-            Config.DOMAIN + url_for("vorbereiten_church_tax_info"),
-            Config.DOMAIN + url_for("vorbereiten_medical_expenses_info"),
-            Config.DOMAIN + url_for("vorbereiten_care_costs_info_page"),
-            Config.DOMAIN + url_for("vorbereiten_donation_info"),
-            Config.DOMAIN + url_for("vorbereiten_pension_expenses_info"),
-            Config.DOMAIN + url_for("vorbereiten_replacement_costs_info_page"),
-        ]), 200, {'Content-Type': 'text/plain; charset=utf-8'}

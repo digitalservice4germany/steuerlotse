@@ -31,9 +31,18 @@ const CardHeaderElement = styled.div`
 const ExpandButton = styled.button`
   border: 0;
   background: inherit;
-
   &:focus {
     outline: 0;
+  }
+
+  &.text-left:focus-visible {
+    color: var(--focus-text-color) !important;
+    outline: none;
+    box-shadow: none;
+    background: linear-gradient(
+      var(--focus-color) calc(100% - 4px),
+      var(--focus-text-color) 4px
+    );
   }
 `;
 
@@ -83,7 +92,7 @@ export default function AccordionComponent({ title, intro, items }) {
                 <ExpandButton className="col text-left">
                   <CardHeaderSpan>{item.title}</CardHeaderSpan>
                 </ExpandButton>
-                <ExpandButton className="col-1">
+                <ExpandButton tabIndex={-1} className="col-1">
                   {toggle === index ? (
                     <img src={minusIcon} alt="collapse" />
                   ) : (
