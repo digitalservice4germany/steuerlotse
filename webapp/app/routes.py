@@ -34,7 +34,7 @@ from app.model.components import InfoTaxReturnForPensionersProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
-    VorbereitenInfoProps, InfoForRelativesPageProps
+    VorbereitenInfoProps, InfoForRelativesPageProps, LandingPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -297,9 +297,9 @@ def register_request_handlers(app):
     @app.route('/')
     @add_caching_headers
     def index():
-        return render_template('content/landing_page.html',
-                               header_title=_('page.title'),
-                               js_needed=False)
+        return render_react_template(
+            props=LandingPageProps().camelized_dict(),
+            component='LandingPage')
 
     @app.route('/sofunktionierts')
     @add_caching_headers

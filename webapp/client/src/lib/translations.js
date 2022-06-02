@@ -983,6 +983,54 @@ const translations = {
       Text: "Helfen zum Beispiel Freunde oder ehemaligen Arbeitskollege bei der Steuererklärung ist das eine Ordnungswidrigkeit – egal ob mit oder ohne Bezahlung. Wer erwischt wird, zahlt bis zu 5.000 € Strafe. Das sollten Sie daher vermeiden!",
     },
   },
+  LandingPage: {
+    Accordion: {
+      Item1: {
+        title: "Wer kann den Steuerlotsen nutzen?",
+        detail:
+          "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben. Sie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den Steuerlotsen derzeit nicht nutzen. Sie können mit unserem Fragebogen prüfen, ob Sie alle Voraussetzungen für den Steuerlotsen erfüllen.",
+      },
+      Item2: {
+        title: "Wie läuft die Nutzung des Steuerlotsen ab?",
+        detail:
+          "Mit dem Steuerlotsen kommen Sie ganz automatisch in 4 Schritten durch Ihre Steuererklärung:",
+        list: {
+          listItem1:
+            "Prüfen Sie, ob Sie die Voraussetzung für die Nutzung des Steuerlotsen erfüllen.",
+          listItem2:
+            "Registrieren Sie sich beim Steuerlotsen für Ihre Online-Steuererklärung. Mit der erfolgreichen Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung.",
+          listItem3:
+            "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
+          listItem4:
+            "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie erneut unsere Seite auf. Klicken Sie auf Ihre Steuererklärung und melden Sie sich mit Ihrem Freischaltcode an. Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen.",
+        },
+      },
+      Item3: {
+        title: "",
+        detail: "",
+      },
+      Item4: {
+        title: "",
+        detail: "",
+      },
+      Item5: {
+        title: "",
+        detail: "",
+      },
+      Item6: {
+        title: "",
+        detail: "",
+      },
+      Item7: {
+        title: "",
+        detail: "",
+      },
+      Item8: {
+        title: "",
+        detail: "",
+      },
+    },
+  },
 };
 
 export default translations;
