@@ -14,19 +14,31 @@ const Box = styled.div`
 `;
 
 const InnerBox = styled.div`
-  padding: var(--spacing-07) var(--spacing-13) var(--spacing-07a)
-    var(--spacing-07a);
   margin: 0 auto;
+  padding: var(--spacing-05) var(--spacing-07a) var(--spacing-06a)
+    var(--spacing-06a);
+
+  @media (min-width: 769px) {
+    padding: var(--spacing-07) var(--spacing-13) var(--spacing-07b)
+      var(--spacing-07b);
+  }
 `;
 
 const BoxHeadline = styled.h2`
-  padding-bottom: var(--spacing-06);
   margin: 0;
+  font-size: var(--text-medium-big);
+  padding-bottom: var(--spacing-03);
 
-  font-size: var(--text-xxl);
+  @media (min-width: 577px) {
+    font-size: var(--text-xxl);
+  }
+
+  @media (min-width: 769px) {
+    padding-bottom: var(--spacing-04a);
+  }
 `;
 const BoxText = styled.span`
-  padding-bottom: var(--spacing-01);
+  font-size: var(--text-medium);
 `;
 
 const SmallText = styled.span`
@@ -35,7 +47,10 @@ const SmallText = styled.span`
 `;
 
 const ButtonInRow = styled(ButtonAnchor)`
-  margin-top: 47px;
+  margin-top: var(--spacing-05);
+  @media (min-width: 577px) {
+    margin-top: 47px;
+  }
   width: 195px;
 `;
 
@@ -54,15 +69,21 @@ const SuccessIconSmall = styled(SuccessIcon)`
   margin-right: var(--spacing-03);
 `;
 
-const Row = styled.div`
-  display: flex;
+const RowFieldButton = styled.div`
+  display: grid;
+  @media (min-width: 577px) {
+    display: flex;
+  }
   flex-wrap: wrap;
   padding-bottom: var(--spacing-03);
 `;
 
-const ColumnA = styled.div`
+const ColumnField = styled.div`
   display: inline-block;
-  flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
+
+  @media (min-width: 577px) {
+    flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
+  }
 
   ${({ reduceMargin }) =>
     reduceMargin &&
@@ -73,14 +94,33 @@ const ColumnA = styled.div`
   `}
 `;
 
-const ColumnB = styled.div`
+const ColumnButton = styled.div`
   display: inline-block;
-  flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
-  ${({ leftAuto }) =>
-    leftAuto &&
-    `
+  @media (min-width: 577px) {
+    flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
+    ${({ leftAuto }) =>
+      leftAuto &&
+      `
     margin-left: auto;
   `}
+  }
+`;
+
+const RowTickSuccessMessage = styled.div`
+  display: flex;
+  padding-bottom: var(--spacing-03);
+`;
+
+const ColumnTick = styled.div`
+  display: inline-block;
+  flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
+  margin-top: var(--spacing-03);
+`;
+
+const ColumnSuccessMessage = styled.div`
+  display: inline-block;
+  flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
+  margin-top: var(--spacing-03);
 `;
 
 const errors = [];
@@ -150,8 +190,8 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
       <InnerBox>
         <BoxHeadline>{t("newsletter.headline")}</BoxHeadline>
         <BoxText>{t("newsletter.text")}</BoxText>
-        <Row>
-          <ColumnA flexBasis={61.54} reduceMargin>
+        <RowFieldButton>
+          <ColumnField flexBasis={61.54} reduceMargin>
             <FormFieldTextInput
               fieldName="email"
               fieldId="email"
@@ -162,26 +202,26 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
               errors={errors}
               fieldWidth={11}
             />
-          </ColumnA>
-          <ColumnB flexBasis={30} leftAuto>
+          </ColumnField>
+          <ColumnButton flexBasis={30} leftAuto>
             <ButtonInRow onClick={sendEmail}>
               {t("newsletter.button.label")}
             </ButtonInRow>
-          </ColumnB>
-        </Row>
+          </ColumnButton>
+        </RowFieldButton>
         <SuccessBox id="success">
-          <Row>
-            <ColumnA flexBasis={4.6}>
+          <RowTickSuccessMessage>
+            <ColumnTick flexBasis={4.6}>
               <SuccessIconSmall />
-            </ColumnA>
-            <ColumnB flexBasis={85.85}>
+            </ColumnTick>
+            <ColumnSuccessMessage flexBasis={85.85}>
               <Trans
                 t={t}
                 i18nKey="newsletter.success.text"
                 values={{ emailValue }}
               />
-            </ColumnB>
-          </Row>
+            </ColumnSuccessMessage>
+          </RowTickSuccessMessage>
         </SuccessBox>
         <SmallText>
           <Trans
