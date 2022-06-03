@@ -61,16 +61,17 @@ const Wrapper = styled.div`
   margin-bottom: var(--spacing-02);
 `;
 
-export default function SummaryComponent({ data }) {
+export default function SummaryComponent({ data, label, url }) {
+  console.log(data);
   const mapping =
-    data.data &&
-    Object.entries(data.data).map(([key, value]) => (
-      <Wrapper key={key}>
+    data &&
+    data.map((item) => (
+      <Wrapper key={item.name}>
         <Column>
-          <BoxText>{key}</BoxText>
+          <BoxText>{item.name}</BoxText>
         </Column>
         <Column>
-          <ValueText>{value}</ValueText>
+          <ValueText>{item.value}</ValueText>
         </Column>
       </Wrapper>
     ));
@@ -78,8 +79,8 @@ export default function SummaryComponent({ data }) {
   return (
     <Box>
       <LabelBox>
-        <BoxLabelText>{data.label}</BoxLabelText>
-        <BoxLink href={data.url}>Ändern</BoxLink>
+        <BoxLabelText>{label}</BoxLabelText>
+        <BoxLink href={url}>Ändern</BoxLink>
       </LabelBox>
       <ValueBox>{mapping}</ValueBox>
     </Box>
@@ -87,9 +88,12 @@ export default function SummaryComponent({ data }) {
 }
 
 SummaryComponent.propTypes = {
-  data: PropTypes.shape({
-    data: PropTypes.shape({}),
-    label: PropTypes.string,
-    url: PropTypes.string,
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
+  ).isRequired,
+  label: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };

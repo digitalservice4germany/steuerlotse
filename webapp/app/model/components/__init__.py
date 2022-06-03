@@ -256,3 +256,12 @@ class CraftsmanServicesInfoPageProps(ComponentProps):
 class InfoForRelativesPageProps(ComponentProps):
     pass
 
+class SummaryDataSectionProps(ComponentProps):
+    mandatory_data: List[Dict]
+    section_steuerminderung: List[Dict]
+
+class SummaryPageProps(ComponentProps):
+    summary_data: SummaryDataSectionProps
+    prev_url: Optional[str]
+    form: FormProps
+    fields: Dict[str, FieldProps]

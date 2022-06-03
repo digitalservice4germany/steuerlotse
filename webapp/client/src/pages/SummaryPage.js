@@ -6,11 +6,7 @@ import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
 import SummaryComponent from "../components/SummaryComponent";
 import { checkboxPropType } from "../lib/propTypes";
-import {
-  ContentWrapper,
-  Headline1,
-  Headline5,
-} from "../components/ContentPagesGeneralStyling";
+import { Headline1, Headline5 } from "../components/ContentPagesGeneralStyling";
 
 export default function SummaryPage({
   plausibleDomain,
@@ -23,16 +19,16 @@ export default function SummaryPage({
 
   const plausibleProps = { method: "CTA Eingabe zu weiteren Einkünften" };
 
-  const mandatorySummaryData = Object.values(
-    summaryData.section_steps.mandatory_data.data
-  ).map((item, index) => <SummaryComponent key={index} data={item} />);
+  const mandatorySummaryData = Object.values(summaryData.mandatoryData).map(
+    (item, index) => <SummaryComponent key={index} {...item} />
+  );
 
   const steuerminderungSummaryData = Object.values(
-    summaryData.section_steps.section_steuerminderung.data
-  ).map((item, index) => <SummaryComponent key={index} data={item} />);
+    summaryData.sectionSteuerminderung
+  ).map((item, index) => <SummaryComponent key={index} {...item} />);
 
   return (
-    <ContentWrapper>
+    <>
       <StepHeaderButtons url={prevUrl} />
       <Headline1>{t("lotse.summary.heading")}</Headline1>
       <Headline5>{t("lotse.summary.mandatorySection")}</Headline5>
@@ -49,12 +45,12 @@ export default function SummaryPage({
           autofocus
           fieldName="declaration_summary"
           fieldId="declaration_summary"
-          checked={fields.declarationSummary.checked}
-          labelText={t("lotse.summary.declarationConfirmation")}
-          errors={fields.declarationSummary.errors}
+          checked={fields.confirmCompleteCorrect.checked}
+          labelText={t("lotse.summary.confirmCompleteCorrect")}
+          errors={fields.confirmCompleteCorrect.errors}
         />
       </StepForm>
-    </ContentWrapper>
+    </>
   );
 }
 
@@ -68,25 +64,33 @@ SummaryPage.propTypes = {
   plausibleDomain: PropTypes.string,
   prevUrl: PropTypes.string.isRequired,
   fields: PropTypes.shape({
-    declarationSummary: checkboxPropType,
+    confirmCompleteCorrect: checkboxPropType,
   }).isRequired,
   summaryData: PropTypes.shape({
-    section_steps: PropTypes.shape({
-      mandatory_data: PropTypes.shape({
-        data: PropTypes.shape({
-          data: PropTypes.shape({}),
-          label: PropTypes.string,
-          url: PropTypes.string,
-        }),
-      }),
-      section_steuerminderung: PropTypes.shape({
-        data: PropTypes.shape({
-          data: PropTypes.shape({}),
-          label: PropTypes.string,
-          url: PropTypes.string,
-        }),
-      }),
-    }),
+    mandatoryData: PropTypes.arrayOf(
+      PropTypes.shape({
+        data: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          })
+        ).isRequired,
+        label: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      })
+    ),
+    sectionSteuerminderung: PropTypes.arrayOf(
+      PropTypes.shape({
+        data: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string,
+            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          })
+        ).isRequired,
+        label: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      })
+    ),
   }).isRequired,
 };
 SummaryPage.defaultProps = {

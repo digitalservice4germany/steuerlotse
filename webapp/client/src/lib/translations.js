@@ -233,7 +233,7 @@ const translations = {
       heading: "Prüfen Sie Ihre Angaben",
       mandatorySection: "PFLICHTANGABEN",
       steuerminderungSection: "STEUERMINDERNDE AUFWENDUNGEN",
-      declarationConfirmation:
+      confirmCompleteCorrect:
         "Hiermit bestätige ich, dass die Angaben überprüft wurden und dass sie vollständig und richtig sind.",
     },
   },
