@@ -174,22 +174,27 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
           r.json().then((data) => ({ status: r.status, body: data }))
         )
         .then((data) => {
-          if (data.status === 200) {
-            errors.length = 0;
-            forceUpdate();
-            displaySuccessBox(true);
-          } else if (data.status === 400) {
-            errors.length = 0;
-            switch (data.body.code) {
-              case "invalid_parameter":
-                errors.push(t("newsletter.errors.emailInvalid"));
-                break;
-              case "duplicate_parameter":
-                errors.push(t("newsletter.errors.emailDuplicate"));
-                break;
-              default:
-            }
-            forceUpdate();
+          errors.length = 0;
+          switch (data.stats) {
+            case 200:
+              forceUpdate();
+              displaySuccessBox(true);
+              break;
+            case 400:
+              switch (data.body.code) {
+                case "invalid_parameter":
+                  errors.push(t("newsletter.errors.emailInvalid"));
+                  break;
+                case "duplicate_parameter":
+                  errors.push(t("newsletter.errors.emailDuplicate"));
+                  break;
+                default:
+              }
+              forceUpdate();
+              break;
+            default:
+              errors.push(t("newsletter.errors.unexpectedError"));
+              forceUpdate();
           }
         });
     }

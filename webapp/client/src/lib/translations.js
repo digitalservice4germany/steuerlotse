@@ -305,6 +305,7 @@ const translations = {
       emailEmpty: "Dieses Feld darf nicht leer sein.",
       emailInvalid: "Die eingegebene E-Mail Adresse ist nicht gültig.",
       emailDuplicate: "Die eingegebene E-Mail Adresse ist bereits registriert.",
+      unexpectedError: "Es ist ein unerwarteter Fehler aufgetreten",
     },
     success: {
       text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an {{emailValue}} geschickt.",
