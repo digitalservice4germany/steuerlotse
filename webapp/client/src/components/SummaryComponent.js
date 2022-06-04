@@ -18,7 +18,7 @@ const ValueBox = styled.div`
   background-color: var(--white);
 `;
 
-const BoxText = styled.h3`
+const BoxText = styled.p`
   font-size: var(--text-medium);
   margin: 0;
   font-weight: 700;
@@ -41,7 +41,7 @@ const BoxLink = styled.a`
   }
 `;
 
-const ValueText = styled.h5`
+const ValueText = styled.p`
   font-size: var(--text-medium);
   font-weight: 400;
   margin: 0;
@@ -62,7 +62,6 @@ const Wrapper = styled.div`
 `;
 
 export default function SummaryComponent({ data, label, url }) {
-  console.log(data);
   const mapping =
     data &&
     data.map((item) => (

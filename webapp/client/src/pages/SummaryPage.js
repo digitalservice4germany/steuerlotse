@@ -6,7 +6,7 @@ import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import StepForm from "../components/StepForm";
 import SummaryComponent from "../components/SummaryComponent";
 import { checkboxPropType } from "../lib/propTypes";
-import { Headline1, Headline5 } from "../components/ContentPagesGeneralStyling";
+import { Headline1, Headline2 } from "../components/ContentPagesGeneralStyling";
 
 export default function SummaryPage({
   plausibleDomain,
@@ -31,9 +31,11 @@ export default function SummaryPage({
     <>
       <StepHeaderButtons url={prevUrl} />
       <Headline1>{t("lotse.summary.heading")}</Headline1>
-      <Headline5>{t("lotse.summary.mandatorySection")}</Headline5>
+      <Headline2 marginVariant>{t("lotse.summary.mandatorySection")}</Headline2>
       {mandatorySummaryData}
-      <Headline5>{t("lotse.summary.steuerminderungSection")}</Headline5>
+      <Headline2 marginVariant>
+        {t("lotse.summary.steuerminderungSection")}
+      </Headline2>
       {steuerminderungSummaryData}
       <StepForm
         plausibleDomain={plausibleDomain}
