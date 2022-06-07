@@ -175,7 +175,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
         )
         .then((data) => {
           errors.length = 0;
-          switch (data.stats) {
+          switch (data.status) {
             case 200:
               forceUpdate();
               displaySuccessBox(true);
