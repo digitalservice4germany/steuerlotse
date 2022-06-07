@@ -101,6 +101,7 @@
 
     /* Font Size */
     --text-sm: 0.785rem;
+    --text-sb: 0.875rem;
     --text-s: 0.9rem;
     --text-base: 1rem;
     --text-medium: 1.125rem;

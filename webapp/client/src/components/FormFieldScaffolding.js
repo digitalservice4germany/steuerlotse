@@ -7,6 +7,9 @@ import "jquery-mask-plugin";
 import FieldError from "./FieldError";
 
 const FormField = styled.div`
+  &.field-margin-top {
+    margin-top: var(--spacing-06a) !important;
+  }
   &.error-found-line {
     margin-left: var(--spacing-02);
     padding-left: var(--spacing-04) !important;
@@ -51,7 +54,7 @@ export default function FormFieldScaffolding({
   });
 
   return (
-    <FormField ref={element} className={divClassNames}>
+    <FormField ref={element} className={[divClassNames, "field-margin-top"]}>
       {!hideLabel && labelComponent}
       <div className={classNames({ "d-block": displayBlock })}>
         {render(fieldClassNames)}

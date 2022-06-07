@@ -88,13 +88,13 @@ const ColumnField = styled.div`
     flex-basis: ${({ flexBasis }) => `${flexBasis}%`};
   }
 
-  ${({ reduceMargin }) =>
-    reduceMargin &&
-    `
-      .text-input-field-label {
-        margin-top: var(--spacing-05);
-    }
-  `}
+  .text-input-field-label {
+    margin-top: 0;
+  }
+
+  .field-margin-top {
+    margin-top: var(--spacing-05) !important;
+  }
 `;
 
 const ColumnButton = styled.div`
@@ -206,7 +206,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
         <BoxHeadline>{t("newsletter.headline")}</BoxHeadline>
         <BoxText>{t("newsletter.text")}</BoxText>
         <RowFieldButton>
-          <ColumnField flexBasis={61.54} reduceMargin>
+          <ColumnField flexBasis={61.54}>
             <FormFieldTextInput
               fieldName="email"
               fieldId="email"
