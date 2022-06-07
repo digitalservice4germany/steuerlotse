@@ -510,7 +510,7 @@ def register_request_handlers(app):
     def ping():
         """Simple route that can be used to check if the app has started.
         """
-        return 'pong'#
+        return 'pong'
 
 
 
