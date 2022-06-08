@@ -495,7 +495,8 @@ def register_request_handlers(app):
     def free_tax_declaration():
         return render_react_content_page_template(
             props=FreeTaxDeclarationForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
-            component='FreeTaxDeclarationForPensionersPage')
+            component='FreeTaxDeclarationForPensionersPage', disable_default_title_description_meta_tags=True,
+            header_title=_('freeTaxDeclarationForPensioners.header-title'))
 
     @app.route('/ping')
     def ping():
