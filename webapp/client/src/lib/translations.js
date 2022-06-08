@@ -479,8 +479,8 @@ const translations = {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
     },
     ShareBox: {
-      header: "Artikel teilen",
-      text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+      header: "Artikel weiterempfehlen",
+      text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein. ",
       promoteUrl:
         "https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
       shareText:
