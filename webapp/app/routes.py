@@ -164,7 +164,7 @@ def register_request_handlers(app):
                 if incident_config is not None and 'text' in incident_config:
                     flash(incident_config['text'], 'warn')
         except Exception as ex:
-             current_app.logger.info('incident problem:' + str(ex))
+            current_app.logger.info('incident problem:' + str(ex))
             
 
         return response
