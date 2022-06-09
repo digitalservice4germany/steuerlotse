@@ -15,12 +15,12 @@ const Box = styled.div`
 
 const InnerBox = styled.div`
   margin: 0 auto;
-  padding: var(--spacing-05) var(--spacing-07a) var(--spacing-06a)
+  padding: var(--spacing-05) var(--spacing-06a) var(--spacing-06a)
     var(--spacing-06a);
 
   @media (min-width: 769px) {
-    padding: var(--spacing-07) var(--spacing-13) var(--spacing-07b)
-      var(--spacing-07b);
+    padding: var(--spacing-07) var(--spacing-13) var(--spacing-07a)
+      var(--spacing-07a);
   }
 `;
 
@@ -30,11 +30,7 @@ const BoxHeadline = styled.h2`
   padding-bottom: var(--spacing-03);
 
   @media (min-width: 577px) {
-    font-size: var(--text-xxl);
-  }
-
-  @media (min-width: 769px) {
-    padding-bottom: var(--spacing-04a);
+    font-size: var(--text-2xl);
   }
 `;
 const BoxText = styled.span`
@@ -47,9 +43,9 @@ const SmallText = styled.span`
 `;
 
 const ButtonInRow = styled(ButtonAnchor)`
-  margin-top: var(--spacing-05);
+  margin-top: var(--spacing-03);
   @media (min-width: 577px) {
-    margin-top: 47px;
+    margin-top: 40px;
   }
   width: 195px;
 `;
@@ -93,7 +89,7 @@ const ColumnField = styled.div`
   }
 
   .field-margin-top {
-    margin-top: var(--spacing-05) !important;
+    margin-top: var(--spacing-03) !important;
   }
 `;
 
