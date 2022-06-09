@@ -151,7 +151,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
   }, []);
 
   const sendEmail = () => {
-    emailValue = document.getElementsByTagName("input")[0].value;
+    emailValue = document.getElementById("email").value;
     if (emailValue === "") {
       errors.length = 0;
       errors.push(t("newsletter.errors.emailEmpty"));
