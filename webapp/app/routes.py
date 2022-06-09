@@ -157,11 +157,15 @@ def register_request_handlers(app):
         return str(is_deleted)
 
     @app.after_request
-    def inform_incident(response):        
-        if response.status_code == 200:
-            incident_config = ConfigurationStorage.get_incident_configuration()
-            if incident_config is not None:
-                flash(incident_config['text'], 'warn')
+    def inform_incident(response):
+        try:    
+            if response.status_code == 200:
+                incident_config = ConfigurationStorage.get_incident_configuration()
+                if incident_config is not None and 'text' in incident_config:
+                    flash(incident_config['text'], 'warn')
+        except Exception as ex:
+            current_app.logger.info('incident problem:' + str(ex))
+            
 
         return response
 
