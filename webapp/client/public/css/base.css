@@ -287,6 +287,10 @@ ol li::before {
   padding-top: 1.5rem;
 }
 
+.main-content--full-width--no-padding {
+  padding-top: 0;
+}
+
 .list-unstyled li a {
   color: var(--text-color);
 }
@@ -570,5 +574,5 @@ img.icon {
 }
 
 .section-title {
-    margin-bottom: var(--spacing-05);
+  margin-bottom: var(--spacing-05);
 }

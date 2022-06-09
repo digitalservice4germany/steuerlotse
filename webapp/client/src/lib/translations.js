@@ -984,52 +984,96 @@ const translations = {
     },
   },
   LandingPage: {
+    Hero: {
+      title: "Die vereinfachte Steuererklärung für Menschen im Ruhestand",
+      subTitle:
+        "Mit dem Steuerlotsen können Sie Ihre Steuererklärung für das Steuerjahr 2021 einfach und ohne besonderes Vorwissen online machen.",
+      listItem1: "mit Schritt-für-Schritt-Anleitung",
+      listItem2: "kostenlos und ohne Installation",
+      listItem3: "schnell und unkompliziert",
+      eligibilityTest:
+        "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?",
+      checkUseButton: "Jetzt prüfen",
+    },
+    Cards: {
+      cardOne: {
+        header: "Herausfinden, ob Sie den Steuerlotsen nutzen können",
+        text: "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die Voraussetzungen für die Nutzung des Steuerlotsen erfüllen.",
+        url: "/eligibility/step/tax_year?link_overview=False",
+      },
+      cardTwo: {
+        header: "Registrieren und Freischaltcode beantragen",
+        text: "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung zugeschickt.",
+        url: "/unlock_code_request/step/data_input?link_overview=False",
+      },
+      cardThree: {
+        header: "Mit Freischaltcode anmelden und Steuererklärung machen",
+        text: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
+        url: "/unlock_code_activation/step/data_input?link_overview=False",
+      },
+    },
     Accordion: {
+      heading: "Häufig gestellte Fragen zum Steuerlotsen",
       Item1: {
         title: "Wer kann den Steuerlotsen nutzen?",
         detail:
-          "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben. Sie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den Steuerlotsen derzeit nicht nutzen. Sie können mit unserem Fragebogen prüfen, ob Sie alle Voraussetzungen für den Steuerlotsen erfüllen.",
+          "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben.\n\nSie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den Steuerlotsen derzeit nicht nutzen.\n\nSie können <eligibilityLink>mit unserem Fragebogen</eligibilityLink> prüfen, ob Sie alle Voraussetzungen für den Steuerlotsen erfüllen.",
       },
       Item2: {
         title: "Wie läuft die Nutzung des Steuerlotsen ab?",
         detail:
           "Mit dem Steuerlotsen kommen Sie ganz automatisch in 4 Schritten durch Ihre Steuererklärung:",
-        list: {
-          listItem1:
-            "Prüfen Sie, ob Sie die Voraussetzung für die Nutzung des Steuerlotsen erfüllen.",
-          listItem2:
-            "Registrieren Sie sich beim Steuerlotsen für Ihre Online-Steuererklärung. Mit der erfolgreichen Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung.",
-          listItem3:
-            "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
-          listItem4:
-            "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie erneut unsere Seite auf. Klicken Sie auf Ihre Steuererklärung und melden Sie sich mit Ihrem Freischaltcode an. Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen.",
-        },
+        listItem1:
+          "<eligibilityLink> Prüfen Sie</eligibilityLink>, ob Sie die Voraussetzung für die Nutzung des Steuerlotsen erfüllen.",
+        listItem2:
+          "<registrationLink>Registrieren Sie sich</registrationLink> beim Steuerlotsen für Ihre Online-Steuererklärung. Mit der erfolgreichen Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung.",
+        listItem3:
+          "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
+        listItem4:
+          "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie erneut unsere Seite auf. Klicken Sie auf <activationLink>Ihre Steuererklärung</activationLink>und melden Sie sich mit Ihrem Freischaltcode an. Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen.",
       },
       Item3: {
-        title: "",
-        detail: "",
+        title: "Bis wann kann ich die Steuererklärung abgeben?",
+        detail:
+          "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Juli 2022</strong> beim Finanzamt sein.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
       },
       Item4: {
-        title: "",
-        detail: "",
+        title: "Kann ich Angaben machen, die meine Steuerlast reduzieren?",
+        detailOne:
+          "Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und somit Ihre Steuerlast reduzieren. Zu folgenden Bereichen können Sie Angaben machen:",
+        detailTwo:
+          "Die <strong>haushaltsnahen Dienstleistungen</strong> und Handwerkerleistungen umfassen im Steuerlotsen <strong>keine Arbeitsverhältnisse</strong>. Sollten Sie Haushaltshilfen als Arbeitnehmer einstellen, können Sie dies im Steuerlotsen nicht steuerlich absetzen.\n\nEine detaillierte Übersicht, welche Angaben zu den Bereichen gehören, finden Sie in unserer Vorbereitungshilfe.\n\n<downloadPreparationLink>Vorbereitungshilfe speichern</downloadPreparationLink>",
+        listItem1: "Vorsorgeaufwendungen",
+        listItem2: "Spenden und Mitgliedsbeiträge",
+        listItem3: "außergewöhnliche Belastungen, wie Krankheitskosten",
+        listItem4: "Haushaltsnahe Dienstleistungen",
+        listItem5: "Haushaltsnahe Handwerkerleistungen",
+        listItem6: "Gezahlte Kirchensteuer",
       },
       Item5: {
-        title: "",
-        detail: "",
+        title: "Können wir die Steuererklärung gemeinsam als Paar machen?",
+        detail:
+          'Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es reicht in diesem Fall aus, wenn sich nur eine Person registriert und unter "Ihre Steuererklärung" für die gemeinsame Steuererklärung anmeldet. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner oder Ihrer Partnerin eintragen.',
       },
       Item6: {
-        title: "",
-        detail: "",
+        title:
+          "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?",
+        detail:
+          "Sie können den Steuerlotsen vielleicht nutzen. Der Steuerlotse ist nur mit dem Briefersatzverfahren für den Datenabruf von ELSTER nutzbar.\n\nWenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von ELSTER.\n\nELSTER steht für »Elektronische Steuererklärung« und ist die offizielle Plattform der deutschen Finanzverwaltung.",
       },
       Item7: {
-        title: "",
-        detail: "",
+        title: "Wer hat den Steuerlotsen entwickelt?",
+        detail:
+          "Der Steuerlotse wurde vom <digitalServiceLink>DigitalService</digitalServiceLink> – einer Bundes GmbH – im Auftrag des <bundesfinanzministeriumLink>Bundesfinanzministerium</bundesfinanzministeriumLink> entwickelt. Daneben hat der DigitalService die <grundsteuererklärungLink>“Grundsteuererklärung für Privateigentum”</grundsteuererklärungLink> entwickelt.",
       },
       Item8: {
-        title: "",
-        detail: "",
+        title:
+          "Für welche Steuerjahre kann ich den Steuerlotsen für meine Steuererklärung nutzen?",
+        detail:
+          "Der Steuerlotse kann zurzeit nur für die Abgabe einer Steuererklärung für das Steuerjahr 2021 verwendet werden. Für alle früheren Steuerjahre können Sie beispielsweise auf <elsterLink>Mein ELSTER</elsterLink> oder in einigen Bundesländern auch auf das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> zurückgreifen.",
       },
     },
+    ButtonLabel: "Zum Informationsseite",
   },
 };
 
