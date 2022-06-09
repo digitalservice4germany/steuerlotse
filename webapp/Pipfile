@@ -30,6 +30,7 @@ pyhumps = "*"
 pytest-xdist = "*"
 jinja2 = "==3.0.3"
 fakeredis = "*"
+sib-api-v3-sdk = "*"
 
 [dev-packages]
 pytest = "*"
