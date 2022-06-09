@@ -45,7 +45,7 @@ const SmallText = styled.span`
 const ButtonInRow = styled(ButtonAnchor)`
   margin-top: var(--spacing-03);
   @media (min-width: 577px) {
-    margin-top: 40px;
+    margin-top: 47px;
   }
   width: 195px;
 `;
@@ -89,7 +89,7 @@ const ColumnField = styled.div`
   }
 
   .field-margin-top {
-    margin-top: var(--spacing-03) !important;
+    margin-top: var(--spacing-05) !important;
   }
 `;
 
