@@ -45,6 +45,7 @@ class BaseConfig(object):
     
     CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY')
 
+    USE_SENDINBLUE_MOCK = False
     SENDINBLUE_API_KEY = environ.get('SENDINBLUE_API_KEY')
     SENDINBLUE_CONTACT_LIST_ID = environ.get('SENDINBLUE_CONTACT_LIST_ID')
 
@@ -121,6 +122,8 @@ class FunctionalTestingConfig(DevelopmentConfig):
     ERICA_BASE_URL = 'ERICA'
     RATELIMIT_ENABLED = False
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///functional-testing.db"
+
+    USE_SENDINBLUE_MOCK = True
 
 
 class TestingConfig(BaseConfig):
