@@ -45,6 +45,8 @@ import DonationInfoPage from "./pages/DonationInfoPage";
 import ChurchTaxInfoPage from "./pages/ChurchTaxInfoPage";
 import CraftsmanServicesInfoPage from "./pages/CraftsmanServicesInfoPage";
 import InfoForRelativesPage from "./pages/InfoForRelativesPage";
+import NewsletterSuccessPage from "./pages/NewsletterSuccessPage";
+import NewsletterRegisterBox from "./components/NewsletterRegisterBox";
 import FreeTaxDeclarationForPensionersPage from "./pages/FreeTaxDeclarationForPensionersPage";
 
 const allowedComponents = {
@@ -90,6 +92,8 @@ const allowedComponents = {
   ChurchTaxInfoPage,
   CraftsmanServicesInfoPage,
   InfoForRelativesPage,
+  NewsletterSuccessPage,
+  NewsletterRegisterBox,
   FreeTaxDeclarationForPensionersPage,
 };
 

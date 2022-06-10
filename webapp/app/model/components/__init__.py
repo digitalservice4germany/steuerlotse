@@ -98,6 +98,8 @@ class UnlockCodeSuccessProps(ComponentProps):
     steuer_erklaerung_link: str
     vorbereitungs_hilfe_link: str
     plausible_domain: Optional[str]
+    data_privacy_link: str
+    csrf_token: str
 
 
 class UnlockCodeFailureProps(ComponentProps):
@@ -257,6 +259,9 @@ class CraftsmanServicesInfoPageProps(ComponentProps):
 class InfoForRelativesPageProps(ComponentProps):
     pass
 
+
+class NewsletterSuccessPageProps(ComponentProps):
+    pass
 
 class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
     pass

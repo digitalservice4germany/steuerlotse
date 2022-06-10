@@ -8,11 +8,14 @@ import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
 import OneIcon from "../assets/icons/Icon-1.svg";
 import TwoIcon from "../assets/icons/Icon-2.svg";
 import ThreeIcon from "../assets/icons/Icon-3.svg";
+import NewsletterRegisterBox from "../components/NewsletterRegisterBox";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
   vorbereitungsHilfeLink,
   plausibleDomain,
+  dataPrivacyLink,
+  csrfToken,
 }) {
   const { t } = useTranslation();
   const stepHeader = {
@@ -100,6 +103,10 @@ export default function UnlockCodeSuccessPage({
         icon={IconThree}
         textOnly
       />
+      <NewsletterRegisterBox
+        dataPrivacyLink={dataPrivacyLink}
+        csrfToken={csrfToken}
+      />
     </>
   );
 }
@@ -108,6 +115,8 @@ UnlockCodeSuccessPage.propTypes = {
   prevUrl: PropTypes.string.isRequired,
   vorbereitungsHilfeLink: PropTypes.string.isRequired,
   plausibleDomain: PropTypes.string,
+  dataPrivacyLink: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
 };
 
 UnlockCodeSuccessPage.defaultProps = {
