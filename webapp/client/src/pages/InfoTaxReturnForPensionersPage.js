@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Trans, useTranslation } from "react-i18next";
-import styled from "styled-components";
 import ContentPageBox from "../components/ContentPageBox";
 import {
   ContentSpacingWrapper,
@@ -13,33 +12,12 @@ import {
   ListBox,
   ListBoxText,
   ShareBox,
+  HeaderSection,
+  Picture,
+  TopContent,
 } from "../components/ContentPageStyles";
 
 import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
-
-const Picture = styled.picture`
-  img {
-    width: 100%;
-    max-width: 930px;
-    height: auto;
-    object-fit: contain;
-  }
-`;
-
-const HeaderSection = styled.div`
-  margin-top: var(--spacing-11);
-
-  @media (max-width: 768px) {
-    margin-top: var(--spacing-09);
-  }
-`;
-
-const TopContent = styled.div`
-  max-width: 832px;
-  @media (max-width: 768px) {
-    max-width: 636px;
-  }
-`;
 
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();

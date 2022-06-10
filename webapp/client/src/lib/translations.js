@@ -1074,8 +1074,8 @@ const translations = {
           "Aufgrund der oben beschriebenen Anpassung des Rentenfreibetrags und den Erhöhungen der Renten zahlen immer mehr Menschen im Ruhestand Einkommensteuer.",
       },
       ShareBox: {
-        header: "Artikel teilen",
-        text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+        header: "Artikel weiterempfehlen",
+        text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein.",
         promoteUrl:
           "https://www.steuerlotse-rente.de/kostenlose-steuererklaerung-rentner",
         shareText:
@@ -1087,7 +1087,7 @@ const translations = {
         heading:
           "An diese Stellen können Sie sich bei Fragen zur Einkommensteuer wenden",
         introText:
-          "Wenn Sie das Finanzamt auffordert, eine Steuerklärung abzugeben, gilt es einige Punkte zu beachten. Zum Beispiel diese:",
+          "Wenn Sie das Finanzamt auffordert, eine Steuererklärung abzugeben, gilt es einige Punkte zu beachten. Zum Beispiel diese:",
         subHeading1: "Fristverlängerung und Formulare im Internet",
         text1:
           "Sie finden im Schreiben der Behörde ein Datum, an dem Ihre Erklärung spätestens eingereicht werden sollte. Falls absehbar ist, dass ein fristgerechtes Einbringen der Steuererklärung nicht mehr möglich ist, stellt das üblicherweise kein Problem dar: Bitten Sie Ihr zuständiges Finanzamt einfach um eine Fristverlängerung. Ein formloses Schreiben ist völlig ausreichend. Falls Sie bereits sehr versiert im Umgang mit Ihrer Steuererklärung sind, können Sie diese elektronisch über <elster>ELSTER</elster> vornehmen. Die notwendigen Vordrucke finden Sie außerdem auf dem <bfinv>Formularserver der Finanzverwaltung</bfinv> oder direkt bei Ihrem Finanzamt. ",

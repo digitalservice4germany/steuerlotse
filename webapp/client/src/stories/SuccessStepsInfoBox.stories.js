@@ -58,8 +58,8 @@ WithImage.args = {
 
 export const ContentShareBox = Template.bind({});
 ContentShareBox.args = {
-  header: "Artikel teilen",
-  text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+  header: "Artikel weiterempfehlen",
+  text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein.",
   shareText: "share text",
   mailSubject: "Mail Subject",
   sourcePage: "Reference Page",

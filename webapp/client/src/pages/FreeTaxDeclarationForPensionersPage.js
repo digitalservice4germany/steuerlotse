@@ -10,40 +10,18 @@ import {
   ParagraphTextLarger,
   ListBox,
   ShareBox,
+  IntroParagraphText,
+  HeaderSection,
+  TopContent,
+  Picture,
 } from "../components/ContentPageStyles";
 import AccordionComponent from "../components/AccordionComponent";
 import ButtonAnchor from "../components/ButtonAnchor";
 import ContentPageBox from "../components/ContentPageBox";
 import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
 
-const Picture = styled.picture`
-  img {
-    width: 100%;
-    max-width: 930px;
-    height: auto;
-    object-fit: contain;
-  }
-`;
-
-const HeaderSection = styled.div`
-  margin-top: var(--spacing-11);
-
-  @media (max-width: 768px) {
-    margin-top: var(--spacing-09);
-  }
-`;
-
-const TopContent = styled.div`
-  max-width: 832px;
-  @media (max-width: 768px) {
-    max-width: 636px;
-  }
-`;
-
-const ContentTeaserText = styled.p`
+export const IntroParagraphTextWithMarginTop = styled(IntroParagraphText)`
   padding-top: var(--spacing-07);
-  font-family: var(--font-bold);
-  font-size: var(--text-xxl);
 `;
 
 const ParagraphHeadingH2 = styled.h2`
@@ -52,6 +30,7 @@ const ParagraphHeadingH2 = styled.h2`
 `;
 
 const ParagraphHeadingH3 = styled.h3`
+  font-size: var(--text-2xl);
   padding-top: var(--spacing-03);
   font-family: var(--font-bold);
 `;
@@ -162,9 +141,9 @@ export default function FreeTaxDeclarationForPensionersPage({
                 alt="Bild von Rentnerin und Rentner beim Ausfüllen ihrer digitalen Steuererklärung"
               />
             </Picture>
-            <ContentTeaserText>
+            <IntroParagraphTextWithMarginTop>
               {t("freeTaxDeclarationForPensioners.Teaser")}
-            </ContentTeaserText>
+            </IntroParagraphTextWithMarginTop>
           </TopContent>
           <AnchorList>
             <li>
