@@ -177,7 +177,7 @@ def register_request_handlers(app):
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['X-Frame-Options'] = 'SAMEORIGIN'
         response.headers['Referrer-Policy'] = 'same-origin'
-        response.headers['Permissions-Policy'] = 'Permissions-Policy: accelerometer=(), ambient-light-sensor=(), ' \
+        response.headers['Permissions-Policy'] = 'accelerometer=(), ambient-light-sensor=(), ' \
                                                  'autoplay=(), battery=(), camera=(), cross-origin-isolated=(), ' \
                                                  'display-capture=(), document-domain=(), encrypted-media=(), ' \
                                                  'execution-while-not-rendered=(), execution-while-out-of-viewport=(' \
@@ -186,11 +186,14 @@ def register_request_handlers(app):
                                                  'payment=(), picture-in-picture=(), publickey-credentials-get=(), ' \
                                                  'screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), ' \
                                                  'xr-spatial-tracking=() '
+        additional_connect_src = ""
+        if request.path == '/unlock_code_request/step/unlock_code_success':
+            additional_connect_src = "'self'"
         response.headers['Content-Security-Policy'] = (
             "default-src 'self'; "
             "script-src 'self' 'unsafe-inline' plausible.io; "
             "style-src 'self' 'unsafe-inline'; "
-            "connect-src plausible.io; "
+            "connect-src " + additional_connect_src + " plausible.io; "
             "object-src 'none'; "
         )
         return response
