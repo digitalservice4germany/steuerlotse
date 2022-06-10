@@ -114,3 +114,7 @@ export const ParagraphHeading = styled.h3`
     font-size: 1.25rem;
   }
 `;
+
+export const ShareBox = styled.div`
+  max-width: 738px;
+`;

@@ -155,14 +155,15 @@ export default function SuccessStepsInfoBox({
 SuccessStepsInfoBox.propTypes = {
   header: PropTypes.string,
   text: PropTypes.string,
-  image: {
+  image: PropTypes.shape({
     src: PropTypes.string,
     srcSet: PropTypes.string,
     alt: PropTypes.string,
-  },
-  anchor: {
+  }),
+  anchor: PropTypes.shape({
     url: PropTypes.string,
-  },
+    text: PropTypes.string,
+  }),
   icon: PropTypes.string,
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,

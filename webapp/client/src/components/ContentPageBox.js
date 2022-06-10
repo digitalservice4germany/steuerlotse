@@ -97,28 +97,28 @@ export default function ContentPageBox({ boxText, anchor, plausibleDomain }) {
 }
 
 ContentPageBox.propTypes = {
-  boxText: {
+  boxText: PropTypes.shape({
     headerOne: PropTypes.string,
     headerTwo: PropTypes.string,
-  },
+  }),
   plausibleDomain: PropTypes.string,
-  anchor: {
-    buttonOne: {
+  anchor: PropTypes.shape({
+    buttonOne: PropTypes.shape({
       url: PropTypes.string,
       text: PropTypes.string,
       plausibleGoal: PropTypes.string,
-    },
-    buttonTwo: {
+    }),
+    buttonTwo: PropTypes.shape({
       url: PropTypes.string,
       text: PropTypes.string,
       plausibleGoal: PropTypes.string,
-    },
-    buttonThree: {
+    }),
+    buttonThree: PropTypes.shape({
       url: PropTypes.string,
       text: PropTypes.string,
       plausibleGoal: PropTypes.string,
-    },
-  },
+    }),
+  }),
 };
 
 ContentPageBox.defaultProps = {
