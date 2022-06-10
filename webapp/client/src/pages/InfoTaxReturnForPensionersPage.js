@@ -12,6 +12,7 @@ import {
   ParagraphHeadingLarger,
   ListBox,
   ListBoxText,
+  ShareBox,
 } from "../components/ContentPageStyles";
 
 import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
@@ -38,10 +39,6 @@ const TopContent = styled.div`
   @media (max-width: 768px) {
     max-width: 636px;
   }
-`;
-
-const ShareBox = styled.div`
-  max-width: 738px;
 `;
 
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {

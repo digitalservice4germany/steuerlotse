@@ -30,7 +30,7 @@ from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.data_access.storage.configuration_storage import ConfigurationStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template
-from app.model.components import InfoTaxReturnForPensionersProps, NewsletterSuccessPageProps
+from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, NewsletterSuccessPageProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
@@ -510,13 +510,19 @@ def register_request_handlers(app):
             props=NewsletterSuccessPageProps().camelized_dict(),
             component='NewsletterSuccessPage')
 
+    @app.route('/kostenlose-steuererklaerung-rentner', methods=['GET'])
+    @add_caching_headers
+    def free_tax_declaration():
+        return render_react_content_page_template(
+            props=FreeTaxDeclarationForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
+            component='FreeTaxDeclarationForPensionersPage', disable_default_title_description_meta_tags=True,
+            header_title=_('freeTaxDeclarationForPensioners.header-title'))
+
     @app.route('/ping')
     def ping():
         """Simple route that can be used to check if the app has started.
         """
         return 'pong'
-
-
 
 
 ERICA_ERROR_TEMPLATE = 'error/erica_error.html'

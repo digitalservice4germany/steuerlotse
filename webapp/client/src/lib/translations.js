@@ -1009,6 +1009,111 @@ const translations = {
       Text: "Helfen zum Beispiel Freunde oder ehemaligen Arbeitskollege bei der Steuererklärung ist das eine Ordnungswidrigkeit – egal ob mit oder ohne Bezahlung. Wer erwischt wird, zahlt bis zu 5.000 € Strafe. Das sollten Sie daher vermeiden!",
     },
   },
+  freeTaxDeclarationForPensioners: {
+    meta: {
+      title: "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente",
+      description:
+        "Steuererklärungen stellen viele Rentner vor Probleme. Lesen Sie hier, welche (kostenlosen) Beratungsmöglichkeiten bereitstehen.",
+      keywords:
+        "Steuererklärung Rentner, Steuererklärung für Rentner, Steuererklärung für Rentner kostenlos, Steuererklärung Rentner Pflicht",
+    },
+    Heading: "Kostenlose Steuererklärung für Rentner – ein Überblick",
+    Teaser:
+      "Immer mehr Bezieher einer Rente oder Pension werden vom Finanzamt um eine Steuererklärung gebeten. Lesen Sie hier, wieso diese anfällt – und wo Sie Hilfe für die Einkommensteuererklärung erhalten.",
+    AnchorList: {
+      anchor1: "Voraussetzungen Einkommensteuer",
+      anchor2: "Beratungsangebote Rentner",
+      anchor3: "Kostenfreie Steuererklärung erstellen",
+    },
+    Accordion: {
+      heading:
+        "Die wichtigsten Antworten zu Steuererklärungen für Rentner im Überblick",
+      Item1: {
+        heading: "Muss ich als Rentner oder Pensionär Einkommensteuer zahlen?",
+        detail:
+          "Grundsätzlich sind Renten und Pensionen einkommensteuerpflichtig. Liegen Ihre zu versteuernde Einkünfte unter dem Grundfreibetrag, so müssen Sie allerdings keine Steuererklärung beim Finanzamt einreichen.",
+      },
+      Item2: {
+        heading: "Wie hoch ist der Grundfreibetrag?",
+        detail:
+          "Im Jahr 2020 lag der Grundfreibetrag bei 9.408 Euro, im Jahr 2021 bei 9.744 Euro. 2022 wird der Grundfreibetrag auf 9.984 Euro angehoben.",
+      },
+      Item3: {
+        heading:
+          "Bislang musste ich keine Steuererklärung einreichen. Wieso ist das jetzt anders?",
+        detail:
+          "Einerseits erhöhen sich die Renten in fast jedem Jahr, andererseits nimmt der Besteuerungsanteil stetig zu. Das führt dazu, dass immer mehr Menschen im Ruhestand Einkommensteuer entrichten müssen.",
+      },
+      Item4: {
+        heading: "Welche Beratungsmöglichkeiten stehen mir zur Verfügung?",
+        detail:
+          "Neben Steuerberatern bieten auch Lohnsteuerhilfevereine ihre Dienste an. Es gibt sogar völlig kostenlose Möglichkeiten der Beratung und Unterstützung.",
+      },
+    },
+    Body: {
+      introText:
+        "Vielleicht sind Sie Rentnerin oder Rentner und haben Post vom Finanzamt erhalten: Die Behörde fordert Sie möglicherweise auf, eine Einkommensteuererklärung einzureichen. Sie sind damit nicht allein: Knapp sieben Millionen Rentnerinnen und Rentner mussten im Jahr 2017 – aktuellere Daten liegen noch nicht vor – Einkommensteuer auf ihre Renteneinkünfte zahlen. Das bedeutet, dass etwa <destatisLink>jeder dritte Rentenempfänger</destatisLink> in Deutschland eine Steuererklärung bei seinem Finanzamt abgeben muss. Falls dieser Sachverhalt auch auf Sie zutrifft, müssen Sie aber nicht in Sorge geraten: Wir möchten Ihnen aufzeigen, wo Sie Hilfe und Unterstützung finden – und das sogar kostenlos.",
+      part1: {
+        heading: "Rente und Einkommensteuer",
+        introText:
+          "Nicht jedem ist bekannt, dass auf Renten und Pensionen Einkommensteuer anfällt. Die <deutscheRente>Deutsche Rentenversicherung</deutscheRente> meldet die relevanten Daten der zuständigen Finanzverwaltung, führt aber keine Steuern an das Finanzamt ab.",
+        subHeading1:
+          "Rentenfreibetrag und einkommensteuerpflichtiger Teil der Rente",
+        text1:
+          "Alle Rentenempfänger erhalten einen „Rentenfreibetrag“: Hierbei handelt es sich um einen festen Eurobetrag, auf den keine Steuern anfallen. Die Höhe des Anteils des Rentenfreibetrags hängt von dem Jahr ab, in dem Sie erstmals eine Rente erhalten. Liegt der erstmalige Erhalt einer Rente zum Beispiel im Jahr 2020, unterliegen 20 Prozent Ihrer Rente keiner Einkommensteuer. Bekommen Sie Ihre erste Rente im Jahr 2021, dann sind es nur noch 19 Prozent. Im Folgejahr sind es 18 Prozent für Bezieher der ersten Rentenzahlung und so weiter. Grund hierfür ist die sogenannte „nachgelagerte Besteuerung“, für die sich der Gesetzgeber im Jahr 2005 entschieden hat.",
+        example1:
+          "<bold>Beispiel:</bold> Herr Mayer ist ledig und erhält erstmals im Jahr 2020 eine Jahresbruttorente von 14.000 Euro. 80 Prozent hiervon müssen versteuert werden: Das sind 11.200 Euro, der Rentenfreibetrag beläuft sich auf 2.800 Euro. Sollte Herr Mayer aufgrund einer Erhöhung seiner Rente fünf Jahre später 15.000 Euro Rente erhalten, ändert das nichts am Rentenfreibetrag: Dieser bleibt bei 2.800 Euro, sodass 12.200 Euro versteuert werden müssen.",
+        text2:
+          "Bei Pensionen ist das anders: Sie werden bereits jetzt in voller Höhe versteuert. Als „Pensionen“ gelten jene Bezüge, welche Beamtinnen und Beamte im Ruhestand erhalten.",
+        subHeading2: "Grundfreibetrag: Ab wann Einkommensteuer anfällt",
+        text3:
+          "Neben dem Rentenfreibetrag gibt es noch den Grundfreibetrag. Letzterer hat zur Folge, dass die Einkommensteuer erst ab einem bestimmten <bfinm>Schwellenwert</bfinm> greift: Im Jahr 2020 lag dieser bei 9.408 Euro, ein Jahr später bei 9.744 Euro, anno 2022 wird er auf 9.984 Euro angehoben.",
+        example2:
+          "<bold>Beispiel:</bold> Für Herrn Mayer, Bezieher einer Rente, hat das zur Folge, dass im Jahr 2020 auf lediglich 1.792 Euro (11.200 Euro minus 9.408 Euro) Einkommensteuer anfällt. Würde Herr Mayer übrigens eine jährliche Pension in Höhe von 14.000 Euro erhalten, so würden 4.592 Euro der Einkommensteuer unterliegen (14.000 Euro minus 9.408 Euro).",
+        text4:
+          "Aufgrund der oben beschriebenen Anpassung des Rentenfreibetrags und den Erhöhungen der Renten zahlen immer mehr Menschen im Ruhestand Einkommensteuer.",
+      },
+      ShareBox: {
+        header: "Artikel teilen",
+        text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+        promoteUrl:
+          "https://www.steuerlotse-rente.de/kostenlose-steuererklaerung-rentner",
+        shareText:
+          "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/kostenlose-steuererklaerung-rentner",
+        mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
+        sourcePage: "FreeTaxDeclarationForPensionersPage",
+      },
+      part2: {
+        heading:
+          "An diese Stellen können Sie sich bei Fragen zur Einkommensteuer wenden",
+        introText:
+          "Wenn Sie das Finanzamt auffordert, eine Steuerklärung abzugeben, gilt es einige Punkte zu beachten. Zum Beispiel diese:",
+        subHeading1: "Fristverlängerung und Formulare im Internet",
+        text1:
+          "Sie finden im Schreiben der Behörde ein Datum, an dem Ihre Erklärung spätestens eingereicht werden sollte. Falls absehbar ist, dass ein fristgerechtes Einbringen der Steuererklärung nicht mehr möglich ist, stellt das üblicherweise kein Problem dar: Bitten Sie Ihr zuständiges Finanzamt einfach um eine Fristverlängerung. Ein formloses Schreiben ist völlig ausreichend. Falls Sie bereits sehr versiert im Umgang mit Ihrer Steuererklärung sind, können Sie diese elektronisch über <elster>ELSTER</elster> vornehmen. Die notwendigen Vordrucke finden Sie außerdem auf dem <bfinv>Formularserver der Finanzverwaltung</bfinv> oder direkt bei Ihrem Finanzamt. ",
+        tipp: "<bold>Tipp:</bold> Sie können Ihre Steuererklärung auch kostenlos direkt mit dem <steuerlotse>Steuerlotsen</steuerlotse> erledigen. Dazu brauchen Sie keinen Elster-Account! ",
+        subHeading2:
+          "Beratung beim Finanzamt, Lohnsteuerverein oder Steuerberater",
+        text2:
+          "Tauchen beim Ausfüllen der Formulare Fragen auf, zögern Sie nicht, diese an Ihr Finanzamt zu richten. Viele dieser Behörden bieten persönliche Beratungsgespräche und telefonische Hilfestellung an. Eine kostengünstige Möglichkeit, Beratung einzuholen und die Steuererklärung an fachkundige Personen zu delegieren, sind sogenannte „Lohnsteuerhilfevereine“. Die Mitgliedschaft in einem solchen Verein hängt von der Höhe des Einkommens ab und kostet in der Regel zwischen 50 und 400 Euro jährlich. Deutlich teurer fallen die Dienste eines Steuerberaters aus. Allerdings geht die Inanspruchnahme eines Lohnsteuerhilfevereins oder Steuerberaters mit einem großen Vorteil einher: Die Frist zur Abgabe der Steuererklärung verlängert sich automatisch um sieben Monate!",
+      },
+      part3: {
+        heading: "Kostenlose Steuererklärung für Rentner mit dem Steuerlotsen",
+        introText:
+          "Falls Sie eine Rente oder Pension beziehen und keine weiteren Einkünfte erzielen, gibt es neben den oben genannten Beratungsangeboten eine weitere Möglichkeit: Der <steuerlotse>Steuerlotse</steuerlotse> wurde im Auftrag des Bundesfinanzministeriums entwickelt und verfolgt daher keine kommerziellen Absichten. Im Gegenteil: Die Nutzung des Dienstes ist völlig kostenfrei. Er richtet sich gezielt an Menschen im Ruhestand. Die Installation eines gesonderten Programms ist nicht erforderlich, die Internetseite führt Sie bequem durch die Steuererklärung.",
+        subHeading1: "So funktioniert der Steuerlotse",
+        text1:
+          "Um sich <steuerlotseRegister>beim Steuerlotsen zu registrieren</steuerlotseRegister>, reichen Angaben zu Ihrem Geburtsdatum und Ihrer Steuer-Identifikationsnummer aus. Binnen zwei Wochen erhalten Sie einen Brief mit einem persönlichen Freischaltcode. Übrigens: Falls Sie eine gemeinsame Veranlagung als Paar vornehmen möchten, weil Sie verheiratet sind oder in einer eingetragenen Lebenspartnerschaft leben, ist das problemlos möglich. Es reicht aus, wenn sich eine Person registriert.",
+        text2:
+          "Selbstverständlich berücksichtigt der Steuerlotse auch jene Ausgaben, die Ihre Steuerlast verringern. So können Sie unter anderem gezahlte Kirchensteuer, Spenden und Mitgliedsbeiträge sowie außergewöhnliche Belastungen steuerlich geltend machen.",
+      },
+      button: {
+        label: "Zum Steuerlotsen für Rente und Pension",
+        plausibleGoal: "contentPage_freeTaxDeclaration_clicked",
+        url: "/",
+      },
+    },
+  },
 };
 
 export default translations;

@@ -47,6 +47,7 @@ import CraftsmanServicesInfoPage from "./pages/CraftsmanServicesInfoPage";
 import InfoForRelativesPage from "./pages/InfoForRelativesPage";
 import NewsletterSuccessPage from "./pages/NewsletterSuccessPage";
 import NewsletterRegisterBox from "./components/NewsletterRegisterBox";
+import FreeTaxDeclarationForPensionersPage from "./pages/FreeTaxDeclarationForPensionersPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -93,6 +94,7 @@ const allowedComponents = {
   InfoForRelativesPage,
   NewsletterSuccessPage,
   NewsletterRegisterBox,
+  FreeTaxDeclarationForPensionersPage,
 };
 
 function mountComponent(element) {

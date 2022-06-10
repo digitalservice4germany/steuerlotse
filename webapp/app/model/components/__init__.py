@@ -262,3 +262,6 @@ class InfoForRelativesPageProps(ComponentProps):
 
 class NewsletterSuccessPageProps(ComponentProps):
     pass
+
+class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
+    pass
