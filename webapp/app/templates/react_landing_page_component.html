@@ -1,0 +1,9 @@
+{% extends 'basis/base.html' %} {% block main_content %}
+<div class="main-content--full-width--no-padding">
+  <div
+    data-is-component="yes"
+    data-component-name="{{ component }}"
+    data-props-json="{{ props | tojson | forceescape }}"
+  ></div>
+</div>
+{% endblock %}
