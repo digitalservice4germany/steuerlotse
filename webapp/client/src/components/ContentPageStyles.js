@@ -118,3 +118,27 @@ export const ParagraphHeading = styled.h3`
 export const ShareBox = styled.div`
   max-width: 738px;
 `;
+
+export const Picture = styled.picture`
+  img {
+    width: 100%;
+    max-width: 930px;
+    height: auto;
+    object-fit: contain;
+  }
+`;
+
+export const HeaderSection = styled.div`
+  margin-top: var(--spacing-11);
+
+  @media (max-width: 768px) {
+    margin-top: var(--spacing-09);
+  }
+`;
+
+export const TopContent = styled.div`
+  max-width: 832px;
+  @media (max-width: 768px) {
+    max-width: 636px;
+  }
+`;
