@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 const Box = styled.div`
   margin-bottom: var(--spacing-05);
@@ -62,6 +63,8 @@ const Wrapper = styled.div`
 `;
 
 export default function SummaryComponent({ data, label, url }) {
+  const { t } = useTranslation();
+
   const mapping =
     data &&
     data.map((item) => (
@@ -79,7 +82,9 @@ export default function SummaryComponent({ data, label, url }) {
     <Box>
       <LabelBox>
         <BoxLabelText>{label}</BoxLabelText>
-        <BoxLink href={url}>Ändern</BoxLink>
+        <BoxLink href={url} alt={`${label} ${t("lotse.summary.changeAlt")}`}>
+          {t("lotse.summary.change")}
+        </BoxLink>
       </LabelBox>
       <ValueBox>{mapping}</ValueBox>
     </Box>
