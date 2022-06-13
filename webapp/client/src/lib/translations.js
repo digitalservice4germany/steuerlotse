@@ -1206,6 +1206,146 @@ const translations = {
       },
     },
   },
+  mandateForTaxDeclaration: {
+    meta: {
+      title: "Steuererklärung für Eltern machen | Steuerlotse Rente",
+      description:
+        "Viele Rentner müssen eine Steuererklärung abgeben. Wie können Kinder die Steuererklärung für ihre Eltern machen? Mehr erfahren!",
+      keywords:
+        "Steuererklärung für Eltern machen (40), Steuererklärung Eltern Unterstützung (20), Steuererklärung Unterstützung Eltern wo eintragen (10), Vollmacht Finanzamt Eltern (30)",
+    },
+    Heading: "Steuererklärung für Eltern machen (inkl. Vollmacht-Vorlage)",
+    Teaser:
+      "Immer mehr Rentner und Rentnerinnen müssen eine Steuererklärung abgeben. Viele von ihnen sind damit jedoch überfordert. Wir erklären, wie Sie als Angehöriger die Steuererklärung für Ihre Eltern machen können und was Sie dabei beachten sollten.",
+    AnchorList: {
+      anchor1: "Wie entsteht die Steuerpflicht?",
+      anchor2: "Wer darf bei der Steuererklärung helfen?",
+      anchor3: "Vollmacht für das Finanzamt ausstellen",
+      anchor4: "Mit dem Steuerlotsen Steuererklärungen erledigen",
+    },
+    Accordion: {
+      heading:
+        "Die wichtigsten Antworten zum Thema „Steuererklärung für Eltern machen“ im Überblick:",
+      Item1: {
+        heading: "Warum müssen immer mehr Rentner eine Steuererklärung machen?",
+        detail:
+          "Im Jahr 2020 hat die Bundesregierung die Rente erhöht. Auf diese Weise überschreiten immer mehr Menschen im Ruhestand den Freibetrag – also den Betrag, den sie pro Jahr steuerfrei einnehmen dürfen. Heute zahlen daher rund sieben Millionen der gut 21 Millionen Rentenbeziehenden eine Einkommensteuer. Das heißt auch: Sie müssen eine Steuererklärung abgeben.",
+      },
+      Item2: {
+        heading: "Wer kann Rentnern bei der Steuererklärung helfen?",
+        detail:
+          "Grundsätzlich können Angehörige Rentnern bei ihrer Steuererklärung helfen. Oftmals bieten Kinder ihren Eltern eine Unterstützung für die Steuererklärung an.",
+      },
+      Item3: {
+        heading:
+          "Wo müssen Eltern die Unterstützung durch ihre Kinder in der Steuererklärung angeben?",
+        detail:
+          "Eltern können im Mantelbogen der Steuererklärung angeben, dass ihre Kinder ihnen bei der Steuererklärung geholfen haben.",
+      },
+      Item4: {
+        heading:
+          "Wie können Rentner eine Vollmacht für das Finanzamt ausstellen?",
+        detail:
+          "Eine rechtssichere Vollmacht für das Finanzamt benötigt den Namen des Rentners, seine Anschrift, den des bevollmächtigten Kindes (oder eines anderen Angehörigen), das aktuelle Datum und die Unterschrift des Rentners. Alternativ können Sie einfach diese <bfinm>Vollmacht-Vorlage</bfinm> nutzen.",
+      },
+    },
+    Body: {
+      introText:
+        "Ihre Eltern haben Ihr Leben lang gearbeitet und fleißig in die Rentenkasse eingezahlt. Jetzt im Ruhestand erhalten sie jeden Monat Geld – ohne etwas dafür tun zu müssen. Ganz so einfach ist es für Rentner dann aber doch nicht. Denn: Immer mehr Menschen im Ruhestand müssen Steuern zahlen. Das bedeutet auch: Sie müssen eine Steuererklärung abgeben. Viele Rentner suchen daher Unterstützung bei ihren Kindern. Wie können Sie als Angehöriger also die Steuererklärung für Ihre Eltern machen? Und was sollten Sie dabei beachten?",
+      part1: {
+        heading: "Warum müssen immer mehr Rentner eine Steuererklärung machen?",
+        text1:
+          "Im Juli 2020 erhöhte die Bundesregierung die Rente. Seitdem erhalten Menschen in Westdeutschland 3,45 Prozent und Menschen in Ostdeutschland 4,2 Prozent <vlh>mehr Rente</vlh>. Das war für ältere Menschen grundsätzlich eine gute Nachricht. Mehr Geld heißt im Ruhestand mehr Lebensqualität!",
+        text2:
+          "Die höhere Rente bedeutet jedoch auch, dass viele Rentner und Pensionäre die Mehreinnahmen vollständig versteuern müssen. Das passiert, sobald das Einkommen aus ihrer Rente den Grundfreibetrag überschreitet. Dieser liegt im Jahr 2022 bei 9.984 Euro.",
+        text3:
+          "Für die Praxis hieß das: Im Jahr 2020 rutschten plötzlich rund 51.000 Rentner neu in die Steuerpflicht. Das schätzt das <finanztip>Bundesfinanzministerium</finanztip>. Heute zahlen knapp sieben Millionen der gut 21 Millionen Rentenbeziehenden in Deutschland eine <finanztip>Einkommensteuer.</finanztip> Das bedeutet für die Rentner: Sie müssen jedes Jahr immer wieder eine Steuererklärung abgeben – eine für ältere Menschen manchmal nicht einfache Aufgabe.",
+      },
+      ShareBox: {
+        header: "Artikel weiterempfehlen",
+        text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein.",
+        promoteUrl:
+          "https://www.steuerlotse-rente.de/steuererklärung-eltern-vollmacht",
+        shareText:
+          "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/steuererklärung-eltern-vollmacht",
+        mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
+        sourcePage: "MandateForTaxDeclarationPage",
+      },
+      part2: {
+        heading: "Wann müssen Rentner tatsächlich Steuern zahlen?",
+        text1:
+          "Ob ein Rentner tatsächlich eine Steuererklärung abgeben und Steuern zahlen muss, hängt davon ab...",
+        list: {
+          item1: "...wie viel Rente er bekommt.",
+          item2: "...wann er zum ersten Mal Rente bezogen hat.",
+          item3: "...wie hoch der steuerpflichtige Anteil seiner Rente ist.",
+          item4: "...ob er verheiratet ist.",
+          item5:
+            "...wie viel Versicherungsbeiträge und Krankheitskosten er zahlt.",
+          item6:
+            "...ob er mit seinen Einnahmen über dem <mdr>jährlichen Freibetrag</mdr> liegt.",
+        },
+        text2:
+          "Wann genau Rentner und Rentnerinnen eine Steuererklärung abgeben müssen, hat die Finanzverwaltung NRW in einem anschaulichen Video erklärt:",
+      },
+      part3: {
+        heading: "Wer darf Rentnern bei der Steuererklärung helfen?",
+        text1:
+          "Eigentlich hatten Ihre Eltern bereits einen großen Haken an das Thema Arbeit und Steuern gemacht – und plötzlich sollen sie doch wieder eine Steuererklärung machen. Wer kann ihnen dabei helfen?",
+        text2:
+          "Grundsätzlich dürfen Kinder ihren Eltern Unterstützung bei der Steuererklärung anbieten. Daneben dürfen ihnen auch:",
+        list: {
+          item1: "Ehegatten",
+          item2: "geschiedene Ehepartner",
+          item3: "Lebenspartner",
+          item4: "Verlobte",
+          item5: "Verwandte und Verschwägerte gerader Linie",
+          item6: "Geschwister",
+          item7: "Kinder der Geschwister",
+          item8: "Ehegatten oder Lebenspartner der Geschwister",
+          item9: "Geschwister der Ehegatten oder Lebenspartner",
+          item10: "Geschwister der Eltern",
+          item11: "Pflegeeltern und Pflegekinder",
+        },
+        text3:
+          "bei der <steuertipps>Steuererklärung helfen</steuertipps>. Das muss jedoch kostenlos sein!",
+        subHeading1:
+          "Wo müssen Kinder die Unterstützung ihrer Eltern bei der Steuererklärung eintragen?",
+        text4:
+          "Möchten Angehörige Rentner oder Pensionäre bei der Steuererklärung unterstützen, sollten sie diesen Umstand bei der Steuererklärung angeben. Sie können die <steuertipps>Hilfe im Mantelbogen der Steuererklärung</steuertipps> im Feld „Bei der Anfertigung dieser Steuererklärung hat mitgewirkt“ angeben. Dabei sollten sie auch das Verwandtschaftsverhältnis mitteilen.",
+      },
+      part4: {
+        heading:
+          "Wie können Eltern eine Vollmacht für das Finanzamt ausstellen?",
+        text1:
+          "Steuererklärung anfertigen, Bescheid auslesen und eventuelle Nachzahlungen tätigen: Um im Ruhestand auch die wohlverdiente Ruhe zu genießen, können Eltern ihren Kindern eine Vollmacht für das Finanzamt ausstellen. Die Kinder übernehmen in diesem Fall jegliche Steuerangelegenheiten.",
+        text2: "Damit eine Vollmacht wirksam ist, sollte diese:",
+        list: {
+          item1: "Namen des Rentners",
+          item2: "Anschrift des Rentners",
+          item3:
+            "Namen des bevollmächtigten Kindes (oder eines anderen Angehörigen)",
+          item4: "Aktuelles Datum",
+          item5: "Unterschrift des Rentners",
+        },
+        text3:
+          "enthalten. Damit Sie dabei auf der sicheren Seite stehen, haben wir für Sie eine wasserdichte <bfinm>Vollmacht-Vorlage</bfinm> erstellt.",
+      },
+      part5: {
+        heading:
+          "Mit dem Steuerlotsen die Steuererklärung in wenigen Minuten erledigen",
+        text1:
+          "Wenn Sie die Steuererklärung für Ihre Eltern machen möchten, schaffen Sie das mit dem Steuerlotsen schnell und unkompliziert!",
+        text2:
+          "Der Steuerlotse ist ein Online-Tool für Rentner und Pensionäre, mit dem Sie intuitiv und ganz ohne Vorkenntnisse in wenigen Minuten die Steuererklärung für Ihre Eltern erledigen. Dazu gibt Ihnen der Steuerlotse eine Schritt-für-Schritt-Anleitung an die Hand, die Sie schnell und unkompliziert durch Ihre Steuern führt. Das Beste daran: Das Angebot wurde im Auftrag des Bundesfinanzministeriums entwickelt und ist daher kostenlos!",
+      },
+      button: {
+        label: "Jetzt Ihre Steuererklärung mit dem Steuerlotsen erledigen!",
+        plausibleGoal: "contentPage_mandateForTaxDeclaration_clicked",
+        url: "/eligibility/step/marital_status?link_overview=False",
+      },
+    },
+  },
 };
 
 export default translations;

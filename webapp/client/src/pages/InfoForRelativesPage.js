@@ -75,7 +75,7 @@ export default function InfoForRelativesPage() {
         </InnerHeader>
         <Picture>
           <img
-            src="../images/info-angehoerige.jpg"
+            src="../images/mandate-for-tax-declaration.jpg"
             alt="Frau hilft Verwandten am Laptop bei ihrer Steuererklärung"
           />
         </Picture>

@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import FreeTaxDeclarationForPensionersPage from "./FreeTaxDeclarationForPensionersPage";
 import i18n from "i18next";
 import { I18nextProvider } from "react-i18next";
+import MandateForTaxDeclarationPage from "./MandateForTaxDeclarationPage";
 
 jest.mock("../components/InfoBox", () => ({
   __esModule: true,
@@ -22,13 +22,13 @@ const MOCK_PROPS = {
   plausibleDomain: "/plausibleDomain/path",
 };
 
-describe("FreeTaxDeclarationForPensionersPage translations", () => {
+describe("MandateForTaxDeclaration translations", () => {
   const texts =
-    i18n.getDataByLanguage("de").translation.freeTaxDeclarationForPensioners;
+    i18n.getDataByLanguage("de").translation.mandateForTaxDeclaration;
   beforeEach(() => {
     render(
       <I18nextProvider i18n={i18n}>
-        <FreeTaxDeclarationForPensionersPage {...MOCK_PROPS} />
+        <MandateForTaxDeclarationPage {...MOCK_PROPS} />
       </I18nextProvider>
     );
   });
@@ -53,12 +53,16 @@ describe("FreeTaxDeclarationForPensionersPage translations", () => {
     expect(screen.getByText(texts.AnchorList.anchor3)).toBeDefined();
   });
 
+  it("should render anchor 4", () => {
+    expect(screen.getByText(texts.AnchorList.anchor4)).toBeDefined();
+  });
+
   it("should render accordion heading", () => {
     expect(screen.getByText(texts.Accordion.heading)).toBeDefined();
   });
 
   it("should render accordion item 1 heading", () => {
-    expect(screen.getByText(texts.Accordion.Item1.heading)).toBeDefined();
+    expect(screen.getAllByText(texts.Accordion.Item1.heading)).toBeDefined();
   });
 
   it("should render accordion item 1 detail", () => {
@@ -85,66 +89,86 @@ describe("FreeTaxDeclarationForPensionersPage translations", () => {
     expect(screen.getByText(texts.Accordion.Item4.heading)).toBeDefined();
   });
 
-  it("should render accordion item 4 detail", () => {
-    expect(screen.getByText(texts.Accordion.Item4.detail)).toBeDefined();
-  });
-
   it("should render body part 1 heading", () => {
-    expect(screen.getByText(texts.Body.part1.heading)).toBeDefined();
-  });
-
-  it("should render body part 1 subheading 1", () => {
-    expect(screen.getByText(texts.Body.part1.subHeading1)).toBeDefined();
-  });
-
-  it("should render body part 1 text 1", () => {
-    expect(screen.getByText(texts.Body.part1.text1)).toBeDefined();
+    expect(screen.getAllByText(texts.Body.part1.heading)).toBeDefined();
   });
 
   it("should render body part 1 text 2", () => {
     expect(screen.getByText(texts.Body.part1.text2)).toBeDefined();
   });
 
-  it("should render body part 1 subheading 2", () => {
-    expect(screen.getByText(texts.Body.part1.subHeading2)).toBeDefined();
-  });
-
-  it("should render body part 1 text 4", () => {
-    expect(screen.getByText(texts.Body.part1.text4)).toBeDefined();
-  });
-
   it("should render body part 2 heading", () => {
     expect(screen.getByText(texts.Body.part2.heading)).toBeDefined();
   });
 
-  it("should render body part 2 intro text", () => {
-    expect(screen.getByText(texts.Body.part2.introText)).toBeDefined();
-  });
-
-  it("should render body part 2 subheading 2", () => {
-    expect(screen.getByText(texts.Body.part2.subHeading2)).toBeDefined();
-  });
-
   it("should render body part 2 text 2", () => {
-    expect(screen.getByText(texts.Body.part2.text2)).toBeDefined();
+    expect(screen.getByText(texts.Body.part2.text1)).toBeDefined();
+  });
+
+  it("should render body part 2 list item 1", () => {
+    expect(screen.getByText(texts.Body.part2.list.item1)).toBeDefined();
+  });
+
+  it("should render body part 2 list item 2", () => {
+    expect(screen.getByText(texts.Body.part2.list.item2)).toBeDefined();
+  });
+
+  it("should render body part 2 list item 3", () => {
+    expect(screen.getByText(texts.Body.part2.list.item3)).toBeDefined();
+  });
+
+  it("should render body part 2 list item 4", () => {
+    expect(screen.getByText(texts.Body.part2.list.item4)).toBeDefined();
+  });
+
+  it("should render body part 2 list item 5", () => {
+    expect(screen.getByText(texts.Body.part2.list.item5)).toBeDefined();
   });
 
   it("should render body part 3 heading", () => {
     expect(screen.getByText(texts.Body.part3.heading)).toBeDefined();
   });
 
-  it("should render body part 3 subheading 1", () => {
-    expect(screen.getByText(texts.Body.part3.subHeading1)).toBeDefined();
+  it("should render body part 3 text 1", () => {
+    expect(screen.getByText(texts.Body.part3.text1)).toBeDefined();
   });
 
   it("should render body part 3 text 2", () => {
     expect(screen.getByText(texts.Body.part3.text2)).toBeDefined();
   });
+
+  it("should render body part 3 subheading 1", () => {
+    expect(screen.getByText(texts.Body.part3.subHeading1)).toBeDefined();
+  });
+
+  it("should render body part 4 heading", () => {
+    expect(screen.getByText(texts.Body.part4.heading)).toBeDefined();
+  });
+
+  it("should render body part 4 text 1", () => {
+    expect(screen.getByText(texts.Body.part4.text1)).toBeDefined();
+  });
+
+  it("should render body part 4 text 2", () => {
+    expect(screen.getByText(texts.Body.part4.text2)).toBeDefined();
+  });
+
+  it("should render body part 5 heading", () => {
+    expect(screen.getByText(texts.Body.part5.heading)).toBeDefined();
+  });
+
+  it("should render body part 5 text 1", () => {
+    expect(screen.getByText(texts.Body.part5.text1)).toBeDefined();
+  });
+
+  it("should render body part 5 text 2", () => {
+    expect(screen.getByText(texts.Body.part5.text2)).toBeDefined();
+  });
 });
 
 describe("Render boxes", () => {
   beforeEach(() => {
-    render(<FreeTaxDeclarationForPensionersPage {...MOCK_PROPS} />);
+    render(<MandateForTaxDeclarationPage {...MOCK_PROPS} />);
   });
 
   it("should render the InfoBox component", () => {

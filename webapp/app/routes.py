@@ -29,8 +29,10 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.data_access.storage.configuration_storage import ConfigurationStorage
-from app.templates.react_template import render_react_template, render_react_content_page_template, render_react_landing_page_template
-from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, NewsletterSuccessPageProps
+from app.templates.react_template import render_react_template, render_react_content_page_template, \
+    render_react_landing_page_template
+from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, \
+    NewsletterSuccessPageProps, MandateForTaxDeclarationProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
@@ -88,6 +90,7 @@ login_manager.login_message = _l('login.not-logged-in-warning')
 login_manager.login_message_category = 'warn'
 login_manager.refresh_view = 'refresh_unlock_code_activation'
 
+
 def extract_information_from_request():
     update_data = request.method == 'POST'
     form_data = request.form
@@ -144,7 +147,7 @@ def register_request_handlers(app):
             ConfigurationStorage.set_incident_configuration(config_as_json)
 
         return config_as_json
-    
+
     @csrf.exempt
     @app.route('/configuration/incident', methods=['DELETE'])
     def delete_configuration_incident():
@@ -153,19 +156,18 @@ def register_request_handlers(app):
         is_deleted = False
         if secret == Config.CONFIGURATION_SECRET_ACCESS_KEY:
             is_deleted = ConfigurationStorage.remove_incident_configuration()
-        
+
         return str(is_deleted)
 
     @app.after_request
     def inform_incident(response):
-        try:    
+        try:
             if response.status_code == 200:
                 incident_config = ConfigurationStorage.get_incident_configuration()
                 if incident_config is not None and 'text' in incident_config:
                     flash(incident_config['text'], 'warn')
         except Exception as ex:
             current_app.logger.info('incident problem:' + str(ex))
-            
 
         return response
 
@@ -190,11 +192,11 @@ def register_request_handlers(app):
         if request.path == '/unlock_code_request/step/unlock_code_success':
             additional_connect_src = "'self'"
         response.headers['Content-Security-Policy'] = (
-            "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline' plausible.io; "
-            "style-src 'self' 'unsafe-inline'; "
-            "connect-src " + additional_connect_src + " plausible.io; "
-            "object-src 'none'; "
+                "default-src 'self'; "
+                "script-src 'self' 'unsafe-inline' plausible.io; "
+                "style-src 'self' 'unsafe-inline'; "
+                "connect-src " + additional_connect_src + " plausible.io; "
+                                                          "object-src 'none'; "
         )
         return response
 
@@ -385,7 +387,6 @@ def register_request_handlers(app):
                          attachment_filename='STL-Flyer_A6-doppelseitig.pdf',
                          as_attachment=True)
 
-
     @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
     @add_caching_headers
     def infotax():
@@ -433,20 +434,19 @@ def register_request_handlers(app):
     def vorbereiten():
         return render_react_content_page_template(
             props=VorbereitenInfoProps(
-                    angaben_bei_behinderung_url=url_for("vorbereiten_diability_costs_info"),
-                    bestattungskosten_url=url_for("vorbereiten_funeral_expenses_info"),
-                    download_preparation_link=url_for("download_preparation"),
-                    handwerkerleistungen_url=url_for("vorbereiten_craftsman_services_info"),
-                    haushaltsnahe_dienstleistungen_url=url_for("vorbereiten_household_services_info"),
-                    kirchensteuer_url=url_for("vorbereiten_church_tax_info"),
-                    krankheitskosten_url=url_for("vorbereiten_medical_expenses_info"),
-                    pflegekosten_url=url_for("vorbereiten_care_costs_info_page"),
-                    spenden_und_mitgliedsbeitraege_url=url_for("vorbereiten_donation_info"),
-                    vorsorgeaufwendungen_url=url_for("vorbereiten_pension_expenses_info"),
-                    wiederbeschaffungskosten_url=url_for("vorbereiten_replacement_costs_info_page")
-                ).camelized_dict(),
+                angaben_bei_behinderung_url=url_for("vorbereiten_diability_costs_info"),
+                bestattungskosten_url=url_for("vorbereiten_funeral_expenses_info"),
+                download_preparation_link=url_for("download_preparation"),
+                handwerkerleistungen_url=url_for("vorbereiten_craftsman_services_info"),
+                haushaltsnahe_dienstleistungen_url=url_for("vorbereiten_household_services_info"),
+                kirchensteuer_url=url_for("vorbereiten_church_tax_info"),
+                krankheitskosten_url=url_for("vorbereiten_medical_expenses_info"),
+                pflegekosten_url=url_for("vorbereiten_care_costs_info_page"),
+                spenden_und_mitgliedsbeitraege_url=url_for("vorbereiten_donation_info"),
+                vorsorgeaufwendungen_url=url_for("vorbereiten_pension_expenses_info"),
+                wiederbeschaffungskosten_url=url_for("vorbereiten_replacement_costs_info_page")
+            ).camelized_dict(),
             component='VorbereitenOverviewPage')
-
 
     @app.route('/vorbereiten/haushaltsnahe-dienstleistungen', methods=['GET'])
     @add_caching_headers
@@ -520,6 +520,14 @@ def register_request_handlers(app):
             props=FreeTaxDeclarationForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='FreeTaxDeclarationForPensionersPage', disable_default_title_description_meta_tags=True,
             header_title=_('freeTaxDeclarationForPensioners.header-title'))
+
+    @app.route('/steuererklärung-eltern-vollmacht', methods=['GET'])
+    @add_caching_headers
+    def mandate_for_tax_declaration():
+        return render_react_content_page_template(
+            props=MandateForTaxDeclarationProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
+            component='MandateForTaxDeclarationPage', disable_default_title_description_meta_tags=True,
+            header_title=_('mandateForTaxDeclaration.header-title'))
 
     @app.route('/ping')
     def ping():

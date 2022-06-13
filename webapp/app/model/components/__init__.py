@@ -265,5 +265,10 @@ class LandingPageProps(ComponentProps):
 class NewsletterSuccessPageProps(ComponentProps):
     pass
 
+
 class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
+    pass
+
+
+class MandateForTaxDeclarationProps(ComponentPlausibleProps):
     pass

@@ -2,10 +2,10 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import InfoTaxReturnForPensionersPage from "./InfoTaxReturnForPensionersPage";
 
-jest.mock("../components/ContentPageBox", () => ({
+jest.mock("../components/InfoBox", () => ({
   __esModule: true,
-  default: function ContentPageBox() {
-    return <div>Content Page Box</div>;
+  default: function InfoBox() {
+    return <div>InfoBox</div>;
   },
 }));
 
@@ -51,7 +51,7 @@ describe("InfoTaxReturnForPensionersPage", () => {
   it("should render the ContentPageBox component", () => {
     setup();
 
-    expect(screen.getByText("Content Page Box")).toBeInTheDocument();
+    expect(screen.getByText("InfoBox")).toBeInTheDocument();
   });
 
   it("should render the SuccessStepsInfoBox component", () => {

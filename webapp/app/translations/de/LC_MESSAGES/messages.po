@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-08 14:43+0200\n"
+"POT-Creation-Date: 2022-06-10 12:01+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,117 +18,121 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app/routes.py:74
+#: app/routes.py:75
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:75
+#: app/routes.py:76
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:76
+#: app/routes.py:77
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:77
+#: app/routes.py:78
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:79
+#: app/routes.py:80
 msgid "nav.preparation"
 msgstr "Vorbereiten"
 
-#: app/routes.py:81
+#: app/routes.py:82
 msgid "nav.lotse-form"
 msgstr "Steuererklärung 2021"
 
-#: app/routes.py:83
+#: app/routes.py:84
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:87
+#: app/routes.py:88
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:227
+#: app/routes.py:228
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:228
+#: app/routes.py:229
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:271
+#: app/routes.py:272
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:272
+#: app/routes.py:273
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:285 app/routes.py:528
+#: app/routes.py:286 app/routes.py:553
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:305 app/templates/basis/base.html:45
+#: app/routes.py:306 app/templates/basis/base.html:45
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:312
+#: app/routes.py:313
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:319
+#: app/routes.py:320
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:326
+#: app/routes.py:327
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:333
+#: app/routes.py:334
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:340
+#: app/routes.py:341
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:347
+#: app/routes.py:348
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:353
+#: app/routes.py:354
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:358
+#: app/routes.py:359
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:503
+#: app/routes.py:520
 msgid "freeTaxDeclarationForPensioners.header-title"
 msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
 
-#: app/routes.py:519 app/routes.py:549 app/routes.py:556
+#: app/routes.py:528
+msgid "mandateForTaxDeclaration.header-title"
+msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
+
+#: app/routes.py:544 app/routes.py:574 app/routes.py:581
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:524 app/routes.py:532
+#: app/routes.py:549 app/routes.py:557
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:537
+#: app/routes.py:562
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:543
+#: app/routes.py:568
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -1042,8 +1046,8 @@ msgstr ""
 "beantragen "
 
 #: app/forms/steps/unlock_code_request_steps.py:63
-#: app/forms/steps/unlock_code_request_steps.py:84
-#: app/forms/steps/unlock_code_request_steps.py:102
+#: app/forms/steps/unlock_code_request_steps.py:86
+#: app/forms/steps/unlock_code_request_steps.py:104
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
@@ -1059,11 +1063,11 @@ msgstr ""
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie"
 " Ihren Brief erhalten."
 
-#: app/forms/steps/unlock_code_request_steps.py:92
+#: app/forms/steps/unlock_code_request_steps.py:94
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:93
+#: app/forms/steps/unlock_code_request_steps.py:95
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Registrierung fehlgeschlagen. Haben Sie sich vielleicht bereits "
