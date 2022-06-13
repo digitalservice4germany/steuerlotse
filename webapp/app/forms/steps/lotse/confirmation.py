@@ -1,5 +1,4 @@
 import logging
-import json
 
 from flask import request, flash
 from flask_wtf.csrf import generate_csrf
@@ -48,7 +47,7 @@ class StepSummary(LotseFormSteuerlotseStep):
             self.render_info.next_url = self.url_for_step(StepSummary.name)
         # TODO move this to a more sensible location!
         multistep_flow = LotseMultiStepFlow(endpoint='lotse')
-       
+
         self.summary_data = multistep_flow._get_overview_data(self.stored_data, missing_fields)
         self.render_info.overview_url = None
 
@@ -59,8 +58,8 @@ class StepSummary(LotseFormSteuerlotseStep):
                                                 self.stored_data['confirm_complete_correct'])
 
     def render(self):
-        mandatory_data =  next((data for data in self.summary_data if data.get('name', '') == 'mandatory_data'), [])
-        section_steuerminderung =  next((data for data in self.summary_data if data.get('name', '') == 'section_steuerminderung'), [])
+        mandatory_data = next((data for data in self.summary_data if data.get('name', '') == 'mandatory_data'), [])
+        section_steuerminderung = next((data for data in self.summary_data if data.get('name', '') == 'section_steuerminderung'), [])
         props_dict = SummaryPageProps(
             summary_data=SummaryDataSectionProps(mandatory_data=mandatory_data, section_steuerminderung=section_steuerminderung),
             form={
