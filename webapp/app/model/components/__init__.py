@@ -257,8 +257,8 @@ class InfoForRelativesPageProps(ComponentProps):
     pass
 
 class SummaryDataSectionProps(ComponentProps):
-    mandatory_data: List[Dict]
-    section_steuerminderung: List[Dict]
+    mandatory_data: Dict
+    section_steuerminderung: Dict
 
 class SummaryPageProps(ComponentProps):
     summary_data: SummaryDataSectionProps

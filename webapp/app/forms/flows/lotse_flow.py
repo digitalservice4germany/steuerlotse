@@ -322,7 +322,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 curr_section["data"].append({
                     "label": curr_step.get_label(stored_data),
                     "url": self.url_for_step(curr_step.name, _has_link_overview=True),
-                    "data": [step_data]
+                    "data": step_data
                 })
                 
                 if not section_added:
@@ -386,13 +386,15 @@ class LotseMultiStepFlow(MultiStepFlow):
             :param step: An instance of the step, of which the data will be collected
             :param stored_data: The form_data from the cookie
         """
-        step_data = {}
+        step_data = []
         for attr in step.create_form(request.form, stored_data).__dict__:
             if missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']
-                step_data["name"] = label
-                step_data["value"] = _l('form.lotse.missing_mandatory_field')
+                step_data.append({
+                    "name": label,
+                    "value": _l('form.lotse.missing_mandatory_field')
+                })
             elif attr in stored_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation &
@@ -400,9 +402,10 @@ class LotseMultiStepFlow(MultiStepFlow):
                 label, value = self._generate_value_representation(field, stored_data.get(attr))
                 value = step.get_overview_value_representation(value, stored_data)
                 if value is not None:
-                    # If get_overview_value_representation() returns None, the value will not be displayed
-                    step_data["name"] = label
-                    step_data["value"] = value
+                    step_data.append({
+                        "name": label,
+                        "value": value
+                    })
 
         return step_data
 

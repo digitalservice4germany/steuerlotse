@@ -18,13 +18,12 @@ export default function SummaryPage({
   const { t } = useTranslation();
 
   const plausibleProps = { method: "CTA Eingabe zu weiteren Einkünften" };
-
-  const mandatorySummaryData = Object.values(summaryData.mandatoryData).map(
-    (item, index) => <SummaryComponent key={index} {...item} />
-  );
+  const mandatorySummaryData = Object.values(
+    summaryData.mandatoryData.data
+  ).map((item, index) => <SummaryComponent key={index} {...item} />);
 
   const steuerminderungSummaryData = Object.values(
-    summaryData.sectionSteuerminderung
+    summaryData.sectionSteuerminderung.data
   ).map((item, index) => <SummaryComponent key={index} {...item} />);
 
   return (
@@ -69,30 +68,26 @@ SummaryPage.propTypes = {
     confirmCompleteCorrect: checkboxPropType,
   }).isRequired,
   summaryData: PropTypes.shape({
-    mandatoryData: PropTypes.arrayOf(
-      PropTypes.shape({
-        data: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string,
-            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          })
-        ).isRequired,
-        label: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-      })
-    ),
-    sectionSteuerminderung: PropTypes.arrayOf(
-      PropTypes.shape({
-        data: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string,
-            value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          })
-        ).isRequired,
-        label: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-      })
-    ),
+    mandatoryData: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        })
+      ).isRequired,
+      label: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
+    sectionSteuerminderung: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        })
+      ).isRequired,
+      label: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };
 SummaryPage.defaultProps = {

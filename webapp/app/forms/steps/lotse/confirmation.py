@@ -27,7 +27,7 @@ class StepSummary(LotseFormSteuerlotseStep):
     header_title = _l('form.lotse.summary.header-title')
     next_step = StepConfirmation
 
-    summary_data = {}
+    summary_data = []
 
     class InputForm(SteuerlotseBaseForm):
         confirm_complete_correct = ConfirmationField(label=_l('form.lotse.field_confirm_complete_correct'),
@@ -59,8 +59,10 @@ class StepSummary(LotseFormSteuerlotseStep):
                                                 self.stored_data['confirm_complete_correct'])
 
     def render(self):
+        mandatory_data =  next((data for data in self.summary_data if data.get('name', '') == 'mandatory_data'), [])
+        section_steuerminderung =  next((data for data in self.summary_data if data.get('name', '') == 'section_steuerminderung'), [])
         props_dict = SummaryPageProps(
-            summary_data=SummaryDataSectionProps(mandatory_data=self.summary_data[0]["data"], section_steuerminderung=self.summary_data[1]["data"]),
+            summary_data=SummaryDataSectionProps(mandatory_data=mandatory_data, section_steuerminderung=section_steuerminderung),
             form={
                 'action': self.render_info.submit_url,
                 'csrf_token': generate_csrf(),

@@ -35,16 +35,6 @@ class TestStepSummaryHandle:
         step = LotseStepChooser().get_correct_step(StepSummary.name, False, ImmutableMultiDict({}))
         return step
 
-    def test_set_section_steps_in_render_info(self, new_test_request_context, summary_step):
-        expected_summary_session_steps = {}
-        with new_test_request_context(), \
-                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._get_overview_data",
-                      MagicMock(return_value=expected_summary_session_steps)), \
-                patch("app.forms.flows.lotse_flow.MandatoryFormData.parse_obj"):
-            summary_step.handle()
-
-            assert summary_step.render_info.additional_info['section_steps'] == expected_summary_session_steps
-
     def test_if_data_missing_then_set_next_url_correct(self, new_test_request_context, summary_step):
         data_with_missing_fields = {'steuernummer': 'C3P0'}
 
