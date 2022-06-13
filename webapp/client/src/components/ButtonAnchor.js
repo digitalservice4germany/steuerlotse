@@ -93,6 +93,7 @@ const Button = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
   font-size: var(--text-medium);
   font-family: var(--font-bold);
   line-height: 1;
@@ -214,6 +215,7 @@ export default function ButtonAnchor({
   external,
   disabled,
   className,
+  marginVariant,
 }) {
   const relation = [];
   let target = false;
@@ -236,6 +238,7 @@ export default function ButtonAnchor({
       target={target || undefined}
       rel={url && !download ? relation : undefined}
       onClick={onClick}
+      marginVariant={marginVariant}
     >
       {children}
     </Button>
@@ -259,6 +262,7 @@ ButtonAnchor.propTypes = {
   variant: PropTypes.oneOf(["primary", "outline"]),
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  marginVariant: PropTypes.bool,
 };
 
 ButtonAnchor.defaultProps = {
@@ -271,4 +275,5 @@ ButtonAnchor.defaultProps = {
   buttonStyle: "default",
   disabled: false,
   className: undefined,
+  marginVariant: false,
 };

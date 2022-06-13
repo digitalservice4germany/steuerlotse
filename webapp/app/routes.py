@@ -307,7 +307,7 @@ def register_request_handlers(app):
     @add_caching_headers
     def index():
         return render_react_landing_page_template(
-            props=LandingPageProps().camelized_dict(),
+            props=LandingPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='LandingPage')
 
     @app.route('/sofunktionierts')

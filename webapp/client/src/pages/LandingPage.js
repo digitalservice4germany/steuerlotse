@@ -14,6 +14,10 @@ const LandingPageHeroWrapper = styled.div`
   @media (max-width: 1023px) {
     flex-direction: column;
   }
+
+  @media (max-width: 768px) {
+    padding-left: 1rem;
+  }
 `;
 
 const LandingPageHeroContentWrapper = styled.div`
@@ -123,17 +127,26 @@ export default function LandingPage({ plausibleDomain }) {
             url="/eligibility/step/first_input_step"
             plausibleGoal={t("LandingPage.Hero.plausibleGoal")}
             plausibleDomain={plausibleDomain}
+            marginVariant
           >
             {t("LandingPage.Hero.checkUseButton")}
           </ButtonAnchor>
         </LandingPageHeroContentWrapper>
         <Figure>
-          <img
-            srcSet="../images/hero-image-small.png 1155w,
-                                ../images/hero-image-big.png 2048w"
-            src="../images/hero-image-small.png"
-            alt="Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen Steuererklärung."
-          />
+          <picture>
+            <source
+              media="(min-width: 1024px)"
+              srcSet="../images/hero-image-big.png"
+            />
+            <source
+              media="(min-width: 320px)"
+              srcSet="../images/hero-image-small.png"
+            />
+            <img
+              src="../images/hero-image-small.png"
+              alt="Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen Steuererklärung."
+            />
+          </picture>
         </Figure>
       </LandingPageHeroWrapper>
       <CardsComponent cards={cardsInfo} />
@@ -141,6 +154,7 @@ export default function LandingPage({ plausibleDomain }) {
         <AccordionComponent
           title={t("LandingPage.Accordion.heading")}
           items={faqAnchorList}
+          variant
         />
         <ButtonAnchorLandingPage
           url="/sofunktionierts"

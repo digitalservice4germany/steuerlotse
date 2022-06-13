@@ -59,20 +59,22 @@ const CardHeaderSpan = styled.span`
 `;
 
 const AccordionHeadline = styled.h2`
-  margin-bottom: 0;
+  margin-bottom: ${(props) => (props.variant ? "var(--spacing-07)" : "0")};
 `;
 
 const AccordionStyled = styled(Accordion)`
   padding-top: var(--spacing-03);
 `;
 
-export default function AccordionComponent({ title, intro, items }) {
+export default function AccordionComponent({ title, intro, items, variant }) {
   const [toggle, setToggle] = useState();
 
   return (
     <>
       {title.length > 0 && (
-        <AccordionHeadline className="mt-5">{title}</AccordionHeadline>
+        <AccordionHeadline className="mt-5" variant={variant}>
+          {title}
+        </AccordionHeadline>
       )}
       {intro.length > 0 && <p className="mt-3 pb-2">{intro}</p>}
       <AccordionStyled>
@@ -94,9 +96,9 @@ export default function AccordionComponent({ title, intro, items }) {
                 </ExpandButton>
                 <ExpandButton tabIndex={-1} className="col-1">
                   {toggle === index ? (
-                    <img src={minusIcon} alt="collapse" />
+                    <img src={minusIcon} alt="Einklappen Icon" />
                   ) : (
-                    <img src={plusIcon} alt="expand" />
+                    <img src={plusIcon} alt="Ausklappen Icon" />
                   )}
                 </ExpandButton>
               </Accordion.Toggle>
@@ -114,6 +116,7 @@ export default function AccordionComponent({ title, intro, items }) {
 
 AccordionComponent.propTypes = {
   title: PropTypes.string,
+  variant: PropTypes.bool,
   intro: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.exact({
@@ -126,4 +129,5 @@ AccordionComponent.propTypes = {
 AccordionComponent.defaultProps = {
   title: "",
   intro: "",
+  variant: false,
 };

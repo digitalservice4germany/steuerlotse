@@ -7,11 +7,15 @@ const Wrapper = styled.div`
   background-color: var(--bg-highlight-color);
   display: flex;
   padding: 3rem 2rem 0 2rem;
-  gap: var(--spacing-06);
+  gap: var(--spacing-03);
+
+  @media (max-width: 1024px) {
+    padding-top: var(--spacing-06a);
+  }
 
   @media (max-width: 767px) {
     flex-direction: column;
-    padding: 0;
+    padding: var(--spacing-03) 0;
   }
 
   @media (max-width: 500px) {
@@ -63,7 +67,7 @@ export default function CardsComponent({ cards }) {
         <Card href={card.url} key={index}>
           <h2>{card.header}</h2>
           <p>{card.text}</p>
-          <img src={ArrowLeft} alt="arrow pointing left" />
+          <img src={ArrowLeft} alt="Pfeil nach rechts" />
         </Card>,
       ])}
     </Wrapper>

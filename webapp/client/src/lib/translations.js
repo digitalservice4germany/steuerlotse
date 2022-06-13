@@ -1102,7 +1102,7 @@ const translations = {
           "Der Steuerlotse kann zurzeit nur für die Abgabe einer Steuererklärung für das Steuerjahr 2021 verwendet werden. Für alle früheren Steuerjahre können Sie beispielsweise auf <elsterLink>Mein ELSTER</elsterLink> oder in einigen Bundesländern auch auf das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> zurückgreifen.",
       },
     },
-    ButtonLabel: "Zum Informationsseite",
+    ButtonLabel: "Zur Informationsseite",
     InformationButtonPlausibleGoal: "Zur Informationsseite",
   },
   freeTaxDeclarationForPensioners: {
