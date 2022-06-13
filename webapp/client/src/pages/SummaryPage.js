@@ -19,11 +19,11 @@ export default function SummaryPage({
 
   const plausibleProps = { method: "CTA Eingabe zu weiteren Einkünften" };
   const mandatorySummaryData = Object.values(
-    summaryData.mandatoryData.data
+    summaryData.mandatoryData?.data ?? {}
   ).map((item, index) => <SummaryComponent key={index} {...item} />);
 
   const steuerminderungSummaryData = Object.values(
-    summaryData.sectionSteuerminderung.data
+    summaryData.sectionSteuerminderung?.data ?? {}
   ).map((item, index) => <SummaryComponent key={index} {...item} />);
 
   return (
