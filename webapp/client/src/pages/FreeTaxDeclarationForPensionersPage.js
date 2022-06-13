@@ -14,25 +14,17 @@ import {
   HeaderSection,
   TopContent,
   Picture,
+  ParagraphHeadingH2,
+  ParagraphHeadingH3,
 } from "../components/ContentPageStyles";
 import AccordionComponent from "../components/AccordionComponent";
 import ButtonAnchor from "../components/ButtonAnchor";
-import ContentPageBox from "../components/ContentPageBox";
 import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
+import InfoBox from "../components/InfoBox";
+import { anchorPrufen } from "../lib/contentPagesAnchors";
 
-export const IntroParagraphTextWithMarginTop = styled(IntroParagraphText)`
+const IntroParagraphTextWithMarginTop = styled(IntroParagraphText)`
   padding-top: var(--spacing-07);
-`;
-
-const ParagraphHeadingH2 = styled.h2`
-  padding-top: var(--spacing-07);
-  font-family: var(--font-bold);
-`;
-
-const ParagraphHeadingH3 = styled.h3`
-  font-size: var(--text-2xl);
-  padding-top: var(--spacing-03);
-  font-family: var(--font-bold);
 `;
 
 const CTAButton = styled(ButtonAnchor)`
@@ -89,29 +81,6 @@ export default function FreeTaxDeclarationForPensionersPage({
       />
     );
   }
-
-  const buttons = {
-    buttonOne: {
-      text: t("taxGuideQuestionBox.startQuestionnaire"),
-      url: "/eligibility/step/marital_status?link_overview=False",
-      plausibleGoal: "contentPage_startQuestionnaire_clicked",
-    },
-    buttonTwo: {
-      text: t("taxGuideQuestionBox.faq"),
-      url: "/sofunktionierts",
-      plausibleGoal: "contentPage_faq_clicked",
-    },
-    buttonThree: {
-      text: t("taxGuideQuestionBox.contactUs"),
-      url: "mailto:kontakt@steuerlotse-rente.de",
-      plausibleGoal: "contentPage_contactUs_clicked",
-    },
-  };
-
-  const boxText = {
-    headerOne: t("taxGuideQuestionBox.canIUseTaxGuide"),
-    headerTwo: t("taxGuideQuestionBox.moreInformationTaxGuide"),
-  };
 
   return (
     <>
@@ -328,7 +297,11 @@ export default function FreeTaxDeclarationForPensionersPage({
           </CTAButton>
         </ContentText>
       </ContentSpacingWrapper>
-      <ContentPageBox anchor={buttons} boxText={boxText} />
+      <InfoBox
+        boxHeadline={anchorPrufen.headline}
+        boxText={t("CheckNowInfoBox.text")}
+        anchor={anchorPrufen}
+      />
     </>
   );
 }

@@ -25,6 +25,7 @@ export const IntroParagraphText = styled.p`
     font-size: 1.5rem;
   }
 `;
+
 export const ContentText = styled.div`
   max-width: 738px;
 
@@ -141,4 +142,24 @@ export const TopContent = styled.div`
   @media (max-width: 768px) {
     max-width: 636px;
   }
+`;
+
+export const ParagraphHeadingH2 = styled.h2`
+  padding-top: var(--spacing-07);
+  font-family: var(--font-bold);
+`;
+
+export const ParagraphHeadingH3 = styled.h3`
+  font-size: var(--text-2xl);
+  padding-top: var(--spacing-03);
+  font-family: var(--font-bold);
+`;
+
+export const HowItWorksVideoContainer = styled.div`
+  position: relative;
+`;
+
+export const HowItWorksImage = styled.img`
+  max-width: 100%;
+  height: auto;
 `;

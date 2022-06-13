@@ -2,7 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useTranslation, Trans } from "react-i18next";
-import { HeroImage, TextContent } from "../components/ContentPageStyles";
+import {
+  HeroImage,
+  HowItWorksImage,
+  HowItWorksVideoContainer,
+  TextContent,
+} from "../components/ContentPageStyles";
 import DownloadLink from "../components/DownloadLink";
 import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
 import {
@@ -10,15 +15,6 @@ import {
   Headline2,
   ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
-
-const HowItWorksVideoContainer = styled.div`
-  position: relative;
-`;
-
-const HowItWorksImage = styled.img`
-  max-width: 100%;
-  height: auto;
-`;
 
 const Headline1Ambassador = styled(Headline1)`
   margin-top: var(--spacing-11);

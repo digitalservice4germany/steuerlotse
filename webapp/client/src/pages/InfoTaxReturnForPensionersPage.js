@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Trans, useTranslation } from "react-i18next";
-import ContentPageBox from "../components/ContentPageBox";
 import {
   ContentSpacingWrapper,
   IntroHeadingText,
@@ -18,31 +17,11 @@ import {
 } from "../components/ContentPageStyles";
 
 import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
+import InfoBox from "../components/InfoBox";
+import { anchorPrufen } from "../lib/contentPagesAnchors";
 
 export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
   const { t } = useTranslation();
-  const buttons = {
-    buttonOne: {
-      text: t("taxGuideQuestionBox.startQuestionnaire"),
-      url: "/eligibility/step/marital_status?link_overview=False",
-      plausibleGoal: "contentPage_startQuestionnaire_clicked",
-    },
-    buttonTwo: {
-      text: t("taxGuideQuestionBox.faq"),
-      url: "/sofunktionierts",
-      plausibleGoal: "contentPage_faq_clicked",
-    },
-    buttonThree: {
-      text: t("taxGuideQuestionBox.contactUs"),
-      url: "mailto:kontakt@steuerlotse-rente.de",
-      plausibleGoal: "contentPage_contactUs_clicked",
-    },
-  };
-
-  const boxText = {
-    headerOne: t("taxGuideQuestionBox.canIUseTaxGuide"),
-    headerTwo: t("taxGuideQuestionBox.moreInformationTaxGuide"),
-  };
 
   function trans(key) {
     return (
@@ -178,7 +157,11 @@ export default function InfoTaxReturnForPensionersPage({ plausibleDomain }) {
           </ParagraphTextLarger>
         </ContentText>
       </ContentSpacingWrapper>
-      <ContentPageBox anchor={buttons} boxText={boxText} />
+      <InfoBox
+        boxHeadline={anchorPrufen.headline}
+        boxText={t("CheckNowInfoBox.text")}
+        anchor={anchorPrufen}
+      />
     </>
   );
 }
