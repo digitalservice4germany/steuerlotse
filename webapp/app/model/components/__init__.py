@@ -259,7 +259,7 @@ class CraftsmanServicesInfoPageProps(ComponentProps):
 class InfoForRelativesPageProps(ComponentProps):
     pass
 
-class LandingPageProps(ComponentProps):
+class LandingPageProps(ComponentPlausibleProps):
     pass
 
 class NewsletterSuccessPageProps(ComponentProps):

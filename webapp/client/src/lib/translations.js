@@ -1020,6 +1020,7 @@ const translations = {
       eligibilityTest:
         "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?",
       checkUseButton: "Jetzt prüfen",
+      plausibleGoal: "Nutzung prüfen",
     },
     Cards: {
       cardOne: {
@@ -1100,6 +1101,7 @@ const translations = {
       },
     },
     ButtonLabel: "Zum Informationsseite",
+    InformationButtonPlausibleGoal: "Zur Informationsseite",
   },
   freeTaxDeclarationForPensioners: {
     meta: {

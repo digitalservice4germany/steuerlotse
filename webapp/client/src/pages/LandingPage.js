@@ -1,5 +1,6 @@
 import React from "react";
 import { t } from "i18next";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import AccordionComponent from "../components/AccordionComponent";
 import faqAnchorList from "../lib/faqAnchors";
@@ -105,7 +106,7 @@ const ButtonAnchorLandingPage = styled(ButtonAnchor)`
   margin-top: var(--spacing-08);
 `;
 
-export default function LandingPage() {
+export default function LandingPage({ plausibleDomain }) {
   return (
     <div>
       <LandingPageHeroWrapper>
@@ -118,7 +119,11 @@ export default function LandingPage() {
             <li>{t("LandingPage.Hero.listItem3")}</li>
           </ul>
           <p>{t("LandingPage.Hero.eligibilityTest")}</p>
-          <ButtonAnchor url="/eligibility/step/first_input_step">
+          <ButtonAnchor
+            url="/eligibility/step/first_input_step"
+            plausibleGoal={t("LandingPage.Hero.plausibleGoal")}
+            plausibleDomain={plausibleDomain}
+          >
             {t("LandingPage.Hero.checkUseButton")}
           </ButtonAnchor>
         </LandingPageHeroContentWrapper>
@@ -137,10 +142,22 @@ export default function LandingPage() {
           title={t("LandingPage.Accordion.heading")}
           items={faqAnchorList}
         />
-        <ButtonAnchorLandingPage url="/sofunktionierts">
+        <ButtonAnchorLandingPage
+          url="/sofunktionierts"
+          plausibleGoal={t("LandingPage.InformationButtonPlausibleGoal")}
+          plausibleDomain={plausibleDomain}
+        >
           {t("LandingPage.ButtonLabel")}
         </ButtonAnchorLandingPage>
       </AccordionWrapper>
     </div>
   );
 }
+
+LandingPage.propTypes = {
+  plausibleDomain: PropTypes.string,
+};
+
+LandingPage.defaultProps = {
+  plausibleDomain: undefined,
+};
