@@ -44,8 +44,8 @@ export default function SummaryPage({
         <FormFieldConsentBox
           required
           autofocus
-          fieldName="declaration_summary"
-          fieldId="declaration_summary"
+          fieldName="confirm_complete_correct"
+          fieldId="confirm_complete_correct"
           checked={fields.confirmCompleteCorrect.checked}
           labelText={t("lotse.summary.confirmCompleteCorrect")}
           errors={fields.confirmCompleteCorrect.errors}
