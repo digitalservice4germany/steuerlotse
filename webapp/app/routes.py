@@ -29,13 +29,12 @@ from app.forms.steps.lotse_multistep_flow_steps.personal_data_steps import StepF
 from app.logging import log_flask_request
 from app.data_access.storage.session_storage import SessionStorage
 from app.data_access.storage.configuration_storage import ConfigurationStorage
-from app.templates.react_template import render_react_template, render_react_content_page_template
-from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, \
-    NewsletterSuccessPageProps, MandateForTaxDeclarationProps
+from app.templates.react_template import render_react_template, render_react_content_page_template, render_react_landing_page_template
+from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, NewsletterSuccessPageProps, MandateForTaxDeclarationProps
 from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
-    VorbereitenInfoProps, InfoForRelativesPageProps
+    VorbereitenInfoProps, InfoForRelativesPageProps, LandingPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -305,9 +304,9 @@ def register_request_handlers(app):
     @app.route('/')
     @add_caching_headers
     def index():
-        return render_template('content/landing_page.html',
-                               header_title=_('page.title'),
-                               js_needed=False)
+        return render_react_landing_page_template(
+            props=LandingPageProps().camelized_dict(),
+            component='LandingPage')
 
     @app.route('/sofunktionierts')
     @add_caching_headers
