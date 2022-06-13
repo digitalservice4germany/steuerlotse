@@ -269,7 +269,8 @@ class SummaryPageProps(ComponentProps):
     form: FormProps
     fields: Dict[str, FieldProps]
 
-class LandingPageProps(ComponentProps):
+
+class LandingPageProps(ComponentPlausibleProps):
     pass
 
 class NewsletterSuccessPageProps(ComponentProps):
