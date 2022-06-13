@@ -116,7 +116,7 @@ describe("SummaryPage", () => {
   it("should render checked value false", () => {
     setup();
 
-    expect(screen.getByTestId("declaration_summary").checked).toBe(false);
+    expect(screen.getByTestId("confirm_complete_correct").checked).toBe(false);
   });
 
   it("should render checked value true", () => {
@@ -129,7 +129,7 @@ describe("SummaryPage", () => {
       },
     });
 
-    expect(screen.getByTestId("declaration_summary").checked).toBe(true);
+    expect(screen.getByTestId("confirm_complete_correct").checked).toBe(true);
   });
 
   it("should render error value", () => {
