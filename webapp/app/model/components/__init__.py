@@ -231,11 +231,11 @@ class VorbereitenInfoProps(ComponentProps):
     handwerkerleistungen_url: str
     spenden_und_mitgliedsbeitraege_url: str
     kirchensteuer_url: str
-  
+
 class HouseholdServicesInfoPageProps(ComponentProps):
     pass
 
-  
+
 class ReplacementCostsInfoPageProps(ComponentProps):
     pass
 
@@ -258,6 +258,17 @@ class CraftsmanServicesInfoPageProps(ComponentProps):
 
 class InfoForRelativesPageProps(ComponentProps):
     pass
+
+class SummaryDataSectionProps(ComponentProps):
+    mandatory_data: Dict
+    section_steuerminderung: Dict
+
+class SummaryPageProps(ComponentProps):
+    summary_data: SummaryDataSectionProps
+    prev_url: Optional[str]
+    form: FormProps
+    fields: Dict[str, FieldProps]
+
 
 class LandingPageProps(ComponentPlausibleProps):
     pass

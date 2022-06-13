@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 const Box = styled.div`
   margin-bottom: var(--spacing-05);
@@ -18,7 +19,7 @@ const ValueBox = styled.div`
   background-color: var(--white);
 `;
 
-const BoxText = styled.h3`
+const BoxText = styled.p`
   font-size: var(--text-medium);
   margin: 0;
   font-weight: 700;
@@ -41,7 +42,7 @@ const BoxLink = styled.a`
   }
 `;
 
-const ValueText = styled.h5`
+const ValueText = styled.p`
   font-size: var(--text-medium);
   font-weight: 400;
   margin: 0;
@@ -61,16 +62,18 @@ const Wrapper = styled.div`
   margin-bottom: var(--spacing-02);
 `;
 
-export default function SummaryComponent({ data }) {
+export default function SummaryComponent({ data, label, url }) {
+  const { t } = useTranslation();
+
   const mapping =
-    data.data &&
-    Object.entries(data.data).map(([key, value]) => (
-      <Wrapper key={key}>
+    data &&
+    data.map((item) => (
+      <Wrapper key={item.name}>
         <Column>
-          <BoxText>{key}</BoxText>
+          <BoxText>{item.name}</BoxText>
         </Column>
         <Column>
-          <ValueText>{value}</ValueText>
+          <ValueText>{item.value}</ValueText>
         </Column>
       </Wrapper>
     ));
@@ -78,8 +81,10 @@ export default function SummaryComponent({ data }) {
   return (
     <Box>
       <LabelBox>
-        <BoxLabelText>{data.label}</BoxLabelText>
-        <BoxLink href={data.url}>Ändern</BoxLink>
+        <BoxLabelText>{label}</BoxLabelText>
+        <BoxLink href={url} alt={`${label} ${t("lotse.summary.changeAlt")}`}>
+          {t("lotse.summary.change")}
+        </BoxLink>
       </LabelBox>
       <ValueBox>{mapping}</ValueBox>
     </Box>
@@ -87,9 +92,12 @@ export default function SummaryComponent({ data }) {
 }
 
 SummaryComponent.propTypes = {
-  data: PropTypes.shape({
-    data: PropTypes.shape({}),
-    label: PropTypes.string,
-    url: PropTypes.string,
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })
+  ).isRequired,
+  label: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 };

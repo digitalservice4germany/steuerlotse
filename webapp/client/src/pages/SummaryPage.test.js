@@ -8,35 +8,55 @@ configure({ testIdAttribute: "id" });
 
 const MOCK_PROPS = {
   summaryData: {
-    section_steps: {
-      mandatory_data: {
-        data: {
-          decl_incomes: {
-            data: {
-              "Keine weiteren Einkünfte vorhanden:": "Ja",
+    mandatoryData: {
+      data: [
+        {
+          data: [
+            {
+              name: "Keine weiteren Einkünfte vorhanden:",
+              value: "Ja",
             },
-            label: "Angabe zu weiteren Einkünften",
-            url: "/lotse/step/decl_incomes?link_overview=True",
-          },
+          ],
+          label: "Angabe zu weiteren Einkünften",
+          url: "/lotse/step/decl_incomes?link_overview=True",
         },
-      },
-      section_steuerminderung: {
-        data: {
-          select_stmind: {
-            data: {
-              "Vorsorgeaufwendungen ausgewählt:": "Ja",
-              "Krankheitskosten und weitere außergewöhnliche Belastungen ausgewählt:":
-                "Ja",
-              "Haushaltsnahe Dienstleistungen und Handwerkerleistungen ausgewählt:":
-                "Ja",
-              "Spenden und Mitgliedsbeiträge ausgewählt:": "Ja",
-              "Steuern für Ihre Religionsgemeinschaft ausgwählt:": "Ja",
+      ],
+      label: "Pflichtangaben",
+      name: "mandatory_data",
+      url: "/lotse/step/decl_incomes?link_overview=True",
+    },
+    sectionSteuerminderung: {
+      data: [
+        {
+          data: [
+            {
+              name: "Vorsorgeaufwendungen ausgewählt:",
+              value: "Ja",
             },
-            label: "Ihre Ausgaben",
-            url: "/lotse/step/select_stmind?link_overview=True",
-          },
+            {
+              name: "Krankheitskosten und weitere außergewöhnliche Belastungen ausgewählt:",
+              value: "Ja",
+            },
+            {
+              name: "Haushaltsnahe Dienstleistungen und Handwerkerleistungen ausgewählt:",
+              value: "Ja",
+            },
+            {
+              name: "Spenden und Mitgliedsbeiträge ausgewählt:",
+              value: "Ja",
+            },
+            {
+              name: "Steuern für Ihre Religionsgemeinschaft ausgwählt:",
+              value: "Ja",
+            },
+          ],
+          label: "Ihre Ausgaben",
+          url: "/lotse/step/select_stmind?link_overview=True",
         },
-      },
+      ],
+      label: "Steuermindernde Aufwendungen",
+      name: "section_steuerminderung",
+      url: "/lotse/step/select_stmind?link_overview=True",
     },
   },
 };
@@ -48,7 +68,7 @@ const REQUIRED_PROPS = {
   },
   prevUrl: "/some/prev/path",
   fields: {
-    declarationSummary: {
+    confirmCompleteCorrect: {
       checked: false,
       errors: [],
     },
@@ -96,26 +116,26 @@ describe("SummaryPage", () => {
   it("should render checked value false", () => {
     setup();
 
-    expect(screen.getByTestId("declaration_summary").checked).toBe(false);
+    expect(screen.getByTestId("confirm_complete_correct").checked).toBe(false);
   });
 
   it("should render checked value true", () => {
     setup({
       fields: {
-        declarationSummary: {
+        confirmCompleteCorrect: {
           checked: true,
           errors: [],
         },
       },
     });
 
-    expect(screen.getByTestId("declaration_summary").checked).toBe(true);
+    expect(screen.getByTestId("confirm_complete_correct").checked).toBe(true);
   });
 
   it("should render error value", () => {
     setup({
       fields: {
-        declarationSummary: {
+        confirmCompleteCorrect: {
           checked: false,
           errors: ["Error1"],
         },

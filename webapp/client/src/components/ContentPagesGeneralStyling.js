@@ -61,18 +61,12 @@ export const Headline1 = styled.h1`
 export const Headline2 = styled.h2`
   padding-top: var(--spacing-09);
   margin: 0;
+  margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
   font-size: var(--text-2xl);
 
   @media (min-width: 768px) {
     font-size: var(--text-3xl);
   }
-`;
-
-export const Headline5 = styled.h5`
-  font-size: var(--text-medium-big);
-  margin-top: var(--spacing-07);
-  margin-bottom: 0;
-  font-family: var(--font-bold);
 `;
 
 export const Paragraph = styled.p`

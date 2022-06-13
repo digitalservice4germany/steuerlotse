@@ -293,7 +293,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             StepFiling, StepAck
         ]
 
-        sections = {}
+        sections = []
         for curr_step in self.steps.values():
             if curr_step in _IGNORED_STEPS:
                 continue  # no need to collect data from ignored section steps
@@ -301,15 +301,33 @@ class LotseMultiStepFlow(MultiStepFlow):
             step_data = self._collect_data_for_step(curr_step(), stored_data, missing_fields)
 
             if step_data:
-                if curr_step.section_link.name not in sections:
-                    # Append new section
-                    sections[curr_step.section_link.name] = self._create_section_from_section_link(
-                        curr_step.section_link, {})
-                curr_section = sections[curr_step.section_link.name]
+                section_added = False
+                curr_section = None
+                
+                for section in sections:                        
+                    if curr_step.section_link.name == section["name"]:
+                        # Append new section
+                        section_added = True
+                        curr_section = section
 
-                curr_section.data[curr_step.name] = Section(curr_step.get_label(stored_data),
-                                                            self.url_for_step(curr_step.name, _has_link_overview=True),
-                                                            step_data, name=curr_step.name)
+                if not curr_section:
+                    curr_section = {
+                        "label": curr_step.section_link.label,
+                        "url": self.url_for_step(curr_step.section_link.beginning_step,
+                                        _has_link_overview=True, name=None),
+                        "data": [],
+                        "name": curr_step.section_link.name
+                    }
+
+                curr_section["data"].append({
+                    "label": curr_step.get_label(stored_data),
+                    "url": self.url_for_step(curr_step.name, _has_link_overview=True),
+                    "data": step_data
+                })
+                
+                if not section_added:
+                    sections.append(curr_section)
+                
 
         return sections
 
@@ -368,12 +386,15 @@ class LotseMultiStepFlow(MultiStepFlow):
             :param step: An instance of the step, of which the data will be collected
             :param stored_data: The form_data from the cookie
         """
-        step_data = {}
+        step_data = []
         for attr in step.create_form(request.form, stored_data).__dict__:
             if missing_fields and attr in missing_fields:
                 field = getattr(step.form, attr)
                 label = field.kwargs['render_kw']['data_label']
-                step_data[label] = _l('form.lotse.missing_mandatory_field')
+                step_data.append({
+                    "name": label,
+                    "value": _l('form.lotse.missing_mandatory_field')
+                })
             elif attr in stored_data or hasattr(step.form, attr):
                 field = getattr(step.form, attr)
                 # TODO: When the summary page is refactored we should merge _generate_value_representation &
@@ -381,8 +402,10 @@ class LotseMultiStepFlow(MultiStepFlow):
                 label, value = self._generate_value_representation(field, stored_data.get(attr))
                 value = step.get_overview_value_representation(value, stored_data)
                 if value is not None:
-                    # If get_overview_value_representation() returns None, the value will not be displayed
-                    step_data[label] = value
+                    step_data.append({
+                        "name": label,
+                        "value": value
+                    })
 
         return step_data
 

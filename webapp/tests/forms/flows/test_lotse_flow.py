@@ -1136,42 +1136,45 @@ class TestLotseGetOverviewData(unittest.TestCase):
         flow = LotseMultiStepFlow(endpoint='lotse')
         flow.steps = {s.name: s for s in [StepIban, StepHaushaltsnaheHandwerker, StepAck]}
         debug_data = flow._DEBUG_DATA[1]
-        expected_data = {
-            'mandatory_data': Section(
-                StepIban.section_link.label,
-                flow.url_for_step(StepIban.section_link.beginning_step, _has_link_overview=True),
-                {
-                    StepIban.name:
-                        Section(
-                            StepIban.label,
-                            flow.url_for_step(StepIban.name, _has_link_overview=True),
-                            {str(debug_data['iban']): debug_data['iban'],
-                                str(debug_data['account_holder']): debug_data[
-                                    'account_holder']}, StepIban.name
-                        )
-                }
-            ),
-            'section_steuerminderung': Section(
-                StepHaushaltsnaheHandwerker.section_link.label,
-                flow.url_for_step(StepHaushaltsnaheHandwerker.section_link.beginning_step, _has_link_overview=True),
-                {
-                    StepHaushaltsnaheHandwerker.name: Section(
-                        StepHaushaltsnaheHandwerker.label,
-                        flow.url_for_step(StepHaushaltsnaheHandwerker.name, _has_link_overview=True),
-                        {str(debug_data['stmind_haushaltsnahe_entries']): debug_data[
-                            'stmind_haushaltsnahe_entries'],
-                            str(debug_data['stmind_haushaltsnahe_summe']): debug_data[
-                                'stmind_haushaltsnahe_summe'],
-                            str(debug_data['stmind_handwerker_entries']): debug_data[
-                                'stmind_handwerker_entries'],
-                            str(debug_data['stmind_handwerker_summe']): debug_data[
-                                'stmind_handwerker_summe'],
-                            str(debug_data['stmind_handwerker_lohn_etc_summe']): debug_data[
-                                'stmind_handwerker_lohn_etc_summe']}, StepHaushaltsnaheHandwerker.name
-                    )
-                }
-            )
-        }
+        expected_data = [
+            {
+                'label': StepIban.section_link.label,
+                'url': flow.url_for_step(StepIban.section_link.beginning_step, _has_link_overview=True),
+                'data': [
+                    {
+                        'label': StepIban.label,
+                        'url': flow.url_for_step(StepIban.name, _has_link_overview=True),
+                        'data': [{"name": debug_data['account_holder'],
+                                  "value": debug_data['account_holder']},
+                                 {"name": debug_data['iban'],
+                                 "value": debug_data['iban']}]
+                    }
+                ],
+                'name': 'mandatory_data'
+            },
+            {
+                'label': StepHaushaltsnaheHandwerker.section_link.label,
+                'url': flow.url_for_step(StepHaushaltsnaheHandwerker.section_link.beginning_step, _has_link_overview=True),
+                'data':
+                    [{
+                        'label': StepHaushaltsnaheHandwerker.label,
+                        'url': flow.url_for_step(StepHaushaltsnaheHandwerker.name, _has_link_overview=True),
+                        'data': [{
+                            "name": str(debug_data['stmind_haushaltsnahe_entries']),
+                            "value": debug_data['stmind_haushaltsnahe_entries']},{
+                            "name": str(debug_data['stmind_haushaltsnahe_summe']),
+                            "value": debug_data['stmind_haushaltsnahe_summe']},{
+                            "name": str(debug_data['stmind_handwerker_entries']),
+                            "value": debug_data['stmind_handwerker_entries']},{
+                            "name": str(debug_data['stmind_handwerker_summe']),
+                            "value": debug_data['stmind_handwerker_summe']},{
+                            "name": str(debug_data['stmind_handwerker_lohn_etc_summe']),
+                            "value": debug_data['stmind_handwerker_lohn_etc_summe']}]
+                        }
+                    ],
+                'name': 'section_steuerminderung'
+            }
+        ]
 
         with patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._generate_value_representation',
                     MagicMock(side_effect=lambda field, value: (str(value), value))):
@@ -1186,43 +1189,44 @@ class TestLotseGetOverviewData(unittest.TestCase):
         for missing_field in missing_fields:
             debug_data.pop(missing_field)
         mandatory_data_missing_value = _l('form.lotse.missing_mandatory_field')
-        expected_data = {
-            'mandatory_data': Section(
-                StepIban.section_link.label,
-                flow.url_for_step(StepIban.section_link.beginning_step, _has_link_overview=True),
-                {
-                    StepIban.name:
-                        Section(
-                            StepIban.label,
-                            flow.url_for_step(StepIban.name, _has_link_overview=True),
-                            {_l('form.lotse.field_iban.data_label'): mandatory_data_missing_value,
-                                _l(
-                                    'form.lotse.iban.account-holder.data_label'): mandatory_data_missing_value}, StepIban.name
-                        )
-                }
-            ),
-            'section_steuerminderung': Section(
-                StepHaushaltsnaheHandwerker.section_link.label,
-                flow.url_for_step(StepHaushaltsnaheHandwerker.section_link.beginning_step, _has_link_overview=True),
-                {
-                    StepHaushaltsnaheHandwerker.name:
-                        Section(
-                            StepHaushaltsnaheHandwerker.label,
-                            flow.url_for_step(StepHaushaltsnaheHandwerker.name, _has_link_overview=True),
-                            {str(debug_data['stmind_haushaltsnahe_entries']): debug_data[
-                                'stmind_haushaltsnahe_entries'],
-                                str(debug_data['stmind_haushaltsnahe_summe']): debug_data[
-                                    'stmind_haushaltsnahe_summe'],
-                                str(debug_data['stmind_handwerker_entries']): debug_data[
-                                    'stmind_handwerker_entries'],
-                                str(debug_data['stmind_handwerker_summe']): debug_data[
-                                    'stmind_handwerker_summe'],
-                                str(debug_data['stmind_handwerker_lohn_etc_summe']): debug_data[
-                                    'stmind_handwerker_lohn_etc_summe']}, StepHaushaltsnaheHandwerker.name
-                        )
-                }
-            )
-        }
+
+        expected_data = [{
+                'label': StepIban.section_link.label,
+                'url': flow.url_for_step(StepIban.section_link.beginning_step, _has_link_overview=True),
+                'data': [
+                    {
+                        'label': StepIban.label,
+                        'url': flow.url_for_step(StepIban.name, _has_link_overview=True),
+                        'data': [{"name": _l('form.lotse.iban.account-holder.data_label'),
+                                  "value": mandatory_data_missing_value},
+                                 {"name": _('form.lotse.field_iban.data_label'),
+                                 "value": mandatory_data_missing_value}]
+                    }
+                ],
+                'name': 'mandatory_data'
+            }, {
+                'label': StepHaushaltsnaheHandwerker.section_link.label,
+                'url': flow.url_for_step(StepHaushaltsnaheHandwerker.section_link.beginning_step, _has_link_overview=True),
+                'data':
+                    [{
+                        'label': StepHaushaltsnaheHandwerker.label,
+                        'url': flow.url_for_step(StepHaushaltsnaheHandwerker.name, _has_link_overview=True),
+                        'data': [{
+                            "name": str(debug_data['stmind_haushaltsnahe_entries']),
+                            "value": debug_data['stmind_haushaltsnahe_entries']},{
+                            "name": str(debug_data['stmind_haushaltsnahe_summe']),
+                            "value": debug_data['stmind_haushaltsnahe_summe']},{
+                            "name": str(debug_data['stmind_handwerker_entries']),
+                            "value": debug_data['stmind_handwerker_entries']},{
+                            "name": str(debug_data['stmind_handwerker_summe']),
+                            "value": debug_data['stmind_handwerker_summe']},{
+                            "name": str(debug_data['stmind_handwerker_lohn_etc_summe']),
+                            "value": debug_data['stmind_handwerker_lohn_etc_summe']}]
+                        }
+                    ],
+                'name': 'section_steuerminderung'
+            }
+        ]
 
         with patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._generate_value_representation',
                     MagicMock(side_effect=lambda field, value: (str(value), value))):
