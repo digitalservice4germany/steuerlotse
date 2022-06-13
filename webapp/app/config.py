@@ -107,13 +107,6 @@ class DevelopmentConfig(BaseConfig):
     
     SESSION_DATA_STORAGE_URL = environ.get('SESSION_DATA_STORAGE_URL') or 'redis://0.0.0.0:6379'
     CONFIGURATION_SECRET_ACCESS_KEY = environ.get('CONFIGURATION_SECRET_ACCESS_KEY') or 'dev-secret'
-    DEBUG = False
-    ALLOW_TESTING_ROUTES = True
-    PREFILL_SAMPLE_FORM_DATA = False
-    USE_MOCK_API = True
-
-    ERICA_BASE_URL = 'ERICA'
-    RATELIMIT_ENABLED = False
 
 
 class FunctionalTestingConfig(DevelopmentConfig):
