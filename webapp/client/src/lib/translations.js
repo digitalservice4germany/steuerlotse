@@ -297,7 +297,7 @@ const translations = {
       label: "Ihre E-Mail Adresse",
     },
     button: {
-      label: "E-Mails abonieren",
+      label: "E-Mails abonnieren",
     },
     smallText:
       "Mit dem Abonnieren der E-Mails nehmen Sie die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> zur Kenntnis.",
