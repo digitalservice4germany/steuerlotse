@@ -9,7 +9,7 @@ describe("NewsletterRegisterBox", () => {
   });
 
   it("Should display error email empty", () => {
-    cy.get("button").contains("E-Mails abbonieren").click();
+    cy.get("button").contains("E-Mails abonieren").click();
     // we should have visible errors now
     cy.get(".invalid-feedback").should(
       "contain",
@@ -22,7 +22,7 @@ describe("NewsletterRegisterBox", () => {
 
   it("Should display success message", () => {
     cy.get("input[id=email]").type("test@test.de");
-    cy.get("button").contains("E-Mails abbonieren").click();
+    cy.get("button").contains("E-Mails abonieren").click();
 
     // we should see success message
     cy.get("div[id=success]").should("exist");

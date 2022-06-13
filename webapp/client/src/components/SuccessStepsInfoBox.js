@@ -50,6 +50,9 @@ const InnerBox = styled.div`
 const InnerBoxHeader = styled.h3`
   font-size: var(--text-2xl);
   margin: 0.5rem 0;
+  @media (max-width: 568px) {
+    font-size: var(--text-medium-big);
+  }
 `;
 
 const InnerBoxText = styled.p`

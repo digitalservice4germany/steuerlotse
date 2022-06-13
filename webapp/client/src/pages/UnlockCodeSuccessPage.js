@@ -28,6 +28,10 @@ export default function UnlockCodeSuccessPage({
     @media (max-width: 768px) {
       font-size: var(--text-2xl);
     }
+
+    @media (max-width: 568px) {
+      font-size: var(--text-xla);
+    }
   `;
 
   const anchorInfo = {

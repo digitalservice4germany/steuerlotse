@@ -188,15 +188,12 @@ def register_request_handlers(app):
                                                  'payment=(), picture-in-picture=(), publickey-credentials-get=(), ' \
                                                  'screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), ' \
                                                  'xr-spatial-tracking=() '
-        additional_connect_src = ""
-        if request.path == '/unlock_code_request/step/unlock_code_success':
-            additional_connect_src = "'self'"
         response.headers['Content-Security-Policy'] = (
-                "default-src 'self'; "
-                "script-src 'self' 'unsafe-inline' plausible.io; "
-                "style-src 'self' 'unsafe-inline'; "
-                "connect-src " + additional_connect_src + " plausible.io; "
-                                                          "object-src 'none'; "
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' plausible.io; "
+            "style-src 'self' 'unsafe-inline'; "
+            "connect-src 'self' plausible.io; "
+            "object-src 'none'; "
         )
         return response
 

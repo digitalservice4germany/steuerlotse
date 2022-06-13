@@ -19,7 +19,7 @@ const InnerBox = styled.div`
     var(--spacing-06a);
 
   @media (min-width: 769px) {
-    padding: var(--spacing-07) var(--spacing-13) var(--spacing-07a)
+    padding: var(--spacing-07) var(--spacing-11) var(--spacing-07a)
       var(--spacing-07a);
   }
 `;
@@ -131,6 +131,7 @@ const ColumnSuccessMessage = styled.div`
 
 const errors = [];
 let emailValue = "";
+let disableButton = false;
 
 export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
   const { t } = useTranslation();
@@ -151,6 +152,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
   }, []);
 
   const sendEmail = () => {
+    disableButton = true;
     emailValue = document.getElementById("email").value;
     if (emailValue === "") {
       errors.length = 0;
@@ -194,6 +196,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
           }
         });
     }
+    disableButton = false;
   };
 
   return (
@@ -215,7 +218,7 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
             />
           </ColumnField>
           <ColumnButton flexBasis={30} leftAuto>
-            <ButtonInRow onClick={sendEmail}>
+            <ButtonInRow onClick={sendEmail} disabled={disableButton}>
               {t("newsletter.button.label")}
             </ButtonInRow>
           </ColumnButton>
