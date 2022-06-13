@@ -500,6 +500,10 @@ img.icon {
   background-color: var(--success-color);
   color: white;
 }
+.alert-info {
+  background-color: var(--blue-800);
+  color: white;
+}
 
 .alert-warning {
   background-color: var(--error-color);

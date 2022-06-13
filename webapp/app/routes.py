@@ -164,8 +164,11 @@ def register_request_handlers(app):
         try:
             if response.status_code == 200:
                 incident_config = ConfigurationStorage.get_incident_configuration()
-                if incident_config is not None and 'text' in incident_config:
-                    flash(incident_config['text'], 'warn')
+                incident_text = incident_config['text'] if incident_config is not None and 'text' in incident_config else None
+                incident_levl = incident_config['category'] if incident_config is not None and 'category' in incident_config else 'warn'
+                
+                if incident_text:
+                    flash(incident_text, incident_levl)
         except Exception as ex:
             current_app.logger.info('incident problem:' + str(ex))
 
