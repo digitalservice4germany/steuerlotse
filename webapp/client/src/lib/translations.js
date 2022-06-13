@@ -290,6 +290,32 @@ const translations = {
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
     },
   },
+  newsletter: {
+    headline: "Bestätigung und Erinnerung per E-Mail erhalten",
+    text: "Erhalten Sie zusätzlich per E-Mail die Bestätigung Ihrer Registrierung mit Informationen zur Vorbereitung und eine Erinnerung, wenn Ihr Brief mit Freischaltcode angekommen ist.",
+    fieldEmail: {
+      label: "Ihre E-Mail Adresse",
+    },
+    button: {
+      label: "E-Mails abonieren",
+    },
+    smallText:
+      "Mit dem Abonnieren der E-Mails nehmen Sie die <dataPrivacyLink>Datenschutzerklärung</dataPrivacyLink> zur Kenntnis.",
+    errors: {
+      emailEmpty: "Dieses Feld darf nicht leer sein.",
+      emailInvalid: "Die eingegebene E-Mail Adresse ist nicht gültig.",
+      emailDuplicate: "Die eingegebene E-Mail Adresse ist bereits registriert.",
+      unexpectedError:
+        "Das Speichern Ihrer E-Mail-Adresse hat nicht geklappt.  Bitte versuchen Sie es erneut.",
+    },
+    success: {
+      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an {{emailValue}} geschickt.",
+    },
+    successPage: {
+      title:
+        "Vielen Dank für Ihre Bestätigung! Sie erhalten nun E-Mails vom Steuerlotsen.",
+    },
+  },
   filing: {
     success: {
       title:
@@ -479,8 +505,8 @@ const translations = {
       text: "Nachdem Sie sich durch das Online-Formular des Steuerlotsen geklickt haben und alle Angaben gemacht haben, wird Ihre Steuererklärung elektronisch an Ihr Finanzamt weitergeleitet. Ihre Steuererklärung ist offiziell eingereicht! Sie können sich nun zurücklehnen und auf den Steuerbescheid warten. Dieser wird Ihnen vom Finanzamt innerhalb der üblichen Frist zugeschickt.",
     },
     ShareBox: {
-      header: "Artikel teilen",
-      text: "Dieser Artikel kann auch hilfreich für Ihre Freunde und Bekannte sein?",
+      header: "Artikel weiterempfehlen",
+      text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein. ",
       promoteUrl:
         "https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
       shareText:
@@ -981,6 +1007,343 @@ const translations = {
     Section3: {
       Heading: "Wer nicht bei der Steuererklärungen helfen darf",
       Text: "Helfen zum Beispiel Freunde oder ehemaligen Arbeitskollege bei der Steuererklärung ist das eine Ordnungswidrigkeit – egal ob mit oder ohne Bezahlung. Wer erwischt wird, zahlt bis zu 5.000 € Strafe. Das sollten Sie daher vermeiden!",
+    },
+  },
+  LandingPage: {
+    Hero: {
+      title: "Die vereinfachte Steuererklärung für Menschen im Ruhestand",
+      subTitle:
+        "Mit dem Steuerlotsen können Sie Ihre Steuererklärung für das Steuerjahr 2021 einfach und ohne besonderes Vorwissen online machen.",
+      listItem1: "mit Schritt-für-Schritt-Anleitung",
+      listItem2: "kostenlos und ohne Installation",
+      listItem3: "schnell und unkompliziert",
+      eligibilityTest:
+        "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?",
+      checkUseButton: "Jetzt prüfen",
+    },
+    Cards: {
+      cardOne: {
+        header: "Herausfinden, ob Sie den Steuerlotsen nutzen können",
+        text: "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die Voraussetzungen für die Nutzung des Steuerlotsen erfüllen.",
+        url: "/eligibility/step/tax_year?link_overview=False",
+      },
+      cardTwo: {
+        header: "Registrieren und Freischaltcode beantragen",
+        text: "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung zugeschickt.",
+        url: "/unlock_code_request/step/data_input?link_overview=False",
+      },
+      cardThree: {
+        header: "Mit Freischaltcode anmelden und Steuererklärung machen",
+        text: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
+        url: "/unlock_code_activation/step/data_input?link_overview=False",
+      },
+    },
+    Accordion: {
+      heading: "Häufig gestellte Fragen zum Steuerlotsen",
+      Item1: {
+        title: "Wer kann den Steuerlotsen nutzen?",
+        detail:
+          "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben.\n\nSie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den Steuerlotsen derzeit nicht nutzen.\n\nSie können <eligibilityLink>mit unserem Fragebogen</eligibilityLink> prüfen, ob Sie alle Voraussetzungen für den Steuerlotsen erfüllen.",
+      },
+      Item2: {
+        title: "Wie läuft die Nutzung des Steuerlotsen ab?",
+        detail:
+          "Mit dem Steuerlotsen kommen Sie ganz automatisch in 4 Schritten durch Ihre Steuererklärung:",
+        listItem1:
+          "<eligibilityLink> Prüfen Sie</eligibilityLink>, ob Sie die Voraussetzung für die Nutzung des Steuerlotsen erfüllen.",
+        listItem2:
+          "<registrationLink>Registrieren Sie sich</registrationLink> beim Steuerlotsen für Ihre Online-Steuererklärung. Mit der erfolgreichen Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung.",
+        listItem3:
+          "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
+        listItem4:
+          "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie erneut unsere Seite auf. Klicken Sie auf <activationLink>Ihre Steuererklärung</activationLink>und melden Sie sich mit Ihrem Freischaltcode an. Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen.",
+      },
+      Item3: {
+        title: "Bis wann kann ich die Steuererklärung abgeben?",
+        detail:
+          "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Juli 2022</strong> beim Finanzamt sein.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
+      },
+      Item4: {
+        title: "Kann ich Angaben machen, die meine Steuerlast reduzieren?",
+        detailOne:
+          "Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und somit Ihre Steuerlast reduzieren. Zu folgenden Bereichen können Sie Angaben machen:",
+        detailTwo:
+          "Die <strong>haushaltsnahen Dienstleistungen</strong> und Handwerkerleistungen umfassen im Steuerlotsen <strong>keine Arbeitsverhältnisse</strong>. Sollten Sie Haushaltshilfen als Arbeitnehmer einstellen, können Sie dies im Steuerlotsen nicht steuerlich absetzen.\n\nEine detaillierte Übersicht, welche Angaben zu den Bereichen gehören, finden Sie in unserer Vorbereitungshilfe.\n\n<downloadPreparationLink>Vorbereitungshilfe speichern</downloadPreparationLink>",
+        listItem1: "Vorsorgeaufwendungen",
+        listItem2: "Spenden und Mitgliedsbeiträge",
+        listItem3: "außergewöhnliche Belastungen, wie Krankheitskosten",
+        listItem4: "Haushaltsnahe Dienstleistungen",
+        listItem5: "Haushaltsnahe Handwerkerleistungen",
+        listItem6: "Gezahlte Kirchensteuer",
+      },
+      Item5: {
+        title: "Können wir die Steuererklärung gemeinsam als Paar machen?",
+        detail:
+          'Ja. Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. Es reicht in diesem Fall aus, wenn sich nur eine Person registriert und unter "Ihre Steuererklärung" für die gemeinsame Steuererklärung anmeldet. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner oder Ihrer Partnerin eintragen.',
+      },
+      Item6: {
+        title:
+          "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?",
+        detail:
+          "Sie können den Steuerlotsen vielleicht nutzen. Der Steuerlotse ist nur mit dem Briefersatzverfahren für den Datenabruf von ELSTER nutzbar.\n\nWenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von ELSTER.\n\nELSTER steht für »Elektronische Steuererklärung« und ist die offizielle Plattform der deutschen Finanzverwaltung.",
+      },
+      Item7: {
+        title: "Wer hat den Steuerlotsen entwickelt?",
+        detail:
+          "Der Steuerlotse wurde vom <digitalServiceLink>DigitalService</digitalServiceLink> – einer Bundes GmbH – im Auftrag des <bundesfinanzministeriumLink>Bundesfinanzministerium</bundesfinanzministeriumLink> entwickelt. Daneben hat der DigitalService die <grundsteuererklärungLink>“Grundsteuererklärung für Privateigentum”</grundsteuererklärungLink> entwickelt.",
+      },
+      Item8: {
+        title:
+          "Für welche Steuerjahre kann ich den Steuerlotsen für meine Steuererklärung nutzen?",
+        detail:
+          "Der Steuerlotse kann zurzeit nur für die Abgabe einer Steuererklärung für das Steuerjahr 2021 verwendet werden. Für alle früheren Steuerjahre können Sie beispielsweise auf <elsterLink>Mein ELSTER</elsterLink> oder in einigen Bundesländern auch auf das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> zurückgreifen.",
+      },
+    },
+    ButtonLabel: "Zum Informationsseite",
+  },
+  freeTaxDeclarationForPensioners: {
+    meta: {
+      title: "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente",
+      description:
+        "Steuererklärungen stellen viele Rentner vor Probleme. Lesen Sie hier, welche (kostenlosen) Beratungsmöglichkeiten bereitstehen.",
+      keywords:
+        "Steuererklärung Rentner, Steuererklärung für Rentner, Steuererklärung für Rentner kostenlos, Steuererklärung Rentner Pflicht",
+    },
+    Heading: "Kostenlose Steuererklärung für Rentner – ein Überblick",
+    Teaser:
+      "Immer mehr Bezieher einer Rente oder Pension werden vom Finanzamt um eine Steuererklärung gebeten. Lesen Sie hier, wieso diese anfällt – und wo Sie Hilfe für die Einkommensteuererklärung erhalten.",
+    AnchorList: {
+      anchor1: "Voraussetzungen Einkommensteuer",
+      anchor2: "Beratungsangebote Rentner",
+      anchor3: "Kostenfreie Steuererklärung erstellen",
+    },
+    Accordion: {
+      heading:
+        "Die wichtigsten Antworten zu Steuererklärungen für Rentner im Überblick",
+      Item1: {
+        heading: "Muss ich als Rentner oder Pensionär Einkommensteuer zahlen?",
+        detail:
+          "Grundsätzlich sind Renten und Pensionen einkommensteuerpflichtig. Liegen Ihre zu versteuernde Einkünfte unter dem Grundfreibetrag, so müssen Sie allerdings keine Steuererklärung beim Finanzamt einreichen.",
+      },
+      Item2: {
+        heading: "Wie hoch ist der Grundfreibetrag?",
+        detail:
+          "Im Jahr 2020 lag der Grundfreibetrag bei 9.408 Euro, im Jahr 2021 bei 9.744 Euro. 2022 wird der Grundfreibetrag auf 9.984 Euro angehoben.",
+      },
+      Item3: {
+        heading:
+          "Bislang musste ich keine Steuererklärung einreichen. Wieso ist das jetzt anders?",
+        detail:
+          "Einerseits erhöhen sich die Renten in fast jedem Jahr, andererseits nimmt der Besteuerungsanteil stetig zu. Das führt dazu, dass immer mehr Menschen im Ruhestand Einkommensteuer entrichten müssen.",
+      },
+      Item4: {
+        heading: "Welche Beratungsmöglichkeiten stehen mir zur Verfügung?",
+        detail:
+          "Neben Steuerberatern bieten auch Lohnsteuerhilfevereine ihre Dienste an. Es gibt sogar völlig kostenlose Möglichkeiten der Beratung und Unterstützung.",
+      },
+    },
+    Body: {
+      introText:
+        "Vielleicht sind Sie Rentnerin oder Rentner und haben Post vom Finanzamt erhalten: Die Behörde fordert Sie möglicherweise auf, eine Einkommensteuererklärung einzureichen. Sie sind damit nicht allein: Knapp sieben Millionen Rentnerinnen und Rentner mussten im Jahr 2017 – aktuellere Daten liegen noch nicht vor – Einkommensteuer auf ihre Renteneinkünfte zahlen. Das bedeutet, dass etwa <destatisLink>jeder dritte Rentenempfänger</destatisLink> in Deutschland eine Steuererklärung bei seinem Finanzamt abgeben muss. Falls dieser Sachverhalt auch auf Sie zutrifft, müssen Sie aber nicht in Sorge geraten: Wir möchten Ihnen aufzeigen, wo Sie Hilfe und Unterstützung finden – und das sogar kostenlos.",
+      part1: {
+        heading: "Rente und Einkommensteuer",
+        introText:
+          "Nicht jedem ist bekannt, dass auf Renten und Pensionen Einkommensteuer anfällt. Die <deutscheRente>Deutsche Rentenversicherung</deutscheRente> meldet die relevanten Daten der zuständigen Finanzverwaltung, führt aber keine Steuern an das Finanzamt ab.",
+        subHeading1:
+          "Rentenfreibetrag und einkommensteuerpflichtiger Teil der Rente",
+        text1:
+          "Alle Rentenempfänger erhalten einen „Rentenfreibetrag“: Hierbei handelt es sich um einen festen Eurobetrag, auf den keine Steuern anfallen. Die Höhe des Anteils des Rentenfreibetrags hängt von dem Jahr ab, in dem Sie erstmals eine Rente erhalten. Liegt der erstmalige Erhalt einer Rente zum Beispiel im Jahr 2020, unterliegen 20 Prozent Ihrer Rente keiner Einkommensteuer. Bekommen Sie Ihre erste Rente im Jahr 2021, dann sind es nur noch 19 Prozent. Im Folgejahr sind es 18 Prozent für Bezieher der ersten Rentenzahlung und so weiter. Grund hierfür ist die sogenannte „nachgelagerte Besteuerung“, für die sich der Gesetzgeber im Jahr 2005 entschieden hat.",
+        example1:
+          "<bold>Beispiel:</bold> Herr Mayer ist ledig und erhält erstmals im Jahr 2020 eine Jahresbruttorente von 14.000 Euro. 80 Prozent hiervon müssen versteuert werden: Das sind 11.200 Euro, der Rentenfreibetrag beläuft sich auf 2.800 Euro. Sollte Herr Mayer aufgrund einer Erhöhung seiner Rente fünf Jahre später 15.000 Euro Rente erhalten, ändert das nichts am Rentenfreibetrag: Dieser bleibt bei 2.800 Euro, sodass 12.200 Euro versteuert werden müssen.",
+        text2:
+          "Bei Pensionen ist das anders: Sie werden bereits jetzt in voller Höhe versteuert. Als „Pensionen“ gelten jene Bezüge, welche Beamtinnen und Beamte im Ruhestand erhalten.",
+        subHeading2: "Grundfreibetrag: Ab wann Einkommensteuer anfällt",
+        text3:
+          "Neben dem Rentenfreibetrag gibt es noch den Grundfreibetrag. Letzterer hat zur Folge, dass die Einkommensteuer erst ab einem bestimmten <bfinm>Schwellenwert</bfinm> greift: Im Jahr 2020 lag dieser bei 9.408 Euro, ein Jahr später bei 9.744 Euro, anno 2022 wird er auf 9.984 Euro angehoben.",
+        example2:
+          "<bold>Beispiel:</bold> Für Herrn Mayer, Bezieher einer Rente, hat das zur Folge, dass im Jahr 2020 auf lediglich 1.792 Euro (11.200 Euro minus 9.408 Euro) Einkommensteuer anfällt. Würde Herr Mayer übrigens eine jährliche Pension in Höhe von 14.000 Euro erhalten, so würden 4.592 Euro der Einkommensteuer unterliegen (14.000 Euro minus 9.408 Euro).",
+        text4:
+          "Aufgrund der oben beschriebenen Anpassung des Rentenfreibetrags und den Erhöhungen der Renten zahlen immer mehr Menschen im Ruhestand Einkommensteuer.",
+      },
+      ShareBox: {
+        header: "Artikel weiterempfehlen",
+        text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein.",
+        promoteUrl:
+          "https://www.steuerlotse-rente.de/kostenlose-steuererklaerung-rentner",
+        shareText:
+          "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/kostenlose-steuererklaerung-rentner",
+        mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
+        sourcePage: "FreeTaxDeclarationForPensionersPage",
+      },
+      part2: {
+        heading:
+          "An diese Stellen können Sie sich bei Fragen zur Einkommensteuer wenden",
+        introText:
+          "Wenn Sie das Finanzamt auffordert, eine Steuererklärung abzugeben, gilt es einige Punkte zu beachten. Zum Beispiel diese:",
+        subHeading1: "Fristverlängerung und Formulare im Internet",
+        text1:
+          "Sie finden im Schreiben der Behörde ein Datum, an dem Ihre Erklärung spätestens eingereicht werden sollte. Falls absehbar ist, dass ein fristgerechtes Einbringen der Steuererklärung nicht mehr möglich ist, stellt das üblicherweise kein Problem dar: Bitten Sie Ihr zuständiges Finanzamt einfach um eine Fristverlängerung. Ein formloses Schreiben ist völlig ausreichend. Falls Sie bereits sehr versiert im Umgang mit Ihrer Steuererklärung sind, können Sie diese elektronisch über <elster>ELSTER</elster> vornehmen. Die notwendigen Vordrucke finden Sie außerdem auf dem <bfinv>Formularserver der Finanzverwaltung</bfinv> oder direkt bei Ihrem Finanzamt. ",
+        tipp: "<bold>Tipp:</bold> Sie können Ihre Steuererklärung auch kostenlos direkt mit dem <steuerlotse>Steuerlotsen</steuerlotse> erledigen. Dazu brauchen Sie keinen Elster-Account! ",
+        subHeading2:
+          "Beratung beim Finanzamt, Lohnsteuerverein oder Steuerberater",
+        text2:
+          "Tauchen beim Ausfüllen der Formulare Fragen auf, zögern Sie nicht, diese an Ihr Finanzamt zu richten. Viele dieser Behörden bieten persönliche Beratungsgespräche und telefonische Hilfestellung an. Eine kostengünstige Möglichkeit, Beratung einzuholen und die Steuererklärung an fachkundige Personen zu delegieren, sind sogenannte „Lohnsteuerhilfevereine“. Die Mitgliedschaft in einem solchen Verein hängt von der Höhe des Einkommens ab und kostet in der Regel zwischen 50 und 400 Euro jährlich. Deutlich teurer fallen die Dienste eines Steuerberaters aus. Allerdings geht die Inanspruchnahme eines Lohnsteuerhilfevereins oder Steuerberaters mit einem großen Vorteil einher: Die Frist zur Abgabe der Steuererklärung verlängert sich automatisch um sieben Monate!",
+      },
+      part3: {
+        heading: "Kostenlose Steuererklärung für Rentner mit dem Steuerlotsen",
+        introText:
+          "Falls Sie eine Rente oder Pension beziehen und keine weiteren Einkünfte erzielen, gibt es neben den oben genannten Beratungsangeboten eine weitere Möglichkeit: Der <steuerlotse>Steuerlotse</steuerlotse> wurde im Auftrag des Bundesfinanzministeriums entwickelt und verfolgt daher keine kommerziellen Absichten. Im Gegenteil: Die Nutzung des Dienstes ist völlig kostenfrei. Er richtet sich gezielt an Menschen im Ruhestand. Die Installation eines gesonderten Programms ist nicht erforderlich, die Internetseite führt Sie bequem durch die Steuererklärung.",
+        subHeading1: "So funktioniert der Steuerlotse",
+        text1:
+          "Um sich <steuerlotseRegister>beim Steuerlotsen zu registrieren</steuerlotseRegister>, reichen Angaben zu Ihrem Geburtsdatum und Ihrer Steuer-Identifikationsnummer aus. Binnen zwei Wochen erhalten Sie einen Brief mit einem persönlichen Freischaltcode. Übrigens: Falls Sie eine gemeinsame Veranlagung als Paar vornehmen möchten, weil Sie verheiratet sind oder in einer eingetragenen Lebenspartnerschaft leben, ist das problemlos möglich. Es reicht aus, wenn sich eine Person registriert.",
+        text2:
+          "Selbstverständlich berücksichtigt der Steuerlotse auch jene Ausgaben, die Ihre Steuerlast verringern. So können Sie unter anderem gezahlte Kirchensteuer, Spenden und Mitgliedsbeiträge sowie außergewöhnliche Belastungen steuerlich geltend machen.",
+      },
+      button: {
+        label: "Zum Steuerlotsen für Rente und Pension",
+        plausibleGoal: "contentPage_freeTaxDeclaration_clicked",
+        url: "/",
+      },
+    },
+  },
+  mandateForTaxDeclaration: {
+    meta: {
+      title: "Steuererklärung für Eltern machen | Steuerlotse Rente",
+      description:
+        "Viele Rentner müssen eine Steuererklärung abgeben. Wie können Kinder die Steuererklärung für ihre Eltern machen? Mehr erfahren!",
+      keywords:
+        "Steuererklärung für Eltern machen (40), Steuererklärung Eltern Unterstützung (20), Steuererklärung Unterstützung Eltern wo eintragen (10), Vollmacht Finanzamt Eltern (30)",
+    },
+    Heading: "Steuererklärung für Eltern machen (inkl. Vollmacht-Vorlage)",
+    Teaser:
+      "Immer mehr Rentner und Rentnerinnen müssen eine Steuererklärung abgeben. Viele von ihnen sind damit jedoch überfordert. Wir erklären, wie Sie als Angehöriger die Steuererklärung für Ihre Eltern machen können und was Sie dabei beachten sollten.",
+    AnchorList: {
+      anchor1: "Wie entsteht die Steuerpflicht?",
+      anchor2: "Wer darf bei der Steuererklärung helfen?",
+      anchor3: "Vollmacht für das Finanzamt ausstellen",
+      anchor4: "Mit dem Steuerlotsen Steuererklärungen erledigen",
+    },
+    Accordion: {
+      heading:
+        "Die wichtigsten Antworten zum Thema „Steuererklärung für Eltern machen“ im Überblick:",
+      Item1: {
+        heading: "Warum müssen immer mehr Rentner eine Steuererklärung machen?",
+        detail:
+          "Im Jahr 2020 hat die Bundesregierung die Rente erhöht. Auf diese Weise überschreiten immer mehr Menschen im Ruhestand den Freibetrag – also den Betrag, den sie pro Jahr steuerfrei einnehmen dürfen. Heute zahlen daher rund sieben Millionen der gut 21 Millionen Rentenbeziehenden eine Einkommensteuer. Das heißt auch: Sie müssen eine Steuererklärung abgeben.",
+      },
+      Item2: {
+        heading: "Wer kann Rentnern bei der Steuererklärung helfen?",
+        detail:
+          "Grundsätzlich können Angehörige Rentnern bei ihrer Steuererklärung helfen. Oftmals bieten Kinder ihren Eltern eine Unterstützung für die Steuererklärung an.",
+      },
+      Item3: {
+        heading:
+          "Wo müssen Eltern die Unterstützung durch ihre Kinder in der Steuererklärung angeben?",
+        detail:
+          "Eltern können im Mantelbogen der Steuererklärung angeben, dass ihre Kinder ihnen bei der Steuererklärung geholfen haben.",
+      },
+      Item4: {
+        heading:
+          "Wie können Rentner eine Vollmacht für das Finanzamt ausstellen?",
+        detail:
+          "Eine rechtssichere Vollmacht für das Finanzamt benötigt den Namen des Rentners, seine Anschrift, den des bevollmächtigten Kindes (oder eines anderen Angehörigen), das aktuelle Datum und die Unterschrift des Rentners. Alternativ können Sie einfach diese <bfinm>Vollmacht-Vorlage</bfinm> nutzen.",
+      },
+    },
+    Body: {
+      introText:
+        "Ihre Eltern haben Ihr Leben lang gearbeitet und fleißig in die Rentenkasse eingezahlt. Jetzt im Ruhestand erhalten sie jeden Monat Geld – ohne etwas dafür tun zu müssen. Ganz so einfach ist es für Rentner dann aber doch nicht. Denn: Immer mehr Menschen im Ruhestand müssen Steuern zahlen. Das bedeutet auch: Sie müssen eine Steuererklärung abgeben. Viele Rentner suchen daher Unterstützung bei ihren Kindern. Wie können Sie als Angehöriger also die Steuererklärung für Ihre Eltern machen? Und was sollten Sie dabei beachten?",
+      part1: {
+        heading: "Warum müssen immer mehr Rentner eine Steuererklärung machen?",
+        text1:
+          "Im Juli 2020 erhöhte die Bundesregierung die Rente. Seitdem erhalten Menschen in Westdeutschland 3,45 Prozent und Menschen in Ostdeutschland 4,2 Prozent <vlh>mehr Rente</vlh>. Das war für ältere Menschen grundsätzlich eine gute Nachricht. Mehr Geld heißt im Ruhestand mehr Lebensqualität!",
+        text2:
+          "Die höhere Rente bedeutet jedoch auch, dass viele Rentner und Pensionäre die Mehreinnahmen vollständig versteuern müssen. Das passiert, sobald das Einkommen aus ihrer Rente den Grundfreibetrag überschreitet. Dieser liegt im Jahr 2022 bei 9.984 Euro.",
+        text3:
+          "Für die Praxis hieß das: Im Jahr 2020 rutschten plötzlich rund 51.000 Rentner neu in die Steuerpflicht. Das schätzt das <finanztip>Bundesfinanzministerium</finanztip>. Heute zahlen knapp sieben Millionen der gut 21 Millionen Rentenbeziehenden in Deutschland eine <finanztip>Einkommensteuer.</finanztip> Das bedeutet für die Rentner: Sie müssen jedes Jahr immer wieder eine Steuererklärung abgeben – eine für ältere Menschen manchmal nicht einfache Aufgabe.",
+      },
+      ShareBox: {
+        header: "Artikel weiterempfehlen",
+        text: "Dieser Artikel könnte auch hilfreich für Ihre Freunde oder Bekannten sein.",
+        promoteUrl:
+          "https://www.steuerlotse-rente.de/steuererklärung-eltern-vollmacht",
+        shareText:
+          "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/steuererklärung-eltern-vollmacht",
+        mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
+        sourcePage: "MandateForTaxDeclarationPage",
+      },
+      part2: {
+        heading: "Wann müssen Rentner tatsächlich Steuern zahlen?",
+        text1:
+          "Ob ein Rentner tatsächlich eine Steuererklärung abgeben und Steuern zahlen muss, hängt davon ab...",
+        list: {
+          item1: "...wie viel Rente er bekommt.",
+          item2: "...wann er zum ersten Mal Rente bezogen hat.",
+          item3: "...wie hoch der steuerpflichtige Anteil seiner Rente ist.",
+          item4: "...ob er verheiratet ist.",
+          item5:
+            "...wie viel Versicherungsbeiträge und Krankheitskosten er zahlt.",
+          item6:
+            "...ob er mit seinen Einnahmen über dem <mdr>jährlichen Freibetrag</mdr> liegt.",
+        },
+        text2:
+          "Wann genau Rentner und Rentnerinnen eine Steuererklärung abgeben müssen, hat die Finanzverwaltung NRW in einem anschaulichen Video erklärt:",
+      },
+      part3: {
+        heading: "Wer darf Rentnern bei der Steuererklärung helfen?",
+        text1:
+          "Eigentlich hatten Ihre Eltern bereits einen großen Haken an das Thema Arbeit und Steuern gemacht – und plötzlich sollen sie doch wieder eine Steuererklärung machen. Wer kann ihnen dabei helfen?",
+        text2:
+          "Grundsätzlich dürfen Kinder ihren Eltern Unterstützung bei der Steuererklärung anbieten. Daneben dürfen ihnen auch:",
+        list: {
+          item1: "Ehegatten",
+          item2: "geschiedene Ehepartner",
+          item3: "Lebenspartner",
+          item4: "Verlobte",
+          item5: "Verwandte und Verschwägerte gerader Linie",
+          item6: "Geschwister",
+          item7: "Kinder der Geschwister",
+          item8: "Ehegatten oder Lebenspartner der Geschwister",
+          item9: "Geschwister der Ehegatten oder Lebenspartner",
+          item10: "Geschwister der Eltern",
+          item11: "Pflegeeltern und Pflegekinder",
+        },
+        text3:
+          "bei der <steuertipps>Steuererklärung helfen</steuertipps>. Das muss jedoch kostenlos sein!",
+        subHeading1:
+          "Wo müssen Kinder die Unterstützung ihrer Eltern bei der Steuererklärung eintragen?",
+        text4:
+          "Möchten Angehörige Rentner oder Pensionäre bei der Steuererklärung unterstützen, sollten sie diesen Umstand bei der Steuererklärung angeben. Sie können die <steuertipps>Hilfe im Mantelbogen der Steuererklärung</steuertipps> im Feld „Bei der Anfertigung dieser Steuererklärung hat mitgewirkt“ angeben. Dabei sollten sie auch das Verwandtschaftsverhältnis mitteilen.",
+      },
+      part4: {
+        heading:
+          "Wie können Eltern eine Vollmacht für das Finanzamt ausstellen?",
+        text1:
+          "Steuererklärung anfertigen, Bescheid auslesen und eventuelle Nachzahlungen tätigen: Um im Ruhestand auch die wohlverdiente Ruhe zu genießen, können Eltern ihren Kindern eine Vollmacht für das Finanzamt ausstellen. Die Kinder übernehmen in diesem Fall jegliche Steuerangelegenheiten.",
+        text2: "Damit eine Vollmacht wirksam ist, sollte diese:",
+        list: {
+          item1: "Namen des Rentners",
+          item2: "Anschrift des Rentners",
+          item3:
+            "Namen des bevollmächtigten Kindes (oder eines anderen Angehörigen)",
+          item4: "Aktuelles Datum",
+          item5: "Unterschrift des Rentners",
+        },
+        text3:
+          "enthalten. Damit Sie dabei auf der sicheren Seite stehen, haben wir für Sie eine wasserdichte <bfinm>Vollmacht-Vorlage</bfinm> erstellt.",
+      },
+      part5: {
+        heading:
+          "Mit dem Steuerlotsen die Steuererklärung in wenigen Minuten erledigen",
+        text1:
+          "Wenn Sie die Steuererklärung für Ihre Eltern machen möchten, schaffen Sie das mit dem Steuerlotsen schnell und unkompliziert!",
+        text2:
+          "Der Steuerlotse ist ein Online-Tool für Rentner und Pensionäre, mit dem Sie intuitiv und ganz ohne Vorkenntnisse in wenigen Minuten die Steuererklärung für Ihre Eltern erledigen. Dazu gibt Ihnen der Steuerlotse eine Schritt-für-Schritt-Anleitung an die Hand, die Sie schnell und unkompliziert durch Ihre Steuern führt. Das Beste daran: Das Angebot wurde im Auftrag des Bundesfinanzministeriums entwickelt und ist daher kostenlos!",
+      },
+      button: {
+        label: "Jetzt Ihre Steuererklärung mit dem Steuerlotsen erledigen!",
+        plausibleGoal: "contentPage_mandateForTaxDeclaration_clicked",
+        url: "/eligibility/step/marital_status?link_overview=False",
+      },
     },
   },
 };

@@ -287,6 +287,10 @@ ol li::before {
   padding-top: 1.5rem;
 }
 
+.main-content--full-width--no-padding {
+  padding-top: 0;
+}
+
 .list-unstyled li a {
   color: var(--text-color);
 }
@@ -341,7 +345,7 @@ ol li::before {
 }
 
 .text-input-field-label {
-  margin-top: var(--spacing-07);
+  margin-top: var(--spacing-01);
   font-size: var(--text-medium);
   font-family: var(--font-bold);
 }
@@ -570,5 +574,5 @@ img.icon {
 }
 
 .section-title {
-    margin-bottom: var(--spacing-05);
+  margin-bottom: var(--spacing-05);
 }

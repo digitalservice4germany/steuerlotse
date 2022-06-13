@@ -101,11 +101,13 @@
 
     /* Font Size */
     --text-sm: 0.785rem;
+    --text-sb: 0.875rem;
     --text-s: 0.9rem;
     --text-base: 1rem;
     --text-medium: 1.125rem;
     --text-medium-big: 1.25rem;
     --text-xl: 1.375rem;
+    --text-xla: 1.5rem;
     --text-xxl: 1.6125rem;
     --text-2xl: 1.625rem;
     --text-3xl: 1.875rem;
@@ -137,12 +139,15 @@
     --spacing-04: 1.25rem;
     --spacing-05: 1.5rem;
     --spacing-06: 1.875rem;
+    --spacing-06a: 2rem;
     --spacing-07: 2.5rem;
+    --spacing-07a: 3rem;
     --spacing-08: 3.125rem;
     --spacing-09: 3.75rem;
     --spacing-10: 5.625rem;
     --spacing-11: 7.5rem;
     --spacing-12: 9rem;
+    --spacing-13: 9.5rem;
 
     /* Input Field Widths */
     --input-width-2: 3.5rem;

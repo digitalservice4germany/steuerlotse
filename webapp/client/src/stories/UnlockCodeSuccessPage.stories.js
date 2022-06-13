@@ -15,8 +15,6 @@ function Template(args) {
 export const Default = Template.bind({});
 Default.args = {
   prevUrl: "/unlock_code_revocation/step/data_input",
-  nextUrl: "/unlock_code_request/step/data_input",
-  download: true,
-  steuerErklaerungLink: "unlock_code_activation/step/data_input",
   vorbereitungsHilfeLink: "/download_preparation",
+  dataPrivacyLink: "/datenschutz",
 };

@@ -25,6 +25,7 @@ export const IntroParagraphText = styled.p`
     font-size: 1.5rem;
   }
 `;
+
 export const ContentText = styled.div`
   max-width: 738px;
 
@@ -113,4 +114,52 @@ export const ParagraphHeading = styled.h3`
   @media (max-width: 375px) {
     font-size: 1.25rem;
   }
+`;
+
+export const ShareBox = styled.div`
+  max-width: 738px;
+`;
+
+export const Picture = styled.picture`
+  img {
+    width: 100%;
+    max-width: 930px;
+    height: auto;
+    object-fit: contain;
+  }
+`;
+
+export const HeaderSection = styled.div`
+  margin-top: var(--spacing-11);
+
+  @media (max-width: 768px) {
+    margin-top: var(--spacing-09);
+  }
+`;
+
+export const TopContent = styled.div`
+  max-width: 832px;
+  @media (max-width: 768px) {
+    max-width: 636px;
+  }
+`;
+
+export const ParagraphHeadingH2 = styled.h2`
+  padding-top: var(--spacing-07);
+  font-family: var(--font-bold);
+`;
+
+export const ParagraphHeadingH3 = styled.h3`
+  font-size: var(--text-2xl);
+  padding-top: var(--spacing-03);
+  font-family: var(--font-bold);
+`;
+
+export const HowItWorksVideoContainer = styled.div`
+  position: relative;
+`;
+
+export const HowItWorksImage = styled.img`
+  max-width: 100%;
+  height: auto;
 `;

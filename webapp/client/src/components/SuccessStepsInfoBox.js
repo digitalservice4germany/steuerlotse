@@ -50,6 +50,9 @@ const InnerBox = styled.div`
 const InnerBoxHeader = styled.h3`
   font-size: var(--text-2xl);
   margin: 0.5rem 0;
+  @media (max-width: 568px) {
+    font-size: var(--text-medium-big);
+  }
 `;
 
 const InnerBoxText = styled.p`
@@ -155,14 +158,15 @@ export default function SuccessStepsInfoBox({
 SuccessStepsInfoBox.propTypes = {
   header: PropTypes.string,
   text: PropTypes.string,
-  image: {
+  image: PropTypes.shape({
     src: PropTypes.string,
     srcSet: PropTypes.string,
     alt: PropTypes.string,
-  },
-  anchor: {
+  }),
+  anchor: PropTypes.shape({
     url: PropTypes.string,
-  },
+    text: PropTypes.string,
+  }),
   icon: PropTypes.string,
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,

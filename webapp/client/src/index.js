@@ -46,6 +46,11 @@ import ChurchTaxInfoPage from "./pages/ChurchTaxInfoPage";
 import CraftsmanServicesInfoPage from "./pages/CraftsmanServicesInfoPage";
 import InfoForRelativesPage from "./pages/InfoForRelativesPage";
 import SummaryPage from "./pages/SummaryPage";
+import LandingPage from "./pages/LandingPage";
+import NewsletterSuccessPage from "./pages/NewsletterSuccessPage";
+import NewsletterRegisterBox from "./components/NewsletterRegisterBox";
+import FreeTaxDeclarationForPensionersPage from "./pages/FreeTaxDeclarationForPensionersPage";
+import MandateForTaxDeclarationPage from "./pages/MandateForTaxDeclarationPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -91,6 +96,11 @@ const allowedComponents = {
   CraftsmanServicesInfoPage,
   InfoForRelativesPage,
   SummaryPage,
+  LandingPage,
+  NewsletterSuccessPage,
+  NewsletterRegisterBox,
+  FreeTaxDeclarationForPensionersPage,
+  MandateForTaxDeclarationPage,
 };
 
 function mountComponent(element) {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-05-20 13:57+0200\n"
+"POT-Creation-Date: 2022-06-10 12:01+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,113 +18,121 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app/routes.py:73
+#: app/routes.py:75
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:74
+#: app/routes.py:76
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:75
+#: app/routes.py:77
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:76
+#: app/routes.py:78
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:78
+#: app/routes.py:80
 msgid "nav.preparation"
 msgstr "Vorbereiten"
 
-#: app/routes.py:80
+#: app/routes.py:82
 msgid "nav.lotse-form"
 msgstr "Steuererklärung 2021"
 
-#: app/routes.py:82
+#: app/routes.py:84
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:86
+#: app/routes.py:88
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:199
+#: app/routes.py:228
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:200
+#: app/routes.py:229
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:243
+#: app/routes.py:272
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:244
+#: app/routes.py:273
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:257 app/routes.py:492
+#: app/routes.py:286 app/routes.py:553
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:277 app/templates/basis/base.html:41
+#: app/routes.py:306 app/templates/basis/base.html:45
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:284
+#: app/routes.py:313
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:291
+#: app/routes.py:320
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:298
+#: app/routes.py:327
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:305
+#: app/routes.py:334
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:312
+#: app/routes.py:341
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:319
+#: app/routes.py:348
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:325
+#: app/routes.py:354
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:330
+#: app/routes.py:359
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:483 app/routes.py:513 app/routes.py:520
+#: app/routes.py:520
+msgid "freeTaxDeclarationForPensioners.header-title"
+msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
+
+#: app/routes.py:528
+msgid "mandateForTaxDeclaration.header-title"
+msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
+
+#: app/routes.py:544 app/routes.py:574 app/routes.py:581
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:488 app/routes.py:496
+#: app/routes.py:549 app/routes.py:557
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:501
+#: app/routes.py:562
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:507
+#: app/routes.py:568
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -1038,8 +1046,8 @@ msgstr ""
 "beantragen "
 
 #: app/forms/steps/unlock_code_request_steps.py:63
-#: app/forms/steps/unlock_code_request_steps.py:84
-#: app/forms/steps/unlock_code_request_steps.py:102
+#: app/forms/steps/unlock_code_request_steps.py:86
+#: app/forms/steps/unlock_code_request_steps.py:104
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
@@ -1055,11 +1063,11 @@ msgstr ""
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie"
 " Ihren Brief erhalten."
 
-#: app/forms/steps/unlock_code_request_steps.py:92
+#: app/forms/steps/unlock_code_request_steps.py:94
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:93
+#: app/forms/steps/unlock_code_request_steps.py:95
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Registrierung fehlgeschlagen. Haben Sie sich vielleicht bereits "
@@ -3103,7 +3111,7 @@ msgstr "Weitere Informationen"
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
-#: app/templates/basis/base.html:85 app/templates/error/erica_error.html:8
+#: app/templates/basis/base.html:89 app/templates/error/erica_error.html:8
 #: app/templates/macros.html:7
 msgid "form.back"
 msgstr "Zurück"
@@ -3117,22 +3125,22 @@ msgstr "Zurück zur Übersicht"
 msgid "form.next"
 msgstr "Weiter"
 
-#: app/templates/basis/base.html:8 app/templates/basis/base.html:13
+#: app/templates/basis/base.html:9 app/templates/basis/base.html:16
 msgid "meta.og.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/templates/basis/base.html:9 app/templates/basis/base.html:14
+#: app/templates/basis/base.html:10 app/templates/basis/base.html:17
 msgid "meta.og.description"
 msgstr ""
 "Mit dem Steuerlotsen, entwickelt im Auftrag des Bundesfinanzministeriums,"
 " können Rentner:innen und Pensionär:innen ohne Zusatzeinkünfte ihre "
 "Steuererklärung einfach online einreichen"
 
-#: app/templates/basis/base.html:40
+#: app/templates/basis/base.html:44
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
 
-#: app/templates/basis/base.html:47
+#: app/templates/basis/base.html:51
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -4156,7 +4164,7 @@ msgstr "Datenschutzerklärung"
 
 #: app/templates/content/data_privacy.html:6
 msgid "data_privacy.last_updated"
-msgstr "Zuletzt aktualisiert: 13.09.2021"
+msgstr "Zuletzt aktualisiert: 31.05.2022"
 
 #: app/templates/content/data_privacy.html:7
 msgid "data_privacy.intro"
@@ -4248,12 +4256,7 @@ msgstr ""
 "Identifikationsnummer, sowie Ihre Steuerdaten. Diese Zusammenfassung "
 "wird, nachdem wir Sie Ihnen für Ihre Unterlagen bereitstellen, zeitnah "
 "wieder gelöscht. Die betroffenen Daten sind für die Abgabe einer "
-"Steuererklärung zwingend notwendig.</p><p>Sollten Sie unseren "
-"Kundendienst in Anspruch nehmen, indem Sie uns eine E-Mail an <a "
-"href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt@steuerlotse-"
-"rente.de</a> schicken, so verarbeiten wir die E-Mail Adresse, von der Sie"
-" uns kontaktiert haben, sowie Daten, die Sie in Ihrer E-Mail selbst "
-"erwähnen, bspw. Ihren Namen."
+"Steuererklärung zwingend notwendig."
 
 #: app/templates/content/data_privacy.html:33
 msgid "data_privacy.processing-title"
@@ -4268,10 +4271,7 @@ msgstr ""
 "für die Dauer des Vorgangs in unseren Datenbanken und geben Steuerdaten "
 "an die Finanzverwaltung weiter. Ihre personenbezogenen Daten werden nicht"
 " von uns ausgewertet oder analysiert. Für die Verarbeitung Ihrer Daten in"
-" der Finanzverwaltung beachten Sie bitte Pkt. 6.</p><p>Die Daten, die wir"
-" im Rahmen der Kontaktfunktion erheben, nutzen wir ausschließlich, um Ihr"
-" Anliegen zu bearbeiten und Ihnen eine Antwort zukommen zu lassen. Wir "
-"führen Kontaktdaten und Steuerdaten nicht zusammen."
+" der Finanzverwaltung beachten Sie bitte Pkt. 6."
 
 #: app/templates/content/data_privacy.html:38
 msgid "data_privacy.processing-base-title"
@@ -4344,21 +4344,47 @@ msgstr ""
 "policy\" target=\"_blank\">https://plausible.io/data-policy</a>."
 
 #: app/templates/content/data_privacy.html:58
+msgid "data_privacy.email-title"
+msgstr "Unter welchen Voraussetzungen erfolgt der E-Mail-Versand?"
+
+#: app/templates/content/data_privacy.html:59
+msgid "data_privacy.email-text"
+msgstr ""
+"Bei der Anmeldung zum Bezug unserer E-Mails werden die von Ihnen "
+"erhobenen Daten ausschließlich für diesen Zweck "
+"verwendet.</p><p>Rechtsgrundlage für die Verarbeitung Ihrer "
+"personenbezogenen Daten ist Art. 6 Abs. 1 DSGVO. Für eine wirksame "
+"Registrierung benötigen wir eine valide E-Mail-Adresse. Um zu überprüfen,"
+" dass eine Anmeldung tatsächlich durch den Inhaber einer E-Mail-Adresse "
+"erfolgt, setzen wir das „Double-opt-in“-Verfahren ein. Hierzu "
+"protokollieren wir die Bestellung durch den Versand einer "
+"Bestätigungsmail und den Eingang der hiermit angeforderten Antwort. Die "
+"Daten werden ausschließlich für den E-Mail-Versand verwendet.</p><p>Die "
+"Verwaltung des E-Mail-Versands wird mit dem Dienstleister Sendinblue GmbH"
+" durchgeführt. Die erhobenen E-Mail-Adressen werden auf einem Server der "
+"Sendinblue GmbH gespeichert. Eine darüber hinausgehende Weitergabe an "
+"Dritte findet nicht statt.</p><p>Die Einwilligung zur Speicherung der "
+"persönlichen Daten und der Nutzung für den E-Mail-Versand können "
+"Nutzer:innen jederzeit widerrufen.</p><p>Die Löschung der "
+"personenbezogenen Daten erfolgt einem Monat nach dem Zugang der letzten "
+"E-Mail."
+
+#: app/templates/content/data_privacy.html:63
 msgid "data_privacy.rights-title"
 msgstr "Welche Rechte (Auskunftsrecht, Widerspruchsrecht usw.) haben Sie?"
 
-#: app/templates/content/data_privacy.html:59
+#: app/templates/content/data_privacy.html:64
 msgid "data_privacy.rights-text"
 msgstr ""
 "Sie haben nach der Datenschutz-Grundverordnung verschiedene Rechte. "
 "Einzelheiten ergeben sich insbesondere aus Artikel 15 bis 18 und 21 der "
 "Datenschutz-Grundverordnung."
 
-#: app/templates/content/data_privacy.html:62
+#: app/templates/content/data_privacy.html:67
 msgid "data_privacy.rights-information"
 msgstr "Recht auf Auskunft"
 
-#: app/templates/content/data_privacy.html:63
+#: app/templates/content/data_privacy.html:68
 msgid "data_privacy.rights-information-text"
 msgstr ""
 "Sie können Auskunft über Ihre von uns verarbeiteten personenbezogenen "
@@ -4367,22 +4393,22 @@ msgstr ""
 "erleichtern. Daher sollten in dem Antrag möglichst Angaben zum konkreten "
 "Prozessschritt gemacht werden."
 
-#: app/templates/content/data_privacy.html:67
+#: app/templates/content/data_privacy.html:72
 msgid "data_privacy.correction-information"
 msgstr "Recht auf Berichtigung"
 
-#: app/templates/content/data_privacy.html:68
+#: app/templates/content/data_privacy.html:73
 msgid "data_privacy.correction-information-text"
 msgstr ""
 "Sollten die Sie betreffenden Angaben nicht (mehr) zutreffend sein, können"
 " Sie eine Berichtigung verlangen. Sollten Ihre Daten unvollständig sein, "
 "können Sie eine Vervollständigung verlangen."
 
-#: app/templates/content/data_privacy.html:72
+#: app/templates/content/data_privacy.html:77
 msgid "data_privacy.deletion-information"
 msgstr "Recht auf Löschung"
 
-#: app/templates/content/data_privacy.html:73
+#: app/templates/content/data_privacy.html:78
 msgid "data_privacy.deletion-information-text"
 msgstr ""
 "Sie können die Löschung Ihrer personenbezogenen Daten verlangen. Ihr "
@@ -4390,32 +4416,32 @@ msgstr ""
 " von uns zur Erfüllung unserer gesetzlichen Aufgaben noch benötigt "
 "werden."
 
-#: app/templates/content/data_privacy.html:77
+#: app/templates/content/data_privacy.html:82
 msgid "data_privacy.restriction-information"
 msgstr "Recht auf Einschränkung der Verarbeitung"
 
-#: app/templates/content/data_privacy.html:78
+#: app/templates/content/data_privacy.html:83
 msgid "data_privacy.restriction-information-text"
 msgstr ""
 "Sie haben das Recht, eine Einschränkung der Verarbeitung der Sie "
 "betreffenden Daten zu verlangen."
 
-#: app/templates/content/data_privacy.html:82
+#: app/templates/content/data_privacy.html:87
 msgid "data_privacy.objection-information"
 msgstr "Recht auf Widerspruch"
 
-#: app/templates/content/data_privacy.html:83
+#: app/templates/content/data_privacy.html:88
 msgid "data_privacy.objection-information-text"
 msgstr ""
 "Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation"
 " ergeben, jederzeit der Verarbeitung der Sie betreffenden Daten zu "
 "widersprechen."
 
-#: app/templates/content/data_privacy.html:86
+#: app/templates/content/data_privacy.html:91
 msgid "data_privacy.appeal-information"
 msgstr "Recht auf Beschwerde"
 
-#: app/templates/content/data_privacy.html:87
+#: app/templates/content/data_privacy.html:92
 msgid "data_privacy.appeal-information-text-p1"
 msgstr ""
 "Wenn Sie der Auffassung sind, dass wir Ihrem Anliegen nicht oder nicht in"
@@ -4423,21 +4449,21 @@ msgstr ""
 "Datenschutzbeauftragten sowie dem Bundesbeauftragten für Datenschutz und "
 "Informationssicherheit Beschwerde einlegen."
 
-#: app/templates/content/data_privacy.html:88
+#: app/templates/content/data_privacy.html:93
 msgid "data_privacy.appeal-information-text-p2"
 msgstr ""
 "Externer Datenschutzbeauftragter des DigitalService4Germany<br/>1000 "
 "Elephants GmbH<br/>Björn Stecher<br/><a "
 "href=\"mailto:bjoern@1000elephants.de\">bjoern@1000elephants.de</a>"
 
-#: app/templates/content/data_privacy.html:89
+#: app/templates/content/data_privacy.html:94
 msgid "data_privacy.appeal-information-text-p3"
 msgstr ""
 "Bundesbeauftragter für Datenschutz und "
 "Informationsfreiheit<br/>Graurheindorfer Str. 153 - 53117 "
 "Bonn<br/>Telefon: +49 (0)228-997799-0<br/>Fax: +49 (0)228-997799-5550"
 
-#: app/templates/content/data_privacy.html:90
+#: app/templates/content/data_privacy.html:95
 msgid "data_privacy.appeal-information-text-p4"
 msgstr ""
 "E-Mail: <a "
@@ -4539,8 +4565,8 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
-"Einkommensteuererklärung bis zum <b>31. Juli 2022</b> beim Finanzamt "
-"sein."
+"Einkommensteuererklärung bis zum <b>30. September 2022</b> beim Finanzamt"
+" sein."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:33

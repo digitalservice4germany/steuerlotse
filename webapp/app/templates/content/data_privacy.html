@@ -1,93 +1,98 @@
 {% extends 'basis/base_content.html' %}
 
 {% block content_content %}
-    <div class="section-intro mb-5">
-        <h1 class="section-title">{{ _('data_privacy.heading') }}</h1>
-        <p class="mb-5">{{ _('data_privacy.last_updated') }}</p>
-        <p class="mb-5">{{ _('data_privacy.intro') }}</p>
-        <hr>
+<div class="section-intro mb-5">
+    <h1 class="section-title">{{ _('data_privacy.heading') }}</h1>
+    <p class="mb-5">{{ _('data_privacy.last_updated') }}</p>
+    <p class="mb-5">{{ _('data_privacy.intro') }}</p>
+    <hr>
+</div>
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.aboutus-title') }}</h2>
+    <p>{{ _('data_privacy.aboutus-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.contact-title') }}</h2>
+    <p>{{ _('data_privacy.contact-text') }}</p>
+    <h4 class="mt-4">{{ _('data_privacy.contact-organisation') }}</h4>
+    <p>{{ _('data_privacy.contact-organisation-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.purpose-title') }}</h2>
+    <p>{{ _('data_privacy.purpose-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.personaldata-title') }}</h2>
+    <p>{{ _('data_privacy.personaldata-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.processing-title') }}</h2>
+    <p>{{ _('data_privacy.processing-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.processing-base-title') }}</h2>
+    <p>{{ _('data_privacy.processing-base-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.disclosure-title') }}</h2>
+    <p>{{ _('data_privacy.disclosure-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.storage-title') }}</h2>
+    <p>{{ _('data_privacy.storage-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.analytics-cookies-title') }}</h2>
+    <p>{{ _('data_privacy.analytics-cookies-text') }}</p>
+</div>
+
+<div class="mt-5 pb-3">
+    <h2 class="pb-1">{{ _('data_privacy.email-title') }}</h2>
+    <p>{{ _('data_privacy.email-text') }}</p>
+</div>
+
+<div class="mt-5 pb-4">
+    <h2 class="pb-1">{{ _('data_privacy.rights-title') }}</h2>
+    <p>{{ _('data_privacy.rights-text') }}</p>
+
+    <div class="mt-5">
+        <h3 class="h4">{{ _('data_privacy.rights-information') }}</h3>
+        <p>{{ _('data_privacy.rights-information-text') }}</p>
     </div>
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.aboutus-title') }}</h2>
-        <p>{{ _('data_privacy.aboutus-text') }}</p>
+
+    <div class="mt-5">
+        <h3 class="h4">{{ _('data_privacy.correction-information') }}</h3>
+        <p>{{ _('data_privacy.correction-information-text') }}</p>
     </div>
 
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.contact-title') }}</h2>
-        <p>{{ _('data_privacy.contact-text') }}</p>
-        <h4 class="mt-4">{{ _('data_privacy.contact-organisation') }}</h4>
-        <p>{{ _('data_privacy.contact-organisation-text') }}</p>
+    <div class="mt-5">
+        <h3 class="h4">{{ _('data_privacy.deletion-information') }}</h3>
+        <p>{{ _('data_privacy.deletion-information-text') }}</p>
     </div>
 
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.purpose-title') }}</h2>
-        <p>{{ _('data_privacy.purpose-text') }}</p>
+    <div class="mt-5">
+        <h3 class="h4">{{ _('data_privacy.restriction-information') }}</h3>
+        <p>{{ _('data_privacy.restriction-information-text') }}</p>
     </div>
 
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.personaldata-title') }}</h2>
-        <p>{{ _('data_privacy.personaldata-text') }}</p>
+    <div class="mt-5">
+        <h3 class="h4">{{ _('data_privacy.objection-information') }}</h3>
+        <p>{{ _('data_privacy.objection-information-text') }}</p>
     </div>
-
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.processing-title') }}</h2>
-        <p>{{ _('data_privacy.processing-text') }}</p>
+    <div class="mt-5">
+        <h3 class="h4">{{ _('data_privacy.appeal-information') }}</h3>
+        <p>{{ _('data_privacy.appeal-information-text-p1') }}</p>
+        <p class="mt-4">{{ _('data_privacy.appeal-information-text-p2') }}</p>
+        <p class="mt-4">{{ _('data_privacy.appeal-information-text-p3') }}</p>
+        <p>{{ _('data_privacy.appeal-information-text-p4') }}</p>
     </div>
-
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.processing-base-title') }}</h2>
-        <p>{{ _('data_privacy.processing-base-text') }}</p>
-    </div>
-
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.disclosure-title') }}</h2>
-        <p>{{ _('data_privacy.disclosure-text') }}</p>
-    </div>
-
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.storage-title') }}</h2>
-        <p>{{ _('data_privacy.storage-text') }}</p>
-    </div>
-
-    <div class="mt-5 pb-3">
-        <h2 class="pb-1">{{ _('data_privacy.analytics-cookies-title') }}</h2>
-        <p>{{ _('data_privacy.analytics-cookies-text') }}</p>
-    </div>
-
-    <div class="mt-5 pb-4">
-        <h2 class="pb-1">{{ _('data_privacy.rights-title') }}</h2>
-        <p>{{ _('data_privacy.rights-text') }}</p>
-
-        <div class="mt-5">
-            <h3 class="h4">{{ _('data_privacy.rights-information') }}</h3>
-            <p>{{ _('data_privacy.rights-information-text') }}</p>
-        </div>
-
-        <div class="mt-5">
-            <h3 class="h4">{{ _('data_privacy.correction-information') }}</h3>
-            <p>{{ _('data_privacy.correction-information-text') }}</p>
-        </div>
-
-        <div class="mt-5">
-            <h3 class="h4">{{ _('data_privacy.deletion-information') }}</h3>
-            <p>{{ _('data_privacy.deletion-information-text') }}</p>
-        </div>
-
-        <div class="mt-5">
-            <h3 class="h4">{{ _('data_privacy.restriction-information') }}</h3>
-            <p>{{ _('data_privacy.restriction-information-text') }}</p>
-        </div>
-
-        <div class="mt-5">
-            <h3 class="h4">{{ _('data_privacy.objection-information') }}</h3>
-            <p>{{ _('data_privacy.objection-information-text') }}</p>
-        </div>
-        <div class="mt-5">
-            <h3 class="h4">{{ _('data_privacy.appeal-information') }}</h3>
-            <p>{{ _('data_privacy.appeal-information-text-p1') }}</p>
-            <p class="mt-4">{{ _('data_privacy.appeal-information-text-p2') }}</p>
-            <p class="mt-4">{{ _('data_privacy.appeal-information-text-p3') }}</p>
-            <p>{{ _('data_privacy.appeal-information-text-p4') }}</p>
-        </div>
-    </div>
+</div>
 {% endblock %}

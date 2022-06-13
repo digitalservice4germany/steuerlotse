@@ -98,6 +98,8 @@ class UnlockCodeSuccessProps(ComponentProps):
     steuer_erklaerung_link: str
     vorbereitungs_hilfe_link: str
     plausible_domain: Optional[str]
+    data_privacy_link: str
+    csrf_token: str
 
 
 class UnlockCodeFailureProps(ComponentProps):
@@ -229,11 +231,11 @@ class VorbereitenInfoProps(ComponentProps):
     handwerkerleistungen_url: str
     spenden_und_mitgliedsbeitraege_url: str
     kirchensteuer_url: str
-  
+
 class HouseholdServicesInfoPageProps(ComponentProps):
     pass
 
-  
+
 class ReplacementCostsInfoPageProps(ComponentProps):
     pass
 
@@ -253,6 +255,7 @@ class ChurchTaxInfoPageProps(ComponentProps):
 class CraftsmanServicesInfoPageProps(ComponentProps):
     pass
 
+
 class InfoForRelativesPageProps(ComponentProps):
     pass
 
@@ -265,3 +268,17 @@ class SummaryPageProps(ComponentProps):
     prev_url: Optional[str]
     form: FormProps
     fields: Dict[str, FieldProps]
+
+class LandingPageProps(ComponentProps):
+    pass
+
+class NewsletterSuccessPageProps(ComponentProps):
+    pass
+
+
+class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
+    pass
+
+
+class MandateForTaxDeclarationProps(ComponentPlausibleProps):
+    pass
