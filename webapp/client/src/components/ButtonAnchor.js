@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
+import addPlausibleGoal from "../lib/helpers";
 
 const hoverStates = css`
   color: ${({ variant, disabled }) => {
@@ -216,7 +217,16 @@ export default function ButtonAnchor({
   disabled,
   className,
   marginVariant,
+  plausibleGoal,
+  plausibleDomain,
+  plausibleProps,
 }) {
+  const handleClick = () => {
+    addPlausibleGoal(plausibleDomain, plausibleGoal, { props: plausibleProps });
+    if (onClick !== undefined) {
+      onClick();
+    }
+  };
   const relation = [];
   let target = false;
   if (external) {
@@ -237,7 +247,7 @@ export default function ButtonAnchor({
       buttonStyle={buttonStyle}
       target={target || undefined}
       rel={url && !download ? relation : undefined}
-      onClick={onClick}
+      onClick={handleClick}
       marginVariant={marginVariant}
     >
       {children}
@@ -263,6 +273,9 @@ ButtonAnchor.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   marginVariant: PropTypes.bool,
+  plausibleGoal: PropTypes.string,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleDomain: PropTypes.string,
 };
 
 ButtonAnchor.defaultProps = {
@@ -276,4 +289,7 @@ ButtonAnchor.defaultProps = {
   disabled: false,
   className: undefined,
   marginVariant: false,
+  plausibleGoal: null,
+  plausibleProps: undefined,
+  plausibleDomain: null,
 };
