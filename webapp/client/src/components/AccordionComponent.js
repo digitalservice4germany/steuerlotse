@@ -59,12 +59,10 @@ const CardHeaderSpan = styled.span`
 `;
 
 const AccordionHeadline = styled.h2`
-  margin-bottom: ${(props) => (props.variant ? "var(--spacing-07)" : "0")};
+  margin-bottom: var(--spacing-05);
 `;
 
-const AccordionStyled = styled(Accordion)`
-  padding-top: var(--spacing-03);
-`;
+const AccordionStyled = styled(Accordion)``;
 
 export default function AccordionComponent({ title, intro, items, variant }) {
   const [toggle, setToggle] = useState();
