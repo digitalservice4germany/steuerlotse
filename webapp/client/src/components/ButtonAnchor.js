@@ -222,7 +222,11 @@ export default function ButtonAnchor({
   plausibleProps,
 }) {
   const handleClick = () => {
-    addPlausibleGoal(plausibleDomain, plausibleGoal, { props: plausibleProps });
+    if (plausibleDomain) {
+      addPlausibleGoal(plausibleDomain, plausibleGoal, {
+        props: plausibleProps,
+      });
+    }
     if (onClick !== undefined) {
       onClick();
     }
