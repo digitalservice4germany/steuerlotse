@@ -15,16 +15,15 @@ import {
   ParagraphHeadingH2,
   ParagraphHeadingH3,
   ShareBox,
-  HowItWorksVideoContainer,
-  HowItWorksImage,
+  ListContent,
 } from "../components/ContentPageStyles";
 import AccordionComponent from "../components/AccordionComponent";
 import ButtonAnchor from "../components/ButtonAnchor";
-import { List, ListItem } from "../components/ContentPagesGeneralStyling";
+import { ListItem } from "../components/ContentPagesGeneralStyling";
 import InfoBox from "../components/InfoBox";
 import { anchorPrufen } from "../lib/contentPagesAnchors";
 import SuccessStepsInfoBox from "../components/SuccessStepsInfoBox";
-import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
+import { ReactComponent as PlayIconInverse } from "../assets/icons/DefaultStatePlayIcon.svg";
 
 const CTAButton = styled(ButtonAnchor)`
   margin-top: var(--spacing-03);
@@ -157,6 +156,8 @@ export default function MandateForTaxDeclarationPage({ plausibleDomain }) {
     <ListItem key={item.text}>{item.text}</ListItem>
   ));
 
+  const { Text, Icon } = ButtonAnchor;
+
   return (
     <>
       <Helmet>
@@ -281,26 +282,24 @@ export default function MandateForTaxDeclarationPage({ plausibleDomain }) {
             {trans("mandateForTaxDeclaration.Body.part2.text1")}
           </ParagraphTextLarger>
 
-          <List aria-label="simple-list">{ListPart2}</List>
+          <ListContent aria-label="simple-list">{ListPart2}</ListContent>
 
           <ParagraphTextLarger className="mt-3">
             {trans("mandateForTaxDeclaration.Body.part2.text2")}
           </ParagraphTextLarger>
 
-          <HowItWorksVideoContainer>
-            <HowItWorksImage
-              src="/images/thumbnail-finv-nrw.png"
-              alt="Erklärvideo auf Youtube abspielen"
-            />
-            <SecondaryAnchorButton
-              text="Auf Youtube abspielen"
-              url="https://youtu.be/51VwaRbRxvI"
-              className="outline-0"
-              isExternalLink
-              plausibleDomain={plausibleDomain}
-              plausibleName="Youtube-Link MandateForTaxDeclaration clicked"
-            />
-          </HowItWorksVideoContainer>
+          <ButtonAnchor
+            url="https://youtu.be/51VwaRbRxvI"
+            plausibleGoal="Youtube-Link MandateForTaxDeclaration clicked"
+            plausibleDomain={plausibleDomain}
+            variant="outline"
+            external
+          >
+            <Icon>
+              <PlayIconInverse />
+            </Icon>
+            <Text>Erklärvideo auf Youtube abspielen</Text>
+          </ButtonAnchor>
 
           <ParagraphHeadingH2 id="anchor2">
             {t("mandateForTaxDeclaration.Body.part3.heading")}
@@ -314,7 +313,7 @@ export default function MandateForTaxDeclarationPage({ plausibleDomain }) {
             {trans("mandateForTaxDeclaration.Body.part3.text2")}
           </ParagraphTextLarger>
 
-          <List aria-label="simple-list">{ListPart3}</List>
+          <ListContent aria-label="simple-list">{ListPart3}</ListContent>
 
           <ParagraphTextLarger className="mt-3">
             {trans("mandateForTaxDeclaration.Body.part3.text3")}
@@ -340,7 +339,7 @@ export default function MandateForTaxDeclarationPage({ plausibleDomain }) {
             {trans("mandateForTaxDeclaration.Body.part4.text2")}
           </ParagraphTextLarger>
 
-          <List aria-label="simple-list">{ListPart4}</List>
+          <ListContent aria-label="simple-list">{ListPart4}</ListContent>
 
           <ParagraphTextLarger className="mt-3">
             {trans("mandateForTaxDeclaration.Body.part4.text3")}

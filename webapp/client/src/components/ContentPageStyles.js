@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { List } from "./ContentPagesGeneralStyling";
 
 export const ContentSpacingWrapper = styled.div`
   padding-left: var(--spacing-03);
@@ -162,4 +163,8 @@ export const HowItWorksVideoContainer = styled.div`
 export const HowItWorksImage = styled.img`
   max-width: 100%;
   height: auto;
+`;
+
+export const ListContent = styled(List)`
+  font-size: var(--text-xla);
 `;

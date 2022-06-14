@@ -1255,7 +1255,7 @@ const translations = {
     },
     Body: {
       introText:
-        "Ihre Eltern haben Ihr Leben lang gearbeitet und fleißig in die Rentenkasse eingezahlt. Jetzt im Ruhestand erhalten sie jeden Monat Geld – ohne etwas dafür tun zu müssen. Ganz so einfach ist es für Rentner dann aber doch nicht. Denn: Immer mehr Menschen im Ruhestand müssen Steuern zahlen. Das bedeutet auch: Sie müssen eine Steuererklärung abgeben. Viele Rentner suchen daher Unterstützung bei ihren Kindern. Wie können Sie als Angehöriger also die Steuererklärung für Ihre Eltern machen? Und was sollten Sie dabei beachten?",
+        "Ihre Eltern haben ihr Leben lang gearbeitet und fleißig in die Rentenkasse eingezahlt. Jetzt im Ruhestand erhalten sie jeden Monat Geld – ohne etwas dafür tun zu müssen. Ganz so einfach ist es für Rentner dann aber doch nicht. Denn: Immer mehr Menschen im Ruhestand müssen Steuern zahlen. Das bedeutet auch: Sie müssen eine Steuererklärung abgeben. Viele Rentner suchen daher Unterstützung bei ihren Kindern. Wie können Sie als Angehöriger also die Steuererklärung für Ihre Eltern machen? Und was sollten Sie dabei beachten?",
       part1: {
         heading: "Warum müssen immer mehr Rentner eine Steuererklärung machen?",
         text1:
@@ -1263,7 +1263,7 @@ const translations = {
         text2:
           "Die höhere Rente bedeutet jedoch auch, dass viele Rentner und Pensionäre die Mehreinnahmen vollständig versteuern müssen. Das passiert, sobald das Einkommen aus ihrer Rente den Grundfreibetrag überschreitet. Dieser liegt im Jahr 2022 bei 9.984 Euro.",
         text3:
-          "Für die Praxis hieß das: Im Jahr 2020 rutschten plötzlich rund 51.000 Rentner neu in die Steuerpflicht. Das schätzt das <finanztip>Bundesfinanzministerium</finanztip>. Heute zahlen knapp sieben Millionen der gut 21 Millionen Rentenbeziehenden in Deutschland eine <finanztip>Einkommensteuer.</finanztip> Das bedeutet für die Rentner: Sie müssen jedes Jahr immer wieder eine Steuererklärung abgeben – eine für ältere Menschen manchmal nicht einfache Aufgabe.",
+          "Für die Praxis hieß das: Im Jahr 2020 rutschten plötzlich rund 51.000 Rentner neu in die Steuerpflicht. Das schätzt das <finanztip>Bundesfinanzministerium</finanztip>. Heute zahlen knapp sieben Millionen der gut 21 Millionen Rentenbeziehenden in Deutschland eine Einkommensteuer. Das bedeutet für die Rentner: Sie müssen jedes Jahr immer wieder eine Steuererklärung abgeben – eine für ältere Menschen manchmal nicht einfache Aufgabe.",
       },
       ShareBox: {
         header: "Artikel weiterempfehlen",
@@ -1346,7 +1346,7 @@ const translations = {
       button: {
         label: "Jetzt Ihre Steuererklärung mit dem Steuerlotsen erledigen!",
         plausibleGoal: "contentPage_mandateForTaxDeclaration_clicked",
-        url: "/eligibility/step/marital_status?link_overview=False",
+        url: "/eligibility/step/tax_year?link_overview=False",
       },
     },
   },
