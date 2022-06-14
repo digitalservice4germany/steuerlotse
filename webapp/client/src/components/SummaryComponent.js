@@ -82,7 +82,10 @@ export default function SummaryComponent({ data, label, url }) {
     <Box>
       <LabelBox>
         <BoxLabelText>{label}</BoxLabelText>
-        <BoxLink href={url} alt={`${label} ${t("lotse.summary.changeAlt")}`}>
+        <BoxLink
+          href={url}
+          aria-label={`${label} ${t("lotse.summary.changeAlt")}`}
+        >
           {t("lotse.summary.change")}
         </BoxLink>
       </LabelBox>
