@@ -26,9 +26,11 @@ const BoxText = styled.p`
   padding: 0 15px 0 10px;
 `;
 
-const BoxLabelText = styled(BoxText)`
+const BoxLabelText = styled.h3`
   padding: 0;
   font-size: var(--text-medium-big);
+  margin: 0;
+  font-weight: 700;
 `;
 
 const BoxLink = styled.a`
