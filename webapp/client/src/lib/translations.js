@@ -519,22 +519,29 @@ const translations = {
   },
   AmbassadorMaterial: {
     Heading:
-      "Info-Materialien zum Steuerlotsen für Digital-Botschafter und Seniorenbüros",
+      "Wir bieten Produktvorstellung für Digital-Botschafter und kostenloses Infomaterial",
     SubHeading:
-      "Wir wollen so viele Menschen im Ruhestand wie möglich erreichen. Unterstützen Sie uns dabei! Hier finden Sie Informationsmaterialien zum Download und ein Erklärvideo zum Steuerlotsen.",
-    Paragraph: {
-      FreeFlyerHeading:
-        "Sie möchten kostenlos Flyer zugeschickt bekommen? Schreiben Sie uns!",
-      FreeFlyerText:
-        "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu. Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
-      DownloadInformationText: "Informationsmaterialien zum Download",
-      InfoBroschureDownloadLink: "Informationsbroschüre (PDF) speichern",
-      SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
-      HowItWorks:
-        "So funktioniert der Steuerlotse für Rente und Pension (Video, 30 Min)",
-      AnyOtherQuestions: "Haben Sie noch weitere Fragen zum Steuerlotsen?",
-      ContactUs:
-        "Schreiben Sie uns: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
+      "Gerne schicken wir Ihnen ein kleines kostenloses Paket Informationsmaterial und stellen Ihnen den Steuerlotsen in Ihrem Dachverband oder Netzwerk vor.",
+    Section: {
+      whatSteuerlotseDoes: {
+        heading: "Was macht der Steuerlotse?",
+        text: "Millionen Seniorinnen und Senioren hierzulande haben steuerpflichtige Einkommen – was viele von ihnen vor große Herausforderungen stellt. Gemeinsam mit dem Bundesministerium der Finanzen haben wir ein Online-Tool entwickelt, das es Renten- und Pensionsbeziehende erlaubt, intuitiv und ganz ohne Vorkenntnisse in wenigen Minuten ihre Steuererklärung abzugeben. Der Steuerlotse stand erstmals für die Steuersaison 2020 zur Verfügung und wird fortlaufend aktualisiert.\n\nWir wollen so vielen Menschen im Ruhestand digitale Teilhabe und eine stressfreie Steuererklärung wie möglich ermöglichen. Unterstützen Sie uns dabei!",
+      },
+      downloadInformation: {
+        heading: "Informationsmaterialien zum Download",
+        text: "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu. ",
+        informationButtonText: "Informationsbroschüre speichern [PDF]",
+        flyerButtonText: "Flyer zum Steuerlotsen speichern [PDF]",
+      },
+      freeInformation: {
+        heading: "Kostenlos Informationsmaterial erhalten ",
+        text: "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu.\n\nSchreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>",
+        buttonText: "Schreiben Sie uns",
+      },
+      contactUs: {
+        heading: "Nehmen Sie Kontakt zu uns auf",
+        text: "Sie sind in einem Steuerverein oder Seniorenbüro tätig oder setzen sich für digitale Teilhabe von Seniorinnen und Senioren ein? Gerne stellen wir Ihnen das Produkt in Ihrem Dachverband oder Netzwerk vor und besprechen eine mögliche Zusammenarbeit. Setzen Sie sich gerne mit uns in Verbindung.",
+      },
     },
   },
   ContentPagesAnchors: {

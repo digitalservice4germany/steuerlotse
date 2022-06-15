@@ -394,7 +394,7 @@ def register_request_handlers(app):
             props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='InfoTaxReturnForPensionersPage')
 
-    @app.route('/botschafter', methods=['GET'])
+    @app.route('/seniorenvereine', methods=['GET'])
     @add_caching_headers
     def ambassadorMaterial():
         return render_react_template(

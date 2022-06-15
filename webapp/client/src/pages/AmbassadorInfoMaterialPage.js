@@ -2,14 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useTranslation, Trans } from "react-i18next";
-import {
-  HeroImage,
-  HowItWorksImage,
-  HowItWorksVideoContainer,
-  TextContent,
-} from "../components/ContentPageStyles";
-import DownloadLink from "../components/DownloadLink";
-import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
+import ButtonAnchor from "../components/ButtonAnchor";
+import { HeroImage, TextContent } from "../components/ContentPageStyles";
+
 import {
   Headline1,
   Headline2,
@@ -22,10 +17,6 @@ const Headline1Ambassador = styled(Headline1)`
   @media (max-width: 1024px) {
     margin-top: var(--spacing-05);
   }
-`;
-
-const DownloadLinkStyled = styled(DownloadLink)`
-  display: block;
 `;
 
 const Headline2Ambassador = styled(Headline2)`
@@ -65,49 +56,62 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         alt="Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen Steuererklärung"
       />
       <Headline2Ambassador>
-        {t("AmbassadorMaterial.Paragraph.DownloadInformationText")}
+        {t("AmbassadorMaterial.Section.whatSteuerlotseDoes.heading")}
       </Headline2Ambassador>
-      <DownloadLinkStyled
-        text={t("AmbassadorMaterial.Paragraph.InfoBroschureDownloadLink")}
-        url="/download_informationsbroschure_pdf"
+      <TextContent>
+        {t("AmbassadorMaterial.Section.whatSteuerlotseDoes.text")}
+      </TextContent>
+
+      <Headline2Ambassador>
+        {t("AmbassadorMaterial.Section.downloadInformation.heading")}
+      </Headline2Ambassador>
+      <TextContent>
+        {t("AmbassadorMaterial.Section.downloadInformation.text")}
+      </TextContent>
+
+      <div>
+        <ButtonAnchor
+          url="/download_informationsbroschure_pdf"
+          plausibleDomain={plausibleDomain}
+          plausibleName="Download Informationsbroschüre"
+          className="mb-3"
+        >
+          {t(
+            "AmbassadorMaterial.Section.downloadInformation.informationButtonText"
+          )}
+        </ButtonAnchor>
+      </div>
+      <div>
+        <ButtonAnchor
+          url="/download_steuerlotsen_flyer.pdf"
+          plausibleDomain={plausibleDomain}
+          plausibleName="Download Steuerlotsen-Flyer"
+          className="mb-3"
+        >
+          {t("AmbassadorMaterial.Section.downloadInformation.flyerButtonText")}
+        </ButtonAnchor>
+      </div>
+
+      <Headline2Ambassador>
+        {t("AmbassadorMaterial.Section.freeInformation.heading")}
+      </Headline2Ambassador>
+      <TextContent>
+        {trans("AmbassadorMaterial.Section.freeInformation.text")}
+      </TextContent>
+      <ButtonAnchor
+        url="mailto:kontakt@steuerlotse-rente.de\"
         plausibleDomain={plausibleDomain}
         plausibleName="Download Informationsbroschüre"
         className="mb-3"
-      />
-      <DownloadLinkStyled
-        text={t("AmbassadorMaterial.Paragraph.SteuerlotsenFlyerLink")}
-        url="/download_steuerlotsen_flyer.pdf"
-        plausibleDomain={plausibleDomain}
-        plausibleName="Download Steuerlotsen-Flyer"
-      />
+      >
+        {t("AmbassadorMaterial.Section.freeInformation.buttonText")}
+      </ButtonAnchor>
+
       <Headline2Ambassador>
-        {t("AmbassadorMaterial.Paragraph.FreeFlyerHeading")}
+        {t("AmbassadorMaterial.Section.contactUs.heading")}
       </Headline2Ambassador>
       <TextContent>
-        {trans("AmbassadorMaterial.Paragraph.FreeFlyerText")}
-      </TextContent>
-      <Headline2Ambassador>
-        {t("AmbassadorMaterial.Paragraph.HowItWorks")}
-      </Headline2Ambassador>
-      <HowItWorksVideoContainer>
-        <HowItWorksImage
-          src="/images/How_It_Works_Video.png"
-          alt="Erklärvideo auf Youtube abspielen"
-        />
-        <SecondaryAnchorButton
-          text="Auf Youtube abspielen"
-          url="https://www.youtube.com/watch?v=vP--fwSWtLE"
-          className="outline-0"
-          isExternalLink
-          plausibleDomain={plausibleDomain}
-          plausibleName="Youtube-Link clicked"
-        />
-      </HowItWorksVideoContainer>
-      <Headline2Ambassador>
-        {t("AmbassadorMaterial.Paragraph.AnyOtherQuestions")}
-      </Headline2Ambassador>
-      <TextContent>
-        {trans("AmbassadorMaterial.Paragraph.ContactUs")}
+        {t("AmbassadorMaterial.Section.contactUs.text")}
       </TextContent>
     </>
   );
