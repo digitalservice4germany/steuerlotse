@@ -397,7 +397,7 @@ def register_request_handlers(app):
     @app.route('/seniorenvereine', methods=['GET'])
     @add_caching_headers
     def ambassadorMaterial():
-        return render_react_template(
+        return render_react_content_page_template(
             props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='AmbassadorInfoMaterialPage')
 

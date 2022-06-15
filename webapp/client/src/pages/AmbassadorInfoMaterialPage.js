@@ -9,6 +9,7 @@ import {
   Headline1,
   Headline2,
   ParagraphLarge,
+  ContentWrapper,
 } from "../components/ContentPagesGeneralStyling";
 
 const Headline1Ambassador = styled(Headline1)`
@@ -46,7 +47,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
   }
 
   return (
-    <>
+    <ContentWrapper>
       <Headline1Ambassador>
         {t("AmbassadorMaterial.Heading")}
       </Headline1Ambassador>
@@ -113,7 +114,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
       <TextContent>
         {t("AmbassadorMaterial.Section.contactUs.text")}
       </TextContent>
-    </>
+    </ContentWrapper>
   );
 }
 
