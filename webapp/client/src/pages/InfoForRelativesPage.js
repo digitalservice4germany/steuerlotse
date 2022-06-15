@@ -8,18 +8,9 @@ import {
   ListItem,
   Headline1,
   Headline2,
-  Paragraph,
   ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 import { anchorPrufen } from "../lib/contentPagesAnchors";
-
-const Picture = styled.picture`
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-`;
 
 const InnerHeader = styled.div`
   margin-bottom: var(--spacing-08);
@@ -73,16 +64,9 @@ export default function InfoForRelativesPage() {
           <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
           <ParagraphLarge>{t("InfoForRelatives.Section1.Text")}</ParagraphLarge>
         </InnerHeader>
-        <Picture>
-          <img
-            src="../images/mandate-for-tax-declaration.jpg"
-            alt="Frau hilft Verwandten am Laptop bei ihrer Steuererklärung"
-          />
-        </Picture>
       </ContentWrapper>
       <ContentWrapper>
-        <Headline2>{t("InfoForRelatives.Section2.Heading")}</Headline2>
-        <Paragraph>{t("InfoForRelatives.Section2.Text")}</Paragraph>
+        <Headline2 noMargin>{t("InfoForRelatives.Section2.Heading")}</Headline2>
         <List aria-label="simple-list">{ListDependentsMap}</List>
       </ContentWrapper>
       <InfoBox
