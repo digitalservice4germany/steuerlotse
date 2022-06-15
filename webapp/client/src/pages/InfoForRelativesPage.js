@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import InfoBox from "../components/InfoBox";
 import {
   ContentWrapper,
   List,
@@ -10,7 +9,6 @@ import {
   Headline2,
   ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
-import { anchorPrufen } from "../lib/contentPagesAnchors";
 
 const InnerHeader = styled.div`
   margin-bottom: var(--spacing-08);
@@ -59,21 +57,15 @@ export default function InfoForRelativesPage() {
 
   return (
     <div>
-      <ContentWrapper>
+      <ContentWrapper bottomMargin>
         <InnerHeader>
           <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
           <ParagraphLarge>{t("InfoForRelatives.Section1.Text")}</ParagraphLarge>
         </InnerHeader>
-      </ContentWrapper>
-      <ContentWrapper>
+
         <Headline2 noMargin>{t("InfoForRelatives.Section2.Heading")}</Headline2>
         <List aria-label="simple-list">{ListDependentsMap}</List>
       </ContentWrapper>
-      <InfoBox
-        boxHeadline={anchorPrufen.headline}
-        boxText={t("CheckNowInfoBox.text")}
-        anchor={anchorPrufen}
-      />
     </div>
   );
 }

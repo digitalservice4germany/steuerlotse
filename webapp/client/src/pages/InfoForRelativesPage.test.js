@@ -20,15 +20,11 @@ describe("InfoForRelativesPage", () => {
   it("should render InfoForRelativesPage", () => {
     setup();
 
-    const headline1 = screen.getByText(
-      "Hilfestellung für Angehörige bei der Steuererklärung"
-    );
-    const headline2 = screen.getByText(
-      "Wem Sie helfen dürfen und wer Ihnen helfen darf:"
-    );
+    const headline1 = screen.getByText("Informationen für Angehörige");
+    const headline2 = screen.getByText("Wer helfen darf");
 
     const text1 = screen.getByText(
-      "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz",
+      "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz.",
       { exact: false }
     );
 
@@ -47,11 +43,5 @@ describe("InfoForRelativesPage", () => {
     const items = getAllByRole("listitem");
 
     expect(items.length).toBe(9);
-  });
-
-  it("should render the info box component", () => {
-    setup();
-
-    expect(screen.getByText("info box")).toBeInTheDocument();
   });
 });
