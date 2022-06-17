@@ -5,7 +5,7 @@ import ButtonAnchor from "./ButtonAnchor";
 const Box = styled.div`
   background-color: var(--beige-200);
   padding-top: var(--spacing-09);
-  margin-top: var(--spacing-11);
+  margin-top: var(--spacing-10);
 `;
 const InnerBox = styled.div`
   padding-left: var(--spacing-03);
