@@ -1,22 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import InfoBox from "../components/InfoBox";
+import FormHeader from "../components/FormHeader";
+import { anchorPrufen } from "../lib/contentPagesAnchors";
 import {
   ContentWrapper,
   List,
   ListItem,
-  Headline1,
   Headline2,
-  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
-
-const InnerHeader = styled.div`
-  margin-bottom: var(--spacing-08);
-
-  @media screen and (min-width: 1024px) {
-    margin-top: var(--spacing-11);
-  }
-`;
 
 export default function InfoForRelativesPage() {
   const { t } = useTranslation();
@@ -58,14 +50,18 @@ export default function InfoForRelativesPage() {
   return (
     <div>
       <ContentWrapper bottomMargin>
-        <InnerHeader>
-          <Headline1>{t("InfoForRelatives.Section1.Heading")}</Headline1>
-          <ParagraphLarge>{t("InfoForRelatives.Section1.Text")}</ParagraphLarge>
-        </InnerHeader>
-
+        <FormHeader
+          title={t("InfoForRelatives.Section1.Heading")}
+          intro={t("InfoForRelatives.Section1.Text")}
+        />
         <Headline2 noMargin>{t("InfoForRelatives.Section2.Heading")}</Headline2>
         <List aria-label="simple-list">{ListDependentsMap}</List>
       </ContentWrapper>
+      <InfoBox
+        boxHeadline={anchorPrufen.headline}
+        boxText={t("CheckNowInfoBox.text")}
+        anchor={anchorPrufen}
+      />
     </div>
   );
 }

@@ -20,7 +20,7 @@ export const ContentWrapper = styled.div`
 export const List = styled.ul`
   margin: 0;
   padding: var(--spacing-03) 0 0;
-  font-size: var(--text-medium-big);
+  font-size: var(--text-medium);
 `;
 
 export const AnchorListItem = styled.li`
@@ -39,10 +39,10 @@ export const Headline1 = styled.h1`
   margin: 0;
   margin-top: var(--spacing-11);
   padding-bottom: var(--spacing-03);
-  font-size: var(--text-3xl);
+  font-size: var(--text-4xl);
 
-  @media (min-width: 768px) {
-    font-size: var(--text-4xl);
+  @media (max-width: 575px) {
+    font-size: var(--spacing-06);
   }
 
   .header-navigation,
@@ -64,10 +64,10 @@ export const Headline2 = styled.h2`
   padding-top: var(--spacing-09);
   margin: 0;
   margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
-  font-size: var(--text-2xl);
+  font-size: var(--text-3xl);
 
-  @media (min-width: 768px) {
-    font-size: var(--text-3xl);
+  @media (max-width: 575px) {
+    font-size: var(--text-xla);
   }
 `;
 
