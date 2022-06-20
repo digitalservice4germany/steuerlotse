@@ -42,7 +42,7 @@ export const Headline1 = styled.h1`
   font-size: var(--text-4xl);
 
   @media (max-width: 575px) {
-    font-size: var(--spacing-06);
+    font-size: var(--text-3xl);
   }
 
   .header-navigation,

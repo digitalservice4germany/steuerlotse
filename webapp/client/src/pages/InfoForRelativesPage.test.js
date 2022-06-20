@@ -44,4 +44,10 @@ describe("InfoForRelativesPage", () => {
 
     expect(items.length).toBe(9);
   });
+
+  it("should render the info box component", () => {
+    setup();
+
+    expect(screen.getByText("info box")).toBeInTheDocument();
+  });
 });
