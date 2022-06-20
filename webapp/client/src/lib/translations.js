@@ -525,7 +525,9 @@ const translations = {
     Section: {
       whatSteuerlotseDoes: {
         heading: "Was macht der Steuerlotse?",
-        text: "Millionen Seniorinnen und Senioren hierzulande haben steuerpflichtige Einkommen – was viele von ihnen vor große Herausforderungen stellt. Gemeinsam mit dem Bundesministerium der Finanzen haben wir ein Online-Tool entwickelt, das es Renten- und Pensionsbeziehende erlaubt, intuitiv und ganz ohne Vorkenntnisse in wenigen Minuten ihre Steuererklärung abzugeben. Der Steuerlotse stand erstmals für die Steuersaison 2020 zur Verfügung und wird fortlaufend aktualisiert.\n\nWir wollen so vielen Menschen im Ruhestand digitale Teilhabe und eine stressfreie Steuererklärung wie möglich ermöglichen. Unterstützen Sie uns dabei!",
+        text: "Millionen Seniorinnen und Senioren hierzulande haben steuerpflichtige Einkommen – was viele von ihnen vor große Herausforderungen stellt. Gemeinsam mit dem Bundesministerium der Finanzen haben wir ein Online-Tool entwickelt, das es Renten- und Pensionsbeziehende erlaubt, intuitiv und ganz ohne Vorkenntnisse in wenigen Minuten ihre Steuererklärung abzugeben. Der Steuerlotse stand erstmals für die Steuersaison 2020 zur Verfügung und wird fortlaufend aktualisiert.Wir wollen so vielen Menschen im Ruhestand digitale Teilhabe und eine stressfreie Steuererklärung wie möglich ermöglichen. Unterstützen Sie uns dabei!",
+        text2:
+          "Wir wollen so vielen Menschen im Ruhestand digitale Teilhabe und eine stressfreie Steuererklärung wie möglich ermöglichen. Unterstützen Sie uns dabei!",
       },
       downloadInformation: {
         heading: "Informationsmaterialien zum Download",
@@ -535,7 +537,9 @@ const translations = {
       },
       freeInformation: {
         heading: "Kostenlos Informationsmaterial erhalten ",
-        text: "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu.\n\nSchreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>",
+        text: "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu.",
+        text2:
+          "Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>",
         buttonText: "Schreiben Sie uns",
       },
       contactUs: {

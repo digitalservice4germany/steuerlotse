@@ -129,6 +129,7 @@ export const Picture = styled.picture`
     max-width: 930px;
     height: auto;
     object-fit: contain;
+    margin-top: ${(props) => props.marginTopVariant && "var(--spacing-05)"};
   }
 `;
 
