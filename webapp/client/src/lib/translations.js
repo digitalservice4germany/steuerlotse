@@ -997,12 +997,11 @@ const translations = {
   },
   InfoForRelatives: {
     Section1: {
-      Heading: "Hilfestellung für Angehörige bei der Steuererklärung",
+      Heading: "Informationen für Angehörige",
       Text: "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz.",
     },
     Section2: {
-      Heading: "Wem Sie helfen dürfen und wer Ihnen helfen darf:",
-      Text: "Für diese Angehörigen dürfen Sie die Steuerformulare ausfüllen (und umgekehrt).",
+      Heading: "Wer helfen darf",
       ListItem1: "Ehepartner",
       ListItem2: "Verlobte",
       ListItem3: "Eltern, Schwiegereltern, Kinder, Großeltern, Enkel",
