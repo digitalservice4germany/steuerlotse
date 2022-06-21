@@ -1,7 +1,6 @@
 import React from "react";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
-import FormHeader from "../components/FormHeader";
 // eslint-disable-next-line import/named
 import {
   anchorBack,
@@ -12,9 +11,11 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import {
   AnchorListItem,
   ContentWrapper,
+  Headline1,
   Headline2,
   List,
   Paragraph,
+  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function ChurchTaxInfoPage() {
@@ -30,10 +31,8 @@ export default function ChurchTaxInfoPage() {
     <>
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
-        <FormHeader
-          title={t("Kirchensteuer.Section1.heading")}
-          intro={t("Kirchensteuer.Section1.text")}
-        />
+        <Headline1>{t("Kirchensteuer.Section1.heading")}</Headline1>
+        <ParagraphLarge>{t("Kirchensteuer.Section1.text")}</ParagraphLarge>
         <Headline2>{t("Kirchensteuer.Section2.heading")}</Headline2>
         <Paragraph>{t("Kirchensteuer.Section2.text")}</Paragraph>
         <Headline2>{t("Kirchensteuer.Section3.heading")}</Headline2>

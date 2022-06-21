@@ -2,8 +2,6 @@ import React from "react";
 import { t } from "i18next";
 import { Trans } from "react-i18next";
 import InfoBox from "../components/InfoBox";
-import FormHeader from "../components/FormHeader";
-
 // eslint-disable-next-line import/named
 import {
   anchorBack,
@@ -14,10 +12,12 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import {
   AnchorListItem,
   ContentWrapper,
+  Headline1,
   Headline2,
   List,
   ListItem,
   Paragraph,
+  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function CraftsmanServicesInfoPage() {
@@ -65,10 +65,10 @@ export default function CraftsmanServicesInfoPage() {
     <>
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
-        <FormHeader
-          title={t("Handwerkerleistungen.Section1.heading")}
-          intro={t("Handwerkerleistungen.Section1.text")}
-        />
+        <Headline1>{t("Handwerkerleistungen.Section1.heading")}</Headline1>
+        <ParagraphLarge>
+          {t("Handwerkerleistungen.Section1.text")}
+        </ParagraphLarge>
         <Headline2>{t("Handwerkerleistungen.Section2.heading")}</Headline2>
         <Paragraph>{t("Handwerkerleistungen.Section2.text")}</Paragraph>
         <List aria-label="simple-list">{listItemsMap}</List>
