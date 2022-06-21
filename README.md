@@ -1,6 +1,6 @@
 # Steuerlotse
 
-🇬🇧 This is the code repository of the [_Steuerlotse_ ](https://steuerlotse-rente.de) by DigitalService4Germany.
+🇬🇧 This is the code repository of the [_Steuerlotse_ ](https://steuerlotse-rente.de) by DigitalService.
 You can use this code under the terms of the provided license.
 The _Steuerlotse_ is available at: https://steuerlotse-rente.de
 
@@ -9,9 +9,9 @@ The _Steuerlotse_ was specially developed for the tax return of pensioners witho
 
 As early as 2019, four federal states (Brandenburg, Bremen, Mecklenburg-Western Pomerania and Saxony) developed
 a simplified tax return in paper form for pensioners. Based on the paper form a
-[digital prototype](https://github.com/tech4germany/steuerlotse) was developed as part of the Tech4Germany Fellowship 2020. The fellowship is organized by [DigitalService4Germany GmbH](https://digitalservice4germany.com).
+[digital prototype](https://github.com/tech4germany/steuerlotse) was developed as part of the Tech4Germany Fellowship 2020. The fellowship is organized by [DigitalService GmbH des Bundes](https://digitalservice.bund.de).
 
-🇩🇪 Dies ist das Quellcodearchiv des [_Steuerlotse_ ](https://steuerlotse-rente.de) vom DigitalService4Germany.
+🇩🇪 Dies ist das Quellcodearchiv des [_Steuerlotse_ ](https://steuerlotse-rente.de) vom DigitalService.
 Du kannst den Code unter den Bedingungen der angegebenen Lizenz nutzen.
 Der _Steuerlotse_ ist verfügbar unter: https://steuerlotse-rente.de
 
@@ -21,7 +21,7 @@ Pensionär:innen ohne Zusatzeinkünfte entwickelt.
 
 Bereits 2019 haben vier Bundesländer (Brandenburg, Bremen, Mecklenburg-Vorpommern und Sachsen) eine vereinfachte
 Steuererklärung in Papierform für Rentner:innen entwickelt. Auf Basis des Papiervordrucks wurde im Rahmen des
-Tech4Germany Fellowships 2020, das von der [DigitalService4Germany GmbH](https://digitalservice4germany.com)
+Tech4Germany Fellowships 2020, das von der [DigitalService GmbH des Bundes](https://digitalservice.bund.de)
 organisiert wird, von vier Fellows in Kooperation mit dem BMF ein
 [digitaler Prototyp](https://github.com/tech4germany/steuerlotse) entwickelt.
 
@@ -51,14 +51,14 @@ Bitte befolge immer die Richtlinien und unseren [Verhaltenskodex](CODE_OF_CONDUC
 
 🇬🇧
 Open a pull request with your changes, and it will be reviewed by someone from the team. When you submit a pull request,
-you declare that you have the right to license your contribution to the DigitalService4Germany and the community.
+you declare that you have the right to license your contribution to the DigitalService and the community.
 By submitting the patch, you agree that your contributions are licensed under the MIT license.
 
 Please make sure that your changes have been tested before submitting a pull request.
 
 🇩🇪  
 Nach dem Erstellen eines Pull Requests wird dieser von einer Person aus dem Team überprüft. Wenn du einen Pull-Request
-einreichst, erklärst du dich damit einverstanden, deinen Beitrag an den DigitalService4Germany und die Community zu
+einreichst, erklärst du dich damit einverstanden, deinen Beitrag an den DigitalService und die Community zu
 lizenzieren. Durch das Einreichen des Patches erklärst du dich damit einverstanden, dass deine Beiträge unter der
 MIT-Lizenz lizenziert sind.
 

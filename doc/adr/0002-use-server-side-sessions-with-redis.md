@@ -9,7 +9,7 @@ Accepted
 ## Context
 
 So far the session data of the user is stored in a cookie using Flask session. The cookie has a size limit of 4 kb and therefore this limits the size of the data in the session. To be independent of the cookie size, we want to use server side session data.
-You can find the internal Tech Spec [here](https://digitalservice4germany.atlassian.net/wiki/spaces/STL/pages/174424075/2022-01+Cookie-Limit)
+You can find the internal Tech Spec [here](https://digitalservicebund.atlassian.net/wiki/spaces/STL/pages/174424075/2022-01+Cookie-Limit)
 
 ## Decision
 
