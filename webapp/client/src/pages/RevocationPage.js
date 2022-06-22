@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldDate from "../components/FormFieldDate";
 import FormHeader from "../components/FormHeader";
@@ -11,6 +11,24 @@ import { fieldPropType } from "../lib/propTypes";
 
 export default function RevocationPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
+  const translateText = function translateText(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          steuerIdLink: (
+            <a
+              aria-label="Info zur Steuerliche Identifikationsnummer"
+              href="https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html"
+            >
+              Info zur Steuerliche Identifikationsnummer
+            </a>
+          ),
+        }}
+      />
+    );
+  };
 
   return (
     <>
@@ -29,7 +47,7 @@ export default function RevocationPage({ stepHeader, form, fields }) {
             }}
             details={{
               title: t("fields.idnr.help.title"),
-              text: t("fields.idnr.help.text"),
+              text: translateText("fields.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />
