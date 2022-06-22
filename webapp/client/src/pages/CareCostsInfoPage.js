@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import InfoBox from "../components/InfoBox";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import FormHeader from "../components/FormHeader";
 // eslint-disable-next-line import/named
 import {
   anchorBack,
@@ -13,10 +14,8 @@ import {
   List,
   AnchorListItem,
   ListItem,
-  Headline1,
   Headline2,
   Paragraph,
-  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function CareCostsInfoPage() {
@@ -47,8 +46,10 @@ export default function CareCostsInfoPage() {
     <>
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
-        <Headline1>{t("CareCostsInfo.Paragraph1.Heading")}</Headline1>
-        <ParagraphLarge>{t("CareCostsInfo.Paragraph1.Text")}</ParagraphLarge>
+        <FormHeader
+          title={t("CareCostsInfo.Paragraph1.Heading")}
+          intro={t("CareCostsInfo.Paragraph1.Text")}
+        />
         <Headline2>{t("CareCostsInfo.Paragraph2.Heading")}</Headline2>
         <List aria-label="simple-list">{listCareCostItemsMap}</List>
         <Headline2>{t("CareCostsInfo.Paragraph3.Heading")}</Headline2>

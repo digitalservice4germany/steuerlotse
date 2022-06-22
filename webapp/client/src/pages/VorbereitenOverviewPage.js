@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { t } from "i18next";
 import PropTypes from "prop-types";
+import FormHeader from "../components/FormHeader";
 import InfoBox from "../components/InfoBox";
 import AccordionComponent from "../components/AccordionComponent";
 import TileCard from "../components/TileCard";
@@ -18,10 +19,8 @@ import SpendenUndMitgliedsbeitraegeIcon from "../assets/icons/spenden_und_mitgli
 import KirchensteuerIcon from "../assets/icons/kirchensteuer.svg";
 import {
   ContentWrapper,
-  Headline1,
   Headline2,
   Paragraph,
-  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 import ButtonAnchor from "../components/ButtonAnchor";
 import { anchorRegister } from "../lib/contentPagesAnchors";
@@ -46,14 +45,6 @@ const ButtonAnchorOverview = styled(ButtonAnchor)`
   margin-top: var(--spacing-04);
 `;
 
-const Headline1Overview = styled(Headline1)`
-  margin-top: var(--spacing-09);
-
-  @media screen and (min-width: 1024px) {
-    margin-top: var(--spacing-11);
-  }
-`;
-
 export default function VorbereitenOverviewPage({
   downloadPreparationLink,
   vorsorgeaufwendungenUrl,
@@ -72,12 +63,10 @@ export default function VorbereitenOverviewPage({
   return (
     <>
       <ContentWrapper>
-        <Headline1Overview>
-          {t("vorbereitenOverview.Paragraph1.heading")}
-        </Headline1Overview>
-        <ParagraphLarge>
-          {t("vorbereitenOverview.Paragraph1.text")}
-        </ParagraphLarge>
+        <FormHeader
+          title={t("vorbereitenOverview.Paragraph1.heading")}
+          intro={t("vorbereitenOverview.Paragraph1.text")}
+        />
         <Headline2>{t("vorbereitenOverview.Paragraph2.heading")}</Headline2>
         <Paragraph>{t("vorbereitenOverview.Paragraph2.text")}</Paragraph>
         <ButtonAnchorOverview url={downloadPreparationLink} download>

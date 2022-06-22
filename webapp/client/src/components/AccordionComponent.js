@@ -60,6 +60,11 @@ const CardHeaderSpan = styled.span`
 
 const AccordionHeadline = styled.h2`
   margin-bottom: var(--spacing-05);
+  font-size: var(--text-3xl);
+
+  @media (max-width: 1024px) {
+    font-size: var(--text-xla);
+  }
 `;
 
 const AccordionStyled = styled(Accordion)``;
