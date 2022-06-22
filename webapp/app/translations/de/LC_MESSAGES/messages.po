@@ -3183,7 +3183,7 @@ msgstr "Über den Digital Service"
 
 #: app/templates/basis/footer.html:43
 msgid "footer.botschafter"
-msgstr "Botschafter:in werden"
+msgstr "Für Seniorenvereine"
 
 #: app/templates/basis/footer.html:52
 msgid "ds4g_logo"

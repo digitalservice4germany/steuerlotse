@@ -96,6 +96,8 @@ export const ContentSection = styled.section`
 `;
 export const TextContent = styled.p`
   font-size: 1.5rem;
+  white-space: pre-line;
+
   @media (max-width: 425px) {
     font-size: var(--text-xl);
   }
@@ -127,6 +129,7 @@ export const Picture = styled.picture`
     max-width: 930px;
     height: auto;
     object-fit: contain;
+    margin-top: ${(props) => props.marginTopVariant && "var(--spacing-05)"};
   }
 `;
 

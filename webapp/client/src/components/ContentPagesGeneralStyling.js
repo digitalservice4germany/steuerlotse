@@ -76,6 +76,9 @@ export const Paragraph = styled.p`
     props.spacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};
   margin: 0;
   font-size: var(--text-medium);
+  white-space: pre-line;
+  line-height: var(--lineheight-l);
+  letter-spacing: var(--tracking-normal);
 `;
 
 export const ParagraphLarge = styled(Paragraph)`

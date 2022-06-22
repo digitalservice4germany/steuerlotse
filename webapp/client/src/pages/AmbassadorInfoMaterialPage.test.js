@@ -6,7 +6,7 @@ const MOCK_PROPS = {
   plausibleDomain: "/plausibleDomain/path",
   downloadBroschureUrl: "/download_informationsbroschure_pdf",
   downloadFlyerUrl: "/download_steuerlotsen_flyer.pdf",
-  PlayerUrl: "https://www.youtube.com/watch?v=vP--fwSWtLE",
+  contactUsUrl: "mailto:kontakt@steuerlotse-rente.de",
 };
 
 describe("AmbassadorInfoMaterialPage", () => {
@@ -20,10 +20,10 @@ describe("AmbassadorInfoMaterialPage", () => {
 
   it("should render InfoBroshure Download button with Link", () => {
     expect(
-      screen.getByText("Informationsbroschüre (PDF) speichern")
+      screen.getByText("Informationsbroschüre speichern [PDF]")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Informationsbroschüre (PDF) speichern").closest("a")
+      screen.getByText("Informationsbroschüre speichern [PDF]").closest("a")
     ).toHaveAttribute(
       "href",
       expect.stringContaining(MOCK_PROPS.downloadBroschureUrl)
@@ -32,20 +32,21 @@ describe("AmbassadorInfoMaterialPage", () => {
 
   it("should render Steuerlotse Flyer Download button with Link", () => {
     expect(
-      screen.getByText("Steuerlotsen-Flyer (PDF) speichern")
+      screen.getByText("Flyer zum Steuerlotsen speichern [PDF]")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Steuerlotsen-Flyer (PDF) speichern").closest("a")
+      screen.getByText("Flyer zum Steuerlotsen speichern [PDF]").closest("a")
     ).toHaveAttribute(
       "href",
       expect.stringContaining(MOCK_PROPS.downloadFlyerUrl)
     );
   });
 
-  it("should render Player Button with Link", () => {
-    expect(screen.getByText("Auf Youtube abspielen")).toBeInTheDocument();
-    expect(
-      screen.getByText("Auf Youtube abspielen").closest("a")
-    ).toHaveAttribute("href", expect.stringContaining(MOCK_PROPS.PlayerUrl));
+  it("should render Contact Us Button with Link", () => {
+    expect(screen.getByText("Schreiben Sie uns")).toBeInTheDocument();
+    expect(screen.getByText("Schreiben Sie uns").closest("a")).toHaveAttribute(
+      "href",
+      expect.stringContaining(MOCK_PROPS.contactUsUrl)
+    );
   });
 });
