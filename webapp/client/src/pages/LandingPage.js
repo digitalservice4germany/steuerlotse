@@ -6,6 +6,7 @@ import AccordionComponent from "../components/AccordionComponent";
 import faqAnchorList from "../lib/faqAnchors";
 import ButtonAnchor from "../components/ButtonAnchor";
 import CardsComponent from "../components/CardsComponent";
+import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
 
 const LandingPageHeroWrapper = styled.div`
   display: flex;
@@ -164,6 +165,7 @@ export default function LandingPage({ plausibleDomain }) {
           {t("LandingPage.ButtonLabel")}
         </ButtonAnchorLandingPage>
       </AccordionWrapper>
+      <InfoBoxGrundsteuer />
     </div>
   );
 }
