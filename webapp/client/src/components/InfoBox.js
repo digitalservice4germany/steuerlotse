@@ -8,27 +8,21 @@ const Box = styled.div`
   margin-top: var(--spacing-10);
 `;
 const InnerBox = styled.div`
-  padding-left: var(--spacing-03);
-  padding-right: var(--spacing-03);
+  padding-left: var(--spacing-06);
+  padding-right: var(--spacing-06);
   margin: 0 auto;
   max-width: var(--pages-max-width);
+  display: flex;
 
-  @media (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
-    grid-template-rows: 1fr;
-  }
-
-  @media (min-width: 769px) {
-    margin: 0 auto;
+  @media (max-width: 1024px) {
     padding-left: var(--spacing-06);
     padding-right: var(--spacing-06);
   }
 
-  @media (min-width: 1025px) {
-    padding-left: var(--spacing-08);
-    padding-right: var(--spacing-08);
-    grid-gap: 1rem;
+  @media (max-width: 767px) {
+    flex-direction: column;
+    padding-left: var(--spacing-03);
+    padding-right: var(--spacing-03);
   }
 `;
 
@@ -37,16 +31,6 @@ const TextBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding-bottom: var(--spacing-09);
-
-  @media (min-width: 768px) {
-    padding-bottom: 13rem;
-    grid-column: 1 / 4;
-    grid-row: 1;
-  }
-
-  @media (min-width: 1224px) {
-    grid-column: 1 / 3;
-  }
 `;
 const BoxHeadline = styled.h2`
   padding-bottom: var(--spacing-06);
@@ -67,20 +51,15 @@ const BoxText = styled.span`
 const Figure = styled.figure`
   margin: 0;
   align-self: end;
-
-  @media (min-width: 768px) {
-    grid-column: 2 / -1;
-    grid-row: 1;
-  }
-
+  width: 100%;
   img {
-    width: 95%;
+    width: 100%;
     height: auto;
     object-fit: contain;
+  }
 
-    @media (min-width: 768px) {
-      width: 85%;
-    }
+  @media (max-width: 767px) {
+    align-self: center;
   }
 `;
 
@@ -94,15 +73,24 @@ export default function InfoBox({ boxHeadline, boxText, anchor }) {
           <ButtonAnchor url={anchor.url}>{anchor.text}</ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">
-          <img
-            srcSet="../images/InfoBox-Image-XS.png 726w,
-                                ../images/InfoBox-Image-S.png 794w,
-      	                        ../images/InfoBox-Image-M.png 1060w,
-      	                        ../images/InfoBox-Image-L.png 1224w"
-            sizes="(min-width: 768px) 50vw, 100vw"
-            src="../images/InfoBox-Image-XS.png"
-            alt="Tablets mit Webapp des Steuerlotsen"
-          />
+          <picture>
+            <source
+              media="(min-width: 1200px)"
+              srcSet="../images/InfoBox-Image-L.png"
+            />
+            <source
+              media="(min-width: 1024px)"
+              srcSet="../images/InfoBox-Image-M.png"
+            />
+            <source
+              media="(min-width: 798px)"
+              srcSet="../images/InfoBox-Image-S.png"
+            />
+            <img
+              src="../images/InfoBox-Image-XS.png"
+              alt="Tablets mit Webapp des Steuerlotsen"
+            />
+          </picture>
         </Figure>
       </InnerBox>
     </Box>
