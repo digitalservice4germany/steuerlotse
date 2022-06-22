@@ -40,10 +40,10 @@ export default function UnlockCodeSuccessPage({
   };
 
   const image = {
-    src: "../../images/Img_Brief_500.jpg",
+    src: "../../images/Img_Brief_500.png",
     alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
     srcSet:
-      "../../images/Img_Brief_500.jpg 1155w ,  ../../images/Img_Brief_1024.jpg 2048w",
+      "../../images/Img_Brief_500.png 1155w ,  ../../images/Img_Brief_1024.png 2048w",
   };
 
   const IconOne = {

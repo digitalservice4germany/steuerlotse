@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-10 12:01+0200\n"
+"POT-Creation-Date: 2022-06-22 08:27+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -18,121 +18,117 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app/routes.py:75
+#: app/routes.py:76
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:76
+#: app/routes.py:77
 msgid "nav.how-it-works"
 msgstr "Informieren"
 
-#: app/routes.py:77
+#: app/routes.py:78
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:78
+#: app/routes.py:79
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:80
+#: app/routes.py:81
 msgid "nav.preparation"
 msgstr "Vorbereiten"
 
-#: app/routes.py:82
+#: app/routes.py:83
 msgid "nav.lotse-form"
 msgstr "Steuererklärung 2021"
 
-#: app/routes.py:84
+#: app/routes.py:85
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:88
+#: app/routes.py:89
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:228
+#: app/routes.py:232
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:229
+#: app/routes.py:233
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:272
+#: app/routes.py:276
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:273
+#: app/routes.py:277
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:286 app/routes.py:553
+#: app/routes.py:290 app/routes.py:555
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:306 app/templates/basis/base.html:45
-msgid "page.title"
-msgstr "Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:313
+#: app/routes.py:317
 msgid "howitworks.header-title"
 msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:320
+#: app/routes.py:324
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:327
+#: app/routes.py:331
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:334
+#: app/routes.py:338
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:341
+#: app/routes.py:345
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:348
+#: app/routes.py:352
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:354
+#: app/routes.py:358
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:359
+#: app/routes.py:363
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:520
+#: app/routes.py:522
 msgid "freeTaxDeclarationForPensioners.header-title"
 msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
 
-#: app/routes.py:528
+#: app/routes.py:530
 msgid "mandateForTaxDeclaration.header-title"
 msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
 
-#: app/routes.py:544 app/routes.py:574 app/routes.py:581
+#: app/routes.py:546 app/routes.py:576 app/routes.py:583
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:549 app/routes.py:557
+#: app/routes.py:551 app/routes.py:559
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:562
+#: app/routes.py:564
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:568
+#: app/routes.py:570
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -237,11 +233,11 @@ msgstr ""
 "href=\"mailto:kontakt@steuerlotse-rente.de\"  class=\"banner-"
 "link\">kontakt@steuerlotse-rente.de</a>"
 
-#: app/forms/flows/lotse_flow.py:327
+#: app/forms/flows/lotse_flow.py:345
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:376
+#: app/forms/flows/lotse_flow.py:396
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
@@ -1125,23 +1121,41 @@ msgstr ""
 "Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren "
 "Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun."
 
-#: app/forms/steps/lotse/confirmation.py:21
+#: app/forms/steps/lotse/confirmation.py:25
 msgid "form.lotse.summary-title"
 msgstr "Prüfen Sie Ihre Angaben"
 
-#: app/forms/steps/lotse/confirmation.py:22
+#: app/forms/steps/lotse/confirmation.py:26
 msgid "form.lotse.summary.header-title"
 msgstr "Steuerformular - Prüfung - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/lotse/confirmation.py:27
+#: app/forms/steps/lotse/confirmation.py:32
 msgid "form.lotse.field_confirm_complete_correct"
 msgstr ""
 "Hiermit bestätige ich, dass die Angaben überprüft wurden und dass sie "
 "vollständig und richtig sind."
 
-#: app/forms/steps/lotse/confirmation.py:28
+#: app/forms/steps/lotse/confirmation.py:33
 msgid "form.lotse.confirm_complete_correct.required"
 msgstr "Bestätigen Sie, dass Ihre Angaben korrekt sind, um fortfahren zu können."
+
+#: app/forms/steps/lotse/confirmation.py:77
+#: app/forms/steps/lotse/fahrtkostenpauschale.py:139
+#: app/forms/steps/lotse/fahrtkostenpauschale.py:193
+#: app/forms/steps/lotse/has_disability.py:55
+#: app/forms/steps/lotse/has_disability.py:93
+#: app/forms/steps/lotse/merkzeichen.py:110
+#: app/forms/steps/lotse/merkzeichen.py:184
+#: app/forms/steps/lotse/no_pauschbetrag.py:103
+#: app/forms/steps/lotse/no_pauschbetrag.py:128
+#: app/forms/steps/lotse/pauschbetrag.py:151
+#: app/forms/steps/lotse/pauschbetrag.py:214
+#: app/forms/steps/lotse/personal_data.py:414
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:56
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:98
+#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:126
+msgid "form.lotse.header-title"
+msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/fahrtkostenpauschale.py:38
 #: app/forms/steps/lotse/fahrtkostenpauschale.py:59
@@ -1197,23 +1211,6 @@ msgid "form.lotse.person_a.request_fahrtkostenpauschale.title"
 msgid_plural "form.lotse.person_a.request_fahrtkostenpauschale.title"
 msgstr[0] "Behinderungsbedingte Fahrtkostenpauschale"
 msgstr[1] "Behinderungsbedingte Fahrtkostenpauschale für Person A"
-
-#: app/forms/steps/lotse/fahrtkostenpauschale.py:139
-#: app/forms/steps/lotse/fahrtkostenpauschale.py:193
-#: app/forms/steps/lotse/has_disability.py:55
-#: app/forms/steps/lotse/has_disability.py:93
-#: app/forms/steps/lotse/merkzeichen.py:110
-#: app/forms/steps/lotse/merkzeichen.py:184
-#: app/forms/steps/lotse/no_pauschbetrag.py:103
-#: app/forms/steps/lotse/no_pauschbetrag.py:128
-#: app/forms/steps/lotse/pauschbetrag.py:151
-#: app/forms/steps/lotse/pauschbetrag.py:214
-#: app/forms/steps/lotse/personal_data.py:414
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:56
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:98
-#: app/forms/steps/lotse_multistep_flow_steps/declaration_steps.py:126
-msgid "form.lotse.header-title"
-msgstr "Steuerformular - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/fahrtkostenpauschale.py:159
 msgid "form.lotse.person_b.request_fahrtkostenpauschale.label"
@@ -3111,7 +3108,7 @@ msgstr "Weitere Informationen"
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
-#: app/templates/basis/base.html:89 app/templates/error/erica_error.html:8
+#: app/templates/basis/base.html:93 app/templates/error/erica_error.html:8
 #: app/templates/macros.html:7
 msgid "form.back"
 msgstr "Zurück"
@@ -3139,6 +3136,10 @@ msgstr ""
 #: app/templates/basis/base.html:44
 msgid "page.title.error-prefix"
 msgstr "Fehler: "
+
+#: app/templates/basis/base.html:45
+msgid "page.title"
+msgstr "Der Steuerlotse für Rente und Pension"
 
 #: app/templates/basis/base.html:51
 msgid "skip-to-content-link"
@@ -3191,9 +3192,9 @@ msgstr "DigitalService"
 #: app/templates/basis/footer.html:56
 msgid "footer.about-steuerlotse-text"
 msgstr ""
-"Der Steuerlotse wurde von der DigitalService GmbH des Bundes umgesetzt. Wir "
-"entwickeln digitale Lösungen für und mit der Bundesverwaltung. Im Zentrum"
-" stehen die Bedürfnisse der Nutzerinnen und Nutzer."
+"Der Steuerlotse wurde von der DigitalService GmbH des Bundes umgesetzt. "
+"Wir entwickeln digitale Lösungen für und mit der Bundesverwaltung. Im "
+"Zentrum stehen die Bedürfnisse der Nutzerinnen und Nutzer."
 
 #: app/templates/basis/footer.html:69
 msgid "footer.data-privacy"
@@ -3239,9 +3240,9 @@ msgstr "Über den Digital Service"
 #: app/templates/content/about_digitalservice.html:6
 msgid "about_digitalservice.intro"
 msgstr ""
-"DigitalService ist eine Bundes-GmbH. Die Bundesrepublik "
-"Deutschland – vertreten durch das Bundeskanzleramt – hält seit Oktober "
-"2020 100 Prozent der Anteile der GmbH."
+"DigitalService ist eine Bundes-GmbH. Die Bundesrepublik Deutschland – "
+"vertreten durch das Bundeskanzleramt – hält seit Oktober 2020 100 Prozent"
+" der Anteile der GmbH."
 
 #: app/templates/content/about_digitalservice.html:9
 msgid "about_digitalservice.aim-text"
@@ -3339,9 +3340,9 @@ msgstr ""
 "Der Steuerlotse ist in der ab dem 31. Mai 2021 zu nutzenden Version ein "
 "voll-funktionstüchtiges Produkt, das den minimalen Funktionsumfang zur "
 "Erfüllung des Zwecks unterstützt. So kann der Dienst schnell einen "
-"Mehrwert für Bürgerinnen und Bürger bieten. DigitalService wird "
-"in den darauffolgenden Monaten weiterhin Rückmeldungen sammeln und "
-"basierend auf dem Feedback den Steuerlotsen weiterentwickeln"
+"Mehrwert für Bürgerinnen und Bürger bieten. DigitalService wird in den "
+"darauffolgenden Monaten weiterhin Rückmeldungen sammeln und basierend auf"
+" dem Feedback den Steuerlotsen weiterentwickeln"
 
 #: app/templates/content/about_steuerlotse.html:27
 msgid "about_digitalservice.creation-headline"
@@ -3353,11 +3354,11 @@ msgstr ""
 "Bereits 2019 haben vier Bundesländer (Brandenburg, Bremen, Mecklenburg-"
 "Vorpommern und Sachsen) eine vereinfachte Steuererklärung in Papierform "
 "für Rentner:innen entwickelt. Auf Basis des Papiervordrucks wurde im "
-"Rahmen des Tech4Germany Fellowships 2020, das von der "
-"DigitalService GmbH des Bundes organisiert wird, von vier Fellows in "
-"Kooperation mit dem BMF ein digitaler Prototyp entwickelt. Ein Prototyp "
-"ist eine vereinfachte Version eines Endproduktes, das exemplarisch die "
-"Vorteile und Anwendungsbereiche eines Produktes aufzeigt"
+"Rahmen des Tech4Germany Fellowships 2020, das von der DigitalService GmbH"
+" des Bundes organisiert wird, von vier Fellows in Kooperation mit dem BMF"
+" ein digitaler Prototyp entwickelt. Ein Prototyp ist eine vereinfachte "
+"Version eines Endproduktes, das exemplarisch die Vorteile und "
+"Anwendungsbereiche eines Produktes aufzeigt"
 
 #: app/templates/content/agb.html:5
 msgid "agb.heading"
@@ -3371,8 +3372,8 @@ msgstr "Präambel"
 msgid "agb.preambel-p1"
 msgstr ""
 "Die Software Steuerlotse ist eine webbasierte Anwendung („Anwendung“), "
-"welche die DigitalService GmbH des Bundes, Prinzessinenstraße 8-14, 10969 "
-"Berlin („wir“, „uns“, „unser“), im Auftrag der Bundesrepublik "
+"welche die DigitalService GmbH des Bundes, Prinzessinenstraße 8-14, 10969"
+" Berlin („wir“, „uns“, „unser“), im Auftrag der Bundesrepublik "
 "Deutschland, vertreten durch das Bundesministerium der Finanzen (BMF), "
 "entwickelt hat und betreibt"
 
@@ -4185,17 +4186,17 @@ msgid "data_privacy.aboutus-text"
 msgstr ""
 "Der Online-Dienst Steuerlotse wird im Auftrag des Bundesministeriums für "
 "Finanzen von DigitalService GmbH des Bundes entwickelt und "
-"betrieben.</p><p>DigitalService ist eine Bundes GmbH. Die "
-"Bundesrepublik Deutschland – vertreten durch das Bundeskanzleramt – hält "
-"100 Prozent der Anteile der GmbH. Unser Ziel: Dienstleistungen, die "
-"besser für alle funktionieren. Dienstleistungen der Verwaltung sollten "
-"für alle Menschen genauso einfach zu erreichen und bedienen sein wie "
-"andere digitale Produkte, die wir in Beruf und Alltag regelmäßig nutzen. "
-"Deshalb stehen die Nutzer:innen mit ihren Bedürfnissen bei unserer "
-"Produktentwicklung konsequent im Mittelpunkt. Wir bringen Teams mit "
-"Kompetenzen in Softwareentwicklung, Design und Produktmanagement mit der "
-"Verwaltung zusammen. Gemeinsam mit den Verantwortlichen der Verwaltung "
-"und unter Einbindung von Bürger:innen bauen wir digitale Lösungen, die "
+"betrieben.</p><p>DigitalService ist eine Bundes GmbH. Die Bundesrepublik "
+"Deutschland – vertreten durch das Bundeskanzleramt – hält 100 Prozent der"
+" Anteile der GmbH. Unser Ziel: Dienstleistungen, die besser für alle "
+"funktionieren. Dienstleistungen der Verwaltung sollten für alle Menschen "
+"genauso einfach zu erreichen und bedienen sein wie andere digitale "
+"Produkte, die wir in Beruf und Alltag regelmäßig nutzen. Deshalb stehen "
+"die Nutzer:innen mit ihren Bedürfnissen bei unserer Produktentwicklung "
+"konsequent im Mittelpunkt. Wir bringen Teams mit Kompetenzen in "
+"Softwareentwicklung, Design und Produktmanagement mit der Verwaltung "
+"zusammen. Gemeinsam mit den Verantwortlichen der Verwaltung und unter "
+"Einbindung von Bürger:innen bauen wir digitale Lösungen, die "
 "nutzerzentriert, modern und vertrauensfördernd sind.</p><p><a "
 "href=\"https://www.digitalservice.bund.de\" "
 "target=\"_blank\">www.digitalservice.bund.de</a>"
@@ -4218,11 +4219,10 @@ msgstr "Verantwortliche Organisation"
 msgid "data_privacy.contact-organisation-text"
 msgstr ""
 "Die datenschutzrechtlich Verantwortliche für die auf unserer Website "
-"stattfindenden Datenverarbeitungen ist die <br/><br/> "
-"DigitalService GmbH des Bundes<br/> Prinzessinenstraße 8-14 <br/> 10969 "
-"Berlin <br/> Handelsregister: HRB 212879 B <br/> Registergericht: "
-"Charlottenburg <br/><br/> Vertreten durch: <br/> Frau Christina Lang "
-"<br/> E-Mail: <a "
+"stattfindenden Datenverarbeitungen ist die <br/><br/> DigitalService GmbH"
+" des Bundes<br/> Prinzessinenstraße 8-14 <br/> 10969 Berlin <br/> "
+"Handelsregister: HRB 212879 B <br/> Registergericht: Charlottenburg "
+"<br/><br/> Vertreten durch: <br/> Frau Christina Lang <br/> E-Mail: <a "
 "href=\"mailto:datenschutz@digitalservice.bund.de\">datenschutz@digitalservice.bund.de</a>"
 
 #: app/templates/content/data_privacy.html:23
@@ -4452,8 +4452,8 @@ msgstr ""
 #: app/templates/content/data_privacy.html:93
 msgid "data_privacy.appeal-information-text-p2"
 msgstr ""
-"Externer Datenschutzbeauftragter des DigitalService<br/>1000 "
-"Elephants GmbH<br/>Björn Stecher<br/><a "
+"Externer Datenschutzbeauftragter des DigitalService<br/>1000 Elephants "
+"GmbH<br/>Björn Stecher<br/><a "
 "href=\"mailto:bjoern@1000elephants.de\">bjoern@1000elephants.de</a>"
 
 #: app/templates/content/data_privacy.html:94
@@ -4766,7 +4766,9 @@ msgstr ""
 "Ihren persönlichen Freischaltcode beantragen Sie automatisch mit Ihrer "
 "Registrierung beim Steuerlotsen. Nach erfolgreicher Beantragung erhalten "
 "Sie Ihren Freischaltcode mit der Post innerhalb weniger Tage von Ihrer "
-"Finanzverwaltung."
+"Finanzverwaltung. Der Brief ist nur für Ihre Unterlagen und zur Anmeldung"
+" gedacht. Sie brauchen den Brief mit dem persönlichen Freischaltcode "
+"nicht postalisch an den DigitalService zu schicken."
 
 #: app/templates/content/howitworks.html:120
 msgid "info-fsc.card-other.heading"
@@ -4953,8 +4955,8 @@ msgstr ""
 "Pflicht. Der Steuerlotse bietet dafür eine sehr einfache Lösung an. So "
 "können Renten- und Pensionsempfänger:innen ihre Steuererklärung "
 "unkompliziert und ohne besonderes Vorwissen erledigen. Dieser Service "
-"wurde im Auftrag des Bundesministeriums der Finanzen von "
-"DigitalService entwickelt."
+"wurde im Auftrag des Bundesministeriums der Finanzen von DigitalService "
+"entwickelt."
 
 #: app/templates/content/howitworks.html:211
 msgid "info.heading-content"
