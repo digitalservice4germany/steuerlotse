@@ -85,6 +85,10 @@ const Figure = styled.figure`
     object-fit: contain;
     border: 1px solid var(--grey-100);
 
+    @media (max-width: 768px) {
+      width: 60%;
+    }
+
     @media (max-width: 576px) {
       width: 100%;
     }

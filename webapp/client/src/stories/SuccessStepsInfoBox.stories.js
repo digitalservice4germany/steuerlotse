@@ -46,10 +46,10 @@ WithImage.args = {
   header: "Vorbereiten und Belege sammeln",
   text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe oder unter dem Menüpunkt Vorbereiten.",
   image: {
-    src: "../../images/Img_Brief_500.png",
+    src: "../../images/Img_Brief_500.jpg",
     alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
     srcSet:
-      "../../images/Img_Brief_500.png 1155w ,  ../../images/Img_Brief_1024.png 2048w",
+      "../../images/Img_Brief_500.jpg 1155w ,  ../../images/Img_Brief_1024.jpg 2048w",
   },
   icon: {
     iconSrc: OneIcon,
