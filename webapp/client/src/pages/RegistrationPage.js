@@ -30,10 +30,10 @@ export default function RegistrationPage({
         components={{
           steuerIdLink: (
             <a
-              aria-label="Steuerliche Identifikationsnummer"
+              aria-label="Info zur Steuerliche Identifikationsnummer"
               href="https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html"
             >
-              {" "}
+              Info zur Steuerliche Identifikationsnummer
             </a>
           ),
         }}
