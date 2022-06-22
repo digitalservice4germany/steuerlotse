@@ -391,7 +391,7 @@ const translations = {
           },
           "step-2": {
             heading: "Brief mit Freischaltcode zur Anmeldung erhalten",
-            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService4Germany als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
+            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
           },
           "step-3": {
             heading: "Steuererklärung online machen",
@@ -402,7 +402,7 @@ const translations = {
       letter: {
         heading: "So sieht der Brief aus, den Sie erhalten werden",
         intro:
-          "Auf dem Brief wird der DigitalService4Germany als Antragsteller angegeben. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes.",
+          "Auf dem Brief wird der DigitalService als Antragsteller angegeben. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes.",
       },
       preparation: {
         heading: "Wie Sie sich auf Ihre Steuererklärung vorbereiten können",
@@ -795,6 +795,11 @@ const translations = {
   InfoBox: {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
     text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
+  },
+  InfoBoxGrundsteuer: {
+    heading: "Weitere Steuerprodukte vom DigitalService",
+    text: "Mit unserem weiteren Service können private Eigentümerinnen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
+    button: "Zum Service",
   },
   CheckNowInfoBox: {
     heading: "Steuererklärung kann auch einfach sein",
