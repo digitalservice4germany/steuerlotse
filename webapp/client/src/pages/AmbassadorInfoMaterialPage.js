@@ -54,9 +54,6 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
       <Headline2>
         {t("AmbassadorMaterial.Section.downloadInformation.heading")}
       </Headline2>
-      <Paragraph>
-        {t("AmbassadorMaterial.Section.downloadInformation.text")}
-      </Paragraph>
       <div>
         <ButtonAnchor
           url="/download_informationsbroschure_pdf"
@@ -90,7 +87,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         {trans("AmbassadorMaterial.Section.freeInformation.text2")}
       </Paragraph>
       <ButtonAnchor
-        url="mailto:kontakt@steuerlotse-rente.de\"
+        url="mailto:kontakt@steuerlotse-rente.de"
         plausibleDomain={plausibleDomain}
         plausibleName="Download Informationsbroschüre"
         className="mb-3"

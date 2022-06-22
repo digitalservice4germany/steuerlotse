@@ -383,7 +383,7 @@ def register_request_handlers(app):
     @limiter.limit('15 per minute')
     @limiter.limit('1000 per day')
     def download_steuerlotsen_flyer_pdf():
-        return send_file('static/files/STL-Flyer_A6-doppelseitig.pdf', mimetype='application/pdf',
+        return send_file('static/files/STL-Flyer_A6.pdf', mimetype='application/pdf',
                          attachment_filename='STL-Flyer_A6-doppelseitig.pdf',
                          as_attachment=True)
 
