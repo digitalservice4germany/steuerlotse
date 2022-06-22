@@ -59,7 +59,7 @@ const CardHeaderSpan = styled.span`
 `;
 
 const AccordionHeadline = styled.h2`
-  margin-bottom: var(--spacing-05);
+  padding-top: var(--spacing-09);
   font-size: var(--text-3xl);
 
   @media (max-width: 1024px) {
@@ -75,9 +75,7 @@ export default function AccordionComponent({ title, intro, items, variant }) {
   return (
     <>
       {title.length > 0 && (
-        <AccordionHeadline className="mt-5" variant={variant}>
-          {title}
-        </AccordionHeadline>
+        <AccordionHeadline variant={variant}>{title}</AccordionHeadline>
       )}
       {intro.length > 0 && <p className="mt-3 pb-2">{intro}</p>}
       <AccordionStyled>
