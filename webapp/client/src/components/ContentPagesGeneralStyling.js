@@ -66,7 +66,7 @@ export const Headline2 = styled.h2`
   margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
   font-size: var(--text-3xl);
 
-  @media (max-width: 575px) {
+  @media (max-width: 1024px) {
     font-size: var(--text-xla);
   }
 `;
@@ -75,7 +75,7 @@ export const Paragraph = styled.p`
   padding-top: ${(props) =>
     props.spacingVariant ? "var(--spacing-08)" : "var(--spacing-03)"};
   margin: 0;
-  font-size: var(--text-medium-big);
+  font-size: var(--text-medium);
 `;
 
 export const ParagraphLarge = styled(Paragraph)`

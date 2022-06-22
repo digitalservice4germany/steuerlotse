@@ -4766,7 +4766,9 @@ msgstr ""
 "Ihren persönlichen Freischaltcode beantragen Sie automatisch mit Ihrer "
 "Registrierung beim Steuerlotsen. Nach erfolgreicher Beantragung erhalten "
 "Sie Ihren Freischaltcode mit der Post innerhalb weniger Tage von Ihrer "
-"Finanzverwaltung."
+"Finanzverwaltung. Der Brief ist nur für Ihre Unterlagen und zur Anmeldung"
+" gedacht. Sie brauchen den Brief mit dem persönlichen Freischaltcode "
+"nicht postalisch an den DigitalService zu schicken."
 
 #: app/templates/content/howitworks.html:120
 msgid "info-fsc.card-other.heading"

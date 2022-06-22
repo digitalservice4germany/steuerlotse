@@ -53,7 +53,6 @@ export default function InfoForRelativesPage() {
         <FormHeader
           title={t("InfoForRelatives.Section1.Heading")}
           intro={t("InfoForRelatives.Section1.Text")}
-          widthVariant
         />
         <Headline2 noMargin>{t("InfoForRelatives.Section2.Heading")}</Headline2>
         <List aria-label="simple-list">{ListDependentsMap}</List>
