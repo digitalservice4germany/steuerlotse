@@ -785,6 +785,11 @@ const translations = {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
     text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
   },
+  InfoBoxGrundsteuer: {
+    heading: "Weitere Steuerprodukte vom DigitalService",
+    text: "Mit unserem weiteren Service können private Eigentümerinnen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
+    button: "Zum Service",
+  },
   CheckNowInfoBox: {
     heading: "Steuererklärung kann auch einfach sein",
     text: "Schnell und unkompliziert – mit und für Rentenbeziehende entwickelt! Finden Sie heraus, ob Sie den Steuerlotsen nutzen können.",
