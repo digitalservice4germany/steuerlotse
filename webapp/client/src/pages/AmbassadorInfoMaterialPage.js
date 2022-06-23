@@ -22,7 +22,7 @@ export default function AmbassadorInfoMaterialPage({ plausibleDomain }) {
         components={{
           mailToContact: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a href="mailto:kontakt@steuerlotse-rente.de\" />
+            <a href="mailto:kontakt@steuerlotse-rente.de" />
           ),
         }}
       />
