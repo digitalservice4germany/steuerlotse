@@ -49,16 +49,14 @@ class TestSendEst(unittest.TestCase):
         expected_data = {
             'was_successful': True,
             'pdf': self.est_response_including_responses.json()['pdf'].encode(),
-            'transfer_ticket': escape(self.est_including_json['transfer_ticket']),
-            'eric_response': escape(self.est_including_json['eric_response']),
-            'server_response': escape(self.est_including_json['server_response'])
+            'transfer_ticket': escape(self.est_including_json['transfer_ticket'])
         }
 
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
-            actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
+            actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP')
 
         self.assertEqual(expected_data, actual_returned_data)
 
@@ -73,7 +71,7 @@ class TestSendEst(unittest.TestCase):
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
-            actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=False)
+            actual_returned_data = send_est_with_elster(self.valid_form_data, 'IP')
 
         self.assertEqual(expected_data, actual_returned_data)
 
@@ -82,91 +80,85 @@ class TestSendEst(unittest.TestCase):
                 patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
                 patch('app.elster_client.elster_client._log_address_data'), \
                 patch('app.elster_client.elster_client.create_audit_log_entry') as audit_log_fun:
-            send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=False)
+            send_est_with_elster(self.valid_form_data, 'IP')
             audit_log_fun.assert_called()
 
     def test_if_validation_error_occurred_raise_error(self):
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
                     patch('app.elster_client.elster_client.current_user',
                           MagicMock(is_active=True, is_authenticated=True)):
-                send_est_with_elster(self.invalid_form_data, 'IP', include_elster_responses=False)
+                send_est_with_elster(self.invalid_form_data, 'IP')
                 self.fail("No validation error raised")
         except ElsterGlobalValidationError as e:
-            self.assertEqual(get_json_response('validation_error_no_resp')['detail']['validation_problems'],
+            self.assertEqual(get_json_response('validation_error_no_resp_v2')['validation_problems'],
                              e.validation_problems)
+        finally:
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_transfer_error_occurred_raise_error(self):
         MockErica.eric_transfer_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client.current_user',
                           MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP',
-                                  include_elster_responses=False)
+                self.assertRaises(ElsterTransferError, send_est_with_elster, self.valid_form_data, 'IP')
         finally:
             MockErica.eric_transfer_error_occurred = False
-
-    def test_if_eric_transfer_error_with_responses_occurred_raise_error_with_responses(self):
-        MockErica.eric_transfer_error_occurred = True
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                    patch('app.elster_client.elster_client._log_address_data'), \
-                    patch('app.elster_client.elster_client.current_user',
-                          MagicMock(is_active=True, is_authenticated=True)):
-                send_est_with_elster(self.valid_form_data, 'IP', include_elster_responses=True)
-        except ElsterTransferError as e:
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
-                             e.eric_response)
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['server_response']),
-                             e.server_response)
-        finally:
-            MockErica.eric_transfer_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_error_occurred_raise_error(self):
         MockErica.eric_process_not_successful_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client.current_user',
                           MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(ElsterProcessNotSuccessful, send_est_with_elster, self.valid_form_data, 'IP',
-                                  include_elster_responses=False)
+                self.assertRaises(ElsterProcessNotSuccessful, send_est_with_elster, self.valid_form_data, 'IP')
         finally:
             MockErica.eric_process_not_successful_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_fields_missing_raise_error(self):
         data = copy.deepcopy(self.valid_form_data)
         data.pop("familienstand")
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
-                patch('app.elster_client.elster_client._log_address_data'):
-            self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP',
-                              include_elster_responses=False)
+        MockErica.deliver_fail_on_get_job = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                    patch('app.elster_client.elster_client.current_user', MagicMock(is_active=True, is_authenticated=True)), \
+                    patch('app.elster_client.elster_client._log_address_data'):
+                self.assertRaises(EricaIsMissingFieldError, send_est_with_elster, data, 'IP')
+        finally:
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_invalid_bufa_then_return_error(self):
         MockErica.invalid_bufa_number_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
                     patch('app.elster_client.elster_client.current_user',
                           MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(ElsterInvalidBufaNumberError, send_est_with_elster, self.valid_form_data, 'IP',
-                                  include_elster_responses=False)
+                self.assertRaises(ElsterInvalidBufaNumberError, send_est_with_elster, self.valid_form_data, 'IP')
         finally:
             MockErica.invalid_bufa_number_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_invalid_tax_number_then_return_error(self):
         MockErica.invalid_tax_number_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                     patch('app.elster_client.elster_client._log_address_data'), \
                     patch('app.elster_client.elster_client.current_user',
                           MagicMock(is_active=True, is_authenticated=True)):
-                self.assertRaises(ElsterInvalidTaxNumberError, send_est_with_elster, self.valid_form_data, 'IP',
-                                  include_elster_responses=False)
+                self.assertRaises(ElsterInvalidTaxNumberError, send_est_with_elster, self.valid_form_data, 'IP')
         finally:
             MockErica.invalid_tax_number_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
 
 class TestValidateEst(unittest.TestCase):
@@ -274,72 +266,52 @@ class TestSendUnlockCodeRequest(unittest.TestCase):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
             actual_returned_json = send_unlock_code_request_with_elster({'idnr': self.new_idnr, 'dob': '1990-12-12'},
-                                                                        'IP', include_elster_responses=False)
-            self.assertIn('idnr', actual_returned_json)
-            self.assertIn('elster_request_id', actual_returned_json)
-            self.assertEqual(self.new_idnr, actual_returned_json['idnr'])
-            self.assertIsNotNone(actual_returned_json['elster_request_id'])
-            self.assertNotIn('eric_response', actual_returned_json)
-            self.assertNotIn('server_response', actual_returned_json)
-
-    def test_if_idnr_new_and_include_resp_true_then_return_correct_json(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.create_audit_log_entry'):
-            actual_returned_json = send_unlock_code_request_with_elster({'idnr': self.new_idnr, 'dob': '1990-12-12'},
-                                                                        'IP', include_elster_responses=True)
-            self.assertIn('idnr', actual_returned_json)
-            self.assertIn('elster_request_id', actual_returned_json)
-            self.assertEqual(self.new_idnr, actual_returned_json['idnr'])
-            self.assertIsNotNone(actual_returned_json['elster_request_id'])
-            self.assertEqual(get_json_response('unlock_code_request_with_resp')['eric_response'],
-                             actual_returned_json['eric_response'])
-            self.assertEqual(get_json_response('unlock_code_request_with_resp')['server_response'],
-                             actual_returned_json['server_response'])
+                                                                        'IP')
+            self.assertIn('taxIdNumber', actual_returned_json)
+            self.assertIn('elsterRequestId', actual_returned_json)
+            self.assertEqual(self.new_idnr, actual_returned_json['taxIdNumber'])
+            self.assertIsNotNone(actual_returned_json['elsterRequestId'])
+            self.assertIsNotNone(actual_returned_json['transferticket'])
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.create_audit_log_entry') as audit_log_fun:
             send_unlock_code_request_with_elster({'idnr': self.new_idnr, 'dob': '1990-12-12'},
-                                                 'IP', include_elster_responses=False)
+                                                 'IP')
             audit_log_fun.assert_called()
 
     def test_if_idnr_already_used_then_return_error(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
-            self.assertRaises(ElsterAlreadyRequestedError, send_unlock_code_request_with_elster,
-                              {'idnr': self.already_available_idnr, 'dob': '1990-12-12'}, 'IP')
+        MockErica.deliver_fail_on_get_job = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
+
+                self.assertRaises(ElsterAlreadyRequestedError, send_unlock_code_request_with_elster,
+                                  {'idnr': self.already_available_idnr, 'dob': '1990-12-12'}, 'IP')
+
+        finally:
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_error_transfer_occurred_then_return_error(self):
         MockErica.eric_transfer_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterTransferError, send_unlock_code_request_with_elster,
-                                  {'idnr': self.new_idnr, 'dob': '1990-12-12'}, 'IP',
-                                  include_elster_responses=False)
+                                  {'idnr': self.new_idnr, 'dob': '1990-12-12'}, 'IP')
         finally:
             MockErica.eric_transfer_error_occurred = False
-
-    def test_if_eric_error_transfer_occurred_with_responses_then_return_error_with_responses(self):
-        MockErica.eric_transfer_error_occurred = True
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
-                send_unlock_code_request_with_elster({'idnr': self.new_idnr, 'dob': '1990-12-12'}, 'IP',
-                                                     include_elster_responses=True)
-        except ElsterTransferError as e:
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
-                             e.eric_response)
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['server_response']),
-                             e.server_response)
-        finally:
-            MockErica.eric_transfer_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_error_occurred_then_return_error(self):
         MockErica.eric_process_not_successful_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterProcessNotSuccessful, send_unlock_code_request_with_elster,
                                   {'idnr': self.new_idnr, 'dob': '1990-12-12'}, 'IP')
         finally:
             MockErica.eric_process_not_successful_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def tearDown(self):
         if self.new_idnr in MockErica.available_idnrs:
@@ -360,77 +332,54 @@ class TestSendUnlockCodeActivation(unittest.TestCase):
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
             actual_returned_json = send_unlock_code_activation_with_elster({'idnr': self.already_available_idnr,
                                                                             'unlock_code': self.correct_unlock_code},
-                                                                           self.correct_elster_request_id, 'IP',
-                                                                           include_elster_responses=False)
-            self.assertIn('idnr', actual_returned_json)
-            self.assertEqual(self.already_available_idnr, actual_returned_json['idnr'])
-            self.assertNotIn('eric_response', actual_returned_json)
-            self.assertNotIn('server_response', actual_returned_json)
-
-    def test_if_existing_idnr_and_correct_unlock_code_and_include_resp_then_return_correct_json(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.create_audit_log_entry'):
-            actual_returned_json = send_unlock_code_activation_with_elster({'idnr': self.already_available_idnr,
-                                                                            'unlock_code': self.correct_unlock_code},
-                                                                           self.correct_elster_request_id, 'IP',
-                                                                           include_elster_responses=True)
-            self.assertIn('idnr', actual_returned_json)
-            self.assertEqual(self.already_available_idnr, actual_returned_json['idnr'])
-            self.assertEqual(get_json_response('unlock_code_activation_with_resp')['eric_response'],
-                             actual_returned_json['eric_response'])
-            self.assertEqual(get_json_response('unlock_code_activation_with_resp')['server_response'],
-                             actual_returned_json['server_response'])
+                                                                           self.correct_elster_request_id, 'IP')
+            self.assertIn('taxIdNumber', actual_returned_json)
+            self.assertEqual(self.already_available_idnr, actual_returned_json['taxIdNumber'])
 
     def test_if_successful_case_then_call_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.create_audit_log_entry') as audit_log_fun:
             send_unlock_code_activation_with_elster({'idnr': self.already_available_idnr,
                                                      'unlock_code': self.correct_unlock_code},
-                                                    self.correct_elster_request_id, 'IP',
-                                                    include_elster_responses=True)
+                                                    self.correct_elster_request_id, 'IP')
             audit_log_fun.assert_called()
 
     def test_if_idnr_not_known_then_return_error(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
-            self.assertRaises(ElsterRequestIdUnkownError, send_unlock_code_activation_with_elster,
-                              {'idnr': self.new_idnr, 'unlock_code': self.correct_unlock_code}, 'INCORRECT_REQ_ID',
-                              'IP')
+        MockErica.deliver_fail_on_get_job = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
+                self.assertRaises(ElsterRequestIdUnkownError, send_unlock_code_activation_with_elster,
+                                  {'idnr': self.new_idnr, 'unlock_code': self.correct_unlock_code}, 'INCORRECT_REQ_ID',
+                                  'IP')
+        finally:
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_unlock_code_wrong_then_return_error(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.create_audit_log_entry'):
-            self.assertRaises(ElsterRequestIdUnkownError, send_unlock_code_activation_with_elster,
-                              {'idnr': self.already_available_idnr, 'unlock_code': 'INCORRECT'},
-                              self.correct_elster_request_id, 'IP')
+        MockErica.deliver_fail_on_get_job = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
+                    patch('app.elster_client.elster_client.create_audit_log_entry'):
+                self.assertRaises(ElsterRequestIdUnkownError, send_unlock_code_activation_with_elster,
+                                  {'idnr': self.already_available_idnr, 'unlock_code': 'INCORRECT'},
+                                  self.correct_elster_request_id, 'IP')
+        finally:
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_error_transfer_occurred_then_return_error(self):
         MockErica.eric_transfer_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterTransferError, send_unlock_code_activation_with_elster,
                                   {'idnr': self.already_available_idnr, 'unlock_code': self.correct_unlock_code},
-                                  self.correct_elster_request_id, 'IP', include_elster_responses=False)
+                                  self.correct_elster_request_id, 'IP')
         finally:
             MockErica.eric_transfer_error_occurred = False
-
-    def test_if_eric_error_transfer_occurred_with_responses_then_return_error_with_responses(self):
-        MockErica.eric_transfer_error_occurred = True
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
-                send_unlock_code_activation_with_elster({'idnr': self.already_available_idnr,
-                                                         'unlock_code': self.correct_unlock_code},
-                                                        self.correct_elster_request_id, 'IP',
-                                                        include_elster_responses=True)
-        except ElsterTransferError as e:
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
-                             e.eric_response)
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['server_response']),
-                             e.server_response)
-        finally:
-            MockErica.eric_transfer_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_error_occurred_then_return_error(self):
         MockErica.eric_process_not_successful_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterProcessNotSuccessful, send_unlock_code_activation_with_elster,
@@ -438,6 +387,7 @@ class TestSendUnlockCodeActivation(unittest.TestCase):
                                   self.correct_elster_request_id, 'IP')
         finally:
             MockErica.eric_process_not_successful_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def tearDown(self):
         if self.new_idnr in MockErica.available_idnrs:
@@ -455,77 +405,59 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.create_audit_log_entry'):
             actual_returned_json = send_unlock_code_revocation_with_elster(
-                {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP',
-                include_elster_responses=False)
-            self.assertNotIn('eric_response', actual_returned_json)
-            self.assertNotIn('server_response', actual_returned_json)
-
-    def test_if_existing_elster_request_id_and_include_resp_then_return_correct_json(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
-                patch('app.elster_client.elster_client.create_audit_log_entry'):
-            actual_returned_json = send_unlock_code_revocation_with_elster(
-                {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id},
-                'IP', include_elster_responses=True)
-            self.assertEqual(get_json_response('unlock_code_revocation_with_resp')['eric_response'],
-                             actual_returned_json['eric_response'])
-            self.assertEqual(get_json_response('unlock_code_revocation_with_resp')['server_response'],
-                             actual_returned_json['server_response'])
+                {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
+            self.assertIn('transferticket', actual_returned_json)
+            self.assertIn('elsterRequestId', actual_returned_json)
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
                 patch('app.elster_client.elster_client.create_audit_log_entry') as audit_log_fun:
             send_unlock_code_revocation_with_elster(
                 {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id},
-                'IP', include_elster_responses=True)
+                'IP')
             audit_log_fun.assert_called()
 
     def test_if_elster_request_id_not_known_then_return_error(self):
-        with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
-            self.assertRaises(ElsterRequestIdUnkownError, send_unlock_code_revocation_with_elster,
-                              {'idnr': self.new_idnr, 'elster_request_id': 'INCORRECT_REQ_ID'}, 'IP')
+        MockErica.deliver_fail_on_get_job = True
+        try:
+            with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
+                self.assertRaises(ElsterRequestIdUnkownError, send_unlock_code_revocation_with_elster,
+                                  {'idnr': self.new_idnr, 'elster_request_id': 'INCORRECT_REQ_ID'}, 'IP')
+        finally:
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_transfer_error_occurred_then_return_error(self):
         MockErica.eric_transfer_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterTransferError, send_unlock_code_revocation_with_elster,
-                                  {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP',
-                                  include_elster_responses=False)
+                                  {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
         finally:
             MockErica.eric_transfer_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_elster_request_already_revoked_then_return_error(self):
         MockErica.request_code_already_revoked_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterRequestAlreadyRevoked, send_unlock_code_revocation_with_elster,
                                   {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
         finally:
             MockErica.request_code_already_revoked_error_occurred = False
-
-    def test_if_eric_transfer_error_occurred_with_responses_then_return_error_with_responses(self):
-        MockErica.eric_transfer_error_occurred = True
-        try:
-            with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
-                send_unlock_code_revocation_with_elster({'idnr': self.new_idnr,
-                                                         'elster_request_id': self.correct_elster_request_id}, 'IP',
-                                                        include_elster_responses=True)
-        except ElsterTransferError as e:
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['eric_response']),
-                             e.eric_response)
-            self.assertEqual(escape(get_json_response('transfer_error_with_resp')['detail']['server_response']),
-                             e.server_response)
-        finally:
-            MockErica.eric_transfer_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def test_if_eric_error_occurred_then_return_error(self):
         MockErica.eric_process_not_successful_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with patch('requests.post', side_effect=MockErica.mocked_elster_requests):
                 self.assertRaises(ElsterProcessNotSuccessful, send_unlock_code_revocation_with_elster,
                                   {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
         finally:
             MockErica.eric_process_not_successful_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
     def tearDown(self):
         if self.new_idnr in MockErica.available_idnrs:
@@ -557,11 +489,13 @@ class TestValidateTaxNumber:
         state_abbreviation = 'BY'
         tax_number = '19811310010'
         MockErica.eric_process_not_successful_error_occurred = True
+        MockErica.deliver_fail_on_get_job = True
         try:
             with pytest.raises(ElsterUnknownError):
                 validate_tax_number(state_abbreviation, tax_number)
         finally:
             MockErica.eric_process_not_successful_error_occurred = False
+            MockErica.deliver_fail_on_get_job = False
 
 
 class TestGenerateEStRequestData(unittest.TestCase):

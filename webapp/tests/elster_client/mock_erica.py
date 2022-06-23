@@ -27,10 +27,11 @@ _METADATA_KEYS = ["year"]
 
 
 class MockResponse:
-    def __init__(self, json_data, status_code):
+    def __init__(self, json_data, status_code, location=None):
         self.json_data = json_data
         self.status_code = status_code
         self.content = str(json_data)
+        self.headers = {'location': location}
 
     def json(self):
         return self.json_data
@@ -55,6 +56,7 @@ class MockErica:
     min_request_count_get_job = 5
     deliver_fail_on_post_job = False
     deliver_fail_on_get_job = False
+    unlock_code_success = False
 
     INVALID_ID = 'C3PO'
 
@@ -71,26 +73,17 @@ class MockErica:
 
             if args[0] == _PYERIC_API_BASE_URL_01 + '/est_validations':
                 response = MockErica.validate_est(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL_01 + '/ests':
-                response = MockErica.send_est(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL_01 + '/unlock_code_requests':
-                response = MockErica.request_unlock_code(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL_01 + '/unlock_code_activations':
-                response = MockErica.activate_unlock_code(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL_01 + '/unlock_code_revocations':
-                response = MockErica.revoke_unlock_code(sent_data, include_elster_responses)
             elif args[0] == _PYERIC_API_BASE_URL_01 + '/address':
                 response = MockErica.get_address_data(sent_data, include_elster_responses)
             elif args[0] == _PYERIC_API_BASE_URL_01 + '/tax_offices':
                 response = MockErica.get_tax_offices()
-            elif _PYERIC_API_BASE_URL_01 + '/tax_number_validity' in args[0]:
-                sub_urls = args[0].split('/')
-                response = MockErica.is_valid_tax_number(state_abbreviation=sub_urls[len(sub_urls)-2], tax_number=sub_urls[len(sub_urls)-1])
-            elif args[0] == _PYERIC_API_BASE_URL_02 + '/post_job':
-                return MockErica.post_dummy_job()
-            elif args[0] == _PYERIC_API_BASE_URL_02 + '/get_job':
-                request_id = kwargs['request_id'] if 'request_id' in kwargs else None
-                return MockErica.get_dummy_job(request_id)
+            elif MockErica._is_valid_uuid(args[0][args[0].rindex("/") + 1:]):
+                url_without_uuid = args[0][:args[0].rindex("/")]
+                return MockErica.get_dummy_job(args[0][args[0].rindex("/") + 1:],
+                                               url_without_uuid[url_without_uuid.rindex("/") + 1:])
+            elif "payload" in kwargs['data']:
+                return MockErica.post_dummy_job(args[0][args[0].rindex("/") + 1:],
+                                                json.loads(kwargs['data'])["payload"])
             else:
                 return MockResponse(None, 404)
         except UnexpectedInputDataError:
@@ -141,8 +134,7 @@ class MockErica:
                 return get_json_response('est_without_responses')
 
     @staticmethod
-    def send_est(input_body, show_response: bool):
-        input_data = json.loads(input_body)
+    def send_est(input_data):
 
         if (not all(key in input_data for key in _EST_KEYS)) or \
                 (not all(key in input_data['est_data'] for key in _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER) and
@@ -152,102 +144,76 @@ class MockErica:
 
         # ValidationError
         if MockErica._is_input_data_invalid(input_data):
-            if show_response:
-                return get_json_response('validation_error_with_resp')
-            else:
-                return get_json_response('validation_error_no_resp')
+            return get_json_response('validation_error_no_resp_v2')
 
-        err_response = MockErica.errors_from_error_flags(show_response)
+        err_response = MockErica.errors_from_error_flags(False, True)
         if err_response:
             return err_response
 
         # Successful cases
-        if show_response:
-            if 'new_admission' in input_data['est_data']:
-                return get_json_response('est_without_tax_number_including_responses')
-            else:
-                return get_json_response('est_including_responses')
+        if 'new_admission' in input_data['est_data']:
+            return get_json_response('est_without_tax_number_without_responses')
         else:
-            if 'new_admission' in input_data['est_data']:
-                return get_json_response('est_without_tax_number_without_responses')
-            else:
-                return get_json_response('est_without_responses')
+            return get_json_response('est_without_responses_v2')
 
     @staticmethod
-    def request_unlock_code(input_body, show_response: bool):
-        input_data = json.loads(input_body)
+    def request_unlock_code(input_data):
 
         # unexpected input data
-        if not input_data.get('idnr') or not input_data.get('dob'):
+        if not input_data.get('tax_id_number') or not input_data.get('date_of_birth'):
             raise UnexpectedInputDataError()
 
         idnr_exists = False
         for available_idnr in MockErica.available_idnrs:
-            if available_idnr[0] == input_data['idnr']:
+            if available_idnr[0] == input_data['tax_id_number']:
                 idnr_exists = True
                 break
 
         # AlreadyRequestedError
         if idnr_exists:
-            if show_response:
-                return get_json_response('already_requested_error_with_resp')
-            else:
-                return get_json_response('already_requested_error_no_resp')
+            return get_json_response('already_requested_error_no_resp')
 
-        err_response = MockErica.errors_from_error_flags(show_response)
+        err_response = MockErica.errors_from_error_flags(False, True)
         if err_response:
             return err_response
 
         # Successful case
         if not idnr_exists:
             elster_request_id = gen_random_key()
-            MockErica.available_idnrs.append((input_data['idnr'], elster_request_id, None))
-
-            if show_response:
-                return get_json_response('unlock_code_request_with_resp',
-                                         elster_request_id=elster_request_id, idnr=input_data['idnr'])
-            else:
-                return get_json_response('unlock_code_request_no_resp',
-                                         elster_request_id=elster_request_id, idnr=input_data['idnr'])
+            MockErica.available_idnrs.append((input_data['tax_id_number'], elster_request_id, None))
+            return get_json_response('unlock_code_request_no_resp',
+                                     elster_request_id=elster_request_id, idnr=input_data['tax_id_number'])
 
     @staticmethod
-    def activate_unlock_code(input_body, show_response: bool):
-        input_data = json.loads(input_body)
+    def activate_unlock_code(input_data):
 
         # unexpected input data
-        if not input_data.get('idnr') or not input_data.get('elster_request_id') or not input_data.get('unlock_code'):
+        if not input_data.get('tax_id_number') or not input_data.get('elster_request_id') or not input_data.get(
+                'freischalt_code'):
             raise UnexpectedInputDataError()
 
         # AntragNotFoundError
-        if (input_data['idnr'], input_data['elster_request_id'], input_data['unlock_code']) \
+        if (input_data['tax_id_number'], input_data['elster_request_id'], input_data['freischalt_code']) \
                 not in MockErica.available_idnrs:
-            if show_response:
-                return get_json_response('request_id_not_found_with_resp')
-            else:
-                return get_json_response('request_id_not_found_no_resp')
+            return get_json_response('request_id_not_found_no_resp')
 
-        err_response = MockErica.errors_from_error_flags(show_response)
+        err_response = MockErica.errors_from_error_flags(False, True)
         if err_response:
             return err_response
 
         # Successful case
         if (
-                input_data['idnr'], input_data['elster_request_id'],
-                input_data['unlock_code']) in MockErica.available_idnrs:
+                input_data['tax_id_number'], input_data['elster_request_id'],
+                input_data['freischalt_code']) in MockErica.available_idnrs:
             elster_request_id_for_unlock = gen_random_key()
-            if show_response:
-                return get_json_response('unlock_code_activation_with_resp', idnr=input_data['idnr'],
-                                         elster_request_id=elster_request_id_for_unlock)
-            else:
-                return get_json_response('unlock_code_activation_no_resp', idnr=input_data['idnr'],
-                                         elster_request_id=elster_request_id_for_unlock)
+            return get_json_response('unlock_code_activation_no_resp', idnr=input_data['tax_id_number'],
+                                     elster_request_id=elster_request_id_for_unlock)
 
     @staticmethod
-    def revoke_unlock_code(input_body, show_response: bool):
-        input_data = json.loads(input_body)
+    def revoke_unlock_code(input_data):
 
         # unexpected input data
-        if not input_data.get('idnr') or not input_data.get('elster_request_id'):
+        if not input_data.get('tax_id_number') or not input_data.get('elster_request_id'):
             raise UnexpectedInputDataError()
 
         idnr_exists = False
@@ -258,12 +224,9 @@ class MockErica:
 
         # AntragNotFoundError
         if not idnr_exists:
-            if show_response:
-                return get_json_response('request_id_not_found_with_resp')
-            else:
-                return get_json_response('request_id_not_found_no_resp')
+            return get_json_response('request_id_not_found_no_resp')
 
-        err_response = MockErica.errors_from_error_flags(show_response)
+        err_response = MockErica.errors_from_error_flags(False, True)
         if err_response:
             return err_response
 
@@ -271,13 +234,9 @@ class MockErica:
         if idnr_exists:
             elster_request_id_for_revocation = gen_random_key()
             MockErica.available_idnrs = [idnr for idnr in MockErica.available_idnrs if
-                                         idnr[0] != input_data.get('idnr')]
-            if show_response:
-                return get_json_response('unlock_code_revocation_with_resp',
-                                         elster_request_id=elster_request_id_for_revocation)
-            else:
-                return get_json_response('unlock_code_revocation_no_resp',
-                                         elster_request_id=elster_request_id_for_revocation)
+                                         idnr[0] != input_data.get('tax_id_number')]
+            return get_json_response('unlock_code_revocation_no_resp',
+                                     elster_request_id=elster_request_id_for_revocation)
 
     @staticmethod
     def get_address_data(input_body, show_response: bool):
@@ -313,7 +272,8 @@ class MockErica:
 
     @staticmethod
     def is_valid_tax_number(state_abbreviation, tax_number):
-        if err_response := MockErica.errors_from_error_flags(True):
+
+        if err_response := MockErica.errors_from_error_flags(False, True):
             return err_response
 
         _VALID_TAX_NUMBERS = ['19811310010']
@@ -333,17 +293,22 @@ class MockErica:
         return get_json_response('tax_offices')
 
     @staticmethod
-    def errors_from_error_flags(show_response):
+    def errors_from_error_flags(show_response, is_api_v2=False):
         # EricTransferError
         if MockErica.eric_transfer_error_occurred:
-            if show_response:
+            if is_api_v2:
+                return get_json_response('transfer_error')
+            elif show_response:
                 return get_json_response('transfer_error_with_resp')
             else:
                 return get_json_response('transfer_error_no_resp')
 
         # EricProcessUnsuccessfulError
         if MockErica.eric_process_not_successful_error_occurred:
-            return get_json_response('eric_process_error')
+            if is_api_v2:
+                return get_json_response('eric_process_error_v2')
+            else:
+                return get_json_response('eric_process_error')
 
         # Erica ValueError bc of missing fields
         if MockErica.value_error_missing_fields_occurred:
@@ -362,32 +327,62 @@ class MockErica:
             return get_json_response('invalid_tax_number')
 
     request_id_count = {}
+    request_id_with_payload = {}
 
     @staticmethod
-    def post_dummy_job(*args, **kwargs):
+    def post_dummy_job(endpoint, payload, *args, **kwargs):
         if MockErica.deliver_fail_on_post_job:
             return {"errorCode": -1, "errorMessage": "Job could not be submitted."}, 422
         else:
             request_id = str(uuid.uuid4())
             MockErica.request_id_count.setdefault(request_id, 0)
-            return "/02/get_job/" + request_id, 201
+            MockErica.request_id_with_payload[request_id] = payload
+            return MockResponse(None, 201, "/" + endpoint + "/" + request_id)
 
     @staticmethod
-    def get_dummy_job(request_id):
+    def get_dummy_job(request_id, endpoint):
         count = MockErica.request_id_count.get(request_id, -1) + 1
         if count >= MockErica.min_request_count_get_job:
             if MockErica.deliver_fail_on_get_job:
-                response = {"processStatus": "failure", "errorCode": -1, "errorMessage": "ELSTER Timeout error"}
+                error_response = MockErica.get_result(endpoint, request_id)
+                payload = {"processStatus": "Failure", "errorCode": error_response['code'],
+                           "errorMessage": error_response['message'],
+                           "result": error_response[
+                               'validation_problems'] if 'validation_problems' in error_response else None}
             else:
-                response = {"processStatus": "success", "payload": get_json_response('est_without_responses')}
+                payload = {"processStatus": "Success", "result": MockErica.get_result(endpoint, request_id),
+                           "errorCode": None, "errorMessage": None}
         elif count == 0:
-            response = {"errorCode": -1, "errorMessage": "Request ID not found"}, 404
+            payload = {"errorCode": -1, "errorMessage": "Request ID not found"}, 404
         else:
             MockErica.request_id_count[request_id] = count
-            response = {"processStatus": "processing"}
-        return response
+            payload = {"processStatus": "Processing", "result": None, "errorCode": None, "errorMessage": None}
+        return MockResponse(payload, 200)
+
+    @staticmethod
+    def get_result(endpoint, request_id):
+        payload = MockErica.request_id_with_payload.get(request_id)
+        if endpoint == 'ests':
+            return MockErica.send_est(payload)
+        if endpoint == 'tax_number_validity':
+            return MockErica.is_valid_tax_number(payload['state_abbreviation'], payload['tax_number'])
+        if endpoint == 'request':
+            return MockErica.request_unlock_code(payload)
+        if endpoint == 'activation':
+            return MockErica.activate_unlock_code(payload)
+        if endpoint == 'revocation':
+            return MockErica.revoke_unlock_code(payload)
+        return MockResponse(None, 404)
 
     @staticmethod
     def _is_input_data_invalid(input_data):
         return input_data['est_data']['person_a_idnr'] == MockErica.INVALID_ID or \
                datetime.strptime(input_data['est_data']['person_a_dob'], '%Y-%m-%d').date().year > VERANLAGUNGSJAHR
+
+    @staticmethod
+    def _is_valid_uuid(value):
+        try:
+            uuid.UUID(value)
+            return True
+        except ValueError:
+            return False

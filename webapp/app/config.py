@@ -49,6 +49,8 @@ class BaseConfig(object):
     SENDINBLUE_API_KEY = environ.get('SENDINBLUE_API_KEY')
     SENDINBLUE_CONTACT_LIST_ID = environ.get('SENDINBLUE_CONTACT_LIST_ID')
 
+    ERICA_CLIENT_IDENTIFIER = 'steuerlotse-rente'
+
 class ProductionConfig(BaseConfig):
     PROMETHEUS_EXPORTER_ENABLED = True
     DOMAIN = 'https://steuerlotse-rente.de'
@@ -96,7 +98,7 @@ class DevelopmentConfig(BaseConfig):
 
     SESSION_COOKIE_SECURE = False  # Because Safari can not send Secure Cookies via HTTP to localhost
 
-    ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/01'
+    ERICA_BASE_URL = environ.get('ERICA_BASE_URL') or 'http://0.0.0.0:8000/v2'
     RATELIMIT_STORAGE_URL = environ.get('RATELIMIT_STORAGE_URL') or "memory://"
     SQLALCHEMY_DATABASE_URI = environ.get('SQLALCHEMY_DATABASE_URI') or "sqlite:///dev.db"
     SQLALCHEMY_ENGINE_OPTIONS = {}  # Some of our settings don't work with sqlite.
