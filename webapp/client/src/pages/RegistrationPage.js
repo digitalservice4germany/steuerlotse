@@ -29,12 +29,13 @@ export default function RegistrationPage({
         i18nKey={key}
         components={{
           steuerIdLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
             <a
               aria-label="Info zur Steuerliche Identifikationsnummer"
               href="https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html"
-            >
-              Info zur Steuerliche Identifikationsnummer
-            </a>
+              target="_blank"
+              rel="noreferrer"
+            />
           ),
         }}
       />

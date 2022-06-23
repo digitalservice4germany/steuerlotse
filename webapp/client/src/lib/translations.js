@@ -839,7 +839,7 @@ const translations = {
       Item3: {
         heading: "Steuer-Identifikationsnummer",
         detail:
-          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem letzten Steuerbescheid.",
+          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem letzten Steuerbescheid. Sollten Sie Ihre Steuer-Identifikationsnummer nicht finden, erhalten Sie <steuerIdLink>hier</steuerIdLink> weitere Unterstützung. ",
       },
       Item4: {
         heading: "Steuernummer",
