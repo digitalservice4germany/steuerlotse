@@ -6,7 +6,7 @@ function setup() {
   const MOCK_PROPS = {
     boxHeadline: "Weitere Steuerprodukte vom DigitalService",
     boxText:
-      "Mit unserem weiteren Service können private Eigentümerinnen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
+      "Mit unserem weiteren Service können private Eigentümer:innen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
     anchor: {
       url: "https://www.grundsteuererklaerung-fuer-privateigentum.de/",
       text: "Zum Service",
@@ -26,7 +26,7 @@ describe("InfoBoxGrundsteuer", () => {
       "Weitere Steuerprodukte vom DigitalService"
     );
     const text = screen.getByText(
-      "Mit unserem weiteren Service können private Eigentümerinnen ihre Grundsteuererklärung einfach und kostenlos online abgeben!"
+      "Mit unserem weiteren Service können private Eigentümer:innen ihre Grundsteuererklärung einfach und kostenlos online abgeben!"
     );
     const buttonAnchor = screen.getByText("Zum Service");
     const altImg = screen.getByAltText("Tablet mit Webapp der Grundsteuer");

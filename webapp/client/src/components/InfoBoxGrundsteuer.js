@@ -39,6 +39,8 @@ const TextBox = styled.div`
   align-items: flex-start;
   grid-column: 1 / 3;
 
+  margin-bottom: var(--spacing-06);
+
   @media (min-width: 768px) {
     grid-row: 1;
   }
@@ -63,6 +65,7 @@ const Image = styled.img`
   margin: 0;
   grid-column: 3 / -1;
   grid-row: 1;
+  margin-top: var(--spacing-06);
 `;
 
 export default function InfoBoxGrundsteuer() {

@@ -797,7 +797,7 @@ const translations = {
   },
   InfoBoxGrundsteuer: {
     heading: "Weitere Steuerprodukte vom DigitalService",
-    text: "Mit unserem weiteren Service können private Eigentümerinnen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
+    text: "Mit unserem weiteren Service können private Eigentümer:innen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
     button: "Zum Service",
   },
   CheckNowInfoBox: {
