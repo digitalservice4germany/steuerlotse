@@ -517,36 +517,6 @@ const translations = {
       sourcePage: "shareAcknowledged",
     },
   },
-  AmbassadorMaterial: {
-    Heading:
-      "Wir bieten Produktvorstellung für Digital-Botschafter und kostenloses Infomaterial",
-    SubHeading:
-      "Gerne schicken wir Ihnen ein kleines kostenloses Paket Informationsmaterial und stellen Ihnen den Steuerlotsen in Ihrem Dachverband oder Netzwerk vor.",
-    Section: {
-      whatSteuerlotseDoes: {
-        heading: "Was macht der Steuerlotse?",
-        text: "Millionen Seniorinnen und Senioren hierzulande haben steuerpflichtige Einkommen – was viele von ihnen vor große Herausforderungen stellt. Gemeinsam mit dem Bundesministerium der Finanzen haben wir ein Online-Tool entwickelt, das es Renten- und Pensionsbeziehende erlaubt, intuitiv und ganz ohne Vorkenntnisse in wenigen Minuten ihre Steuererklärung abzugeben. Der Steuerlotse stand erstmals für die Steuersaison 2020 zur Verfügung und wird fortlaufend aktualisiert.",
-        text2:
-          "Wir wollen so vielen Menschen im Ruhestand digitale Teilhabe und eine stressfreie Steuererklärung wie möglich ermöglichen. Unterstützen Sie uns dabei!",
-      },
-      downloadInformation: {
-        heading: "Informationsmaterialien zum Download",
-        informationButtonText: "Informationsbroschüre speichern [PDF]",
-        flyerButtonText: "Flyer zum Steuerlotsen speichern [PDF]",
-      },
-      freeInformation: {
-        heading: "Kostenlos Informationsmaterial erhalten ",
-        text: "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu.",
-        text2:
-          "Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>",
-        buttonText: "Schreiben Sie uns",
-      },
-      contactUs: {
-        heading: "Nehmen Sie Kontakt zu uns auf",
-        text: "Sie sind in einem Steuerverein oder Seniorenbüro tätig oder setzen sich für digitale Teilhabe von Seniorinnen und Senioren ein? Gerne stellen wir Ihnen das Produkt in Ihrem Dachverband oder Netzwerk vor und besprechen eine mögliche Zusammenarbeit. Setzen Sie sich gerne mit uns in Verbindung.",
-      },
-    },
-  },
   ContentPagesAnchors: {
     Krankheitskosten: {
       text: "Krankheitskosten",

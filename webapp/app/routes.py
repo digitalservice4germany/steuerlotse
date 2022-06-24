@@ -33,7 +33,7 @@ from app.templates.react_template import render_react_template, render_react_con
     render_react_landing_page_template
 from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, \
     NewsletterSuccessPageProps, MandateForTaxDeclarationProps
-from app.model.components import AmbassadorInfoMaterialProps, MedicalExpensesInfoPageProps, PensionExpensesProps, \
+from app.model.components import MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
     VorbereitenInfoProps, InfoForRelativesPageProps, LandingPageProps
@@ -393,13 +393,6 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='InfoTaxReturnForPensionersPage')
-
-    @app.route('/seniorenvereine', methods=['GET'])
-    @add_caching_headers
-    def ambassadorMaterial():
-        return render_react_content_page_template(
-            props=AmbassadorInfoMaterialProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
-            component='AmbassadorInfoMaterialPage')
 
     @app.route('/vorbereiten/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
