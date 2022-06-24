@@ -68,7 +68,6 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     eligibility_error = None
     input_step_name = ''
     title = _l('form.eligibility.failure.title')
-    intro = _l('form.eligibility.failure.intro')
 
     def __init__(self, endpoint, stored_data=None, render_info=None, *args, **kwargs):
         super(EligibilityFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
@@ -402,8 +401,10 @@ class DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(DecisionElig
         joint_taxes_eligibility = RadioField(
             label="",
             render_kw={'hide_label': True,
-                       'data-detail': {'title': _l('form.eligibility.joint_taxes.detail.title'),
-                                  'text': _l('form.eligibility.joint_taxes.detail.text')}},
+                       'data-detail': [{'title': _l('form.eligibility.joint_taxes.detail.title'),
+                                  'text': _l('form.eligibility.joint_taxes.detail.text')},
+                                  {'title': _l('form.eligibility.joint_taxes.detailTwo.title'),
+                                  'text': _l('form.eligibility.joint_taxes.detailTwo.text')}]},
             choices=[('yes', _l('form.eligibility.joint_taxes.yes')),
                      ('no', _l('form.eligibility.joint_taxes.no')),
                      ],
