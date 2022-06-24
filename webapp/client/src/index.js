@@ -32,7 +32,6 @@ import SubmitAcknowledgePage from "./pages/SubmitAcknowledgePage";
 import FilingSuccessPage from "./pages/FilingSuccessPage";
 import FilingFailurePage from "./pages/FilingFailurePage";
 import InfoTaxReturnForPensionersPage from "./pages/InfoTaxReturnForPensionersPage";
-import AmbassadorInfoMaterialPage from "./pages/AmbassadorInfoMaterialPage";
 import MedicalExpensesInfoPage from "./pages/MedicalExpensesInfoPage";
 import PensionExpensesInfoPage from "./pages/PensionExpensesInfoPage";
 import DisabilityCostsInfoPage from "./pages/DisabilityCostsInfoPage";
@@ -82,7 +81,6 @@ const allowedComponents = {
   FilingFailurePage,
   SubmitAcknowledgePage,
   InfoTaxReturnForPensionersPage,
-  AmbassadorInfoMaterialPage,
   MedicalExpensesInfoPage,
   PensionExpensesInfoPage,
   DisabilityCostsInfoPage,

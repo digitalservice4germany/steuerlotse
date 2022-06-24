@@ -3181,10 +3181,6 @@ msgstr "Über den Steuerlotsen"
 msgid "footer.about-ds"
 msgstr "Über den Digital Service"
 
-#: app/templates/basis/footer.html:43
-msgid "footer.botschafter"
-msgstr "Für Seniorenvereine"
-
 #: app/templates/basis/footer.html:52
 msgid "ds4g_logo"
 msgstr "DigitalService"
