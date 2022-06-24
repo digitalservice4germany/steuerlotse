@@ -60,6 +60,7 @@ export default function UnlockCodeSuccessPage({
   };
 
   const plausibleGoal = "Vorbereitungshilfe";
+  const emailPlausibleGoal = "E-Mails abonnieren";
   const plausiblePropsButton = {
     method: "CTA Vorbereitungshilfe herunterladen",
   };
@@ -110,6 +111,8 @@ export default function UnlockCodeSuccessPage({
       <NewsletterRegisterBox
         dataPrivacyLink={dataPrivacyLink}
         csrfToken={csrfToken}
+        plausibleDomain={plausibleDomain}
+        plausibleGoal={emailPlausibleGoal}
       />
     </>
   );

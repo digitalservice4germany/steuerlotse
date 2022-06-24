@@ -133,7 +133,12 @@ const errors = [];
 let emailValue = "";
 let disableButton = false;
 
-export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
+export default function NewsletterRegisterBox({
+  dataPrivacyLink,
+  csrfToken,
+  plausibleDomain,
+  plausibleGoal,
+}) {
   const { t } = useTranslation();
 
   function displaySuccessBox(activate) {
@@ -218,7 +223,12 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
             />
           </ColumnField>
           <ColumnButton flexBasis={30} leftAuto>
-            <ButtonInRow onClick={sendEmail} disabled={disableButton}>
+            <ButtonInRow
+              onClick={sendEmail}
+              disabled={disableButton}
+              plausibleDomain={plausibleDomain}
+              plausibleGoal={plausibleGoal}
+            >
               {t("newsletter.button.label")}
             </ButtonInRow>
           </ColumnButton>
@@ -255,4 +265,11 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
 NewsletterRegisterBox.propTypes = {
   dataPrivacyLink: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+  plausibleGoal: PropTypes.string,
+};
+
+NewsletterRegisterBox.defaultProps = {
+  plausibleDomain: null,
+  plausibleGoal: null,
 };
