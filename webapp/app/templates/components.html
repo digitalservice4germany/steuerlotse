@@ -39,10 +39,16 @@
 {%- endmacro %}
 
 {% macro render_detail(field) %}
-    {%- set detail = field.render_kw['data-detail'] -%}
-    {%- if detail %}
-        {{ details(detail.title, [detail.text], details_id=field.id) }}
-    {% endif %}
+    {%- set detail_object = field.render_kw['data-detail'] -%}
+    {% if detail_object %}
+        {% if detail_object is iterable %}
+            {% for detail in detail_object %}
+                {{ details(detail.title, [detail.text], details_id=field.id|string + loop.index|string) }}
+            {% endfor %}
+        {% else %}    
+                {{ details(detail_object.title, [detail_object.text], details_id=field.id) }}
+        {% endif %}   
+    {% endif %}   
 {% endmacro %}
 
 {% macro checkbox(field, classes="", position_details_after=False, first_field=False) %}
