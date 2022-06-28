@@ -139,7 +139,6 @@ export default function NewsletterRegisterBox({
   csrfToken,
   plausibleDomain,
   plausibleGoal,
-  plausibleProps,
 }) {
   const { t } = useTranslation();
 
@@ -147,9 +146,7 @@ export default function NewsletterRegisterBox({
     const x = document.getElementById("success");
     if (activate) {
       x.style.display = "block";
-      addPlausibleGoal(plausibleDomain, plausibleGoal, {
-        props: plausibleProps,
-      });
+      addPlausibleGoal(plausibleDomain, plausibleGoal, {});
     } else {
       x.style.display = "none";
     }
@@ -267,11 +264,9 @@ NewsletterRegisterBox.propTypes = {
   csrfToken: PropTypes.string.isRequired,
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,
-  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
 };
 
 NewsletterRegisterBox.defaultProps = {
   plausibleDomain: null,
   plausibleGoal: null,
-  plausibleProps: undefined,
 };
