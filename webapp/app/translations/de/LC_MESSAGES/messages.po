@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-22 11:10+0200\n"
+"POT-Creation-Date: 2022-06-30 12:57+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -72,7 +72,7 @@ msgstr ""
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:290 app/routes.py:555
+#: app/routes.py:290 app/routes.py:548
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
@@ -108,27 +108,27 @@ msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:522
+#: app/routes.py:515
 msgid "freeTaxDeclarationForPensioners.header-title"
 msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
 
-#: app/routes.py:530
+#: app/routes.py:523
 msgid "mandateForTaxDeclaration.header-title"
 msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
 
-#: app/routes.py:546 app/routes.py:576 app/routes.py:583
+#: app/routes.py:539 app/routes.py:569 app/routes.py:576
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:551 app/routes.py:559
+#: app/routes.py:544 app/routes.py:552
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:564
+#: app/routes.py:557
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:570
+#: app/routes.py:563
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -3181,30 +3181,30 @@ msgstr "Über den Steuerlotsen"
 msgid "footer.about-ds"
 msgstr "Über den Digital Service"
 
-#: app/templates/basis/footer.html:52
+#: app/templates/basis/footer.html:49
 msgid "ds4g_logo"
 msgstr "DigitalService"
 
-#: app/templates/basis/footer.html:56
+#: app/templates/basis/footer.html:53
 msgid "footer.about-steuerlotse-text"
 msgstr ""
 "Der Steuerlotse wurde von der DigitalService GmbH des Bundes umgesetzt. "
 "Wir entwickeln digitale Lösungen für und mit der Bundesverwaltung. Im "
 "Zentrum stehen die Bedürfnisse der Nutzerinnen und Nutzer."
 
-#: app/templates/basis/footer.html:69
+#: app/templates/basis/footer.html:66
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:70
+#: app/templates/basis/footer.html:67
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:71
+#: app/templates/basis/footer.html:68
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:72
+#: app/templates/basis/footer.html:69
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 
@@ -4628,34 +4628,22 @@ msgid "info-stl.elster.heading"
 msgstr "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?"
 
 #: app/templates/content/howitworks.html:58
-#: app/templates/content/landing_page.html:56
-msgid "info-stl.elster.p1-content"
+msgid "info-stl.elster.content"
 msgstr ""
-"Sie können den Steuerlotsen vielleicht nutzen. Der Steuerlotse ist nur "
-"mit dem Briefersatzverfahren für den Datenabruf von ELSTER nutzbar."
+"Nein. Für die Überprüfung Ihrer Identität braucht unser Service einen "
+"Freischaltcode. Dieser Freischaltcode wird von ELSTER erstellt und per "
+"Post versendet. Aus technischen Gründen geschieht das in der Regel bei "
+"bestehenden ELSTER-Konten nicht. Daher können Sie den Steuerlotsen "
+"derzeit nicht nutzen. Wir empfehlen Ihnen als Alternative <a "
+"href=\"https://einfach.elster.de/erklaerung/ui/\">einfachELSTER</a> oder "
+"<a href=\"https://einfach.elster.de/erklaerung/ui/\">ELSTER</a>."
 
-#: app/templates/content/howitworks.html:59
-#: app/templates/content/landing_page.html:57
-msgid "info-stl.elster.p2-content"
-msgstr ""
-"Wenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für"
-" den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente "
-"nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von "
-"ELSTER. "
-
-#: app/templates/content/howitworks.html:60
-#: app/templates/content/landing_page.html:58
-msgid "info-stl.elster.p3-content"
-msgstr ""
-"ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
-"Plattform der deutschen Finanzverwaltung. "
-
-#: app/templates/content/howitworks.html:65
+#: app/templates/content/howitworks.html:63
 #: app/templates/content/landing_page.html:63
 msgid "info-stl.reference.heading"
 msgstr "Wer hat den Steuerlotsen entwickelt?"
 
-#: app/templates/content/howitworks.html:67
+#: app/templates/content/howitworks.html:65
 #: app/templates/content/landing_page.html:65
 msgid "info-stl.reference.p1-content"
 msgstr ""
@@ -4667,31 +4655,27 @@ msgstr ""
 ".grundsteuererklaerung-fuer-privateigentum.de/\">“Grundsteuererklärung "
 "für Privateigentum”</a> entwickelt."
 
-#: app/templates/content/howitworks.html:72
+#: app/templates/content/howitworks.html:70
 #: app/templates/content/landing_page.html:70
 msgid "info-stl.taxableyear.heading"
-msgstr ""
-"Für welche Steuerjahre kann ich den Steuerlotsen für meine "
-"Steuererklärung nutzen?"
+msgstr "Für welche Steuerjahre kann ich den Steuerlotsen nutzen?"
 
-#: app/templates/content/howitworks.html:74
+#: app/templates/content/howitworks.html:72
 #: app/templates/content/landing_page.html:72
 msgid "info-stl.taxableyear.p1-content"
 msgstr ""
 "Der Steuerlotse kann zurzeit nur für die Abgabe einer Steuererklärung für"
 " das Steuerjahr 2021 verwendet werden. Für alle früheren Steuerjahre "
 "können Sie beispielsweise auf <a "
-"href=\"https://www.elster.de/eportal/login/softpse\">Mein ELSTER</a> oder"
-" in einigen Bundesländern auch auf das <a "
-"href=\"https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerliche_Themengebiete/Altersvorsorge/2019-04-29"
-"-Laendervordruck-vereinfachte-veranlagung-rentner.html\">vereinfachte "
-"Papierformular</a> zurückgreifen."
+"href=\"https://einfach.elster.de/erklaerung/ui/\">einfachELSTER</a> oder "
+"<a href=\"https://einfach.elster.de/erklaerung/ui/\">ELSTER</a>. "
+"zurückgreifen."
 
-#: app/templates/content/howitworks.html:81
+#: app/templates/content/howitworks.html:79
 msgid "info.heading-prepare"
 msgstr "Vorbereitung"
 
-#: app/templates/content/howitworks.html:82
+#: app/templates/content/howitworks.html:80
 msgid "info.intro-prepare"
 msgstr ""
 "Wir möchten Sie während des gesamten Prozesses bis zu Ihrer fertigen "
@@ -4700,11 +4684,11 @@ msgstr ""
 "aller notwendigen Unterlagen für das Ausfüllen Ihrer Steuererklärung. So "
 "können Sie sich bestens vorbereiten."
 
-#: app/templates/content/howitworks.html:85
+#: app/templates/content/howitworks.html:83
 msgid "info-prep.card-mandatory.heading"
 msgstr "Welche Angaben müssen im Steuerlotsen gemacht werden?"
 
-#: app/templates/content/howitworks.html:87
+#: app/templates/content/howitworks.html:85
 msgid "info-prep.card-mandatory.p1-content"
 msgstr ""
 "Folgende Angaben müssen Sie beim Steuerlotsen machen:<ul><li>Name, "
@@ -4715,11 +4699,11 @@ msgstr ""
 "keine Steuernummer haben, können Sie im Steuerlotsen mit der Abgabe Ihrer"
 " Steuererklärung eine neue Steuernummer beantragen."
 
-#: app/templates/content/howitworks.html:92
+#: app/templates/content/howitworks.html:90
 msgid "info-prep.card-otional.heading"
 msgstr "Welche Angaben kann ich optional machen?"
 
-#: app/templates/content/howitworks.html:94
+#: app/templates/content/howitworks.html:92
 msgid "info-prep.card-optional.p1-content"
 msgstr ""
 "Neben den Pflichtangaben können Sie Spenden und Mitgliedsbeiträge, "
@@ -4728,11 +4712,11 @@ msgstr ""
 " Unterlagen beispielhaft zu den steuermindernden Angaben gehören, finden "
 "Sie in unserer <a href=%(link)s>Vorbereitungshilfe.</a>"
 
-#: app/templates/content/howitworks.html:99
+#: app/templates/content/howitworks.html:97
 msgid "info-prep.card-receipts.heading"
 msgstr "Was mache ich mit Belegen und Nachweisen?"
 
-#: app/templates/content/howitworks.html:101
+#: app/templates/content/howitworks.html:99
 msgid "info-prep.card-receipts.p1-content"
 msgstr ""
 "Belege müssen Sie nur einreichen, wenn das Finanzamt Sie schriftlich dazu"
@@ -4741,22 +4725,22 @@ msgstr ""
 "Beispiel Spendenbescheinigungen, der Nachweis von Pflegekosten, einer "
 "Behinderung oder Rechnungen von Handwerkern sein."
 
-#: app/templates/content/howitworks.html:109
+#: app/templates/content/howitworks.html:107
 msgid "info.heading-fsc"
 msgstr "Informationen zum Freischaltcode"
 
-#: app/templates/content/howitworks.html:110
+#: app/templates/content/howitworks.html:108
 msgid "info.intro-fsc"
 msgstr ""
 "Mit Ihrer Registrierung beim Steuerlotsen beantragen Sie automatisch "
 "einen Freischaltcode bei Ihrer Finanzverwaltung. Diesen erhalten Sie nach"
 " erfolgreicher Beantragung innerhalb weniger Tage."
 
-#: app/templates/content/howitworks.html:113
+#: app/templates/content/howitworks.html:111
 msgid "info-fsc.card-how.heading"
 msgstr "Wie bekomme ich den Freischaltcode?"
 
-#: app/templates/content/howitworks.html:115
+#: app/templates/content/howitworks.html:113
 msgid "info-fsc.card-how.p1-content"
 msgstr ""
 "Ihren persönlichen Freischaltcode beantragen Sie automatisch mit Ihrer "
@@ -4766,13 +4750,13 @@ msgstr ""
 " gedacht. Sie brauchen den Brief mit dem persönlichen Freischaltcode "
 "nicht postalisch an den DigitalService zu schicken."
 
-#: app/templates/content/howitworks.html:120
+#: app/templates/content/howitworks.html:118
 msgid "info-fsc.card-other.heading"
 msgstr ""
 "Ich habe bereits einen Freischaltcode für einen anderen Service. Kann ich"
 " diesen auch für den Steuerlotsen verwenden?"
 
-#: app/templates/content/howitworks.html:122
+#: app/templates/content/howitworks.html:120
 msgid "info-fsc.card-other.p1-content"
 msgstr ""
 "Nein. Der Freischaltcode gilt jeweils für einen Anbieter. Wenn Sie den "
@@ -4780,11 +4764,11 @@ msgstr ""
 " Ihrer Registrierung beantragen Sie automatisch einen Freischaltcode für "
 "die Nutzung des Steuerlotsen."
 
-#: app/templates/content/howitworks.html:127
+#: app/templates/content/howitworks.html:125
 msgid "info-fsc.received.heading"
 msgstr "Was mache ich, wenn ich den Freischaltcode nicht erhalten habe?"
 
-#: app/templates/content/howitworks.html:129
+#: app/templates/content/howitworks.html:127
 msgid "info-fsc.card-received.p1-content"
 msgstr ""
 "Wenn Sie sich beim Steuerlotsen registriert und damit erfolgreich einen "
@@ -4794,7 +4778,7 @@ msgstr ""
 " Steuerlotsen leider nicht nutzen und werden daher keinen Freischaltcode "
 "erhalten."
 
-#: app/templates/content/howitworks.html:130
+#: app/templates/content/howitworks.html:128
 msgid "info-fsc.card-received.p2-content"
 msgstr ""
 "Sie sind nicht bei ELSTER angemeldet, warten aber bereits seit über 2 "
@@ -4802,33 +4786,33 @@ msgstr ""
 "href=%(link)s>Freischaltcode stornieren</a> Ihren alten Freischaltcode "
 "zunächst stornieren und im Anschluss einen neuen beantragen."
 
-#: app/templates/content/howitworks.html:135
+#: app/templates/content/howitworks.html:133
 msgid "info-fsc.lost.heading"
 msgstr "Was mache ich, wenn ich meinen Freischaltcode verloren habe?"
 
-#: app/templates/content/howitworks.html:137
+#: app/templates/content/howitworks.html:135
 msgid "info-fsc.card-lost.p1-content"
 msgstr ""
 "Wenn Sie Ihren Freischaltcode nicht mehr finden, können Sie unter <a "
 "href=%(link)s>Freischaltcode stornieren</a> Ihren alten Freischaltcode "
 "zunächst stornieren und im Anschluss einen neuen beantragen."
 
-#: app/templates/content/howitworks.html:142
+#: app/templates/content/howitworks.html:140
 msgid "info-fsc.validity.heading"
 msgstr "Wieso muss ich nächstes Jahr einen neuen Freischaltcode beantragen?"
 
-#: app/templates/content/howitworks.html:144
+#: app/templates/content/howitworks.html:142
 msgid "info-fsc.validity.p1-content"
 msgstr ""
 "Wir haben unseren Dienst so datensparsam wie möglich entwickelt. Ihr "
 "Freischaltcode verliert daher seine Gültigkeit, wenn Sie Ihre "
 "Steuererklärung verschickt und sich abgemeldet haben."
 
-#: app/templates/content/howitworks.html:152
+#: app/templates/content/howitworks.html:150
 msgid "info.heading-edaten"
 msgstr "Informationen zur Übernahme vorliegender Daten"
 
-#: app/templates/content/howitworks.html:153
+#: app/templates/content/howitworks.html:151
 msgid "info.intro-edaten"
 msgstr ""
 "Da Ihrer Finanzverwaltung bereits viele Informationen über Sie vorliegen,"
@@ -4836,100 +4820,100 @@ msgstr ""
 "vereinfacht Ihnen die Erstellung Ihrer Steuererklärung, weil Sie viele "
 "Felder nicht mehr ausfüllen müssen."
 
-#: app/templates/content/howitworks.html:156
+#: app/templates/content/howitworks.html:154
 msgid "info.card-takeover.heading"
 msgstr "Welche Daten werden automatisch in meine Steuererklärung übernommen?"
 
-#: app/templates/content/howitworks.html:158
+#: app/templates/content/howitworks.html:156
 msgid "info.card-takeover.p1-content"
 msgstr ""
 "Daten zu inländischen Renten, Pensionen sowie zu Kranken- und "
 "Pflegeversicherungen erhält die Finanzverwaltung von der jeweiligen "
 "Stelle elektronisch."
 
-#: app/templates/content/howitworks.html:159
+#: app/templates/content/howitworks.html:157
 msgid "info.card-takeover.p2-content"
 msgstr ""
 "Welche Daten für Sie übermittelt wurden, können Sie den Unterlagen "
 "entnehmen, die Sie von der jeweiligen Stelle erhalten. Das Finanzamt "
 "erhält die Daten aus derselben Quelle wie Sie Ihre Belege."
 
-#: app/templates/content/howitworks.html:160
+#: app/templates/content/howitworks.html:158
 msgid "info.card-takeover.p3-content"
 msgstr ""
 "Kontrollieren Sie dennoch aufmerksam Ihren Steuerbescheid. Diesen "
 "erhalten Sie automatisch mit der Post, sobald Ihr Finanzamt Ihre "
 "Steuererklärung bearbeitet hat."
 
-#: app/templates/content/howitworks.html:165
+#: app/templates/content/howitworks.html:163
 msgid "info.card-advantage.heading"
 msgstr "Was sind die Vorteile der automatischen Übernahme vorliegender Daten?"
 
-#: app/templates/content/howitworks.html:167
+#: app/templates/content/howitworks.html:165
 msgid "info.card-advantage.p1-content"
 msgstr ""
 "Sie ersparen sich das mühsame Übertragen Ihrer Daten aus Ihren Unterlagen"
 " in das Steuerformular."
 
-#: app/templates/content/howitworks.html:168
+#: app/templates/content/howitworks.html:166
 msgid "info.card-advantage.p2-content"
 msgstr ""
 "Sie können sich außerdem nicht aus Versehen bei der Dateneingabe "
 "vertippen. Die Daten, die das Finanzamt hat und die in Ihren Unterlagen "
 "stehen, stammen sogar aus denselben Quellen."
 
-#: app/templates/content/howitworks.html:169
+#: app/templates/content/howitworks.html:167
 msgid "info.card-advantage.p3-content"
 msgstr ""
 "Sie haben weniger Stress. Das Finanzamt muss Ihre Angaben nicht mehr "
 "prüfen, weil sie diesem bereits vorliegen. Daher kommt es zu weniger "
 "Rückfragen."
 
-#: app/templates/content/howitworks.html:174
+#: app/templates/content/howitworks.html:172
 msgid "info.edaten.control.heading"
 msgstr "Wie kann ich die übernommenen Daten kontrollieren?"
 
-#: app/templates/content/howitworks.html:176
+#: app/templates/content/howitworks.html:174
 msgid "info.edaten.control-content1"
 msgstr ""
 "Welche Daten für Sie übermittelt wurden, können Sie den Unterlagen "
 "entnehmen, die Sie von der jeweiligen Stelle erhalten haben. Das "
 "Finanzamt erhält die Daten aus derselben Quelle wie Sie Ihre Belege."
 
-#: app/templates/content/howitworks.html:177
+#: app/templates/content/howitworks.html:175
 msgid "info.edaten.control-content2"
 msgstr ""
 "Kontrollieren Sie dennoch aufmerksam Ihren Steuerbescheid. Diesen "
 "erhalten Sie automatisch mit der Post, sobald Ihr Finanzamt Ihre "
 "Steuererklärung bearbeitet hat."
 
-#: app/templates/content/howitworks.html:186
+#: app/templates/content/howitworks.html:184
 msgid "info.heading-data-protection"
 msgstr "Datenschutz und Sicherheit"
 
-#: app/templates/content/howitworks.html:187
+#: app/templates/content/howitworks.html:185
 msgid "info.intro-data-protection"
 msgstr ""
 "Der Schutz Ihrer Daten ist uns sehr wichtig. Wir haben unseren Service "
 "bewusst datensparsam entwickelt. Ihre Daten werden ausschließlich "
 "verschlüsselt gespeichert und übertragen."
 
-#: app/templates/content/howitworks.html:190
+#: app/templates/content/howitworks.html:188
 msgid "info-security.transfer.heading"
 msgstr "Wie wird meine Steuererklärung an das Finanzamt geschickt?"
 
-#: app/templates/content/howitworks.html:192
+#: app/templates/content/howitworks.html:190
 msgid "info-security.transfer.p1-content"
 msgstr ""
 "Ihre Steuererklärung wird über die offizielle ELSTER-Schnittstelle "
 "digital übermittelt. ELSTER steht für »Elektronische Steuererklärung« und"
 " ist die offizielle Plattform der deutschen Finanzverwaltung."
 
-#: app/templates/content/howitworks.html:197
+#: app/templates/content/howitworks.html:195
 msgid "info-security.card-processing.heading"
 msgstr "Wie verarbeiten Sie meine Daten?"
 
-#: app/templates/content/howitworks.html:199
+#: app/templates/content/howitworks.html:197
 msgid "info-security.card-processing.p1-content"
 msgstr ""
 "Der Steuerlotse fragt nur und erst dann Daten ab, wenn sie wirklich "
@@ -4939,11 +4923,11 @@ msgstr ""
 "Finanzverwaltung. Personenbezogene Daten werden von uns nur "
 "weitergeleitet – nicht zu anderen Zwecken verarbeitet."
 
-#: app/templates/content/howitworks.html:208
+#: app/templates/content/howitworks.html:206
 msgid "info.heading"
 msgstr "Informieren"
 
-#: app/templates/content/howitworks.html:209
+#: app/templates/content/howitworks.html:207
 msgid "info.intro"
 msgstr ""
 "Die Abgabe der Steuererklärung ist vor allem für Renten- und "
@@ -4954,25 +4938,25 @@ msgstr ""
 "wurde im Auftrag des Bundesministeriums der Finanzen vom DigitalService "
 "entwickelt."
 
-#: app/templates/content/howitworks.html:211
+#: app/templates/content/howitworks.html:209
 msgid "info.heading-content"
 msgstr "Inhalte auf dieser Seite"
 
-#: app/templates/content/howitworks.html:229
+#: app/templates/content/howitworks.html:227
 msgid "info.teaser.eligibility.title"
 msgstr "Herausfinden, ob Sie den Steuerlotsen nutzen können"
 
-#: app/templates/content/howitworks.html:230
+#: app/templates/content/howitworks.html:228
 msgid "info.teaser.eligibility.description"
 msgstr ""
 "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die "
 "Voraussetzungen für die Nutzung des Steuerlotsen erfüllen."
 
-#: app/templates/content/howitworks.html:234
+#: app/templates/content/howitworks.html:232
 msgid "info.teaser.register.title"
 msgstr "Registrieren und Freischaltcode beantragen"
 
-#: app/templates/content/howitworks.html:235
+#: app/templates/content/howitworks.html:233
 msgid "info.teaser.register.description"
 msgstr ""
 "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer "
@@ -5127,6 +5111,27 @@ msgstr "Häufig gestellte Fragen zum Steuerlotsen"
 msgid "info-stl.card-zusammenveranlagung.heading"
 msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
 
+#: app/templates/content/landing_page.html:56
+#, fuzzy
+msgid "info-stl.elster.p1-content"
+msgstr ""
+"ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
+"Plattform der deutschen Finanzverwaltung. "
+
+#: app/templates/content/landing_page.html:57
+msgid "info-stl.elster.p2-content"
+msgstr ""
+"Wenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für"
+" den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente "
+"nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von "
+"ELSTER. "
+
+#: app/templates/content/landing_page.html:58
+msgid "info-stl.elster.p3-content"
+msgstr ""
+"ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
+"Plattform der deutschen Finanzverwaltung. "
+
 #: app/templates/content/landing_page.html:85
 msgid "landing.hero-title"
 msgstr "Die vereinfachte Steuererklärung für Menschen im Ruhestand"
@@ -5229,8 +5234,9 @@ msgid "form.eligibility.use-elster-button"
 msgstr "Zu Mein ELSTER"
 
 #: app/templates/eligibility/display_maybe.html:17
-msgid "maybe_icon"
-msgstr "Fragezeichen Icon auf gelbem Kreis"
+#, fuzzy
+msgid "faliure_icon"
+msgstr "Durchgestrichen Icon auf rotem Kreis"
 
 #: app/templates/eligibility/display_maybe.html:26
 #: app/templates/eligibility/display_success.html:25
@@ -5487,4 +5493,7 @@ msgstr "Zurück zur Steuererklärung"
 #~ " Fragen, damit wir Ihnen sagen "
 #~ "können, ob Sie den Steuerlotsen nutzen"
 #~ " können."
+
+#~ msgid "maybe_icon"
+#~ msgstr "Fragezeichen Icon auf gelbem Kreis"
 

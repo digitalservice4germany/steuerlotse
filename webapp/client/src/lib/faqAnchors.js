@@ -46,6 +46,10 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerliche_Themengebiete/Altersvorsorge/2019-04-29-Laendervordruck-vereinfachte-veranlagung-rentner.html" />
         ),
+        einfachElsterLink: (
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          <a href="https://einfach.elster.de/erklaerung/ui/" />
+        ),
       }}
     />
   );
@@ -74,31 +78,12 @@ const faqAnchorList = [
     detail: trans("LandingPage.Accordion.Item3.detail"),
   },
   {
-    title: t("LandingPage.Accordion.Item4.title"),
-    detail: (
-      <div>
-        <p>{t("LandingPage.Accordion.Item4.detailOne")}</p>
-        <ul>
-          <li>{t("LandingPage.Accordion.Item4.listItem1")}</li>
-          <li>{t("LandingPage.Accordion.Item4.listItem2")}</li>
-          <li>{t("LandingPage.Accordion.Item4.listItem3")}</li>
-          <li>{t("LandingPage.Accordion.Item4.listItem4")}</li>
-        </ul>
-        <p>{trans("LandingPage.Accordion.Item4.detailTwo")}</p>
-      </div>
-    ),
-  },
-  {
     title: t("LandingPage.Accordion.Item5.title"),
     detail: t("LandingPage.Accordion.Item5.detail"),
   },
   {
     title: t("LandingPage.Accordion.Item6.title"),
-    detail: t("LandingPage.Accordion.Item6.detail"),
-  },
-  {
-    title: t("LandingPage.Accordion.Item7.title"),
-    detail: trans("LandingPage.Accordion.Item7.detail"),
+    detail: trans("LandingPage.Accordion.Item6.detail"),
   },
   {
     title: t("LandingPage.Accordion.Item8.title"),
