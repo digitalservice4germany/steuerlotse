@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-24 16:36+0200\n"
+"POT-Creation-Date: 2022-06-30 14:48+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -72,7 +72,7 @@ msgstr ""
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:290 app/routes.py:555
+#: app/routes.py:290 app/routes.py:548
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
@@ -108,27 +108,27 @@ msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:522
+#: app/routes.py:515
 msgid "freeTaxDeclarationForPensioners.header-title"
 msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
 
-#: app/routes.py:530
+#: app/routes.py:523
 msgid "mandateForTaxDeclaration.header-title"
 msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
 
-#: app/routes.py:546 app/routes.py:576 app/routes.py:583
+#: app/routes.py:539 app/routes.py:569 app/routes.py:576
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:551 app/routes.py:559
+#: app/routes.py:544 app/routes.py:552
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:564
+#: app/routes.py:557
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:570
+#: app/routes.py:563
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -546,10 +546,9 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:407
 msgid "form.eligibility.joint_taxes.detailTwo.text"
 msgstr ""
-"Ein geschiedenes Paar kann im Jahr der Scheidung die Zusammenveranlagung"
-"  dann nutzen, wenn sich innerhalb eines Jahres das bis dahin "
-"zusammenlebendes Ehepaar trennt und sofort – ohne Trennungsjahr – "
-"scheiden lässt."
+"Ein geschiedenes Paar kann im Jahr der Scheidung die Zusammenveranlagung "
+"nutzen, wenn sich das bis dahin zusammenlebende Ehepaar innerhalb eines "
+"Jahres trennt und sofort – ohne Trennungsjahr – scheiden lässt."
 
 #: app/forms/steps/eligibility_steps.py:434
 msgid "form.eligibility.alimony.single.yes"
@@ -568,9 +567,8 @@ msgstr ""
 " einem Träger erhalten, der nicht genannt wurde, Sie aber sicherstellen "
 "können, dass der Träger Ihre Rentenbezugsmitteilungen elektronisch an die"
 " Finanzverwaltung übermittelt, ist dies kein Ausschlussgrund für die "
-"Nutzung des Steuerlotsen.</p><p>Wir können dies im Einzelfall zurzeit "
-"nicht prüfen, arbeiten aber an einer Möglichkeit, Ihnen mehr "
-"Informationen zur Verfügung zu stellen."
+"Nutzung des Steuerlotsen.</p>Wir können dies im Einzelfall zurzeit nicht "
+"prüfen."
 
 #: app/forms/steps/eligibility_steps.py:471
 msgid "form.eligibility.pension-title"
@@ -3188,30 +3186,30 @@ msgstr "Über den Steuerlotsen"
 msgid "footer.about-ds"
 msgstr "Über den Digital Service"
 
-#: app/templates/basis/footer.html:52
+#: app/templates/basis/footer.html:49
 msgid "ds4g_logo"
 msgstr "DigitalService"
 
-#: app/templates/basis/footer.html:56
+#: app/templates/basis/footer.html:53
 msgid "footer.about-steuerlotse-text"
 msgstr ""
 "Der Steuerlotse wurde von der DigitalService GmbH des Bundes umgesetzt. "
 "Wir entwickeln digitale Lösungen für und mit der Bundesverwaltung. Im "
 "Zentrum stehen die Bedürfnisse der Nutzerinnen und Nutzer."
 
-#: app/templates/basis/footer.html:69
+#: app/templates/basis/footer.html:66
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:70
+#: app/templates/basis/footer.html:67
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:71
+#: app/templates/basis/footer.html:68
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:72
+#: app/templates/basis/footer.html:69
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 
@@ -5474,3 +5472,4 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
