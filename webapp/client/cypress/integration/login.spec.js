@@ -61,7 +61,7 @@ describe("Login", () => {
     it("unlock code revocation should be disabled", () => {
       cy.get("span")
         .contains(/^Freischaltcode Stornierung$/)
-        .should("have.class", "inactive");
+        .should("have.class", "footer-inactive");
     });
   });
 });
