@@ -5,60 +5,24 @@ or (not render_info and not disable_extended_footer) %}
     {% set disable_extended_footer = true %}
 {% endif %}
 <footer class="pl-0 pr-0 ml-0 mr-0 mt-0 {{'border-0' if disable_extended_footer }}">
-    {% if not disable_extended_footer %}
-    <div class="container-fluid pt-4 pb-3 pl-0 pr-0">
-        <div class="footer-inner">
-            <div class="row m-0">
-                <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-                    <span class="bold">{{ _('footer.help-contact') }}</span>
-                    <ul class="list-unstyled">
-                        <li class="text-nowrap mt-3">
-                            <a href="{{ url_for('howitworks') }}">{{ _('footer.information') }}</a>
-                        </li>
-                        <li class="text-nowrap mt-2">
-                            <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
-                        </li>
-                        <li class="text-nowrap mt-2">
-                            <a href="{{ url_for('relatives_info') }}">{{ _('footer.relatives') }}</a>
-                        </li>
-                        <li class="text-nowrap mt-2">
-                            {% if current_user.is_authenticated %}
-                            <span class="inactive">{{ _('footer.revocation') }}</span>
-                            {% else %}
-                            <a href="{{ url_for('unlock_code_revocation', step='start') }}">{{ _('footer.revocation')}}</a>
-                            {% endif %}
-                        </li>
-                    </ul>
+    <div class="top-footer">
+        <div class="container-fluid">
+            <div class="footer-inner">
+                <div class="row">
+                    <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
+                    <a href="{{ url_for('relatives_info') }}">{{ _('footer.relatives') }}</a>
+                    {% if current_user.is_authenticated %}
+                        <span class="footer-inactive">{{ _('footer.revocation') }}</span>
+                   {% else %}
+                        <a href="{{ url_for('unlock_code_revocation', step='start') }}">{{ _('footer.revocation')}}</a>
+                    {% endif %}
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 pb-4">
-                    <span class="bold">{{ _('footer.about-product') }}</span>
-                    <ul class="list-unstyled">
-                        <li class="text-nowrap mt-3">
-                            <a href="{{ url_for('about_steuerlotse') }}">{{ _('footer.about-steuerlotse') }}</a>
-                        </li>
-                        <li class="text-nowrap mt-2">
-                            <a href="{{ url_for('about_digitalservice') }}">{{ _('footer.about-ds') }}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-5 offset-lg-1 offset-md-0 offset-sm-0 pb-4 mt-lg-0 mt-md-5 mt-xs-5 container">
-                    <div class="row">
-                        <div class="col-auto">
-                            <a href="https://digitalservice.bund.de">
-                                <img src="{{ static_url_for('static', filename='images/DigitalService_Logo_black.png') }}"
-                                     class="logo-ds4g mb-2" alt="{{ _('ds4g_logo') }}"/>
-                            </a>
-                        </div>
-                        <div class="col about-stl">
-                            {{ _('footer.about-steuerlotse-text') }}
-                        </div>
-
-                    </div>
+                <div class="row">
+                    <span class="footer-signature">{{ _('footer.online-service-ds') }}</span>
                 </div>
             </div>
         </div>
     </div>
-    {% endif %}
     <div class="footer-footer">
         <div class="container-fluid">
             <div class="footer-inner">
