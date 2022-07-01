@@ -41,12 +41,12 @@
 {% macro render_detail(field) %}
     {%- set detail_object = field.render_kw['data-detail'] -%}
     {% if detail_object %}
-        {% if detail_object is iterable %}
+        {% if detail_object is mapping %}
+            {{ details(detail_object.title, [detail_object.text], details_id=field.id) }}
+        {% else %}    
             {% for detail in detail_object %}
                 {{ details(detail.title, [detail.text], details_id=field.id|string + loop.index|string) }}
-            {% endfor %}
-        {% else %}    
-                {{ details(detail_object.title, [detail_object.text], details_id=field.id) }}
+            {% endfor %}    
         {% endif %}   
     {% endif %}   
 {% endmacro %}

@@ -546,10 +546,9 @@ msgstr ""
 #: app/forms/steps/eligibility_steps.py:407
 msgid "form.eligibility.joint_taxes.detailTwo.text"
 msgstr ""
-"Ein geschiedenes Paar kann im Jahr der Scheidung die Zusammenveranlagung"
-"  dann nutzen, wenn sich innerhalb eines Jahres das bis dahin "
-"zusammenlebendes Ehepaar trennt und sofort – ohne Trennungsjahr – "
-"scheiden lässt."
+"Ein geschiedenes Paar kann im Jahr der Scheidung die Zusammenveranlagung "
+"nutzen, wenn sich das bis dahin zusammenlebende Ehepaar innerhalb eines "
+"Jahres trennt und sofort – ohne Trennungsjahr – scheiden lässt."
 
 #: app/forms/steps/eligibility_steps.py:434
 msgid "form.eligibility.alimony.single.yes"
@@ -568,9 +567,8 @@ msgstr ""
 " einem Träger erhalten, der nicht genannt wurde, Sie aber sicherstellen "
 "können, dass der Träger Ihre Rentenbezugsmitteilungen elektronisch an die"
 " Finanzverwaltung übermittelt, ist dies kein Ausschlussgrund für die "
-"Nutzung des Steuerlotsen.</p><p>Wir können dies im Einzelfall zurzeit "
-"nicht prüfen, arbeiten aber an einer Möglichkeit, Ihnen mehr "
-"Informationen zur Verfügung zu stellen."
+"Nutzung des Steuerlotsen.</p>Wir können dies im Einzelfall zurzeit nicht "
+"prüfen."
 
 #: app/forms/steps/eligibility_steps.py:471
 msgid "form.eligibility.pension-title"
@@ -4546,8 +4544,9 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
-"Einkommensteuererklärung bis zum <b>30. September 2022</b> beim Finanzamt"
-" sein."
+"Einkommensteuererklärung bis zum <b>31. Oktober 2022</b> beim Finanzamt "
+"sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. "
+"November 2022 als Fristende."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:33
@@ -4556,7 +4555,7 @@ msgstr ""
 "Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. "
 "Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr "
 "Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel "
-"Zeit lassen. "
+"Zeit lassen."
 
 #: app/templates/content/howitworks.html:40
 #: app/templates/content/landing_page.html:38
