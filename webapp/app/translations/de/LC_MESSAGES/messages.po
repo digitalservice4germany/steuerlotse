@@ -4566,8 +4566,9 @@ msgstr "Bis wann kann ich die Steuererklärung abgeben?"
 msgid "info-stl.card-submission.p1-content"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre "
-"Einkommensteuererklärung bis zum <b>30. September 2022</b> beim Finanzamt"
-" sein."
+"Einkommensteuererklärung bis zum <b>31. Oktober 2022</b> beim Finanzamt "
+"sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. "
+"November 2022 als Fristende."
 
 #: app/templates/content/howitworks.html:35
 #: app/templates/content/landing_page.html:33
@@ -4576,7 +4577,7 @@ msgstr ""
 "Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. "
 "Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr "
 "Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel "
-"Zeit lassen. "
+"Zeit lassen."
 
 #: app/templates/content/howitworks.html:40
 #: app/templates/content/landing_page.html:38

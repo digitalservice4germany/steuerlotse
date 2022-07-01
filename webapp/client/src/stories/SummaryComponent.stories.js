@@ -12,11 +12,12 @@ function Template(args) {
 
 export const Default = Template.bind({});
 Default.args = {
-  data: {
-    data: {
-      "Keine weiteren Einkünfte vorhanden:": "Ja",
+  data: [
+    {
+      name: "Keine weiteren Einkünfte vorhanden:",
+      value: "Ja",
     },
-    label: "Angabe zu weiteren Einkünften",
-    url: "/lotse/step/decl_incomes?link_overview=True",
-  },
+  ],
+  label: "Angabe zu weiteren Einkünften",
+  url: "/lotse/step/decl_incomes?link_overview=True",
 };
