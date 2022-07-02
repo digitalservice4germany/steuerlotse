@@ -3,7 +3,7 @@
 {% import "macros.html" as macros %}
 
 {% set title = render_info.step_title %}
-{% set error_details = [error_text, render_info.step_intro] %}
+{% set error_details = [error_text] %}
 
 {% block additional_stylesheets %}
     {{ super() }}
