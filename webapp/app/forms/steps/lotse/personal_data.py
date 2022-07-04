@@ -187,8 +187,7 @@ class StepSteuernummer(LotseFormSteuerlotseStep):
                                      props=props_dict,
                                      # TODO: These are still required by base.html to set the page title.
                                      form=self.render_info.form,
-                                     header_title=self.header_title,
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=self.header_title)
 
 
 class StepPersonA(LotseFormSteuerlotseStep):
@@ -411,5 +410,4 @@ class StepTelephoneNumber(LotseFormSteuerlotseStep):
         return render_react_template(component='TelephoneNumberPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))

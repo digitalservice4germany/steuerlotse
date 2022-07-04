@@ -136,8 +136,7 @@ class StepFahrtkostenpauschalePersonA(StepFahrtkostenpauschale):
         return render_react_template(component='FahrtkostenpauschalePersonAPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=True)
+                                     header_title=_('form.lotse.header-title'))
 
     def get_fahrtkostenpauschale(self, stored_data):
         return calculate_fahrtkostenpauschale(
@@ -190,8 +189,7 @@ class StepFahrtkostenpauschalePersonB(StepFahrtkostenpauschale):
         return render_react_template(component='FahrtkostenpauschalePersonBPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=True)
+                                     header_title=_('form.lotse.header-title'))
 
     def get_fahrtkostenpauschale(self, form_data):
         return calculate_fahrtkostenpauschale(
