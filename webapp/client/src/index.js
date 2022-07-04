@@ -50,6 +50,7 @@ import NewsletterSuccessPage from "./pages/NewsletterSuccessPage";
 import NewsletterRegisterBox from "./components/NewsletterRegisterBox";
 import FreeTaxDeclarationForPensionersPage from "./pages/FreeTaxDeclarationForPensionersPage";
 import MandateForTaxDeclarationPage from "./pages/MandateForTaxDeclarationPage";
+import HowItWorksPage from "./pages/HowItWorksPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -99,6 +100,7 @@ const allowedComponents = {
   NewsletterRegisterBox,
   FreeTaxDeclarationForPensionersPage,
   MandateForTaxDeclarationPage,
+  HowItWorksPage,
 };
 
 function mountComponent(element) {

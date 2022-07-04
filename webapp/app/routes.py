@@ -36,7 +36,7 @@ from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclara
 from app.model.components import MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
-    VorbereitenInfoProps, InfoForRelativesPageProps, LandingPageProps
+    VorbereitenInfoProps, InfoForRelativesPageProps, LandingPageProps, HowItWorksPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -313,9 +313,9 @@ def register_request_handlers(app):
     @app.route('/sofunktionierts')
     @add_caching_headers
     def howitworks():
-        return render_template('content/howitworks.html',
-                               header_title=_('howitworks.header-title'),
-                               js_needed=False)
+        return render_react_content_page_template(
+            props=HowItWorksPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
+            component='HowItWorksPage')
 
     @app.route('/kontakt')
     @add_caching_headers

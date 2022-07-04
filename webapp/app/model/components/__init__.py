@@ -279,3 +279,6 @@ class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
 
 class MandateForTaxDeclarationProps(ComponentPlausibleProps):
     pass
+
+class HowItWorksPageProps(ComponentPlausibleProps):
+    pass
