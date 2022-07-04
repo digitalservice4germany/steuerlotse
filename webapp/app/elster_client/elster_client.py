@@ -170,7 +170,7 @@ def _send_job_and_get_result(endpoint, data):
     result = None
     while status == 'Processing':
         erica_response_job_status = request_from_erica(
-            _PYERIC_API_BASE_URL + erica_response_job_creation.headers['location'])
+            _PYERIC_API_BASE_URL + erica_response_job_creation.headers['location'].removeprefix("v2"))
         check_erica_response_for_errors(erica_response_job_status)
         status = erica_response_job_status.json()['processStatus']
         result = erica_response_job_status.json()['result']
