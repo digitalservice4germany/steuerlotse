@@ -183,7 +183,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
-                fun_unlock_code_request.return_value = {'idnr': idnr, 'elster_request_id': '000'}
+                fun_unlock_code_request.return_value = {'idnr': idnr, 'elsterRequestId': '000'}
 
                 render_info, _ = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
@@ -199,7 +199,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
-                fun_unlock_code_request.return_value = {'idnr': idnr, 'elster_request_id': expected_elster_request_id}
+                fun_unlock_code_request.return_value = {'idnr': idnr, 'elsterRequestId': expected_elster_request_id}
 
                 self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)

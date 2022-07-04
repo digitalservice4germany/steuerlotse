@@ -100,6 +100,6 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
             raise UserAlreadyExistsError(idnr)
 
         response = elster_client.send_unlock_code_request_with_elster(request_form, request.remote_addr)
-        request_id = escape(response['elster_request_id'])
+        request_id = escape(response['elsterRequestId'])
 
         create_user(idnr, request_form['dob'].strftime("%d.%m.%Y"), request_id)
