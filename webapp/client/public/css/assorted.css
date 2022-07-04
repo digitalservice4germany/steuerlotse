@@ -369,6 +369,7 @@ footer a {
   display: block;
   text-decoration-color: var(--icon-default-color);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 footer a:hover {
@@ -419,10 +420,6 @@ footer .footer-signature a{
     display: flex;
     flex-direction: column;
   }
-}
-
-footer a {
-  text-decoration: none;
 }
 
 .footer-footer a{
