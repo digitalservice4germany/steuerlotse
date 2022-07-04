@@ -1,9 +1,3 @@
-{% if (render_info and not render_info.additional_info['disable_extended_footer'])
-or (not render_info and not disable_extended_footer) %}
-    {% set disable_extended_footer = false %}
-{% else %}
-    {% set disable_extended_footer = true %}
-{% endif %}
 <footer class="pl-0 pr-0 ml-0 mr-0 mt-0">
     <div class="top-footer">
         <div class="container-fluid">

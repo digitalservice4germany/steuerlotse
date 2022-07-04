@@ -53,8 +53,7 @@ class StepConfirmation(FormStep):
                                      props=props_dict,
                                      # TODO: These are still required by base.html to set the page title.
                                      form=render_info.form,
-                                     header_title=_('form.lotse.confirmation.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.confirmation.header-title'))
 
 
 class StepFiling(DisplayStep):
@@ -88,8 +87,7 @@ class StepFiling(DisplayStep):
                                      props=props_dict,
                                      # TODO: These are still required by base.html to set the page title.
                                      form=render_info.form,
-                                     header_title=header_title,
-                                     disable_extended_footer=True)
+                                     header_title=header_title)
 
 
 class StepAck(DisplayStep):
@@ -106,5 +104,4 @@ class StepAck(DisplayStep):
         ).camelized_dict()
         return render_react_template(component='SubmitAcknowledgePage',
                                      props=prop_dicts,
-                                     header_title=_('form.lotse.filing.success.header-title'),
-                                     disable_extended_footer=True)
+                                     header_title=_('form.lotse.filing.success.header-title'))
