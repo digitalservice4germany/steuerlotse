@@ -293,8 +293,8 @@ const translations = {
     },
   },
   newsletter: {
-    headline: "Bestätigung und Erinnerung per E-Mail erhalten",
-    text: "Erhalten Sie zusätzlich per E-Mail die Bestätigung Ihrer Registrierung mit Informationen zur Vorbereitung und eine Erinnerung, wenn Ihr Brief mit Freischaltcode angekommen ist.",
+    headline: "Bleiben Sie informiert",
+    text: "Erhalten Sie per E-Mail weitere Informationen zum Steuerlotsen z.B. Informationen zur Vorbereitung der Steuererklärung und Erinnerungen zu wichtigen Fristen.",
     fieldEmail: {
       label: "Ihre E-Mail Adresse",
     },
