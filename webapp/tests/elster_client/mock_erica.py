@@ -343,14 +343,14 @@ class MockErica:
     def get_dummy_job(request_id, endpoint):
         count = MockErica.request_id_count.get(request_id, -1) + 1
         if count >= MockErica.min_request_count_get_job:
-            if MockErica.deliver_fail_on_get_job:
-                error_response = MockErica.get_result(endpoint, request_id)
-                payload = {"processStatus": "Failure", "errorCode": error_response['code'],
-                           "errorMessage": error_response['message'],
-                           "result": error_response[
-                               'validation_problems'] if 'validation_problems' in error_response else None}
+            result = MockErica.get_result(endpoint, request_id)
+            if MockErica.deliver_fail_on_get_job or 'code' in result:
+                payload = {"processStatus": "Failure", "errorCode": result['code'],
+                           "errorMessage": result['message'],
+                           "result": result[
+                               'validation_problems'] if 'validation_problems' in result else None}
             else:
-                payload = {"processStatus": "Success", "result": MockErica.get_result(endpoint, request_id),
+                payload = {"processStatus": "Success", "result": result,
                            "errorCode": None, "errorMessage": None}
         elif count == 0:
             payload = {"errorCode": -1, "errorMessage": "Request ID not found"}, 404
