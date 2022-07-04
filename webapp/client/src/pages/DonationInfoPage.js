@@ -1,6 +1,7 @@
 import React from "react";
 import { t } from "i18next";
 import InfoBox from "../components/InfoBox";
+import FormHeader from "../components/FormHeader";
 // eslint-disable-next-line import/named
 import {
   anchorBack,
@@ -11,12 +12,10 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import {
   AnchorListItem,
   ContentWrapper,
-  Headline1,
   Headline2,
   List,
   ListItem,
   Paragraph,
-  ParagraphLarge,
 } from "../components/ContentPagesGeneralStyling";
 
 export default function DonationInfoPage() {
@@ -72,8 +71,10 @@ export default function DonationInfoPage() {
     <>
       <ContentWrapper>
         <StepHeaderButtons text={anchorBack.text} url={anchorBack.url} />
-        <Headline1>{t("Spenden.Section1.heading")}</Headline1>
-        <ParagraphLarge>{t("Spenden.Section1.text")}</ParagraphLarge>
+        <FormHeader
+          title={t("Spenden.Section1.heading")}
+          intro={t("Spenden.Section1.text")}
+        />
         <Headline2>{t("Spenden.Section2.heading")}</Headline2>
         <Paragraph>{t("Spenden.Section2.text")}</Paragraph>
         <List aria-label="simple-list">{listItemsMap}</List>

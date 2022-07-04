@@ -391,7 +391,7 @@ const translations = {
           },
           "step-2": {
             heading: "Brief mit Freischaltcode zur Anmeldung erhalten",
-            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService4Germany als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
+            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
           },
           "step-3": {
             heading: "Steuererklärung online machen",
@@ -402,7 +402,7 @@ const translations = {
       letter: {
         heading: "So sieht der Brief aus, den Sie erhalten werden",
         intro:
-          "Auf dem Brief wird der DigitalService4Germany als Antragsteller angegeben. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes.",
+          "Auf dem Brief wird der DigitalService als Antragsteller angegeben. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes.",
       },
       preparation: {
         heading: "Wie Sie sich auf Ihre Steuererklärung vorbereiten können",
@@ -444,7 +444,7 @@ const translations = {
       labelText: "Steuer-Identifikationsnummer",
       help: {
         title: "Wo finde ich diese Nummer?",
-        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid.",
+        text: "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf Ihrem letzten Steuerbescheid. Sollten Sie Ihre Steuer-Identifikationsnummer nicht finden, erhalten Sie <steuerIdLink>hier</steuerIdLink> weitere Unterstützung.",
       },
     },
     dob: {
@@ -515,26 +515,6 @@ const translations = {
         "Diesen Artikel beim Steuerlotsen für Rente und Pension finde ich interessant: https://www.steuerlotse-rente.de/vereinfachte-steuererklärung-für-rentner",
       mailSubject: "Artikel beim Steuerlotsen für Rente und Pension",
       sourcePage: "shareAcknowledged",
-    },
-  },
-  AmbassadorMaterial: {
-    Heading:
-      "Info-Materialien zum Steuerlotsen für Digital-Botschafter und Seniorenbüros",
-    SubHeading:
-      "Wir wollen so viele Menschen im Ruhestand wie möglich erreichen. Unterstützen Sie uns dabei! Hier finden Sie Informationsmaterialien zum Download und ein Erklärvideo zum Steuerlotsen.",
-    Paragraph: {
-      FreeFlyerHeading:
-        "Sie möchten kostenlos Flyer zugeschickt bekommen? Schreiben Sie uns!",
-      FreeFlyerText:
-        "Sehr gerne schicken wir Ihnen ein kleines kostenloses Paket mit Flyern zum Auslegen im Seniorenbüro oder Weitergeben in der Seniorengruppe zu. Schreiben Sie uns einfach eine E-Mail mit Ihrer Adresse an: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
-      DownloadInformationText: "Informationsmaterialien zum Download",
-      InfoBroschureDownloadLink: "Informationsbroschüre (PDF) speichern",
-      SteuerlotsenFlyerLink: "Steuerlotsen-Flyer (PDF) speichern",
-      HowItWorks:
-        "So funktioniert der Steuerlotse für Rente und Pension (Video, 30 Min)",
-      AnyOtherQuestions: "Haben Sie noch weitere Fragen zum Steuerlotsen?",
-      ContactUs:
-        "Schreiben Sie uns: <mailToContact>kontakt@steuerlotse-rente.de</mailToContact>.",
     },
   },
   ContentPagesAnchors: {
@@ -785,6 +765,11 @@ const translations = {
     heading: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten?",
     text: "Wenn Sie den Brief mit Ihrem Freischaltcode erhalten haben, starten Sie mit Ihrer Steuererklärung.",
   },
+  InfoBoxGrundsteuer: {
+    heading: "Weitere Steuerprodukte vom DigitalService",
+    text: "Mit unserem weiteren Service können private Eigentümer:innen ihre Grundsteuererklärung einfach und kostenlos online abgeben!",
+    button: "Zum Service",
+  },
   CheckNowInfoBox: {
     heading: "Steuererklärung kann auch einfach sein",
     text: "Schnell und unkompliziert – mit und für Rentenbeziehende entwickelt! Finden Sie heraus, ob Sie den Steuerlotsen nutzen können.",
@@ -824,7 +809,7 @@ const translations = {
       Item3: {
         heading: "Steuer-Identifikationsnummer",
         detail:
-          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem letzten Steuerbescheid.",
+          "Die 11-stellige Nummer haben Sie mit einem Brief vom Bundeszentralamt für Steuern erhalten. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie die Nummer auch auf Ihrem letzten Steuerbescheid. Sollten Sie Ihre Steuer-Identifikationsnummer nicht finden, erhalten Sie <steuerIdLink>hier</steuerIdLink> weitere Unterstützung. ",
       },
       Item4: {
         heading: "Steuernummer",
@@ -990,12 +975,11 @@ const translations = {
   },
   InfoForRelatives: {
     Section1: {
-      Heading: "Hilfestellung für Angehörige bei der Steuererklärung",
+      Heading: "Informationen für Angehörige",
       Text: "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz.",
     },
     Section2: {
-      Heading: "Wem Sie helfen dürfen und wer Ihnen helfen darf:",
-      Text: "Für diese Angehörigen dürfen Sie die Steuerformulare ausfüllen (und umgekehrt).",
+      Heading: "Wer helfen darf",
       ListItem1: "Ehepartner",
       ListItem2: "Verlobte",
       ListItem3: "Eltern, Schwiegereltern, Kinder, Großeltern, Enkel",
@@ -1064,7 +1048,7 @@ const translations = {
       Item3: {
         title: "Bis wann kann ich die Steuererklärung abgeben?",
         detail:
-          "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Juli 2022</strong> beim Finanzamt sein.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
+          "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Oktober 2022</strong> beim Finanzamt sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
       },
       Item4: {
         title: "Kann ich Angaben machen, die meine Steuerlast reduzieren?",

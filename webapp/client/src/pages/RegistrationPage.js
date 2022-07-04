@@ -22,6 +22,25 @@ export default function RegistrationPage({
   dataPrivacyLink,
 }) {
   const { t } = useTranslation();
+  const translateText = function translateText(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          steuerIdLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a
+              aria-label="Info zur Steuerliche Identifikationsnummer"
+              href="https://www.bzst.de/DE/Privatpersonen/SteuerlicheIdentifikationsnummer/steuerlicheidentifikationsnummer_node.html"
+              target="_blank"
+              rel="noreferrer"
+            />
+          ),
+        }}
+      />
+    );
+  };
 
   return (
     <>
@@ -74,7 +93,7 @@ export default function RegistrationPage({
             }}
             details={{
               title: t("fields.idnr.help.title"),
-              text: t("fields.idnr.help.text"),
+              text: translateText("fields.idnr.help.text"),
             }}
             errors={fields.idnr.errors}
           />

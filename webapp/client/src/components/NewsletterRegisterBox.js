@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import ButtonAnchor from "./ButtonAnchor";
 import FormFieldTextInput from "./FormFieldTextInput";
 import { ReactComponent as SuccessIcon } from "../assets/icons/success_icon.svg";
+import addPlausibleGoal from "../lib/helpers";
 
 const Box = styled.div`
   background-color: var(--beige-200);
@@ -133,13 +134,19 @@ const errors = [];
 let emailValue = "";
 let disableButton = false;
 
-export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
+export default function NewsletterRegisterBox({
+  dataPrivacyLink,
+  csrfToken,
+  plausibleDomain,
+  plausibleGoal,
+}) {
   const { t } = useTranslation();
 
   function displaySuccessBox(activate) {
     const x = document.getElementById("success");
     if (activate) {
       x.style.display = "block";
+      addPlausibleGoal(plausibleDomain, plausibleGoal, {});
     } else {
       x.style.display = "none";
     }
@@ -255,4 +262,11 @@ export default function NewsletterRegisterBox({ dataPrivacyLink, csrfToken }) {
 NewsletterRegisterBox.propTypes = {
   dataPrivacyLink: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+  plausibleGoal: PropTypes.string,
+};
+
+NewsletterRegisterBox.defaultProps = {
+  plausibleDomain: null,
+  plausibleGoal: null,
 };

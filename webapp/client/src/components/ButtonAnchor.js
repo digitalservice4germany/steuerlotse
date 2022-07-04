@@ -95,6 +95,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
+  margin-top: ${(props) => props.marginTop && "var(--spacing-03)"};
   font-size: var(--text-medium);
   font-family: var(--font-bold);
   line-height: 1;
@@ -220,6 +221,7 @@ export default function ButtonAnchor({
   plausibleGoal,
   plausibleDomain,
   plausibleProps,
+  marginTop,
 }) {
   const handleClick = () => {
     if (plausibleDomain) {
@@ -253,6 +255,7 @@ export default function ButtonAnchor({
       rel={url && !download ? relation : undefined}
       onClick={handleClick}
       marginVariant={marginVariant}
+      marginTop={marginTop}
     >
       {children}
     </Button>
@@ -277,6 +280,7 @@ ButtonAnchor.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   marginVariant: PropTypes.bool,
+  marginTop: PropTypes.bool,
   plausibleGoal: PropTypes.string,
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
   plausibleDomain: PropTypes.string,
@@ -293,6 +297,7 @@ ButtonAnchor.defaultProps = {
   disabled: false,
   className: undefined,
   marginVariant: false,
+  marginTop: false,
   plausibleGoal: null,
   plausibleProps: undefined,
   plausibleDomain: null,

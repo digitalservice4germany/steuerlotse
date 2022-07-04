@@ -93,11 +93,10 @@ class RegistrationProps(StepFormProps):
     data_privacy_link: str
 
 
-class UnlockCodeSuccessProps(ComponentProps):
+class UnlockCodeSuccessProps(ComponentPlausibleProps):
     prev_url: Optional[str]
     steuer_erklaerung_link: str
     vorbereitungs_hilfe_link: str
-    plausible_domain: Optional[str]
     data_privacy_link: str
     csrf_token: str
 
@@ -196,10 +195,6 @@ class StepSubmitAcknowledgeProps(ComponentPlausibleProps):
 
 
 class InfoTaxReturnForPensionersProps(ComponentPlausibleProps):
-    pass
-
-
-class AmbassadorInfoMaterialProps(ComponentPlausibleProps):
     pass
 
 
