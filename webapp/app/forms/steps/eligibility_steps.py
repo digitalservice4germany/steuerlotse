@@ -19,7 +19,7 @@ from app.model.eligibility_data import IsCorrectTaxYearEligibilityData, OtherInc
     MoreThanMinimalInvestmentIncome, SeparatedLivedTogetherEligibilityData, SeparatedNotLivedTogetherEligibilityData, \
     SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
     SingleUserElsterAccountEligibilityData, \
-    UserBElsterAccountEligibilityData, ForeignCountryMaybeEligibility
+    UserBElsterAccountEligibilityData
 from app.model.recursive_data import PreviousFieldsMissingError
 
 
