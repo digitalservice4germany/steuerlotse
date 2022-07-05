@@ -473,31 +473,3 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
     @validator('has_no_other_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
-
-
-class ForeignCountryMaybeEligibility(RecursiveDataModel):
-    """
-    This is the only point where we have additional fields of previous steps on a step model.
-    That's because the ForeignCountry step is the last step of the flow and needs to decide which result page is
-    displayed: 'success' or 'maybe'.
-    """
-    has_no_other_income: Optional[OtherIncomeEligibilityData]
-    foreign_country_eligibility: str
-    user_a_has_elster_account_eligibility: str
-    user_b_has_elster_account_eligibility: Optional[str]
-
-    @validator('foreign_country_eligibility')
-    def has_only_taxed_investment_income(cls, v):
-        return declarations_must_be_set_no(v)
-    
-    @validator('user_a_has_elster_account_eligibility')
-    def has_user_a_elster_account_eligibility(cls,v):
-        return declarations_must_be_set_yes(v)
-    
-    @validator('user_b_has_elster_account_eligibility')
-    def has_user_b_elster_account_eligibility(cls,v):
-        return declarations_must_be_set_yes(v)
-    
-    @validator('has_no_other_income', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
