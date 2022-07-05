@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-04 10:51+0200\n"
+"POT-Creation-Date: 2022-07-05 11:44+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -3164,7 +3164,7 @@ msgstr "Infos für Angehörige"
 
 #: app/templates/basis/footer.html:9 app/templates/basis/footer.html:11
 msgid "footer.revocation"
-msgstr "Freischaltcode Stornierung"
+msgstr "Freischaltcode stornieren"
 
 #: app/templates/basis/footer.html:15
 msgid "footer.online-service-ds"
