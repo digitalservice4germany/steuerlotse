@@ -14,8 +14,8 @@ describe("Footer", () => {
     cy.url().should("include", "/datenschutz");
   });
 
-  it("link clickable to Freischaltcode Stornierung", () => {
-    cy.get("a").contains("Freischaltcode Stornierung").click();
+  it("link clickable to Freischaltcode stornieren", () => {
+    cy.get("a").contains("Freischaltcode stornieren").click();
     cy.url().should("include", "/unlock_code_revocation/step/data_input");
   });
 
