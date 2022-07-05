@@ -726,7 +726,6 @@ class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligib
     name = "foreign_country"
     next_step_data_models = [
         (ForeignCountrySuccessEligibility, 'success'),
-        (ForeignCountryMaybeEligibility, 'maybe')
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
@@ -781,34 +780,3 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
         self.render_info.additional_info['dependent_notes'] = dependent_notes
         self.render_info.next_url = None
-
-
-class EligibilityMaybeDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
-    name = 'maybe'
-    title = _l('form.eligibility.success.maybe.title')
-    intro = _l('form.eligibility.success.maybe.intro')
-    template = 'eligibility/display_maybe.html'
-
-    def __init__(self, endpoint, stored_data=None, *args, **kwargs):
-        super(EligibilityMaybeDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
-                                   stored_data=stored_data,
-                                   header_title=_('form.eligibility.header-title'),
-                                   *args,
-                                   **kwargs)
-
-    def _main_handle(self):
-        super()._main_handle()
-
-        dependent_notes = []
-
-        if data_fits_data_model(UserBElsterAccountEligibilityData, self.stored_data):
-            dependent_notes.append(_l('form.eligibility.result-note.both_elster_account-registration-maybe'))
-        if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
-                self.stored_data):
-            dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))
-
-        self.render_info.additional_info['dependent_notes'] = dependent_notes
-        self.render_info.detail = {'render_kw': {
-                'data-detail': {'title': _l('form.eligibility.result-note.when_unlock_code.title'),
-                                'text': _l('form.eligibility.result-note.when_unlock_code.description')}}
-                }
