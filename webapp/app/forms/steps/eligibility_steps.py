@@ -7,10 +7,10 @@ from wtforms.validators import InputRequired
 from app.forms import SteuerlotseBaseForm
 from app.data_access.storage.cookie_storage import CookieStorage
 from app.forms.steps.steuerlotse_step import FormSteuerlotseStep, DisplaySteuerlotseStep
-from app.model.eligibility_data import IsCorrectTaxYearEligibilityData, OtherIncomeEligibilityData, \
+from app.model.eligibility_data import IsCorrectTaxYearEligibilityData, NotMarriedEligibilityData, OtherIncomeEligibilityData, \
     ForeignCountrySuccessEligibility, MarginalEmploymentEligibilityData, NoEmploymentIncomeEligibilityData, \
     NoTaxedInvestmentIncome, MinimalInvestmentIncome, InvestmentIncomeEligibilityData, \
-    PensionEligibilityData, SingleUserNoElsterAccountEligibilityData, AlimonyEligibilityData, \
+    PensionEligibilityData, ForeignCountrySingleElsterEligibilityData, ForeignCountryMarriedElsterEligibilityData, SingleUserNoElsterAccountEligibilityData, AlimonyEligibilityData, \
     DivorcedJointTaxesEligibilityData, UserBNoElsterAccountEligibilityData, AlimonyMarriedEligibilityData, \
     SeparatedEligibilityData, MarriedJointTaxesEligibilityData, \
     UserANoElsterAccountEligibilityData, CheaperCheckEligibilityData, MarriedEligibilityData, WidowedEligibilityData, \
@@ -318,7 +318,7 @@ class MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureD
 class MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "married_alimony"
     next_step_data_models = [
-        (AlimonyMarriedEligibilityData, 'user_a_has_elster_account'),
+        (AlimonyMarriedEligibilityData, 'pension'),
     ]
     failure_step_name = MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.alimony-title')
@@ -420,7 +420,7 @@ class SingleAlimonyEligibilityFailureDisplaySteuerlotseStep(EligibilityFailureDi
 class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "single_alimony"
     next_step_data_models = [
-        (AlimonyEligibilityData, 'single_elster_account'),
+        (AlimonyEligibilityData, 'pension'),
     ]
     failure_step_name = SingleAlimonyEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.alimony-title')
@@ -723,9 +723,10 @@ class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailur
 
 
 class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
-    name = "foreign_country"
+    name = "foreign_country"    
     next_step_data_models = [
-        (ForeignCountrySuccessEligibility, 'success'),
+        (ForeignCountrySingleElsterEligibilityData, 'single_elster_account'),
+        (ForeignCountryMarriedElsterEligibilityData, 'user_a_has_elster_account'),
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')

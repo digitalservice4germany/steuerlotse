@@ -27,7 +27,7 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
-    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, EligibilityMaybeDisplaySteuerlotseStep
+    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
 
 _ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
@@ -54,11 +54,8 @@ class EligibilityStepChooser(StepChooser):
                 SeparatedJointTaxesEligibilityInputFormSteuerlotseStep,
                 MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
                 MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep,
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
                 DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
                 SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
                 PensionDecisionEligibilityInputFormSteuerlotseStep,
                 InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
                 MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
@@ -68,8 +65,10 @@ class EligibilityStepChooser(StepChooser):
                 MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep,
                 IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
+                UserAElsterAccountEligibilityInputFormSteuerlotseStep,
+                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
                 EligibilitySuccessDisplaySteuerlotseStep,
-                EligibilityMaybeDisplaySteuerlotseStep,
                 TaxYearEligibilityFailureDisplaySteuerlotseStep,
                 MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
                 MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
