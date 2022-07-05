@@ -441,7 +441,7 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
     """
         This is the only point where we have additional fields of previous steps on a step model.
         That's because the ForeignCountry step is the last step of the flow and needs to decide which result page is
-        displayed: 'success' or 'maybe'.
+        displayed: 'success'
     """
     has_no_other_income: Optional[OtherIncomeEligibilityData]
     foreign_country_eligibility: str
