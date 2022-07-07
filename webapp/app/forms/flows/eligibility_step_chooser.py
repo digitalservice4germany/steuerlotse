@@ -27,7 +27,8 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     PensionEligibilityFailureDisplaySteuerlotseStep, \
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
-    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep
+    SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
+    SingleElsterFailureDisplaySteuerlotseStep
 from app.forms.flows.step_chooser import StepChooser
 
 _ELIGIBILITY_DATA_KEY = 'eligibility_form_data'
@@ -80,6 +81,7 @@ class EligibilityStepChooser(StepChooser):
                 MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep,
                 IncomeOtherEligibilityFailureDisplaySteuerlotseStep,
                 ForeignCountriesEligibilityFailureDisplaySteuerlotseStep,
+                SingleElsterFailureDisplaySteuerlotseStep,
             ],
             endpoint=endpoint,
             form_storage=CookieStorage

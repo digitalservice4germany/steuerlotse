@@ -266,8 +266,8 @@ class ForeignCountrySingleElsterEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
     
 class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
-    no_separated_joint_taxes: Optional[SeparatedJointTaxesEligibilityData]
     is_married: Optional[MarriedEligibilityData]
+    no_separated_joint_taxes: Optional[SeparatedJointTaxesEligibilityData]
         
     foreign_country_eligibility: str
 
@@ -275,7 +275,7 @@ class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
 
-    @validator('is_married', always=True, check_fields=False)
+    @validator('no_separated_joint_taxes', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
     
@@ -298,7 +298,6 @@ class AlimonyEligibilityData(RecursiveDataModel):
 
 
 class SingleUserNoElsterAccountEligibilityData(RecursiveDataModel):
-    no_alimony: Optional[AlimonyEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
@@ -324,6 +323,7 @@ class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
 
 
 class PensionEligibilityData(RecursiveDataModel):
+    alimony: Optional[AlimonyMarriedEligibilityData]
     no_alimony: Optional[AlimonyEligibilityData]
 
     pension_eligibility: str
