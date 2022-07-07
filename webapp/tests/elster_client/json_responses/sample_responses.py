@@ -208,8 +208,8 @@ def get_json_response(keyword, idnr=None, elster_request_id=None):
         }
     if keyword == 'request_code_already_revoked':
         return {
-            'code': 'ERIC_TRANSFER_ERR_XML_NHEADER',
-            'message': 'ERIC_TRANSFER_ERR_XML_NHEADER'
+            'code': 'ALREADY_REVOKED_UNLOCK_CODE',
+            'message': 'ALREADY_REVOKED_UNLOCK_CODE'
         }
     if keyword == 'get_address_no_resp':
         return {
