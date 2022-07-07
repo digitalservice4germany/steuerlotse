@@ -1,10 +1,6 @@
 from flask_babel import lazy_gettext as _l
 from requests import RequestException
 
-# TODO this error?
-FSC_ALREADY_REQUESTED_ERRORS = {
-    610101292: "ERIC_TRANSFER_ERR_XML_NHEADER"  # has no special error message
-}
 
 ERIC_GLOBAL_INITIALISATION_ERRORS = ["ERIC_GLOBAL_NICHT_INITIALISIERT", "ERIC_GLOBAL_MEHRFACHE_INITIALISIERUNG",
                                      "ERIC_GLOBAL_FEHLER_INITIALISIERUNG"]

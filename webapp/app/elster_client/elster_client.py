@@ -352,8 +352,7 @@ def check_erica_response_for_errors(erica_response):
             raise ElsterGlobalValidationError(message=error_message, validation_problems=validation_problems)
         elif error_code in ERIC_GLOBAL_INITIALISATION_ERRORS:
             raise ElsterGlobalInitialisationError(message=error_message)
-        # TODO richtig next?
-        elif error_code == 'ERIC_TRANSFER_ERR_XML_NHEADER':
+        elif error_code == 'ALREADY_REVOKED_UNLOCK_CODE':
             raise ElsterRequestAlreadyRevoked(message=error_message)
         elif error_code in ERIC_TRANSFER_ERRORS:
             raise ElsterTransferError(message=error_message)
