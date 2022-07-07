@@ -293,8 +293,8 @@ const translations = {
     },
   },
   newsletter: {
-    headline: "Bestätigung und Erinnerung per E-Mail erhalten",
-    text: "Erhalten Sie zusätzlich per E-Mail die Bestätigung Ihrer Registrierung mit Informationen zur Vorbereitung und eine Erinnerung, wenn Ihr Brief mit Freischaltcode angekommen ist.",
+    headline: "Bleiben Sie informiert",
+    text: "Erhalten Sie per E-Mail Erinnerungen zu wichtigen Fristen und weitere Informationen zum Steuerlotsen, zum Beispiel zur Vorbereitung der Steuererklärung.",
     fieldEmail: {
       label: "Ihre E-Mail Adresse",
     },
@@ -311,7 +311,7 @@ const translations = {
         "Das Speichern Ihrer E-Mail-Adresse hat nicht geklappt.  Bitte versuchen Sie es erneut.",
     },
     success: {
-      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an {{emailValue}} geschickt.",
+      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung an {{emailValue}} geschickt. Der Bestätigungslink ist 48 Stunden gültig.",
     },
     successPage: {
       title:

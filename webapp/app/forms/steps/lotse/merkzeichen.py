@@ -107,8 +107,7 @@ class StepMerkzeichenPersonA(LotseFormSteuerlotseStep):
         return render_react_template(component='MerkzeichenPersonAPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))
 
 
 class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
@@ -181,8 +180,7 @@ class StepMerkzeichenPersonB(LotseFormSteuerlotseStep):
         return render_react_template(component='MerkzeichenPersonBPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))
 
 
 class HasMerkzeichenPersonAPrecondition(BaseModel):
