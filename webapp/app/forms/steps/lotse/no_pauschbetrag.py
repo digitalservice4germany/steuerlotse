@@ -100,8 +100,7 @@ class StepNoPauschbetragPersonA(LotseFormSteuerlotseStep):
         return render_react_template(component='NoPauschbetragPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))
 
 
 class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
@@ -125,5 +124,4 @@ class StepNoPauschbetragPersonB(LotseFormSteuerlotseStep):
         return render_react_template(component='NoPauschbetragPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))

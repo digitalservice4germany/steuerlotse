@@ -52,8 +52,7 @@ class StepDisabilityPersonB(LotseFormSteuerlotseStep):
         return render_react_template(component='HasDisabilityPersonBPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))
 
 
 class StepDisabilityPersonA(LotseFormSteuerlotseStep):
@@ -90,8 +89,7 @@ class StepDisabilityPersonA(LotseFormSteuerlotseStep):
         return render_react_template(component='HasDisabilityPersonAPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=self.disable_extended_footer)
+                                     header_title=_('form.lotse.header-title'))
 
 
 class HasDisabilityPersonAPrecondition(BaseModel):
