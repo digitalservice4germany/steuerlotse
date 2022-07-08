@@ -13,7 +13,7 @@
         <div class="panel simple-card spacing-b-06">
             <div class="row p-0">
                 <div class="col-12 col-sm-2 failure-success-icon">
-                    <img src="{{ static_url_for('static', filename='icons/maybe_icon.svg') }}"
+                    <img src="{{ static_url_for('static', filename='icons/failure_icon.svg') }}"
                          alt="{{ _('maybe_icon') }}"/>
                 </div>
                 <div class="col-12 col-sm-10">
@@ -21,12 +21,12 @@
                     <p class="result-text">{{ render_info.step_intro }}</p>
                 </div>
             </div>
-            <div class="row p-0">
-                <div class="col-12 col-sm-6 mt-4 ml-2 text-center">
-                    {{ components.primaryButton( text=_('form.eligibility.use-register-button'), url=url_for('unlock_code_request')) }}
-                </div>
-            </div>
         </div>
+    </div>
+
+    <div class="spacing-b-06">
+        <h2>{{ _('form.eligibility.failure-next-step-heading') }}</h2>
+        <p class="result-text">{{ _('form.eligibility.failure-next-step-text') }}</p>
     </div>
 
     {% set dependent_notes =  render_info.additional_info['dependent_notes'] %}
@@ -40,6 +40,15 @@
             </ul>
         </div>
     {% endif %}
+
+    <div class="spacing-b-11 row m-0">
+        {{ components.primaryButtonWithIcon(
+            text=_('form.eligibility.use-elster-button'),
+            url="https://www.elster.de/eportal/start",
+            icon="↗",
+            target="_blank"
+        ) }}
+    </div>
 
     
 {% endblock %}

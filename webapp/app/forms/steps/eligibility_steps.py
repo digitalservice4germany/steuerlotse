@@ -90,6 +90,7 @@ class EligibilityElsterFailureDisplaySteuerlotseStep(EligibilityStepMixin, Displ
     eligibility_error = None
     input_step_name = ''
     title = _l('form.eligibility.failure.title')
+    intro = _l('form.eligibility.failure.intro')
 
     def __init__(self, endpoint, stored_data=None, render_info=None, *args, **kwargs):
         super(EligibilityElsterFailureDisplaySteuerlotseStep, self).__init__(endpoint=endpoint,
