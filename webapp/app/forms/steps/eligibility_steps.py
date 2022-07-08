@@ -808,7 +808,9 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
         dependent_notes = []
 
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
-            dependent_notes.append(_l('form.eligibility.result-note.user_b_elster_account-registration-success'))
+            dependent_notes.append(_l('form.eligibility.result-note.user_elster_account-registration-success'))
+        if data_fits_data_model(UserANoElsterAccountEligibilityData, self.stored_data):
+            dependent_notes.append(_l('form.eligibility.result-note.user_elster_account-registration-success'))
         if data_fits_data_model_from_list([CheaperCheckEligibilityData, MinimalInvestmentIncome, MoreThanMinimalInvestmentIncome],
                 self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.capital_investment'))

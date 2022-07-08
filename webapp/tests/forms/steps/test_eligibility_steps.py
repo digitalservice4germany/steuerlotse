@@ -3166,7 +3166,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_url, step.render_info.prev_url)
 
     def test_if_user_b_has_no_elster_account_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.user_b_elster_account-registration-success')]
+        expected_information = [_('form.eligibility.result-note.user_elster_account-registration-success')]
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
@@ -3227,7 +3227,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.user_b_elster_account-registration-success'),
+        expected_information = [_('form.eligibility.result-note.user_elster_account-registration-success'),
                                 _('form.eligibility.result-note.capital_investment')]
         
         session_data = {'marital_status_eligibility': 'married',
@@ -3253,7 +3253,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_b_has_no_elster_account_and_user_has_minimal_investment_income_check_then_set_correct_info(self):
-        expected_information = [_('form.eligibility.result-note.user_b_elster_account-registration-success'),
+        expected_information = [_('form.eligibility.result-note.user_elster_account-registration-success'),
                                 _('form.eligibility.result-note.capital_investment')]
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
