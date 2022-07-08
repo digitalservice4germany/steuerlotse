@@ -3,51 +3,73 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 import { ContentWrapper } from "../components/ContentPagesGeneralStyling";
 import FormHeader from "../components/FormHeader";
-
-const Figure = styled.figure`
-  margin: 0;
-  align-self: end;
-  width: 100%;
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  @media (max-width: 767px) {
-    align-self: center;
-  }
-`;
+import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
+import HowItWorksComponent from "../components/HowItWorksComponent";
+import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
+import ButtonAnchor from "../components/ButtonAnchor";
 
 const VideoSection = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 48px 0px 48px 144px;
   background-color: var(--beige-300);
+  padding: 48px 50px;
+`;
+
+const HowItWorksVideoContainer = styled.div`
+  position: relative;
+  max-width: 930px;
+  width: 75vw;
+
+  @media (max-width: 1024px) {
+    width: 85vw;
+  }
+
+  @media (max-width: 425px) {
+    width: 90vw;
+  }
+`;
+
+const HowItWorksImage = styled.img`
+  width: 100%;
+  height: auto;
 `;
 
 export default function HowItWorksPage() {
   const { t } = useTranslation();
 
   return (
-    <ContentWrapper>
-      <FormHeader
-        title={t("vorbereitenOverview.Paragraph1.heading")}
-        intro={t("vorbereitenOverview.Paragraph1.text")}
-      />
+    <>
+      <ContentWrapper>
+        <FormHeader
+          title={t("vorbereitenOverview.Paragraph1.heading")}
+          intro={t("vorbereitenOverview.Paragraph1.text")}
+        />
+      </ContentWrapper>
       <VideoSection>
         <h2>Schritt-für-Schritt Anleitung (Erklärvideo)</h2>
-        <Figure>
-          <picture>
-            <img
-              src="../images/hero_info_tax_return_pensioners.png"
-              alt="Tablets mit Webapp des Steuerlotsen"
-            />
-          </picture>
-        </Figure>
+        <HowItWorksVideoContainer>
+          <HowItWorksImage
+            src="/images/test.png"
+            alt="Link to How It Works Video"
+          />
+          <SecondaryAnchorButton
+            text="Auf Youtube abspielen"
+            url="https://www.youtube.com/watch?v=vP--fwSWtLE"
+            className="outline-0"
+            isExternalLink
+            plausibleName="Youtube-Link clicked"
+          />
+        </HowItWorksVideoContainer>
       </VideoSection>
-    </ContentWrapper>
+      <ContentWrapper marginVariant>
+        <HowItWorksComponent />
+        <HowItWorksComponent />
+        <HowItWorksComponent borderVariant />
+      </ContentWrapper>
+      <ButtonAnchor />
+      <InfoBoxGrundsteuer />
+    </>
   );
 }
