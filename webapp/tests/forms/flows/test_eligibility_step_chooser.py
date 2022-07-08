@@ -25,8 +25,8 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     TaxedInvestmentIncomeEligibilityFailureDisplaySteuerlotseStep, CheaperCheckEligibilityFailureDisplaySteuerlotseStep, \
     MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, \
-    SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
-    EligibilityMaybeDisplaySteuerlotseStep
+    SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep \
+
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockFirstInputStep
 
 
@@ -65,7 +65,6 @@ class TestEligibilityChooserInit(unittest.TestCase):
             IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
             ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
             EligibilitySuccessDisplaySteuerlotseStep,
-            EligibilityMaybeDisplaySteuerlotseStep,
             TaxYearEligibilityFailureDisplaySteuerlotseStep,
             MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
             MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,

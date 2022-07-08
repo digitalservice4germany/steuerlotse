@@ -31,7 +31,6 @@ from app.forms.steps.eligibility_steps import MarriedJointTaxesEligibilityFailur
     SeparatedEligibilityInputFormSteuerlotseStep, MaritalStatusInputFormSteuerlotseStep, \
     EligibilityStepMixin, SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, \
     EligibilityStartDisplaySteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
-    EligibilityMaybeDisplaySteuerlotseStep, \
     data_fits_data_model_from_list, data_fits_data_model
 from app.forms.steps.steuerlotse_step import RedirectSteuerlotseStep
 from app.model.recursive_data import PreviousFieldsMissingError
