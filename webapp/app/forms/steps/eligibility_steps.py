@@ -83,7 +83,7 @@ class EligibilityFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
 
     def render(self):
         return super().render(error_text=self.eligibility_error)
-    
+
 class EligibilityElsterFailureDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteuerlotseStep):
     name = 'result'
     template = 'eligibility/display_elster_failure.html'
@@ -219,7 +219,7 @@ class TaxYearEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSte
                      ('no', _l('form.eligibility.tax_year.no')),
                      ],
             validators=[InputRequired()])
-        
+
     def _main_handle(self):
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.tax_year.back_link_text')
@@ -387,14 +387,19 @@ class UserAElsterAccountEligibilityInputFormSteuerlotseStep(DecisionEligibilityI
                      ],
             validators=[InputRequired()])
 
+class MarriedElsterFailureDisplaySteuerlotseStep(EligibilityElsterFailureDisplaySteuerlotseStep):
+    name = 'married_elster_account_failure'
+    eligibility_error = _l('form.eligibility.elster_failure-error')
+    input_step_name = 'user_b_has_elster_account'
+
 
 class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "user_b_has_elster_account"
     next_step_data_models = [
-        (UserBNoElsterAccountEligibilityData, 'pension'),
-        (UserBElsterAccountEligibilityData, 'pension')
+        (UserBNoElsterAccountEligibilityData, 'success'),
     ]
     title = _l('form.eligibility.user_b_has_elster_account-title')
+    failure_step_name = MarriedElsterFailureDisplaySteuerlotseStep.name
 
     class InputForm(SteuerlotseBaseForm):
         user_b_has_elster_account_eligibility = RadioField(
@@ -458,11 +463,12 @@ class SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibili
                      ('no', _l('form.eligibility.alimony.single.no')),
                      ],
             validators=[InputRequired()])
-        
+
 class SingleElsterFailureDisplaySteuerlotseStep(EligibilityElsterFailureDisplaySteuerlotseStep):
     name = 'single_elster_account_failure'
     eligibility_error = _l('form.eligibility.elster_failure-error')
     input_step_name = 'single_elster_account'
+
 
 class SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = "single_elster_account"
@@ -750,10 +756,10 @@ class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailur
 
 
 class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
-    name = "foreign_country"    
+    name = "foreign_country"
     next_step_data_models = [
-        (ForeignCountryMarriedElsterEligibilityData, 'user_a_has_elster_account'),
         (ForeignCountrySingleElsterEligibilityData, 'single_elster_account'),
+        (ForeignCountryMarriedElsterEligibilityData, 'user_a_has_elster_account'),
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
