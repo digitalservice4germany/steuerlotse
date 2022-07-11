@@ -1338,7 +1338,40 @@ const translations = {
     formHeaderTitle: "So funktioniert’s",
     formHeaderText:
       "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension und beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
-    stepsVideoSectionHeading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
+    stepsVideoSection: {
+      heading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
+      imageAltText: "Link to How It Works Video",
+    },
+    stepOne: {
+      heading: "Finden Sie heraus, ob Sie den Steuerlotsen nutzen können",
+      imageAltText: "",
+    },
+    stepTwo: {
+      heading: "Registrieren Sie sich  unverbindlich",
+      text: "Wenn Sie die Steuererklärung gemeinsam als Paar machen möchten, reicht es aus, wenn sich eine Person registriert.",
+      imageAltText: "",
+    },
+    stepThree: {
+      heading: "Bereiten Sie sich mit unserer Vorbereitungshilfe vor",
+      imageAltText: "",
+    },
+    stepFour: {
+      heading:
+        "Sie erhalten einen Brief mit Ihrem Freischaltcode zur Anmeldung",
+      imageAltText: "",
+    },
+    stepFive: {
+      heading: "Melden Sie sich mit Ihrem Freischaltcode an",
+      imageAltText: "",
+    },
+    stepSix: {
+      heading: "Machen Sie Schritt für Schritt Ihre Angaben",
+      imageAltText: "",
+    },
+    stepSeven: {
+      heading: "Reichen Sie sicher und unkompliziert Ihre Steuererklärung ein",
+      imageAltText: "",
+    },
   },
 };
 

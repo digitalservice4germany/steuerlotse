@@ -1,11 +1,12 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import OneIcon from "../assets/icons/Icon-1.svg";
 
 const Box = styled.div`
   /* background-color: var(--beige-200); */
   /* padding-top: var(--spacing-09); */
   /* margin-top: var(--spacing-10); */
-  border-left: 2px solid black;
+  border-left: ${(props) =>
+    props.border ? "none" : "2px solid var(--beige-500)"};
 `;
 
 const InnerBox = styled.div`
@@ -34,7 +35,7 @@ const InnerBox = styled.div`
 const Icon = styled.img`
   position: absolute;
   top: 0;
-  left: -3%;
+  left: -26.5px;
   border-radius: 100%;
   height: 50px;
   width: 50px;
@@ -55,24 +56,36 @@ const Figure = styled.figure`
   }
 `;
 
-export const Headline3 = styled.h3`
+const Headline3 = styled.h3`
   max-width: 300px;
 `;
 
-export default function HowItWorksComponent() {
+const Column = styled.div`
+  /* background-color: red; */
+  width: 60%;
+  margin-right: 3rem;
+`;
+
+export default function HowItWorksComponent({
+  heading,
+  text,
+  icon,
+  image,
+  borderVariant,
+}) {
   return (
-    <Box>
+    <Box border={borderVariant}>
       <InnerBox>
-        <Icon src={OneIcon} alt="icon" />
-        <Headline3>
-          Finden Sie heraus, ob Sie den Steuerlotsen nutzen können
-        </Headline3>
+        <Icon src={icon.iconSrc} alt={icon.altText} />
+        <Column>
+          <Headline3>{heading}</Headline3>
+          {text && <p>{text}</p>}
+        </Column>
         <Figure className="info-box__figure">
           <picture>
-            <img
-              src="../images/step1.png"
-              alt="Tablets mit Webapp des Steuerlotsen"
-            />
+            <source media="(min-width: 1024px)" srcSet={image.srcSetDesktop} />
+            <source media="(min-width: 320px)" srcSet={image.srcSetMobile} />
+            <img src={image.src} alt={image.alt} srcSet={image.srcSet} />
           </picture>
         </Figure>
       </InnerBox>
@@ -80,11 +93,18 @@ export default function HowItWorksComponent() {
   );
 }
 
+HowItWorksComponent.propTypes = {
+  heading: PropTypes.string,
+  text: PropTypes.string,
+  icon: PropTypes.string,
+  image: PropTypes.string,
+  borderVariant: PropTypes.string,
+};
+
 HowItWorksComponent.defaultProps = {
-  boxHeadline: null,
-  boxText: null,
-  anchor: {
-    url: null,
-    text: null,
-  },
+  heading: null,
+  text: null,
+  icon: null,
+  image: null,
+  borderVariant: null,
 };
