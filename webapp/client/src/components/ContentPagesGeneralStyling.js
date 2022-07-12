@@ -4,7 +4,7 @@ export const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
   max-width: var(--pages-max-width);
-  margin-top: ${(props) => props.marginVariant && "var(--spacing-10)"};
+  margin-top: ${(props) => props.marginVariant && "var(--spacing-09)"};
 
   margin-bottom: var(--spacing-10);
 

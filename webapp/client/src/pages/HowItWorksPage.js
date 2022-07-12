@@ -6,7 +6,6 @@ import {
   Headline2,
 } from "../components/ContentPagesGeneralStyling";
 import FormHeader from "../components/FormHeader";
-// import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
 import HowItWorksComponent from "../components/HowItWorksComponent";
 import ButtonAnchor from "../components/ButtonAnchor";
 import OneIcon from "../assets/icons/Icon-1.svg";
@@ -22,15 +21,26 @@ const VideoSection = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: var(--beige-300);
-  padding: 48px 0 70px 0;
+  padding: 48px 0 50px 0;
+
+  @media (max-width: 768px) {
+    padding: 48px 16px 50px 16px;
+  }
 `;
 
 const HowItWorksVideoContainer = styled.div`
   position: relative;
   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.35);
   display: flex;
-  /* width: 60%; */
   max-width: 650px;
+
+  @media (max-width: 768px) {
+    max-width: 60%;
+  }
+
+  @media (max-width: 575px) {
+    max-width: 100%;
+  }
 `;
 
 const HowItWorksImage = styled.img`
@@ -64,7 +74,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepOne.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step1.png",
       srcSetMobile: "../../images/step1_mobile.png",
     },
@@ -78,7 +88,7 @@ export default function HowItWorksPage() {
     text: "Wenn Sie die Steuererklärung gemeinsam als Paar machen möchten, reicht es aus, wenn sich eine Person registriert.",
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step2.png",
       srcSetMobile: "../../images/step2_mobile.png",
     },
@@ -91,7 +101,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepThree.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step3.png",
       srcSetMobile: "../../images/step3_mobile.png",
     },
@@ -104,7 +114,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepFour.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step4.png",
       srcSetMobile: "../../images/step4.png",
     },
@@ -117,7 +127,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepFive.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step5.png",
       srcSetMobile: "../../images/step5_mobile.png",
     },
@@ -130,7 +140,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepSix.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step6.png",
       srcSetMobile: "../../images/step6_mobile.png",
     },
@@ -143,7 +153,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepSeven.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
+      alt: "",
       srcSetDesktop: "../../images/step7.png",
       srcSetMobile: "../../images/step7_mobile.png",
     },

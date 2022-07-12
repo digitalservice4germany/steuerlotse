@@ -2,9 +2,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Box = styled.div`
-  /* background-color: var(--beige-200); */
-  /* padding-top: var(--spacing-09); */
-  /* margin-top: var(--spacing-10); */
   border-left: ${(props) =>
     props.border ? "none" : "2px solid var(--beige-500)"};
 `;
@@ -15,16 +12,6 @@ const InnerBox = styled.div`
   position: relative;
   justify-content: space-between;
   padding-bottom: 100px;
-
-  @media (max-width: 1024px) {
-    padding-left: var(--spacing-09);
-  }
-
-  /* @media (max-width: 767px) {
-    flex-direction: column;
-    padding-left: var(--spacing-03);
-    padding-right: var(--spacing-03);
-  } */
 `;
 
 const Icon = styled.img`
@@ -37,12 +24,14 @@ const Icon = styled.img`
 `;
 
 const Figure = styled.figure`
-  align-self: end;
   width: 100%;
   max-width: 476px;
   border-radius: 50px;
   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.35);
 
+  @media (max-width: 768px) {
+    max-width: 180px;
+  }
   img {
     width: 100%;
     height: auto;
@@ -53,6 +42,10 @@ const Figure = styled.figure`
 const Headline3 = styled.h3`
   font-size: var(--text-2xl);
   margin-bottom: var(--spacing-06);
+
+  @media (max-width: 768px) {
+    font-size: var(--text-medium-big);
+  }
 `;
 
 const Column = styled.div`
@@ -61,28 +54,24 @@ const Column = styled.div`
 
   @media (max-width: 768px) {
     margin-right: 2rem;
+    max-width: 200px;
+  }
+
+  @media (max-width: 575px) {
+    margin-right: 0;
   }
 `;
 
 const InnerContent = styled.div`
   display: flex;
-
-  @media (max-width: 1279px) {
-    /* flex-direction: column;
-    justify-content: start; */
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    justify-content: start;
-  }
+  flex-wrap: wrap;
 
   @media (max-width: 768px) {
-    flex-direction: row;
-    flex-wrap: nowrap;
     margin-right: var(--spacing-06);
+  }
+
+  @media (max-width: 575px) {
+    justify-content: start;
   }
 `;
 
