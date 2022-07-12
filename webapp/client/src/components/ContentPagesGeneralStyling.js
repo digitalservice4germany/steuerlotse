@@ -5,6 +5,7 @@ export const ContentWrapper = styled.div`
   padding-right: var(--spacing-03);
   max-width: var(--pages-max-width);
   margin-top: ${(props) => props.marginVariant && "var(--spacing-10)"};
+
   margin-bottom: var(--spacing-10);
 
   @media (min-width: 769px) {
@@ -14,6 +15,11 @@ export const ContentWrapper = styled.div`
 
   @media (min-width: 1280px) {
     padding-left: var(--spacing-12);
+  }
+
+  @media (max-width: 1279px) {
+    margin-left: ${(props) => props.marginLeftVariant && "var(--spacing-06)"};
+    padding-left: ${(props) => props.marginLeftVariant && "var(--spacing-03)"};
   }
 `;
 

@@ -1372,6 +1372,11 @@ const translations = {
       heading: "Reichen Sie sicher und unkompliziert Ihre Steuererklärung ein",
       imageAltText: "",
     },
+    startButton: "Jetzt starten",
+    questionInfoBox: {
+      heading: "Haben Sie noch Fragen?",
+      button: "Zum Hilfebereich",
+    },
   },
 };
 

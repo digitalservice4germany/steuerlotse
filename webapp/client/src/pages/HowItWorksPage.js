@@ -6,9 +6,8 @@ import {
   Headline2,
 } from "../components/ContentPagesGeneralStyling";
 import FormHeader from "../components/FormHeader";
-import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
+// import SecondaryAnchorButton from "../components/SecondaryAnchorButton";
 import HowItWorksComponent from "../components/HowItWorksComponent";
-import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
 import ButtonAnchor from "../components/ButtonAnchor";
 import OneIcon from "../assets/icons/Icon-1.svg";
 import TwoIcon from "../assets/icons/Icon-2.svg";
@@ -21,24 +20,37 @@ import SevenIcon from "../assets/icons/Icon-7.svg";
 const VideoSection = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   background-color: var(--beige-300);
-  padding: 48px 0 70px 250px;
+  padding: 48px 0 70px 0;
 `;
 
 const HowItWorksVideoContainer = styled.div`
   position: relative;
   box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.35);
   display: flex;
-  /* justify-content: center; */
-  /* max-width: 650px; */
-  width: 65%;
-  /* margin-top: var(--spacing-03); */
+  /* width: 60%; */
+  max-width: 650px;
 `;
 
 const HowItWorksImage = styled.img`
   width: 100%;
   height: auto;
+`;
+
+const Box = styled.div`
+  padding: 60px 0px 90px 0px;
+  background-color: var(--beige-200);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 274px;
+`;
+
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default function HowItWorksPage() {
@@ -67,8 +79,8 @@ export default function HowItWorksPage() {
     image: {
       src: "../../images/step1.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-      srcSetDesktop: "../../images/step1.png",
-      srcSetMobile: "../../images/step1_mobile.png",
+      srcSetDesktop: "../../images/step2.png",
+      srcSetMobile: "../../images/step2_mobile.png",
     },
   };
   const StepThree = {
@@ -80,8 +92,8 @@ export default function HowItWorksPage() {
     image: {
       src: "../../images/step1.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-      srcSetDesktop: "../../images/step1.png",
-      srcSetMobile: "../../images/step1_mobile.png",
+      srcSetDesktop: "../../images/step3.png",
+      srcSetMobile: "../../images/step3_mobile.png",
     },
   };
   const StepFour = {
@@ -93,8 +105,8 @@ export default function HowItWorksPage() {
     image: {
       src: "../../images/step1.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-      srcSetDesktop: "../../images/step1.png",
-      srcSetMobile: "../../images/step1_mobile.png",
+      srcSetDesktop: "../../images/step4.png",
+      srcSetMobile: "../../images/step4.png",
     },
   };
   const StepFive = {
@@ -106,8 +118,8 @@ export default function HowItWorksPage() {
     image: {
       src: "../../images/step1.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-      srcSetDesktop: "../../images/step1.png",
-      srcSetMobile: "../../images/step1_mobile.png",
+      srcSetDesktop: "../../images/step5.png",
+      srcSetMobile: "../../images/step5_mobile.png",
     },
   };
   const StepSix = {
@@ -119,8 +131,8 @@ export default function HowItWorksPage() {
     image: {
       src: "../../images/step1.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-      srcSetDesktop: "../../images/step1.png",
-      srcSetMobile: "../../images/step1_mobile.png",
+      srcSetDesktop: "../../images/step6.png",
+      srcSetMobile: "../../images/step6_mobile.png",
     },
   };
   const StepSeven = {
@@ -132,11 +144,12 @@ export default function HowItWorksPage() {
     image: {
       src: "../../images/step1.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-      srcSetDesktop: "../../images/step1.png",
-      srcSetMobile: "../../images/step1_mobile.png",
+      srcSetDesktop: "../../images/step7.png",
+      srcSetMobile: "../../images/step7_mobile.png",
     },
   };
 
+  const newLocal = "https://www.youtube.com/watch?v=vP--fwSWtLE";
   return (
     <>
       <ContentWrapper>
@@ -154,16 +167,22 @@ export default function HowItWorksPage() {
             src="/images/test.png"
             alt={t("howItWorksPage.stepsVideoSection.imageAltText")}
           />
-          <SecondaryAnchorButton
+          <ButtonAnchor
             text="Auf Youtube abspielen"
-            url="https://www.youtube.com/watch?v=vP--fwSWtLE"
-            className="outline-0"
+            url={newLocal}
             isExternalLink
             plausibleName="Erklärvideo"
           />
         </HowItWorksVideoContainer>
       </VideoSection>
-      <ContentWrapper marginVariant>
+      <ContentWrapper
+        marginLeftVariant
+        marginVariant
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <HowItWorksComponent
           heading={StepOne.heading}
           icon={StepOne.icon}
@@ -204,11 +223,22 @@ export default function HowItWorksPage() {
           text={StepSeven.text}
           icon={StepSeven.icon}
           image={StepSeven.image}
-          borderVariant
+          variant
         />
+        <Div>
+          <ButtonAnchor url="/eligibility/step/welcome?link_overview=False">
+            {t("howItWorksPage.startButton")}
+          </ButtonAnchor>
+        </Div>
       </ContentWrapper>
-      <ButtonAnchor />
-      <InfoBoxGrundsteuer />
+      <Box>
+        <Headline2 marginVariant paddingVariant>
+          {t("howItWorksPage.questionInfoBox.heading")}
+        </Headline2>
+        <ButtonAnchor variant="outline" url="/">
+          {t("howItWorksPage.questionInfoBox.button")}
+        </ButtonAnchor>
+      </Box>
     </>
   );
 }

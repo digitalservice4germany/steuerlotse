@@ -11,25 +11,20 @@ const Box = styled.div`
 
 const InnerBox = styled.div`
   padding-left: var(--spacing-09);
-  /* padding-right: var(--spacing-06); */
-  /* margin: 0 auto; */
-  /* max-width: var(--pages-max-width); */
   display: flex;
   position: relative;
   justify-content: space-between;
   padding-bottom: 100px;
-  /* background-color: red; */
 
   @media (max-width: 1024px) {
-    padding-left: var(--spacing-06);
-    padding-right: var(--spacing-06);
+    padding-left: var(--spacing-09);
   }
 
-  @media (max-width: 767px) {
+  /* @media (max-width: 767px) {
     flex-direction: column;
     padding-left: var(--spacing-03);
     padding-right: var(--spacing-03);
-  }
+  } */
 `;
 
 const Icon = styled.img`
@@ -42,28 +37,53 @@ const Icon = styled.img`
 `;
 
 const Figure = styled.figure`
-  /* margin: 0; */
   align-self: end;
   width: 100%;
+  max-width: 476px;
+  border-radius: 50px;
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.35);
+
   img {
     width: 100%;
     height: auto;
     object-fit: contain;
   }
-
-  @media (max-width: 767px) {
-    align-self: center;
-  }
 `;
 
 const Headline3 = styled.h3`
-  max-width: 300px;
+  font-size: var(--text-2xl);
+  margin-bottom: var(--spacing-06);
 `;
 
 const Column = styled.div`
-  /* background-color: red; */
-  width: 60%;
   margin-right: 3rem;
+  max-width: 253px;
+
+  @media (max-width: 768px) {
+    margin-right: 2rem;
+  }
+`;
+
+const InnerContent = styled.div`
+  display: flex;
+
+  @media (max-width: 1279px) {
+    /* flex-direction: column;
+    justify-content: start; */
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-right: var(--spacing-06);
+  }
 `;
 
 export default function HowItWorksComponent({
@@ -71,23 +91,25 @@ export default function HowItWorksComponent({
   text,
   icon,
   image,
-  borderVariant,
+  variant,
 }) {
   return (
-    <Box border={borderVariant}>
+    <Box border={variant}>
       <InnerBox>
         <Icon src={icon.iconSrc} alt={icon.altText} />
-        <Column>
-          <Headline3>{heading}</Headline3>
-          {text && <p>{text}</p>}
-        </Column>
-        <Figure className="info-box__figure">
-          <picture>
-            <source media="(min-width: 1024px)" srcSet={image.srcSetDesktop} />
-            <source media="(min-width: 320px)" srcSet={image.srcSetMobile} />
-            <img src={image.src} alt={image.alt} srcSet={image.srcSet} />
-          </picture>
-        </Figure>
+        <InnerContent>
+          <Column>
+            <Headline3>{heading}</Headline3>
+            {text && <p>{text}</p>}
+          </Column>
+          <Figure className="info-box__figure">
+            <picture>
+              <source media="(min-width: 769px)" srcSet={image.srcSetDesktop} />
+              <source media="(min-width: 320px)" srcSet={image.srcSetMobile} />
+              <img src={image.src} alt={image.alt} srcSet={image.srcSet} />
+            </picture>
+          </Figure>
+        </InnerContent>
       </InnerBox>
     </Box>
   );
@@ -98,7 +120,7 @@ HowItWorksComponent.propTypes = {
   text: PropTypes.string,
   icon: PropTypes.string,
   image: PropTypes.string,
-  borderVariant: PropTypes.string,
+  variant: PropTypes.string,
 };
 
 HowItWorksComponent.defaultProps = {
@@ -106,5 +128,5 @@ HowItWorksComponent.defaultProps = {
   text: null,
   icon: null,
   image: null,
-  borderVariant: null,
+  variant: null,
 };

@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import addPlausibleGoal from "../lib/helpers";
+import { ReactComponent as PlayIcon } from "../assets/icons/play_icon.svg";
 
 const hoverStates = css`
   color: ${({ variant, disabled }) => {
@@ -174,6 +175,25 @@ const AnchorButtonIcon = styled.span`
   }
 `;
 
+const ButtonAnchorForPlayer = styled(Button)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  font-size: var(--text-medium);
+  outline: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 269px;
+
+  @media (max-width: 425px) {
+    font-size: var(--text-base);
+    padding: 14px 18px 14px 18px;
+    width: 240px;
+  }
+`;
+
 function Text({ children }) {
   return (
     <AnchorButtonText className="anchor-btn__text">{children}</AnchorButtonText>
@@ -222,6 +242,8 @@ export default function ButtonAnchor({
   plausibleDomain,
   plausibleProps,
   marginTop,
+  isExternalLink,
+  text,
 }) {
   const handleClick = () => {
     if (plausibleDomain) {
@@ -240,7 +262,7 @@ export default function ButtonAnchor({
     relation.push("noopener");
   }
 
-  return (
+  return !isExternalLink ? (
     <Button
       as={url ? "a" : "button"}
       className={className}
@@ -259,6 +281,18 @@ export default function ButtonAnchor({
     >
       {children}
     </Button>
+  ) : (
+    <ButtonAnchorForPlayer
+      as={url ? "a" : "button"}
+      href={url}
+      name={name}
+      onClick={handleClick}
+      target="_blank"
+      rel="noopener"
+    >
+      <PlayIcon />
+      {text}
+    </ButtonAnchorForPlayer>
   );
 }
 
@@ -284,6 +318,8 @@ ButtonAnchor.propTypes = {
   plausibleGoal: PropTypes.string,
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
   plausibleDomain: PropTypes.string,
+  isExternalLink: PropTypes.bool,
+  text: PropTypes.string.isRequired,
 };
 
 ButtonAnchor.defaultProps = {
@@ -301,4 +337,5 @@ ButtonAnchor.defaultProps = {
   plausibleGoal: null,
   plausibleProps: undefined,
   plausibleDomain: null,
+  isExternalLink: false,
 };
