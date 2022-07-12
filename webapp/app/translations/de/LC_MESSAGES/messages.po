@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-05 11:44+0200\n"
+"POT-Creation-Date: 2022-07-12 22:31+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -24,7 +24,7 @@ msgstr "Übersicht"
 
 #: app/routes.py:77
 msgid "nav.how-it-works"
-msgstr "Informieren"
+msgstr "So funktioniert’s"
 
 #: app/routes.py:78
 msgid "nav.eligibility"
@@ -75,10 +75,6 @@ msgstr ""
 #: app/routes.py:290 app/routes.py:548
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
-
-#: app/routes.py:317
-msgid "howitworks.header-title"
-msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
 #: app/routes.py:324
 msgid "contact.header-title"
@@ -5451,4 +5447,7 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "howitworks.header-title"
+#~ msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 
