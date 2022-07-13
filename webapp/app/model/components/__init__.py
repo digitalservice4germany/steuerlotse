@@ -277,3 +277,7 @@ class MandateForTaxDeclarationProps(ComponentPlausibleProps):
 
 class HowItWorksPageProps(ComponentPlausibleProps):
     pass
+class HelpAreaPageProps(ComponentPlausibleProps):
+    pass
+
+

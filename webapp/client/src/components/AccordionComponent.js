@@ -61,6 +61,12 @@ const CardHeaderSpan = styled.span`
 const AccordionHeadline = styled.h2`
   padding-top: var(--spacing-09);
   font-size: var(--text-3xl);
+  margin-top: ${({ variant }) => {
+    if (variant === "marginTop") {
+      return "var(--spacing-09)";
+    }
+    return "0";
+  }};
 
   @media (max-width: 1024px) {
     font-size: var(--text-xla);
