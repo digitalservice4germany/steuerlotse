@@ -175,7 +175,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
         </Headline2>
         <HowItWorksVideoContainer>
           <HowItWorksImage
-            src="/images/test.png"
+            src="/images/videoHowItWorks.png"
             alt={t("howItWorksPage.stepsVideoSection.imageAltText")}
           />
           <ButtonAnchor
