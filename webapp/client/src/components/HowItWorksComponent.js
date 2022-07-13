@@ -107,8 +107,17 @@ export default function HowItWorksComponent({
 HowItWorksComponent.propTypes = {
   heading: PropTypes.string,
   text: PropTypes.string,
-  icon: PropTypes.string,
-  image: PropTypes.string,
+  icon: PropTypes.shape({
+    iconSrc: PropTypes.string,
+    altText: PropTypes.string,
+  }),
+  image: PropTypes.shape({
+    src: PropTypes.string,
+    srcSet: PropTypes.string,
+    srcSetDesktop: PropTypes.string,
+    srcSetMobile: PropTypes.string,
+    alt: PropTypes.string,
+  }),
   variant: PropTypes.string,
 };
 
