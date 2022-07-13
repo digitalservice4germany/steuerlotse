@@ -36,7 +36,7 @@ from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclara
 from app.model.components import MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
-    VorbereitenInfoProps, InfoForRelativesPageProps, LandingPageProps, HowItWorksPageProps
+    VorbereitenInfoProps, LandingPageProps, HowItWorksPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -482,13 +482,6 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=ChurchTaxInfoPageProps().camelized_dict(),
             component='ChurchTaxInfoPage')
-
-    @app.route('/info-angehoerige', methods=['GET'])
-    @add_caching_headers
-    def relatives_info():
-        return render_react_content_page_template(
-            props=InfoForRelativesPageProps().camelized_dict(),
-            component='InfoForRelativesPage')
 
     @app.route('/register_user_with_doi', methods=['POST'])
     def register_user_with_doi():

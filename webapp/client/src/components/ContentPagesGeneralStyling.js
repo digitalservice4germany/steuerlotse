@@ -6,7 +6,8 @@ export const ContentWrapper = styled.div`
   max-width: var(--pages-max-width);
   margin-top: ${(props) => props.marginVariant && "var(--spacing-09)"};
 
-  margin-bottom: var(--spacing-10);
+  margin-bottom: ${(props) =>
+    props.marginBottom ? "var(--spacing-07)" : "var(--spacing-09)"};
 
   @media (min-width: 769px) {
     padding-left: var(--spacing-06);

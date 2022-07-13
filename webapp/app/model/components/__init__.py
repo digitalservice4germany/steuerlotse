@@ -250,10 +250,6 @@ class ChurchTaxInfoPageProps(ComponentProps):
 class CraftsmanServicesInfoPageProps(ComponentProps):
     pass
 
-
-class InfoForRelativesPageProps(ComponentProps):
-    pass
-
 class SummaryDataSectionProps(ComponentProps):
     mandatory_data: Dict
     section_steuerminderung: Dict

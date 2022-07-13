@@ -91,7 +91,7 @@ export default function HowItWorksComponent({
             <Headline3>{heading}</Headline3>
             {text && <p>{text}</p>}
           </Column>
-          <Figure className="info-box__figure">
+          <Figure>
             <picture>
               <source media="(min-width: 769px)" srcSet={image.srcSetDesktop} />
               <source media="(min-width: 320px)" srcSet={image.srcSetMobile} />

@@ -973,28 +973,6 @@ const translations = {
       Heading: "Weitere Ausgaben, die Sie absetzen können",
     },
   },
-  InfoForRelatives: {
-    Section1: {
-      Heading: "Informationen für Angehörige",
-      Text: "Wir erklären Ihnen, wer helfen darf und wer nicht. Dass sich Angehörige ohne Bezahlung gegenseitig bei der Steuererklärung helfen, erlaubt sogar das sonst so strenge Steuerberatungsgesetz.",
-    },
-    Section2: {
-      Heading: "Wer helfen darf",
-      ListItem1: "Ehepartner",
-      ListItem2: "Verlobte",
-      ListItem3: "Eltern, Schwiegereltern, Kinder, Großeltern, Enkel",
-      ListItem4: "Geschwister (auch Halbgeschwister)",
-      ListItem5: "Nichten und Neffen",
-      ListItem6: "Schwager oder Schwägerin",
-      ListItem7: "Onkel und Tante",
-      ListItem8: "Pflegeeltern und Pflegekinder",
-      ListItem9: "geschiedene Ehepartner",
-    },
-    Section3: {
-      Heading: "Wer nicht bei der Steuererklärungen helfen darf",
-      Text: "Helfen zum Beispiel Freunde oder ehemaligen Arbeitskollege bei der Steuererklärung ist das eine Ordnungswidrigkeit – egal ob mit oder ohne Bezahlung. Wer erwischt wird, zahlt bis zu 5.000 € Strafe. Das sollten Sie daher vermeiden!",
-    },
-  },
   LandingPage: {
     Hero: {
       title: "Die vereinfachte Steuererklärung für Menschen im Ruhestand",
@@ -1341,41 +1319,51 @@ const translations = {
     stepsVideoSection: {
       heading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
       imageAltText: "Link to How It Works Video",
+      buttonText: "Auf Youtube abspielen",
+      plausibleGoal: "Erklärvideo",
     },
     stepOne: {
       heading: "Finden Sie heraus, ob Sie den Steuerlotsen nutzen können",
-      imageAltText: "",
+      imageAltText: "Tablet mit Nutzung prüfen-Seite",
     },
     stepTwo: {
       heading: "Registrieren Sie sich  unverbindlich",
       text: "Wenn Sie die Steuererklärung gemeinsam als Paar machen möchten, reicht es aus, wenn sich eine Person registriert.",
-      imageAltText: "",
+      imageAltText: "Tablet mit Registrieren-Seite",
     },
     stepThree: {
       heading: "Bereiten Sie sich mit unserer Vorbereitungshilfe vor",
-      imageAltText: "",
+      imageAltText: "Tablet mit Vorbereiten-Seite",
     },
     stepFour: {
       heading:
         "Sie erhalten einen Brief mit Ihrem Freischaltcode zur Anmeldung",
-      imageAltText: "",
+      imageAltText: "Brief mit Freischaltcode",
+      iconaltText: "Schritt 4",
     },
     stepFive: {
       heading: "Melden Sie sich mit Ihrem Freischaltcode an",
-      imageAltText: "",
+      imageAltText: "Tablet mit Anmelden-Seite",
+      iconaltText: "Schritt 5",
     },
     stepSix: {
       heading: "Machen Sie Schritt für Schritt Ihre Angaben",
-      imageAltText: "",
+      imageAltText: "Tablet mit Ausgaben-Seite",
+      iconaltText: "Schritt 6",
     },
     stepSeven: {
       heading: "Reichen Sie sicher und unkompliziert Ihre Steuererklärung ein",
-      imageAltText: "",
+      imageAltText: "Tablet mit Abgabe-Seite",
+      iconaltText: "Schritt 7",
     },
-    startButton: "Jetzt starten",
+    startButton: {
+      text: "Jetzt starten",
+      plausibleGoal: "CTA Jetzt starten",
+    },
     questionInfoBox: {
       heading: "Haben Sie noch Fragen?",
       button: "Zum Hilfebereich",
+      plausibleGoal: "Zum Hilfebereich",
     },
   },
 };

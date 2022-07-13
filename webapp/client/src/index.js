@@ -43,7 +43,6 @@ import ReplacementCostsInfoPage from "./pages/ReplacementCostsInfoPage";
 import DonationInfoPage from "./pages/DonationInfoPage";
 import ChurchTaxInfoPage from "./pages/ChurchTaxInfoPage";
 import CraftsmanServicesInfoPage from "./pages/CraftsmanServicesInfoPage";
-import InfoForRelativesPage from "./pages/InfoForRelativesPage";
 import SummaryPage from "./pages/SummaryPage";
 import LandingPage from "./pages/LandingPage";
 import NewsletterSuccessPage from "./pages/NewsletterSuccessPage";
@@ -93,7 +92,6 @@ const allowedComponents = {
   DonationInfoPage,
   ChurchTaxInfoPage,
   CraftsmanServicesInfoPage,
-  InfoForRelativesPage,
   SummaryPage,
   LandingPage,
   NewsletterSuccessPage,

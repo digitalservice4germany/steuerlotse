@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import {
   ContentWrapper,
@@ -63,7 +64,7 @@ const Div = styled.div`
   justify-content: center;
 `;
 
-export default function HowItWorksPage() {
+export default function HowItWorksPage({ plausibleDomain }) {
   const { t } = useTranslation();
 
   const StepOne = {
@@ -74,7 +75,7 @@ export default function HowItWorksPage() {
     heading: t("howItWorksPage.stepOne.heading"),
     image: {
       src: "../../images/step1.png",
-      alt: "",
+      alt: t("howItWorksPage.stepOne.imageAltText"),
       srcSetDesktop: "../../images/step1.png",
       srcSetMobile: "../../images/step1_mobile.png",
     },
@@ -82,13 +83,13 @@ export default function HowItWorksPage() {
   const StepTwo = {
     icon: {
       iconSrc: TwoIcon,
-      altText: t("register.icons.iconOne.altText"),
+      altText: t("register.icons.iconTwo.altText"),
     },
     heading: t("howItWorksPage.stepTwo.heading"),
     text: "Wenn Sie die Steuererklärung gemeinsam als Paar machen möchten, reicht es aus, wenn sich eine Person registriert.",
     image: {
-      src: "../../images/step1.png",
-      alt: "",
+      src: "../../images/step2.png",
+      alt: t("howItWorksPage.stepTwo.imageAltText"),
       srcSetDesktop: "../../images/step2.png",
       srcSetMobile: "../../images/step2_mobile.png",
     },
@@ -96,12 +97,12 @@ export default function HowItWorksPage() {
   const StepThree = {
     icon: {
       iconSrc: ThreeIcon,
-      altText: t("register.icons.iconOne.altText"),
+      altText: t("register.icons.iconThree.altText"),
     },
     heading: t("howItWorksPage.stepThree.heading"),
     image: {
-      src: "../../images/step1.png",
-      alt: "",
+      src: "../../images/step3.png",
+      alt: t("howItWorksPage.stepThree.imageAltText"),
       srcSetDesktop: "../../images/step3.png",
       srcSetMobile: "../../images/step3_mobile.png",
     },
@@ -109,12 +110,12 @@ export default function HowItWorksPage() {
   const StepFour = {
     icon: {
       iconSrc: FourIcon,
-      altText: t("register.icons.iconOne.altText"),
+      altText: t("howItWorksPage.stepFour.iconaltText"),
     },
     heading: t("howItWorksPage.stepFour.heading"),
     image: {
-      src: "../../images/step1.png",
-      alt: "",
+      src: "../../images/step4.png",
+      alt: t("howItWorksPage.stepFour.imageAltText"),
       srcSetDesktop: "../../images/step4.png",
       srcSetMobile: "../../images/step4.png",
     },
@@ -122,12 +123,12 @@ export default function HowItWorksPage() {
   const StepFive = {
     icon: {
       iconSrc: FiveIcon,
-      altText: t("register.icons.iconOne.altText"),
+      altText: t("howItWorksPage.stepFive.iconaltText"),
     },
     heading: t("howItWorksPage.stepFive.heading"),
     image: {
-      src: "../../images/step1.png",
-      alt: "",
+      src: "../../images/step5.png",
+      alt: t("howItWorksPage.stepFive.imageAltText"),
       srcSetDesktop: "../../images/step5.png",
       srcSetMobile: "../../images/step5_mobile.png",
     },
@@ -135,12 +136,12 @@ export default function HowItWorksPage() {
   const StepSix = {
     icon: {
       iconSrc: SixIcon,
-      altText: t("register.icons.iconOne.altText"),
+      altText: t("howItWorksPage.stepSix.iconaltText"),
     },
     heading: t("howItWorksPage.stepSix.heading"),
     image: {
-      src: "../../images/step1.png",
-      alt: "",
+      src: "../../images/step6.png",
+      alt: t("howItWorksPage.stepSix.imageAltText"),
       srcSetDesktop: "../../images/step6.png",
       srcSetMobile: "../../images/step6_mobile.png",
     },
@@ -148,12 +149,12 @@ export default function HowItWorksPage() {
   const StepSeven = {
     icon: {
       iconSrc: SevenIcon,
-      altText: t("register.icons.iconOne.altText"),
+      altText: t("howItWorksPage.stepSeven.iconaltText"),
     },
     heading: t("howItWorksPage.stepSeven.heading"),
     image: {
-      src: "../../images/step1.png",
-      alt: "",
+      src: "../../images/step7.png",
+      alt: t("howItWorksPage.stepSeven.imageAltText"),
       srcSetDesktop: "../../images/step7.png",
       srcSetMobile: "../../images/step7_mobile.png",
     },
@@ -162,7 +163,7 @@ export default function HowItWorksPage() {
   const newLocal = "https://www.youtube.com/watch?v=vP--fwSWtLE";
   return (
     <>
-      <ContentWrapper>
+      <ContentWrapper marginBottom>
         <FormHeader
           title={t("howItWorksPage.formHeaderTitle")}
           intro={t("howItWorksPage.formHeaderText")}
@@ -178,10 +179,11 @@ export default function HowItWorksPage() {
             alt={t("howItWorksPage.stepsVideoSection.imageAltText")}
           />
           <ButtonAnchor
-            text="Auf Youtube abspielen"
+            text={t("howItWorksPage.stepsVideoSection.buttonText")}
             url={newLocal}
             isExternalLink
-            plausibleName="Erklärvideo"
+            plausibleGoal={t("howItWorksPage.stepsVideoSection.plausibleGoal")}
+            plausibleDomain={plausibleDomain}
           />
         </HowItWorksVideoContainer>
       </VideoSection>
@@ -236,8 +238,12 @@ export default function HowItWorksPage() {
           variant
         />
         <Div>
-          <ButtonAnchor url="/eligibility/step/welcome?link_overview=False">
-            {t("howItWorksPage.startButton")}
+          <ButtonAnchor
+            url="/eligibility/step/welcome?link_overview=False"
+            plausibleGoal={t("howItWorksPage.startButton.plausibleGoal")}
+            plausibleDomain={plausibleDomain}
+          >
+            {t("howItWorksPage.startButton.text")}
           </ButtonAnchor>
         </Div>
       </ContentWrapper>
@@ -245,10 +251,23 @@ export default function HowItWorksPage() {
         <Headline2 marginVariant paddingVariant>
           {t("howItWorksPage.questionInfoBox.heading")}
         </Headline2>
-        <ButtonAnchor variant="outline" url="/">
+        <ButtonAnchor
+          variant="outline"
+          url="/hilfebereich"
+          plausibleGoal={t("howItWorksPage.questionInfoBox.plausibleGoal")}
+          plausibleDomain={plausibleDomain}
+        >
           {t("howItWorksPage.questionInfoBox.button")}
         </ButtonAnchor>
       </Box>
     </>
   );
 }
+
+HowItWorksPage.propTypes = {
+  plausibleDomain: PropTypes.string,
+};
+
+HowItWorksPage.defaultProps = {
+  plausibleDomain: undefined,
+};
