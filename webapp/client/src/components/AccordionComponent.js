@@ -67,6 +67,7 @@ const AccordionHeadline = styled.h2`
     }
     return "0";
   }};
+  margin-bottom: 1rem;
 
   @media (max-width: 1024px) {
     font-size: var(--text-xla);
@@ -75,13 +76,21 @@ const AccordionHeadline = styled.h2`
 
 const AccordionStyled = styled(Accordion)``;
 
-export default function AccordionComponent({ title, intro, items, variant }) {
+export default function AccordionComponent({
+  title,
+  intro,
+  items,
+  variant,
+  id,
+}) {
   const [toggle, setToggle] = useState();
 
   return (
     <>
       {title.length > 0 && (
-        <AccordionHeadline variant={variant}>{title}</AccordionHeadline>
+        <AccordionHeadline variant={variant} id={id}>
+          {title}
+        </AccordionHeadline>
       )}
       {intro.length > 0 && <p className="mt-3 pb-2">{intro}</p>}
       <AccordionStyled>
@@ -131,10 +140,12 @@ AccordionComponent.propTypes = {
       detail: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     })
   ).isRequired,
+  id: PropTypes.string,
 };
 
 AccordionComponent.defaultProps = {
   title: "",
   intro: "",
   variant: false,
+  id: null,
 };

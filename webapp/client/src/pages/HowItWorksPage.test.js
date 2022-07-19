@@ -74,5 +74,3 @@ describe("HowItWorks Page", () => {
     expect(screen.getAllByText("HowItWorksComponent")).toHaveLength(7);
   });
 });
-
-// component rendered several times
