@@ -9,26 +9,13 @@ import {
   submitTaxReturnSection,
   afterSubmissionSection,
 } from "../lib/helperPageFaqAnchors";
-import {
-  ContentWrapper,
-  Headline2,
-} from "../components/ContentPagesGeneralStyling";
+import { ContentWrapper } from "../components/ContentPagesGeneralStyling";
 import AccordionComponent from "../components/AccordionComponent";
-import ButtonAnchor from "../components/ButtonAnchor";
 import IconOne from "../assets/icons/icon_1_noBorder.svg";
 import IconTwo from "../assets/icons/icon_2_noBorder.svg";
 import IconThree from "../assets/icons/icon_3_noBorder.svg";
 import IconFour from "../assets/icons/icon_4_noBorder.svg";
-
-const Box = styled.div`
-  padding: 60px 0px 90px 0px;
-  background-color: var(--beige-200);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-height: 274px;
-`;
+import CallToActionBox from "../components/CallToActionBox";
 
 const Icon = styled.img`
   height: 21px;
@@ -107,18 +94,13 @@ export default function HelpAreaPage({ plausibleDomain }) {
           id="afterSubmissionSection"
         />
       </ContentWrapper>
-      <Box style={{ marginTop: "5rem" }}>
-        <Headline2 marginVariant paddingVariant>
-          {t("helpAreaPage.questionInfoBox.heading")}
-        </Headline2>
-        <ButtonAnchor
-          url={mailto}
-          plausibleGoal={t("helpAreaPage.questionInfoBox.plausibleGoal")}
-          plausibleDomain={plausibleDomain}
-        >
-          {t("helpAreaPage.questionInfoBox.button")}
-        </ButtonAnchor>
-      </Box>
+      <CallToActionBox
+        headline={t("helpAreaPage.questionInfoBox.heading")}
+        anchor={mailto}
+        plausibleGoal={t("helpAreaPage.questionInfoBox.plausibleGoal")}
+        plausibleDomain={plausibleDomain}
+        buttonText={t("helpAreaPage.questionInfoBox.button")}
+      />
     </>
   );
 }

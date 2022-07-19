@@ -16,6 +16,7 @@ import FourIcon from "../assets/icons/Icon-4.svg";
 import FiveIcon from "../assets/icons/Icon-5.svg";
 import SixIcon from "../assets/icons/Icon-6.svg";
 import SevenIcon from "../assets/icons/Icon-7.svg";
+import CallToActionBox from "../components/CallToActionBox";
 
 const VideoSection = styled.div`
   display: flex;
@@ -47,16 +48,6 @@ const HowItWorksVideoContainer = styled.div`
 const HowItWorksImage = styled.img`
   width: 100%;
   height: auto;
-`;
-
-const Box = styled.div`
-  padding: 60px 0px 90px 0px;
-  background-color: var(--beige-200);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-height: 274px;
 `;
 
 const Div = styled.div`
@@ -247,19 +238,14 @@ export default function HowItWorksPage({ plausibleDomain }) {
           </ButtonAnchor>
         </Div>
       </ContentWrapper>
-      <Box>
-        <Headline2 marginVariant paddingVariant>
-          {t("howItWorksPage.questionInfoBox.heading")}
-        </Headline2>
-        <ButtonAnchor
-          variant="outline"
-          url="/hilfebereich"
-          plausibleGoal={t("howItWorksPage.questionInfoBox.plausibleGoal")}
-          plausibleDomain={plausibleDomain}
-        >
-          {t("howItWorksPage.questionInfoBox.button")}
-        </ButtonAnchor>
-      </Box>
+      <CallToActionBox
+        headline={t("howItWorksPage.questionInfoBox.heading")}
+        variant="outline"
+        anchor="/hilfebereich"
+        plausibleGoal={t("howItWorksPage.questionInfoBox.plausibleGoal")}
+        plausibleDomain={plausibleDomain}
+        buttonText={t("howItWorksPage.questionInfoBox.button")}
+      />
     </>
   );
 }

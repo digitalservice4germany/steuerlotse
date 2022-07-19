@@ -1013,15 +1013,18 @@ const translations = {
       Item2: {
         title: "Wie läuft die Nutzung des Steuerlotsen ab?",
         detail:
-          "Mit dem Steuerlotsen kommen Sie ganz automatisch in 4 Schritten durch Ihre Steuererklärung:",
+          "Mit dem Steuerlotsen kommen Sie schnell und geführt durch Ihre Steuererklärung:",
+        detail2:
+          "Mehr Informationen und Eindrücke finden Sie auf der Seite <howItWorksPageLink>„So funktioniert’s“</howItWorksPageLink>.",
         listItem1:
-          "<eligibilityLink> Prüfen Sie</eligibilityLink>, ob Sie die Voraussetzung für die Nutzung des Steuerlotsen erfüllen.",
+          "Prüfen Sie, ob Sie die Voraussetzung für die Nutzung des Steuerlotsen erfüllen.",
         listItem2:
-          "<registrationLink>Registrieren Sie sich</registrationLink> beim Steuerlotsen für Ihre Online-Steuererklärung. Mit der erfolgreichen Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung.",
-        listItem3:
-          "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
+          "Registrieren Sie sich beim Steuerlotsen für Ihre Online-Steuererklärung. Mit der erfolgreichen Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung.",
+        listItem3: "Bereiten Sie sich mit unserer Vorbereitungshilfe vor.",
         listItem4:
-          "Für den letzten Schritt, das Ausfüllen Ihrer Steuererklärung, rufen Sie erneut unsere Seite auf. Klicken Sie auf <activationLink>Ihre Steuererklärung</activationLink>und melden Sie sich mit Ihrem Freischaltcode an. Danach können Sie mit dem Ausfüllen der Steuererklärung beginnen.",
+          "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
+        listItem5:
+          "Melden Sie sich mit Ihrem Freischaltcode an und füllen Ihre Steuererklärung aus.",
       },
       Item3: {
         title: "Bis wann kann ich die Steuererklärung abgeben?",
