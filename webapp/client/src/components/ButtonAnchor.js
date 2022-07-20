@@ -319,7 +319,7 @@ ButtonAnchor.propTypes = {
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
   plausibleDomain: PropTypes.string,
   isExternalLink: PropTypes.bool,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
 };
 
 ButtonAnchor.defaultProps = {
@@ -338,4 +338,5 @@ ButtonAnchor.defaultProps = {
   plausibleProps: undefined,
   plausibleDomain: null,
   isExternalLink: false,
+  text: null,
 };

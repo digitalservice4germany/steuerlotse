@@ -152,6 +152,15 @@ export default function HowItWorksPage({ plausibleDomain }) {
   };
 
   const newLocal = "https://www.youtube.com/watch?v=vP--fwSWtLE";
+  const plausiblePropsPlayVideoButton = {
+    method: "Sofunktionierts / Erklärvideo",
+  };
+  const plausiblePropsEligibilityStartButton = {
+    method: "Sofunktionierts / CTA Jetzt starten",
+  };
+  const plausiblePropsHelpPageButton = {
+    method: "Sofunktionierts / Zum Hilfebereich",
+  };
   return (
     <>
       <ContentWrapper marginBottom>
@@ -175,6 +184,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
             isExternalLink
             plausibleGoal={t("howItWorksPage.stepsVideoSection.plausibleGoal")}
             plausibleDomain={plausibleDomain}
+            plausibleProps={plausiblePropsPlayVideoButton}
           />
         </HowItWorksVideoContainer>
       </VideoSection>
@@ -232,6 +242,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
           <ButtonAnchor
             url="/eligibility/step/welcome?link_overview=False"
             plausibleGoal={t("howItWorksPage.startButton.plausibleGoal")}
+            plausibleProps={plausiblePropsEligibilityStartButton}
             plausibleDomain={plausibleDomain}
           >
             {t("howItWorksPage.startButton.text")}
@@ -243,6 +254,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
         variant="outline"
         anchor="/hilfebereich"
         plausibleGoal={t("howItWorksPage.questionInfoBox.plausibleGoal")}
+        plausibleProps={plausiblePropsHelpPageButton}
         plausibleDomain={plausibleDomain}
         buttonText={t("howItWorksPage.questionInfoBox.button")}
       />

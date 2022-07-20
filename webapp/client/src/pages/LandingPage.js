@@ -156,17 +156,19 @@ export default function LandingPage({ plausibleDomain }) {
         />
       </AccordionWrapper>
       <CallToActionBox
-        headline={t("helpAreaPage.questionInfoBox.heading")}
-        anchor="/hilfebereich"
-        plausibleGoal="Start / Zum Hilfebereich"
-        plausibleDomain={plausibleDomain}
-        buttonText={t("howItWorksPage.questionInfoBox.button")}
         colorVariant
         multipleButtons
-        secondButtonText="So funktioniert der Steuerlotse"
-        secondButtonUrl="/sofunktionierts"
+        plausibleDomain={plausibleDomain}
         variant="outline"
-        secondButtonPlausibleGoal="Start / So funktionierts"
+        headline={t("helpAreaPage.questionInfoBox.heading")}
+        firstButtonText={t("LandingPage.cta.howItWorksButtonText")}
+        firstButtonUrl="/sofunktionierts"
+        firstButtonPlausibleGoal="So funktionierts"
+        firstButtonPlausibleProps="Start / So funktionierts"
+        secondButtonText={t("howItWorksPage.questionInfoBox.button")}
+        secondButtonUrl="/hilfebereich"
+        secondButtonPlausibleGoal="Zum Hilfebereich"
+        secondButtonPlausibleProps="Start / Zum Hilfebereich"
       />
       <InfoBoxGrundsteuer />
     </div>

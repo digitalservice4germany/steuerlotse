@@ -37,13 +37,19 @@ export default function CallToActionBox({
   anchor,
   plausibleDomain,
   plausibleGoal,
-  secondButtonPlausibleGoal,
   variant,
   buttonText,
   colorVariant,
   multipleButtons,
+  plausibleProps,
+  firstButtonText,
+  firstButtonUrl,
+  firstButtonPlausibleGoal,
+  firstButtonPlausibleProps,
   secondButtonText,
   secondButtonUrl,
+  secondButtonPlausibleProps,
+  secondButtonPlausibleGoal,
 }) {
   return !multipleButtons ? (
     <Box colorVariant={colorVariant}>
@@ -55,6 +61,7 @@ export default function CallToActionBox({
         url={anchor}
         plausibleGoal={plausibleGoal}
         plausibleDomain={plausibleDomain}
+        plausibleProps={plausibleProps}
       >
         {buttonText}
       </ButtonAnchor>
@@ -66,20 +73,22 @@ export default function CallToActionBox({
       </Headline2>
       <Row>
         <ButtonAnchor
-          url={secondButtonUrl}
-          plausibleGoal={secondButtonPlausibleGoal}
+          url={firstButtonUrl}
+          plausibleGoal={firstButtonPlausibleGoal}
           plausibleDomain={plausibleDomain}
+          plausibleProps={firstButtonPlausibleProps}
           className="left-button"
         >
-          {secondButtonText}
+          {firstButtonText}
         </ButtonAnchor>
         <ButtonAnchor
           variant={variant}
-          url={anchor}
-          plausibleGoal={plausibleGoal}
+          url={secondButtonUrl}
+          plausibleGoal={secondButtonPlausibleGoal}
           plausibleDomain={plausibleDomain}
+          plausibleProps={secondButtonPlausibleProps}
         >
-          {buttonText}
+          {secondButtonText}
         </ButtonAnchor>
       </Row>
     </Box>
@@ -88,34 +97,43 @@ export default function CallToActionBox({
 
 CallToActionBox.propTypes = {
   headline: PropTypes.string,
-  anchor: {
+  anchor: PropTypes.shape({
     url: PropTypes.string,
     text: PropTypes.string,
-  },
+  }),
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,
   variant: PropTypes.string,
   buttonText: PropTypes.string,
   colorVariant: PropTypes.string,
   multipleButtons: PropTypes.bool,
+  firstButtonText: PropTypes.string,
   secondButtonText: PropTypes.string,
   secondButtonUrl: PropTypes.string,
+  firstButtonUrl: PropTypes.string,
+  firstButtonPlausibleGoal: PropTypes.string,
+  firstButtonPlausibleProps: PropTypes.string,
   secondButtonPlausibleGoal: PropTypes.string,
+  secondButtonPlausibleProps: PropTypes.string,
+  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
 };
 
 CallToActionBox.defaultProps = {
   headline: null,
-  anchor: {
-    url: null,
-    text: null,
-  },
+  anchor: null,
   plausibleDomain: null,
   plausibleGoal: null,
   variant: null,
   buttonText: null,
   colorVariant: null,
   multipleButtons: false,
+  firstButtonText: null,
   secondButtonText: null,
   secondButtonUrl: null,
+  firstButtonUrl: null,
   secondButtonPlausibleGoal: null,
+  firstButtonPlausibleGoal: null,
+  firstButtonPlausibleProps: null,
+  secondButtonPlausibleProps: null,
+  plausibleProps: null,
 };

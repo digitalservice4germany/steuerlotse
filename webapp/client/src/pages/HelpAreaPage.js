@@ -38,7 +38,9 @@ const Row = styled.div`
 export default function HelpAreaPage({ plausibleDomain }) {
   const { t } = useTranslation();
   const mailto = t("helpAreaPage.mailto");
-
+  const plausiblePropsContactUsButton = {
+    method: "Hilfebereich / Schreiben Sie uns",
+  };
   return (
     <>
       <ContentWrapper>
@@ -99,6 +101,7 @@ export default function HelpAreaPage({ plausibleDomain }) {
         anchor={mailto}
         plausibleGoal={t("helpAreaPage.questionInfoBox.plausibleGoal")}
         plausibleDomain={plausibleDomain}
+        plausibleProps={plausiblePropsContactUsButton}
         buttonText={t("helpAreaPage.questionInfoBox.button")}
       />
     </>

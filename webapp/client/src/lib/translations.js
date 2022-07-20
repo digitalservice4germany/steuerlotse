@@ -1069,6 +1069,9 @@ const translations = {
     },
     ButtonLabel: "Zur Informationsseite",
     InformationButtonPlausibleGoal: "Zur Informationsseite",
+    cta: {
+      howItWorksButtonText: "So funktioniert der Steuerlotse",
+    },
   },
   freeTaxDeclarationForPensioners: {
     meta: {
@@ -1361,12 +1364,12 @@ const translations = {
     },
     startButton: {
       text: "Jetzt starten",
-      plausibleGoal: "Sofunktionierts / CTA Jetzt starten",
+      plausibleGoal: "SofunktioniertsPage",
     },
     questionInfoBox: {
       heading: "Haben Sie noch Fragen?",
       button: "Zum Hilfebereich",
-      plausibleGoal: "Sofunktionierts / Zum Hilfebereich",
+      plausibleGoal: "Sofunktionierts",
     },
   },
   helpAreaPage: {
@@ -1381,7 +1384,6 @@ const translations = {
       heading: "Kann ich den Steuerlotsen nutzen?",
       item1: {
         title: "Elster-Konto",
-        plausibleGoal: "",
         detail: {
           one: "Wenn Sie bereits ein ELSTER-Konto haben, können Sie den Steuerlotse nicht nutzen.",
           two: "Für die Überprüfung Ihrer Identität braucht unser Service einen Freischaltcode. Dieser Freischaltcode wird von ELSTER erstellt und per Post versendet. Aus technischen Gründen geschieht das in der Regel bei bestehenden ELSTER-Konten nicht.",
@@ -1391,7 +1393,6 @@ const translations = {
       },
       item2: {
         title: "Steuerjahre vor 2021",
-        plausibleGoal: "",
         detail: {
           one: "Der Steuerlotse kann nur für die Abgabe der Steuererklärung 2021 verwendet werden. Für alle früheren Steuerjahre können Sie beispielsweise auf folgende Möglichkeiten zurückgreifen:",
           listItemOne:
@@ -1403,7 +1404,6 @@ const translations = {
       },
       item3: {
         title: "Als Paar",
-        plausibleGoal: "",
         detail:
           "Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. In diesem Fall müssen Sie und Ihr Partner / Ihre Partnerin alle Voraussetzungen unter <eligibilityLink>„Nutzung prüfen“</eligibilityLink> erfüllen. Es reicht aus, wenn sich nur eine Person beim Steuerlotsen registriert. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner / Ihrer Partnerin eintragen.",
       },
@@ -1425,7 +1425,6 @@ const translations = {
       },
       item5: {
         title: "2021 noch berufstätig",
-        plausibleGoal: "",
         detail: {
           one: "Wenn es sich bei der Erwerbstätigkeit um eine geringfügige Beschäftigung handelt (sogenannter „Minijob“) und alle anderen Voraussetzungen unter <eligibilityLink>„Nutzung prüfen“</eligibilityLink> erfüllt sind, dann können Sie den Steuerlotsen nutzen.",
           two: "Wenn Sie anderweitig erwerbstätig waren, dann können Sie den Steuerlotsen nicht nutzen. Sie können dann beispielsweise <elsterLink>Mein ELSTER</elsterLink> nutzen.",
@@ -1433,7 +1432,6 @@ const translations = {
       },
       item6: {
         title: "Verschiedene Renteneinkünfte",
-        plausibleGoal: "",
         detail: {
           one: "Sie können Ihre Steuererklärung mit dem Steuerlotsen machen, wenn die Renteneinkünfte und / oder Pensionen von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch an die Finanzverwaltung übermittelt wurden. Wenn dies auf Ihre Renten zutrifft, können Sie den Steuerlotsen nutzen. Wir können das im Einzelfall jedoch nicht prüfen oder garantieren.",
           two: "Eine Liste der Träger, die Daten elektronisch übermitteln, finden Sie im <eligibilityLink>„Nutzung prüfen“-Fragebogen.</eligibilityLink>",
@@ -1441,13 +1439,11 @@ const translations = {
       },
       item7: {
         title: "Einkünfte aus Ehrenamt",
-        plausibleGoal: "",
         detail:
           "Bei Einkünfte aus einem Ehrenamt (sogenannte „Minijobs“ ausgenommen) müssen diese in der Steuererklärung angegeben werden, was der Steuerlotse nicht abdeckt. Sie können dann beispielsweise <elsterLink>Mein ELSTER</elsterLink> nutzen.",
       },
       item8: {
         title: "Kapitalerträge",
-        plausibleGoal: "",
         detail: {
           one: "Der Steuerlotse kann mit Kapitalerträgen nur genutzt werden, wenn diese bereits versteuert sind und daher nicht mehr in der Steuererklärung angegeben werden müssen. Wir können das im Einzelfall jedoch nicht prüfen.",
           two: "Ob Ihre Kapitalerträge bereits versteuert sind, finden Sie im <eligibilityLink>„Nutzung prüfen“-Fragebogen</eligibilityLink> heraus.",
@@ -1495,7 +1491,6 @@ const translations = {
       heading: "Steuererklärung ausfüllen und abgeben",
       item1: {
         title: "Abgabefrist",
-        plausibleGoal: "",
         detail: {
           one: "Wenn Sie verpflichtet sind, eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung <strong>bis zum 31. Oktober 2022</strong> beim Finanzamt sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende.",
           two: "Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
@@ -1504,7 +1499,6 @@ const translations = {
       item2: {
         title:
           "Steuer-Identifikationsnummer meiner Partnerin / meines Partners",
-        plausibleGoal: "",
         detail: {
           one: "Die 11-stellige Steueridentifikationsnummer müsste Ihr Partner / Ihre Partnerin mit einem Brief vom Bundeszentralamt für Steuern erhalten haben. Die Nummer steht oben rechts groß auf dem Brief. Alternativ finden Sie diese Nummer auch auf dem letzten Einkommenssteuerbescheid oder der letzten Lohnsteuerabrechnung Ihres Partners / Ihrer Partnerin.",
           two: "Wenn Sie die Steueridentifikationsnummer nicht finden, haben Sie die Möglichkeit, sich die Nummer vom <federalTaxOffice>Bundeszentralamt</federalTaxOffice> für Steuern erneut zuschicken zu lassen.",
@@ -1512,7 +1506,6 @@ const translations = {
       },
       item3: {
         title: "Automatische Übernahme von Daten",
-        plausibleGoal: "",
         detail: {
           one: "Daten zu inländischen Renten, Pensionen sowie zu Kranken- und Pflegeversicherungen erhält die Finanzverwaltung von der jeweiligen Stelle elektronisch. Welche Daten für Sie übermittelt wurden, können Sie den Unterlagen entnehmen, die Sie von der jeweiligen Stelle erhalten. Das Finanzamt erhält die Daten aus derselben Quelle wie Sie Ihre Belege.",
           two: "Kontrollieren Sie dennoch Ihren Steuerbescheid. Diesen erhalten Sie automatisch mit der Post, sobald Ihr Finanzamt Ihre Steuererklärung bearbeitet hat.",
@@ -1520,13 +1513,11 @@ const translations = {
       },
       item4: {
         title: "Vorausberechnung der Steuererstattung oder Steuernachzahlung",
-        plausibleGoal: "",
         detail:
           "Der Steuerlotse bietet keine Vorausberechnung an. Die Information über eine Steuererstattung oder Steuernachzahlung erhalten Sie erst mit dem Steuerbescheid.",
       },
       item5: {
         title: "Abschicken der Steuererklärung ans Finanzamt",
-        plausibleGoal: "",
         detail: {
           one: "Ihre Steuererklärung wird beim Steuerlotsen über die offizielle ELSTER-Schnittstelle digital an das Finanzamt übermittelt. ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle Plattform der deutschen Finanzverwaltung.",
           two: "Sie müssen nichts ausdrucken oder per Post verschicken.",
@@ -1534,7 +1525,6 @@ const translations = {
       },
       item6: {
         title: "Datenverarbeitung",
-        plausibleGoal: "",
         detail:
           "Der Steuerlotse fragt nur und erst dann Daten ab, wenn sie wirklich benötigt werden und speichert sie erst und nur dann, wenn es gesetzlich verpflichtet ist. Daten werden immer verschlüsselt verschickt und gespeichert. Der Steuerlotse übermittelt die Daten lediglich an die Finanzverwaltung. Personenbezogene Daten werden von uns nur weitergeleitet – nicht zu anderen Zwecken verarbeitet.",
       },
@@ -1543,13 +1533,11 @@ const translations = {
       heading: "Nach der Abgabe",
       item1: {
         title: "Belege und Nachweise",
-        plausibleGoal: "",
         detail:
           "Belege müssen Sie nur einreichen, wenn das Finanzamt Sie schriftlich dazu auffordert. Bewahren Sie Ihre Belege daher für den Fall einer Nachfrage gut auf. Belege, nach denen das Finanzamt häufig fragt, können zum Beispiel Spendenbescheinigungen, der Nachweis von Pflegekosten, einer Behinderung oder Rechnungen von Handwerkern sein.",
       },
       item2: {
         title: "Fehler nach Absenden korrigieren",
-        plausibleGoal: "",
         detail: {
           one: "Eine Korrektur der abgegebenen Steuererklärung ist mit dem Steuerlotsen nicht möglich. Sie haben aber die Möglichkeit, sich erneut zu registrieren, die Steuererklärung erneut auszufüllen und zu verschicken. Im Finanzamt wird nur die zuletzt eingegangene Steuererklärung bearbeitet.",
           two: "Wenn es sich um eine kleine Korrektur handelt, raten wir Ihnen Ihr Finanzamt direkt über die falsche Angabe zu informieren. Das Finanzamt wird Ihnen dann mitteilen, was Sie weiter tun müssen, ob z.B. eine formlose Information ausreicht oder ob Sie eine korrigierte Steuererklärung einreichen müssen.",
@@ -1559,13 +1547,11 @@ const translations = {
       },
       item3: {
         title: "Übermittlung ans Finanzamt prüfen",
-        plausibleGoal: "",
         detail:
           "Grundsätzlich gilt, dass die Übermittlung der Steuererklärung erfolgreich war, wenn Sie am Ende des Steuerlotsen die Transaktionsnummer sowie das PDF mit einer Übersicht Ihrer Angaben erhalten haben. Die Transaktionsnummer wird durch die empfangende Software der Finanzverwaltung als digitale Unterschrift erstellt und dem Nutzer zurückgespielt. ",
       },
       item4: {
         title: "Steuerbescheid",
-        plausibleGoal: "",
         detail: {
           one: "Der Steuerbescheid wird von Ihrem zuständigen Finanzamt ausgestellt, sobald dieses Ihre Steuererklärung bearbeitet hat. Dies passiert in der Regel fünf bis zehn Wochen, nachdem Sie Ihre Steuererklärung eingereicht haben. Bei größeren und schwierigeren Fällen oder in Zeiten, in denen besonders viele Leute ihre Erklärung abgeben, kann es jedoch gelegentlich länger dauern.",
           two: "Falls Sie sich über den Verbleib Ihres Steuerbescheids erkundigen wollen, ist Ihr zuständiges Finanzamt der richtige Ansprechpartner.",
@@ -1576,7 +1562,7 @@ const translations = {
     questionInfoBox: {
       heading: "Haben Sie noch Fragen?",
       button: "Schreiben Sie uns",
-      plausibleGoal: "Hilfebereich / Schreiben Sie uns",
+      plausibleGoal: "Schreiben Sie uns",
     },
   },
 };

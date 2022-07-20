@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Accordion, Card } from "react-bootstrap";
 import plusIcon from "../assets/icons/plus.svg";
 import minusIcon from "../assets/icons/minus.svg";
+import addPlausibleGoal from "../lib/helpers";
 
 const CardElement = styled.div`
   border: 0;
@@ -82,6 +83,7 @@ export default function AccordionComponent({
   items,
   variant,
   id,
+  plausibleDomain,
 }) {
   const [toggle, setToggle] = useState();
 
@@ -105,6 +107,9 @@ export default function AccordionComponent({
                 onClick={() => {
                   if (toggle === index) setToggle(-1);
                   else setToggle(index);
+                  addPlausibleGoal(plausibleDomain, `${item.title}`, {
+                    method: `Hilfebereich /${item.title}`,
+                  });
                 }}
               >
                 <ExpandButton className="col text-left">
@@ -132,7 +137,7 @@ export default function AccordionComponent({
 
 AccordionComponent.propTypes = {
   title: PropTypes.string,
-  variant: PropTypes.bool,
+  variant: PropTypes.string,
   intro: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.exact({
@@ -141,11 +146,13 @@ AccordionComponent.propTypes = {
     })
   ).isRequired,
   id: PropTypes.string,
+  plausibleDomain: PropTypes.string,
 };
 
 AccordionComponent.defaultProps = {
   title: "",
   intro: "",
-  variant: false,
+  variant: null,
   id: null,
+  plausibleDomain: null,
 };

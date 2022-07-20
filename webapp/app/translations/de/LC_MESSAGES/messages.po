@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-12 22:31+0200\n"
+"POT-Creation-Date: 2022-07-20 23:58+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -76,31 +76,31 @@ msgstr ""
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:324
+#: app/routes.py:331
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:331
+#: app/routes.py:338
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:338
+#: app/routes.py:345
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:345
+#: app/routes.py:352
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:352
+#: app/routes.py:359
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:358
+#: app/routes.py:365
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:363
+#: app/routes.py:370
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
@@ -3154,33 +3154,29 @@ msgstr "Durchgestrichen Icon auf rotem Kreis"
 msgid "footer.contact"
 msgstr "Kontakt und Feedback"
 
-#: app/templates/basis/footer.html:7
-msgid "footer.relatives"
-msgstr "Infos für Angehörige"
-
-#: app/templates/basis/footer.html:9 app/templates/basis/footer.html:11
+#: app/templates/basis/footer.html:8 app/templates/basis/footer.html:10
 msgid "footer.revocation"
 msgstr "Freischaltcode stornieren"
 
-#: app/templates/basis/footer.html:15
+#: app/templates/basis/footer.html:14
 msgid "footer.online-service-ds"
 msgstr ""
 "Ein Online Dienst des <a "
 "href=\"https://digitalservice.bund.de/\">DigitalService</a>"
 
-#: app/templates/basis/footer.html:24
+#: app/templates/basis/footer.html:23
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:25
+#: app/templates/basis/footer.html:24
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:26
+#: app/templates/basis/footer.html:25
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:27
+#: app/templates/basis/footer.html:26
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 
@@ -5213,25 +5209,55 @@ msgid "maybe_icon"
 msgstr "Fragezeichen Icon auf gelbem Kreis"
 
 #: app/templates/eligibility/display_maybe.html:26
-#: app/templates/eligibility/display_success.html:25
+#: app/templates/eligibility/display_success.html:24
 msgid "form.eligibility.use-register-button"
 msgstr "Registrieren"
 
 #: app/templates/eligibility/display_maybe.html:35
-#: app/templates/eligibility/display_success.html:39
+#: app/templates/eligibility/display_success.html:37
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
-#: app/templates/eligibility/display_success.html:15
+#: app/templates/eligibility/display_success.html:14
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
 
-#: app/templates/eligibility/display_success.html:27
+#: app/templates/eligibility/display_success.html:26
 msgid "tracking.eligibility.success.goal"
 msgstr "Registrierung"
 
-#: app/templates/eligibility/display_success.html:28
+#: app/templates/eligibility/display_success.html:27
 msgid "tracking.eligibility.success.method"
+msgstr "Registrierung CTA positiv NP"
+
+#: app/templates/eligibility/display_success.html:52
+msgid "form.eligibility.success.cta-heading"
+msgstr "Haben Sie noch Fragen?"
+
+#: app/templates/eligibility/display_success.html:53
+msgid "form.eligibility.success.button-one.text"
+msgstr "So funktioniert der Steuerlotse"
+
+#: app/templates/eligibility/display_success.html:54
+msgid "form.eligibility.success.button-two.text"
+msgstr "Zum Hilfebereich"
+
+#: app/templates/eligibility/display_success.html:57
+msgid "tracking.eligibility.how_it_works.success.goal"
+msgstr "So funktionierts"
+
+#: app/templates/eligibility/display_success.html:58
+msgid "tracking.eligibility.help_page.success.goal"
+msgstr "Zum Hilfebereich"
+
+#: app/templates/eligibility/display_success.html:59
+#, fuzzy
+msgid "tracking.eligibility.success.how_it_works_button.method"
+msgstr "Registrierung CTA positiv NP"
+
+#: app/templates/eligibility/display_success.html:60
+#, fuzzy
+msgid "tracking.eligibility.success.help_page_button.method"
 msgstr "Registrierung CTA positiv NP"
 
 #: app/templates/eligibility/form_marital_status_input.html:7
@@ -5447,7 +5473,4 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#~ msgid "howitworks.header-title"
-#~ msgstr "Informieren - Der Steuerlotse für Rente und Pension"
 

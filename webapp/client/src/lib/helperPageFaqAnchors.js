@@ -22,14 +22,6 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/unlock_code_activation/step/data_input?link_overview=False" />
         ),
-        shareLink: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a href="/vereinfachte-steuererklärung-für-rentner" />
-        ),
-        digitalServiceLink: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a href="https://digitalservice.bund.de/" />
-        ),
         bundesfinanzministeriumLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://www.bundesfinanzministerium.de/Web/DE/Home/home.html" />
