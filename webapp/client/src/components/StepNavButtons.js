@@ -246,11 +246,14 @@ export default function StepNavButtons({
   const handleClick = () => {
     addPlausibleGoal(plausibleDomain, plausibleGoal, { props: plausibleProps });
   };
-  // eslint-disable-next-line no-unused-vars
+
   function announceChange(message) {
     const ariaLiveContainer = document.querySelector("[aria-live]");
-    ariaLiveContainer.appendChild(document.createTextNode(message));
+    if (ariaLiveContainer !== null) {
+      ariaLiveContainer.appendChild(document.createTextNode(message));
+    }
   }
+
   if (loading) {
     announceChange(waitingMessages.firstMessage);
     const interval = setInterval(() => {
