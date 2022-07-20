@@ -2929,18 +2929,6 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             step.handle()
 
         assert step.render_info.next_url == expected_url
-          
-    def test_if_post_and_session_data_correct_and_both_user_has_elster_and_input_data_correct_then_set_maybe_step(self, app, correct_session_data_users_have_elster):
-        with app.test_request_context(method='POST') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(correct_session_data_users_have_elster)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
-                form_data=ImmutableMultiDict({'foreign_country_eligibility': 'no'}))
-            expected_url = step.url_for_step(EligibilityMaybeDisplaySteuerlotseStep.name)
-            step.handle()
-
-        assert step.render_info.next_url == expected_url
                 
     def test_if_post_and_session_data_correct_and_user_a_has_elster_and_input_data_correct_then_set_success_step(self, app, correct_session_data_user_a_have_elster):
         with app.test_request_context(method='POST') as req:
