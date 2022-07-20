@@ -1,8 +1,9 @@
 import datetime
 import logging
-from typing import Optional
+import time
 
 from app.data_access.db_model.user import User
+from app.data_access.storage.session_storage import SessionStorage
 
 from app.data_access.user_controller import user_exists, check_dob, delete_user
 from app.data_access.user_controller_errors import UserNotExistingError, WrongDateOfBirthError
@@ -10,7 +11,7 @@ from app.elster_client import elster_client
 
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
-from flask import request, flash
+from flask import request, flash, session
 from requests import RequestException
 
 
@@ -22,6 +23,8 @@ from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationInp
 from app.data_access.storage.cookie_storage import CookieStorage
 
 logger = logging.getLogger(__name__)
+flashes_saved = []
+saved_data = []
 
 
 class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
@@ -51,8 +54,13 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(UnlockCodeRevocationMultiStepFlow, self)._handle_specifics_for_step(step, render_info, stored_data)
-
+        seconds_before = time.time()
         if isinstance(step, UnlockCodeRevocationInputStep):
+
+            if request.method == 'GET' and "location" in SessionStorage.get_data("location",
+                                                                                 key_identifier=stored_data["idnr"]):
+                render_info.additional_info['waiting_moment_active'] = True
+
             if request.method == 'POST' and render_info.form.validate():
                 try:
                     self._cancel_user(stored_data)
@@ -65,7 +73,26 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
+                    flashes_saved.append((_('flash.erica.dataConnectionError'), 'warn'))
                     pass  # go to failure step
+                finally:
+                    self._delete_reload_cookie(stored_data)
+                    self._respect_min_waiting_time(seconds_before)
+
+            if request.method == 'POST' and not render_info.form.validate():
+                saved_data.append((render_info, stored_data))
+
+            if request.method == 'GET' and saved_data:
+                render_info_and_stored_data = saved_data[0]
+                render_info = render_info_and_stored_data[0]
+                stored_data = render_info_and_stored_data[1]
+                saved_data.clear()
+
+            if flashes_saved and '_flashes' not in session:
+                for flash_saved in flashes_saved:
+                    flash(flash_saved[0], flash_saved[1])
+                flashes_saved.clear()
+                
         elif isinstance(step, UnlockCodeRevocationFailureStep):
             render_info.next_url = None
 

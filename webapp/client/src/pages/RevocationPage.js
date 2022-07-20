@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldDate from "../components/FormFieldDate";
@@ -9,7 +9,12 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function RevocationPage({ stepHeader, form, fields }) {
+export default function RevocationPage({
+  stepHeader,
+  form,
+  fields,
+  waitingMomentActive,
+}) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
     return (
@@ -31,13 +36,28 @@ export default function RevocationPage({ stepHeader, form, fields }) {
     );
   };
 
+  const [isDisable, setIsDisable] = useState(waitingMomentActive);
+
+  const sendDisableCall = () => {
+    setIsDisable(true);
+  };
+
   return (
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        {...form}
+        loadingFromOutside={waitingMomentActive}
+        sendDisableCall={sendDisableCall}
+        waitingMessages={{
+          firstMessage: t("waitingMoment.revocation.firstMessage"),
+          secondMessage: t("waitingMoment.revocation.secondMessage"),
+        }}
+      >
         <FormRowCentered>
           <FormFieldIdNr
+            disable={isDisable}
             autofocus
             required
             fieldName="idnr"
@@ -55,6 +75,7 @@ export default function RevocationPage({ stepHeader, form, fields }) {
         </FormRowCentered>
         <FormRowCentered>
           <FormFieldDate
+            disable={isDisable}
             required
             fieldName="dob"
             fieldId="dob"
@@ -84,4 +105,9 @@ RevocationPage.propTypes = {
     idnr: fieldPropType,
     dob: fieldPropType,
   }).isRequired,
+  waitingMomentActive: PropTypes.bool,
+};
+
+RevocationPage.defaultProps = {
+  waitingMomentActive: false,
 };

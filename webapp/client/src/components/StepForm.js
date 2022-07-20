@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import StepNavButtons from "./StepNavButtons";
+import { waitingMomentMessagePropType } from "../lib/propTypes";
 
 export default function StepForm({
   children,
@@ -11,9 +13,55 @@ export default function StepForm({
   plausibleGoal,
   plausibleDomain,
   plausibleProps,
+  sendDisableCall,
+  waitingMessages,
+  loadingFromOutside,
 }) {
+  const [loading, setLoading] = useState(loadingFromOutside);
+
+  function makeFetchCall(formData) {
+    fetch(action, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        window.location = response.url;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    if (loadingFromOutside) {
+      const form = document.getElementById("theForm");
+
+      Array.from(form.elements)
+        .filter((element) => element.hasAttribute("required"))
+        .forEach((filteredElement) => {
+          filteredElement.removeAttribute("disabled");
+        });
+      const formData = new FormData(form);
+      makeFetchCall(formData);
+    }
+  }, []);
+
+  function sendDisableCallAndFetch(event) {
+    event.preventDefault();
+    const { target } = event;
+
+    const formData = new FormData(target);
+
+    if (sendDisableCall !== undefined) {
+      setLoading(true);
+      sendDisableCall();
+    }
+
+    makeFetchCall(formData);
+  }
+
   return (
-    <form noValidate method="POST" action={action}>
+    <form id="theForm" noValidate onSubmit={sendDisableCallAndFetch}>
       <input type="hidden" name="csrf_token" value={csrfToken} />
       {children}
       <StepNavButtons
@@ -23,6 +71,8 @@ export default function StepForm({
         plausibleGoal={plausibleGoal}
         plausibleDomain={plausibleDomain}
         plausibleProps={plausibleProps}
+        loading={loading}
+        waitingMessages={waitingMessages}
       />
     </form>
   );
@@ -41,8 +91,14 @@ StepForm.propTypes = {
   plausibleGoal: PropTypes.string,
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
   plausibleDomain: PropTypes.string,
+  sendDisableCall: PropTypes.any,
+  waitingMessages: waitingMomentMessagePropType,
+  loadingFromOutside: PropTypes.bool,
 };
 
 StepForm.defaultProps = {
   ...StepNavButtons.defaultProps,
+  sendDisableCall: undefined,
+  waitingMessages: undefined,
+  loadingFromOutside: false,
 };

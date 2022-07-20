@@ -133,7 +133,7 @@ input.form-control {
   min-height: 55px;
 }
 
-input.form-control:hover {
+input.form-control:hover:enabled {
   border: 2px solid var(--hover-border-color);
 }
 
@@ -145,6 +145,11 @@ input.form-control:focus-visible {
 input.form-control:active {
   border: 2px solid var(--border-color);
   box-shadow: 0 0 0 2px var(--active-outline-color);
+}
+
+input.form-control:disabled {
+  background-color: var(--beige-200);
+  color: var(--grey-900);
 }
 
 input.form-control.field-error-found {

@@ -1334,6 +1334,32 @@ const translations = {
       },
     },
   },
+  waitingMoment: {
+    registration: {
+      firstMessage: "Ihr Freischaltcode wird beantragt.",
+      secondMessage:
+        "Das Beantragen dauert etwas länger.\n" +
+        "Bitte verlassen Sie diese Seite nicht.",
+    },
+    login: {
+      firstMessage: "Ihr Freischaltcode wird überprüft.",
+      secondMessage:
+        "Das Überprüfen dauert etwas länger.\n" +
+        "Bitte verlassen Sie diese Seite nicht.",
+    },
+    revocation: {
+      firstMessage: "Ihr Freischaltcode wird storniert.",
+      secondMessage:
+        "Das Stornieren dauert etwas länger.\n" +
+        "Bitte verlassen Sie diese Seite nicht.",
+    },
+    confirmation: {
+      firstMessage: "Ihre Steuererklärung wird verschickt.",
+      secondMessage:
+        "Das Verschicken dauert etwas länger.\n" +
+        "Bitte verlassen Sie diese Seite nicht.",
+    },
+  },
 };
 
 export default translations;

@@ -1,8 +1,9 @@
 import datetime
 import logging
+import time
 from decimal import Decimal
 
-from flask import request, flash, url_for
+from flask import request, flash, url_for, session
 from flask_babel import _, lazy_gettext as _l
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
@@ -40,6 +41,7 @@ SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
 
 logger = logging.getLogger(__name__)
+flashes_saved = []
 
 
 class LotseMultiStepFlow(MultiStepFlow):
@@ -187,6 +189,7 @@ class LotseMultiStepFlow(MultiStepFlow):
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(LotseMultiStepFlow, self)._handle_specifics_for_step(step, render_info,
                                                                                               stored_data)
+
         if isinstance(step, StepConfirmation):
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed data privacy', request.remote_addr,
@@ -195,6 +198,9 @@ class LotseMultiStepFlow(MultiStepFlow):
                 create_audit_log_confirmation_entry('Confirmed terms of service', request.remote_addr,
                                                     stored_data['idnr'], 'confirm_terms_of_service',
                                                     stored_data['confirm_terms_of_service'])
+            elif flashes_saved and '_flashes' not in session:
+                flash(flashes_saved[0], 'warn')
+                flashes_saved.clear()
         if isinstance(step, StepAck):
             render_info.overview_url = None
             render_info.next_url = url_for('logout')
@@ -204,6 +210,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 try:
                     self._validate_input(stored_data)
                     from app.elster_client.elster_client import send_est_with_elster
+                    time.sleep(15)
                     elster_data = send_est_with_elster(stored_data, request.remote_addr)
                     store_pdf_and_transfer_ticket(current_user,
                                                   elster_data.pop('pdf', None),
@@ -235,6 +242,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 except RequestException as e:
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
+                    flashes_saved.append(_('flash.erica.dataConnectionError'))
                     render_info.redirect_url = self.url_for_step(StepConfirmation.name)
             else:
                 render_info.additional_info['elster_data'] = {

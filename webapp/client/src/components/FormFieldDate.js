@@ -19,6 +19,7 @@ function FormFieldDate({
   label,
   details,
   errors,
+  disable,
 }) {
   const { t } = useTranslation();
 
@@ -61,6 +62,7 @@ function FormFieldDate({
             fieldId,
             values,
             required,
+            disable,
           }}
           autofocus={autofocus || Boolean(errors.length)}
           inputFieldLengths={[2, 2, 4]}
@@ -84,6 +86,7 @@ FormFieldDate.propTypes = {
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: FieldLabelForSeparatedFields.propTypes.label,
   details: FieldLabelForSeparatedFields.propTypes.details,
+  disable: PropTypes.bool,
 };
 
 FormFieldDate.defaultProps = {
@@ -91,6 +94,7 @@ FormFieldDate.defaultProps = {
   required: FormFieldSeparatedField.defaultProps.required,
   label: FieldLabelForSeparatedFields.defaultProps.label,
   details: FieldLabelForSeparatedFields.defaultProps.details,
+  disable: false,
 };
 
 export default FormFieldDate;

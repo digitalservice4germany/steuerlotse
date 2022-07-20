@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldUnlockCode from "../components/FormFieldUnlockCode";
@@ -9,7 +9,12 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function LoginPage({ stepHeader, form, fields }) {
+export default function LoginPage({
+  stepHeader,
+  form,
+  fields,
+  waitingMomentActive,
+}) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
     return (
@@ -31,13 +36,28 @@ export default function LoginPage({ stepHeader, form, fields }) {
     );
   };
 
+  const [isDisable, setIsDisable] = useState(waitingMomentActive);
+
+  const sendDisableCall = () => {
+    setIsDisable(true);
+  };
+
   return (
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepForm
+        {...form}
+        loadingFromOutside={waitingMomentActive}
+        sendDisableCall={sendDisableCall}
+        waitingMessages={{
+          firstMessage: t("waitingMoment.login.firstMessage"),
+          secondMessage: t("waitingMoment.login.secondMessage"),
+        }}
+      >
         <FormRowCentered>
           <FormFieldIdNr
+            disable={isDisable}
             autofocus
             required
             fieldName="idnr"
@@ -56,6 +76,7 @@ export default function LoginPage({ stepHeader, form, fields }) {
         </FormRowCentered>
         <FormRowCentered>
           <FormFieldUnlockCode
+            disable={isDisable}
             required
             fieldName="unlock_code"
             fieldId="unlock_code"
@@ -91,4 +112,9 @@ LoginPage.propTypes = {
     idnr: fieldPropType,
     unlockCode: fieldPropType,
   }).isRequired,
+  waitingMomentActive: PropTypes.bool,
+};
+
+LoginPage.defaultProps = {
+  waitingMomentActive: false,
 };

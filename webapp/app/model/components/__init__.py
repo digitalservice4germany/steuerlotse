@@ -74,7 +74,7 @@ class StepDisplayProps(ComponentProps):
 
 
 class LoginProps(StepFormProps):
-    pass
+    waiting_moment_active: Optional[bool]
 
 
 class LogoutProps(ComponentProps):
@@ -91,6 +91,7 @@ class RegistrationProps(StepFormProps):
     eligibility_link: str
     terms_of_service_link: str
     data_privacy_link: str
+    waiting_moment_active: Optional[bool]
 
 
 class UnlockCodeSuccessProps(ComponentPlausibleProps):
@@ -106,7 +107,7 @@ class UnlockCodeFailureProps(ComponentProps):
 
 
 class RevocationProps(StepFormProps):
-    pass
+    waiting_moment_active: Optional[bool]
 
 
 class RevocationSuccessProps(StepDisplayProps):

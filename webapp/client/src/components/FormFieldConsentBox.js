@@ -12,6 +12,12 @@ const ConsentBox = styled.div`
 
   &.consent-box {
     background-color: var(--bg-highlight-color);
+    ${({ disable }) =>
+      disable &&
+      `
+        background-color: var(--beige-200);
+        color: var(--grey-900);
+  `}
     padding: var(--spacing-04);
   }
 
@@ -28,6 +34,12 @@ const ConsentBox = styled.div`
 
   &.checkbox input:checked ~ label.checkmark {
     background-color: var(--link-color);
+    ${({ disable }) =>
+      disable &&
+      `
+        background-color: var(--blue-400);
+        border-color: var( --grey-500);
+  `}
     background-image: url(${checkedIcon});
     background-repeat: no-repeat;
     background-size: 22px;
@@ -39,6 +51,11 @@ const ConsentBox = styled.div`
     width: 30px;
     height: 30px;
     cursor: pointer;
+    ${({ disable }) =>
+      disable &&
+      `
+        cursor: default;
+  `}
     background: white;
     position: absolute;
     border: 2px solid var(--text-color);
@@ -53,6 +70,7 @@ function FormFieldConsentBox({
   autofocus,
   labelText,
   errors,
+  disable,
 }) {
   return (
     <FormFieldScaffolding
@@ -62,8 +80,12 @@ function FormFieldConsentBox({
       }}
       hideLabel
       render={() => (
-        <ConsentBox className="form-row checkbox consent-box col-lg-10">
+        <ConsentBox
+          disable={disable}
+          className="form-row checkbox consent-box col-lg-10"
+        >
           <input
+            disabled={disable}
             type="checkbox"
             id={fieldId}
             name={fieldName}
@@ -97,12 +119,14 @@ FormFieldConsentBox.propTypes = {
   checked: PropTypes.bool,
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
+  disable: PropTypes.bool,
 };
 
 FormFieldConsentBox.defaultProps = {
   checked: false,
   required: false,
   autofocus: false,
+  disable: false,
 };
 
 export default FormFieldConsentBox;

@@ -44,6 +44,8 @@ class UnlockCodeRevocationInputStep(FormStep):
                 'show_overview_button': bool(render_info.overview_url),
             },
             fields=form_fields_dict(render_info.form),
+            waiting_moment_active=render_info.additional_info[
+                'waiting_moment_active'] if 'waiting_moment_active' in render_info.additional_info else None
         ).camelized_dict()
 
         return render_react_template(component='RevocationPage',

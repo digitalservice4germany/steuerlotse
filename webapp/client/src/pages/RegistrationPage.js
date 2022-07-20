@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
+import styled from "styled-components";
 import Details from "../components/Details";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormFieldDate from "../components/FormFieldDate";
@@ -12,6 +13,16 @@ import StepHeaderButtons from "../components/StepHeaderButtons";
 import SubHeading from "../components/SubHeading";
 import { checkboxPropType, fieldPropType } from "../lib/propTypes";
 
+const Link = styled.a`
+  ${({ disable }) =>
+    disable &&
+    `
+            pointer-events: none;
+    cursor: default;
+    color: var(--blue-400) !important;
+  `}
+`;
+
 export default function RegistrationPage({
   stepHeader,
   form,
@@ -20,6 +31,7 @@ export default function RegistrationPage({
   eligibilityLink,
   termsOfServiceLink,
   dataPrivacyLink,
+  waitingMomentActive,
 }) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
@@ -42,6 +54,12 @@ export default function RegistrationPage({
     );
   };
 
+  const [isDisable, setIsDisable] = useState(waitingMomentActive);
+
+  const sendDisableCall = () => {
+    setIsDisable(true);
+  };
+
   return (
     <>
       <StepHeaderButtons />
@@ -57,6 +75,12 @@ export default function RegistrationPage({
       />
       <StepForm
         {...form}
+        loadingFromOutside={waitingMomentActive}
+        sendDisableCall={sendDisableCall}
+        waitingMessages={{
+          firstMessage: t("waitingMoment.registration.firstMessage"),
+          secondMessage: t("waitingMoment.registration.secondMessage"),
+        }}
         explanatoryButtonText={
           <Trans
             t={t}
@@ -71,6 +95,7 @@ export default function RegistrationPage({
       >
         <FormRowCentered>
           <FormFieldDate
+            disable={isDisable}
             autofocus
             required
             fieldName="dob"
@@ -84,6 +109,7 @@ export default function RegistrationPage({
         </FormRowCentered>
         <FormRowCentered>
           <FormFieldIdNr
+            disable={isDisable}
             required
             fieldName="idnr"
             fieldId="idnr"
@@ -102,6 +128,7 @@ export default function RegistrationPage({
           {t("unlockCodeRequest.dataPrivacyAndAgb.title")}
         </SubHeading>
         <FormFieldConsentBox
+          disable={isDisable}
           required
           fieldName="registration_confirm_data_privacy"
           fieldId="registration_confirm_data_privacy"
@@ -113,10 +140,20 @@ export default function RegistrationPage({
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                dataPrivacyLink: <a href={dataPrivacyLink} />,
+                dataPrivacyLink: (
+                  <Link
+                    disable={isDisable}
+                    tabIndex={isDisable ? "-1" : undefined}
+                    href={dataPrivacyLink}
+                    rel="noreferrer"
+                    target="_blank"
+                  />
+                ),
                 taxGdprLink: (
                   // eslint-disable-next-line jsx-a11y/anchor-has-content
-                  <a
+                  <Link
+                    tabIndex={isDisable ? "-1" : undefined}
+                    disable={isDisable}
                     href="https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2020-07-01-Korrektur-Allgemeine-Informationen-Datenschutz-Grundverordnung-Steuerverwaltung-anlage-1.pdf?__blob=publicationFile&v=3"
                     rel="noreferrer"
                     target="_blank"
@@ -128,6 +165,7 @@ export default function RegistrationPage({
           errors={fields.registrationConfirmDataPrivacy.errors}
         />
         <FormFieldConsentBox
+          disable={isDisable}
           required
           fieldName="registration_confirm_terms_of_service"
           fieldId="registration_confirm_terms_of_service"
@@ -139,13 +177,20 @@ export default function RegistrationPage({
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                termsOfServiceLink: <a href={termsOfServiceLink} />,
+                termsOfServiceLink: (
+                  <Link
+                    disable={isDisable}
+                    tabIndex={isDisable ? "-1" : undefined}
+                    href={termsOfServiceLink}
+                  />
+                ),
               }}
             />
           }
           errors={fields.registrationConfirmTermsOfService.errors}
         />
         <FormFieldConsentBox
+          disable={isDisable}
           required
           fieldName="registration_confirm_incomes"
           fieldId="registration_confirm_incomes"
@@ -157,7 +202,13 @@ export default function RegistrationPage({
               components={{
                 // The anchors get content in the translation file
                 // eslint-disable-next-line jsx-a11y/anchor-has-content
-                eligibilityLink: <a href={eligibilityLink} />,
+                eligibilityLink: (
+                  <Link
+                    disable={isDisable}
+                    tabIndex={isDisable ? "-1" : undefined}
+                    href={eligibilityLink}
+                  />
+                ),
               }}
             />
           }
@@ -165,6 +216,7 @@ export default function RegistrationPage({
         />
         <SubHeading>{t("unlockCodeRequest.eData.title")}</SubHeading>
         <Details
+          disable={isDisable}
           title={t("unlockCodeRequest.eData.helpTitle")}
           detailsId="registration_confirm_e_data"
         >
@@ -177,6 +229,7 @@ export default function RegistrationPage({
           </p>
         </Details>
         <FormFieldConsentBox
+          disable={isDisable}
           required
           fieldName="registration_confirm_e_data"
           fieldId="registration_confirm_e_data"
@@ -195,6 +248,7 @@ RegistrationPage.propTypes = {
   stepHeader: PropTypes.exact({
     // TODO: define these here, not in Python
     title: PropTypes.string,
+    intro: PropTypes.string,
   }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
@@ -214,4 +268,9 @@ RegistrationPage.propTypes = {
   eligibilityLink: PropTypes.string.isRequired,
   termsOfServiceLink: PropTypes.string.isRequired,
   dataPrivacyLink: PropTypes.string.isRequired,
+  waitingMomentActive: PropTypes.bool,
+};
+
+RegistrationPage.defaultProps = {
+  waitingMomentActive: false,
 };

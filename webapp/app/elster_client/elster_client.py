@@ -1,5 +1,7 @@
 import logging
 import json
+import threading
+import time
 from datetime import datetime
 from decimal import Decimal
 
@@ -10,6 +12,7 @@ from requests import Timeout
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_address_entry
+from app.data_access.storage.session_storage import SessionStorage
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
@@ -108,9 +111,18 @@ def validate_est_with_elster(form_data, year=VERANLAGUNGSJAHR, include_elster_re
 
 
 def send_unlock_code_request_with_elster(form_data, ip_address):
-    data = {'payload': {'tax_id_number': form_data['idnr'], 'date_of_birth': form_data['dob']},
-            'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
-    result = _send_job_and_get_result('fsc/request', data)
+    if "location" not in SessionStorage.get_data("location", key_identifier=form_data['idnr']):
+        data = {'payload': {'tax_id_number': form_data['idnr'], 'date_of_birth': form_data['dob']},
+                'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
+        erica_response_job_creation = _send_job('fsc/request', data)
+        location = erica_response_job_creation.headers['location'].removeprefix("v2")
+        SessionStorage.override_data({'location': location, 'thread': threading.current_thread().ident},
+                                     data_identifier="location", key_identifier=form_data['idnr'])
+        time.sleep(10)
+        result = _get_job_result(location)
+    else:
+        result = _get_job_result(SessionStorage.get_data("location", key_identifier=form_data['idnr'])['location'])
+
     create_audit_log_entry('unlock_code_request_sent',
                            ip_address,
                            form_data['idnr'],
@@ -120,10 +132,19 @@ def send_unlock_code_request_with_elster(form_data, ip_address):
 
 
 def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_address):
-    data = {'payload': {'tax_id_number': form_data['idnr'], 'freischalt_code': form_data['unlock_code'],
-                        'elster_request_id': elster_request_id},
-            'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
-    result = _send_job_and_get_result('fsc/activation', data)
+    if "location" not in SessionStorage.get_data("location", key_identifier=form_data['idnr']):
+        data = {'payload': {'tax_id_number': form_data['idnr'], 'freischalt_code': form_data['unlock_code'],
+                            'elster_request_id': elster_request_id},
+                'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
+        erica_response_job_creation = _send_job('fsc/activation', data)
+        location = erica_response_job_creation.headers['location'].removeprefix("v2")
+        SessionStorage.override_data({'location': location, 'thread': threading.current_thread().ident},
+                                     data_identifier="location", key_identifier=form_data['idnr'])
+        time.sleep(10)
+        result = _get_job_result(location)
+    else:
+        result = _get_job_result(SessionStorage.get_data("location", key_identifier=form_data['idnr'])['location'])
+
     create_audit_log_entry('unlock_code_activation_sent',
                            ip_address,
                            form_data['idnr'],
@@ -133,13 +154,22 @@ def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_add
 
 
 def send_unlock_code_revocation_with_elster(form_data, ip_address):
-    data = {'payload': {'tax_id_number': form_data['idnr'], 'elster_request_id': form_data['elster_request_id']},
-            'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
-    result = _send_job_and_get_result('fsc/revocation', data)
+    if "location" not in SessionStorage.get_data("location", key_identifier=form_data['idnr']):
+        data = {'payload': {'tax_id_number': form_data['idnr'], 'elster_request_id': form_data['elster_request_id']},
+                'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
+        erica_response_job_creation = _send_job('fsc/revocation', data)
+        location = erica_response_job_creation.headers['location'].removeprefix("v2")
+        SessionStorage.override_data({'location': location, 'thread': threading.current_thread().ident},
+                                     data_identifier="location", key_identifier=form_data['idnr'])
+        time.sleep(10)
+        result = _get_job_result(location)
+    else:
+        result = _get_job_result(SessionStorage.get_data("location", key_identifier=form_data['idnr'])['location'])
+
     create_audit_log_entry('unlock_code_revocation_sent',
                            ip_address, form_data['idnr'],
                            result['transferticket'],
-                           result['elsterRequestId'])
+                           form_data['elster_request_id'])
     return result
 
 
@@ -171,6 +201,26 @@ def _send_job_and_get_result(endpoint, data):
     while status == 'Processing':
         erica_response_job_status = request_from_erica(
             _PYERIC_API_BASE_URL + erica_response_job_creation.headers['location'].removeprefix("v2"))
+        check_erica_response_for_errors(erica_response_job_status)
+        status = erica_response_job_status.json()['processStatus']
+        result = erica_response_job_status.json()['result']
+    return result
+
+
+def _send_job(endpoint, data):
+    erica_response_job_creation = send_to_erica(_PYERIC_API_BASE_URL + '/' + endpoint,
+                                                data=json.dumps(data, default=str))
+    check_erica_response_for_errors(erica_response_job_creation)
+    return erica_response_job_creation
+
+
+def _get_job_result(location):
+    status = 'Processing'
+    result = None
+    while status == 'Processing':
+        print("Get Status. Thread: " + str(threading.current_thread().ident))
+        erica_response_job_status = request_from_erica(
+            _PYERIC_API_BASE_URL + location)
         check_erica_response_for_errors(erica_response_job_status)
         status = erica_response_job_status.json()['processStatus']
         result = erica_response_job_status.json()['result']
