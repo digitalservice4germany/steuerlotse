@@ -21,6 +21,7 @@ Default.args = {
   },
   form: {
     ...StepFormDefault.args,
+    nextButtonLabel: "Registrieren",
   },
   fields: {
     idnr: {

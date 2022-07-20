@@ -157,6 +157,8 @@ const OutlineButton = styled.button`
 
 const ExplanatoryText = styled.small`
   margin-bottom: 0;
+  margin-top: var(--spacing-01);
+  margin-left: var(--spacing-01);
 
   & a {
     color: var(--text-color);
