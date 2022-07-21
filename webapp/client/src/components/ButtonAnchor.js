@@ -262,19 +262,40 @@ export default function ButtonAnchor({
     relation.push("noopener");
   }
 
+  const isUrl = () => {
+    if (url) {
+      return "a";
+    }
+    return "button";
+  };
+
+  const isDisabled = () => {
+    if (!url) {
+      return disabled;
+    }
+    return undefined;
+  };
+
+  const rel = () => {
+    if (url && !download) {
+      return relation;
+    }
+    return undefined;
+  };
+
   return !isExternalLink ? (
     <Button
-      as={url ? "a" : "button"}
+      as={isUrl()}
       className={className}
       href={url}
       variant={variant}
-      disabled={!url ? disabled : undefined}
+      disabled={isDisabled()}
       name={name}
       download={download}
       external={external}
       buttonStyle={buttonStyle}
       target={target || undefined}
-      rel={url && !download ? relation : undefined}
+      rel={rel()}
       onClick={handleClick}
       marginVariant={marginVariant}
       marginTop={marginTop}
@@ -283,7 +304,7 @@ export default function ButtonAnchor({
     </Button>
   ) : (
     <ButtonAnchorForPlayer
-      as={url ? "a" : "button"}
+      as={isUrl()}
       href={url}
       name={name}
       onClick={handleClick}
