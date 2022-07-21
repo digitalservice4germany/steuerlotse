@@ -433,9 +433,12 @@ const translations = {
   revocation: {
     failure: {
       header: {
-        title: "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
-        intro:
-          "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun.",
+        title: "Stornierung fehlgeschlagen",
+        reason: {
+          title: "Mögliche Ursachen:",
+          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. <registrationLink>Registrieren</registrationLink> Sie sich, um den Steuerlotsen zu nutzen.",
+          two: "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
+        },
       },
     },
   },
