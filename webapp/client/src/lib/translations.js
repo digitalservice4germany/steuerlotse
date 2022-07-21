@@ -413,9 +413,16 @@ const translations = {
     },
     failure: {
       header: {
-        title: "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
+        title: "Registrierung fehlgeschlagen.",
         intro:
           "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+      },
+      reasons: {
+        title: "Mögliche Ursachen:",
+        one: "<strong>Ihre Angaben sind nicht korrekt.</strong> <eligibilityLink>Prüfen</eligibilityLink> Sie, ob Sie Ihre Steuer-ID und Ihr Geburtsdatum korrekt eingegeben haben.",
+        two: "<strong>Sie haben sich bereits bei uns registriert.</strong> In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+        three:
+          "<strong>Haben Sie sich noch nicht bei uns registriert und die Registrierung klappt trotzdem nicht?</strong> <revocationLink>Stornieren</revocationLink> Sie erst Ihren Freischaltcode und versuchen Sie dann erneut die Registrierung.",
       },
     },
     icons: {
