@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-05 11:44+0200\n"
+"POT-Creation-Date: 2022-07-21 23:28+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -2973,7 +2973,7 @@ msgid "validate.date-of-too-far-in-past"
 msgstr "Das Datum darf nicht vor dem 1.1.1900 liegen."
 
 #: app/forms/validations/validators.py:25
-#: app/forms/validations/validators.py:189
+#: app/forms/validations/validators.py:192
 msgid "validate.not-a-decimal"
 msgstr "Der Wert darf nur Ziffern beinhalten."
 
@@ -3031,35 +3031,41 @@ msgstr ""
 msgid "validate.invalid-unlock-code"
 msgstr "Der Freischaltcode ist nicht valide."
 
-#: app/forms/validations/validators.py:137
-#: app/forms/validations/validators.py:147
+#: app/forms/validations/validators.py:130
+msgid "validate.unlock-code.not.example-code"
+msgstr ""
+"Der eingegebene Freischaltcode entspricht dem Beispiel-Freischaltcode. "
+"Sie erhalten Ihren persönlichen Freischaltcode in einem Brief."
+
+#: app/forms/validations/validators.py:140
+#: app/forms/validations/validators.py:150
 msgid "validate.invalid-character"
 msgstr "Das Feld enthält ein Zeichen, das nicht unterstützt wird."
 
-#: app/forms/validations/validators.py:159
+#: app/forms/validations/validators.py:162
 msgid "validate.invalid-tax-number-length.shorter-than-ten"
 msgstr "Die Angabe muss mindestens 10 Ziffern umfassen."
 
-#: app/forms/validations/validators.py:161
+#: app/forms/validations/validators.py:164
 msgid "validate.invalid-tax-number-length.shorter-than-eleven"
 msgstr "Die Angabe muss mindestens 11 Ziffern umfassen."
 
-#: app/forms/validations/validators.py:163
+#: app/forms/validations/validators.py:166
 msgid "validate.invalid-tax-number-length.too-long"
 msgstr "Die Angabe darf höchstens 11 Ziffern umfassen."
 
-#: app/forms/validations/validators.py:172
+#: app/forms/validations/validators.py:175
 msgid "validate.invalid-hessen-tax-number"
 msgstr ""
 "In Hessen gibt es verschiedene Formate für die Steuernummer. Sollte die "
 "Ihnen vorliegende Nummer 10 Ziffern haben, tragen Sie bitte an erster "
 "Stelle eine 0 ein."
 
-#: app/forms/validations/validators.py:180
+#: app/forms/validations/validators.py:183
 msgid "validate.invalid-tax-number"
 msgstr "Die Steuernummer ist nicht valide."
 
-#: app/forms/validations/validators.py:196
+#: app/forms/validations/validators.py:199
 msgid "validate.disability_degree.invalid_number"
 msgstr ""
 "Der Grad der Behinderung wird in 5er-Schritten bis 100 festgesetzt. "

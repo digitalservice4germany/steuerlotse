@@ -119,6 +119,9 @@ class ValidUnlockCode:
             raise ValidationError(_('validate.unlock-code-length'))
 
         input_str = str(field.data)
+        # must not equal example-code
+        if (input_str == 'KPWT-7R2F-HGS'):
+            raise ValidationError(_('validate.unlock-code.not.example-code'))    
         # must contain 14 digits
         if len(input_str) != 14:
             raise ValidationError(_('validate.unlock-code-length'))
