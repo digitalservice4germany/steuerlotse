@@ -5,7 +5,7 @@ import { Default as StepFormDefault } from "./StepForm.stories";
 import { baseDecorator } from "../../.storybook/decorators";
 
 export default {
-  title: "Pages/Login",
+  title: "Pages/Login Page",
   component: LoginPage,
   decorators: baseDecorator,
 };
