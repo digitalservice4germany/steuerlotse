@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
-import userEvent from "@testing-library/user-event";
 import SubmitAcknowledgePage from "./SubmitAcknowledgePage";
 
 const MOCK_PROPS = {
@@ -27,14 +26,6 @@ describe("SubmitAcknowledgePage", () => {
       "href",
       expect.stringContaining(MOCK_PROPS.logoutUrl)
     );
-  });
-
-  it("should render facebook icon", () => {
-    expect(screen.getByText("Auf Facebook teilen")).toBeInTheDocument();
-  });
-
-  it("should render email icon", () => {
-    expect(screen.getByText("E-Mail schreiben")).toBeInTheDocument();
   });
 });
 
@@ -70,13 +61,15 @@ describe("SubmitAcknowledgePage translations", () => {
 
   it("should render recommend header", () => {
     expect(
-      screen.getByText(submitAcknowledgeTexts.recommend.heading)
+      screen.getByText(
+        submitAcknowledgeTexts.supportingDocumentsEvidence.heading
+      )
     ).toBeDefined();
   });
 
   it("should render recommend text", () => {
     expect(
-      screen.getByText(submitAcknowledgeTexts.recommend.text)
+      screen.getByText(submitAcknowledgeTexts.supportingDocumentsEvidence.text)
     ).toBeDefined();
   });
 
@@ -88,36 +81,5 @@ describe("SubmitAcknowledgePage translations", () => {
 
   it("should render logout text", () => {
     expect(screen.getByText(submitAcknowledgeTexts.logout.text)).toBeDefined();
-  });
-});
-
-describe("SubmitAcknowledgePage with plausible domain", () => {
-  const MOCK_PROPS_PLAUSIBLE = {
-    prevUrl: "/some/prev/path",
-    logoutUrl: "/some/link/path",
-    plausibleDomain: "http://localhost:3000",
-  };
-
-  beforeEach(() => {
-    window.plausible = jest.fn();
-    render(<SubmitAcknowledgePage {...MOCK_PROPS_PLAUSIBLE} />);
-  });
-
-  it("should add plausible goal for facebook click", async () => {
-    const user = userEvent.setup();
-
-    await user.click(screen.getByText("Auf Facebook teilen"));
-    expect(window.plausible).toHaveBeenCalledWith("Facebook icon clicked", {
-      method: "submitAcknowledge",
-    });
-  });
-
-  it("should add plausible goal for email click", async () => {
-    const user = userEvent.setup();
-
-    await user.click(screen.getByText("E-Mail schreiben"));
-    expect(window.plausible).toHaveBeenCalledWith("Email icon clicked", {
-      method: "submitAcknowledge",
-    });
   });
 });
