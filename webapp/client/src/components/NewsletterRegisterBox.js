@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import ButtonAnchor from "./ButtonAnchor";
 import FormFieldTextInput from "./FormFieldTextInput";
 import { ReactComponent as SuccessIcon } from "../assets/icons/success_icon.svg";
+import addPlausibleGoal from "../lib/helpers";
 
 const Box = styled.div`
   background-color: var(--beige-200);
@@ -145,6 +146,7 @@ export default function NewsletterRegisterBox({
     const x = document.getElementById("success");
     if (activate) {
       x.style.display = "block";
+      addPlausibleGoal(plausibleDomain, plausibleGoal, {});
     } else {
       x.style.display = "none";
     }
@@ -223,12 +225,7 @@ export default function NewsletterRegisterBox({
             />
           </ColumnField>
           <ColumnButton flexBasis={30} leftAuto>
-            <ButtonInRow
-              onClick={sendEmail}
-              disabled={disableButton}
-              plausibleDomain={plausibleDomain}
-              plausibleGoal={plausibleGoal}
-            >
+            <ButtonInRow onClick={sendEmail} disabled={disableButton}>
               {t("newsletter.button.label")}
             </ButtonInRow>
           </ColumnButton>

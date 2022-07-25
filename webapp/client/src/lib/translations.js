@@ -251,11 +251,11 @@ const translations = {
       causes: {
         title: "Mögliche Ursachen",
         reasons1:
-          "Ihr Freischaltcode ist nicht korrekt. Eine Ursache kann die Verwechslung von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer 8 verwechselt werden. Prüfen Sie Ihre Angabe.",
+          "<strong>Ihr Freischaltcode ist nicht korrekt.</strong> Eine Ursache kann die Verwechslung von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer 8 verwechselt werden. <eligibilityLink>Prüfen</eligibilityLink> Sie Ihre Angabe.",
         reasons2:
-          "Haben Sie sich vor 90 Tagen registriert? In diesem Fall können Sie sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <registrationLink>Registrieren</registrationLink> Sie sich bitte erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode.",
+          "<strong>Haben Sie sich vor 90 Tagen registriert?</strong> In diesem Fall können Sie sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <registrationLink>Registrieren</registrationLink> Sie sich bitte erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode.",
         reasons3:
-          "Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen. Dann ist Ihr Freischaltcode nicht mehr gültig. Bitte <revocationLink>stornieren</revocationLink> Sie Ihren Freischaltcode und <registrationLink>registrieren</registrationLink> sich erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode.",
+          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> Dann ist Ihr Freischaltcode nicht mehr gültig. Bitte <revocationLink>stornieren</revocationLink> Sie Ihren Freischaltcode und registrieren sich erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode.",
       },
     },
   },
@@ -293,8 +293,8 @@ const translations = {
     },
   },
   newsletter: {
-    headline: "Bestätigung und Erinnerung per E-Mail erhalten",
-    text: "Erhalten Sie zusätzlich per E-Mail die Bestätigung Ihrer Registrierung mit Informationen zur Vorbereitung und eine Erinnerung, wenn Ihr Brief mit Freischaltcode angekommen ist.",
+    headline: "Bleiben Sie informiert",
+    text: "Erhalten Sie per E-Mail Erinnerungen zu wichtigen Fristen und weitere Informationen zum Steuerlotsen, zum Beispiel zur Vorbereitung der Steuererklärung.",
     fieldEmail: {
       label: "Ihre E-Mail Adresse",
     },
@@ -311,7 +311,7 @@ const translations = {
         "Das Speichern Ihrer E-Mail-Adresse hat nicht geklappt.  Bitte versuchen Sie es erneut.",
     },
     success: {
-      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung Ihrer E-Mail-Adresse an {{emailValue}} geschickt.",
+      text: "Vielen Dank! Wir haben eine E-Mail zur Bestätigung an {{emailValue}} geschickt. Der Bestätigungslink ist 48 Stunden gültig.",
     },
     successPage: {
       title:
@@ -365,6 +365,10 @@ const translations = {
       mail_subject: "Vereinfachte Steuererklärung für Rentner und Pensionäre",
       promote_url: "https://www.steuerlotse-rente.de/",
     },
+    supportingDocumentsEvidence: {
+      heading: "Was mache ich mit Belegen und Nachweisen?",
+      text: "Belege müssen Sie nur einreichen, wenn das Finanzamt Sie schriftlich dazu auffordert. Bewahren Sie Ihre Belege daher für den Fall einer Nachfrage gut auf. Belege, nach denen das Finanzamt häufig fragt, können zum Beispiel Spendenbescheinigungen, der Nachweis von Pflegekosten, einer Behinderung oder Rechnungen von Handwerkern sein.",
+    },
     logout: {
       heading: "Wir löschen Ihr Nutzerkonto",
       text: "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Wenn Sie unseren Service nächstes Jahr wieder nutzen möchten, können Sie sich einfach erneut registrieren. Haben Sie Ihre Steuererklärung gespeichert? Dann können Sie sich abmelden.",
@@ -413,9 +417,16 @@ const translations = {
     },
     failure: {
       header: {
-        title: "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
+        title: "Registrierung fehlgeschlagen.",
         intro:
           "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+      },
+      reasons: {
+        title: "Mögliche Ursachen:",
+        one: "<strong>Ihre Angaben sind nicht korrekt.</strong> <eligibilityLink>Prüfen</eligibilityLink> Sie, ob Sie Ihre Steuer-ID und Ihr Geburtsdatum korrekt eingegeben haben.",
+        two: "<strong>Sie haben sich bereits bei uns registriert.</strong> In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+        three:
+          "<strong>Haben Sie sich noch nicht bei uns registriert und die Registrierung klappt trotzdem nicht?</strong> <revocationLink>Stornieren</revocationLink> Sie erst Ihren Freischaltcode und versuchen Sie dann erneut die Registrierung.",
       },
     },
     icons: {
@@ -433,9 +444,12 @@ const translations = {
   revocation: {
     failure: {
       header: {
-        title: "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
-        intro:
-          "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt? Dann haben wir Ihren Freischaltcode automatisiert storniert und Sie müssen nichts weiter tun.",
+        title: "Stornierung fehlgeschlagen",
+        reason: {
+          title: "Mögliche Ursachen:",
+          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. <registrationLink>Registrieren</registrationLink> Sie sich, um den Steuerlotsen zu nutzen.",
+          two: "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
+        },
       },
     },
   },

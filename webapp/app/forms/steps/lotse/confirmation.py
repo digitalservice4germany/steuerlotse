@@ -74,5 +74,4 @@ class StepSummary(LotseFormSteuerlotseStep):
         return render_react_template(component='SummaryPage',
                                      props=props_dict,
                                      form=self.render_info.form,
-                                     header_title=_('form.lotse.header-title'),
-                                     disable_extended_footer=True)
+                                     header_title=_('form.lotse.header-title'))
