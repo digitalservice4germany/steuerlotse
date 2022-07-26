@@ -9,9 +9,9 @@
     "main.css.map": "./static/css/main.03480f9f.chunk.css.map",
     "runtime~main.js": "./runtime~main.39487a85.iframe.bundle.js",
     "vendors~main.css": "./static/css/vendors~main.9bbac83c.chunk.css",
-    "vendors~main.js": "./vendors~main.2be83883.iframe.bundle.js",
+    "vendors~main.js": "./vendors~main.12b79419.iframe.bundle.js",
     "vendors~main.css.map": "./static/css/vendors~main.9bbac83c.chunk.css.map",
-    "vendors~main.js.map": "./vendors~main.2be83883.iframe.bundle.js.map",
+    "vendors~main.js.map": "./vendors~main.12b79419.iframe.bundle.js.map",
     "6.cb417b41.iframe.bundle.js": "./6.cb417b41.iframe.bundle.js",
     "7.6cbc5732.iframe.bundle.js": "./7.6cbc5732.iframe.bundle.js",
     "7.6cbc5732.iframe.bundle.js.map": "./7.6cbc5732.iframe.bundle.js.map",
@@ -57,12 +57,12 @@
     "static/media/vorsorgeaufwendungen.svg": "./static/media/vorsorgeaufwendungen.477f80b2.svg",
     "static/media/warning.131b694e.svg": "./static/media/warning.131b694e.svg",
     "static/media/wiederbeschaffungskosten.98ea5760.svg": "./static/media/wiederbeschaffungskosten.98ea5760.svg",
-    "vendors~main.2be83883.iframe.bundle.js.LICENSE.txt": "./vendors~main.2be83883.iframe.bundle.js.LICENSE.txt"
+    "vendors~main.12b79419.iframe.bundle.js.LICENSE.txt": "./vendors~main.12b79419.iframe.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
     "runtime~main.39487a85.iframe.bundle.js",
     "static/css/vendors~main.9bbac83c.chunk.css",
-    "vendors~main.2be83883.iframe.bundle.js",
+    "vendors~main.12b79419.iframe.bundle.js",
     "static/css/main.03480f9f.chunk.css",
     "main.e01d93df.iframe.bundle.js"
   ]
