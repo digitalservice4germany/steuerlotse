@@ -786,11 +786,11 @@
         },
         "schwifty": {
             "hashes": [
-                "sha256:154e5398a1927a1279a5159321e64c015069bf61f694a57ccb77e7bd3ae3f457",
-                "sha256:31e905f7a2bc20f8e8a79efae0eaba65cbca24e4dcd5083f815e43cf689a7019"
+                "sha256:56e1817b870e02441c164749fa1a6312a31c8df0cc7bd4073c4f58a172981e9c",
+                "sha256:a6fbb22bef937bf48008a8f793fd52962b519050fab781ab020861aa821d5201"
             ],
             "index": "pypi",
-            "version": "==2022.6.0"
+            "version": "==2022.7.0"
         },
         "setuptools": {
             "hashes": [
@@ -882,11 +882,11 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:44ece4d53fb1706f667c9bd1c648f5469a2ec925fcf3a776667042d645472c14",
-                "sha256:aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"
+                "sha256:8298d6d56d39be0e3bc13c1c97d133f9b45d797169a0e11cdd0e0489d786f7ec",
+                "sha256:879ba4d1e89654d9769ce13121e0f94310ea32e8d2f8cf587b77c08bbcdb30d6"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
-            "version": "==1.26.9"
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5' and python_version < '4'",
+            "version": "==1.26.10"
         },
         "werkzeug": {
             "hashes": [
