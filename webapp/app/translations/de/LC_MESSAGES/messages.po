@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-21 23:28+0200\n"
+"POT-Creation-Date: 2022-07-26 22:58+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -5257,12 +5257,10 @@ msgid "tracking.eligibility.help_page.success.goal"
 msgstr "Zum Hilfebereich"
 
 #: app/templates/eligibility/display_success.html:59
-#, fuzzy
 msgid "tracking.eligibility.success.how_it_works_button.method"
 msgstr "Registrierung CTA positiv NP"
 
 #: app/templates/eligibility/display_success.html:60
-#, fuzzy
 msgid "tracking.eligibility.success.help_page_button.method"
 msgstr "Registrierung CTA positiv NP"
 

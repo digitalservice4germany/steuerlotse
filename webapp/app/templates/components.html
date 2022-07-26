@@ -283,7 +283,7 @@
 {% macro eligibilitySuccessBox(heading, textButtonOne, textButtonTwo, urlButtonOne, urlButtonTwo, targetButtonOne, targetButtonTwo , sourceButtonOne, sourceButtonTwo, plausible_domain_set=False, float_right=False) -%}
     <h2>{{heading}}</h2>
     <div class="eligibilitySuccessButtons">
-        <a class="{% if  float_right %} float-right {% endif %} btn btn-primary" href="{{ urlButtonOne }}" onclick="plausible('{{ targetButtonOne }}', {props: {method: '{{ sourceButtonOne }}'}})">{{ textButtonOne }}</a>
+        <a class="btn btn-primary" href="{{ urlButtonOne }}" onclick="plausible('{{ targetButtonOne }}', {props: {method: '{{ sourceButtonOne }}'}})">{{ textButtonOne }}</a>
         <a class="{% if  float_right %} float-right {% endif %} btn btn-outline-primary" href="{{ urlButtonTwo }}" onclick="plausible('{{ targetButtonTwo }}', {props: {method: '{{ sourceButtonTwo }}'}})">{{ textButtonTwo }}</a>
     </div>
 {%- endmacro %}
