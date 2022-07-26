@@ -72,7 +72,7 @@ class RecursiveDataModel(PotentialDataModelKeysMixin, BaseModel):
     def _set_data_for_previous_field(enriched_data, field_name, field_type):
         try:
             possible_data = field_type.parse_obj(enriched_data).dict()
-        except ValidationError as er:
+        except ValidationError:
             return
         else:
             enriched_data[field_name] = possible_data
