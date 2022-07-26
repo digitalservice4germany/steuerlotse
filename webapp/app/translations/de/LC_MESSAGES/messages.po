@@ -5258,11 +5258,11 @@ msgstr "Zum Hilfebereich"
 
 #: app/templates/eligibility/display_success.html:59
 msgid "tracking.eligibility.success.how_it_works_button.method"
-msgstr "Registrierung CTA positiv NP"
+msgstr "Eligibility / So funktionierts"
 
 #: app/templates/eligibility/display_success.html:60
 msgid "tracking.eligibility.success.help_page_button.method"
-msgstr "Registrierung CTA positiv NP"
+msgstr "Eligibility / Zum Hilfebereich"
 
 #: app/templates/eligibility/form_marital_status_input.html:7
 msgid "eligibility.marital_status.widowed_note"
