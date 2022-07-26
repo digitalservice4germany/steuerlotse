@@ -4,7 +4,6 @@
             <div class="footer-inner">
                 <div class="row">
                     <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
-                    <a href="{{ url_for('relatives_info') }}">{{ _('footer.relatives') }}</a>
                     {% if current_user.is_authenticated %}
                         <span class="footer-inactive">{{ _('footer.revocation') }}</span>
                    {% else %}

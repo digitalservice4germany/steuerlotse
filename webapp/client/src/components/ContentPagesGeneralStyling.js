@@ -4,8 +4,10 @@ export const ContentWrapper = styled.div`
   padding-left: var(--spacing-03);
   padding-right: var(--spacing-03);
   max-width: var(--pages-max-width);
+  margin-top: ${(props) => props.marginVariant && "var(--spacing-09)"};
 
-  margin-bottom: var(--spacing-10);
+  margin-bottom: ${(props) =>
+    props.marginBottom ? "var(--spacing-07)" : "var(--spacing-09)"};
 
   @media (min-width: 769px) {
     padding-left: var(--spacing-06);
@@ -14,6 +16,11 @@ export const ContentWrapper = styled.div`
 
   @media (min-width: 1280px) {
     padding-left: var(--spacing-12);
+  }
+
+  @media (max-width: 1279px) {
+    margin-left: ${(props) => props.marginLeftVariant && "var(--spacing-06)"};
+    padding-left: ${(props) => props.marginLeftVariant && "var(--spacing-03)"};
   }
 `;
 
@@ -61,7 +68,7 @@ export const Headline1 = styled.h1`
 `;
 
 export const Headline2 = styled.h2`
-  padding-top: var(--spacing-09);
+  padding-top: ${(props) => (props.paddingVariant ? "0" : "var(--spacing-09)")};
   margin: 0;
   margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
   font-size: var(--text-3xl);

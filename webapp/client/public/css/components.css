@@ -48,7 +48,7 @@
     font-family: var(--font-bold);
     letter-spacing: var(--tracking-wide);
     text-decoration: none;
-    color: var(--link-color);
+    color: var(--text-color);
 
 
     background: white;
@@ -56,6 +56,7 @@
 
     border-radius: 0;
     border: 1px solid var(--border-color);
+    outline: 0;
 }
 
 .btn-outline-primary:not(:disabled):not(.disabled):active, a.btn-outline-primary:not(:disabled):not(.disabled):active{
@@ -67,12 +68,12 @@
 .btn-outline-primary:hover, a.btn-outline-primary:hover {
     color: var(--link-hover-color);
     background: white;
-    border: 1px solid var(--link-hover-color);
+    outline: 0;
 }
 
 .btn-outline-primary:focus-visible, a.btn-outline-primary:focus-visible {
     color: var(--focus-color);
-    outline:none;
+    outline:0;
     box-shadow: none;
     border: 1px solid var(--focus-border-color);
 }
@@ -345,8 +346,40 @@
     margin-top: var(--spacing-06);
 }
 
+.eligibilitySuccessBox{
+    background-color:var(--beige-200);
+    padding: 60px 0px 90px 0px;
+    /* max-height: 274px; */
+}
+
+.eligibilitySuccessButtons{
+    margin-top: var(--spacing-05);
+}
+
+.eligibilitySuccessButtons a:first-of-type{
+    margin-right: var(--spacing-05);
+}
+
 .panel .row {
     flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+
+    .eligibilitySuccessButtons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .eligibilitySuccessButtons a{
+        width: fit-content;
+    }
+
+    .eligibilitySuccessButtons a:first-of-type{
+        margin-bottom: var(--spacing-03);
+    }
+
 }
 
 @media (max-width: 575px) {

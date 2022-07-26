@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ static_url_for('static', filename='css/display_failure_success.css') }}">
     <link rel="stylesheet" href="{{ static_url_for('static', filename='css/eligibility.css') }}">
 {% endblock %}
-
 {% block step_content %}
     <div class="section-intro panel simple-card">
         <div class="row p-0">
@@ -32,7 +31,6 @@
             </div>
         </div>
     </div>
-
     {% set dependent_notes =  render_info.additional_info['dependent_notes'] %}
     {% if dependent_notes %}
         <div class="spacing-b-09">
@@ -46,3 +44,22 @@
     {% endif %}
     
 {% endblock %}
+{% block full_width_final_area %}
+    <div>
+        <div class="eligibilitySuccessBox">
+            <div class=" mt-4 text-center">
+            {{ components.eligibilitySuccessBox( 
+            heading=_('form.eligibility.success.cta-heading'), 
+            textButtonOne=_('form.eligibility.success.button-one.text'),
+            textButtonTwo=_('form.eligibility.success.button-two.text'),
+            urlButtonOne=url_for('howitworks'), 
+            urlButtonTwo=url_for('helparea'),
+            targetButtonOne=_('tracking.eligibility.how_it_works.success.goal'),
+            targetButtonTwo=_('tracking.eligibility.help_page.success.goal'),
+            sourceButtonOne=_('tracking.eligibility.success.how_it_works_button.method'),
+            sourceButtonTwo=_('tracking.eligibility.success.help_page_button.method'),
+            plausible_domain_set=plausible_domain is not none ) }}
+            </div>
+        </div>
+    </div>
+    {% endblock %}

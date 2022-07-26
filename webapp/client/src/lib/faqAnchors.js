@@ -46,6 +46,10 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerliche_Themengebiete/Altersvorsorge/2019-04-29-Laendervordruck-vereinfachte-veranlagung-rentner.html" />
         ),
+        howItWorksPageLink: (
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          <a href="/sofunktionierts" />
+        ),
       }}
     />
   );
@@ -61,11 +65,13 @@ const faqAnchorList = [
       <div>
         <p>{t("LandingPage.Accordion.Item2.detail")}</p>
         <ul>
-          <li>{trans("LandingPage.Accordion.Item2.listItem1")}</li>
-          <li>{trans("LandingPage.Accordion.Item2.listItem2")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem1")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem2")}</li>
           <li>{t("LandingPage.Accordion.Item2.listItem3")}</li>
-          <li>{trans("LandingPage.Accordion.Item2.listItem4")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem4")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem5")}</li>
         </ul>
+        <p>{trans("LandingPage.Accordion.Item2.detail2")}</p>
       </div>
     ),
   },
