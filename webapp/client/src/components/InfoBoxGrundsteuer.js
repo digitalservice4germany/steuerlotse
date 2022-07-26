@@ -66,6 +66,7 @@ const Image = styled.img`
   grid-column: 3 / -1;
   grid-row: 1;
   margin-top: var(--spacing-06);
+  width: 100%;
 `;
 
 export default function InfoBoxGrundsteuer() {
