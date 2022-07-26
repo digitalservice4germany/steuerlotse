@@ -19,6 +19,30 @@ export default function LoginFailurePage({
   revocationLink,
 }) {
   const { t } = useTranslation();
+
+  function trans(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          registrationLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href={registrationLink} />
+          ),
+          revocationLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href={revocationLink} />
+          ),
+          eligibilityLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/unlock_code_request/step/data_input" />
+          ),
+        }}
+      />
+    );
+  }
+
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
@@ -27,30 +51,9 @@ export default function LoginFailurePage({
         {t("unlockCodeActivation.failure.causes.title")}
       </FailureReasonsHeadline>
       <ol>
-        <li>{t("unlockCodeActivation.failure.causes.reasons1")}</li>
-        <li>
-          <Trans
-            t={t}
-            i18nKey="unlockCodeActivation.failure.causes.reasons2"
-            components={{
-              // The anchors get content in the translation file
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              registrationLink: <a href={registrationLink} />,
-            }}
-          />
-        </li>
-        <li>
-          <Trans
-            t={t}
-            i18nKey="unlockCodeActivation.failure.causes.reasons3"
-            components={{
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              registrationLink: <a href={registrationLink} />,
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              revocationLink: <a href={revocationLink} />,
-            }}
-          />
-        </li>
+        <li>{trans("unlockCodeActivation.failure.causes.reasons1")}</li>
+        <li>{trans("unlockCodeActivation.failure.causes.reasons2")}</li>
+        <li>{trans("unlockCodeActivation.failure.causes.reasons3")}</li>
       </ol>
     </>
   );

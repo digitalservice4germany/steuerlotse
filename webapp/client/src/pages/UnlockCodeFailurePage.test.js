@@ -6,16 +6,21 @@ const MOCK_PROPS = {
   prevUrl: "/some/prev/path",
 };
 const EXPECTED_HEADER = {
-  title: "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben.",
-  intro:
-    "Haben Sie sich vielleicht bereits registriert? In diesem Fall können Sie sich nicht erneut registrieren und bekommen einen Brief mit Ihrem persönlichen Freischaltcode von Ihrer Finanzverwaltung zugeschickt.",
+  title: "Registrierung fehlgeschlagen.",
 };
 
+const EXPECTED_TEXT = {
+  title: "Mögliche Ursachen:",
+};
 describe("UnlockCodeFailurePage", () => {
   it("should render step header texts", () => {
     render(<UnlockCodeFailurePage {...MOCK_PROPS} />);
     expect(screen.getByText(EXPECTED_HEADER.title)).toBeInTheDocument();
-    expect(screen.getByText(EXPECTED_HEADER.intro)).toBeInTheDocument();
+  });
+
+  it("should render possible reasons for failure", () => {
+    render(<UnlockCodeFailurePage {...MOCK_PROPS} />);
+    expect(screen.getByText(EXPECTED_TEXT.title)).toBeInTheDocument();
   });
 
   it("should link to the previous page", () => {
