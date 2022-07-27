@@ -7,6 +7,7 @@ import faqAnchorList from "../lib/faqAnchors";
 import ButtonAnchor from "../components/ButtonAnchor";
 import CardsComponent from "../components/CardsComponent";
 import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
+import CallToActionBox from "../components/CallToActionBox";
 
 const LandingPageHeroWrapper = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ const Figure = styled.div`
 `;
 
 const AccordionWrapper = styled.div`
-  width: 66%;
+  width: 60%;
   margin: var(--spacing-11) auto;
 
   @media (max-width: 767px) {
@@ -106,10 +107,6 @@ const cardsInfo = [
     url: t("LandingPage.Cards.cardThree.url"),
   },
 ];
-
-const ButtonAnchorLandingPage = styled(ButtonAnchor)`
-  margin-top: var(--spacing-08);
-`;
 
 export default function LandingPage({ plausibleDomain }) {
   return (
@@ -157,14 +154,22 @@ export default function LandingPage({ plausibleDomain }) {
           items={faqAnchorList}
           variant
         />
-        <ButtonAnchorLandingPage
-          url="/sofunktionierts"
-          plausibleGoal={t("LandingPage.InformationButtonPlausibleGoal")}
-          plausibleDomain={plausibleDomain}
-        >
-          {t("LandingPage.ButtonLabel")}
-        </ButtonAnchorLandingPage>
       </AccordionWrapper>
+      <CallToActionBox
+        colorVariant
+        multipleButtons
+        plausibleDomain={plausibleDomain}
+        variant="outline"
+        headline={t("helpAreaPage.questionInfoBox.heading")}
+        firstButtonText={t("LandingPage.cta.howItWorksButtonText")}
+        firstButtonUrl="/sofunktionierts"
+        firstButtonPlausibleGoal="So funktionierts"
+        firstButtonPlausibleProps="Start / So funktionierts"
+        secondButtonText={t("howItWorksPage.questionInfoBox.button")}
+        secondButtonUrl="/hilfebereich"
+        secondButtonPlausibleGoal="Zum Hilfebereich"
+        secondButtonPlausibleProps="Start / Zum Hilfebereich"
+      />
       <InfoBoxGrundsteuer />
     </div>
   );

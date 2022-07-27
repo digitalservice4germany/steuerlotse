@@ -49,6 +49,10 @@ function trans(key) {
         einfachElsterLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://einfach.elster.de/erklaerung/ui/" />
+          ),
+        howItWorksPageLink: (
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          <a href="/sofunktionierts" />
         ),
       }}
     />
@@ -65,11 +69,13 @@ const faqAnchorList = [
       <div>
         <p>{t("LandingPage.Accordion.Item2.detail")}</p>
         <ul>
-          <li>{trans("LandingPage.Accordion.Item2.listItem1")}</li>
-          <li>{trans("LandingPage.Accordion.Item2.listItem2")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem1")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem2")}</li>
           <li>{t("LandingPage.Accordion.Item2.listItem3")}</li>
-          <li>{trans("LandingPage.Accordion.Item2.listItem4")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem4")}</li>
+          <li>{t("LandingPage.Accordion.Item2.listItem5")}</li>
         </ul>
+        <p>{trans("LandingPage.Accordion.Item2.detail2")}</p>
       </div>
     ),
   },
