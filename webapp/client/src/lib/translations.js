@@ -273,7 +273,7 @@ const translations = {
     },
     fieldRegistrationConfirmIncomes: {
       labelText:
-        "Ich habe unter <eligibilityLink>Nutzung prüfen</eligibilityLink> den Fragebogen ausgewertet und erfülle alle Voraussetzungen für die Nutzung des Steuerlotsen.",
+        "Ich habe den <eligibilityLink>Nutzung prüfen</eligibilityLink>-Fragebogen ausgefüllt und erfülle alle Voraussetzungen für die Nutzung des Steuerlotsen, z.B. habe ich <referenceLink>kein ELSTER-Konto</referenceLink>.",
     },
     fieldRegistrationConfirmEData: {
       labelText:
@@ -993,7 +993,7 @@ const translations = {
       subTitle:
         "Mit dem Steuerlotsen können Sie Ihre Steuererklärung für das Steuerjahr 2021 einfach und ohne besonderes Vorwissen online machen.",
       listItem1: "mit Schritt-für-Schritt-Anleitung",
-      listItem2: "kostenlos und ohne Installation",
+      listItem2: "kostenlos und ohne ELSTER-Konto",
       listItem3: "schnell und unkompliziert",
       eligibilityTest:
         "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?",
@@ -1018,7 +1018,7 @@ const translations = {
       },
     },
     Accordion: {
-      heading: "Häufig gestellte Fragen zum Steuerlotsen",
+      heading: "Häufige Fragen und Antworten",
       Item1: {
         title: "Wer kann den Steuerlotsen nutzen?",
         detail:
@@ -1045,19 +1045,6 @@ const translations = {
         detail:
           "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Oktober 2022</strong> beim Finanzamt sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
       },
-      Item4: {
-        title: "Kann ich Angaben machen, die meine Steuerlast reduzieren?",
-        detailOne:
-          "Ja. Sie können eine Vielzahl an Ausgaben beim Steuerlotsen angeben und somit Ihre Steuerlast reduzieren. Zu folgenden Bereichen können Sie Angaben machen:",
-        detailTwo:
-          "Die <strong>haushaltsnahen Dienstleistungen</strong> und Handwerkerleistungen umfassen im Steuerlotsen <strong>keine Arbeitsverhältnisse</strong>. Sollten Sie Haushaltshilfen als Arbeitnehmer einstellen, können Sie dies im Steuerlotsen nicht steuerlich absetzen.\n\nEine detaillierte Übersicht, welche Angaben zu den Bereichen gehören, finden Sie in unserer Vorbereitungshilfe.\n\n<downloadPreparationLink>Vorbereitungshilfe speichern</downloadPreparationLink>",
-        listItem1: "Vorsorgeaufwendungen",
-        listItem2: "Spenden und Mitgliedsbeiträge",
-        listItem3: "außergewöhnliche Belastungen, wie Krankheitskosten",
-        listItem4: "Haushaltsnahe Dienstleistungen",
-        listItem5: "Haushaltsnahe Handwerkerleistungen",
-        listItem6: "Gezahlte Kirchensteuer",
-      },
       Item5: {
         title: "Können wir die Steuererklärung gemeinsam als Paar machen?",
         detail:
@@ -1067,18 +1054,12 @@ const translations = {
         title:
           "Kann ich den Service nutzen, wenn ich bereits ein Konto bei ELSTER habe?",
         detail:
-          "Sie können den Steuerlotsen vielleicht nutzen. Der Steuerlotse ist nur mit dem Briefersatzverfahren für den Datenabruf von ELSTER nutzbar.\n\nWenn Sie ein ELSTER-Konto und das digitale Verfahren zur Berechtigung für den Datenabruf aktiviert haben, ist die Nutzung des Steuerlotsen Rente nicht möglich. In diesem Falle empfehlen wir Ihnen die Nutzung von ELSTER.\n\nELSTER steht für »Elektronische Steuererklärung« und ist die offizielle Plattform der deutschen Finanzverwaltung.",
-      },
-      Item7: {
-        title: "Wer hat den Steuerlotsen entwickelt?",
-        detail:
-          "Der Steuerlotse wurde vom <digitalServiceLink>DigitalService</digitalServiceLink> – einer Bundes GmbH – im Auftrag des <bundesfinanzministeriumLink>Bundesfinanzministerium</bundesfinanzministeriumLink> entwickelt. Daneben hat der DigitalService die <grundsteuererklärungLink>“Grundsteuererklärung für Privateigentum”</grundsteuererklärungLink> entwickelt.",
+          "Nein. Für die Überprüfung Ihrer Identität braucht unser Service einen Freischaltcode. Dieser Freischaltcode wird von ELSTER erstellt und per Post versendet. Aus technischen Gründen geschieht das in der Regel bei bestehenden ELSTER-Konten nicht. Daher können Sie den Steuerlotsen derzeit nicht nutzen. Wir empfehlen Ihnen als Alternative <einfachElsterLink>einfachELSTER</einfachElsterLink> oder <elsterLink>ELSTER</elsterLink>.",
       },
       Item8: {
-        title:
-          "Für welche Steuerjahre kann ich den Steuerlotsen für meine Steuererklärung nutzen?",
+        title: "Für welche Steuerjahre kann ich den Steuerlotsen nutzen?",
         detail:
-          "Der Steuerlotse kann zurzeit nur für die Abgabe einer Steuererklärung für das Steuerjahr 2021 verwendet werden. Für alle früheren Steuerjahre können Sie beispielsweise auf <elsterLink>Mein ELSTER</elsterLink> oder in einigen Bundesländern auch auf das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> zurückgreifen.",
+          "Der Steuerlotse kann zurzeit nur für die Abgabe einer Steuererklärung für das Steuerjahr 2021 verwendet werden. Für alle früheren Steuerjahre können Sie beispielsweise auf <einfachElsterLink>einfachELSTER</einfachElsterLink> oder <elsterLink>ELSTER</elsterLink> zurückgreifen.",
       },
     },
     ButtonLabel: "Zur Informationsseite",
