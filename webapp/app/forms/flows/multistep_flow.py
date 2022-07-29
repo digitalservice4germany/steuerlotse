@@ -1,6 +1,5 @@
 import logging
-import threading
-import time
+
 from collections import namedtuple
 from typing import Optional
 
