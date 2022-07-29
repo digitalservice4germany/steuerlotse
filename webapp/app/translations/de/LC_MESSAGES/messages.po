@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-26 22:58+0200\n"
+"POT-Creation-Date: 2022-07-29 13:12+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -3142,32 +3142,36 @@ msgid "failure_icon"
 msgstr "Durchgestrichen Icon auf rotem Kreis"
 
 #: app/templates/basis/footer.html:6
+msgid "footer.help"
+msgstr "Hilfebereich"
+
+#: app/templates/basis/footer.html:7
 msgid "footer.contact"
 msgstr "Kontakt und Feedback"
 
-#: app/templates/basis/footer.html:8 app/templates/basis/footer.html:10
+#: app/templates/basis/footer.html:9 app/templates/basis/footer.html:11
 msgid "footer.revocation"
 msgstr "Freischaltcode stornieren"
 
-#: app/templates/basis/footer.html:14
+#: app/templates/basis/footer.html:15
 msgid "footer.online-service-ds"
 msgstr ""
 "Ein Online Dienst des <a "
 "href=\"https://digitalservice.bund.de/\">DigitalService</a>"
 
-#: app/templates/basis/footer.html:23
+#: app/templates/basis/footer.html:24
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:24
+#: app/templates/basis/footer.html:25
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:25
+#: app/templates/basis/footer.html:26
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:26
+#: app/templates/basis/footer.html:27
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 
@@ -5192,7 +5196,7 @@ msgstr ""
 " nutzen können."
 
 #: app/templates/eligibility/display_elster_failure.html:35
-#: app/templates/eligibility/display_success.html:39
+#: app/templates/eligibility/display_success.html:37
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
@@ -5223,24 +5227,13 @@ msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_success.html:15
-msgid "success_icon"
-msgstr "Abgehakt Icon auf grünem Kreis"
-
-#: app/templates/eligibility/display_success.html:27
-#: app/templates/eligibility/display_maybe.html:26
-#: app/templates/eligibility/display_success.html:24
-msgid "form.eligibility.use-register-button"
-msgstr "Registrieren"
-
-#: app/templates/eligibility/display_maybe.html:35
-#: app/templates/eligibility/display_success.html:37
-msgid "form.eligibility.success-attention.heading"
-msgstr "Bitte beachten Sie"
-
 #: app/templates/eligibility/display_success.html:14
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
+
+#: app/templates/eligibility/display_success.html:24
+msgid "form.eligibility.use-register-button"
+msgstr "Registrieren"
 
 #: app/templates/eligibility/display_success.html:26
 msgid "tracking.eligibility.success.goal"
@@ -5491,4 +5484,7 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "footer.help"
+#~ msgstr "Hilfebereich"
 
