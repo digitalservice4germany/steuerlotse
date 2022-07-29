@@ -50,6 +50,7 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
 
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
+        render_info, stored_data = super(UnlockCodeRequestMultiStepFlow, self)._handle_specifics_for_step(step, render_info, stored_data)
         if isinstance(step, UnlockCodeRequestInputStep):
             render_info.additional_info['next_button_label'] = _('form.register')
 

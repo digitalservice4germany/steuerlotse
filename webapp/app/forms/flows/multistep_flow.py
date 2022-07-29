@@ -111,7 +111,6 @@ class MultiStepFlow:
             return redirect(render_info.redirect_url)
         elif isinstance(step, FormStep) and request.method == 'POST' and render_info.form.validate():
             logger.info(f"Redirect to next Step {render_info.next_url}")
-            return step.render(stored_data, render_info)
             return redirect(render_info.next_url)
         else:
             return step.render(stored_data, render_info)

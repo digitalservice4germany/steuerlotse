@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import StepNavButtons from "./StepNavButtons";
 import { waitingMomentMessagePropType } from "../lib/propTypes";
 
@@ -18,17 +18,40 @@ export default function StepForm({
   loadingFromOutside,
 }) {
   const [loading, setLoading] = useState(loadingFromOutside);
+  // eslint-disable-next-line no-promise-executor-return
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-  function makeFetchCall(formData) {
+  async function makeFetchCall(formData) {
+    const startTime = Date.now();
+
     fetch(action, {
       method: "POST",
       body: formData,
     })
-      .then((response) => response.text())
-      .then((text, response) => {
-        document.documentElement.innerHTML = text;
-        console.log(response);
-        // document.body.innerHTML = response.body;
+      .then((response) => {
+        const durationTime = Date.now();
+        const duration = (durationTime - startTime) / 1000;
+        const minDuration = 2000;
+
+        if (duration < minDuration) {
+          return Promise.resolve(delay(minDuration - duration)).then(
+            () => response
+          );
+        }
+
+        return response;
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        }
+        return Promise.reject(response);
+      })
+      .then((text) => {
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(text, "text/html");
+        document.body.innerHTML = htmlDoc.body.innerHTML;
+        window.renderReact();
       })
       .catch((error) => {
         console.log(error);

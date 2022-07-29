@@ -22,7 +22,6 @@ logger = logging.getLogger(__name__)
 def _store_id_in_server_session(idnr):
     SessionStorage.override_data({'idnr': idnr}, 'form_data')
 
-storage_key_identifier = "unlock_code_elster"
 class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
     # TODO: This uses the outdated MultiStepFlow. We do not need a multi step procedure for unlock code activation.
     #  If you adapt the unlock code activation, please consider if you can get rid of the MultiStepFlow.
@@ -53,8 +52,6 @@ class UnlockCodeActivationMultiStepFlow(MultiStepFlow):
         if isinstance(step, UnlockCodeActivationInputStep):
             if request.method == 'POST' and render_info.form.validate():
                 try:
-                    time.sleep(5)
-                    raise RequestException
                     self._login_or_activate_user(stored_data)
                     # prevent going to failure page as in normal flow
                     render_info.next_url = url_for('lotse', step='start')

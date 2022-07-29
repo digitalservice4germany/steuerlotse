@@ -202,9 +202,6 @@ class LotseMultiStepFlow(MultiStepFlow):
             render_info.next_url = url_for('logout')
             render_info.additional_info['next_button_label'] = _('form.logout')
         if isinstance(step, StepFiling):
-            if request.method == 'GET' and "location" in SessionStorage.get_data("location", key_identifier=stored_data["idnr"]):
-                render_info.additional_info['waiting_moment_active'] = True
-
             if (not current_user.has_completed_tax_return() or is_test_user(current_user)) and request.method == 'POST':
                 try:
                     self._validate_input(stored_data)
