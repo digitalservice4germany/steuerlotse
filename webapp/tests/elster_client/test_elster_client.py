@@ -661,7 +661,7 @@ class TestGenerateEStRequestData(unittest.TestCase):
 
     def test_if_user_has_no_unlock_code_then_logout_user_is_called(self):
         with patch('app.elster_client.elster_client.current_user', MagicMock(unlock_code_hashed=None)), \
-                patch('app.elster_client.elster_client.logout_user') as logout_fun, \
+                patch('flask_login.logout_user') as logout_fun, \
                 pytest.raises(TaxDeclarationNotDigitallySigned):
             _generate_est_request_data({})
 
