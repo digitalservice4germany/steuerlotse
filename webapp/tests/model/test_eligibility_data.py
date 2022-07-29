@@ -5,7 +5,7 @@ import pytest
 from pydantic import ValidationError
 
 from app.model.eligibility_data import SeparatedEligibilityData, \
-    NotSeparatedEligibilityData, AlimonyMarriedEligibilityData, UserANoElsterAccountEligibilityData, \
+    NotSeparatedEligibilityData, AlimonyMarriedEligibilityData, SuccessEligibility, UserANoElsterAccountEligibilityData, \
     UserBNoElsterAccountEligibilityData, DivorcedJointTaxesEligibilityData, AlimonyEligibilityData, \
     SingleUserNoElsterAccountEligibilityData, PensionEligibilityData, InvestmentIncomeEligibilityData, \
     CheaperCheckEligibilityData, \
@@ -16,8 +16,8 @@ from app.model.eligibility_data import SeparatedEligibilityData, \
     SingleEligibilityData, WidowedEligibilityData, DivorcedEligibilityData, MoreThanMinimalInvestmentIncome, \
     MinimalInvestmentIncome, UserAElsterAccountEligibilityData, SeparatedLivedTogetherEligibilityData, \
     SeparatedNotLivedTogetherEligibilityData, SeparatedJointTaxesEligibilityData, SeparatedNoJointTaxesEligibilityData, \
-    SingleUserElsterAccountEligibilityData, UserBElsterAccountEligibilityData, \
-    ForeignCountryMaybeEligibility
+    SingleUserElsterAccountEligibilityData, UserBElsterAccountEligibilityData
+from app.forms.steps.eligibility_steps import EligibilitySuccessDisplaySteuerlotseStep \
 
 
 class TestMarriedEligibilityData(unittest.TestCase):
@@ -93,7 +93,7 @@ class TestSeparatedEligibilityDataEligibilityData(unittest.TestCase):
 
     def test_if_married_data_invalid_and_separated_since_last_year_yes_then_raise_validation_error(self):
         valid_data = {'separated_since_last_year_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.MarriedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.MarriedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], MarriedEligibilityData))):
             self.assertRaises(ValidationError, SeparatedEligibilityData.parse_obj, valid_data)
 
@@ -116,7 +116,7 @@ class TestNotSeparatedEligibilityDataEligibilityData(unittest.TestCase):
 
     def test_if_married_data_invalid_and_separated_since_last_year_no_then_raise_validation_error(self):
         valid_data = {'separated_since_last_year_eligibility': 'no'}
-        with patch('app.model.eligibility_data.MarriedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.MarriedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], MarriedEligibilityData))):
             self.assertRaises(ValidationError, NotSeparatedEligibilityData.parse_obj, valid_data)
 
@@ -188,7 +188,7 @@ class TestSeparatedJointTaxesEligibilityData(unittest.TestCase):
 
     def test_if_separated_data_invalid_and_separated_joint_taxes_yes_then_raise_validation_error(self):
         valid_data = {'separated_joint_taxes_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.SeparatedLivedTogetherEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.SeparatedLivedTogetherEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], MarriedEligibilityData))):
             self.assertRaises(ValidationError, SeparatedJointTaxesEligibilityData.parse_obj, valid_data)
 
@@ -211,7 +211,7 @@ class TestSeparatedNoJointTaxesEligibilityData(unittest.TestCase):
 
     def test_if_separated_data_invalid_and_separated_joint_taxes_no_then_raise_validation_error(self):
         valid_data = {'separated_joint_taxes_eligibility': 'no'}
-        with patch('app.model.eligibility_data.SeparatedLivedTogetherEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.SeparatedLivedTogetherEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], MarriedEligibilityData))):
             self.assertRaises(ValidationError, SeparatedNoJointTaxesEligibilityData.parse_obj, valid_data)
 
@@ -234,7 +234,7 @@ class TestMarriedJointTaxesEligibilityData(unittest.TestCase):
 
     def test_if_not_separated_invalid_and_joint_taxes_yes_then_raise_validation_error(self):
         valid_data = {'joint_taxes_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.NotSeparatedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.NotSeparatedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], NotSeparatedEligibilityData))):
             self.assertRaises(ValidationError, MarriedJointTaxesEligibilityData.parse_obj, valid_data)
 
@@ -253,22 +253,22 @@ class TestAlimonyMarriedEligibilityData(unittest.TestCase):
     def test_if_not_separated_data_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
         with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedEligibilityData))):
             self.assertRaises(ValidationError, AlimonyMarriedEligibilityData.parse_obj, non_valid_data)
 
     def test_if_separated_data_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], MarriedJointTaxesEligibilityData))), \
                 patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, AlimonyMarriedEligibilityData.parse_obj, non_valid_data)
 
     def test_if_not_and_separated_data_invalid_and_alimony_no_then_raise_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
-        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], MarriedJointTaxesEligibilityData))), \
-                patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedEligibilityData))):
             self.assertRaises(ValidationError, AlimonyMarriedEligibilityData.parse_obj, valid_data)
 
@@ -277,7 +277,7 @@ class TestAlimonyMarriedEligibilityData(unittest.TestCase):
         try:
             with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], SeparatedEligibilityData))):
                 AlimonyMarriedEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -286,7 +286,7 @@ class TestAlimonyMarriedEligibilityData(unittest.TestCase):
     def test_if_separated_data_valid_and_alimony_no_then_raise_no_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.MarriedJointTaxesEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], MarriedJointTaxesEligibilityData))), \
                     patch('app.model.eligibility_data.SeparatedJointTaxesEligibilityData.__init__',
                           MagicMock(return_value=None)):
@@ -301,12 +301,6 @@ class TestUserANoElsterAccountEligibilityData(unittest.TestCase):
         non_valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
         with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, UserANoElsterAccountEligibilityData.parse_obj, non_valid_data)
-
-    def test_if_alimony_married_invalid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
-        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
-        with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], AlimonyMarriedEligibilityData))):
-            self.assertRaises(ValidationError, UserANoElsterAccountEligibilityData.parse_obj, valid_data)
 
     def test_if_alimony_married_valid_and_user_a_has_elster_account_no_then_raise_no_validation_error(self):
         valid_data = {'user_a_has_elster_account_eligibility': 'no'}
@@ -324,12 +318,6 @@ class TestUserAElsterAccountEligibilityData(unittest.TestCase):
         non_valid_data = {'user_a_has_elster_account_eligibility': 'no'}
         with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, UserAElsterAccountEligibilityData.parse_obj, non_valid_data)
-
-    def test_if_alimony_married_invalid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
-        valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.AlimonyMarriedEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], AlimonyMarriedEligibilityData))):
-            self.assertRaises(ValidationError, UserAElsterAccountEligibilityData.parse_obj, valid_data)
 
     def test_if_alimony_married_valid_and_user_a_has_elster_account_no_then_raise_no_validation_error(self):
         valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
@@ -350,7 +338,7 @@ class TestUserBNoElsterAccountEligibilityData(unittest.TestCase):
 
     def test_if_user_a_elster_account_invalid_and_user_b_has_elster_account_no_then_raise_validation_error(self):
         valid_data = {'user_b_has_elster_account_eligibility': 'no'}
-        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))):
             self.assertRaises(ValidationError, UserBNoElsterAccountEligibilityData.parse_obj, valid_data)
 
@@ -373,7 +361,7 @@ class TestUserBElsterAccountEligibilityData(unittest.TestCase):
 
     def test_if_user_a_elster_account_invalid_and_user_b_has_elster_account_yes_then_raise_validation_error(self):
         valid_data = {'user_b_has_elster_account_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], UserAElsterAccountEligibilityData))):
             self.assertRaises(ValidationError, UserBElsterAccountEligibilityData.parse_obj, valid_data)
 
@@ -393,7 +381,7 @@ class TestDivorcedJointTaxesEligibilityData(unittest.TestCase):
 
     def test_if_divorced_data_invalid_and_joint_taxes_no_then_raise_validation_error(self):
         valid_data = {'joint_taxes_eligibility': 'no'}
-        with patch('app.model.eligibility_data.DivorcedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.DivorcedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], DivorcedEligibilityData))):
             self.assertRaises(ValidationError, DivorcedJointTaxesEligibilityData.parse_obj, valid_data)
 
@@ -412,67 +400,67 @@ class TestAlimonyEligibilityData(unittest.TestCase):
     def test_if_widowed_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
         with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_single_status_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
                 patch('app.model.eligibility_data.SingleEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_divorced_joint_taxes_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
                 patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_not_separated_living_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
                 patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedNoJointTaxesEligibilityData))):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_not_joint_taxes_valid_and_alimony_yes_then_raise_validation_error(self):
         non_valid_data = {'alimony_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
-                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedNotLivedTogetherEligibilityData))), \
                 patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, non_valid_data)
 
     def test_if_all_previous_data_is_invalid_and_alimony_no_then_raise_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
-        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
-             patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__', 
+             patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedNotLivedTogetherEligibilityData))), \
-            patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__', 
+            patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedNoJointTaxesEligibilityData))):
             self.assertRaises(ValidationError, AlimonyEligibilityData.parse_obj, valid_data)
 
@@ -481,9 +469,9 @@ class TestAlimonyEligibilityData(unittest.TestCase):
         try:
             with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))):
                 AlimonyEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -496,7 +484,7 @@ class TestAlimonyEligibilityData(unittest.TestCase):
                        MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
                     patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))):
                 AlimonyEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -505,9 +493,9 @@ class TestAlimonyEligibilityData(unittest.TestCase):
     def test_if_divorced_joint_taxes_valid_and_alimony_no_then_raise_no_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                    patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
                     patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                           MagicMock(return_value=None)):
@@ -518,11 +506,11 @@ class TestAlimonyEligibilityData(unittest.TestCase):
     def test_if_not_separated_living_valid_and_alimony_no_then_raise_no_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                    patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
                     patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__',
                           MagicMock(return_value=None)):
@@ -533,13 +521,13 @@ class TestAlimonyEligibilityData(unittest.TestCase):
     def test_if_not_separated_joint_taxes_valid_and_alimony_no_then_raise_no_validation_error(self):
         valid_data = {'alimony_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.WidowedEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.WidowedEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], WidowedEligibilityData))), \
-                    patch('app.model.eligibility_data.SingleEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.SingleEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], SingleEligibilityData))), \
-                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__', 
+                patch('app.model.eligibility_data.DivorcedJointTaxesEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], DivorcedJointTaxesEligibilityData))), \
-                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__', 
+                patch('app.model.eligibility_data.SeparatedNotLivedTogetherEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], SeparatedNotLivedTogetherEligibilityData))), \
                     patch('app.model.eligibility_data.SeparatedNoJointTaxesEligibilityData.__init__',
                           MagicMock(return_value=None)):
@@ -554,12 +542,6 @@ class TestSingleUserNoElsterAccountEligibilityData(unittest.TestCase):
         non_valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
         with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, SingleUserNoElsterAccountEligibilityData.parse_obj, non_valid_data)
-
-    def test_if_alimony_invalid_and_user_a_has_elster_account_no_then_raise_validation_error(self):
-        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
-        with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], AlimonyEligibilityData))):
-            self.assertRaises(ValidationError, SingleUserNoElsterAccountEligibilityData.parse_obj, valid_data)
 
     def test_if_alimony_valid_and_user_a_has_elster_account_account_no_then_raise_no_validation_error(self):
         valid_data = {'user_a_has_elster_account_eligibility': 'no'}
@@ -579,13 +561,6 @@ class TestSingleUserElsterAccountEligibilityData:
                 pytest.raises(ValidationError):
             SingleUserElsterAccountEligibilityData.parse_obj(non_valid_data)
 
-    def test_if_alimony_invalid_and_user_a_has_elster_account_yes_then_raise_validation_error(self):
-        non_valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__', 
-                   MagicMock(side_effect=ValidationError([], AlimonyEligibilityData))), \
-                pytest.raises(ValidationError):
-            SingleUserElsterAccountEligibilityData.parse_obj(non_valid_data)
-
     def test_if_alimony_valid_and_user_a_has_elster_account_yes_then_raise_no_validation_error(self):
         valid_data = {'user_a_has_elster_account_eligibility': 'yes'}
         with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__',
@@ -599,66 +574,11 @@ class TestPensionEligibilityData(unittest.TestCase):
         with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, non_valid_data)
 
-    def test_if_single_has_no_elster_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension_eligibility': 'yes'}
-        try:
-            with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.__init__',
-                       MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.__init__', 
-                          MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))):
-                PensionEligibilityData.parse_obj(valid_data)
-        except ValidationError as e:
-            self.fail("PensionEligibilityData.parse_obj should not raise validation error")
-
-    def test_if_user_a_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension_eligibility': 'yes'}
-        try:
-            with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.__init__',
-                       MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
-                    patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.__init__',
-                          MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.__init__', 
-                          MagicMock(side_effect=ValidationError([], UserBNoElsterAccountEligibilityData))):
-                PensionEligibilityData.parse_obj(valid_data)
-        except ValidationError as e:
-            self.fail("PensionEligibilityData.parse_obj should not raise validation error")
-
-    def test_if_user_b_elster_valid_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension_eligibility': 'yes'}
-        try:
-            with patch('app.model.eligibility_data.SingleUserNoElsterAccountEligibilityData.__init__', 
-                       MagicMock(side_effect=ValidationError([], SingleUserNoElsterAccountEligibilityData))), \
-                    patch('app.model.eligibility_data.UserANoElsterAccountEligibilityData.__init__', 
-                          MagicMock(side_effect=ValidationError([], UserANoElsterAccountEligibilityData))), \
-                    patch('app.model.eligibility_data.UserBNoElsterAccountEligibilityData.__init__',
-                          MagicMock(return_value=None)):
-                PensionEligibilityData.parse_obj(valid_data)
-        except ValidationError as e:
-            self.fail("PensionEligibilityData.parse_obj should not raise validation error")
-            
-    def test_if_single_user_has_elster_account_and_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension_eligibility': 'yes'}
-        try:
-            with patch('app.model.eligibility_data.SingleUserElsterAccountEligibilityData.__init__', 
-                       MagicMock(return_value=None)):
-                PensionEligibilityData.parse_obj(valid_data)
-        except ValidationError as e:
-            self.fail("PensionEligibilityData.parse_obj should not raise validation error")
-            
-    def test_if_user_b_has_elster_account_pension_yes_then_raise_no_validation_error(self):
-        valid_data = {'pension_eligibility': 'yes'}
-        try:
-            with patch('app.model.eligibility_data.UserBElsterAccountEligibilityData.__init__', 
-                       MagicMock(return_value=None)):
-                PensionEligibilityData.parse_obj(valid_data)
-        except ValidationError as e:
-            self.fail("PensionEligibilityData.parse_obj should not raise validation error")
-            
     def test_if_joint_taxes_user_a_has_elster_account_pension_yes_then_raise_validation_error(self):
         non_valid_data = {'pension_eligibility': 'yes'}
-        
-        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__', 
-                MagicMock(return_value=None)):        
+
+        with patch('app.model.eligibility_data.UserAElsterAccountEligibilityData.__init__',
+                MagicMock(return_value=None)):
             self.assertRaises(ValidationError, PensionEligibilityData.parse_obj, non_valid_data)
 class TestInvestmentIncome(unittest.TestCase):
 
@@ -669,7 +589,7 @@ class TestInvestmentIncome(unittest.TestCase):
 
     def test_if_pension_invalid_and_investment_income_yes_then_raise_validation_error(self):
         valid_data = {'investment_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.PensionEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.PensionEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], PensionEligibilityData))):
             self.assertRaises(ValidationError, InvestmentIncomeEligibilityData.parse_obj, valid_data)
 
@@ -692,7 +612,7 @@ class TestMinimalInvestmentIncome(unittest.TestCase):
 
     def test_if_inv_income_invalid_and_minimal_investment_income_yes_then_raise_validation_error(self):
         valid_data = {'minimal_investment_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], InvestmentIncomeEligibilityData))):
             self.assertRaises(ValidationError, MinimalInvestmentIncome.parse_obj, valid_data)
 
@@ -715,7 +635,7 @@ class TestMoreThanMinimalInvestmentIncome(unittest.TestCase):
 
     def test_if_inv_income_invalid_and_minimal_investment_income_no_then_raise_validation_error(self):
         valid_data = {'minimal_investment_income_eligibility': 'no'}
-        with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.InvestmentIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], InvestmentIncomeEligibilityData))):
             self.assertRaises(ValidationError, MoreThanMinimalInvestmentIncome.parse_obj, valid_data)
 
@@ -738,7 +658,7 @@ class TestNoTaxedInvestmentIncome(unittest.TestCase):
 
     def test_if_above_minimal_inv_income_invalid_and_taxed_investment_income_yes_then_raise_validation_error(self):
         valid_data = {'taxed_investment_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.MoreThanMinimalInvestmentIncome.__init__', 
+        with patch('app.model.eligibility_data.MoreThanMinimalInvestmentIncome.__init__',
                    MagicMock(side_effect=ValidationError([], MoreThanMinimalInvestmentIncome))):
             self.assertRaises(ValidationError, NoTaxedInvestmentIncome.parse_obj, valid_data)
 
@@ -761,7 +681,7 @@ class TestCheaperCheckEligibilityData(unittest.TestCase):
 
     def test_if_taxed_inv_invalid_and_cheaper_check_no_then_raise_validation_error(self):
         valid_data = {'cheaper_check_eligibility': 'no'}
-        with patch('app.model.eligibility_data.NoTaxedInvestmentIncome.__init__', 
+        with patch('app.model.eligibility_data.NoTaxedInvestmentIncome.__init__',
                    MagicMock(side_effect=ValidationError([], NoTaxedInvestmentIncome))):
             self.assertRaises(ValidationError, CheaperCheckEligibilityData.parse_obj, valid_data)
 
@@ -784,7 +704,7 @@ class TestNoInvestmentIncomeEligibilityData(unittest.TestCase):
 
     def test_if_taxed_inv_invalid_and_investment_income_no_then_raise_validation_error(self):
         valid_data = {'investment_income_eligibility': 'no'}
-        with patch('app.model.eligibility_data.PensionEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.PensionEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], PensionEligibilityData))):
             self.assertRaises(ValidationError, NoInvestmentIncomeEligibilityData.parse_obj, valid_data)
 
@@ -803,37 +723,37 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
     def test_if_cheaper_check_valid_and_employment_income_yes_then_raise_validation_error(self):
         non_valid_data = {'employment_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_no_inv_income_valid_and_employment_income_yes_then_raise_validation_error(self):
         non_valid_data = {'employment_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_taxed_inv_income_valid_and_employment_income_yes_then_raise_validation_error(self):
         non_valid_data = {'employment_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
-                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
                 patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_cheaper_check_and_no_inv_income_and_taxed_inv_income_invalid_and_employment_income_no_then_raise_validation_error(self):
         valid_data = {'employment_income_eligibility': 'no'}
-        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
-                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
             self.assertRaises(ValidationError, NoEmploymentIncomeEligibilityData.parse_obj, valid_data)
 
@@ -842,9 +762,9 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
                 NoEmploymentIncomeEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -857,7 +777,7 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                     patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
                 NoEmploymentIncomeEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -866,9 +786,9 @@ class TestNoEmploymentIncomeEligibilityData(unittest.TestCase):
     def test_if_taxed_inv_income_valid_and_employment_income_no_then_raise_no_validation_error(self):
         valid_data = {'employment_income_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
-                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
                     patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                           MagicMock(return_value=None)):
@@ -882,37 +802,37 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
     def test_if_cheaper_check_valid_and_employment_income_no_then_raise_validation_error(self):
         non_valid_data = {'employment_income_eligibility': 'no'}
         with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_no_inv_income_valid_and_employment_income_no_then_raise_validation_error(self):
         non_valid_data = {'employment_income_eligibility': 'no'}
-        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                 patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_taxed_inv_income_valid_and_employment_income_no_then_raise_validation_error(self):
         non_valid_data = {'employment_income_eligibility': 'no'}
-        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
-                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
                 patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_cheaper_check_and_no_inv_income_and_taxed_inv_income_invalid_and_employment_income_yes_then_raise_validation_error(self):
         valid_data = {'employment_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
-                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
             self.assertRaises(ValidationError, EmploymentIncomeEligibilityData.parse_obj, valid_data)
 
@@ -921,9 +841,9 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
         try:
             with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
                 EmploymentIncomeEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -936,7 +856,7 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
                     patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__', 
+                patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                       MagicMock(side_effect=ValidationError([], MinimalInvestmentIncome))):
                 EmploymentIncomeEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -945,9 +865,9 @@ class TestEmploymentIncomeEligibilityData(unittest.TestCase):
     def test_if_taxed_inv_income_valid_and_employment_income_yes_then_raise_no_validation_error(self):
         valid_data = {'employment_income_eligibility': 'yes'}
         try:
-            with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.CheaperCheckEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], CheaperCheckEligibilityData))), \
-                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.NoInvestmentIncomeEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], NoInvestmentIncomeEligibilityData))), \
                     patch('app.model.eligibility_data.MinimalInvestmentIncome.__init__',
                           MagicMock(return_value=None)):
@@ -965,7 +885,7 @@ class TestMarginalEmploymentEligibilityData(unittest.TestCase):
 
     def test_if_employment_income_invalid_and_marginal_employment_yes_then_raise_validation_error(self):
         valid_data = {'marginal_employment_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.EmploymentIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.EmploymentIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], EmploymentIncomeEligibilityData))):
             self.assertRaises(ValidationError, MarginalEmploymentEligibilityData.parse_obj, valid_data)
 
@@ -984,22 +904,22 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
     def test_if_no_employment_valid_and_other_income_yes_then_raise_validation_error(self):
         non_valid_data = {'other_income_eligibility': 'yes'}
         with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__', MagicMock(return_value=None)), \
-                patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__', 
+                patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], MarginalEmploymentEligibilityData))):
             self.assertRaises(ValidationError, OtherIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_marginal_employ_valid_and_other_income_yes_then_raise_validation_error(self):
         non_valid_data = {'other_income_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], NoEmploymentIncomeEligibilityData))), \
                 patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__', MagicMock(return_value=None)):
             self.assertRaises(ValidationError, OtherIncomeEligibilityData.parse_obj, non_valid_data)
 
     def test_if_no_and_marginal_employ_invalid_and_other_income_no_then_raise_validation_error(self):
         valid_data = {'other_income_eligibility': 'no'}
-        with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], NoEmploymentIncomeEligibilityData))), \
-                patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__', 
+                patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__',
                       MagicMock(side_effect=ValidationError([], MarginalEmploymentEligibilityData))):
             self.assertRaises(ValidationError, OtherIncomeEligibilityData.parse_obj, valid_data)
 
@@ -1008,7 +928,7 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
         try:
             with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__',
                        MagicMock(return_value=None)), \
-                    patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__', 
+                    patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__',
                           MagicMock(side_effect=ValidationError([], MarginalEmploymentEligibilityData))):
                 OtherIncomeEligibilityData.parse_obj(valid_data)
         except ValidationError as e:
@@ -1017,7 +937,7 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
     def test_if_marginal_employ_valid_and_other_income_no_then_raise_no_validation_error(self):
         valid_data = {'other_income_eligibility': 'no'}
         try:
-            with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__', 
+            with patch('app.model.eligibility_data.NoEmploymentIncomeEligibilityData.__init__',
                        MagicMock(side_effect=ValidationError([], NoEmploymentIncomeEligibilityData))), \
                     patch('app.model.eligibility_data.MarginalEmploymentEligibilityData.__init__',
                           MagicMock(return_value=None)):
@@ -1027,7 +947,7 @@ class TestOtherIncomeEligibilityData(unittest.TestCase):
 
 
 class TestForeignCountrySuccessEligibility(unittest.TestCase):
-    
+
     def test_if_other_income_valid_and_foreign_country_no_and_no_user_a_has_elster_account_eligibility_then_raise_no_validation_error(self):
         valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'no'}
         try:
@@ -1036,9 +956,9 @@ class TestForeignCountrySuccessEligibility(unittest.TestCase):
                 ForeignCountrySuccessEligibility.parse_obj(valid_data)
         except ValidationError:
             self.fail("ForeignCountryEligibility.parse_obj should not raise validation error")
-    
+
     def test_if_other_income_valid_and_foreign_country_no_and_no_users_has_elster_account_eligibility_then_raise_no_validation_error(self):
-        # Two person defined but both no elster account      
+        # Two person defined but both no elster account
         valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'no', 'user_b_has_elster_account_eligibility': 'no'}
         try:
             with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
@@ -1046,7 +966,7 @@ class TestForeignCountrySuccessEligibility(unittest.TestCase):
                 ForeignCountrySuccessEligibility.parse_obj(valid_data)
         except ValidationError:
             self.fail("ForeignCountryEligibility.parse_obj should not raise validation error")
-                
+
     def test_if_other_income_valid_and_foreign_country_no_and_both_persons_defined_but_only_user_a_has_elster_account_eligibility_then_raise_no_validation_error(self):
         valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'yes', 'user_b_has_elster_account_eligibility': 'no'}
         try:
@@ -1059,56 +979,27 @@ class TestForeignCountrySuccessEligibility(unittest.TestCase):
     def test_if_other_income_valid_and_foreign_country_no_and_both_persons_defined_and_both_person_has_elster_account_eligibility_then_raise_validation_error(self):
         non_valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'yes', 'user_b_has_elster_account_eligibility': 'yes'}
         with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', MagicMock(return_value=None)):
-            self.assertRaises(ValidationError, ForeignCountrySuccessEligibility.parse_obj, non_valid_data)
+            self.assertRaises(ValidationError, SuccessEligibility.parse_obj, non_valid_data)
 
     def test_if_other_income_valid_and_foreign_country_yes_then_raise_validation_error(self):
         non_valid_data = {'foreign_country_eligibility': 'yes'}
         with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', MagicMock(return_value=None)):
-            self.assertRaises(ValidationError, ForeignCountrySuccessEligibility.parse_obj, non_valid_data)
+            self.assertRaises(ValidationError, SuccessEligibility.parse_obj, non_valid_data)
 
     def test_if_other_income_invalid_and_foreign_country_no_then_raise_validation_error(self):
         valid_data = {'foreign_country_eligibility': 'no'}
-        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], OtherIncomeEligibilityData))):
-            self.assertRaises(ValidationError, ForeignCountrySuccessEligibility.parse_obj, valid_data)
+            self.assertRaises(ValidationError, SuccessEligibility.parse_obj, valid_data)
 
     def test_if_other_income_valid_and_foreign_country_no_and_user_a_has_elster_account_eligibility_then_raise_validation_error(self):
         valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', 
+        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
                    MagicMock(side_effect=ValidationError([], OtherIncomeEligibilityData))):
-            self.assertRaises(ValidationError, ForeignCountrySuccessEligibility.parse_obj, valid_data)
-            
-
-class TestForeignCountryMaybeEligibility:
-
-    def test_if_other_income_invalid_and_foreign_country_no_then_raise_validation_error(self):
-        valid_data = {'foreign_country_eligibility': 'no'}
-        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
-                   MagicMock(side_effect=ValidationError([], OtherIncomeEligibilityData))), \
-                pytest.raises(ValidationError):
-            ForeignCountryMaybeEligibility.parse_obj(valid_data)
-
-    def test_if_other_income_valid_and_foreign_country_yes_then_raise_validation_error(self):
-        non_valid_data = {'foreign_country_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ForeignCountryMaybeEligibility.parse_obj(non_valid_data)
-
-    def test_if_other_income_valid_and_foreign_country_no_but_user_a_has_elster_account_eligibility_no_then_raise_validation_error(self):
-        non_valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'no'}
-        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__', MagicMock(return_value=None)), \
-                pytest.raises(ValidationError):
-            ForeignCountryMaybeEligibility.parse_obj(non_valid_data)
-
-    def test_if_other_income_valid_and_foreign_country_no_and_user_a_has_elster_account_eligibility_no_then_raise_no_validation_error(self):
-        valid_data = {'foreign_country_eligibility': 'no', 'user_a_has_elster_account_eligibility': 'yes'}
-        with patch('app.model.eligibility_data.OtherIncomeEligibilityData.__init__',
-                   MagicMock(return_value=None)):
-            ForeignCountryMaybeEligibility.parse_obj(valid_data)
-
+            self.assertRaises(ValidationError, SuccessEligibility.parse_obj, valid_data)
 
 class TestEligibilityDataInGeneral(unittest.TestCase):
-    last_step_data_type = ForeignCountrySuccessEligibility
+    last_step_data_type = SuccessEligibility
 
     def test_if_married_and_no_joint_taxes_then_raise_validation_error(self):
         invalid_data = {
@@ -1908,26 +1799,6 @@ class TestEligibilityDataInGeneral(unittest.TestCase):
             self.last_step_data_type.parse_obj(valid_data)
         except ValidationError:
             self.fail("Parsing the data should not have raised a validation error")
-
-    def test_if_other_income_and_foreign_country_than_raise_validation_error(self):
-        invalid_data = {
-            'marital_status_eligibility': 'single',
-            'separated_since_last_year_eligibility': 'no',
-            'user_a_has_elster_account_eligibility': 'no',
-            'user_b_has_elster_account_eligibility': 'no',
-            'joint_taxes_eligibility': 'no',
-            'alimony_eligibility': 'no',
-            'pension_eligibility': 'yes',
-            'investment_income_eligibility': 'no',
-            'minimal_investment_income_eligibility': 'yes',
-            'taxed_investment_income_eligibility': 'no',
-            'cheaper_check_eligibility': 'no',
-            'employment_income_eligibility': 'no',
-            'marginal_employment_eligibility': 'no',
-            'other_income_eligibility': 'no',
-            'foreign_country_eligibility': 'yes'}
-
-        self.assertRaises(ValidationError, self.last_step_data_type.parse_obj, invalid_data)
 
     def test_if_other_income_and_no_foreign_country_than_raise_no_validation_error(self):
         valid_data = {

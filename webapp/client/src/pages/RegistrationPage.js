@@ -209,6 +209,8 @@ export default function RegistrationPage({
                     href={eligibilityLink}
                   />
                 ),
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                referenceLink: <a href="/sofunktionierts#about_stl" />,
               }}
             />
           }

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Accordion, Card } from "react-bootstrap";
 import plusIcon from "../assets/icons/plus.svg";
 import minusIcon from "../assets/icons/minus.svg";
+import addPlausibleGoal from "../lib/helpers";
 
 const CardElement = styled.div`
   border: 0;
@@ -61,6 +62,13 @@ const CardHeaderSpan = styled.span`
 const AccordionHeadline = styled.h2`
   padding-top: var(--spacing-09);
   font-size: var(--text-3xl);
+  margin-top: ${({ variant }) => {
+    if (variant === "marginTop") {
+      return "var(--spacing-09)";
+    }
+    return "0";
+  }};
+  margin-bottom: 1rem;
 
   @media (max-width: 1024px) {
     font-size: var(--text-xla);
@@ -69,13 +77,22 @@ const AccordionHeadline = styled.h2`
 
 const AccordionStyled = styled(Accordion)``;
 
-export default function AccordionComponent({ title, intro, items, variant }) {
+export default function AccordionComponent({
+  title,
+  intro,
+  items,
+  variant,
+  id,
+  plausibleDomain,
+}) {
   const [toggle, setToggle] = useState();
 
   return (
     <>
       {title.length > 0 && (
-        <AccordionHeadline variant={variant}>{title}</AccordionHeadline>
+        <AccordionHeadline variant={variant} id={id}>
+          {title}
+        </AccordionHeadline>
       )}
       {intro.length > 0 && <p className="mt-3 pb-2">{intro}</p>}
       <AccordionStyled>
@@ -90,6 +107,9 @@ export default function AccordionComponent({ title, intro, items, variant }) {
                 onClick={() => {
                   if (toggle === index) setToggle(-1);
                   else setToggle(index);
+                  addPlausibleGoal(plausibleDomain, `${item.title}`, {
+                    method: `Hilfebereich / ${item.title}`,
+                  });
                 }}
               >
                 <ExpandButton className="col text-left">
@@ -117,7 +137,7 @@ export default function AccordionComponent({ title, intro, items, variant }) {
 
 AccordionComponent.propTypes = {
   title: PropTypes.string,
-  variant: PropTypes.bool,
+  variant: PropTypes.string,
   intro: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.exact({
@@ -125,10 +145,14 @@ AccordionComponent.propTypes = {
       detail: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     })
   ).isRequired,
+  id: PropTypes.string,
+  plausibleDomain: PropTypes.string,
 };
 
 AccordionComponent.defaultProps = {
   title: "",
   intro: "",
-  variant: false,
+  variant: null,
+  id: null,
+  plausibleDomain: null,
 };

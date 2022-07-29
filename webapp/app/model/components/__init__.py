@@ -228,6 +228,7 @@ class VorbereitenInfoProps(ComponentProps):
     spenden_und_mitgliedsbeitraege_url: str
     kirchensteuer_url: str
 
+
 class HouseholdServicesInfoPageProps(ComponentProps):
     pass
 
@@ -252,12 +253,10 @@ class CraftsmanServicesInfoPageProps(ComponentProps):
     pass
 
 
-class InfoForRelativesPageProps(ComponentProps):
-    pass
-
 class SummaryDataSectionProps(ComponentProps):
     mandatory_data: Dict
     section_steuerminderung: Dict
+
 
 class SummaryPageProps(ComponentProps):
     summary_data: SummaryDataSectionProps
@@ -269,6 +268,7 @@ class SummaryPageProps(ComponentProps):
 class LandingPageProps(ComponentPlausibleProps):
     pass
 
+
 class NewsletterSuccessPageProps(ComponentProps):
     pass
 
@@ -278,4 +278,12 @@ class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
 
 
 class MandateForTaxDeclarationProps(ComponentPlausibleProps):
+    pass
+
+
+class HowItWorksPageProps(ComponentPlausibleProps):
+    pass
+
+
+class HelpAreaPageProps(ComponentPlausibleProps):
     pass

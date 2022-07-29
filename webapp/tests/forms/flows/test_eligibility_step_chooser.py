@@ -26,7 +26,9 @@ from app.forms.steps.eligibility_steps import EligibilityStartDisplaySteuerlotse
     MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep, \
     IncomeOtherEligibilityFailureDisplaySteuerlotseStep, ForeignCountriesEligibilityFailureDisplaySteuerlotseStep, \
     SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep, SeparatedJointTaxesEligibilityInputFormSteuerlotseStep, \
-    EligibilityMaybeDisplaySteuerlotseStep
+    SingleElsterFailureDisplaySteuerlotseStep, \
+    MarriedElsterFailureDisplaySteuerlotseStep
+
 from tests.forms.mock_steuerlotse_steps import MockStartStep, MockFirstInputStep
 
 
@@ -50,11 +52,8 @@ class TestEligibilityChooserInit(unittest.TestCase):
             SeparatedJointTaxesEligibilityInputFormSteuerlotseStep,
             MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
             MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-            UserAElsterAccountEligibilityInputFormSteuerlotseStep,
-            UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
             DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep,
             SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep,
-            SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
             PensionDecisionEligibilityInputFormSteuerlotseStep,
             InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
             MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep,
@@ -64,8 +63,10 @@ class TestEligibilityChooserInit(unittest.TestCase):
             MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep,
             IncomeOtherDecisionEligibilityInputFormSteuerlotseStep,
             ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep,
+            UserAElsterAccountEligibilityInputFormSteuerlotseStep,
+            UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
+            SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep,
             EligibilitySuccessDisplaySteuerlotseStep,
-            EligibilityMaybeDisplaySteuerlotseStep,
             TaxYearEligibilityFailureDisplaySteuerlotseStep,
             MarriedJointTaxesEligibilityFailureDisplaySteuerlotseStep,
             MarriedAlimonyEligibilityFailureDisplaySteuerlotseStep,
@@ -77,6 +78,8 @@ class TestEligibilityChooserInit(unittest.TestCase):
             MarginalEmploymentIncomeEligibilityFailureDisplaySteuerlotseStep,
             IncomeOtherEligibilityFailureDisplaySteuerlotseStep,
             ForeignCountriesEligibilityFailureDisplaySteuerlotseStep,
+            SingleElsterFailureDisplaySteuerlotseStep,
+            MarriedElsterFailureDisplaySteuerlotseStep
         ]
         self.endpoint_correct = "eligibility"
 

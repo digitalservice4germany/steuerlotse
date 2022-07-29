@@ -23,6 +23,16 @@ def declarations_must_be_set_no(v):
     return v
 
 
+class NotMarriedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
+    marital_status_eligibility: str
+
+    @validator('marital_status_eligibility')
+    def must_not_be_married(cls, v):
+        if v in 'married':
+            raise ValueError
+        return v
+
+
 class MarriedEligibilityData(BaseModel, PotentialDataModelKeysMixin):
     marital_status_eligibility: str
 
@@ -177,29 +187,19 @@ class AlimonyMarriedEligibilityData(RecursiveDataModel):
 
 
 class UserANoElsterAccountEligibilityData(RecursiveDataModel):
-    alimony: Optional[AlimonyMarriedEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
     def must_not_have_elster_account(cls, v):
         return declarations_must_be_set_no(v)
 
-    @validator('alimony', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
 
 class UserAElsterAccountEligibilityData(RecursiveDataModel):
-    alimony: Optional[AlimonyMarriedEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
     def has_elster_account(cls, v):
         return declarations_must_be_set_yes(v)
-
-    @validator('alimony', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
 class UserBNoElsterAccountEligibilityData(RecursiveDataModel):
@@ -240,7 +240,6 @@ class DivorcedJointTaxesEligibilityData(RecursiveDataModel):
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
-
 class AlimonyEligibilityData(RecursiveDataModel):
     is_widowed: Optional[WidowedEligibilityData]
     is_single: Optional[SingleEligibilityData]
@@ -258,38 +257,56 @@ class AlimonyEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
+class ForeignCountrySingleElsterEligibilityData(RecursiveDataModel):
+    marital_status_eligibility: str
+    foreign_country_eligibility: str
+
+    @validator('marital_status_eligibility')
+    def must_be_not_married(cls, v):
+        if v in 'married':
+            raise InvalidEligiblityError
+        return v
+
+    @validator('foreign_country_eligibility')
+    def has_only_taxed_investment_income(cls, v):
+        return declarations_must_be_set_no(v)
+
+
+class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
+    marital_status_eligibility: str
+    foreign_country_eligibility: str
+
+    @validator('marital_status_eligibility')
+    def must_be_married(cls, v):
+        if v not in 'married':
+            raise InvalidEligiblityError
+        return v
+
+    @validator('foreign_country_eligibility')
+    def has_only_taxed_investment_income(cls, v):
+        return declarations_must_be_set_no(v)
+
+
+
 class SingleUserNoElsterAccountEligibilityData(RecursiveDataModel):
-    no_alimony: Optional[AlimonyEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
     def must_not_have_elster_account(cls, v):
         return declarations_must_be_set_no(v)
 
-    @validator('no_alimony', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
 
 class SingleUserElsterAccountEligibilityData(RecursiveDataModel):
-    no_alimony: Optional[AlimonyEligibilityData]
     user_a_has_elster_account_eligibility: str
 
     @validator('user_a_has_elster_account_eligibility')
     def must_have_elster_account(cls, v):
         return declarations_must_be_set_yes(v)
 
-    @validator('no_alimony', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
-
 
 class PensionEligibilityData(RecursiveDataModel):
-    single_user_a_has_elster_account: Optional[SingleUserElsterAccountEligibilityData]
-    single_user_has_no_elster_account: Optional[SingleUserNoElsterAccountEligibilityData]
-    user_a_has_no_elster_account: Optional[UserANoElsterAccountEligibilityData]   
-    user_b_has_no_elster_account: Optional[UserBNoElsterAccountEligibilityData]
-    user_b_has_elster_account: Optional[UserBElsterAccountEligibilityData]
+    alimony: Optional[AlimonyMarriedEligibilityData]
+    no_alimony: Optional[AlimonyEligibilityData]
 
     pension_eligibility: str
 
@@ -297,7 +314,7 @@ class PensionEligibilityData(RecursiveDataModel):
     def has_to_get_pension(cls, v):
         return declarations_must_be_set_yes(v)
 
-    @validator('user_b_has_elster_account', always=True, check_fields=False)
+    @validator('no_alimony', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
@@ -436,23 +453,28 @@ class OtherIncomeEligibilityData(RecursiveDataModel):
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
-
 class ForeignCountrySuccessEligibility(RecursiveDataModel):
+    foreign_country_eligibility: str
+
+    @validator('foreign_country_eligibility')
+    def has_only_taxed_investment_income(cls, v):
+        return declarations_must_be_set_no(v)
+
+
+class SuccessEligibility(RecursiveDataModel):
     """
         This is the only point where we have additional fields of previous steps on a step model.
-        That's because the ForeignCountry step is the last step of the flow and needs to decide which result page is
-        displayed: 'success' or 'maybe'.
+        displayed: 'success'
     """
     has_no_other_income: Optional[OtherIncomeEligibilityData]
-    foreign_country_eligibility: str
     user_a_has_elster_account_eligibility: str
     user_b_has_elster_account_eligibility: Optional[str]
-    
+
     @validator('user_b_has_elster_account_eligibility', always=True)
     def users_must_not_all_have_elster_accounts(cls,v, values):
         user_a_has_elster_account = values.get('user_a_has_elster_account_eligibility')
         user_b_has_elster_account = v
-        
+
         # One person case
         if not user_b_has_elster_account:
             declarations_must_be_set_no(user_a_has_elster_account)
@@ -464,40 +486,8 @@ class ForeignCountrySuccessEligibility(RecursiveDataModel):
                 declarations_must_be_set_no(user_b_has_elster_account)
 
         return user_b_has_elster_account
-    
-
-    @validator('foreign_country_eligibility')
-    def has_only_taxed_investment_income(cls, v):
-        return declarations_must_be_set_no(v)
-
-    @validator('has_no_other_income', always=True, check_fields=False)
-    def one_previous_field_has_to_be_set(cls, v, values):
-        return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
-class ForeignCountryMaybeEligibility(RecursiveDataModel):
-    """
-    This is the only point where we have additional fields of previous steps on a step model.
-    That's because the ForeignCountry step is the last step of the flow and needs to decide which result page is
-    displayed: 'success' or 'maybe'.
-    """
-    has_no_other_income: Optional[OtherIncomeEligibilityData]
-    foreign_country_eligibility: str
-    user_a_has_elster_account_eligibility: str
-    user_b_has_elster_account_eligibility: Optional[str]
-
-    @validator('foreign_country_eligibility')
-    def has_only_taxed_investment_income(cls, v):
-        return declarations_must_be_set_no(v)
-    
-    @validator('user_a_has_elster_account_eligibility')
-    def has_user_a_elster_account_eligibility(cls,v):
-        return declarations_must_be_set_yes(v)
-    
-    @validator('user_b_has_elster_account_eligibility')
-    def has_user_b_elster_account_eligibility(cls,v):
-        return declarations_must_be_set_yes(v)
-    
     @validator('has_no_other_income', always=True, check_fields=False)
     def one_previous_field_has_to_be_set(cls, v, values):
         return super().one_previous_field_has_to_be_set(cls, v, values)
