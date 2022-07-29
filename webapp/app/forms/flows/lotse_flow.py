@@ -1,9 +1,9 @@
 import datetime
 import logging
-import time
+
 from decimal import Decimal
 
-from flask import request, flash, url_for, session
+from flask import request, flash, url_for
 from flask_babel import _, lazy_gettext as _l
 from flask_login import current_user
 from pydantic import ValidationError, MissingError
@@ -36,7 +36,6 @@ from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
     IdNrMismatchInputValidationError, show_person_b
-from app.data_access.storage.session_storage import SessionStorage
 
 SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
