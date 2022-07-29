@@ -7,7 +7,6 @@ from markupsafe import escape
 from requests import RequestException
 
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
-from app.data_access.storage.session_storage import SessionStorage
 from app.data_access.user_controller import user_exists, create_user
 from app.data_access.user_controller_errors import UserAlreadyExistsError
 from app.elster_client import elster_client
