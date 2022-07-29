@@ -1,6 +1,5 @@
 import logging
 import json
-import threading
 
 from datetime import datetime
 from decimal import Decimal
@@ -191,7 +190,6 @@ def _get_job_result(location):
     status = 'Processing'
     result = None
     while status == 'Processing':
-        print("Get Status. Thread: " + str(threading.current_thread().ident))
         erica_response_job_status = request_from_erica(
             _PYERIC_API_BASE_URL + location)
         check_erica_response_for_errors(erica_response_job_status)

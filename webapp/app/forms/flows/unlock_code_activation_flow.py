@@ -1,5 +1,4 @@
 import logging
-import time
 
 from app.data_access.user_controller import verify_and_login, activate_user, find_user
 from app.data_access.user_controller_errors import UserNotActivatedError, WrongUnlockCodeError, \
@@ -8,7 +7,7 @@ from app.elster_client import elster_client
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful
 from app.forms.flows.multistep_flow import MultiStepFlow
 from flask_babel import _
-from flask import request, url_for, flash, session
+from flask import request, url_for, flash
 from requests import RequestException
 
 from app.forms.steps.unlock_code_activation_steps import UnlockCodeActivationInputStep, \
