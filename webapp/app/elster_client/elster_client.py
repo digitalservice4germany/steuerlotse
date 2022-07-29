@@ -96,6 +96,7 @@ def send_est_with_elster(form_data, ip_address, year=VERANLAGUNGSJAHR):
     return _extract_est_response_data_v2(result)
 
 
+
 def validate_est_with_elster(form_data, year=VERANLAGUNGSJAHR, include_elster_responses=True):
     """The overarching method that is being called from the web backend. It
     will send the form data for an ESt to the PyERiC server and then extract information from the response.
@@ -111,18 +112,9 @@ def validate_est_with_elster(form_data, year=VERANLAGUNGSJAHR, include_elster_re
 
 
 def send_unlock_code_request_with_elster(form_data, ip_address):
-    if "location" not in SessionStorage.get_data("location", key_identifier=form_data['idnr']):
-        data = {'payload': {'tax_id_number': form_data['idnr'], 'date_of_birth': form_data['dob']},
-                'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
-        erica_response_job_creation = _send_job('fsc/request', data)
-        location = erica_response_job_creation.headers['location'].removeprefix("v2")
-        SessionStorage.override_data({'location': location, 'thread': threading.current_thread().ident},
-                                     data_identifier="location", key_identifier=form_data['idnr'])
-        time.sleep(10)
-        result = _get_job_result(location)
-    else:
-        result = _get_job_result(SessionStorage.get_data("location", key_identifier=form_data['idnr'])['location'])
-
+    data = {'payload': {'tax_id_number': form_data['idnr'], 'date_of_birth': form_data['dob']},
+            'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
+    result = _send_job_and_get_result('fsc/request', data)
     create_audit_log_entry('unlock_code_request_sent',
                            ip_address,
                            form_data['idnr'],
@@ -132,19 +124,10 @@ def send_unlock_code_request_with_elster(form_data, ip_address):
 
 
 def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_address):
-    if "location" not in SessionStorage.get_data("location", key_identifier=form_data['idnr']):
-        data = {'payload': {'tax_id_number': form_data['idnr'], 'freischalt_code': form_data['unlock_code'],
-                            'elster_request_id': elster_request_id},
-                'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
-        erica_response_job_creation = _send_job('fsc/activation', data)
-        location = erica_response_job_creation.headers['location'].removeprefix("v2")
-        SessionStorage.override_data({'location': location, 'thread': threading.current_thread().ident},
-                                     data_identifier="location", key_identifier=form_data['idnr'])
-        time.sleep(10)
-        result = _get_job_result(location)
-    else:
-        result = _get_job_result(SessionStorage.get_data("location", key_identifier=form_data['idnr'])['location'])
-
+    data = {'payload': {'tax_id_number': form_data['idnr'], 'freischalt_code': form_data['unlock_code'],
+                        'elster_request_id': elster_request_id},
+            'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
+    result = _send_job_and_get_result('fsc/activation', data)
     create_audit_log_entry('unlock_code_activation_sent',
                            ip_address,
                            form_data['idnr'],
@@ -154,18 +137,9 @@ def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_add
 
 
 def send_unlock_code_revocation_with_elster(form_data, ip_address):
-    if "location" not in SessionStorage.get_data("location", key_identifier=form_data['idnr']):
-        data = {'payload': {'tax_id_number': form_data['idnr'], 'elster_request_id': form_data['elster_request_id']},
-                'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
-        erica_response_job_creation = _send_job('fsc/revocation', data)
-        location = erica_response_job_creation.headers['location'].removeprefix("v2")
-        SessionStorage.override_data({'location': location, 'thread': threading.current_thread().ident},
-                                     data_identifier="location", key_identifier=form_data['idnr'])
-        time.sleep(10)
-        result = _get_job_result(location)
-    else:
-        result = _get_job_result(SessionStorage.get_data("location", key_identifier=form_data['idnr'])['location'])
-
+    data = {'payload': {'tax_id_number': form_data['idnr'], 'elster_request_id': form_data['elster_request_id']},
+            'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
+    result = _send_job_and_get_result('fsc/revocation', data)
     create_audit_log_entry('unlock_code_revocation_sent',
                            ip_address, form_data['idnr'],
                            result['transferticket'],

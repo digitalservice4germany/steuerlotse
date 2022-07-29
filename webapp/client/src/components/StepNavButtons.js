@@ -259,10 +259,14 @@ export default function StepNavButtons({
     const interval = setInterval(() => {
       const firstMessage = document.getElementById("firstMessage");
       const secondMessage = document.getElementById("secondMessage");
-      firstMessage.style.display = "none";
-      firstMessage.style.visibility = "none";
-      secondMessage.style.display = "block";
-      secondMessage.style.visibility = "visible";
+      if (firstMessage) {
+        firstMessage.style.display = "none";
+        firstMessage.style.visibility = "none";
+      }
+      if (secondMessage) {
+        secondMessage.style.display = "block";
+        secondMessage.style.visibility = "visible";
+      }
       announceChange(waitingMessages.secondMessage);
       clearInterval(interval);
     }, 10000);

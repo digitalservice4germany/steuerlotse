@@ -36,13 +36,12 @@ from app.forms.steps.step import Section
 from app.model.form_data import MandatoryFormData, MandatoryConfirmations, \
     ConfirmationMissingInputValidationError, MandatoryFieldMissingValidationError, InputDataInvalidError, \
     IdNrMismatchInputValidationError, show_person_b
+from app.data_access.storage.session_storage import SessionStorage
 
 SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
 
 logger = logging.getLogger(__name__)
-flashes_saved = []
-
 
 class LotseMultiStepFlow(MultiStepFlow):
     _DEBUG_DATA = (
@@ -198,19 +197,19 @@ class LotseMultiStepFlow(MultiStepFlow):
                 create_audit_log_confirmation_entry('Confirmed terms of service', request.remote_addr,
                                                     stored_data['idnr'], 'confirm_terms_of_service',
                                                     stored_data['confirm_terms_of_service'])
-            elif flashes_saved and '_flashes' not in session:
-                flash(flashes_saved[0], 'warn')
-                flashes_saved.clear()
         if isinstance(step, StepAck):
             render_info.overview_url = None
             render_info.next_url = url_for('logout')
             render_info.additional_info['next_button_label'] = _('form.logout')
         if isinstance(step, StepFiling):
-            if not current_user.has_completed_tax_return() or is_test_user(current_user):
+            if request.method == 'GET' and "location" in SessionStorage.get_data("location", key_identifier=stored_data["idnr"]):
+                render_info.additional_info['waiting_moment_active'] = True
+
+            if (not current_user.has_completed_tax_return() or is_test_user(current_user)) and request.method == 'POST':
                 try:
                     self._validate_input(stored_data)
                     from app.elster_client.elster_client import send_est_with_elster
-                    time.sleep(15)
+
                     elster_data = send_est_with_elster(stored_data, request.remote_addr)
                     store_pdf_and_transfer_ticket(current_user,
                                                   elster_data.pop('pdf', None),
@@ -242,7 +241,6 @@ class LotseMultiStepFlow(MultiStepFlow):
                 except RequestException as e:
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
-                    flashes_saved.append(_('flash.erica.dataConnectionError'))
                     render_info.redirect_url = self.url_for_step(StepConfirmation.name)
             else:
                 render_info.additional_info['elster_data'] = {

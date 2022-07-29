@@ -24,8 +24,11 @@ export default function StepForm({
       method: "POST",
       body: formData,
     })
-      .then((response) => {
-        window.location = response.url;
+      .then((response) => response.text())
+      .then((text, response) => {
+        document.documentElement.innerHTML = text;
+        console.log(response);
+        // document.body.innerHTML = response.body;
       })
       .catch((error) => {
         console.log(error);

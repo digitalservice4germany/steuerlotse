@@ -111,6 +111,7 @@ class MultiStepFlow:
             return redirect(render_info.redirect_url)
         elif isinstance(step, FormStep) and request.method == 'POST' and render_info.form.validate():
             logger.info(f"Redirect to next Step {render_info.next_url}")
+            return step.render(stored_data, render_info)
             return redirect(render_info.next_url)
         else:
             return step.render(stored_data, render_info)
@@ -185,22 +186,3 @@ class MultiStepFlow:
             if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
                 stored_data.pop(field)
         return stored_data
-
-    @staticmethod
-    def _delete_reload_cookie(stored_data):
-        # the same thread who created the cookie will delete it
-        if ("location" in SessionStorage.get_data("location", key_identifier=stored_data["idnr"]) and
-                SessionStorage.get_data("location", key_identifier=stored_data["idnr"])[
-                    'thread'] == threading.current_thread().ident):
-            SessionStorage.delete_data(data_identifier="location", key_identifier=stored_data["idnr"])
-
-    @staticmethod
-    def _respect_min_waiting_time(seconds_before: float):
-        # Respect the waiting time of the waiting moment (if <2 then up to 2, if > 10 < 12 then up to 12)
-        time_passed = time.time() - seconds_before
-        if time_passed < 10.0:
-            while (time.time() - seconds_before) < 2.0:
-                pass
-        elif 10.0 < time_passed < 12.0:
-            while (time.time() - seconds_before) < 12.0:
-                pass
