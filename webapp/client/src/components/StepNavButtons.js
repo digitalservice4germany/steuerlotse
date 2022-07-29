@@ -320,7 +320,13 @@ export default function StepNavButtons({
         <ExplanatoryText>{explanatoryButtonText}</ExplanatoryText>
       )}
 
-      {loading && <ClipLoaderWithStyle color="#0B0C0C" size="30px" />}
+      {loading && (
+        <ClipLoaderWithStyle
+          name="loading_spinner"
+          color="#0B0C0C"
+          size="30px"
+        />
+      )}
       {loading && (
         <div>
           <ExplanatoryTextSpinner id="firstMessage">

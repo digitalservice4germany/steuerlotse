@@ -5,7 +5,7 @@ import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldDate from "../components/FormFieldDate";
 import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
-import StepForm from "../components/StepForm";
+import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
@@ -46,7 +46,7 @@ export default function RevocationPage({
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm
+      <StepFormAsync
         {...form}
         loadingFromOutside={waitingMomentActive}
         sendDisableCall={sendDisableCall}
@@ -86,7 +86,7 @@ export default function RevocationPage({
             errors={fields.dob.errors}
           />
         </FormRowCentered>
-      </StepForm>
+      </StepFormAsync>
     </>
   );
 }

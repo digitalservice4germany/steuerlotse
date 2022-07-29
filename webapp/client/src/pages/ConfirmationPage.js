@@ -4,7 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import FormFieldConsentBox from "../components/FormFieldConsentBox";
 import FormHeader from "../components/FormHeader";
-import StepForm from "../components/StepForm";
+import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { checkboxPropType } from "../lib/propTypes";
 
@@ -38,7 +38,7 @@ export default function ConfirmationPage({
     <>
       <StepHeaderButtons url={prevUrl} disable={isDisable} />
       <FormHeader {...stepHeader} />
-      <StepForm
+      <StepFormAsync
         {...form}
         nextButtonLabel={t("lotse.confirmation.finish")}
         sendDisableCall={sendDisableCall}
@@ -107,7 +107,7 @@ export default function ConfirmationPage({
           }
           errors={fields.confirmTermsOfService.errors}
         />
-      </StepForm>
+      </StepFormAsync>
     </>
   );
 }

@@ -8,7 +8,7 @@ import FormFieldDate from "../components/FormFieldDate";
 import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
-import StepForm from "../components/StepForm";
+import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import SubHeading from "../components/SubHeading";
 import { checkboxPropType, fieldPropType } from "../lib/propTypes";
@@ -73,7 +73,7 @@ export default function RegistrationPage({
           />
         }
       />
-      <StepForm
+      <StepFormAsync
         {...form}
         loadingFromOutside={waitingMomentActive}
         sendDisableCall={sendDisableCall}
@@ -239,7 +239,7 @@ export default function RegistrationPage({
           )}
           errors={fields.registrationConfirmEData.errors}
         />
-      </StepForm>
+      </StepFormAsync>
     </>
   );
 }

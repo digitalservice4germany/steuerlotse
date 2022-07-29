@@ -5,7 +5,7 @@ import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldUnlockCode from "../components/FormFieldUnlockCode";
 import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
-import StepForm from "../components/StepForm";
+import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
@@ -46,7 +46,7 @@ export default function LoginPage({
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm
+      <StepFormAsync
         {...form}
         loadingFromOutside={waitingMomentActive}
         sendDisableCall={sendDisableCall}
@@ -91,7 +91,7 @@ export default function LoginPage({
             errors={fields.unlockCode.errors}
           />
         </FormRowCentered>
-      </StepForm>
+      </StepFormAsync>
     </>
   );
 }
