@@ -1,18 +1,17 @@
 import logging
 import json
 import threading
-import time
+
 from datetime import datetime
 from decimal import Decimal
 
 import requests
-from flask_login import current_user, logout_user
+from flask_login import current_user
 from markupsafe import escape
 from requests import Timeout
 
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_entry, create_audit_log_address_entry
-from app.data_access.storage.session_storage import SessionStorage
 from app.elster_client.elster_errors import ElsterGlobalError, ElsterGlobalValidationError, \
     ElsterGlobalInitialisationError, ElsterTransferError, ElsterCryptError, ElsterIOError, ElsterPrintError, \
     ElsterNullReturnedError, ElsterUnknownError, ElsterAlreadyRequestedError, ElsterRequestIdUnkownError, \
