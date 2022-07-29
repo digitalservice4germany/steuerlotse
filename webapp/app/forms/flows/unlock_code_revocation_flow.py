@@ -2,7 +2,6 @@ import datetime
 import logging
 
 from app.data_access.db_model.user import User
-from app.data_access.storage.session_storage import SessionStorage
 
 from app.data_access.user_controller import user_exists, check_dob, delete_user
 from app.data_access.user_controller_errors import UserNotExistingError, WrongDateOfBirthError
@@ -63,8 +62,7 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
-                    pass  # go to failure step
-                
+                    pass  # go to failure step                
         elif isinstance(step, UnlockCodeRevocationFailureStep):
             render_info.next_url = None
 
