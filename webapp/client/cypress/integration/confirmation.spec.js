@@ -6,7 +6,11 @@ describe("Confirmation", () => {
 
   context("submitting an empty form", () => {
     beforeEach(() => {
+      const loadingSpinnerSelector = '[name="loading_spinner"]';
+
+      cy.get(loadingSpinnerSelector).should("not.exist");
       cy.get("button[type=submit]").contains("Steuererklärung abgeben").click();
+      cy.get(loadingSpinnerSelector).should("be.visible");
     });
 
     it("should have errors in the right places.", () => {
