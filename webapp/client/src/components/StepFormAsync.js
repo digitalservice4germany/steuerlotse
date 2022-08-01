@@ -29,12 +29,23 @@ export default function StepFormAsync({
       body: formData,
     })
       .then((response) => {
-        const durationTime = Date.now();
-        const duration = (durationTime - startTime) / 1000;
-        const minDuration = 2000;
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+        const firstMinDuration = 2000;
+        const spinnerMessageChangeTime = 10000;
+        const secondMinDuration = 12000;
+        console.log(duration);
 
-        if (duration < minDuration) {
-          return Promise.resolve(delay(minDuration - duration)).then(
+        if (duration < firstMinDuration) {
+          return Promise.resolve(delay(firstMinDuration - duration)).then(
+            () => response
+          );
+        }
+        if (
+          duration > spinnerMessageChangeTime &&
+          duration < secondMinDuration
+        ) {
+          return Promise.resolve(delay(secondMinDuration - duration)).then(
             () => response
           );
         }
