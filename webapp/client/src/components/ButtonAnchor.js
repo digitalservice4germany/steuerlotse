@@ -247,9 +247,9 @@ export default function ButtonAnchor({
 }) {
   const handleClick = () => {
     if (plausibleDomain) {
-      let props = undefined;
+      let props;
 
-      if (plausibleProps.props == undefined) {
+      if (plausibleProps.props === undefined) {
         props = {
           props: plausibleProps,
         };
@@ -345,7 +345,10 @@ ButtonAnchor.propTypes = {
   marginVariant: PropTypes.bool,
   marginTop: PropTypes.bool,
   plausibleGoal: PropTypes.string,
-  plausibleProps: PropTypes.shape({ method: PropTypes.string }),
+  plausibleProps: PropTypes.shape({
+    method: PropTypes.string,
+    props: PropTypes.any,
+  }),
   plausibleDomain: PropTypes.string,
   isExternalLink: PropTypes.bool,
   text: PropTypes.string,
