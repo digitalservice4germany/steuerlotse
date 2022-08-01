@@ -12,6 +12,7 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   max-height: 274px;
+  margin-top: 90px;
 `;
 
 const Row = styled.div`

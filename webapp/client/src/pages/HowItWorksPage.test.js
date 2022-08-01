@@ -28,7 +28,7 @@ describe("HowItWorks Page", () => {
     const EXPECTED_HEADER = {
       title: "So funktioniert’s",
       intro:
-        "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension und beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
+        "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
     };
 
     const headline = screen.getByText(EXPECTED_HEADER.title);

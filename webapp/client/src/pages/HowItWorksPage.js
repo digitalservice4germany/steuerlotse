@@ -53,6 +53,11 @@ const HowItWorksImage = styled.img`
 const Div = styled.div`
   display: flex;
   justify-content: center;
+  visibility: hidden;
+
+  @media (max-width: 1279px) {
+    visibility: visible;
+  }
 `;
 
 export default function HowItWorksPage({ plausibleDomain }) {
@@ -161,6 +166,11 @@ export default function HowItWorksPage({ plausibleDomain }) {
   const plausiblePropsHelpPageButton = {
     method: "Sofunktionierts / Zum Hilfebereich",
   };
+  const startButton = {
+    url: "/eligibility/step/welcome?link_overview=False",
+    plausibleGoal: t("howItWorksPage.startButton.plausibleGoal"),
+    plausibleProps: { plausiblePropsEligibilityStartButton },
+  };
   return (
     <>
       <ContentWrapper marginBottom>
@@ -237,6 +247,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
           icon={StepSeven.icon}
           image={StepSeven.image}
           variant
+          button={startButton}
         />
         <Div>
           <ButtonAnchor

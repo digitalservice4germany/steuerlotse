@@ -1316,7 +1316,7 @@ const translations = {
   howItWorksPage: {
     formHeaderTitle: "So funktioniert’s",
     formHeaderText:
-      "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension und beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
+      "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
     stepsVideoSection: {
       heading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
       imageAltText: "Erklärvideo auf Youtube abspielen",
@@ -1400,7 +1400,7 @@ const translations = {
       item3: {
         title: "Als Paar",
         detail:
-          "Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. In diesem Fall müssen Sie und Ihr Partner / Ihre Partnerin alle Voraussetzungen unter <eligibilityLink>„Nutzung prüfen“</eligibilityLink> erfüllen. Es reicht aus, wenn sich nur eine Person beim Steuerlotsen registriert. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner / Ihrer Partnerin eintragen.",
+          "Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. In diesem Fall müssen Sie <strong>und</strong> Ihr Partner / Ihre Partnerin alle Voraussetzungen unter <eligibilityLink>„Nutzung prüfen“</eligibilityLink> erfüllen. Es reicht aus, wenn sich nur eine Person beim Steuerlotsen registriert. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner / Ihrer Partnerin eintragen.",
       },
       item4: {
         title: "Als Angehörige:r",
@@ -1512,7 +1512,7 @@ const translations = {
           "Der Steuerlotse bietet keine Vorausberechnung an. Die Information über eine Steuererstattung oder Steuernachzahlung erhalten Sie erst mit dem Steuerbescheid.",
       },
       item5: {
-        title: "Abschicken der Steuererklärung ans Finanzamt",
+        title: "Abschicken der Steuererklärung an das Finanzamt",
         detail: {
           one: "Ihre Steuererklärung wird beim Steuerlotsen über die offizielle ELSTER-Schnittstelle digital an das Finanzamt übermittelt. ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle Plattform der deutschen Finanzverwaltung.",
           two: "Sie müssen nichts ausdrucken oder per Post verschicken.",

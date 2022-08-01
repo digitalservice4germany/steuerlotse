@@ -70,7 +70,7 @@ export const Headline1 = styled.h1`
 export const Headline2 = styled.h2`
   padding-top: ${(props) => (props.paddingVariant ? "0" : "var(--spacing-09)")};
   margin: 0;
-  margin-bottom: ${(props) => props.marginVariant && "var(--spacing-03)"};
+  margin-bottom: ${(props) => props.marginVariant && "var(--spacing-05)"};
   font-size: var(--text-3xl);
 
   @media (max-width: 1024px) {
