@@ -195,7 +195,14 @@ class UserANoElsterAccountEligibilityData(RecursiveDataModel):
 
 
 class UserAElsterAccountEligibilityData(RecursiveDataModel):
+    marital_status_eligibility: str
     user_a_has_elster_account_eligibility: str
+
+    @validator('marital_status_eligibility')
+    def must_be_married(cls, v):
+        if v not in 'married':
+            raise InvalidEligiblityError
+        return v
 
     @validator('user_a_has_elster_account_eligibility')
     def has_elster_account(cls, v):
@@ -289,7 +296,14 @@ class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
 
 
 class SingleUserNoElsterAccountEligibilityData(RecursiveDataModel):
+    marital_status_eligibility: str
     user_a_has_elster_account_eligibility: str
+    
+    @validator('marital_status_eligibility')
+    def must_not_be_married(cls, v):
+        if v in 'married':
+            raise InvalidEligiblityError
+        return v
 
     @validator('user_a_has_elster_account_eligibility')
     def must_not_have_elster_account(cls, v):
