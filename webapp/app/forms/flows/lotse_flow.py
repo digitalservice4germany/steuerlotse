@@ -201,7 +201,7 @@ class LotseMultiStepFlow(MultiStepFlow):
             render_info.next_url = url_for('logout')
             render_info.additional_info['next_button_label'] = _('form.logout')
         if isinstance(step, StepFiling):
-            if (not current_user.has_completed_tax_return() or is_test_user(current_user)) and request.method == 'POST':
+            if not current_user.has_completed_tax_return() or is_test_user(current_user):
                 try:
                     self._validate_input(stored_data)
                     from app.elster_client.elster_client import send_est_with_elster
