@@ -65,13 +65,6 @@ export default function UnlockCodeSuccessPage({
     method: "CTA Vorbereitungshilfe herunterladen",
   };
 
-  const text = (
-    <>
-      <p>{t("register.success.next-steps.howItContinues.step-3.textOne")}</p>
-      <p>{t("register.success.next-steps.howItContinues.step-3.textTwo")}</p>
-    </>
-  );
-
   function trans(key) {
     return (
       <Trans
@@ -86,6 +79,15 @@ export default function UnlockCodeSuccessPage({
       />
     );
   }
+
+  const text = (
+    <>
+      <p>{t("register.success.next-steps.howItContinues.step-3.textOne")}</p>
+      <p>
+        {trans("register.success.next-steps.howItContinues.step-3.textTwo")}
+      </p>
+    </>
+  );
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import {
   ContentWrapper,
   Headline2,
@@ -62,6 +62,21 @@ const Div = styled.div`
 
 export default function HowItWorksPage({ plausibleDomain }) {
   const { t } = useTranslation();
+
+  function trans(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          vorbereitenLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/vorbereiten" rel="noreferrer" target="_blank" />
+          ),
+        }}
+      />
+    );
+  }
 
   const StepOne = {
     icon: {
@@ -175,7 +190,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
   const introText = (
     <>
       <p>{t("howItWorksPage.formHeaderTextOne")}</p>
-      <p>{t("howItWorksPage.formHeaderTextTwo")}</p>
+      <p>{trans("howItWorksPage.formHeaderTextTwo")}</p>
     </>
   );
   return (

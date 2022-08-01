@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-01 20:30+0200\n"
+"POT-Creation-Date: 2022-08-01 23:03+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -929,16 +929,26 @@ msgstr ""
 "Als Nächstes können Sie Ihre Zugangsdaten zum Steuerlotsen beantragen. "
 "Die Registrierung dauert nur 2 Minuten."
 
-#: app/forms/steps/eligibility_steps.py:808
-#: app/forms/steps/eligibility_steps.py:810
-msgid "form.eligibility.result-note.user_elster_account-registration-success"
+#: app/forms/steps/eligibility_steps.py:807
+msgid "form.eligibility.result-note.registration-success"
 msgstr ""
 "Eine erfolgreiche Registrierung ist nur ohne Konto bei Mein ELSTER "
 "garantiert. Um die Zugangsdaten per Post zu erhalten, muss sich die "
 "Person beim Steuerlotsen registrieren, die kein Konto bei Mein ELSTER "
 "hat."
 
-#: app/forms/steps/eligibility_steps.py:813
+#: app/forms/steps/eligibility_steps.py:810
+#: app/forms/steps/eligibility_steps.py:812
+msgid "form.eligibility.result-note.user_elster_account-registration-success"
+msgstr ""
+"Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist "
+"die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. "
+"Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. "
+"November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach "
+"der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr "
+"Finanzamt einen Verspätungszuschlag erhebt."
+
+#: app/forms/steps/eligibility_steps.py:815
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "
@@ -984,10 +994,10 @@ msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist "
-"die Abgabefrist der 31. Oktober 2022. Wenn dieser Tag in Ihrem Bundesland"
-" ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie "
-"können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann "
-"kann es allerdings vorkommen, dass Ihr Finanzamt einen "
+"die <strong>Abgabefrist</strong> der 31. Oktober 2022. Wenn dieser Tag in"
+" Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als "
+"Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch "
+"einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen "
 "Verspätungszuschlag erhebt."
 
 #: app/forms/steps/unlock_code_activation_steps.py:29
