@@ -544,7 +544,7 @@ class TestSingleUserNoElsterAccountEligibilityData(unittest.TestCase):
             self.assertRaises(ValidationError, SingleUserNoElsterAccountEligibilityData.parse_obj, non_valid_data)
 
     def test_if_alimony_valid_and_user_a_has_elster_account_account_no_then_raise_no_validation_error(self):
-        valid_data = {'user_a_has_elster_account_eligibility': 'no'}
+        valid_data = {'user_a_has_elster_account_eligibility': 'no', 'marital_status_eligibility': 'single'}
         try:
             with patch('app.model.eligibility_data.AlimonyEligibilityData.__init__',
                        MagicMock(return_value=None)):

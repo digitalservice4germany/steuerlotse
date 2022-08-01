@@ -394,7 +394,7 @@ class MarriedElsterFailureDisplaySteuerlotseStep(EligibilityElsterFailureDisplay
 class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = 'user_b_has_elster_account'
     next_step_data_models = [
-        (UserBNoElsterAccountEligibilityData, 'success'),
+        (UserBNoElsterAccountEligibilityData, 'success')
     ]
     title = _l('form.eligibility.user_b_has_elster_account-title')
     failure_step_name = MarriedElsterFailureDisplaySteuerlotseStep.name
