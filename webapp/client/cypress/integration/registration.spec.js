@@ -3,9 +3,14 @@ describe("Registration", () => {
     cy.visit("/unlock_code_request/step/data_input");
   });
 
+  const loadingSpinnerSelector = '[name="loading_spinner"]';
+  const submitBtnSelector = '[name="next_button"]';
+
   it("submitting an empty form", () => {
     // Submit empty form
-    cy.get("button[type=submit]").contains("Registrieren").click();
+    cy.get(loadingSpinnerSelector).should("not.exist");
+    cy.get(submitBtnSelector).contains("Registrieren").click();
+    cy.get(loadingSpinnerSelector).should("be.visible");
 
     // Should have errors in the right places.
     cy.get("[role=alert][for=dob]").contains("Geben Sie Ihr Geburtsdatum ein");
@@ -48,7 +53,9 @@ describe("Registration", () => {
       cy.get("label[for=registration_confirm_e_data].checkmark").click();
 
       // Submit
-      cy.get("button[type=submit]").contains("Registrieren").click();
+      cy.get(loadingSpinnerSelector).should("not.exist");
+      cy.get(submitBtnSelector).contains("Registrieren").click();
+      cy.get(loadingSpinnerSelector).should("be.visible");
 
       // Should see success message
       cy.url().should(
