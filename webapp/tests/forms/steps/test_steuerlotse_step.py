@@ -582,7 +582,7 @@ class TestSteuerlotseFormStepHandle(unittest.TestCase):
         next_step = MockFinalStep
         expected_data = {'brother': 'Luigi'}
         with patch('app.data_access.storage.session_storage.SessionStorage.override_data') as update_fun:
-            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step,
+            form_step = MockFormStep(endpoint=self.endpoint_correct, stored_data=expected_data, next_step=next_step, should_update_data=True,
                                  render_info=MockFormStep.prepare_render_info(expected_data, input_data=ImmutableMultiDict({})))
             form_step.handle()
 

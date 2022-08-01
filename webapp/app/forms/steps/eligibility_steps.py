@@ -125,10 +125,8 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     def _main_handle(self):
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.back_link_text')
-
-        if not self.should_update_data:
-            self.delete_not_dependent_data()
-            return
+        self.delete_not_dependent_data()
+        
         if self.should_update_data and self.render_info.data_is_valid:
             found_next_step_url = None
             for data_model, step_name in self.next_step_data_models:
