@@ -168,7 +168,8 @@ class FormSteuerlotseStep(SteuerlotseStep):
         return cls.InputForm(form_data, **prefilled_data)
 
     def _post_handle(self):
-        self._override_storage_data(self.stored_data, self.session_data_identifier)
+        if self.should_update_data or not self.render_info.data_is_valid:
+            self._override_storage_data(self.stored_data, self.session_data_identifier)
 
         redirection = self._handle_redirects()
         if redirection:
