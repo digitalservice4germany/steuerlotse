@@ -5,11 +5,12 @@ describe("Confirmation", () => {
   });
 
   const loadingSpinnerSelector = '[name="loading_spinner"]';
+  const submitBtnSelector = '[name="next_button"]';
 
   context("submitting an empty form", () => {
     beforeEach(() => {
       cy.get(loadingSpinnerSelector).should("not.exist");
-      cy.get("button[type=submit]").contains("Steuererklärung abgeben").click();
+      cy.get(submitBtnSelector).contains("Steuererklärung abgeben").click();
       cy.get(loadingSpinnerSelector).should("be.visible");
     });
 
@@ -29,7 +30,7 @@ describe("Confirmation", () => {
       cy.get("label[for=confirm_terms_of_service].checkmark").click();
 
       cy.get(loadingSpinnerSelector).should("not.exist");
-      cy.get("button[type=submit]").contains("Steuererklärung abgeben").click();
+      cy.get(submitBtnSelector).contains("Steuererklärung abgeben").click();
       cy.get(loadingSpinnerSelector).should("be.visible");
     });
 

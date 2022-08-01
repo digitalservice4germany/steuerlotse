@@ -42,6 +42,9 @@ export default function StepFormAsync({
         return response;
       })
       .then((response) => {
+        if (response.redirected) {
+          window.location = response.url;
+        }
         if (response.ok) {
           return response.text();
         }

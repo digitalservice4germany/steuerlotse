@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-26 22:58+0200\n"
+"POT-Creation-Date: 2022-08-01 10:22+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -196,7 +196,7 @@ msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
 #: app/forms/flows/logout_flow.py:21
-#: app/forms/flows/unlock_code_request_flow.py:44
+#: app/forms/flows/unlock_code_request_flow.py:40
 msgid "form.auth-request.title"
 msgstr "Anforderung des Freischaltcodes"
 
@@ -208,22 +208,19 @@ msgstr "Abmelden"
 msgid "flash.logout.successful"
 msgstr "Sie haben sich erfolgreich abgemeldet."
 
-#: app/forms/flows/lotse_flow.py:138 app/forms/flows/lotse_step_chooser.py:111
+#: app/forms/flows/lotse_flow.py:136 app/forms/flows/lotse_step_chooser.py:111
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:207
+#: app/forms/flows/lotse_flow.py:202
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:244 app/forms/flows/lotse_flow.py:245
-#: app/forms/flows/unlock_code_activation_flow.py:77
-#: app/forms/flows/unlock_code_activation_flow.py:78
-#: app/forms/flows/unlock_code_request_flow.py:92
-#: app/forms/flows/unlock_code_request_flow.py:93
-#: app/forms/flows/unlock_code_revocation_flow.py:75
-#: app/forms/flows/unlock_code_revocation_flow.py:76
+#: app/forms/flows/lotse_flow.py:246
+#: app/forms/flows/unlock_code_activation_flow.py:64
+#: app/forms/flows/unlock_code_request_flow.py:79
+#: app/forms/flows/unlock_code_revocation_flow.py:64
 msgid "flash.erica.dataConnectionError"
 msgstr ""
 " Ihre Angaben konnten nicht übermittelt werden. Bitte versuchen Sie es "
@@ -232,24 +229,24 @@ msgstr ""
 "href=\"mailto:kontakt@steuerlotse-rente.de\"  class=\"banner-"
 "link\">kontakt@steuerlotse-rente.de</a>"
 
-#: app/forms/flows/lotse_flow.py:353
+#: app/forms/flows/lotse_flow.py:348
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:404
+#: app/forms/flows/lotse_flow.py:399
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
-#: app/forms/flows/unlock_code_activation_flow.py:44
+#: app/forms/flows/unlock_code_activation_flow.py:38
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
-#: app/forms/flows/unlock_code_request_flow.py:61
+#: app/forms/flows/unlock_code_request_flow.py:54
 #: app/forms/steps/unlock_code_request_steps.py:50
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:44
+#: app/forms/flows/unlock_code_revocation_flow.py:39
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
@@ -989,11 +986,11 @@ msgstr ""
 " können Sie mit Ihrer Steuererklärung 2021 beginnen."
 
 #: app/forms/steps/unlock_code_activation_steps.py:29
-#: app/forms/steps/unlock_code_activation_steps.py:76
+#: app/forms/steps/unlock_code_activation_steps.py:74
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:61
+#: app/forms/steps/unlock_code_activation_steps.py:59
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
@@ -1029,17 +1026,17 @@ msgstr ""
 "Registrieren und persönlichen Freischaltcode für das Steuerjahr 2021 "
 "beantragen "
 
-#: app/forms/steps/unlock_code_request_steps.py:65
-#: app/forms/steps/unlock_code_request_steps.py:88
-#: app/forms/steps/unlock_code_request_steps.py:106
+#: app/forms/steps/unlock_code_request_steps.py:63
+#: app/forms/steps/unlock_code_request_steps.py:86
+#: app/forms/steps/unlock_code_request_steps.py:104
 msgid "form.unlock-code-request.header-title"
 msgstr "Registrieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_request_steps.py:73
+#: app/forms/steps/unlock_code_request_steps.py:71
 msgid "form.unlock-code-request.success-title"
 msgstr "Ihre Registrierung war erfolgreich!"
 
-#: app/forms/steps/unlock_code_request_steps.py:74
+#: app/forms/steps/unlock_code_request_steps.py:72
 msgid "form.unlock-code-request.success-intro"
 msgstr ""
 "Wir haben Ihren Antrag an Ihre Finanzverwaltung weitergeleitet. Sie "
@@ -1047,11 +1044,11 @@ msgstr ""
 "Freischaltcode erhalten haben. Es kann bis zu zwei Wochen dauern, bis Sie"
 " Ihren Brief erhalten."
 
-#: app/forms/steps/unlock_code_request_steps.py:96
+#: app/forms/steps/unlock_code_request_steps.py:94
 msgid "form.unlock-code-request.failure-title"
 msgstr "Registrierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben."
 
-#: app/forms/steps/unlock_code_request_steps.py:97
+#: app/forms/steps/unlock_code_request_steps.py:95
 msgid "form.unlock-code-request.failure-intro"
 msgstr ""
 "Registrierung fehlgeschlagen. Haben Sie sich vielleicht bereits "
@@ -1081,27 +1078,27 @@ msgstr ""
 "Wenn Sie Ihren Freischaltcode verloren haben oder aus anderen Gründen "
 "einen neuen beantragen wollen, können Sie den alten hier stornieren."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:54
-#: app/forms/steps/unlock_code_revocation_steps.py:79
-#: app/forms/steps/unlock_code_revocation_steps.py:97
+#: app/forms/steps/unlock_code_revocation_steps.py:52
+#: app/forms/steps/unlock_code_revocation_steps.py:77
+#: app/forms/steps/unlock_code_revocation_steps.py:95
 msgid "form.unlock-code-revocation.header-title"
 msgstr "Stornieren - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:62
+#: app/forms/steps/unlock_code_revocation_steps.py:60
 msgid "form.unlock-code-revocation.success-title"
 msgstr "Stornierung erfolgreich"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:63
+#: app/forms/steps/unlock_code_revocation_steps.py:61
 msgid "form.unlock-code-revocation.success-intro"
 msgstr ""
 "Ihr Freischaltcode wurde storniert. Wenn Sie einen Neuen beantragen "
 "wollen, fahren Sie mit dem nächsten Formular fort."
 
-#: app/forms/steps/unlock_code_revocation_steps.py:87
+#: app/forms/steps/unlock_code_revocation_steps.py:85
 msgid "form.unlock-code-revocation.failure-title"
 msgstr "Stornierung fehlgeschlagen. Bitte prüfen Sie Ihre Angaben"
 
-#: app/forms/steps/unlock_code_revocation_steps.py:88
+#: app/forms/steps/unlock_code_revocation_steps.py:86
 msgid "form.unlock-code-revocation.failure-intro"
 msgstr ""
 "Sind Sie vielleicht noch nicht bei uns registriert? In diesem Fall können"
@@ -5192,7 +5189,7 @@ msgstr ""
 " nutzen können."
 
 #: app/templates/eligibility/display_elster_failure.html:35
-#: app/templates/eligibility/display_success.html:39
+#: app/templates/eligibility/display_success.html:37
 msgid "form.eligibility.success-attention.heading"
 msgstr "Bitte beachten Sie"
 
@@ -5223,24 +5220,13 @@ msgstr ""
 "Sie können Ihre Steuererklärung online über das Steuerportal Mein ELSTER "
 "machen."
 
-#: app/templates/eligibility/display_success.html:15
-msgid "success_icon"
-msgstr "Abgehakt Icon auf grünem Kreis"
-
-#: app/templates/eligibility/display_success.html:27
-#: app/templates/eligibility/display_maybe.html:26
-#: app/templates/eligibility/display_success.html:24
-msgid "form.eligibility.use-register-button"
-msgstr "Registrieren"
-
-#: app/templates/eligibility/display_maybe.html:35
-#: app/templates/eligibility/display_success.html:37
-msgid "form.eligibility.success-attention.heading"
-msgstr "Bitte beachten Sie"
-
 #: app/templates/eligibility/display_success.html:14
 msgid "success_icon"
 msgstr "Abgehakt Icon auf grünem Kreis"
+
+#: app/templates/eligibility/display_success.html:24
+msgid "form.eligibility.use-register-button"
+msgstr "Registrieren"
 
 #: app/templates/eligibility/display_success.html:26
 msgid "tracking.eligibility.success.goal"
@@ -5491,3 +5477,4 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
