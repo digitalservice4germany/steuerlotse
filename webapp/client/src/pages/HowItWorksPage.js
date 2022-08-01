@@ -171,12 +171,19 @@ export default function HowItWorksPage({ plausibleDomain }) {
     plausibleGoal: t("howItWorksPage.startButton.plausibleGoal"),
     plausibleProps: { plausiblePropsEligibilityStartButton },
   };
+
+  const introText = (
+    <>
+      <p>{t("howItWorksPage.formHeaderTextOne")}</p>
+      <p>{t("howItWorksPage.formHeaderTextTwo")}</p>
+    </>
+  );
   return (
     <>
       <ContentWrapper marginBottom>
         <FormHeader
           title={t("howItWorksPage.formHeaderTitle")}
-          intro={t("howItWorksPage.formHeaderText")}
+          intro={introText}
         />
       </ContentWrapper>
       <VideoSection>
