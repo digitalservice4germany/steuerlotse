@@ -12,7 +12,8 @@ describe("SuccessStepsInfoBox", () => {
     },
     image: {
       src: "../../images/imageName.jpg",
-      srcSet: "../../images/imageName.jpg 1000w",
+      srcSetLargeScreen: "../../images/Img_Brief_1024.png",
+      srcSetSmallerScreen: "../../images/Img_Brief_500.png",
       alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
     },
   };
@@ -51,10 +52,5 @@ describe("SuccessStepsInfoBox", () => {
         .getByAltText("Beispielbild der letzten Briefseite mit Freischaltcode")
         .closest("img")
     ).toHaveAttribute("src", "../../images/imageName.jpg");
-    expect(
-      screen
-        .getByAltText("Beispielbild der letzten Briefseite mit Freischaltcode")
-        .closest("img")
-    ).toHaveAttribute("srcSet", "../../images/imageName.jpg 1000w");
   });
 });

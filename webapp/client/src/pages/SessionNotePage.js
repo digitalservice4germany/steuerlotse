@@ -42,6 +42,7 @@ export default function SessionNotePage({ form, prevUrl }) {
         <li>{translationBold("lotse.sessionNote.listItem2")}</li>
         <li>{translationBold("lotse.sessionNote.listItem3")}</li>
         <li>{t("lotse.sessionNote.listItem4")}</li>
+        <li>{translationBold("lotse.sessionNote.listItem5")}</li>
       </IntroList>
       <StepForm {...form} />
     </>

@@ -53,7 +53,7 @@ const Headline3 = styled.h3`
 const Column = styled.div`
   margin-right: 3rem;
   max-width: 253px;
-  display: flex;
+  display: ${(props) => props.button && "flex"};
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
@@ -109,7 +109,7 @@ export default function HowItWorksComponent({
       <InnerBox>
         <Icon src={icon.iconSrc} alt={icon.altText} />
         <InnerContent>
-          <Column>
+          <Column button={button}>
             <Headline3>{heading}</Headline3>
             {text && <p>{text}</p>}
             {button && (
