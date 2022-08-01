@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import StepNavButtons from "./StepNavButtons";
 import { waitingMomentMessagePropType } from "../lib/propTypes";
 
@@ -15,9 +15,8 @@ export default function StepFormAsync({
   plausibleProps,
   sendDisableCall,
   waitingMessages,
-  loadingFromOutside,
 }) {
-  const [loading, setLoading] = useState(loadingFromOutside);
+  const [loading, setLoading] = useState(false);
   // eslint-disable-next-line no-promise-executor-return
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -71,20 +70,6 @@ export default function StepFormAsync({
       });
   }
 
-  useEffect(() => {
-    if (loadingFromOutside) {
-      const form = document.getElementById("theForm");
-
-      Array.from(form.elements)
-        .filter((element) => element.hasAttribute("required"))
-        .forEach((filteredElement) => {
-          filteredElement.removeAttribute("disabled");
-        });
-      const formData = new FormData(form);
-      makeFetchCall(formData);
-    }
-  }, []);
-
   function sendDisableCallAndFetch(event) {
     event.preventDefault();
     const { target } = event;
@@ -132,12 +117,10 @@ StepFormAsync.propTypes = {
   plausibleDomain: PropTypes.string,
   sendDisableCall: PropTypes.any,
   waitingMessages: waitingMomentMessagePropType,
-  loadingFromOutside: PropTypes.bool,
 };
 
 StepFormAsync.defaultProps = {
   ...StepNavButtons.defaultProps,
   sendDisableCall: undefined,
   waitingMessages: undefined,
-  loadingFromOutside: false,
 };

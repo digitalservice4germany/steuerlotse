@@ -9,12 +9,7 @@ import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function LoginPage({
-  stepHeader,
-  form,
-  fields,
-  waitingMomentActive,
-}) {
+export default function LoginPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
     return (
@@ -36,7 +31,7 @@ export default function LoginPage({
     );
   };
 
-  const [isDisable, setIsDisable] = useState(waitingMomentActive);
+  const [isDisable, setIsDisable] = useState(false);
 
   const sendDisableCall = () => {
     setIsDisable(true);
@@ -48,7 +43,6 @@ export default function LoginPage({
       <FormHeader {...stepHeader} />
       <StepFormAsync
         {...form}
-        loadingFromOutside={waitingMomentActive}
         sendDisableCall={sendDisableCall}
         waitingMessages={{
           firstMessage: t("waitingMoment.login.firstMessage"),
@@ -112,9 +106,4 @@ LoginPage.propTypes = {
     idnr: fieldPropType,
     unlockCode: fieldPropType,
   }).isRequired,
-  waitingMomentActive: PropTypes.bool,
-};
-
-LoginPage.defaultProps = {
-  waitingMomentActive: false,
 };

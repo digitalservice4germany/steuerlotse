@@ -9,12 +9,7 @@ import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function RevocationPage({
-  stepHeader,
-  form,
-  fields,
-  waitingMomentActive,
-}) {
+export default function RevocationPage({ stepHeader, form, fields }) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
     return (
@@ -36,7 +31,7 @@ export default function RevocationPage({
     );
   };
 
-  const [isDisable, setIsDisable] = useState(waitingMomentActive);
+  const [isDisable, setIsDisable] = useState(false);
 
   const sendDisableCall = () => {
     setIsDisable(true);
@@ -48,7 +43,6 @@ export default function RevocationPage({
       <FormHeader {...stepHeader} />
       <StepFormAsync
         {...form}
-        loadingFromOutside={waitingMomentActive}
         sendDisableCall={sendDisableCall}
         waitingMessages={{
           firstMessage: t("waitingMoment.revocation.firstMessage"),
@@ -105,9 +99,4 @@ RevocationPage.propTypes = {
     idnr: fieldPropType,
     dob: fieldPropType,
   }).isRequired,
-  waitingMomentActive: PropTypes.bool,
-};
-
-RevocationPage.defaultProps = {
-  waitingMomentActive: false,
 };

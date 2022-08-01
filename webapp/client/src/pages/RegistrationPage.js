@@ -31,7 +31,6 @@ export default function RegistrationPage({
   eligibilityLink,
   termsOfServiceLink,
   dataPrivacyLink,
-  waitingMomentActive,
 }) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
@@ -54,7 +53,7 @@ export default function RegistrationPage({
     );
   };
 
-  const [isDisable, setIsDisable] = useState(waitingMomentActive);
+  const [isDisable, setIsDisable] = useState(false);
 
   const sendDisableCall = () => {
     setIsDisable(true);
@@ -75,7 +74,6 @@ export default function RegistrationPage({
       />
       <StepFormAsync
         {...form}
-        loadingFromOutside={waitingMomentActive}
         sendDisableCall={sendDisableCall}
         waitingMessages={{
           firstMessage: t("waitingMoment.registration.firstMessage"),
@@ -270,9 +268,4 @@ RegistrationPage.propTypes = {
   eligibilityLink: PropTypes.string.isRequired,
   termsOfServiceLink: PropTypes.string.isRequired,
   dataPrivacyLink: PropTypes.string.isRequired,
-  waitingMomentActive: PropTypes.bool,
-};
-
-RegistrationPage.defaultProps = {
-  waitingMomentActive: false,
 };
