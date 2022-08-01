@@ -5,7 +5,7 @@
     "1.1705b8d9.iframe.bundle.js": "./1.1705b8d9.iframe.bundle.js",
     "2.795e0811.iframe.bundle.js": "./2.795e0811.iframe.bundle.js",
     "main.css": "./static/css/main.03480f9f.chunk.css",
-    "main.js": "./main.56b4aa63.iframe.bundle.js",
+    "main.js": "./main.cf328ae4.iframe.bundle.js",
     "main.css.map": "./static/css/main.03480f9f.chunk.css.map",
     "runtime~main.js": "./runtime~main.39487a85.iframe.bundle.js",
     "vendors~main.css": "./static/css/vendors~main.9bbac83c.chunk.css",
@@ -49,7 +49,7 @@
     "static/media/krankheitskosten.svg": "./static/media/krankheitskosten.17a64d6b.svg",
     "static/media/minus.370b5f0a.svg": "./static/media/minus.370b5f0a.svg",
     "static/media/pflegekosten.ec7fc47c.svg": "./static/media/pflegekosten.ec7fc47c.svg",
-    "static/media/play_icon.svg": "./static/media/play_icon.d60bbb70.svg",
+    "static/media/play_icon.svg": "./static/media/play_icon.b549666a.svg",
     "static/media/plus.1d013c5d.svg": "./static/media/plus.1d013c5d.svg",
     "static/media/radio_button_checked.e5864ef8.svg": "./static/media/radio_button_checked.e5864ef8.svg",
     "static/media/radio_button_checked_focus.8a6ccf94.svg": "./static/media/radio_button_checked_focus.8a6ccf94.svg",
@@ -72,6 +72,6 @@
     "static/css/vendors~main.9bbac83c.chunk.css",
     "vendors~main.12b79419.iframe.bundle.js",
     "static/css/main.03480f9f.chunk.css",
-    "main.56b4aa63.iframe.bundle.js"
+    "main.cf328ae4.iframe.bundle.js"
   ]
 }
