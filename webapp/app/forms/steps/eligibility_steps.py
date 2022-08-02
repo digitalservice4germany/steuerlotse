@@ -802,9 +802,7 @@ class EligibilitySuccessDisplaySteuerlotseStep(EligibilityStepMixin, DisplaySteu
     def _main_handle(self):
         super()._main_handle()
 
-        dependent_notes = []
-        
-        dependent_notes.append(_l('form.eligibility.result-note.registration-success'))
+        dependent_notes = [_l('form.eligibility.result-note.registration-success')]
         
         if data_fits_data_model(UserBNoElsterAccountEligibilityData, self.stored_data):
             dependent_notes.append(_l('form.eligibility.result-note.user_elster_account-registration-success'))

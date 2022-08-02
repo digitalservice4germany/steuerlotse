@@ -240,6 +240,11 @@ const translations = {
     },
   },
   unlockCodeActivation: {
+    form: {
+      title: "Melden Sie sich mit Ihrem Freischaltcode an",
+      intro:
+        "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+    },
     unlockCode: {
       labelText: "Freischaltcode",
       help: {

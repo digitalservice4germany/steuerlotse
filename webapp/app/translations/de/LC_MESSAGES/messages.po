@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-01 23:03+0200\n"
+"POT-Creation-Date: 2022-08-02 13:16+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -929,17 +929,8 @@ msgstr ""
 "Als Nächstes können Sie Ihre Zugangsdaten zum Steuerlotsen beantragen. "
 "Die Registrierung dauert nur 2 Minuten."
 
-#: app/forms/steps/eligibility_steps.py:807
+#: app/forms/steps/eligibility_steps.py:805
 msgid "form.eligibility.result-note.registration-success"
-msgstr ""
-"Eine erfolgreiche Registrierung ist nur ohne Konto bei Mein ELSTER "
-"garantiert. Um die Zugangsdaten per Post zu erhalten, muss sich die "
-"Person beim Steuerlotsen registrieren, die kein Konto bei Mein ELSTER "
-"hat."
-
-#: app/forms/steps/eligibility_steps.py:810
-#: app/forms/steps/eligibility_steps.py:812
-msgid "form.eligibility.result-note.user_elster_account-registration-success"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist "
 "die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. "
@@ -948,7 +939,16 @@ msgstr ""
 "der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr "
 "Finanzamt einen Verspätungszuschlag erhebt."
 
-#: app/forms/steps/eligibility_steps.py:815
+#: app/forms/steps/eligibility_steps.py:808
+#: app/forms/steps/eligibility_steps.py:810
+msgid "form.eligibility.result-note.user_elster_account-registration-success"
+msgstr ""
+"Eine erfolgreiche Registrierung ist nur ohne Konto bei Mein ELSTER "
+"garantiert. Um die Zugangsdaten per Post zu erhalten, muss sich die "
+"Person beim Steuerlotsen registrieren, die kein Konto bei Mein ELSTER "
+"hat."
+
+#: app/forms/steps/eligibility_steps.py:813
 msgid "form.eligibility.result-note.capital_investment"
 msgstr ""
 "Die Besteuerung von Kapitalerträgen erledigen Banken und Versicherungen "

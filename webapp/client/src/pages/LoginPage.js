@@ -9,7 +9,7 @@ import StepForm from "../components/StepForm";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
-export default function LoginPage({ stepHeader, form, fields }) {
+export default function LoginPage({ form, fields }) {
   const { t } = useTranslation();
   const translateText = function translateText(key) {
     return (
@@ -34,7 +34,10 @@ export default function LoginPage({ stepHeader, form, fields }) {
   return (
     <>
       <StepHeaderButtons />
-      <FormHeader {...stepHeader} />
+      <FormHeader
+        title={t("unlockCodeActivation.form.title")}
+        intro={translateText("unlockCodeActivation.form.intro")}
+      />
       <StepForm {...form}>
         <FormRowCentered>
           <FormFieldIdNr
@@ -76,11 +79,6 @@ export default function LoginPage({ stepHeader, form, fields }) {
 }
 
 LoginPage.propTypes = {
-  stepHeader: PropTypes.exact({
-    // TODO: define these here, not in Python
-    title: PropTypes.string,
-    intro: PropTypes.string,
-  }).isRequired,
   form: PropTypes.exact({
     action: PropTypes.string, // TODO: does this change? if not, define here, not in Python
     csrfToken: PropTypes.string,
