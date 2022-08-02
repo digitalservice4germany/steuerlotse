@@ -64,4 +64,49 @@ describe("Registration", () => {
       );
     });
   });
+
+  it("displaying second waiting message", () => {
+    cy.fixture("user").then("user", (user) => {
+      // Fill DOB
+      cy.get("input[id=dob_1]").type("3");
+      cy.get("input[id=dob_2]").type("11");
+      cy.get("input[id=dob_3]").type("1978");
+
+      // Fill tax ID
+      cy.get("input[id=idnr_1]").type("04");
+      cy.get("input[id=idnr_2]").type("531");
+      cy.get("input[id=idnr_3]").type("672");
+      cy.get("input[id=idnr_4]").type("808");
+
+      // Check boxes
+      cy.get("label[for=registration_confirm_data_privacy].checkmark").click();
+      cy.get(
+        "label[for=registration_confirm_terms_of_service].checkmark"
+      ).click();
+      cy.get("label[for=registration_confirm_incomes].checkmark").click();
+      cy.get("label[for=registration_confirm_e_data].checkmark").click();
+
+      // Submit
+      cy.get(loadingSpinnerSelector).should("not.exist");
+
+      cy.intercept(
+        "/unlock_code_request/step/data_input?link_overview=False",
+        (req) => {
+          req.on("response", (res) => {
+            res.setDelay(11000);
+          });
+        }
+      ).as("makeRegistration");
+
+      cy.get(submitBtnSelector).contains("Registrieren").click();
+      cy.get(loadingSpinnerSelector).should("be.visible");
+      cy.get('[id="firstMessage"]').should("be.visible");
+      cy.get('[id="secondMessage"]').should("not.be.visible");
+
+      cy.wait("@makeRegistration").then(({ request, response }) => {
+        cy.get('[id="secondMessage"]').should("be.visible");
+        cy.get('[id="firstMessage"]').should("not.be.visible");
+      });
+    });
+  });
 });
