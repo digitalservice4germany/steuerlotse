@@ -125,10 +125,8 @@ class DecisionEligibilityInputFormSteuerlotseStep(EligibilityStepMixin, FormSteu
     def _main_handle(self):
         super()._main_handle()
         self.render_info.back_link_text = _('form.eligibility.back_link_text')
-
-        if not self.should_update_data:
-            self.delete_not_dependent_data()
-            return
+        self.delete_not_dependent_data()
+        
         if self.should_update_data and self.render_info.data_is_valid:
             found_next_step_url = None
             for data_model, step_name in self.next_step_data_models:
@@ -396,7 +394,7 @@ class MarriedElsterFailureDisplaySteuerlotseStep(EligibilityElsterFailureDisplay
 class UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = 'user_b_has_elster_account'
     next_step_data_models = [
-        (UserBNoElsterAccountEligibilityData, 'success'),
+        (UserBNoElsterAccountEligibilityData, 'success')
     ]
     title = _l('form.eligibility.user_b_has_elster_account-title')
     failure_step_name = MarriedElsterFailureDisplaySteuerlotseStep.name

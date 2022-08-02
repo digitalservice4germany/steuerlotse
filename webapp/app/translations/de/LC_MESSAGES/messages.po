@@ -3141,32 +3141,36 @@ msgid "failure_icon"
 msgstr "Durchgestrichen Icon auf rotem Kreis"
 
 #: app/templates/basis/footer.html:6
+msgid "footer.help"
+msgstr "Hilfebereich"
+
+#: app/templates/basis/footer.html:7
 msgid "footer.contact"
 msgstr "Kontakt und Feedback"
 
-#: app/templates/basis/footer.html:8 app/templates/basis/footer.html:10
+#: app/templates/basis/footer.html:9 app/templates/basis/footer.html:11
 msgid "footer.revocation"
 msgstr "Freischaltcode stornieren"
 
-#: app/templates/basis/footer.html:14
+#: app/templates/basis/footer.html:15
 msgid "footer.online-service-ds"
 msgstr ""
 "Ein Online Dienst des <a "
 "href=\"https://digitalservice.bund.de/\">DigitalService</a>"
 
-#: app/templates/basis/footer.html:23
+#: app/templates/basis/footer.html:24
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:24
+#: app/templates/basis/footer.html:25
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:25
+#: app/templates/basis/footer.html:26
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:26
+#: app/templates/basis/footer.html:27
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 

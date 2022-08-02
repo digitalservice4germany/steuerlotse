@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import ButtonAnchor from "./ButtonAnchor";
 
 const Box = styled.div`
   border-left: ${(props) =>
@@ -51,6 +53,11 @@ const Headline3 = styled.h3`
 const Column = styled.div`
   margin-right: 3rem;
   max-width: 253px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
 
   @media (max-width: 768px) {
     margin-right: 2rem;
@@ -75,13 +82,28 @@ const InnerContent = styled.div`
   }
 `;
 
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 1279px) {
+    display: none;
+  }
+`;
+
 export default function HowItWorksComponent({
   heading,
   text,
   icon,
   image,
   variant,
+  plausibleDomain,
+  button,
 }) {
+  const { t } = useTranslation();
+  const plausiblePropsEligibilityStartButton = {
+    method: "Sofunktionierts / CTA Jetzt starten",
+  };
   return (
     <Box border={variant}>
       <InnerBox>
@@ -90,6 +112,18 @@ export default function HowItWorksComponent({
           <Column>
             <Headline3>{heading}</Headline3>
             {text && <p>{text}</p>}
+            {button && (
+              <Div>
+                <ButtonAnchor
+                  url="/eligibility/step/welcome?link_overview=False"
+                  plausibleGoal={t("howItWorksPage.startButton.plausibleGoal")}
+                  plausibleProps={plausiblePropsEligibilityStartButton}
+                  plausibleDomain={plausibleDomain}
+                >
+                  {t("howItWorksPage.startButton.text")}
+                </ButtonAnchor>
+              </Div>
+            )}
           </Column>
           <Figure>
             <picture>
@@ -119,6 +153,12 @@ HowItWorksComponent.propTypes = {
     alt: PropTypes.string,
   }),
   variant: PropTypes.string,
+  plausibleDomain: PropTypes.string,
+  button: PropTypes.shape({
+    url: PropTypes.string,
+    plausibleGoal: PropTypes.string,
+    plausibleProps: PropTypes.string,
+  }),
 };
 
 HowItWorksComponent.defaultProps = {
@@ -127,4 +167,6 @@ HowItWorksComponent.defaultProps = {
   icon: null,
   image: null,
   variant: null,
+  plausibleDomain: null,
+  button: null,
 };

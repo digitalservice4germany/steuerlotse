@@ -3,6 +3,7 @@
         <div class="container-fluid">
             <div class="footer-inner">
                 <div class="row">
+                    <a href="{{ url_for('helparea') }}">{{ _('footer.help') }}</a>
                     <a href="{{ url_for('contact') }}">{{ _('footer.contact') }}</a>
                     {% if current_user.is_authenticated %}
                         <span class="footer-inactive">{{ _('footer.revocation') }}</span>
