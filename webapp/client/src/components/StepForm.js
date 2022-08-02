@@ -27,7 +27,6 @@ export default function StepForm({
     </form>
   );
 }
-
 StepForm.propTypes = {
   children: PropTypes.node,
   action: PropTypes.string.isRequired,

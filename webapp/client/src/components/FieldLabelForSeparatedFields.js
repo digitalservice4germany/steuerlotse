@@ -41,8 +41,10 @@ FieldLabelForSeparatedFields.propTypes = {
   fieldId: PropTypes.string.isRequired,
   label: labelPropType,
   details: FieldLabelScaffolding.propTypes.details,
+  disable: PropTypes.bool,
 };
 
 FieldLabelForSeparatedFields.defaultProps = {
   ...FieldLabelScaffolding.defaultProps,
+  disable: false,
 };

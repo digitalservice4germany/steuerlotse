@@ -123,4 +123,10 @@ function mountComponent(element) {
   }
 }
 
-document.querySelectorAll("[data-is-component=yes]").forEach(mountComponent);
+function renderReact() {
+  document.querySelectorAll("[data-is-component=yes]").forEach(mountComponent);
+}
+
+renderReact();
+
+window.renderReact = renderReact;

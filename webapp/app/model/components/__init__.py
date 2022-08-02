@@ -135,7 +135,7 @@ class FilingSuccessProps(ComponentPlausibleProps):
     next_url: str
     transfer_ticket: str
     download_url: str
-    taxNumber_provided: bool
+    taxNumber_provided: Optional[bool]
 
 
 class FilingFailureProps(ComponentProps):

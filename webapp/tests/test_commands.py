@@ -9,6 +9,7 @@ from app.commands import _delete_outdated_not_activated_users, _delete_outdated_
     _delete_inactive_users, _delete_outdated_users
 from app.data_access.user_controller import create_user, user_exists, store_pdf_and_transfer_ticket, activate_user
 from app.extensions import db
+from tests.elster_client.mock_erica import MockErica
 
 
 class TestDeleteOutdatedNotActivatedUsers(unittest.TestCase):
@@ -133,16 +134,20 @@ class TestDeleteInactiveUsers(unittest.TestCase):
 
     @freeze_time("2021-08-10")
     def test_if_not_activated_user_older_than_60_days_then_do_not_delete_user(self):
+        MockErica.deliver_fail_on_get_job = True
         _delete_inactive_users()
         self.assertTrue(user_exists(self.outdated_not_activated_idnr))
         self.assertTrue(user_exists(self.non_outdated_idnr))
+        MockErica.deliver_fail_on_get_job = False
 
     @freeze_time("2021-08-10")
     def test_if_user_newer_than_60_days_then_do_not_delete_user(self):
+        MockErica.deliver_fail_on_get_job = True
         _delete_inactive_users()
         self.assertTrue(user_exists(self.non_outdated_idnr))
         self.assertTrue(user_exists(self.non_outdated_activated_idnr))
         self.assertTrue(user_exists(self.outdated_not_activated_idnr))
+        MockErica.deliver_fail_on_get_job = False
 
 
 class TestDeleteOutdatedUsers(unittest.TestCase):

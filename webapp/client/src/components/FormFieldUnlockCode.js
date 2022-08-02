@@ -14,9 +14,10 @@ function FormFieldUnlockCode({
   label,
   details,
   errors,
+  disable,
 }) {
   const labelComponent = (
-    <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
+    <FieldLabelForSeparatedFields {...{ label, fieldId, details, disable }} />
   );
 
   const extraFieldProps = {
@@ -45,6 +46,7 @@ function FormFieldUnlockCode({
             fieldId,
             values,
             required,
+            disable,
           }}
           transformUppercase
           autofocus={autofocus || Boolean(errors.length)}
@@ -65,12 +67,14 @@ FormFieldUnlockCode.propTypes = {
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: FieldLabelForSeparatedFields.propTypes.label,
   details: FieldLabelForSeparatedFields.propTypes.details,
+  disable: PropTypes.bool,
 };
 FormFieldUnlockCode.defaultProps = {
   autofocus: FormFieldSeparatedField.defaultProps.autofocus,
   required: FormFieldSeparatedField.defaultProps.required,
   label: FieldLabelForSeparatedFields.defaultProps.label,
   details: FieldLabelForSeparatedFields.defaultProps.details,
+  disable: false,
 };
 
 export default FormFieldUnlockCode;

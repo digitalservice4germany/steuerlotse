@@ -1,6 +1,5 @@
 import datetime
 import logging
-from typing import Optional
 
 from flask import request, flash
 from flask_babel import _
@@ -51,9 +50,9 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(UnlockCodeRequestMultiStepFlow, self)._handle_specifics_for_step(step, render_info, stored_data)
-
         if isinstance(step, UnlockCodeRequestInputStep):
             render_info.additional_info['next_button_label'] = _('form.register')
+
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed registration data privacy', request.remote_addr,
                                                     stored_data['idnr'], 'registration_confirm_data_privacy',
@@ -79,6 +78,7 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
                     render_info.next_url = self.url_for_step(UnlockCodeRequestInputStep.name)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
                     pass
+
         elif isinstance(step, UnlockCodeRequestFailureStep):
             render_info.next_url = None
         elif isinstance(step, UnlockCodeRequestSuccessStep):
@@ -100,6 +100,6 @@ class UnlockCodeRequestMultiStepFlow(MultiStepFlow):
             raise UserAlreadyExistsError(idnr)
 
         response = elster_client.send_unlock_code_request_with_elster(request_form, request.remote_addr)
-        request_id = escape(response['elster_request_id'])
+        request_id = escape(response['elsterRequestId'])
 
         create_user(idnr, request_form['dob'].strftime("%d.%m.%Y"), request_id)

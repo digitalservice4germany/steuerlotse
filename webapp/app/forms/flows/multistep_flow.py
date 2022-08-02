@@ -183,4 +183,3 @@ class MultiStepFlow:
             if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
                 stored_data.pop(field)
         return stored_data
-

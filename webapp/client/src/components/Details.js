@@ -7,6 +7,7 @@ import downArrow from "../assets/icons/details_arrow_down.svg";
 import rightArrow from "../assets/icons/details_arrow_right.svg";
 import rightArrowHover from "../assets/icons/details_arrow_right_hover.svg";
 import rightArrowFocus from "../assets/icons/details_arrow_right_focus.svg";
+import rightArrowDisabled from "../assets/icons/details_arrow_right_disabled.svg";
 
 const DetailsCard = styled.div`
   &.details-card {
@@ -59,10 +60,20 @@ const DetailsCard = styled.div`
 
   &.details-card .card-header [aria-expanded="false"] {
     color: var(--link-color);
+    ${({ disable }) =>
+      disable &&
+      `
+        color: var(--blue-400);
+  `}
   }
 
   &.details-card .card-header [aria-expanded="false"] :hover {
     color: var(--link-hover-color);
+    ${({ disable }) =>
+      disable &&
+      `
+        color: var(--blue-400);
+  `}
   }
 
   &.details-card .card-header button:focus-visible span {
@@ -79,14 +90,29 @@ const DetailsCard = styled.div`
 
   &.details-card [aria-expanded="false"]:hover .details-icon {
     background: url(${rightArrowHover}) no-repeat left;
+    ${({ disable }) =>
+      disable &&
+      `
+            background: url(${rightArrowDisabled}) no-repeat left;
+  `}
   }
 
   &.details-card [aria-expanded="false"] button:focus .details-icon {
     background: url(${rightArrowFocus}) no-repeat left;
+    ${({ disable }) =>
+      disable &&
+      `
+            background: url(${rightArrowDisabled}) no-repeat left;
+  `}
   }
 
   &.details-card [aria-expanded="false"] .details-icon {
     background: url(${rightArrow}) no-repeat left;
+    ${({ disable }) =>
+      disable &&
+      `
+            background: url(${rightArrowDisabled}) no-repeat left;
+  `}
   }
 
   &.details-card [aria-expanded="true"] .details-icon {
@@ -114,7 +140,7 @@ const DetailsCard = styled.div`
   }
 `;
 
-function Details({ children, title, detailsId }) {
+function Details({ children, title, detailsId, disable }) {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(!open);
 
@@ -122,10 +148,11 @@ function Details({ children, title, detailsId }) {
   const headingId = `heading-${detailsId}`;
 
   return (
-    <DetailsCard className="details-card ml-0 pl-0">
+    <DetailsCard disable={disable} className="details-card ml-0 pl-0">
       <div className="card">
         <div className="card-header unstyled-card-header d-sm-flex justify-content-between align-items-center cursor-pointer mb-0">
           <button
+            disabled={disable}
             onClick={toggle}
             className="w-100"
             type="button"
@@ -162,6 +189,11 @@ Details.propTypes = {
   ]).isRequired,
   title: PropTypes.string.isRequired,
   detailsId: PropTypes.string.isRequired,
+  disable: PropTypes.bool,
+};
+
+Details.defaultProps = {
+  disable: false,
 };
 
 export default Details;

@@ -740,15 +740,18 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
             self):
         for test_idr in SPECIAL_RESEND_TEST_IDNRS:
             hashed_test_idnr = global_salt_hash().hash(test_idr)
-            with (
-                patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))) as send_est_with_elster,
-                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=True), idnr_hashed=hashed_test_idnr)),
-                patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"),
-                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
-            ):
-                _, _ = self.flow._handle_specifics_for_step(self.filing_step,
-                                                            copy.deepcopy(self.render_info_filing_step),
-                                                            self.session_data)
+            with self.app.test_request_context(method='POST',
+                                    environ_base={'REMOTE_ADDR': self.ip_address},
+                                    data=self.session_data):
+                with (
+                    patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))) as send_est_with_elster,
+                    patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=True), idnr_hashed=hashed_test_idnr)),
+                    patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"),
+                    patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
+                ):
+                    _, _ = self.flow._handle_specifics_for_step(self.filing_step,
+                                                                copy.deepcopy(self.render_info_filing_step),
+                                                                self.session_data)
 
                 send_est_with_elster.assert_called()
 
@@ -758,81 +761,95 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
         expected_elster_data.pop('pdf')  # pdf data is expected to be deleted, when stored with the user
         expected_returned_data = copy.deepcopy(self.render_info_filing_step)
         expected_returned_data.additional_info['elster_data'] = expected_elster_data
+        with self.app.test_request_context(method='POST',
+                                environ_base={'REMOTE_ADDR': self.ip_address},
+                                data=self.session_data):
+            with (
+                patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))) as send_est_with_elster,
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"),
+                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
+            ):
+                returned_data, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-        with (
-            patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))) as send_est_with_elster,
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket"),
-            patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
-        ):
-            returned_data, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
-
-            send_est_with_elster.assert_called()
-            self.assertEqual(vars(expected_returned_data), vars(returned_data))
+                send_est_with_elster.assert_called()
+                self.assertEqual(vars(expected_returned_data), vars(returned_data))
 
     def test_if_step_is_filing_step_and_validation_error_raised_then_return_render_info_with_additional_data(self):
         raised_exception = ElsterGlobalValidationError()
         raised_exception.eric_response = 'Eric says'
         raised_exception.validation_problems = 'Well, that\'s just wrong'
-        with (
-            patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(side_effect=raised_exception)),
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
-        ):
-            returned_data, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(side_effect=raised_exception)),
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
+            ):
+                returned_data, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            self.assertEqual(raised_exception.eric_response,
-                                returned_data.additional_info['elster_data']['eric_response'])
-            self.assertEqual(raised_exception.validation_problems,
-                                returned_data.additional_info['elster_data']['validation_problems'])
-            self.assertEqual(False,
-                                returned_data.additional_info['elster_data']['was_successful'])
+                self.assertEqual(raised_exception.eric_response,
+                                    returned_data.additional_info['elster_data']['eric_response'])
+                self.assertEqual(raised_exception.validation_problems,
+                                    returned_data.additional_info['elster_data']['validation_problems'])
+                self.assertEqual(False,
+                                    returned_data.additional_info['elster_data']['was_successful'])
 
     def test_if_step_is_filing_step_and_transfer_error_raised_then_return_render_info_with_additional_data(self):
         raised_exception = ElsterTransferError()
         raised_exception.eric_response = 'Eric says'
         raised_exception.server_response = 'Servcer says'
-        with (
-            patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(side_effect=raised_exception)),
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
-        ):
-            returned_data, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(side_effect=raised_exception)),
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
+            ):
+                returned_data, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            self.assertEqual(raised_exception.eric_response,
-                                returned_data.additional_info['elster_data']['eric_response'])
-            self.assertEqual(raised_exception.server_response,
-                                returned_data.additional_info['elster_data']['server_response'])
-            self.assertEqual(False,
-                                returned_data.additional_info['elster_data']['was_successful'])
+                self.assertEqual(raised_exception.eric_response,
+                                    returned_data.additional_info['elster_data']['eric_response'])
+                self.assertEqual(raised_exception.server_response,
+                                    returned_data.additional_info['elster_data']['server_response'])
+                self.assertEqual(False,
+                                    returned_data.additional_info['elster_data']['was_successful'])
 
     def test_if_step_is_filing_step_and_elster_request_got_though_then_store_pdf_is_called_with_correct_arguments(self):
-        with (
-            patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))),
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))) as current_user_mock,
-            patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket") as store_pdf_and_transfer_ticket,
-            patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
-        ):
-            returned_render_info, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))),
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))) as current_user_mock,
+                patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket") as store_pdf_and_transfer_ticket,
+                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input")
+            ):
+                returned_render_info, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            store_pdf_and_transfer_ticket.assert_called_with(current_user_mock, self.ack_elster_data['pdf'],
-                                                                self.ack_elster_data['transfer_ticket'])
+                store_pdf_and_transfer_ticket.assert_called_with(current_user_mock, self.ack_elster_data['pdf'],
+                                                                    self.ack_elster_data['transfer_ticket'])
 
     def test_if_step_is_filing_step_and_elster_request_got_though_then_elster_data_without_pdf(self):
-        with (
-            patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))),
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"),
-            patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket")
-        ):
-            returned_render_info, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch("app.elster_client.elster_client.send_est_with_elster", MagicMock(return_value=copy.deepcopy(self.ack_elster_data))),
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch("app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input"),
+                patch("app.forms.flows.lotse_flow.store_pdf_and_transfer_ticket")
+            ):
+                returned_render_info, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            self.assertNotIn('pdf', returned_render_info.additional_info['elster_data'])
+                self.assertNotIn('pdf', returned_render_info.additional_info['elster_data'])
 
     def test_if_step_is_declaration_incomes_step_and_valid_form_then_call_create_auditlog_for_all_fields(self):
         valid_session_data = {'idnr': '02293417683'}
@@ -995,56 +1012,68 @@ class TestLotseHandleSpecificsForStep(unittest.TestCase):
 
     def test_if_filing_step_and_validate_raises_confirmation_missing_then_flash_err_and_redirect_to_confirmation(
             self):
-        with (
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch('app.forms.flows.lotse_flow.flash') as mock_flash,
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input', MagicMock(side_effect=ConfirmationMissingInputValidationError))
-        ):
-            returned_render_info, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch('app.forms.flows.lotse_flow.flash') as mock_flash,
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input', MagicMock(side_effect=ConfirmationMissingInputValidationError))
+            ):
+                returned_render_info, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            mock_flash.assert_called_once_with(ConfirmationMissingInputValidationError.message, 'warn')
-            self.assertEqual(self.flow.url_for_step(StepConfirmation.name), returned_render_info.redirect_url)
+                mock_flash.assert_called_once_with(ConfirmationMissingInputValidationError.message, 'warn')
+                self.assertEqual(self.flow.url_for_step(StepConfirmation.name), returned_render_info.redirect_url)
 
     def test_if_filing_step_and_validate_raises_input_invalid_then_flash_err_and_redirect_to_summary(self):
-        with (
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch('app.forms.flows.lotse_flow.flash') as mock_flash,
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input', MagicMock(side_effect=InputDataInvalidError))
-        ):
-            returned_render_info, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch('app.forms.flows.lotse_flow.flash') as mock_flash,
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input', MagicMock(side_effect=InputDataInvalidError))
+            ):
+                returned_render_info, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            mock_flash.assert_called_once_with(InputDataInvalidError.message, 'warn')
-            self.assertEqual(self.flow.url_for_step(StepSummary.name), returned_render_info.redirect_url)
+                mock_flash.assert_called_once_with(InputDataInvalidError.message, 'warn')
+                self.assertEqual(self.flow.url_for_step(StepSummary.name), returned_render_info.redirect_url)
 
     def test_if_filing_step_and_send_est_with_elster_raises_erica_missing_field_then_flash_err_and_redirect_to_summary(
             self):
-        with (
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch('app.forms.flows.lotse_flow.flash') as mock_flash,
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input'),
-            patch('app.elster_client.elster_client.send_est_with_elster', MagicMock(side_effect=EricaIsMissingFieldError))
-        ):
-            returned_render_info, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch('app.forms.flows.lotse_flow.flash') as mock_flash,
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input'),
+                patch('app.elster_client.elster_client.send_est_with_elster', MagicMock(side_effect=EricaIsMissingFieldError))
+            ):
+                returned_render_info, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            mock_flash.assert_called_once_with(EricaIsMissingFieldError().message, 'warn')
-            self.assertEqual(self.flow.url_for_step(StepSummary.name), returned_render_info.redirect_url)
+                mock_flash.assert_called_once_with(EricaIsMissingFieldError().message, 'warn')
+                self.assertEqual(self.flow.url_for_step(StepSummary.name), returned_render_info.redirect_url)
 
     def test_if_filing_step_and_send_est_with_elster_raises_invalid_bufa_error_then_flash_err_and_redirect_to_summary(
             self):
-        with (
-            patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
-            patch('app.forms.flows.lotse_flow.flash') as mock_flash,
-            patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input'),
-            patch('app.elster_client.elster_client.send_est_with_elster', MagicMock(side_effect=ElsterInvalidBufaNumberError))
-        ):
-            returned_render_info, _ = self.flow._handle_specifics_for_step(
-                self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
+        with self.app.test_request_context(method='POST',
+                        environ_base={'REMOTE_ADDR': self.ip_address},
+                        data=self.session_data):
+            with (
+                patch('app.forms.flows.lotse_flow.current_user', MagicMock(has_completed_tax_return=MagicMock(return_value=False))),
+                patch('app.forms.flows.lotse_flow.flash') as mock_flash,
+                patch('app.forms.flows.lotse_flow.LotseMultiStepFlow._validate_input'),
+                patch('app.elster_client.elster_client.send_est_with_elster', MagicMock(side_effect=ElsterInvalidBufaNumberError))
+            ):
+                returned_render_info, _ = self.flow._handle_specifics_for_step(
+                    self.filing_step, copy.deepcopy(self.render_info_filing_step), self.session_data)
 
-            mock_flash.assert_called_once_with(ElsterInvalidBufaNumberError().message, 'warn')
-            self.assertEqual(self.flow.url_for_step(StepSummary.name), returned_render_info.redirect_url)
+                mock_flash.assert_called_once_with(ElsterInvalidBufaNumberError().message, 'warn')
+                self.assertEqual(self.flow.url_for_step(StepSummary.name), returned_render_info.redirect_url)
 
 
 class TestLotseGenerateSteps(unittest.TestCase):

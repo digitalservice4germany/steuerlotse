@@ -11,6 +11,7 @@ export default function FieldLabelScaffolding({
   fieldId,
   label,
   details,
+  disable,
 }) {
   // Only show label if there is text to show.
   if (!label.text) {
@@ -37,7 +38,7 @@ export default function FieldLabelScaffolding({
         <ExampleFieldInput {...{ exampleInput: label.exampleInput, fieldId }} />
       )}
       {details && !details.positionAfterField && (
-        <Details title={details.title} detailsId={fieldId}>
+        <Details disable={disable} title={details.title} detailsId={fieldId}>
           <p>{details.text}</p>
         </Details>
       )}
@@ -56,9 +57,10 @@ FieldLabelScaffolding.propTypes = {
   }),
   details: PropTypes.exact({
     title: PropTypes.string,
-    text: PropTypes.string,
+    text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     positionAfterField: PropTypes.bool, // False unless using 'form_full_width' template (which some pages do)
   }),
+  disable: PropTypes.bool,
 };
 
 FieldLabelScaffolding.defaultProps = {
@@ -69,4 +71,5 @@ FieldLabelScaffolding.defaultProps = {
     exampleInput: undefined,
   },
   details: undefined,
+  disable: false,
 };

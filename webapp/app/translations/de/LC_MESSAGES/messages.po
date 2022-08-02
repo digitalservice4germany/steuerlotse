@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-29 13:12+0200\n"
+"POT-Creation-Date: 2022-08-01 10:22+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -128,11 +128,11 @@ msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
-#: app/elster_client/elster_errors.py:102
+#: app/elster_client/elster_errors.py:225
 msgid "form.lotse.input_invalid.InvalidBufaNumber"
 msgstr "Bitte überprüfen Sie Ihre angegebene Steuernummer."
 
-#: app/elster_client/elster_errors.py:109
+#: app/elster_client/elster_errors.py:232
 msgid "form.lotse.input_invalid.InvalidTaxNumber"
 msgstr ""
 "Wir bekommen von ELSTER die Rückmeldung, dass Ihre Steuernummer nicht "
@@ -141,17 +141,17 @@ msgstr ""
 "beispielsweise sein, dass in der Vergangenheit Finanzämter in Ihrem "
 "Bezirk zusammengelegt wurden oder entfallen sind."
 
-#: app/elster_client/elster_errors.py:142
+#: app/elster_client/elster_errors.py:265
 msgid "form.lotse.input_invalid.MissingFieldsInputValidationError"
 msgstr ""
 "Bitte prüfen Sie Ihre Angaben. Es sind nicht alle notwendigen "
 "Formularfelder ausgefüllt."
 
-#: app/elster_client/elster_errors.py:149
+#: app/elster_client/elster_errors.py:272
 msgid "erica.timeout.error"
 msgstr "Erica Service Timeout Error"
 
-#: app/elster_client/elster_errors.py:158
+#: app/elster_client/elster_errors.py:281
 msgid "erica.connection.error"
 msgstr "Erica Service Connection Error"
 
@@ -196,7 +196,7 @@ msgid "form.eligibility.title"
 msgstr "Prüfung: Kann ich die vereinfachte Steuererklärung nutzen?"
 
 #: app/forms/flows/logout_flow.py:21
-#: app/forms/flows/unlock_code_request_flow.py:41
+#: app/forms/flows/unlock_code_request_flow.py:40
 msgid "form.auth-request.title"
 msgstr "Anforderung des Freischaltcodes"
 
@@ -212,15 +212,15 @@ msgstr "Sie haben sich erfolgreich abgemeldet."
 msgid "form.lotse.title"
 msgstr "Ihre Steuererklärung"
 
-#: app/forms/flows/lotse_flow.py:201
+#: app/forms/flows/lotse_flow.py:202
 #: app/templates/unlock_code/already_logged_in.html:11
 msgid "form.logout"
 msgstr "Abmelden"
 
-#: app/forms/flows/lotse_flow.py:237
-#: app/forms/flows/unlock_code_activation_flow.py:68
-#: app/forms/flows/unlock_code_request_flow.py:80
-#: app/forms/flows/unlock_code_revocation_flow.py:67
+#: app/forms/flows/lotse_flow.py:246
+#: app/forms/flows/unlock_code_activation_flow.py:64
+#: app/forms/flows/unlock_code_request_flow.py:79
+#: app/forms/flows/unlock_code_revocation_flow.py:64
 msgid "flash.erica.dataConnectionError"
 msgstr ""
 " Ihre Angaben konnten nicht übermittelt werden. Bitte versuchen Sie es "
@@ -229,24 +229,24 @@ msgstr ""
 "href=\"mailto:kontakt@steuerlotse-rente.de\"  class=\"banner-"
 "link\">kontakt@steuerlotse-rente.de</a>"
 
-#: app/forms/flows/lotse_flow.py:345
+#: app/forms/flows/lotse_flow.py:348
 msgid "form.lotse.no_answer"
 msgstr "Keine Angabe"
 
-#: app/forms/flows/lotse_flow.py:396
+#: app/forms/flows/lotse_flow.py:399
 msgid "form.lotse.missing_mandatory_field"
 msgstr "Dieses Feld müssen Sie noch angeben."
 
-#: app/forms/flows/unlock_code_activation_flow.py:40
+#: app/forms/flows/unlock_code_activation_flow.py:38
 msgid "form.unlock-code-activation.title"
 msgstr "Aktivierung des Freischaltcodes"
 
-#: app/forms/flows/unlock_code_request_flow.py:56
+#: app/forms/flows/unlock_code_request_flow.py:54
 #: app/forms/steps/unlock_code_request_steps.py:50
 msgid "form.register"
 msgstr "Registrieren"
 
-#: app/forms/flows/unlock_code_revocation_flow.py:41
+#: app/forms/flows/unlock_code_revocation_flow.py:39
 msgid "form.auth-revocation.title"
 msgstr "Freischaltcode Stornierung"
 
@@ -525,7 +525,6 @@ msgstr "Nein"
 
 #: app/forms/steps/eligibility_steps.py:392
 #: app/forms/steps/eligibility_steps.py:469
-#, fuzzy
 msgid "form.eligibility.elster_failure-error"
 msgstr ""
 "Sie können Ihre Steuererklärung nur mit dem Steuerlotsen machen, wenn die"
@@ -5083,7 +5082,6 @@ msgid "info-stl.card-zusammenveranlagung.heading"
 msgstr "Können wir die Steuererklärung gemeinsam als Paar machen?"
 
 #: app/templates/content/landing_page.html:56
-#, fuzzy
 msgid "info-stl.elster.p1-content"
 msgstr ""
 "ELSTER steht für »Elektronische Steuererklärung« und ist die offizielle "
@@ -5179,7 +5177,6 @@ msgstr ""
 " Sie mit Ihrer Steuererklärung 2021 beginnen."
 
 #: app/templates/eligibility/display_elster_failure.html:17
-#, fuzzy
 msgid "maybe_icon"
 msgstr "Menü"
 
@@ -5484,7 +5481,4 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
-
-#~ msgid "footer.help"
-#~ msgstr "Hilfebereich"
 

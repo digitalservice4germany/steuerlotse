@@ -18,9 +18,10 @@ function FormFieldIdNr({
   label,
   details,
   errors,
+  disable,
 }) {
   const labelComponent = (
-    <FieldLabelForSeparatedFields {...{ label, fieldId, details }} />
+    <FieldLabelForSeparatedFields {...{ label, fieldId, details, disable }} />
   );
 
   const extraFieldProps = {
@@ -50,6 +51,7 @@ function FormFieldIdNr({
             fieldId,
             values,
             required,
+            disable,
           }}
           autofocus={autofocus || Boolean(errors.length)}
           inputFieldLengths={[2, 3, 3, 3]}
@@ -68,6 +70,7 @@ FormFieldIdNr.propTypes = {
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: FieldLabelForSeparatedFields.propTypes.label,
   details: FieldLabelForSeparatedFields.propTypes.details,
+  disable: PropTypes.bool,
 };
 
 FormFieldIdNr.defaultProps = {
@@ -75,6 +78,7 @@ FormFieldIdNr.defaultProps = {
   required: FormFieldSeparatedField.defaultProps.required,
   label: FieldLabelForSeparatedFields.defaultProps.label,
   details: FieldLabelForSeparatedFields.defaultProps.details,
+  disable: false,
 };
 
 export default FormFieldIdNr;

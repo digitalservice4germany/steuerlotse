@@ -1,13 +1,28 @@
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import ClipLoader from "react-spinners/ClipLoader";
+import ButtonAnchor from "./ButtonAnchor";
 import addPlausibleGoal from "../lib/helpers";
+import { waitingMomentMessagePropType } from "../lib/propTypes";
+import { ReactComponent as VectorRight } from "../assets/icons/vector.svg";
+
+const { Text, Icon } = ButtonAnchor;
+
+const ButtonAnchorStyled = styled(ButtonAnchor)`
+  font-size: var(--text-base);
+  margin-right: var(--spacing-05);
+`;
 
 const Row = styled.div`
   margin-top: var(--spacing-09);
   display: flex;
   flex-wrap: wrap;
   row-gap: var(--spacing-05);
+`;
+
+const ClipLoaderWithStyle = styled(ClipLoader)`
+  margin-right: var(--spacing-03);
 `;
 
 // TODO: tidy this up (turn into a proper Button component as per Nadine's designs?)
@@ -52,14 +67,13 @@ const sharedButtonLinkStyle = css`
     border-bottom: 4px solid var(--focus-border-color);
   }
 `;
-
+// eslint-disable-next-line no-unused-vars
 const Button = styled.button`
   ${sharedButtonLinkStyle}
 `;
 
 const Link = styled.a`
   ${sharedButtonLinkStyle}
-
   &:visited {
     color: var(--inverse-text-color);
   }
@@ -143,11 +157,74 @@ const OutlineButton = styled.button`
 
 const ExplanatoryText = styled.small`
   margin-bottom: 0;
+  margin-top: var(--spacing-01);
+  margin-left: var(--spacing-01);
 
   & a {
     color: var(--text-color);
     font-family: var(--font-bold);
   }
+`;
+
+const fadeInAndOutAnimation = keyframes`
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const fadeInAndOutAnimationSecond = keyframes`
+  0% {
+    opacity: 0;
+  }
+  1.82% {
+    opacity: 1;
+  }
+  98.28% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const ExplanatoryTextSpinner = styled.small`
+  margin-bottom: 0;
+  font-size: var(--text-medium);
+  animation-name: ${fadeInAndOutAnimation};
+  animation-duration: 10s;
+  -webkit-animation: ${fadeInAndOutAnimation} 10s;
+`;
+
+const ExplanatoryTextSpinnerSecond = styled.small`
+  margin-bottom: 0;
+  font-size: var(--text-medium);
+  display: none;
+  visibility: hidden;
+  animation-name: ${fadeInAndOutAnimationSecond};
+  animation-duration: 110s;
+  -webkit-animation: ${fadeInAndOutAnimationSecond} 110s;
+`;
+
+const HiddenAriaDiv = styled.div`
+  position: absolute !important;
+  display: block;
+  visibility: visible;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
 `;
 
 export default function StepNavButtons({
@@ -160,6 +237,8 @@ export default function StepNavButtons({
   plausibleGoal,
   plausibleDomain,
   plausibleProps,
+  loading,
+  waitingMessages,
 }) {
   const { t } = useTranslation();
   const overviewLabel = t("form.backToOverview");
@@ -167,6 +246,31 @@ export default function StepNavButtons({
   const handleClick = () => {
     addPlausibleGoal(plausibleDomain, plausibleGoal, { props: plausibleProps });
   };
+
+  function announceChange(message) {
+    const ariaLiveContainer = document.querySelector("[aria-live]");
+    if (ariaLiveContainer !== null) {
+      ariaLiveContainer.appendChild(document.createTextNode(message));
+    }
+  }
+
+  if (loading) {
+    announceChange(waitingMessages.firstMessage);
+    const interval = setInterval(() => {
+      const firstMessage = document.getElementById("firstMessage");
+      const secondMessage = document.getElementById("secondMessage");
+      if (firstMessage) {
+        firstMessage.style.display = "none";
+        firstMessage.style.visibility = "none";
+      }
+      if (secondMessage) {
+        secondMessage.style.display = "block";
+        secondMessage.style.visibility = "visible";
+      }
+      announceChange(waitingMessages.secondMessage);
+      clearInterval(interval);
+    }, 10000);
+  }
 
   return (
     <Row className="form-row">
@@ -192,10 +296,19 @@ export default function StepNavButtons({
         </OutlineLink>
       )}
 
-      {isForm && (
+      {isForm && !waitingMessages && (
         <Button type="submit" className="btn btn-primary" name="next_button">
           {nextLabel}
         </Button>
+      )}
+
+      {isForm && !loading && waitingMessages && (
+        <ButtonAnchorStyled type="submit" name="next_button">
+          <Text>{nextLabel}</Text>
+          <Icon hoverVariant="translate-x">
+            <VectorRight />
+          </Icon>
+        </ButtonAnchorStyled>
       )}
       {!isForm && nextUrl && (
         <Link href={nextUrl} className="btn btn-primary" name="next_button">
@@ -203,9 +316,28 @@ export default function StepNavButtons({
         </Link>
       )}
 
-      {explanatoryButtonText && (
+      {explanatoryButtonText && !loading && (
         <ExplanatoryText>{explanatoryButtonText}</ExplanatoryText>
       )}
+
+      {loading && (
+        <ClipLoaderWithStyle
+          name="loading_spinner"
+          color="#0B0C0C"
+          size="30px"
+        />
+      )}
+      {loading && (
+        <div>
+          <ExplanatoryTextSpinner id="firstMessage">
+            {waitingMessages.firstMessage}
+          </ExplanatoryTextSpinner>
+          <ExplanatoryTextSpinnerSecond id="secondMessage">
+            {waitingMessages.secondMessage}
+          </ExplanatoryTextSpinnerSecond>
+        </div>
+      )}
+      <HiddenAriaDiv aria-live="assertive" />
     </Row>
   );
 }
@@ -223,6 +355,8 @@ StepNavButtons.propTypes = {
   plausibleGoal: PropTypes.string,
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
   plausibleDomain: PropTypes.string,
+  loading: PropTypes.bool,
+  waitingMessages: waitingMomentMessagePropType,
 };
 
 StepNavButtons.defaultProps = {
@@ -235,4 +369,6 @@ StepNavButtons.defaultProps = {
   plausibleGoal: "Zurück zur Übersicht",
   plausibleProps: undefined,
   plausibleDomain: null,
+  loading: false,
+  waitingMessages: undefined,
 };

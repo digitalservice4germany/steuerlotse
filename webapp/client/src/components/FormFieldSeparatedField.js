@@ -39,6 +39,7 @@ function FormFieldSeparatedField({
   extraFieldProps,
   transformUppercase,
   setMaxLength,
+  disable,
 }) {
   const container = useRef();
 
@@ -96,6 +97,7 @@ function FormFieldSeparatedField({
           }`;
           const inputElement = (
             <input
+              disabled={disable}
               type="text"
               id={subFieldId}
               name={fieldName}
@@ -138,7 +140,7 @@ function FormFieldSeparatedField({
         })}
       </SeparatedField>
       {details && details.positionAfterField && (
-        <Details title={details.title} detailsId={fieldId}>
+        <Details disable={disable} title={details.title} detailsId={fieldId}>
           <p>{details.text}</p>
         </Details>
       )}
@@ -171,6 +173,7 @@ FormFieldSeparatedField.propTypes = {
   required: PropTypes.bool,
   autofocus: PropTypes.bool,
   setMaxLength: PropTypes.bool,
+  disable: PropTypes.bool,
 };
 
 FormFieldSeparatedField.defaultProps = {
@@ -183,6 +186,7 @@ FormFieldSeparatedField.defaultProps = {
   required: false,
   autofocus: false,
   setMaxLength: true,
+  disable: false,
 };
 
 export default FormFieldSeparatedField;

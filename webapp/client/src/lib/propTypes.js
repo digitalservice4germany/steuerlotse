@@ -61,3 +61,8 @@ export const extendedSelectionFieldPropType = PropTypes.exact({
   name: PropTypes.string.isRequired,
   label: labelPropType,
 });
+
+export const waitingMomentMessagePropType = PropTypes.exact({
+  firstMessage: PropTypes.string,
+  secondMessage: PropTypes.string,
+});

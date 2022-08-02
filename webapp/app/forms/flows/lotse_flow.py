@@ -1,5 +1,6 @@
 import datetime
 import logging
+
 from decimal import Decimal
 
 from flask import request, flash, url_for
@@ -40,7 +41,6 @@ SPECIAL_RESEND_TEST_IDNRS = ['04452397687', '02259674819']
 
 
 logger = logging.getLogger(__name__)
-
 
 class LotseMultiStepFlow(MultiStepFlow):
     _DEBUG_DATA = (
@@ -187,6 +187,7 @@ class LotseMultiStepFlow(MultiStepFlow):
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(LotseMultiStepFlow, self)._handle_specifics_for_step(step, render_info,
                                                                                               stored_data)
+
         if isinstance(step, StepConfirmation):
             if request.method == 'POST' and render_info.form.validate():
                 create_audit_log_confirmation_entry('Confirmed data privacy', request.remote_addr,
@@ -204,6 +205,7 @@ class LotseMultiStepFlow(MultiStepFlow):
                 try:
                     self._validate_input(stored_data)
                     from app.elster_client.elster_client import send_est_with_elster
+
                     elster_data = send_est_with_elster(stored_data, request.remote_addr)
                     store_pdf_and_transfer_ticket(current_user,
                                                   elster_data.pop('pdf', None),

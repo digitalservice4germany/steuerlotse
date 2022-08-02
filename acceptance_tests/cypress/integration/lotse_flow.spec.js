@@ -115,6 +115,8 @@ const one_day_into_the_tax_year_year = '2021'
 
 const submitBtnSelector = '[name="next_button"]'
 const overviewBtnSelector = '[name="overview_button"]'
+const loadingSpinnerSelector = '[name="loading_spinner"]'
+
 const login = function () {
     // Log in
     cy.get('.nav-link').contains('Steuererklärung 2021').click()
@@ -125,7 +127,10 @@ const login = function () {
     cy.get('#unlock_code_1').type(taxReturnData.unlockCode1)
     cy.get('#unlock_code_2').type(taxReturnData.unlockCode2)
     cy.get('#unlock_code_3').type(taxReturnData.unlockCode3)
+    cy.get(loadingSpinnerSelector).should('not.exist');
     cy.get(submitBtnSelector).click()  // Submit form
+    cy.get(loadingSpinnerSelector).should('be.visible');
+    cy.get(submitBtnSelector, { timeout: 5000 }).should('be.visible');
     cy.get(submitBtnSelector).click()  // Skip confirmation
 }
 
@@ -477,7 +482,11 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
                 cy.get('label[for=confirm_data_privacy]').first().click()
                 cy.get('label[for=confirm_terms_of_service]').first().click()
-                cy.get(submitBtnSelector).click()
+                
+                cy.get(loadingSpinnerSelector).should('not.exist');
+                cy.get(submitBtnSelector).click()  // Submit form
+                cy.get(loadingSpinnerSelector).should('be.visible');
+                cy.get(submitBtnSelector, { timeout: 5000 }).should('be.visible');
 
                 // Verify success.
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')

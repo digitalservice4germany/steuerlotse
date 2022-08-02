@@ -49,7 +49,7 @@ function trans(key) {
         einfachElsterLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://einfach.elster.de/erklaerung/ui/" />
-          ),
+        ),
         howItWorksPageLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/sofunktionierts" />
