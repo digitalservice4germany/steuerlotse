@@ -392,13 +392,15 @@ const translations = {
           heading: "So geht es weiter",
           "step-1": {
             heading: "Vorbereiten und Belege sammeln",
-            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe oder unter dem Menüpunkt <vorbereitenLink>Vorbereiten</vorbereitenLink>.",
+            text: "Eine Übersicht über die notwendigen Unterlagen und Informationen für die Erstellung Ihrer Steuererklärung finden Sie unter dem Menüpunkt „Vorbereiten“.",
             buttonText: "Vorbereitungshilfe speichern ",
           },
           "step-2": {
             heading: "Brief mit Freischaltcode zur Anmeldung erhalten",
-            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
-            imageDescription:
+            text: "Ihr Freischaltcode ist nach der Registrierung 90 Tage für die erste Anmeldung gültig. Das Ablaufdatum finden Sie mit Ihren Freischaltcode auf der letzten Seite des Briefes:",
+            imageDescriptionOne:
+              "Nach der ersten Anmeldung mit Ihrem Freischaltcode haben Sie weitere 60 Tage Zeit, Ihre Steuererklärung auszufüllen und abzuschicken.",
+            imageDescriptionTwo:
               "Der Brief ist nur für Ihre Unterlagen und zur Anmeldung beim Steuerlotsen gedacht. Sie brauchen den Brief mit dem persönlichen Freischaltcode nicht postalisch an den DigitalService zu schicken.",
           },
           "step-3": {
