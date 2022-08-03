@@ -277,6 +277,10 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Verify success.
+                cy.url().should(
+                    "include",
+                    "/lotse/step/filing"
+                );
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
                 // Get PDF - can't click on it as it opens a new window, so we request it directly
                 cy.request('/download_pdf/print.pdf').its('body').should('not.be.empty')
@@ -333,6 +337,10 @@ context('Acceptance tests', () => {
                 cy.get(submitBtnSelector).click()
 
                 // Verify success.
+                cy.url().should(
+                    "include",
+                    "/lotse/step/filing"
+                );
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
                 // Get PDF - can't click on it as it opens a new window, so we request it directly
                 cy.downloadFile(Cypress.config('baseUrl') + '/download_pdf/print.pdf',
@@ -486,9 +494,12 @@ context('Acceptance tests', () => {
                 cy.get(loadingSpinnerSelector).should('not.exist');
                 cy.get(submitBtnSelector).click()  // Submit form
                 cy.get(loadingSpinnerSelector).should('be.visible');
-                cy.get(submitBtnSelector, { timeout: 5000 }).should('be.visible');
 
                 // Verify success.
+                cy.url().should(
+                    "include",
+                    "/lotse/step/filing"
+                );
                 cy.get('body').contains('Ihre Informationen wurden erfolgreich verschickt.')
                 // Get PDF - can't click on it as it opens a new window, so we request it directly
                 cy.request('/download_pdf/print.pdf').its('body').should('not.be.empty')
