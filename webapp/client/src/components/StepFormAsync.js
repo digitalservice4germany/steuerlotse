@@ -33,7 +33,6 @@ export default function StepFormAsync({
         const firstMinDuration = 2000;
         const spinnerMessageChangeTime = 10000;
         const secondMinDuration = 12000;
-        console.log(duration);
 
         if (duration < firstMinDuration) {
           return Promise.resolve(delay(firstMinDuration - duration)).then(
@@ -67,7 +66,8 @@ export default function StepFormAsync({
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setTimeout(() => setLoading(false), 1000));
   }
 
   function sendDisableCallAndFetch(event) {
