@@ -66,8 +66,7 @@ export default function StepFormAsync({
       })
       .catch((error) => {
         console.log(error);
-      })
-      .finally(() => setTimeout(() => setLoading(false), 1000));
+      });
   }
 
   function sendDisableCallAndFetch(event) {
