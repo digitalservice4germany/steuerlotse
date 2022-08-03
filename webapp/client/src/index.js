@@ -131,6 +131,7 @@ renderReact();
 
 window.renderReact = renderReact;
 
+// This prevents the browser from reading the cache when using the navigation function of the browser.
 window.onpageshow = function (event) {
   if (event.persisted) {
     window.location.reload();
