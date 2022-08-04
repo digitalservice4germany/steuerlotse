@@ -71,6 +71,10 @@ class StepSummary(LotseFormSteuerlotseStep):
             prev_url=self.render_info.prev_url
         ).camelized_dict()
 
+        elster_error = request.args.get('elster_error')
+        if elster_error:
+            flash(elster_error, 'warn')
+
         return render_react_template(component='SummaryPage',
                                      props=props_dict,
                                      form=self.render_info.form,

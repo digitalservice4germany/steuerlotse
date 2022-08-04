@@ -14,7 +14,7 @@ from requests import RequestException
 from app.config import Config
 from app.data_access.audit_log_controller import create_audit_log_confirmation_entry
 from app.data_access.user_controller import store_pdf_and_transfer_ticket, check_idnr
-from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, EricaIsMissingFieldError, \
+from app.elster_client.elster_errors import ElsterGlobalValidationError, ElsterTransferError, ElsterUnknownError, EricaIsMissingFieldError, \
     ElsterInvalidBufaNumberError
 from app.forms.fields import SteuerlotseDateField, LegacySteuerlotseSelectField, LegacyYesNoField, \
     LegacySteuerlotseDateField, SteuerlotseStringField, \
@@ -214,13 +214,11 @@ class LotseMultiStepFlow(MultiStepFlow):
                     render_info.overview_url = None
                     render_info.prev_url = None
                 except ConfirmationMissingInputValidationError as e:
-                    flash(e.message, 'warn')
-                    render_info.redirect_url = self.url_for_step(StepConfirmation.name)
+                    render_info.redirect_url = self.url_for_step(StepConfirmation.name, _elster_error=e.message)
                 except (MandatoryFieldMissingValidationError, InputDataInvalidError, EricaIsMissingFieldError,
                         ElsterInvalidBufaNumberError) as e:
                     logger.info("Fields are missing or incorrect", exc_info=True)
-                    flash(e.message, 'warn')
-                    render_info.redirect_url = self.url_for_step(StepSummary.name)
+                    render_info.redirect_url = self.url_for_step(StepSummary.name, _elster_error=e.message)
                 except ElsterGlobalValidationError as e:
                     logger.info("Could not send est", exc_info=True)
                     render_info.additional_info['elster_data'] = {
@@ -236,8 +234,10 @@ class LotseMultiStepFlow(MultiStepFlow):
                         'server_response': e.server_response}
                 except RequestException as e:
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)
-                    flash(_('flash.erica.dataConnectionError'), 'warn')
-                    render_info.redirect_url = self.url_for_step(StepConfirmation.name)
+                    render_info.redirect_url = self.url_for_step(StepConfirmation.name, _elster_error=_('flash.erica.dataConnectionError'))
+                except Exception as e:
+                    logger.error(f"A critical error has occurred: {e}", exc_info=True)
+                    render_info.redirect_url = self.url_for_step(StepConfirmation.name, _elster_error=_('erica_error.description'))
             else:
                 render_info.additional_info['elster_data'] = {
                     'was_successful': True,
@@ -305,8 +305,8 @@ class LotseMultiStepFlow(MultiStepFlow):
             if step_data:
                 section_added = False
                 curr_section = None
-                
-                for section in sections:                        
+
+                for section in sections:
                     if curr_step.section_link.name == section["name"]:
                         # Append new section
                         section_added = True
@@ -326,10 +326,10 @@ class LotseMultiStepFlow(MultiStepFlow):
                     "url": self.url_for_step(curr_step.name, _has_link_overview=True),
                     "data": step_data
                 })
-                
+
                 if not section_added:
                     sections.append(curr_section)
-                
+
 
         return sections
 
