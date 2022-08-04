@@ -361,18 +361,6 @@ class TestMaritalStatusInputFormSteuerlotseStep:
             step.handle()
         assert step.render_info.prev_url is None
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self, new_test_request_context):
-        session_data = {'marital_status_eligibility': 'single', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with new_test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          True, ImmutableMultiDict({}))
-            step.handle()
-
-            assert session_data == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self, new_test_request_context):
         session_data = {'marital_status_eligibility': 'single', }
         with new_test_request_context(method='GET') as req:
@@ -382,16 +370,6 @@ class TestMaritalStatusInputFormSteuerlotseStep:
             step.handle()
 
             assert session_data == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self, new_test_request_context):
-        only_necessary_data = {'marital_status_eligibility': 'single', }
-        with new_test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(MaritalStatusInputFormSteuerlotseStep.name,
-                                                                          True, ImmutableMultiDict({}))
-            step.handle()
-
-            assert only_necessary_data == FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY])
 
 
 class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -446,20 +424,6 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no', }
@@ -472,17 +436,6 @@ class TestSeparatedEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             self.assertEqual(session_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.TestCase):
@@ -538,20 +491,6 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'married',
-                        'separated_since_last_year_eligibility': 'yes', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
@@ -561,19 +500,6 @@ class TestSeparatedLivedTogetherEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(self.correct_session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedLivedTogetherEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
@@ -631,18 +557,6 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data_with_incorrect_key = {**self.correct_session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(self.correct_session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
@@ -652,20 +566,6 @@ class TestSeparatedJointTaxesEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertEqual(self.correct_session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SeparatedJointTaxesEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
@@ -739,21 +639,6 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -767,18 +652,6 @@ class TestMarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest.
             self.assertEqual(session_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
 class TestMarriedAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
@@ -863,22 +736,6 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -891,22 +748,6 @@ class TestMarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Tes
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarriedAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
@@ -985,19 +826,6 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
         self.assertEqual(expected_url, step.render_info.prev_url)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'user_a_has_elster_account_eligibility': 'no'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'user_a_has_elster_account_eligibility': 'no'}
         with self.app.test_request_context(method='GET') as req:
@@ -1007,17 +835,6 @@ class TestUserAElsterAccountEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'user_a_has_elster_account_eligibility': 'no'}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserAElsterAccountEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
@@ -1073,20 +890,6 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'user_a_has_elster_account_eligibility': 'no',
-                        'user_b_has_elster_account_eligibility': 'no'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'user_a_has_elster_account_eligibility': 'no',
                         'user_b_has_elster_account_eligibility': 'no'}
@@ -1097,18 +900,6 @@ class TestUserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittest
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'user_a_has_elster_account_eligibility': 'no',
-                               'user_b_has_elster_account_eligibility': 'no'}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                UserBElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
@@ -1181,20 +972,6 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
             with pytest.raises(IncorrectEligibilityData):
                 step.handle()
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'joint_taxes_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'joint_taxes_eligibility': 'no', }
@@ -1206,19 +983,6 @@ class TestDivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep(unittest
 
             self.assertEqual(session_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'joint_taxes_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                DivorcedJointTaxesDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
 
 class TestSingleAlimonyEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
     @pytest.fixture(autouse=True)
@@ -1334,21 +1098,6 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'joint_taxes_eligibility': 'no',
@@ -1360,22 +1109,6 @@ class TestSingleAlimonyDecisionEligibilityInputFormSteuerlotseStep(unittest.Test
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'joint_taxes_eligibility': 'no',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'alimony_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleAlimonyDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
@@ -1433,19 +1166,6 @@ class TestSingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep(unittes
             expected_url = step.url_for_step(SingleElsterFailureDisplaySteuerlotseStep.name)
             step.handle()
         self.assertEqual(expected_url, step.render_info.next_url)
-
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'user_a_has_elster_account_eligibility': 'no'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                SingleElsterAccountDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'user_a_has_elster_account_eligibility': 'no' }
@@ -1555,23 +1275,6 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -1585,23 +1288,6 @@ class TestPensionDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCase):
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                PensionDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
@@ -1697,24 +1383,6 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes',
-                        'investment_income_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -1729,24 +1397,6 @@ class TestInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unittest.T
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                InvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
@@ -1846,25 +1496,6 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes',
-                        'investment_income_eligibility': 'no',
-                        'minimal_investment_income_eligibility': 'yes'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -1882,24 +1513,6 @@ class TestMinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(uni
             self.assertEqual(session_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no',
-                               'minimal_investment_income_eligibility': 'yes'}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MinimalInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
         session_data = {'marital_status_eligibility': 'married',
@@ -2016,26 +1629,6 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes',
-                        'investment_income_eligibility': 'no',
-                        'minimal_investment_income_eligibility': 'yes',
-                        'taxed_investment_income_eligibility': 'no'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -2053,27 +1646,6 @@ class TestTaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep(unitt
 
             self.assertEqual(session_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no',
-                               'minimal_investment_income_eligibility': 'yes',
-                               'taxed_investment_income_eligibility': 'no'}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                TaxedInvestmentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
 
 class TestCheaperCheckEligibilityFailureDisplaySteuerlotseStep(unittest.TestCase):
     @pytest.fixture(autouse=True)
@@ -2150,30 +1722,9 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'alimony_eligibility': 'no',
-                        'cheaper_check_eligibility': 'no',
-                        'investment_income_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'marital_status_eligibility': 'single',
-                        'minimal_investment_income_eligibility': 'yes',
-                        'pension_eligibility': 'yes',
-                        'separated_since_last_year_eligibility': 'no',
-                        'taxed_investment_income_eligibility': 'no',}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'alimony_eligibility': 'no',
-                        'cheaper_check_eligibility': 'no', 
+                        'cheaper_check_eligibility': 'no',
                         'investment_income_eligibility': 'no',
                         'joint_taxes_eligibility': 'no',
                         'marital_status_eligibility': 'single',
@@ -2189,27 +1740,6 @@ class TestCheaperCheckDecisionEligibilityInputFormSteuerlotseStep(unittest.TestC
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no',
-                               'minimal_investment_income_eligibility': 'yes',
-                               'taxed_investment_income_eligibility': 'no',
-                               'cheaper_check_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                CheaperCheckDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
@@ -2335,28 +1865,6 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes',
-                        'investment_income_eligibility': 'no',
-                        'minimal_investment_income_eligibility': 'yes',
-                        'taxed_investment_income_eligibility': 'no',
-                        'cheaper_check_eligibility': 'no',
-                        'employment_income_eligibility': 'no', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -2375,28 +1883,6 @@ class TestEmploymentDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCas
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no',
-                               'minimal_investment_income_eligibility': 'yes',
-                               'taxed_investment_income_eligibility': 'no',
-                               'cheaper_check_eligibility': 'no',
-                               'employment_income_eligibility': 'no', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                EmploymentDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
@@ -2522,29 +2008,6 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes',
-                        'investment_income_eligibility': 'no',
-                        'minimal_investment_income_eligibility': 'yes',
-                        'taxed_investment_income_eligibility': 'no',
-                        'cheaper_check_eligibility': 'no',
-                        'employment_income_eligibility': 'no',
-                        'marginal_employment_eligibility': 'yes', }
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         session_data = {'marital_status_eligibility': 'single',
                         'separated_since_last_year_eligibility': 'no',
@@ -2564,29 +2027,6 @@ class TestMarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep(un
             step.handle()
 
             self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no',
-                               'minimal_investment_income_eligibility': 'yes',
-                               'taxed_investment_income_eligibility': 'no',
-                               'cheaper_check_eligibility': 'no',
-                               'employment_income_eligibility': 'no',
-                               'marginal_employment_eligibility': 'yes', }
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                MarginalEmploymentIncomeDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
 
@@ -2683,30 +2123,6 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
 
             self.assertRaises(IncorrectEligibilityData, step.handle)
 
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self):
-        session_data = {'marital_status_eligibility': 'single',
-                        'separated_since_last_year_eligibility': 'no',
-                        'joint_taxes_eligibility': 'no',
-                        'alimony_eligibility': 'no',
-                        'pension_eligibility': 'yes',
-                        'investment_income_eligibility': 'no',
-                        'minimal_investment_income_eligibility': 'yes',
-                        'taxed_investment_income_eligibility': 'no',
-                        'cheaper_check_eligibility': 'no',
-                        'employment_income_eligibility': 'no',
-                        'marginal_employment_eligibility': 'yes',
-                        'other_income_eligibility': 'no'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
     def test_if_get_and_correct_data_from_session_then_do_not_delete_any_data(self):
         with self.app.test_request_context(method='GET') as req:
             req.session = SecureCookieSession(
@@ -2716,30 +2132,6 @@ class TestIncomeOtherDecisionEligibilityInputFormSteuerlotseStep(unittest.TestCa
             step.handle()
 
             self.assertDictContainsSubset(self.correct_session_data,
-                             FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
-
-    def test_if_get_and_full_data_from_session_then_delete_unnecessary_data(self):
-        only_necessary_data = {'marital_status_eligibility': 'single',
-                               'separated_since_last_year_eligibility': 'no',
-                               'separated_lived_together_eligibility': 'no',
-                               'separated_joint_taxes_eligibility': 'no',
-                               'joint_taxes_eligibility': 'no',
-                               'alimony_eligibility': 'no',
-                               'pension_eligibility': 'yes',
-                               'investment_income_eligibility': 'no',
-                               'minimal_investment_income_eligibility': 'yes',
-                               'taxed_investment_income_eligibility': 'no',
-                               'cheaper_check_eligibility': 'no',
-                               'employment_income_eligibility': 'no',
-                               'marginal_employment_eligibility': 'yes',
-                               'other_income_eligibility': 'no'}
-        with self.app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession({_ELIGIBILITY_DATA_KEY: create_session_form_data(FULL_SESSION_DATA)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                IncomeOtherDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            self.assertEqual(only_necessary_data,
                              FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]))
 
     def test_if_multiple_users_then_show_multiple_text(self):
@@ -2816,7 +2208,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
             'other_income_eligibility': 'no'}
         return correct_session_data
-    
+
     @pytest.fixture
     def correct_session_data_users_have_elster(self):
         correct_session_data = {
@@ -2827,7 +2219,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
             'other_income_eligibility': 'no'}
         return correct_session_data
-        
+
     @pytest.fixture
     def correct_session_data_user_a_have_elster(self):
         correct_session_data = {
@@ -2838,19 +2230,19 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
             'other_income_eligibility': 'no'}
         return correct_session_data
-    
+
     @pytest.fixture
     def correct_session_data_single_user_a_have_elster(self):
         correct_session_data = {
             'marital_status_eligibility': 'single', 'joint_taxes_eligibility': 'yes', 'alimony_eligibility': 'no',
-            'user_a_has_elster_account_eligibility': 'yes', 'pension_eligibility': 'yes', 
+            'user_a_has_elster_account_eligibility': 'yes', 'pension_eligibility': 'yes',
             'investment_income_eligibility': 'yes', 'minimal_investment_income_eligibility': 'no',
             'taxed_investment_income_eligibility': 'yes', 'cheaper_check_eligibility': 'no',
             'employment_income_eligibility': 'yes', 'marginal_employment_eligibility': 'yes',
             'other_income_eligibility': 'no'}
         return correct_session_data
-    
-    
+
+
     def test_if_post_and_session_data_correct_and_input_data_correct_then_set_success_step(self, app, correct_session_data):
         with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
@@ -2862,7 +2254,7 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
             step.handle()
 
         assert step.render_info.next_url == expected_url
-                
+
     def test_if_post_and_session_data_correct_and_user_a_has_elster_and_input_data_correct_then_set_success_step(self, app, correct_session_data_user_a_have_elster):
         with app.test_request_context(method='POST') as req:
             req.session = SecureCookieSession(
@@ -2883,13 +2275,13 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
                 ImmutableMultiDict({'foreign_country_eligibility': 'yes'}))
             expected_url = step.url_for_step(ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name)
-            
+
             step.handle()
-            
+
         assert step.render_info.next_url == expected_url
-            
-            
-            
+
+
+
 
     def test_if_session_data_correct_then_set_prev_input_step_correctly(self, app, correct_session_data):
         with app.test_request_context(method='GET') as req:
@@ -2913,24 +2305,10 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
 
 
             expected_url = step.url_for_step(ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name)
-            
+
             step.handle()
-            
+
         assert step.render_info.next_url == expected_url
-
-    def test_if_get_and_incorrect_data_from_session_then_delete_incorrect_data(self, app):
-        # ['is_widowed', 'is_single', 'is_divorced', 'foreign_country_eligibility', 'marital_status_eligibility', 'marital_status_eligibility', 'marital_status_eligibility']
-        session_data = {'marital_status_eligibility': 'single',
-                        'foreign_country_eligibility': 'no'}
-        session_data_with_incorrect_key = {**session_data, **{'INCORRECT_KEY': 'UNNECESSARY_VALUE'}}
-        with app.test_request_context(method='GET') as req:
-            req.session = SecureCookieSession(
-                {_ELIGIBILITY_DATA_KEY: create_session_form_data(session_data_with_incorrect_key)})
-            step = EligibilityStepChooser('eligibility').get_correct_step(
-                ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True, ImmutableMultiDict({}))
-            step.handle()
-
-            assert FormStorage.deserialize_data(req.session[_ELIGIBILITY_DATA_KEY]) == session_data
 
     def test_if_multiple_users_then_show_multiple_text(self, app):
         session_data = {'marital_status_eligibility': 'married',
@@ -3047,7 +2425,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
 
     def test_if_user_has_no_minimal_investment_income_then_set_correct_info(self):
-        expected_information = [_l('form.eligibility.result-note.user_elster_account-registration-success'), _l('form.eligibility.result-note.capital_investment')]        
+        expected_information = [_l('form.eligibility.result-note.user_elster_account-registration-success'), _l('form.eligibility.result-note.capital_investment')]
         session_data = {'marital_status_eligibility': 'single',
                         'user_a_has_elster_account_eligibility': 'no',
                         'alimony_eligibility': 'no',
@@ -3069,7 +2447,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
     def test_if_user_b_has_no_elster_account_and_user_wants_no_cheaper_check_then_set_correct_info(self):
         expected_information = [_('form.eligibility.result-note.user_elster_account-registration-success'),
                                 _('form.eligibility.result-note.capital_investment')]
-        
+
         session_data = {'marital_status_eligibility': 'married',
                         'separated_since_last_year_eligibility': 'no',
                         'user_a_has_elster_account_eligibility': 'yes',
@@ -3115,7 +2493,7 @@ class TestEligibilitySuccessDisplaySteuerlotseStep(unittest.TestCase):
             step.handle()
 
         self.assertEqual(expected_information, step.render_info.additional_info['dependent_notes'])
-        
+
 
     def test_if_no_user_b_elster_account_and_no_cheaper_check_then_set_no_info(self):
         expected_information = []
