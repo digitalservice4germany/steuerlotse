@@ -259,8 +259,8 @@ class ForeignCountrySingleElsterEligibilityData(RecursiveDataModel):
     is_widowed: Optional[WidowedEligibilityData]
     is_single: Optional[SingleEligibilityData]
     is_divorced: Optional[DivorcedEligibilityData]
-    is_separated: Optional[SeparatedNotLivedTogetherEligibilityData]
-    
+    is_separated: Optional[SeparatedNoJointTaxesEligibilityData]
+
     foreign_country_eligibility: str
 
     @validator('foreign_country_eligibility')
@@ -272,9 +272,14 @@ class ForeignCountrySingleElsterEligibilityData(RecursiveDataModel):
         return super().one_previous_field_has_to_be_set(cls, v, values)
 
 
-class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel): 
+class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
     foreign_country_eligibility: str
     marital_status_eligibility: str
+    separated_since_last_year_eligibility: str
+
+    @validator('separated_since_last_year_eligibility')
+    def married_couples_are_not_separated_since_last_year(cls, v):
+        return declarations_must_be_set_no(v)
 
     @validator('marital_status_eligibility')
     def must_be_married(cls, v):
@@ -285,6 +290,10 @@ class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
+
+    @validator('is_not_separated', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
 
 class SingleUserNoElsterAccountEligibilityData(RecursiveDataModel):
     user_a_has_elster_account_eligibility: str

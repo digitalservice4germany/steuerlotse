@@ -757,8 +757,8 @@ class ForeignCountriesEligibilityFailureDisplaySteuerlotseStep(EligibilityFailur
 class ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep(DecisionEligibilityInputFormSteuerlotseStep):
     name = 'foreign_country'
     next_step_data_models = [
-        (ForeignCountrySingleElsterEligibilityData, 'single_elster_account'),
         (ForeignCountryMarriedElsterEligibilityData, 'user_a_has_elster_account'),
+        (ForeignCountrySingleElsterEligibilityData, 'single_elster_account'),
     ]
     failure_step_name = ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name
     title = _l('form.eligibility.foreign-country-title')
