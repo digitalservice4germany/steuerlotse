@@ -256,45 +256,38 @@ class AlimonyEligibilityData(RecursiveDataModel):
 
 
 class ForeignCountrySingleElsterEligibilityData(RecursiveDataModel):
-    marital_status_eligibility: str
+    is_widowed: Optional[WidowedEligibilityData]
+    is_single: Optional[SingleEligibilityData]
+    is_divorced: Optional[DivorcedEligibilityData]
+    is_separated: Optional[SeparatedNotLivedTogetherEligibilityData]
+    
     foreign_country_eligibility: str
-
-    @validator('marital_status_eligibility')
-    def must_be_not_married(cls, v):
-        if v in 'married':
-            raise InvalidEligiblityError
-        return v
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
 
+    @validator('is_separated', always=True, check_fields=False)
+    def one_previous_field_has_to_be_set(cls, v, values):
+        return super().one_previous_field_has_to_be_set(cls, v, values)
 
-class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel):
-    marital_status_eligibility: str
+
+class ForeignCountryMarriedElsterEligibilityData(RecursiveDataModel): 
     foreign_country_eligibility: str
+    marital_status_eligibility: str
 
     @validator('marital_status_eligibility')
     def must_be_married(cls, v):
         if v not in 'married':
-            raise InvalidEligiblityError
+            raise ValueError
         return v
 
     @validator('foreign_country_eligibility')
     def has_only_taxed_investment_income(cls, v):
         return declarations_must_be_set_no(v)
 
-
-
 class SingleUserNoElsterAccountEligibilityData(RecursiveDataModel):
-    marital_status_eligibility: str
     user_a_has_elster_account_eligibility: str
-
-    @validator('marital_status_eligibility')
-    def must_not_be_married(cls, v):
-        if v in 'married':
-            raise InvalidEligiblityError
-        return v
 
     @validator('user_a_has_elster_account_eligibility')
     def must_not_have_elster_account(cls, v):

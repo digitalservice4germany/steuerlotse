@@ -2302,13 +2302,8 @@ class TestForeignCountriesDecisionEligibilityInputFormSteuerlotseStep:
                 ForeignCountriesDecisionEligibilityInputFormSteuerlotseStep.name, True,
                 form_data=ImmutableMultiDict({'other_income_eligibility': 'no',
                                               'foreign_country_eligibility': 'no'}))
-
-
-            expected_url = step.url_for_step(ForeignCountriesEligibilityFailureDisplaySteuerlotseStep.name)
-
-            step.handle()
-
-        assert step.render_info.next_url == expected_url
+            with pytest.raises(IncorrectEligibilityData):
+                step.handle()
 
     def test_if_multiple_users_then_show_multiple_text(self, app):
         session_data = {'marital_status_eligibility': 'married',
