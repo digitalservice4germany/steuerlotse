@@ -42,8 +42,8 @@ export default function UnlockCodeSuccessPage({
   const image = {
     src: "../../images/Img_Brief_500.png",
     alt: "Beispielbild der letzten Briefseite mit Freischaltcode",
-    srcSet:
-      "../../images/Img_Brief_500.png 1155w ,  ../../images/Img_Brief_1024.png 2048w",
+    srcSetLargeScreen: "../../images/Img_Brief_1024.png",
+    srcSetSmallerScreen: "../../images/Img_Brief_500.png",
   };
 
   const IconOne = {
@@ -80,6 +80,24 @@ export default function UnlockCodeSuccessPage({
     );
   }
 
+  const imageDescription = (
+    <>
+      <p>
+        {t(
+          "register.success.next-steps.howItContinues.step-2.imageDescriptionOne"
+        )}
+        ;
+      </p>
+      <p>
+        {t(
+          "register.success.next-steps.howItContinues.step-2.imageDescriptionTwo"
+        )}
+        ;
+      </p>
+    </>
+  );
+
+  trans("register.success.next-steps.howItContinues.step-2.imageDescription");
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
@@ -101,6 +119,7 @@ export default function UnlockCodeSuccessPage({
         text={t("register.success.next-steps.howItContinues.step-2.text")}
         image={image}
         icon={IconTwo}
+        imageDescription={imageDescription}
       />
       <SuccessStepsInfoBox
         header={t("register.success.next-steps.howItContinues.step-3.heading")}

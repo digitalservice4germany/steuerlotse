@@ -60,6 +60,8 @@ const translations = {
         "Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <bold>länger als 3 Stunden</bold> nichts mehr auf dieser Webseite machen, werden Sie aus Sicherheitsgründen automatisch abgemeldet.",
       listItem4:
         "Sie können alle Angaben vor Versand noch einmal kontrollieren.",
+      listItem5:
+        "Nach der ersten Anmeldung bleibt Ihr Freischaltcode weitere <strong>60 Tage gültig</strong>. Solange haben Sie Zeit Ihre Steuererklärung abzuschicken.",
     },
     declarationEdaten: {
       intro1:
@@ -289,7 +291,7 @@ const translations = {
       "Sie haben Ihren Freischaltcode bereits erhalten? <br><loginLink>Dann können Sie sich anmelden</loginLink>.",
     input: {
       intro:
-        "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
+        "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen <bold>mit einem Brief innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
     },
   },
   newsletter: {
@@ -390,16 +392,20 @@ const translations = {
           heading: "So geht es weiter",
           "step-1": {
             heading: "Vorbereiten und Belege sammeln",
-            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe oder unter dem Menüpunkt <vorbereitenLink>Vorbereiten</vorbereitenLink>.",
+            text: "Eine Übersicht über die notwendigen Unterlagen und Informationen für die Erstellung Ihrer Steuererklärung finden Sie unter dem Menüpunkt „Vorbereiten“.",
             buttonText: "Vorbereitungshilfe speichern ",
           },
           "step-2": {
             heading: "Brief mit Freischaltcode zur Anmeldung erhalten",
-            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
+            text: "Ihr Freischaltcode ist nach der Registrierung 90 Tage für die erste Anmeldung gültig. Das Ablaufdatum finden Sie mit Ihren Freischaltcode auf der letzten Seite des Briefes:",
+            imageDescriptionOne:
+              "Nach der ersten Anmeldung mit Ihrem Freischaltcode haben Sie weitere 60 Tage Zeit, Ihre Steuererklärung auszufüllen und abzuschicken.",
+            imageDescriptionTwo:
+              "Der Brief ist nur für Ihre Unterlagen und zur Anmeldung beim Steuerlotsen gedacht. Sie brauchen den Brief mit dem persönlichen Freischaltcode nicht postalisch an den DigitalService zu schicken.",
           },
           "step-3": {
             heading: "Steuererklärung online machen",
-            text: "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Ihre Steuererklärung“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+            text: "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Steuererklärung 2021“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
           },
         },
       },
