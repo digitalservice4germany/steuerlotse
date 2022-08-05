@@ -48,19 +48,31 @@ const Anchor = styled.a`
   &:focus &:active {
     color: var(--text-color);
   }
+
+  ${({ disable }) =>
+    disable &&
+    `
+    pointer-events: none;
+    cursor: default;
+  `}
 `;
 
 const LinkElement = styled.span`
   color: var(--text-color);
   border-bottom: 1px solid transparent;
   padding: 3px 3px 0;
+  ${({ disable }) =>
+    disable &&
+    `
+        color: var(--grey-900);
+  `}
 `;
 
-export default function BackLink({ text, url }) {
+export default function BackLink({ text, url, disable }) {
   return (
-    <Anchor href={url}>
+    <Anchor disable={disable} href={url} tabIndex={disable ? "-1" : undefined}>
       <BackArrow />
-      <LinkElement>{text}</LinkElement>
+      <LinkElement disable={disable}>{text}</LinkElement>
     </Anchor>
   );
 }
@@ -68,4 +80,9 @@ export default function BackLink({ text, url }) {
 BackLink.propTypes = {
   text: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  disable: PropTypes.bool,
+};
+
+BackLink.defaultProps = {
+  disable: false,
 };

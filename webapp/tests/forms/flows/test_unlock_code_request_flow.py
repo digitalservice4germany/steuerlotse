@@ -183,7 +183,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
-                fun_unlock_code_request.return_value = {'idnr': idnr, 'elster_request_id': '000'}
+                fun_unlock_code_request.return_value = {'idnr': idnr, 'elsterRequestId': '000'}
 
                 render_info, _ = self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
@@ -199,7 +199,7 @@ class TestUnlockCodeRequestHandleSpecificsForStep(unittest.TestCase):
             with patch("app.forms.flows.unlock_code_request_flow.create_audit_log_confirmation_entry"),\
                     patch("app.forms.flows.unlock_code_request_flow.elster_client.send_unlock_code_request_with_elster") \
                     as fun_unlock_code_request:
-                fun_unlock_code_request.return_value = {'idnr': idnr, 'elster_request_id': expected_elster_request_id}
+                fun_unlock_code_request.return_value = {'idnr': idnr, 'elsterRequestId': expected_elster_request_id}
 
                 self.flow._handle_specifics_for_step(
                     self.input_step, self.render_info_input_step, self.session_data)
@@ -317,7 +317,7 @@ class TestUnlockCodeActivationOverrideSessionData:
     @pytest.mark.usefixtures('test_request_context')
     def test_if_override_storage_data_called_then_cookie_override_function_called_with_correct_params(self, unlock_code_request_flow):
         with patch('app.data_access.storage.cookie_storage.CookieStorage.override_data') as patched_override:
-            with patch('app.data_access.storage.cookie_storage.CookieStorage.get_data', MagicMock(return_value={'name': 'Ash'})):
+            with patch('app.data_access.storage.cookie_storage.CookieStorage.get_data', MagicMock(return_value={'name': 'Ash', 'idnr': '0123456789'})):
                 unlock_code_request_flow.handle('data_input')
 
-        assert patched_override.call_args == call({'name': 'Ash'}, data_identifier='form_data')
+        assert patched_override.call_args == call({'name': 'Ash', 'idnr': '0123456789'}, data_identifier='form_data')

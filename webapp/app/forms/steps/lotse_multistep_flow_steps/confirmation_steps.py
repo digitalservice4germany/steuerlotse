@@ -6,7 +6,7 @@ from app.forms import SteuerlotseBaseForm
 from app.forms.steps.step import FormStep, DisplayStep
 from app.forms.fields import ConfirmationField
 
-from flask import url_for
+from flask import request, url_for, flash
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 
@@ -48,6 +48,10 @@ class StepConfirmation(FormStep):
             data_privacy_link=url_for('data_privacy'),
             prev_url=render_info.prev_url,
         ).camelized_dict()
+
+        elster_error = request.args.get('elster_error')
+        if elster_error:
+            flash(elster_error)
 
         return render_react_template(component='ConfirmationPage',
                                      props=props_dict,

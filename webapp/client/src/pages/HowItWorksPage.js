@@ -124,6 +124,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
       altText: t("howItWorksPage.stepFour.iconaltText"),
     },
     heading: t("howItWorksPage.stepFour.heading"),
+    text: "Ihr Freischaltcode ist 90 Tage nach der Registrierung für die erste Anmeldung gültig. Das Ablaudatum finden Sie auch auf Ihrem Brief unter „Gültigkeit(Ende)”.",
     image: {
       src: "../../images/step4.png",
       alt: t("howItWorksPage.stepFour.imageAltText"),
@@ -137,6 +138,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
       altText: t("howItWorksPage.stepFive.iconaltText"),
     },
     heading: t("howItWorksPage.stepFive.heading"),
+    text: "Nach der ersten Anmeldung mit Ihrem Freischaltcode haben Sie 60 Tage Zeit, Ihre Steuererklärung auszufüllen und abzuschicken.",
     image: {
       src: "../../images/step5.png",
       alt: t("howItWorksPage.stepFive.imageAltText"),

@@ -5,6 +5,7 @@ import pytest
 
 from app.data_access.user_controller import create_user
 from app.elster_client.elster_errors import ElsterRequestIdUnkownError
+from tests.elster_client.mock_erica import MockErica
 
 
 class IntegrationTest(unittest.TestCase):
@@ -112,6 +113,7 @@ class TestUnlockCodeActivationStepLogin(IntegrationTest):
         self.assertIn("unlock_code_failure", res.headers[2][1])
 
     def test_if_inactive_user_then_returns_unlock_code_failure(self):
+        MockErica.deliver_fail_on_get_job = True
         create_user('04452397687', '1985-01-01', '0000')
         res = self.client.post('/unlock_code_activation/step/data_input', data=dict(
             idnr='04452397687',
@@ -119,6 +121,7 @@ class TestUnlockCodeActivationStepLogin(IntegrationTest):
                             )
         self.assertEqual(302, res.status_code)
         self.assertIn("unlock_code_failure", res.headers[2][1])
+        MockErica.deliver_fail_on_get_job = False
 
     def test_if_non_activated_user_with_successful_elster_request_then_returns_unlock_code_success_with_redirect_to_lotse_start(self):
         create_user('03352419681', '1985-01-01', '0000')

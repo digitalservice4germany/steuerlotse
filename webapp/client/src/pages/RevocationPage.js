@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import FormFieldIdNr from "../components/FormFieldIdNr";
 import FormFieldDate from "../components/FormFieldDate";
 import FormHeader from "../components/FormHeader";
 import FormRowCentered from "../components/FormRowCentered";
-import StepForm from "../components/StepForm";
+import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 
@@ -31,13 +31,27 @@ export default function RevocationPage({ stepHeader, form, fields }) {
     );
   };
 
+  const [isDisable, setIsDisable] = useState(false);
+
+  const sendDisableCall = () => {
+    setIsDisable(true);
+  };
+
   return (
     <>
       <StepHeaderButtons />
       <FormHeader {...stepHeader} />
-      <StepForm {...form}>
+      <StepFormAsync
+        {...form}
+        sendDisableCall={sendDisableCall}
+        waitingMessages={{
+          firstMessage: t("waitingMoment.revocation.firstMessage"),
+          secondMessage: t("waitingMoment.revocation.secondMessage"),
+        }}
+      >
         <FormRowCentered>
           <FormFieldIdNr
+            disable={isDisable}
             autofocus
             required
             fieldName="idnr"
@@ -55,6 +69,7 @@ export default function RevocationPage({ stepHeader, form, fields }) {
         </FormRowCentered>
         <FormRowCentered>
           <FormFieldDate
+            disable={isDisable}
             required
             fieldName="dob"
             fieldId="dob"
@@ -65,7 +80,7 @@ export default function RevocationPage({ stepHeader, form, fields }) {
             errors={fields.dob.errors}
           />
         </FormRowCentered>
-      </StepForm>
+      </StepFormAsync>
     </>
   );
 }

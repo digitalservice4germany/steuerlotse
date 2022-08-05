@@ -216,13 +216,14 @@ class TestStepSteuernummerValidate:
         steuernummer = '11111111111'
         input_data = {'steuernummer_exists': 'yes',
                       'bundesland': bundesland_abbreviation, 'steuernummer': steuernummer}
-
+        MockErica.tax_number_is_invalid = True
         with patch('app.forms.steps.lotse.personal_data.flash') as mock_flash:
             StepSteuernummer.prepare_render_info(
                 stored_data={}, input_data=ImmutableMultiDict(input_data), should_update_data=True)
 
         mock_flash.assert_called_once_with(
             _('form.lotse.tax-number.invalid-tax-number-error'), 'warn')
+        MockErica.tax_number_is_invalid = False
 
     @pytest.mark.usefixtures("test_request_context")
     def test_if_no_number_given_then_flash_no_error(self, app):

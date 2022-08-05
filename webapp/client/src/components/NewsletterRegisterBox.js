@@ -8,7 +8,7 @@ import { ReactComponent as SuccessIcon } from "../assets/icons/success_icon.svg"
 import addPlausibleGoal from "../lib/helpers";
 
 const Box = styled.div`
-  background-color: var(--beige-200);
+  background-color: var(--beige-300);
   margin: 0 auto;
   max-width: var(--pages-max-width);
   margin-top: var(--spacing-03);

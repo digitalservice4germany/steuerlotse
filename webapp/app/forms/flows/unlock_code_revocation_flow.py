@@ -1,6 +1,5 @@
 import datetime
 import logging
-from typing import Optional
 
 from app.data_access.db_model.user import User
 
@@ -22,7 +21,6 @@ from app.forms.steps.unlock_code_revocation_steps import UnlockCodeRevocationInp
 from app.data_access.storage.cookie_storage import CookieStorage
 
 logger = logging.getLogger(__name__)
-
 
 class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
     # TODO: This uses the outdated MultiStepFlow. We do not need a multi step procedure for unlock code revocation.
@@ -51,7 +49,6 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
     # TODO: Use inheritance to clean up this method
     def _handle_specifics_for_step(self, step, render_info, stored_data):
         render_info, stored_data = super(UnlockCodeRevocationMultiStepFlow, self)._handle_specifics_for_step(step, render_info, stored_data)
-
         if isinstance(step, UnlockCodeRevocationInputStep):
             if request.method == 'POST' and render_info.form.validate():
                 try:
@@ -65,7 +62,7 @@ class UnlockCodeRevocationMultiStepFlow(MultiStepFlow):
                     render_info.next_url = self.url_for_step(UnlockCodeRevocationInputStep.name)
                     logger.error(f"Could not send a request to erica: {e}", exc_info=True)
                     flash(_('flash.erica.dataConnectionError'), 'warn')
-                    pass  # go to failure step
+                    pass  # go to failure step                
         elif isinstance(step, UnlockCodeRevocationFailureStep):
             render_info.next_url = None
 

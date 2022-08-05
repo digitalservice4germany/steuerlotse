@@ -125,7 +125,7 @@ class MultiStepFlow:
         else:
             return None
 
-    def url_for_step(self, step_name, _has_link_overview=None, **values):
+    def url_for_step(self, step_name, _has_link_overview=None, _elster_error=None, **values):
         """Generate URL for given step and current session."""
         if not _has_link_overview:
             _has_link_overview = self.has_link_overview
@@ -134,6 +134,7 @@ class MultiStepFlow:
         return url_for(self.endpoint,
                        step=step_name,
                        link_overview=_has_link_overview,
+                       elster_error=_elster_error,
                        **values)
 
     def _get_storage_data(self, ttl: Optional[int] = None):
@@ -183,4 +184,3 @@ class MultiStepFlow:
             if any([field.startswith(data_field_prefix) for data_field_prefix in data_field_prefixes]):
                 stored_data.pop(field)
         return stored_data
-
