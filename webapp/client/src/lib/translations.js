@@ -60,6 +60,8 @@ const translations = {
         "Sie können sich innerhalb der Sitzung für das Ausfüllen Ihrer Steuererklärung natürlich Zeit lassen. Sollten Sie allerdings <bold>länger als 3 Stunden</bold> nichts mehr auf dieser Webseite machen, werden Sie aus Sicherheitsgründen automatisch abgemeldet.",
       listItem4:
         "Sie können alle Angaben vor Versand noch einmal kontrollieren.",
+      listItem5:
+        "Nach der ersten Anmeldung bleibt Ihr Freischaltcode weitere <strong>60 Tage gültig</strong>. Solange haben Sie Zeit Ihre Steuererklärung abzuschicken.",
     },
     declarationEdaten: {
       intro1:
@@ -240,6 +242,11 @@ const translations = {
     },
   },
   unlockCodeActivation: {
+    form: {
+      title: "Melden Sie sich mit Ihrem Freischaltcode an",
+      intro:
+        "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+    },
     unlockCode: {
       labelText: "Freischaltcode",
       help: {
@@ -289,7 +296,7 @@ const translations = {
       "Sie haben Ihren Freischaltcode bereits erhalten? <br><loginLink>Dann können Sie sich anmelden</loginLink>.",
     input: {
       intro:
-        "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen mit einem Brief <bold>innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
+        "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen <bold>mit einem Brief innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
     },
   },
   newsletter: {
@@ -390,16 +397,23 @@ const translations = {
           heading: "So geht es weiter",
           "step-1": {
             heading: "Vorbereiten und Belege sammeln",
-            text: "Sie können sich auf Ihre Steuererklärung vorbereiten, bis Sie den Brief erhalten haben. Eine Übersicht über die notwendigen Unterlagen und Informationen, die Sie für die Erstellung Ihrer Steuererklärung brauchen, finden Sie in unserer Vorbereitungshilfe oder unter dem Menüpunkt <vorbereitenLink>Vorbereiten</vorbereitenLink>.",
+            text: "Eine Übersicht über die notwendigen Unterlagen und Informationen für die Erstellung Ihrer Steuererklärung finden Sie unter dem Menüpunkt „Vorbereiten“.",
             buttonText: "Vorbereitungshilfe speichern ",
           },
           "step-2": {
             heading: "Brief mit Freischaltcode zur Anmeldung erhalten",
-            text: "Sie erhalten in den nächsten zwei Wochen von Ihrer Finanzverwaltung einen Brief mit Ihrem Freischaltcode. Auf dem Brief wird der DigitalService als Antragssteller stehen. Die Organisation ist der Betreiber des Steuerlotsen. Ihren Freischaltcode finden Sie auf der letzten Seite des Briefes:",
+            text: "Ihr Freischaltcode ist nach der Registrierung 90 Tage für die erste Anmeldung gültig. Das Ablaufdatum finden Sie mit Ihren Freischaltcode auf der letzten Seite des Briefes:",
+            imageDescriptionOne:
+              "Nach der ersten Anmeldung mit Ihrem Freischaltcode haben Sie weitere 60 Tage Zeit, Ihre Steuererklärung auszufüllen und abzuschicken.",
+            imageDescriptionTwo:
+              "Der Brief ist nur für Ihre Unterlagen und zur Anmeldung beim Steuerlotsen gedacht. Sie brauchen den Brief mit dem persönlichen Freischaltcode nicht postalisch an den DigitalService zu schicken.",
           },
           "step-3": {
             heading: "Steuererklärung online machen",
-            text: "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Ihre Steuererklärung“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+            textOne:
+              "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Ihre Steuererklärung“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+            textTwo:
+              "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
           },
         },
       },
@@ -1017,6 +1031,13 @@ const translations = {
         url: "/unlock_code_activation/step/data_input?link_overview=False",
       },
     },
+    Deadline: {
+      header: "Abgabefrist: 31. Oktober 2022",
+      noteOne:
+        "Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1.November 2022.",
+      noteTwo:
+        "Die Abgabefrist gilt für Personen, die verpflichtet sind eine Steuererklärung für das Jahr 2021 abzugeben. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+    },
     Accordion: {
       heading: "Häufige Fragen und Antworten",
       Item1: {
@@ -1039,11 +1060,6 @@ const translations = {
           "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
         listItem5:
           "Melden Sie sich mit Ihrem Freischaltcode an und füllen Ihre Steuererklärung aus.",
-      },
-      Item3: {
-        title: "Bis wann kann ich die Steuererklärung abgeben?",
-        detail:
-          "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Oktober 2022</strong> beim Finanzamt sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
       },
       Item5: {
         title: "Können wir die Steuererklärung gemeinsam als Paar machen?",
@@ -1341,8 +1357,10 @@ const translations = {
   },
   howItWorksPage: {
     formHeaderTitle: "So funktioniert’s",
-    formHeaderText:
+    formHeaderTextOne:
       "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
+    formHeaderTextTwo:
+      "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
     stepsVideoSection: {
       heading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
       imageAltText: "Erklärvideo auf Youtube abspielen",

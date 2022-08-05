@@ -80,10 +80,6 @@ const faqAnchorList = [
     ),
   },
   {
-    title: t("LandingPage.Accordion.Item3.title"),
-    detail: trans("LandingPage.Accordion.Item3.detail"),
-  },
-  {
     title: t("LandingPage.Accordion.Item5.title"),
     detail: t("LandingPage.Accordion.Item5.detail"),
   },

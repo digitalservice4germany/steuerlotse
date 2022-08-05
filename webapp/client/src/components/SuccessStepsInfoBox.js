@@ -106,6 +106,7 @@ export default function SuccessStepsInfoBox({
   sourcePage,
   shareBoxSpacingVariant,
   textOnly,
+  imageDescription,
 }) {
   return (
     <Box shareBoxSpacingVariant={shareBoxSpacingVariant}>
@@ -130,8 +131,19 @@ export default function SuccessStepsInfoBox({
         {image && (
           <Figure>
             <picture>
-              <img src={image.src} srcSet={image.srcSet} alt={image.alt} />
+              <source
+                media="(min-width: 1024px)"
+                srcSet={image.srcSetLargeScreen}
+              />
+              <source
+                media="(max-width: 1024px)"
+                srcSet={image.srcSetSmallerScreen}
+              />
+              <img src={image.src} alt={image.alt} />
             </picture>
+            {imageDescription && (
+              <InnerBoxText>{imageDescription}</InnerBoxText>
+            )}
           </Figure>
         )}
         {shareText && (
@@ -156,7 +168,8 @@ SuccessStepsInfoBox.propTypes = {
   text: PropTypes.string,
   image: PropTypes.shape({
     src: PropTypes.string,
-    srcSet: PropTypes.string,
+    srcSetLargeScreen: PropTypes.string,
+    srcSetSmallerScreen: PropTypes.string,
     alt: PropTypes.string,
   }),
   anchor: PropTypes.shape({
@@ -173,6 +186,7 @@ SuccessStepsInfoBox.propTypes = {
   sourcePage: PropTypes.string,
   shareBoxSpacingVariant: PropTypes.bool,
   textOnly: PropTypes.bool,
+  imageDescription: PropTypes.string,
 };
 
 SuccessStepsInfoBox.defaultProps = {
@@ -190,4 +204,5 @@ SuccessStepsInfoBox.defaultProps = {
   sourcePage: null,
   shareBoxSpacingVariant: false,
   textOnly: false,
+  imageDescription: null,
 };

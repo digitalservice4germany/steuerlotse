@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import {
   ContentWrapper,
   Headline2,
@@ -63,6 +63,21 @@ const Div = styled.div`
 export default function HowItWorksPage({ plausibleDomain }) {
   const { t } = useTranslation();
 
+  function trans(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          vorbereitenLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/vorbereiten" rel="noreferrer" target="_blank" />
+          ),
+        }}
+      />
+    );
+  }
+
   const StepOne = {
     icon: {
       iconSrc: OneIcon,
@@ -109,6 +124,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
       altText: t("howItWorksPage.stepFour.iconaltText"),
     },
     heading: t("howItWorksPage.stepFour.heading"),
+    text: "Ihr Freischaltcode ist 90 Tage nach der Registrierung für die erste Anmeldung gültig. Das Ablaudatum finden Sie auch auf Ihrem Brief unter „Gültigkeit(Ende)”.",
     image: {
       src: "../../images/step4.png",
       alt: t("howItWorksPage.stepFour.imageAltText"),
@@ -122,6 +138,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
       altText: t("howItWorksPage.stepFive.iconaltText"),
     },
     heading: t("howItWorksPage.stepFive.heading"),
+    text: "Nach der ersten Anmeldung mit Ihrem Freischaltcode haben Sie 60 Tage Zeit, Ihre Steuererklärung auszufüllen und abzuschicken.",
     image: {
       src: "../../images/step5.png",
       alt: t("howItWorksPage.stepFive.imageAltText"),
@@ -171,12 +188,19 @@ export default function HowItWorksPage({ plausibleDomain }) {
     plausibleGoal: t("howItWorksPage.startButton.plausibleGoal"),
     plausibleProps: { plausiblePropsEligibilityStartButton },
   };
+
+  const introText = (
+    <>
+      <p>{t("howItWorksPage.formHeaderTextOne")}</p>
+      <p>{trans("howItWorksPage.formHeaderTextTwo")}</p>
+    </>
+  );
   return (
     <>
       <ContentWrapper marginBottom>
         <FormHeader
           title={t("howItWorksPage.formHeaderTitle")}
-          intro={t("howItWorksPage.formHeaderText")}
+          intro={introText}
         />
       </ContentWrapper>
       <VideoSection>
