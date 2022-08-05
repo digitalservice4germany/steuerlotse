@@ -84,6 +84,11 @@ const AccordionWrapper = styled.div`
   width: 60%;
   margin: var(--spacing-11) auto;
 
+  & h2 {
+    margin-bottom: var(--spacing-03);
+    font-size: var(--text-3xl);
+  }
+
   @media (max-width: 767px) {
     width: 100%;
     padding: 0 15px;
@@ -149,6 +154,9 @@ export default function LandingPage({ plausibleDomain }) {
       </LandingPageHeroWrapper>
       <CardsComponent cards={cardsInfo} />
       <AccordionWrapper>
+        <h2>{t("LandingPage.Deadline.header")}</h2>
+        <p>{t("LandingPage.Deadline.noteOne")}</p>
+        <p>{t("LandingPage.Deadline.noteTwo")}</p>
         <AccordionComponent
           title={t("LandingPage.Accordion.heading")}
           items={faqAnchorList}

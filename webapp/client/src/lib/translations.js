@@ -242,6 +242,11 @@ const translations = {
     },
   },
   unlockCodeActivation: {
+    form: {
+      title: "Melden Sie sich mit Ihrem Freischaltcode an",
+      intro:
+        "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+    },
     unlockCode: {
       labelText: "Freischaltcode",
       help: {
@@ -405,7 +410,10 @@ const translations = {
           },
           "step-3": {
             heading: "Steuererklärung online machen",
-            text: "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Steuererklärung 2021“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+            textOne:
+              "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Ihre Steuererklärung“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
+            textTwo:
+              "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
           },
         },
       },
@@ -1023,6 +1031,13 @@ const translations = {
         url: "/unlock_code_activation/step/data_input?link_overview=False",
       },
     },
+    Deadline: {
+      header: "Abgabefrist: 31. Oktober 2022",
+      noteOne:
+        "Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1.November 2022.",
+      noteTwo:
+        "Die Abgabefrist gilt für Personen, die verpflichtet sind eine Steuererklärung für das Jahr 2021 abzugeben. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+    },
     Accordion: {
       heading: "Häufige Fragen und Antworten",
       Item1: {
@@ -1045,11 +1060,6 @@ const translations = {
           "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
         listItem5:
           "Melden Sie sich mit Ihrem Freischaltcode an und füllen Ihre Steuererklärung aus.",
-      },
-      Item3: {
-        title: "Bis wann kann ich die Steuererklärung abgeben?",
-        detail:
-          "Wenn Sie verpflichtet sind eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung bis zum <strong>31. Oktober 2022</strong> beim Finanzamt sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende.\n\nSie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
       },
       Item5: {
         title: "Können wir die Steuererklärung gemeinsam als Paar machen?",
@@ -1347,8 +1357,10 @@ const translations = {
   },
   howItWorksPage: {
     formHeaderTitle: "So funktioniert’s",
-    formHeaderText:
+    formHeaderTextOne:
       "Sie können Ihre Steuererklärung für sich alleine oder gemeinsam als Paar für das Jahr 2021 machen. Voraussetzung ist unter anderem, dass Sie Rente oder Pension beziehen, aber keine Zusatzeinkünfte haben, die Sie noch versteuern müssen.",
+    formHeaderTextTwo:
+      "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
     stepsVideoSection: {
       heading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
       imageAltText: "Erklärvideo auf Youtube abspielen",

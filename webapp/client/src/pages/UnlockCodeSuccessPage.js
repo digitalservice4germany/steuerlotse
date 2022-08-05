@@ -80,24 +80,30 @@ export default function UnlockCodeSuccessPage({
     );
   }
 
+  const text = (
+    <>
+      <p>{t("register.success.next-steps.howItContinues.step-3.textOne")}</p>
+      <p>
+        {trans("register.success.next-steps.howItContinues.step-3.textTwo")}
+      </p>
+    </>
+  );
+        
   const imageDescription = (
     <>
       <p>
         {t(
           "register.success.next-steps.howItContinues.step-2.imageDescriptionOne"
         )}
-        ;
       </p>
       <p>
         {t(
           "register.success.next-steps.howItContinues.step-2.imageDescriptionTwo"
         )}
-        ;
       </p>
-    </>
+      </>
   );
-
-  trans("register.success.next-steps.howItContinues.step-2.imageDescription");
+        
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
@@ -123,7 +129,7 @@ export default function UnlockCodeSuccessPage({
       />
       <SuccessStepsInfoBox
         header={t("register.success.next-steps.howItContinues.step-3.heading")}
-        text={t("register.success.next-steps.howItContinues.step-3.text")}
+        text={text}
         icon={IconThree}
         textOnly
       />
