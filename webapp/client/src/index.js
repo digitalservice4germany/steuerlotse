@@ -51,6 +51,7 @@ import FreeTaxDeclarationForPensionersPage from "./pages/FreeTaxDeclarationForPe
 import MandateForTaxDeclarationPage from "./pages/MandateForTaxDeclarationPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import HelpAreaPage from "./pages/HelpAreaPage";
+import RetirementPage from "./pages/RetirementPage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -101,6 +102,7 @@ const allowedComponents = {
   MandateForTaxDeclarationPage,
   HowItWorksPage,
   HelpAreaPage,
+  RetirementPage,
 };
 
 function mountComponent(element) {

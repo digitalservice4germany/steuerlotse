@@ -175,13 +175,19 @@ export default function HowItWorksPage({ plausibleDomain }) {
 
   const newLocal = "https://www.youtube.com/watch?v=vP--fwSWtLE";
   const plausiblePropsPlayVideoButton = {
-    method: "Sofunktionierts / Erklärvideo",
+    props: {
+      method: "Sofunktionierts / Erklärvideo",
+    },
   };
   const plausiblePropsEligibilityStartButton = {
-    method: "Sofunktionierts / CTA Jetzt starten",
+    props: {
+      method: "Sofunktionierts / CTA Jetzt starten",
+    },
   };
   const plausiblePropsHelpPageButton = {
-    method: "Sofunktionierts / Zum Hilfebereich",
+    props: {
+      method: "Sofunktionierts / Zum Hilfebereich",
+    },
   };
   const startButton = {
     url: "/eligibility/step/welcome?link_overview=False",

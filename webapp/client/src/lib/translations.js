@@ -1365,7 +1365,7 @@ const translations = {
       heading: "Schritt-für-Schritt Anleitung (Erklärvideo)",
       imageAltText: "Erklärvideo auf Youtube abspielen",
       buttonText: "Auf Youtube abspielen",
-      plausibleGoal: "Sofunktionierts / Erklärvideo",
+      plausibleGoal: "Erklärvideo",
     },
     stepOne: {
       heading: "Finden Sie heraus, ob Sie den Steuerlotsen nutzen können",
@@ -1602,6 +1602,63 @@ const translations = {
       heading: "Haben Sie noch Fragen?",
       button: "Schreiben Sie uns",
       plausibleGoal: "Schreiben Sie uns",
+    },
+  },
+  retirementPage: {
+    formHeader: {
+      title: "Der Steuerlotse geht in Rente",
+      introOne:
+        "Bis einschließlich {{dateTwo}} ist die Abgabe der Steuererklärung 2021 mit dem Steuerlotsen noch möglich. Die Registrierung für neue Nutzer:innen ist noch bis einschließlich {{dateOne}} möglich.",
+      introTwo:
+        "Weitere Hintergründe finden Sie in diesem <blogPostLink>Blogpost</blogPostLink>.",
+    },
+    accordion: {
+      heading: "Häufig gestellte Fragen",
+      taxReturnDeadline: {
+        title: "Bis wann kann ich meine Steuererklärung abgeben?",
+        detail:
+          "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validityUnlockCodeLink>Gültigkeit</validityUnlockCodeLink> verlieren kann.",
+      },
+      file2021TaxReturn: {
+        title:
+          "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
+        detail:
+          "Bis einschließlich {{dateOne}} können Sie sich noch beim Steuerlotsen registrieren, sofern Sie die Voraussetzungen zur Nutzung erfüllen. Nach der Registrierung erhalten Sie einen Brief mir Ihrem Freischaltcode zur Anmeldung.  Mehr Informationen zum Ablauf finden Sie auf der Seite <howItWorksLink>„So funktioniert’s“</howItWorksLink>.",
+      },
+      file2022Registration: {
+        title:
+          "Ich möchte mich schon für meine Steuererklärung 2022 registrieren.",
+        detail:
+          "Der Steuerlotse wird eingestellt und kann nicht für die Steuererklärung 2022 genutzt werden. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+      },
+      alternatives: {
+        title: "Welche Alternativen zum Steuerlosten habe ich?",
+        detailOne:
+          "EinfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. EinfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de.</einfachElsterLink>",
+        detailTwo:
+          "Daneben stehen Ihnen noch <simplifiedPaperFormLink>das vereinfachte Papierformular</simplifiedPaperFormLink>  (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
+      },
+      whatHappensToData: {
+        title:
+          "Was passiert mit meinen Daten nach der Einstellung des Steuerlotsen?",
+        detailOne:
+          "Alle Steuererklärungen, die Sie über den Steuerlotsen bis einschließlich {{dateTwo}} abgeben, werden regulär an Ihr zuständiges Finanzamt übermittelt und dort weiter verarbeitet.",
+        detailTwo:
+          "Der Steuerlotse speichert Ihre Angaben nur für 10 Minuten nach dem Verschicken der Steuererklärung, um Ihnen eine Zusammenfassung der übermittelten Daten bereitzustellen. Danach wird Ihr Konto mit Ihren Daten gelöscht gemäß Art. 5 der Datenschutz-Grundverordnung (DSGVO).",
+        detailThre:
+          "Die Daten aller Nutzenden, die sich registriert, aber keine Steuererklärung mit dem Steuerlotsen abgeben haben, werden spätestens nach 60 Tagen gelöscht.",
+        detailFour:
+          "Mehr Informationen finden Sie in unser <dataPrivacyLink>Datenschutzerklärung.</dataPrivacyLink>",
+      },
+    },
+    questionBox: {
+      heading: "Haben Sie noch Fragen?",
+      howItWorksButton: {
+        text: "So funktioniert der Steuerlotse",
+      },
+      helpButton: {
+        text: "Zum Hilfebereich",
+      },
     },
   },
 };
