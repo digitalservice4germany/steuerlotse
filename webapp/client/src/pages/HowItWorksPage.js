@@ -7,6 +7,7 @@ import {
   Headline2,
 } from "../components/ContentPagesGeneralStyling";
 import FormHeader from "../components/FormHeader";
+// import retirementDates from "../lib/retirementDate";
 import HowItWorksComponent from "../components/HowItWorksComponent";
 import ButtonAnchor from "../components/ButtonAnchor";
 import OneIcon from "../assets/icons/Icon-1.svg";
@@ -173,6 +174,11 @@ export default function HowItWorksPage({ plausibleDomain }) {
     },
   };
 
+  const retirementDates = {
+    dateOne: "Bis 30. November 2022",
+    dateTwo: "Bis 20. Dezember 2022",
+  };
+
   const newLocal = "https://www.youtube.com/watch?v=vP--fwSWtLE";
   const plausiblePropsPlayVideoButton = {
     method: "Sofunktionierts / Erklärvideo",
@@ -234,12 +240,14 @@ export default function HowItWorksPage({ plausibleDomain }) {
           heading={StepOne.heading}
           icon={StepOne.icon}
           image={StepOne.image}
+          deadline={retirementDates.dateOne}
         />
         <HowItWorksComponent
           heading={StepTwo.heading}
           text={StepTwo.text}
           icon={StepTwo.icon}
           image={StepTwo.image}
+          deadline={retirementDates.dateOne}
         />
         <HowItWorksComponent
           heading={StepThree.heading}
@@ -258,12 +266,14 @@ export default function HowItWorksPage({ plausibleDomain }) {
           text={StepFive.text}
           icon={StepFive.icon}
           image={StepFive.image}
+          deadline={retirementDates.dateTwo}
         />
         <HowItWorksComponent
           heading={StepSix.heading}
           text={StepSix.text}
           icon={StepSix.icon}
           image={StepSix.image}
+          deadline={retirementDates.dateTwo}
         />
         <HowItWorksComponent
           heading={StepSeven.heading}
@@ -272,6 +282,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
           image={StepSeven.image}
           variant
           button={startButton}
+          deadline={retirementDates.dateTwo}
         />
         <Div>
           <ButtonAnchor

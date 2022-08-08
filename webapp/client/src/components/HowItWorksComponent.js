@@ -66,6 +66,7 @@ const Column = styled.div`
 
   @media (max-width: 575px) {
     margin-right: 0;
+    max-width: 100%;
   }
 `;
 
@@ -91,6 +92,13 @@ const Div = styled.div`
   }
 `;
 
+const DeadlineContainer = styled.div`
+  background-color: var(--blue-100);
+  padding: var(--spacing-03);
+  width: fit-content;
+  margin: var(--spacing-06) 0;
+`;
+
 export default function HowItWorksComponent({
   heading,
   text,
@@ -99,6 +107,7 @@ export default function HowItWorksComponent({
   variant,
   plausibleDomain,
   button,
+  deadline,
 }) {
   const { t } = useTranslation();
   const plausiblePropsEligibilityStartButton = {
@@ -110,8 +119,11 @@ export default function HowItWorksComponent({
         <Icon src={icon.iconSrc} alt={icon.altText} />
         <InnerContent>
           <Column button={button}>
-            <Headline3>{heading}</Headline3>
-            {text && <p>{text}</p>}
+            <div>
+              <Headline3>{heading}</Headline3>
+              {deadline && <DeadlineContainer>{deadline}</DeadlineContainer>}
+              {text && <p>{text}</p>}
+            </div>
             {button && (
               <Div>
                 <ButtonAnchor
@@ -159,6 +171,7 @@ HowItWorksComponent.propTypes = {
     plausibleGoal: PropTypes.string,
     plausibleProps: PropTypes.string,
   }),
+  deadline: PropTypes.string,
 };
 
 HowItWorksComponent.defaultProps = {
@@ -169,4 +182,5 @@ HowItWorksComponent.defaultProps = {
   variant: null,
   plausibleDomain: null,
   button: null,
+  deadline: null,
 };
