@@ -33,7 +33,7 @@ function trans(key) {
         ),
         validityUnlockCodeLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a href="/hilfebereich#letterActivationCodeSection" />
+          <a href="/hilfebereich#letterActivationCodeSection-card-2" />
         ),
       }}
       values={{

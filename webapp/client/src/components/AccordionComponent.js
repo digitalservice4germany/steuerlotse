@@ -91,7 +91,12 @@ export default function AccordionComponent({
       {intro.length > 0 && <p className="mt-3 pb-2">{intro}</p>}
       <AccordionStyled>
         {items.map((item, index) => [
-          <Card key={`card-${index}`} as={CardElement} className="mt-2">
+          <Card
+            id={`${id}-card-${index}`}
+            key={`card-${index}`}
+            as={CardElement}
+            className="mt-2"
+          >
             <Card.Header as={CardHeader} className="d-sm-flex collapsed w-100">
               <Accordion.Toggle
                 as={CardHeaderElement}
