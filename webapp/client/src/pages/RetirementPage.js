@@ -22,10 +22,7 @@ export default function RetirementPage({ plausibleDomain }) {
             <a href="/" />
           ),
         }}
-        values={{
-          dateTwo: retirementDates.dateTwo,
-          dateOne: retirementDates.dateOne,
-        }}
+        values={retirementDates}
       />
     );
   }

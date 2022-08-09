@@ -102,7 +102,7 @@ export default function AccordionComponent({
                   if (toggle === index) setToggle(-1);
                   else setToggle(index);
                   addPlausibleGoal(plausibleDomain, `${item.title}`, {
-                    method: `Hilfebereich / ${item.title}`,
+                    props: { method: `Hilfebereich / ${item.title}` },
                   });
                 }}
               >
