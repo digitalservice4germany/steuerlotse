@@ -1425,7 +1425,7 @@ const translations = {
   helpAreaPage: {
     formHeaderTitle: "Hilfebereich",
     intro:
-      "Mehr Informationen zur Einstellung des Steuerlotsen finden Sie auf der Seite „Ende des Steuerlotsen“.",
+      "Mehr Informationen zur Einstellung des Steuerlotsen finden Sie auf der Seite <retirementPageLink>„Ende des Steuerlotsen“</retirementPageLink>.",
     listOfContents: {
       one: "Kann ich den Steuerlotsen nutzen?",
       two: "Brief und Freischaltcode ",
@@ -1630,7 +1630,7 @@ const translations = {
       taxReturnDeadline: {
         title: "Bis wann kann ich meine Steuererklärung abgeben?",
         detail:
-          "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validityUnlockCodeLink>Gültigkeit</validityUnlockCodeLink> verlieren kann.",
+          "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
       },
       file2021TaxReturn: {
         title:

@@ -1,6 +1,7 @@
 import { t } from "i18next";
 import { Trans } from "react-i18next";
 import retirementDates from "./retirementDate";
+import { toggleManually } from "./helpers";
 
 function trans(key) {
   return (
@@ -31,9 +32,14 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/datenschutz" />
         ),
-        validityUnlockCodeLink: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a href="/hilfebereich#letterActivationCodeSection-card-2" />
+        validity: (
+          // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+          <a
+            href="#"
+            onClick={(event) =>
+              toggleManually(event, true, "letterActivationCodeSection", "2")
+            }
+          />
         ),
       }}
       values={{
