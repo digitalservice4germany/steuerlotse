@@ -31,7 +31,6 @@ import RevocationFailurePage from "./pages/RevocationFailurePage";
 import SubmitAcknowledgePage from "./pages/SubmitAcknowledgePage";
 import FilingSuccessPage from "./pages/FilingSuccessPage";
 import FilingFailurePage from "./pages/FilingFailurePage";
-import InfoTaxReturnForPensionersPage from "./pages/InfoTaxReturnForPensionersPage";
 import MedicalExpensesInfoPage from "./pages/MedicalExpensesInfoPage";
 import PensionExpensesInfoPage from "./pages/PensionExpensesInfoPage";
 import DisabilityCostsInfoPage from "./pages/DisabilityCostsInfoPage";
@@ -47,8 +46,6 @@ import SummaryPage from "./pages/SummaryPage";
 import LandingPage from "./pages/LandingPage";
 import NewsletterSuccessPage from "./pages/NewsletterSuccessPage";
 import NewsletterRegisterBox from "./components/NewsletterRegisterBox";
-import FreeTaxDeclarationForPensionersPage from "./pages/FreeTaxDeclarationForPensionersPage";
-import MandateForTaxDeclarationPage from "./pages/MandateForTaxDeclarationPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import HelpAreaPage from "./pages/HelpAreaPage";
 import RetirementPage from "./pages/RetirementPage";
@@ -82,7 +79,6 @@ const allowedComponents = {
   FilingSuccessPage,
   FilingFailurePage,
   SubmitAcknowledgePage,
-  InfoTaxReturnForPensionersPage,
   MedicalExpensesInfoPage,
   PensionExpensesInfoPage,
   DisabilityCostsInfoPage,
@@ -98,8 +94,6 @@ const allowedComponents = {
   LandingPage,
   NewsletterSuccessPage,
   NewsletterRegisterBox,
-  FreeTaxDeclarationForPensionersPage,
-  MandateForTaxDeclarationPage,
   HowItWorksPage,
   HelpAreaPage,
   RetirementPage,

@@ -194,10 +194,6 @@ class StepSubmitAcknowledgeProps(ComponentPlausibleProps):
     logout_url: str
 
 
-class InfoTaxReturnForPensionersProps(ComponentPlausibleProps):
-    pass
-
-
 class PensionExpensesProps(ComponentProps):
     pass
 
@@ -269,14 +265,6 @@ class LandingPageProps(ComponentPlausibleProps):
 
 
 class NewsletterSuccessPageProps(ComponentProps):
-    pass
-
-
-class FreeTaxDeclarationForPensionersProps(ComponentPlausibleProps):
-    pass
-
-
-class MandateForTaxDeclarationProps(ComponentPlausibleProps):
     pass
 
 

@@ -31,8 +31,7 @@ from app.data_access.storage.session_storage import SessionStorage
 from app.data_access.storage.configuration_storage import ConfigurationStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template, \
     render_react_landing_page_template
-from app.model.components import InfoTaxReturnForPensionersProps, FreeTaxDeclarationForPensionersProps, \
-    NewsletterSuccessPageProps, MandateForTaxDeclarationProps
+from app.model.components import NewsletterSuccessPageProps
 from app.model.components import MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
@@ -401,13 +400,6 @@ def register_request_handlers(app):
                          attachment_filename='STL-Flyer_A6-doppelseitig.pdf',
                          as_attachment=True)
 
-    @app.route('/vereinfachte-steuererklärung-für-rentner', methods=['GET'])
-    @add_caching_headers
-    def infotax():
-        return render_react_content_page_template(
-            props=InfoTaxReturnForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
-            component='InfoTaxReturnForPensionersPage')
-
     @app.route('/vorbereiten/vorsorgeaufwendungen', methods=['GET'])
     @add_caching_headers
     def vorbereiten_pension_expenses_info():
@@ -512,22 +504,6 @@ def register_request_handlers(app):
         return render_react_template(
             props=NewsletterSuccessPageProps().camelized_dict(),
             component='NewsletterSuccessPage')
-
-    @app.route('/kostenlose-steuererklaerung-rentner', methods=['GET'])
-    @add_caching_headers
-    def free_tax_declaration():
-        return render_react_content_page_template(
-            props=FreeTaxDeclarationForPensionersProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
-            component='FreeTaxDeclarationForPensionersPage', disable_default_title_description_meta_tags=True,
-            header_title=_('freeTaxDeclarationForPensioners.header-title'))
-
-    @app.route('/steuererklärung-eltern-vollmacht', methods=['GET'])
-    @add_caching_headers
-    def mandate_for_tax_declaration():
-        return render_react_content_page_template(
-            props=MandateForTaxDeclarationProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
-            component='MandateForTaxDeclarationPage', disable_default_title_description_meta_tags=True,
-            header_title=_('mandateForTaxDeclaration.header-title'))
 
     @app.route('/ping')
     def ping():

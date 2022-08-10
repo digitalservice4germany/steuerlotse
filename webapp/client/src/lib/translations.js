@@ -245,7 +245,7 @@ const translations = {
     form: {
       title: "Melden Sie sich mit Ihrem Freischaltcode an",
       intro:
-        "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+        "<strong>Die Abgabe der Steuererklärung mit dem Steuerlotsen ist noch bis einschließlich {{dateTwo}} möglich.</strong> Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
     },
     unlockCode: {
       labelText: "Freischaltcode",
@@ -260,9 +260,9 @@ const translations = {
         reasons1:
           "<strong>Ihr Freischaltcode ist nicht korrekt.</strong> Eine Ursache kann die Verwechslung von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer 8 verwechselt werden. <eligibilityLink>Prüfen</eligibilityLink> Sie Ihre Angabe.",
         reasons2:
-          "<strong>Haben Sie sich vor 90 Tagen registriert?</strong> In diesem Fall können Sie sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <registrationLink>Registrieren</registrationLink> Sie sich bitte erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode.",
+          "<strong>Haben Sie sich vor 90 Tagen registriert?</strong> In diesem Fall können Sie sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <registrationLink>Registrieren</registrationLink> Sie sich bitte erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
         reasons3:
-          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> Dann ist Ihr Freischaltcode nicht mehr gültig. Bitte <revocationLink>stornieren</revocationLink> Sie Ihren Freischaltcode und registrieren sich erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode.",
+          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> Dann ist Ihr Freischaltcode nicht mehr gültig. Bitte <revocationLink>stornieren</revocationLink> Sie Ihren Freischaltcode und registrieren sich erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
       },
     },
   },
@@ -297,6 +297,10 @@ const translations = {
     input: {
       intro:
         "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode bei Ihrer Finanzverwaltung. Sie erhalten diesen <bold>mit einem Brief innerhalb von zwei Wochen</bold> nach erfolgreicher Beantragung. Wenn Sie die Zusammenveranlagung nutzen möchten, reicht es aus, wenn sich eine Person registriert.",
+    },
+    shutDown: {
+      title: "Ich möchte mich für die Steuererklärung 2022 registrieren.",
+      text: "Der Steuerlotse als Online-Dienst wird zum 20. Dezember 2022 eingestellt. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls kostenlos eine vereinfachte Steuererklärung für Rentnerinnen und Renter an.",
     },
   },
   newsletter: {
@@ -380,6 +384,11 @@ const translations = {
       heading: "Wir löschen Ihr Nutzerkonto",
       text: "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Wenn Sie unseren Service nächstes Jahr wieder nutzen möchten, können Sie sich einfach erneut registrieren. Haben Sie Ihre Steuererklärung gespeichert? Dann können Sie sich abmelden.",
     },
+    shutDown: {
+      heading: "Der Steuerlotse geht in Rente",
+      text: "Der Steuerlotse als Online-Dienst wird eingestellt. Ihr Nutzerkonto beim Steuerlotsen wird gelöscht. Für Ihre Steuererklärung 2022 können Sie <einfachELSTER>einfachELSTER</einfachELSTER> nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden.",
+      url: "https://einfach.elster.de/erklaerung/ui/",
+    },
   },
   dateField: {
     day: "Tag",
@@ -413,6 +422,8 @@ const translations = {
             textOne:
               "Wenn Sie den Brief erhalten haben und vorbereitet sind, gehen Sie erneut auf steuerlotse-rente.de. Wählen Sie den Menüpunkt „Ihre Steuererklärung“ und melden Sie sich mit Ihrem Freischaltcode an. Nach der Anmeldung können Sie das Steuerformular ausfüllen und verschicken.",
             textTwo:
+              "<strong>Die Abgabe der Steuererklärung mit dem Steuerlotsen ist noch bis einschließlich {{dateTwo}} möglich.</strong> Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
+            textThree:
               "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die <strong>Abgabefrist</strong> der <strong>31. Oktober 2022</strong>. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
           },
         },
@@ -461,7 +472,7 @@ const translations = {
         title: "Stornierung fehlgeschlagen",
         reason: {
           title: "Mögliche Ursachen:",
-          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. <registrationLink>Registrieren</registrationLink> Sie sich, um den Steuerlotsen zu nutzen.",
+          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. <registrationLink>Registrieren</registrationLink> Sie sich, um den Steuerlotsen zu nutzen. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
           two: "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
         },
       },
@@ -1031,13 +1042,6 @@ const translations = {
         url: "/unlock_code_activation/step/data_input?link_overview=False",
       },
     },
-    Deadline: {
-      header: "Abgabefrist: 31. Oktober 2022",
-      noteOne:
-        "Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1.November 2022.",
-      noteTwo:
-        "Die Abgabefrist gilt für Personen, die verpflichtet sind eine Steuererklärung für das Jahr 2021 abzugeben. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
-    },
     Accordion: {
       heading: "Häufige Fragen und Antworten",
       Item1: {
@@ -1060,6 +1064,13 @@ const translations = {
           "Sie erhalten einen Brief mit einem 12-stelligen Freischaltcode.",
         listItem5:
           "Melden Sie sich mit Ihrem Freischaltcode an und füllen Ihre Steuererklärung aus.",
+      },
+      Item3: {
+        title: "Bis wann kann ich die Steuererklärung abgeben?",
+        detail1:
+          "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die Abgabefrist der 31. Oktober 2022. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+        detail2:
+          "<strong>Bis einschließlich {{dateTwo}}</strong> haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine Gültigkeit verlieren kann.",
       },
       Item5: {
         title: "Können wir die Steuererklärung gemeinsam als Paar machen?",
@@ -1413,6 +1424,8 @@ const translations = {
   },
   helpAreaPage: {
     formHeaderTitle: "Hilfebereich",
+    intro:
+      "Mehr Informationen zur Einstellung des Steuerlotsen finden Sie auf der Seite „Ende des Steuerlotsen“.",
     listOfContents: {
       one: "Kann ich den Steuerlotsen nutzen?",
       two: "Brief und Freischaltcode ",
@@ -1531,8 +1544,8 @@ const translations = {
       item1: {
         title: "Abgabefrist",
         detail: {
-          one: "Wenn Sie verpflichtet sind, eine Steuererklärung abzugeben, muss Ihre Einkommensteuererklärung <strong>bis zum 31. Oktober 2022</strong> beim Finanzamt sein. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende.",
-          two: "Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Warten Sie aber lieber nicht allzu lange. Es kann vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag einfordert, wenn Sie sich zu viel Zeit lassen.",
+          one: "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist die Abgabefrist der 31. Oktober 2022. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, muss gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+          two: "<strong>Bis einschließlich 20. Dezember 2022</strong> haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
         },
       },
       item2: {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-08 12:05+0200\n"
+"POT-Creation-Date: 2022-08-09 11:15+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,56 +16,56 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.10.3\n"
 
-#: app/routes.py:76
+#: app/routes.py:75
 msgid "nav.home"
 msgstr "Übersicht"
 
-#: app/routes.py:77
+#: app/routes.py:76
 msgid "nav.how-it-works"
 msgstr "So funktioniert’s"
 
-#: app/routes.py:78
+#: app/routes.py:77
 msgid "nav.eligibility"
 msgstr "Nutzung prüfen"
 
-#: app/routes.py:79
+#: app/routes.py:78
 msgid "nav.register"
 msgstr "Registrieren"
 
-#: app/routes.py:81
+#: app/routes.py:80
 msgid "nav.preparation"
 msgstr "Vorbereiten"
 
-#: app/routes.py:83
+#: app/routes.py:82
 msgid "nav.lotse-form"
 msgstr "Steuererklärung 2021"
 
-#: app/routes.py:85
+#: app/routes.py:84
 msgid "nav.logout"
 msgstr "Abmelden"
 
-#: app/routes.py:89
+#: app/routes.py:88
 msgid "login.not-logged-in-warning"
 msgstr "Sie müssen eingeloggt sein um das zu sehen."
 
-#: app/routes.py:232
+#: app/routes.py:231
 msgid "unlock_code_request.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie sich erneut registrieren möchten?"
 
-#: app/routes.py:233
+#: app/routes.py:232
 msgid "unlock_code_request.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung, wenn"
 " Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie sich erneut "
 "registrieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:276
+#: app/routes.py:275
 msgid "unlock_code_revocation.logged_in.title"
 msgstr "Sind Sie sicher, dass Sie Ihren Freischaltcode stornieren möchten?"
 
-#: app/routes.py:277
+#: app/routes.py:276
 msgid "unlock_code_revocation.logged_in.intro"
 msgstr ""
 "Sie sind bereits angemeldet. Wählen Sie „Zurück zur Steuererklärung“, "
@@ -104,27 +104,19 @@ msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:522
-msgid "freeTaxDeclarationForPensioners.header-title"
-msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
-
-#: app/routes.py:530
-msgid "mandateForTaxDeclaration.header-title"
-msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
-
-#: app/routes.py:546 app/routes.py:576 app/routes.py:583
+#: app/routes.py:515 app/routes.py:545 app/routes.py:552
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:551 app/routes.py:559
+#: app/routes.py:520 app/routes.py:528
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:564
+#: app/routes.py:533
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:570
+#: app/routes.py:539
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -931,10 +923,12 @@ msgstr ""
 "machen."
 
 #: app/forms/steps/eligibility_steps.py:793
+# TODO change date if needed here
 msgid "form.eligibility.result-intro"
 msgstr ""
 "Als Nächstes können Sie Ihre Zugangsdaten zum Steuerlotsen beantragen. "
-"Die Registrierung dauert nur 2 Minuten."
+"Die <strong>Registrierung</strong> ist <strong>noch bis einschließlich "
+"30. November 2022 möglich.</strong>"
 
 #: app/forms/steps/eligibility_steps.py:806
 msgid "form.eligibility.result-note.registration-success"
@@ -5499,4 +5493,10 @@ msgstr "Religion"
 #: app/templates/unlock_code/already_logged_in.html:15
 msgid "form.unlock_code.back-to-lotse"
 msgstr "Zurück zur Steuererklärung"
+
+#~ msgid "freeTaxDeclarationForPensioners.header-title"
+#~ msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
+
+#~ msgid "mandateForTaxDeclaration.header-title"
+#~ msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
 
