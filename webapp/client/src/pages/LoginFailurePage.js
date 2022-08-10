@@ -4,6 +4,7 @@ import { Trans, useTranslation } from "react-i18next";
 import styled from "styled-components";
 import FormFailureHeader from "../components/FormFailureHeader";
 import StepHeaderButtons from "../components/StepHeaderButtons";
+import retirementDates from "../lib/retirementDate";
 
 const FailureReasonsHeadline = styled.h2`
   &.unlock-code-failure-reasons-headline {
@@ -38,6 +39,10 @@ export default function LoginFailurePage({
             // eslint-disable-next-line jsx-a11y/anchor-has-content
             <a href="/unlock_code_request/step/data_input" />
           ),
+        }}
+        values={{
+          dateTwo: retirementDates.dateTwo,
+          dateOne: retirementDates.dateOne,
         }}
       />
     );

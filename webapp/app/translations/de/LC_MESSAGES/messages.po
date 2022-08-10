@@ -923,6 +923,7 @@ msgstr ""
 "machen."
 
 #: app/forms/steps/eligibility_steps.py:793
+# TODO change date if needed here
 msgid "form.eligibility.result-intro"
 msgstr ""
 "Als Nächstes können Sie Ihre Zugangsdaten zum Steuerlotsen beantragen. "

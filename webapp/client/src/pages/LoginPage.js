@@ -9,6 +9,7 @@ import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
 import { toggleManually } from "../lib/helpers";
+import retirementDates from "../lib/retirementDate";
 
 export default function LoginPage({ form, fields }) {
   const { t } = useTranslation();
@@ -36,6 +37,10 @@ export default function LoginPage({ form, fields }) {
               }
             />
           ),
+        }}
+        values={{
+          dateTwo: retirementDates.dateTwo,
+          dateOne: retirementDates.dateOne,
         }}
       />
     );

@@ -1,5 +1,6 @@
 import { t } from "i18next";
 import { Trans } from "react-i18next";
+import retirementDates from "./retirementDate";
 
 function trans(key) {
   return (
@@ -54,6 +55,10 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/sofunktionierts" />
         ),
+      }}
+      values={{
+        dateTwo: retirementDates.dateTwo,
+        dateOne: retirementDates.dateOne,
       }}
     />
   );

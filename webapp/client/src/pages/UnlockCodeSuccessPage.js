@@ -10,6 +10,7 @@ import TwoIcon from "../assets/icons/Icon-2.svg";
 import ThreeIcon from "../assets/icons/Icon-3.svg";
 import NewsletterRegisterBox from "../components/NewsletterRegisterBox";
 import { toggleManually } from "../lib/helpers";
+import retirementDates from "../lib/retirementDate";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
@@ -85,6 +86,10 @@ export default function UnlockCodeSuccessPage({
               }
             />
           ),
+        }}
+        values={{
+          dateTwo: retirementDates.dateTwo,
+          dateOne: retirementDates.dateOne,
         }}
       />
     );
