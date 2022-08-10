@@ -154,9 +154,6 @@ export default function LandingPage({ plausibleDomain }) {
       </LandingPageHeroWrapper>
       <CardsComponent cards={cardsInfo} />
       <AccordionWrapper>
-        <h2>{t("LandingPage.Deadline.header")}</h2>
-        <p>{t("LandingPage.Deadline.noteOne")}</p>
-        <p>{t("LandingPage.Deadline.noteTwo")}</p>
         <AccordionComponent
           title={t("LandingPage.Accordion.heading")}
           items={faqAnchorList}
