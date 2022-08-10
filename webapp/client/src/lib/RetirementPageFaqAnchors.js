@@ -1,7 +1,7 @@
 import { t } from "i18next";
 import { Trans } from "react-i18next";
+import React from "react";
 import retirementDates from "./retirementDate";
-import { toggleManually } from "./helpers";
 
 function trans(key) {
   return (
@@ -33,13 +33,8 @@ function trans(key) {
           <a href="/datenschutz" />
         ),
         validity: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-          <a
-            href="#"
-            onClick={(event) =>
-              toggleManually(event, true, "letterActivationCodeSection", "2")
-            }
-          />
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
+          <a href="/hilfebereich#letterActivationCodeSection-2" />
         ),
       }}
       values={{
@@ -49,6 +44,7 @@ function trans(key) {
     />
   );
 }
+
 const accordionRetirementPage = [
   {
     title: t("retirementPage.accordion.taxReturnDeadline.title"),

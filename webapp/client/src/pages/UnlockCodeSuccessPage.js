@@ -9,7 +9,6 @@ import OneIcon from "../assets/icons/Icon-1.svg";
 import TwoIcon from "../assets/icons/Icon-2.svg";
 import ThreeIcon from "../assets/icons/Icon-3.svg";
 import NewsletterRegisterBox from "../components/NewsletterRegisterBox";
-import { toggleManually } from "../lib/helpers";
 import retirementDates from "../lib/retirementDate";
 
 export default function UnlockCodeSuccessPage({
@@ -78,13 +77,8 @@ export default function UnlockCodeSuccessPage({
             <a href="/vorbereiten" rel="noreferrer" target="_blank" />
           ),
           validity: (
-            // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-            <a
-              href="#"
-              onClick={(event) =>
-                toggleManually(event, true, "letterActivationCodeSection", "2")
-              }
-            />
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/hilfebereich#letterActivationCodeSection-2" />
           ),
         }}
         values={{

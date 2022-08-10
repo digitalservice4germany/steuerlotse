@@ -1,7 +1,12 @@
 import { t } from "i18next";
 import { Trans } from "react-i18next";
 import React from "react";
-import { toggleManually } from "./helpers";
+
+function toggleManually(event, section, elementIndex) {
+  event.preventDefault();
+  window.location = `#${section}`;
+  document.getElementById(`button-${section}-${elementIndex}`).click();
+}
 
 function trans(key) {
   return (
@@ -57,11 +62,11 @@ function trans(key) {
           <a href="https://www.bzst.de/SiteGlobals/Kontaktformulare/DE/Steuerliche_IDNr/Mitteilung_IdNr/mitteilung_IdNr_node.html" />
         ),
         validity: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+          // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a
-            href="#"
+            href="/hilfebereich#letterActivationCodeSection-2"
             onClick={(event) =>
-              toggleManually(event, false, "letterActivationCodeSection", "2")
+              toggleManually(event, "letterActivationCodeSection", "2")
             }
           />
         ),

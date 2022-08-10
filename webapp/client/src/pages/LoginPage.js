@@ -8,7 +8,6 @@ import FormRowCentered from "../components/FormRowCentered";
 import StepFormAsync from "../components/StepFormAsync";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import { fieldPropType } from "../lib/propTypes";
-import { toggleManually } from "../lib/helpers";
 import retirementDates from "../lib/retirementDate";
 
 export default function LoginPage({ form, fields }) {
@@ -29,13 +28,8 @@ export default function LoginPage({ form, fields }) {
             />
           ),
           validity: (
-            // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-            <a
-              href="#"
-              onClick={(event) =>
-                toggleManually(event, true, "letterActivationCodeSection", "2")
-              }
-            />
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/hilfebereich#letterActivationCodeSection-2" />
           ),
         }}
         values={{

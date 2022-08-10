@@ -10,13 +10,3 @@ export default function addPlausibleGoal(plausibleDomain, name, props) {
     window.plausible(name, props);
   }
 }
-
-export function toggleManually(event, moveToNewPage, section, elementIndex) {
-  event.preventDefault();
-  if (moveToNewPage) {
-    window.location = `/hilfebereich#${section}-${elementIndex}`;
-  } else {
-    window.location = `#${section}`;
-    document.getElementById(`button-${section}-${elementIndex}`).click();
-  }
-}
