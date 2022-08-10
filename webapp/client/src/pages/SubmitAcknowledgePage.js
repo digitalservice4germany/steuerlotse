@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import StepHeaderButtons from "../components/StepHeaderButtons";
 import FormSuccessHeader from "../components/FormSuccessHeader";
 import AnchorButton from "../components/AnchorButton";
@@ -27,6 +27,23 @@ export default function SubmitAcknowledgePage({ prevUrl, logoutUrl }) {
       </p>
       <h2 className="h4 mt-5">{t("submitAcknowledge.logout.heading")}</h2>
       <p className="mb-5">{t("submitAcknowledge.logout.text")}</p>
+      <h2 className="h4 mt-5">{t("submitAcknowledge.shutDown.heading")}</h2>
+      <p className="mb-5">
+        <Trans
+          t={t}
+          i18nKey="submitAcknowledge.shutDown.text"
+          components={{
+            einfachELSTER: (
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
+              <a
+                href={t("submitAcknowledge.shutDown.url")}
+                rel="noreferrer"
+                target="_blank"
+              />
+            ),
+          }}
+        />
+      </p>
       <AnchorButton
         url={logoutUrl}
         text={t("form.logout.button")}
