@@ -98,15 +98,12 @@ export default function CallToActionBox({
 
 CallToActionBox.propTypes = {
   headline: PropTypes.string,
-  anchor: PropTypes.shape({
-    url: PropTypes.string,
-    text: PropTypes.string,
-  }),
+  anchor: PropTypes.string,
   plausibleDomain: PropTypes.string,
   plausibleGoal: PropTypes.string,
   variant: PropTypes.string,
   buttonText: PropTypes.string,
-  colorVariant: PropTypes.string,
+  colorVariant: PropTypes.bool,
   multipleButtons: PropTypes.bool,
   firstButtonText: PropTypes.string,
   secondButtonText: PropTypes.string,

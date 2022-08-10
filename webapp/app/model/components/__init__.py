@@ -274,3 +274,6 @@ class HowItWorksPageProps(ComponentPlausibleProps):
 
 class HelpAreaPageProps(ComponentPlausibleProps):
     pass
+
+class RetirementPageProps(ComponentPlausibleProps):
+    pass

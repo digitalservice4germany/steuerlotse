@@ -72,35 +72,35 @@ msgstr ""
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:289 app/routes.py:524
+#: app/routes.py:290 app/routes.py:555
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:330
+#: app/routes.py:338
 msgid "contact.header-title"
 msgstr "Kontakt - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:337
+#: app/routes.py:345
 msgid "imprint.header-title"
 msgstr "Impressum - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:344
+#: app/routes.py:352
 msgid "barrierefreiheit.header-title"
 msgstr "Barrierefreiheit - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:351
+#: app/routes.py:359
 msgid "data_privacy.header-title"
 msgstr "Datenschutz - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:358
+#: app/routes.py:366
 msgid "agb.header-title"
 msgstr "Nutzungsbedingungen - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:364
+#: app/routes.py:372
 msgid "about.header-title"
 msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:369
+#: app/routes.py:377
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
@@ -3168,25 +3168,29 @@ msgstr "Kontakt und Feedback"
 msgid "footer.revocation"
 msgstr "Freischaltcode stornieren"
 
-#: app/templates/basis/footer.html:15
+#: app/templates/basis/footer.html:13
+msgid "footer.retirement"
+msgstr "Ende des Steuerlotsen"
+
+#: app/templates/basis/footer.html:16
 msgid "footer.online-service-ds"
 msgstr ""
 "Ein Online Dienst des <a "
 "href=\"https://digitalservice.bund.de/\">DigitalService</a>"
 
-#: app/templates/basis/footer.html:24
+#: app/templates/basis/footer.html:25
 msgid "footer.data-privacy"
 msgstr "Datenschutzerklärung"
 
-#: app/templates/basis/footer.html:25
+#: app/templates/basis/footer.html:26
 msgid "footer.agb"
 msgstr "Nutzungsbedingungen"
 
-#: app/templates/basis/footer.html:26
+#: app/templates/basis/footer.html:27
 msgid "footer.impressum"
 msgstr "Impressum"
 
-#: app/templates/basis/footer.html:27
+#: app/templates/basis/footer.html:28
 msgid "footer.accessibility"
 msgstr "Erklärung zur Barrierefreiheit"
 

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import FormHeader from "../components/FormHeader";
 import {
   accordionCanIUseSection,
@@ -39,14 +39,29 @@ export default function HelpAreaPage({ plausibleDomain }) {
   const { t } = useTranslation();
   const mailto = t("helpAreaPage.mailto");
   const plausiblePropsContactUsButton = {
-    method: "Hilfebereich / Schreiben Sie uns",
+    props: { method: "Hilfebereich / Schreiben Sie uns" },
+  };
+
+  const trans = function translateText(key) {
+    return (
+      <Trans
+        t={t}
+        i18nKey={key}
+        components={{
+          retirementPageLink: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a href="/ende" />
+          ),
+        }}
+      />
+    );
   };
 
   return (
     <>
       <ContentWrapper>
         <FormHeader title={t("helpAreaPage.formHeaderTitle")} />
-        <p>{t("helpAreaPage.intro")}</p>
+        <p>{trans("helpAreaPage.intro")}</p>
         <TableOfContents>
           <Row>
             <Icon src={IconOne} alt="test" />

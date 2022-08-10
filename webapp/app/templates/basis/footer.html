@@ -10,6 +10,7 @@
                    {% else %}
                         <a href="{{ url_for('unlock_code_revocation', step='start') }}">{{ _('footer.revocation')}}</a>
                     {% endif %}
+                    <a href="{{ url_for('ende') }}">{{ _('footer.retirement') }}</a>
                 </div>
                 <div class="row">
                     <span class="footer-signature">{{ _('footer.online-service-ds') }}</span>

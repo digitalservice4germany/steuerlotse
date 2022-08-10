@@ -152,12 +152,16 @@ HowItWorksComponent.propTypes = {
     srcSetMobile: PropTypes.string,
     alt: PropTypes.string,
   }),
-  variant: PropTypes.string,
+  variant: PropTypes.bool,
   plausibleDomain: PropTypes.string,
   button: PropTypes.shape({
     url: PropTypes.string,
     plausibleGoal: PropTypes.string,
-    plausibleProps: PropTypes.string,
+    plausibleProps: PropTypes.shape({
+      props: PropTypes.shape({
+        method: PropTypes.string,
+      }),
+    }),
   }),
 };
 

@@ -35,7 +35,7 @@ from app.model.components import NewsletterSuccessPageProps
 from app.model.components import MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
-    VorbereitenInfoProps, LandingPageProps, HowItWorksPageProps, HelpAreaPageProps
+    VorbereitenInfoProps, LandingPageProps, HowItWorksPageProps, HelpAreaPageProps, RetirementPageProps
 
 
 def add_caching_headers(route_handler, minutes=5):
@@ -322,6 +322,13 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=HelpAreaPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='HelpAreaPage')
+    
+    @app.route('/ende')
+    @add_caching_headers
+    def ende():
+        return render_react_content_page_template(
+            props=RetirementPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
+            component='RetirementPage')
 
     @app.route('/kontakt')
     @add_caching_headers
