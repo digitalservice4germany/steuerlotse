@@ -7,7 +7,7 @@ import {
   Headline2,
 } from "../components/ContentPagesGeneralStyling";
 import FormHeader from "../components/FormHeader";
-// import retirementDates from "../lib/retirementDate";
+import retirementDates from "../lib/retirementDate";
 import HowItWorksComponent from "../components/HowItWorksComponent";
 import ButtonAnchor from "../components/ButtonAnchor";
 import OneIcon from "../assets/icons/Icon-1.svg";
@@ -172,11 +172,6 @@ export default function HowItWorksPage({ plausibleDomain }) {
       srcSetDesktop: "../../images/step7.png",
       srcSetMobile: "../../images/step7_mobile.png",
     },
-  };
-
-  const retirementDates = {
-    dateOne: "Bis 30. November 2022",
-    dateTwo: "Bis 20. Dezember 2022",
   };
 
   const newLocal = "https://www.youtube.com/watch?v=vP--fwSWtLE";
