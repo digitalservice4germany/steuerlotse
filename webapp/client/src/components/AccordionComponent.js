@@ -83,7 +83,7 @@ export default function AccordionComponent({
   const [toggle, setToggle] = useState();
 
   useEffect(() => {
-    if (/[0-9]+$/.test(window.location.hash)) {
+    if (window.location.hash.includes("-")) {
       const splitted = window.location.hash.split("-");
       window.location = `${splitted[0]}`;
       document
