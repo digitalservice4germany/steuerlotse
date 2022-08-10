@@ -41,10 +41,12 @@ export default function HelpAreaPage({ plausibleDomain }) {
   const plausiblePropsContactUsButton = {
     method: "Hilfebereich / Schreiben Sie uns",
   };
+
   return (
     <>
       <ContentWrapper>
         <FormHeader title={t("helpAreaPage.formHeaderTitle")} />
+        <p>{t("helpAreaPage.intro")}</p>
         <TableOfContents>
           <Row>
             <Icon src={IconOne} alt="test" />

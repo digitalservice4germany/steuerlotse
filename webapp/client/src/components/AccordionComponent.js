@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { Accordion, Card } from "react-bootstrap";
@@ -32,6 +32,7 @@ const CardHeaderElement = styled.div`
 const ExpandButton = styled.button`
   border: 0;
   background: inherit;
+
   &:focus {
     outline: 0;
   }
@@ -81,6 +82,16 @@ export default function AccordionComponent({
 }) {
   const [toggle, setToggle] = useState();
 
+  useEffect(() => {
+    if (/[0-9]+$/.test(window.location.hash)) {
+      const splitted = window.location.hash.split("-");
+      window.location = `${splitted[0]}`;
+      document
+        .getElementById(`button-${splitted[0].slice(1)}-${splitted[1]}`)
+        .click();
+    }
+  });
+
   return (
     <>
       {title.length > 0 && (
@@ -106,7 +117,10 @@ export default function AccordionComponent({
                   });
                 }}
               >
-                <ExpandButton className="col text-left">
+                <ExpandButton
+                  className="col text-left"
+                  id={`button-${id}-${index}`}
+                >
                   <CardHeaderSpan>{item.title}</CardHeaderSpan>
                 </ExpandButton>
                 <ExpandButton tabIndex={-1} className="col-1">

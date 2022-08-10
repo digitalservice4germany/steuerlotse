@@ -1,5 +1,7 @@
 import { t } from "i18next";
 import { Trans } from "react-i18next";
+import React from "react";
+import { toggleManually } from "./helpers";
 
 function trans(key) {
   return (
@@ -54,10 +56,20 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://www.bzst.de/SiteGlobals/Kontaktformulare/DE/Steuerliche_IDNr/Mitteilung_IdNr/mitteilung_IdNr_node.html" />
         ),
+        validity: (
+          // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+          <a
+            href="#"
+            onClick={(event) =>
+              toggleManually(event, false, "letterActivationCodeSection", "2")
+            }
+          />
+        ),
       }}
     />
   );
 }
+
 const accordionCanIUseSection = [
   {
     title: t("helpAreaPage.accordionCanIUseSection.item1.title"),

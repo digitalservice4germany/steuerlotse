@@ -58,6 +58,7 @@ function trans(key) {
     />
   );
 }
+
 const faqAnchorList = [
   {
     title: t("LandingPage.Accordion.Item1.title"),
@@ -76,6 +77,15 @@ const faqAnchorList = [
           <li>{t("LandingPage.Accordion.Item2.listItem5")}</li>
         </ul>
         <p>{trans("LandingPage.Accordion.Item2.detail2")}</p>
+      </div>
+    ),
+  },
+  {
+    title: t("LandingPage.Accordion.Item3.title"),
+    detail: (
+      <div>
+        <p>{t("LandingPage.Accordion.Item3.detail1")}</p>
+        <p>{trans("LandingPage.Accordion.Item3.detail2")}</p>
       </div>
     ),
   },

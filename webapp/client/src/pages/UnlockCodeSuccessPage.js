@@ -9,6 +9,7 @@ import OneIcon from "../assets/icons/Icon-1.svg";
 import TwoIcon from "../assets/icons/Icon-2.svg";
 import ThreeIcon from "../assets/icons/Icon-3.svg";
 import NewsletterRegisterBox from "../components/NewsletterRegisterBox";
+import { toggleManually } from "../lib/helpers";
 
 export default function UnlockCodeSuccessPage({
   prevUrl,
@@ -75,6 +76,15 @@ export default function UnlockCodeSuccessPage({
             // eslint-disable-next-line jsx-a11y/anchor-has-content
             <a href="/vorbereiten" rel="noreferrer" target="_blank" />
           ),
+          validity: (
+            // eslint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+            <a
+              href="#"
+              onClick={(event) =>
+                toggleManually(event, true, "letterActivationCodeSection", "2")
+              }
+            />
+          ),
         }}
       />
     );
@@ -86,9 +96,12 @@ export default function UnlockCodeSuccessPage({
       <p>
         {trans("register.success.next-steps.howItContinues.step-3.textTwo")}
       </p>
+      <p>
+        {trans("register.success.next-steps.howItContinues.step-3.textThree")}
+      </p>
     </>
   );
-        
+
   const imageDescription = (
     <>
       <p>
@@ -101,9 +114,9 @@ export default function UnlockCodeSuccessPage({
           "register.success.next-steps.howItContinues.step-2.imageDescriptionTwo"
         )}
       </p>
-      </>
+    </>
   );
-        
+
   return (
     <>
       <StepHeaderButtons url={prevUrl} />
