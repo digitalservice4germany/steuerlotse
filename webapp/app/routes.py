@@ -165,7 +165,7 @@ def register_request_handlers(app):
                 incident_config = ConfigurationStorage.get_incident_configuration()
                 incident_text = incident_config['text'] if incident_config is not None and 'text' in incident_config else None
                 incident_levl = incident_config['category'] if incident_config is not None and 'category' in incident_config else 'warn'
-                
+
                 if incident_text:
                     flash(incident_text, incident_levl)
         except Exception as ex:
@@ -202,6 +202,13 @@ def register_request_handlers(app):
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
     def eligibility(step):
         update_data, form_data = extract_information_from_request()
+
+        if step == "welcome" and request.method == "GET":
+            flash(_('retirement.banner'), 'retirement')
+
+        if step == "tax_year" and request.method == "GET":
+            flash(_('retirement.banner'), 'retirement')
+
         return EligibilityStepChooser(endpoint='eligibility') \
             .get_correct_step(step_name=step, should_update_data=update_data, form_data=form_data) \
             .handle()
@@ -226,6 +233,9 @@ def register_request_handlers(app):
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
     def unlock_code_request(step='start'):
+        if step == "data_input":
+            flash(_('retirement.banner'), 'retirement')
+
         if current_user.is_authenticated:
             return render_template('unlock_code/already_logged_in.html',
                                    title=_('unlock_code_request.logged_in.title'),
@@ -240,6 +250,8 @@ def register_request_handlers(app):
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
     def unlock_code_activation(step='start'):
+        if step == "data_input":
+            flash(_('retirement.banner'), 'retirement')
         # NOTE: If you want to redirect to the protected page, use the url_param next with validating that it is an
         # internal site
         if current_user.is_active:
@@ -270,6 +282,9 @@ def register_request_handlers(app):
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
     def unlock_code_revocation(step):
+        if step == "data_input":
+            flash(_('retirement.banner'), 'retirement')
+
         if current_user.is_authenticated:
             return render_template('unlock_code/already_logged_in.html',
                                    title=_('unlock_code_revocation.logged_in.title'),
@@ -305,6 +320,7 @@ def register_request_handlers(app):
     @app.route('/')
     @add_caching_headers
     def index():
+        flash(_('retirement.banner'), 'retirement')
         return render_react_landing_page_template(
             props=LandingPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='LandingPage')
@@ -312,6 +328,7 @@ def register_request_handlers(app):
     @app.route('/sofunktionierts')
     @add_caching_headers
     def howitworks():
+        flash(_('retirement.banner'), 'retirement')
         return render_react_content_page_template(
             props=HowItWorksPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='HowItWorksPage')
@@ -322,7 +339,7 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=HelpAreaPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='HelpAreaPage')
-    
+
     @app.route('/ende')
     @add_caching_headers
     def ende():
@@ -333,6 +350,7 @@ def register_request_handlers(app):
     @app.route('/kontakt')
     @add_caching_headers
     def contact():
+        flash(_('retirement.banner'), 'retirement')
         return render_template('content/contact.html',
                                header_title=_('contact.header-title'),
                                js_needed=False)
@@ -431,6 +449,8 @@ def register_request_handlers(app):
     @app.route('/vorbereiten', methods=['GET'])
     @add_caching_headers
     def vorbereiten():
+        flash(_('retirement.banner'), 'retirement')
+
         return render_react_content_page_template(
             props=VorbereitenInfoProps(
                 angaben_bei_behinderung_url=url_for("vorbereiten_diability_costs_info"),
