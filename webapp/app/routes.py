@@ -203,10 +203,10 @@ def register_request_handlers(app):
     def eligibility(step):
         update_data, form_data = extract_information_from_request()
 
-        if step == "welcome":
+        if step == "welcome" and request.method == "GET":
             flash(_('retirement.banner'), 'retirement')
 
-        if step == "tax_year":
+        if step == "tax_year" and request.method == "GET":
             flash(_('retirement.banner'), 'retirement')
 
         return EligibilityStepChooser(endpoint='eligibility') \
