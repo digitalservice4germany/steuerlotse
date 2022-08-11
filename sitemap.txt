@@ -1,5 +1,4 @@
 https://www.steuerlotse-rente.de/
-https://www.steuerlotse-rente.de/interviews
 https://www.steuerlotse-rente.de/ueber
 https://www.steuerlotse-rente.de/digitalservice
 https://www.steuerlotse-rente.de/download_informationsbroschure_pdf
@@ -7,7 +6,6 @@ https://www.steuerlotse-rente.de/download_steuerlotsen_flyer.pdf
 https://www.steuerlotse-rente.de/sofunktionierts
 https://www.steuerlotse-rente.de/download_preparation
 https://www.steuerlotse-rente.de/kontakt
-https://www.steuerlotse-rente.de/info-angehoerige
 https://www.steuerlotse-rente.de/datenschutz
 https://www.steuerlotse-rente.de/agb
 https://www.steuerlotse-rente.de/impressum
@@ -23,3 +21,4 @@ https://www.steuerlotse-rente.de/vorbereiten/haushaltsnahe-dienstleistungen
 https://www.steuerlotse-rente.de/vorbereiten/handwerkerleistungen
 https://www.steuerlotse-rente.de/vorbereiten/spenden-und-mitgliedsbeitraege
 https://www.steuerlotse-rente.de/vorbereiten/kirchensteuer
+https://www.steuerlotse-rente.de/ende
