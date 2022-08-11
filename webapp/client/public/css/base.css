@@ -516,7 +516,7 @@ img.icon {
 }
 
 .alert-retirement {
-  background-color: #CCDDE4;
+  background-color: var(--blue-100);
   color: black;
 
   font-size: 18px;
