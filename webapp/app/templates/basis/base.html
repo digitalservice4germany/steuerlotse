@@ -44,11 +44,6 @@
         <script>window.plausible = window.plausible || function () {
             (window.plausible.q = window.plausible.q || []).push(arguments)
         }</script>
-        <script>
-            bannerLink = document.getElementById('banner-retirement-link');
-            if(bannerLink)
-                bannerLink.onclick = function() { window.plausible("Retirement banner link " + window.location.pathname); }
-        </script>
     {% endif %}
 </head>
 
@@ -90,7 +85,7 @@
                                 {{ message|safe }}
                             </div>
                             <br>
-                            <a id='banner-retirement-link' href="{{ url_for('ende') }}">Mehr Informationen zum Ende des Steuerlotsen</a>                                
+                            <a id='banner-retirement-link' href="{{ url_for('ende') }}" onclick="window.plausible('Retirement banner link ' + window.location.pathname);">Mehr Informationen zum Ende des Steuerlotsen</a>                                
                         </div>
                     {% else %}
                         <div class="alert alert-warning" role="alert">

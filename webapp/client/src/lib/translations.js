@@ -245,7 +245,7 @@ const translations = {
     form: {
       title: "Melden Sie sich mit Ihrem Freischaltcode an",
       intro:
-        "<strong>Die Abgabe der Steuererklärung mit dem Steuerlotsen ist noch bis einschließlich {{dateTwo}} möglich.</strong> Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
+        "<strong>Die Abgabe der Steuererklärung mit dem Steuerlotsen ist noch bis einschließlich {{dateTwo}} möglich.</strong> <br>Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
     },
     unlockCode: {
       labelText: "Freischaltcode",
