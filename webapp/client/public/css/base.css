@@ -515,6 +515,17 @@ img.icon {
   color: white;
 }
 
+.alert-retirement {
+  background-color: #CCDDE4;
+  color: black;
+
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0px;
+
+}
+
 .form-row {
   margin-left: 0;
 }
