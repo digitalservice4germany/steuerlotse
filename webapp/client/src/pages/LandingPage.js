@@ -131,6 +131,7 @@ export default function LandingPage({ plausibleDomain }) {
             plausibleGoal={t("LandingPage.Hero.plausibleGoal")}
             plausibleDomain={plausibleDomain}
             marginVariant
+            disabled
           >
             {t("LandingPage.Hero.checkUseButton")}
           </ButtonAnchor>
