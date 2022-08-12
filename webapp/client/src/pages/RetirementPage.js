@@ -19,7 +19,7 @@ export default function RetirementPage({ plausibleDomain }) {
         components={{
           blogPostLink: (
             // eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a href="/" />
+            <a href="https://digitalservice.bund.de/blog/steuerlotse-fuer-rente-und-pension-wird-eingestellt" />
           ),
         }}
         values={retirementDates}
