@@ -1020,25 +1020,15 @@ const translations = {
       listItem1: "mit Schritt-für-Schritt-Anleitung",
       listItem2: "kostenlos und ohne ELSTER-Konto",
       listItem3: "schnell und unkompliziert",
-      eligibilityTest:
-        "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?",
-      checkUseButton: "Jetzt prüfen",
       plausibleGoal: "Nutzung prüfen",
     },
     Cards: {
       cardOne: {
-        header: "Herausfinden, ob Sie den Steuerlotsen nutzen können",
-        text: "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die Voraussetzungen für die Nutzung des Steuerlotsen erfüllen.",
-        url: "/eligibility/step/tax_year?link_overview=False",
+        header: "Ich bin neu hier",
+        url: "/ende#retirementSection-1",
       },
       cardTwo: {
-        header: "Registrieren und Freischaltcode beantragen",
-        text: "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung zugeschickt.",
-        url: "/unlock_code_request/step/data_input?link_overview=False",
-      },
-      cardThree: {
-        header: "Mit Freischaltcode anmelden und Steuererklärung machen",
-        text: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
+        header: "Ich habe bereits einen Freischaltcode",
         url: "/unlock_code_activation/step/data_input?link_overview=False",
       },
     },

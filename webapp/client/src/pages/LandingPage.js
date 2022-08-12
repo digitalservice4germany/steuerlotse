@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import AccordionComponent from "../components/AccordionComponent";
 import faqAnchorList from "../lib/faqAnchors";
-import ButtonAnchor from "../components/ButtonAnchor";
 import CardsComponent from "../components/CardsComponent";
 import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
 import CallToActionBox from "../components/CallToActionBox";
@@ -98,18 +97,11 @@ const AccordionWrapper = styled.div`
 const cardsInfo = [
   {
     header: t("LandingPage.Cards.cardOne.header"),
-    text: t("LandingPage.Cards.cardOne.text"),
     url: t("LandingPage.Cards.cardOne.url"),
   },
   {
     header: t("LandingPage.Cards.cardTwo.header"),
-    text: t("LandingPage.Cards.cardTwo.text"),
     url: t("LandingPage.Cards.cardTwo.url"),
-  },
-  {
-    header: t("LandingPage.Cards.cardThree.header"),
-    text: t("LandingPage.Cards.cardThree.text"),
-    url: t("LandingPage.Cards.cardThree.url"),
   },
 ];
 
@@ -125,15 +117,6 @@ export default function LandingPage({ plausibleDomain }) {
             <li>{t("LandingPage.Hero.listItem2")}</li>
             <li>{t("LandingPage.Hero.listItem3")}</li>
           </ul>
-          <p>{t("LandingPage.Hero.eligibilityTest")}</p>
-          <ButtonAnchor
-            url="/eligibility/step/first_input_step"
-            plausibleGoal={t("LandingPage.Hero.plausibleGoal")}
-            plausibleDomain={plausibleDomain}
-            marginVariant
-          >
-            {t("LandingPage.Hero.checkUseButton")}
-          </ButtonAnchor>
         </LandingPageHeroContentWrapper>
         <Figure>
           <picture>
