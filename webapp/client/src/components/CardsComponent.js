@@ -29,8 +29,8 @@ const Card = styled.a`
   height: 100%;
   text-decoration: none;
   color: black;
-  width: 33.33%;
-  min-height: 450px;
+  width: 50%;
+  min-height: 227px;
   position: relative;
 
   @media (max-width: 767px) {
