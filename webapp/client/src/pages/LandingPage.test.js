@@ -50,6 +50,6 @@ describe("Landing Page", () => {
   it("should render the Accordion component", () => {
     setup();
 
-    expect(screen.getByText("Accordion Component")).toBeInTheDocument();
+    expect(screen.queryByText("Accordion Component")).not.toBeInTheDocument();
   });
 });
