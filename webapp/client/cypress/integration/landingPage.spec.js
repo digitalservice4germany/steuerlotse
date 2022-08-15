@@ -19,4 +19,16 @@ describe("Landing page", () => {
     // Should redirect to retirement page
     cy.url().should("include", "/unlock_code_activation/step/data_input");
   });
+
+  it("eligibility process should be disabled", () => {
+    cy.get("span")
+      .contains(/^Nutzung prüfen$/)
+      .should("have.class", "inactive");
+  });
+
+  it("registration should be disabled", () => {
+    cy.get("span")
+      .contains(/^Registrieren$/)
+      .should("have.class", "inactive");
+  });
 });

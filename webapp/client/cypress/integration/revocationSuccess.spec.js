@@ -9,9 +9,9 @@ describe("Revocation Success", () => {
     cy.url().should("include", "/unlock_code_revocation/step/data_input");
   });
 
-  it("links forward to registration input page", () => {
+  it("links forward to start page", () => {
     cy.get("a").contains("Weiter").click();
 
-    cy.url().should("include", "/unlock_code_request/step/data_input");
+    cy.url().should("eq", Cypress.config().baseUrl + "/");
   });
 });
