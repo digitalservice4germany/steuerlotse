@@ -24,10 +24,6 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerliche_Themengebiete/Altersvorsorge/2019-04-29-Laendervordruck-vereinfachte-veranlagung-rentner.html" />
         ),
-        howItWorksLink: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a href="/sofunktionierts" />
-        ),
         dataPrivacyLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/datenschutz" />
@@ -52,7 +48,12 @@ const accordionRetirementPage = [
   },
   {
     title: t("retirementPage.accordion.file2021TaxReturn.title"),
-    detail: trans("retirementPage.accordion.file2021TaxReturn.detail"),
+    detail: (
+      <div>
+        <p>{trans("retirementPage.accordion.file2021TaxReturn.detailOne")}</p>
+        <p>{trans("retirementPage.accordion.file2021TaxReturn.detailTwo")}</p>
+      </div>
+    ),
   },
   {
     title: t("retirementPage.accordion.file2022Registration.title"),

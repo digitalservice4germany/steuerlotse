@@ -260,9 +260,9 @@ const translations = {
         reasons1:
           "<strong>Ihr Freischaltcode ist nicht korrekt.</strong> Eine Ursache kann die Verwechslung von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer 8 verwechselt werden. <eligibilityLink>Prüfen</eligibilityLink> Sie Ihre Angabe.",
         reasons2:
-          "<strong>Haben Sie sich vor 90 Tagen registriert?</strong> In diesem Fall können Sie sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <registrationLink>Registrieren</registrationLink> Sie sich bitte erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
+          "<strong>Ihre Registrierung liegt mehr als 90 Tage zurück.</strong> In diesem Fall ist Ihr Freischaltcode nicht mehr gültig und Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben",
         reasons3:
-          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> Dann ist Ihr Freischaltcode nicht mehr gültig. Bitte <revocationLink>stornieren</revocationLink> Sie Ihren Freischaltcode und registrieren sich erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
+          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> In diesem Fall ist Ihr Freischaltcode nicht mehr gültig und Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
       },
     },
   },
@@ -472,7 +472,7 @@ const translations = {
         title: "Stornierung fehlgeschlagen",
         reason: {
           title: "Mögliche Ursachen:",
-          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. <registrationLink>Registrieren</registrationLink> Sie sich, um den Steuerlotsen zu nutzen. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
+          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
           two: "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
         },
       },
@@ -1635,8 +1635,10 @@ const translations = {
       file2021TaxReturn: {
         title:
           "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
-        detail:
-          "Bis einschließlich {{dateOne}} können Sie sich noch beim Steuerlotsen registrieren, sofern Sie die Voraussetzungen zur Nutzung erfüllen. Nach der Registrierung erhalten Sie einen Brief mir Ihrem Freischaltcode zur Anmeldung.  Mehr Informationen zum Ablauf finden Sie auf der Seite <howItWorksLink>„So funktioniert’s“</howItWorksLink>.",
+        detailOne:
+          "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich. einfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+        detailTwo:
+          "Daneben stehen Ihnen noch das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
       },
       file2022Registration: {
         title:

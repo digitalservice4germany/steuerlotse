@@ -1,5 +1,4 @@
 from app.model.components.helpers import form_fields_dict
-from flask import url_for
 from flask_babel import _
 from flask_babel import lazy_gettext as _l
 from flask_wtf.csrf import generate_csrf
@@ -63,9 +62,7 @@ class UnlockCodeActivationFailureStep(DisplayStep):
             step_header={
                 'title': self.title,
             },
-            prev_url=render_info.prev_url,
-            registration_link=url_for('unlock_code_request', step='start'),
-            revocation_link=url_for('unlock_code_revocation', step='start'),
+            prev_url=render_info.prev_url
         )
 
         return render_react_template(

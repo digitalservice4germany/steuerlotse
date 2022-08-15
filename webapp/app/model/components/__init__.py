@@ -82,8 +82,7 @@ class LogoutProps(ComponentProps):
 
 
 class LoginFailureProps(StepDisplayProps):
-    registration_link: str
-    revocation_link: str
+    pass
 
 
 class RegistrationProps(StepFormProps):
