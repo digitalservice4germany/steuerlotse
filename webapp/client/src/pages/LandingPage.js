@@ -2,10 +2,7 @@ import React from "react";
 import { t } from "i18next";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import AccordionComponent from "../components/AccordionComponent";
-import faqAnchorList from "../lib/faqAnchors";
 import CardsComponent from "../components/CardsComponent";
-import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
 import CallToActionBox from "../components/CallToActionBox";
 
 const LandingPageHeroWrapper = styled.div`
@@ -79,21 +76,6 @@ const Figure = styled.div`
   }
 `;
 
-const AccordionWrapper = styled.div`
-  width: 60%;
-  margin: var(--spacing-11) auto;
-
-  & h2 {
-    margin-bottom: var(--spacing-03);
-    font-size: var(--text-3xl);
-  }
-
-  @media (max-width: 767px) {
-    width: 100%;
-    padding: 0 15px;
-  }
-`;
-
 const cardsInfo = [
   {
     header: t("LandingPage.Cards.cardOne.header"),
@@ -136,13 +118,6 @@ export default function LandingPage({ plausibleDomain }) {
         </Figure>
       </LandingPageHeroWrapper>
       <CardsComponent cards={cardsInfo} />
-      <AccordionWrapper>
-        <AccordionComponent
-          title={t("LandingPage.Accordion.heading")}
-          items={faqAnchorList}
-          variant
-        />
-      </AccordionWrapper>
       <CallToActionBox
         colorVariant
         multipleButtons
@@ -158,7 +133,6 @@ export default function LandingPage({ plausibleDomain }) {
         secondButtonPlausibleGoal="Zum Hilfebereich"
         secondButtonPlausibleProps="Start / Zum Hilfebereich"
       />
-      <InfoBoxGrundsteuer />
     </div>
   );
 }
