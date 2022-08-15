@@ -1,7 +1,6 @@
 import { t } from "i18next";
 import { Trans } from "react-i18next";
 import React from "react";
-import DisabledLink from "../components/DisableLink";
 
 function toggleManually(event, section, elementIndex) {
   event.preventDefault();
@@ -18,10 +17,6 @@ function trans(key) {
         // eslint-disable-next-line jsx-a11y/anchor-has-content
         downloadPreparationLink: <a href="/download_preparation" />,
 
-        eligibilityLink: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <DisabledLink href="/eligibility/step/tax_year?link_overview=False" />
-        ),
         registrationLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/unlock_code_request/step/data_input?link_overview=False" />
