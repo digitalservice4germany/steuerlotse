@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-11 09:48+0200\n"
+"POT-Creation-Date: 2022-08-15 14:01+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -55,10 +55,9 @@ msgstr "Sie müssen eingeloggt sein um das zu sehen."
 #: app/routes.py:452
 msgid "retirement.banner"
 msgstr ""
-"<strong>Der Steuerlotse geht in Rente.</strong> Sie können sich noch bis "
-"einschließlich 30. November 2022 registrieren und einen Freischaltcode "
-"für die Abgabe Ihrer Steuererklärung 2021 beantragen. Die Abgabe der "
-"Steuererklärung ist bis einschließlich 20. Dezember 2022 möglich."
+"<strong>Der Steuerlotse geht in Rente.</strong> Die Abgabe der "
+"Steuererklärung 2021 ist noch bis einschließlich 20. Dezember 2022 "
+"möglich. Die Registrierung für neue Nutzer:innen ist nicht mehr möglich."
 
 #: app/routes.py:241
 msgid "unlock_code_request.logged_in.title"
@@ -3125,7 +3124,7 @@ msgstr "Weitere Informationen"
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
-#: app/templates/basis/base.html:107 app/templates/error/erica_error.html:8
+#: app/templates/basis/base.html:102 app/templates/error/erica_error.html:8
 #: app/templates/macros.html:7
 msgid "form.back"
 msgstr "Zurück"
@@ -3158,7 +3157,7 @@ msgstr "Fehler: "
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/templates/basis/base.html:57
+#: app/templates/basis/base.html:52
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
