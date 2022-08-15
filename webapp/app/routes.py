@@ -57,10 +57,12 @@ def add_caching_headers(route_handler, minutes=5):
 
 class SteuerlotseNavItem(nav.Item):
 
-    def __init__(self, label, endpoint, params, matching_endpoint_prefixes=None, deactivate_when_logged_in=False):
+    def __init__(self, label, endpoint, params, matching_endpoint_prefixes=None, deactivate_when_logged_in=False,
+                 disable_route=False):
         super(SteuerlotseNavItem, self).__init__(label, endpoint, params)
         self.matching_endpoint_prefixes = matching_endpoint_prefixes if matching_endpoint_prefixes else [endpoint]
         self.deactivate_when_logged_in = deactivate_when_logged_in
+        self.disable_route = disable_route
 
     @property
     def is_current(self):
@@ -68,15 +70,16 @@ class SteuerlotseNavItem(nav.Item):
 
     @property
     def is_active(self):
-        return not self.deactivate_when_logged_in or (current_user and not current_user.is_authenticated)
+        return (not self.deactivate_when_logged_in or (
+                    current_user and not current_user.is_authenticated)) and not self.disable_route
 
 
 nav.Bar('top', [
     SteuerlotseNavItem(_l('nav.home'), 'index', {}),
     SteuerlotseNavItem(_l('nav.how-it-works'), 'howitworks', {}),
-    SteuerlotseNavItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'}),
+    SteuerlotseNavItem(_l('nav.eligibility'), 'eligibility', {'step': 'start'}, disable_route=True),
     SteuerlotseNavItem(_l('nav.register'), 'unlock_code_request', {},
-                       deactivate_when_logged_in=True),
+                       deactivate_when_logged_in=True, disable_route=True),
     SteuerlotseNavItem(_l('nav.preparation'), 'vorbereiten', {},
                        matching_endpoint_prefixes=['vorbereiten']),
     SteuerlotseNavItem(_l('nav.lotse-form'), 'unlock_code_activation', {},
@@ -163,8 +166,10 @@ def register_request_handlers(app):
         try:
             if response.status_code == 200:
                 incident_config = ConfigurationStorage.get_incident_configuration()
-                incident_text = incident_config['text'] if incident_config is not None and 'text' in incident_config else None
-                incident_levl = incident_config['category'] if incident_config is not None and 'category' in incident_config else 'warn'
+                incident_text = incident_config[
+                    'text'] if incident_config is not None and 'text' in incident_config else None
+                incident_levl = incident_config[
+                    'category'] if incident_config is not None and 'category' in incident_config else 'warn'
 
                 if incident_text:
                     flash(incident_text, incident_levl)
@@ -199,7 +204,14 @@ def register_request_handlers(app):
         )
         return response
 
+    def disable_route(f):
+        @wraps(f)
+        def wrap(*args, **kwargs):
+            return redirect("/")
+        return wrap
+
     @app.route('/eligibility/step/<step>', methods=['GET', 'POST'])
+    @disable_route
     def eligibility(step):
         update_data, form_data = extract_information_from_request()
 
@@ -232,6 +244,7 @@ def register_request_handlers(app):
     @app.route('/unlock_code_request/step/<step>', methods=['GET', 'POST'])
     @limiter.limit('15 per minute', methods=['POST'])
     @limiter.limit('1000 per day', methods=['POST'])
+    @disable_route
     def unlock_code_request(step='start'):
         if step == "data_input":
             flash(_('retirement.banner'), 'retirement')

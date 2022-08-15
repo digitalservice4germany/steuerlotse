@@ -160,6 +160,13 @@ const Button = styled.button`
   &:focus {
     outline: none;
   }
+
+  ${({ disabled }) =>
+    disabled &&
+    `
+       pointer-events: none;
+       cursor: default;
+  `}
 `;
 const AnchorButtonText = styled.span`
   padding: 0 4px;
@@ -277,13 +284,6 @@ export default function ButtonAnchor({
     return "button";
   };
 
-  const isDisabled = () => {
-    if (!url) {
-      return disabled;
-    }
-    return undefined;
-  };
-
   const rel = () => {
     if (url && !download) {
       return relation;
@@ -297,7 +297,7 @@ export default function ButtonAnchor({
       className={className}
       href={url}
       variant={variant}
-      disabled={isDisabled()}
+      disabled={disabled}
       name={name}
       download={download}
       external={external}

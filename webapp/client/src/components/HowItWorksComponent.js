@@ -131,6 +131,7 @@ export default function HowItWorksComponent({
                   plausibleGoal={t("howItWorksPage.startButton.plausibleGoal")}
                   plausibleProps={plausiblePropsEligibilityStartButton}
                   plausibleDomain={plausibleDomain}
+                  disabled
                 >
                   {t("howItWorksPage.startButton.text")}
                 </ButtonAnchor>

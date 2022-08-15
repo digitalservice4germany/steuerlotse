@@ -13,7 +13,7 @@ _JSON_RESPONSES_PATH = "tests/app/elster_client/json_responses"
 _PYERIC_API_BASE_URL_01 = Config.ERICA_BASE_URL if Config.ERICA_BASE_URL == 'ERICA' else Config.ERICA_BASE_URL[
                                                                                          :-2] + "01"
 _PYERIC_API_BASE_URL_02 = Config.ERICA_BASE_URL if Config.ERICA_BASE_URL == 'ERICA' else Config.ERICA_BASE_URL[
-                                                                                         :-2] + "02"
+                                                                                         :-2] + "v2"
 _EST_KEYS = ['est_data', 'meta_data']
 _REQUIRED_FORM_KEYS_WITH_STEUERNUMMER = ["steuernummer", "bundesland", "familienstand", "person_a_idnr", "person_a_dob",
                                          "person_a_last_name", "person_a_first_name", "person_a_religion",
@@ -75,7 +75,8 @@ class MockErica:
                 response = MockErica.validate_est(sent_data, include_elster_responses)
             elif args[0] == _PYERIC_API_BASE_URL_01 + '/address':
                 response = MockErica.get_address_data(sent_data, include_elster_responses)
-            elif args[0] == _PYERIC_API_BASE_URL_01 + '/tax_offices':
+            elif (args[0] == _PYERIC_API_BASE_URL_01 + '/tax_offices') or (
+                    args[0] == _PYERIC_API_BASE_URL_02 + '/tax_offices'):
                 response = MockErica.get_tax_offices()
             elif MockErica._is_valid_uuid(args[0][args[0].rindex("/") + 1:]):
                 url_without_uuid = args[0][:args[0].rindex("/")]

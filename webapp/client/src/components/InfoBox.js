@@ -70,7 +70,9 @@ export default function InfoBox({ boxHeadline, boxText, anchor }) {
         <TextBox className="info-box__text">
           <BoxHeadline>{boxHeadline}</BoxHeadline>
           <BoxText>{boxText}</BoxText>
-          <ButtonAnchor url={anchor.url}>{anchor.text}</ButtonAnchor>
+          <ButtonAnchor url={anchor.url} disabled>
+            {anchor.text}
+          </ButtonAnchor>
         </TextBox>
         <Figure className="info-box__figure">
           <picture>

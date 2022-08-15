@@ -32,13 +32,13 @@ describe("Landing Page", () => {
     const text = screen.getByText(
       "Mit dem Steuerlotsen können Sie Ihre Steuererklärung für das Steuerjahr 2021 einfach und ohne besonderes Vorwissen online machen."
     );
-    const text2 = screen.getByText(
+    const text2 = screen.queryByText(
       "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?"
     );
 
     expect(headline).toBeInTheDocument();
     expect(text).toBeInTheDocument();
-    expect(text2).toBeInTheDocument();
+    expect(text2).not.toBeInTheDocument();
   });
 
   it("should render the Cards component", () => {
@@ -50,6 +50,6 @@ describe("Landing Page", () => {
   it("should render the Accordion component", () => {
     setup();
 
-    expect(screen.getByText("Accordion Component")).toBeInTheDocument();
+    expect(screen.queryByText("Accordion Component")).not.toBeInTheDocument();
   });
 });
