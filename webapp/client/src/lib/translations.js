@@ -1627,43 +1627,43 @@ const translations = {
     },
     accordion: {
       heading: "Häufig gestellte Fragen",
-      taxReturnDeadline: {
-        title: "Bis wann kann ich meine Steuererklärung abgeben?",
-        detail:
-          "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
-      },
-      file2021TaxReturn: {
-        title:
-          "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
-        detailOne:
-          "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich. einfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
-        detailTwo:
-          "Daneben stehen Ihnen noch das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
-      },
-      file2022Registration: {
-        title:
-          "Ich möchte mich schon für meine Steuererklärung 2022 registrieren.",
-        detail:
-          "Der Steuerlotse wird eingestellt und kann nicht für die Steuererklärung 2022 genutzt werden. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
-      },
-      alternatives: {
-        title: "Welche Alternativen zum Steuerlosten habe ich?",
-        detailOne:
-          "EinfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. EinfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de.</einfachElsterLink>",
-        detailTwo:
-          "Daneben stehen Ihnen noch <simplifiedPaperFormLink>das vereinfachte Papierformular</simplifiedPaperFormLink>  (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
-      },
-      whatHappensToData: {
-        title:
-          "Was passiert mit meinen Daten nach der Einstellung des Steuerlotsen?",
-        detailOne:
-          "Alle Steuererklärungen, die Sie über den Steuerlotsen bis einschließlich {{dateTwo}} abgeben, werden regulär an Ihr zuständiges Finanzamt übermittelt und dort weiter verarbeitet.",
-        detailTwo:
-          "Der Steuerlotse speichert Ihre Angaben nur für 10 Minuten nach dem Verschicken der Steuererklärung, um Ihnen eine Zusammenfassung der übermittelten Daten bereitzustellen. Danach wird Ihr Konto mit Ihren Daten gelöscht gemäß Art. 5 der Datenschutz-Grundverordnung (DSGVO).",
-        detailThre:
-          "Die Daten aller Nutzenden, die sich registriert, aber keine Steuererklärung mit dem Steuerlotsen abgeben haben, werden spätestens nach 60 Tagen gelöscht.",
-        detailFour:
-          "Mehr Informationen finden Sie in unser <dataPrivacyLink>Datenschutzerklärung.</dataPrivacyLink>",
+      elements: {
+        taxReturnDeadline: {
+          title: "Bis wann kann ich meine Steuererklärung abgeben?",
+          detail:
+            "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
+        },
+        file2021TaxReturn: {
+          title:
+            "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
+          detail: [
+            "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich. einfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+            "Daneben stehen Ihnen noch das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
+          ],
+        },
+        file2022Registration: {
+          title:
+            "Ich möchte mich schon für meine Steuererklärung 2022 registrieren.",
+          detail:
+            "Der Steuerlotse wird eingestellt und kann nicht für die Steuererklärung 2022 genutzt werden. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+        },
+        alternatives: {
+          title: "Welche Alternativen zum Steuerlosten habe ich?",
+          detail: [
+            "EinfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. EinfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de.</einfachElsterLink>",
+            "Daneben stehen Ihnen noch <simplifiedPaperFormLink>das vereinfachte Papierformular</simplifiedPaperFormLink>  (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
+          ],
+        },
+        whatHappensToData: {
+          title:
+            "Was passiert mit meinen Daten nach der Einstellung des Steuerlotsen?",
+          detail: [
+            "Alle Steuererklärungen, die Sie über den Steuerlotsen bis einschließlich {{dateTwo}} abgeben, werden regulär an Ihr zuständiges Finanzamt übermittelt und dort weiter verarbeitet.",
+            "Der Steuerlotse speichert Ihre Angaben nur für 10 Minuten nach dem Verschicken der Steuererklärung, um Ihnen eine Zusammenfassung der übermittelten Daten bereitzustellen. Danach wird Ihr Konto mit Ihren Daten gelöscht gemäß Art. 5 der Datenschutz-Grundverordnung (DSGVO).",
+            "Die Daten aller Nutzenden, die sich registriert, aber keine Steuererklärung mit dem Steuerlotsen abgeben haben, werden spätestens nach 60 Tagen gelöscht.",
+            "Mehr Informationen finden Sie in unser <dataPrivacyLink>Datenschutzerklärung.</dataPrivacyLink>",
+          ],
+        },
       },
     },
     questionBox: {
