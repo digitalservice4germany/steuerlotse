@@ -255,14 +255,14 @@ const translations = {
       },
     },
     failure: {
+      title: "Anmeldung fehlgeschlagen",
       causes: {
         title: "Mögliche Ursachen",
-        reasons1:
+        reasons: [
           "<strong>Ihr Freischaltcode ist nicht korrekt.</strong> Eine Ursache kann die Verwechslung von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer 8 verwechselt werden. <eligibilityLink>Prüfen</eligibilityLink> Sie Ihre Angabe.",
-        reasons2:
           "<strong>Ihre Registrierung liegt mehr als 90 Tage zurück.</strong> In diesem Fall ist Ihr Freischaltcode nicht mehr gültig und Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben",
-        reasons3:
           "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> In diesem Fall ist Ihr Freischaltcode nicht mehr gültig und Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
+        ],
       },
     },
   },
@@ -466,15 +466,16 @@ const translations = {
       },
     },
   },
+
   revocation: {
     failure: {
-      header: {
-        title: "Stornierung fehlgeschlagen",
-        reason: {
-          title: "Mögliche Ursachen:",
-          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
-          two: "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
-        },
+      title: "Stornierung fehlgeschlagen",
+      causes: {
+        title: "Mögliche Ursachen:",
+        reasons: [
+          "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
+          "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
+        ],
       },
     },
   },

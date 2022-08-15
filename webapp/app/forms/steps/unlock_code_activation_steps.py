@@ -59,9 +59,6 @@ class UnlockCodeActivationFailureStep(DisplayStep):
 
     def render(self, data, render_info):
         props_model = LoginFailureProps(
-            step_header={
-                'title': self.title,
-            },
             prev_url=render_info.prev_url
         )
 

@@ -81,8 +81,8 @@ class LogoutProps(ComponentProps):
     form: FormPropsNoOverview
 
 
-class LoginFailureProps(StepDisplayProps):
-    pass
+class LoginFailureProps(ComponentProps):
+    prev_url: Optional[str]
 
 
 class RegistrationProps(StepFormProps):
