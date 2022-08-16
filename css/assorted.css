@@ -322,7 +322,7 @@
 }
 
 span.nav-link.inactive, span.inactive {
-  color: var(--secondary-text-color);
+  color: var(--grey-500);
   cursor: default;
 }
 
