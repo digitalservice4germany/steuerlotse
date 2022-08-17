@@ -5287,15 +5287,15 @@ msgstr "So funktionierts"
 
 #: app/templates/eligibility/display_success.html:58
 msgid "tracking.eligibility.help_page.success.goal"
-msgstr "Zum Hilfebereich"
+msgstr "zum Hilfebereich"
 
 #: app/templates/eligibility/display_success.html:59
 msgid "tracking.eligibility.success.how_it_works_button.method"
-msgstr "Eligibility / So funktionierts"
+msgstr "Eligibility success"
 
 #: app/templates/eligibility/display_success.html:60
 msgid "tracking.eligibility.success.help_page_button.method"
-msgstr "Eligibility / Zum Hilfebereich"
+msgstr "Eligibility success"
 
 #: app/templates/eligibility/form_marital_status_input.html:7
 msgid "eligibility.marital_status.widowed_note"

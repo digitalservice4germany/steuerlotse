@@ -39,7 +39,7 @@ export default function HelpAreaPage({ plausibleDomain }) {
   const { t } = useTranslation();
   const mailto = t("helpAreaPage.mailto");
   const plausiblePropsContactUsButton = {
-    props: { method: "Hilfebereich / Schreiben Sie uns" },
+    method: "Hilfebereich / Schreiben Sie uns",
   };
 
   const trans = function translateText(key) {
@@ -93,24 +93,28 @@ export default function HelpAreaPage({ plausibleDomain }) {
           items={accordionCanIUseSection}
           variant="marginTop"
           id="accordionCanIUseSection"
+          plausibleDomain={plausibleDomain}
         />
         <AccordionComponent
           title={t("helpAreaPage.letterActivationCodeSection.heading")}
           items={letterActivationCodeSection}
           variant="marginTop"
           id="letterActivationCodeSection"
+          plausibleDomain={plausibleDomain}
         />
         <AccordionComponent
           title={t("helpAreaPage.submitTaxReturnSection.heading")}
           items={submitTaxReturnSection}
           variant="marginTop"
           id="submitTaxReturnSection"
+          plausibleDomain={plausibleDomain}
         />
         <AccordionComponent
           title={t("helpAreaPage.afterSubmissionSection.heading")}
           items={afterSubmissionSection}
           variant="marginTop"
           id="afterSubmissionSection"
+          plausibleDomain={plausibleDomain}
         />
       </ContentWrapper>
       <CallToActionBox

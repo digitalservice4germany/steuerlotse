@@ -1410,7 +1410,7 @@ const translations = {
     questionInfoBox: {
       heading: "Haben Sie noch Fragen?",
       button: "Zum Hilfebereich",
-      plausibleGoal: "Sofunktionierts",
+      plausibleGoal: "zum Hilfebereich",
     },
   },
   helpAreaPage: {

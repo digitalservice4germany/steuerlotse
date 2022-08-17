@@ -466,6 +466,7 @@ def register_request_handlers(app):
 
         return render_react_content_page_template(
             props=VorbereitenInfoProps(
+                plausible_domain=Config.PLAUSIBLE_DOMAIN,
                 angaben_bei_behinderung_url=url_for("vorbereiten_diability_costs_info"),
                 bestattungskosten_url=url_for("vorbereiten_funeral_expenses_info"),
                 download_preparation_link=url_for("download_preparation"),

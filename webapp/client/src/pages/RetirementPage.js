@@ -11,6 +11,10 @@ import retirementDates from "../lib/retirementDate";
 export default function RetirementPage({ plausibleDomain }) {
   const { t } = useTranslation();
 
+  const plausibleMethodRetirement = {
+    method: "retirement",
+  };
+
   function trans(key) {
     return (
       <Trans
@@ -46,6 +50,7 @@ export default function RetirementPage({ plausibleDomain }) {
           items={accordionRetirementPage}
           variant="marginTop"
           id="retirementSection"
+          plausibleDomain={plausibleDomain}
         />
       </ContentWrapper>
 
@@ -57,11 +62,11 @@ export default function RetirementPage({ plausibleDomain }) {
         firstButtonText={t("retirementPage.questionBox.howItWorksButton.text")}
         firstButtonUrl="/sofunktionierts"
         firstButtonPlausibleGoal="So funktionierts"
-        firstButtonPlausibleProps="Ende / So funktionierts"
+        firstButtonPlausibleProps={plausibleMethodRetirement}
         secondButtonText={t("retirementPage.questionBox.helpButton.text")}
         secondButtonUrl="/hilfebereich"
-        secondButtonPlausibleGoal="Zum Hilfebereich"
-        secondButtonPlausibleProps="Ende / Zum Hilfebereich"
+        secondButtonPlausibleGoal="zum Hilfebereich"
+        secondButtonPlausibleProps={plausibleMethodRetirement}
       />
     </>
   );
