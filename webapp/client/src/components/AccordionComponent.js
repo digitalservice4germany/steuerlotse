@@ -118,13 +118,9 @@ export default function AccordionComponent({
                   if (toggle === index) setToggle(-1);
                   else {
                     setToggle(index);
-                    addPlausibleGoal(
-                      plausibleDomain,
-                      { title },
-                      {
-                        props: { method: `${item.title}` },
-                      }
-                    );
+                    addPlausibleGoal(plausibleDomain, `Accordion: ${title}`, {
+                      props: { method: `${item.title}` },
+                    });
                   }
                 }}
               >
