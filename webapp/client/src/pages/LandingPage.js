@@ -114,6 +114,10 @@ const cardsInfo = [
 ];
 
 export default function LandingPage({ plausibleDomain }) {
+  const plausibleMethodStart = {
+    method: "start",
+  };
+
   return (
     <div>
       <LandingPageHeroWrapper>
@@ -169,11 +173,11 @@ export default function LandingPage({ plausibleDomain }) {
         firstButtonText={t("LandingPage.cta.howItWorksButtonText")}
         firstButtonUrl="/sofunktionierts"
         firstButtonPlausibleGoal="So funktionierts"
-        firstButtonPlausibleProps="Start / So funktionierts"
+        firstButtonPlausibleProps={plausibleMethodStart}
         secondButtonText={t("howItWorksPage.questionInfoBox.button")}
         secondButtonUrl="/hilfebereich"
-        secondButtonPlausibleGoal="Zum Hilfebereich"
-        secondButtonPlausibleProps="Start / Zum Hilfebereich"
+        secondButtonPlausibleGoal="zum Hilfebereich"
+        secondButtonPlausibleProps={plausibleMethodStart}
       />
       <InfoBoxGrundsteuer />
     </div>

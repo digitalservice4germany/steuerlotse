@@ -39,7 +39,7 @@ export default function HelpAreaPage({ plausibleDomain }) {
   const { t } = useTranslation();
   const mailto = t("helpAreaPage.mailto");
   const plausiblePropsContactUsButton = {
-    props: { method: "Hilfebereich / Schreiben Sie uns" },
+    method: "Hilfebereich / Schreiben Sie uns",
   };
 
   const trans = function translateText(key) {

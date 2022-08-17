@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-11 09:48+0200\n"
+"POT-Creation-Date: 2022-08-17 11:43+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: app/routes.py:75
 msgid "nav.home"
@@ -3125,7 +3125,7 @@ msgstr "Weitere Informationen"
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
-#: app/templates/basis/base.html:107 app/templates/error/erica_error.html:8
+#: app/templates/basis/base.html:102 app/templates/error/erica_error.html:8
 #: app/templates/macros.html:7
 msgid "form.back"
 msgstr "Zurück"
@@ -3158,7 +3158,7 @@ msgstr "Fehler: "
 msgid "page.title"
 msgstr "Der Steuerlotse für Rente und Pension"
 
-#: app/templates/basis/base.html:57
+#: app/templates/basis/base.html:52
 msgid "skip-to-content-link"
 msgstr "Direkt zum Seiteninhalt"
 
@@ -5288,7 +5288,7 @@ msgstr "So funktionierts"
 
 #: app/templates/eligibility/display_success.html:58
 msgid "tracking.eligibility.help_page.success.goal"
-msgstr "Zum Hilfebereich"
+msgstr "zum Hilfebereich"
 
 #: app/templates/eligibility/display_success.html:59
 msgid "tracking.eligibility.success.how_it_works_button.method"
@@ -5296,7 +5296,7 @@ msgstr "Eligibility / So funktionierts"
 
 #: app/templates/eligibility/display_success.html:60
 msgid "tracking.eligibility.success.help_page_button.method"
-msgstr "Eligibility / Zum Hilfebereich"
+msgstr "Eligibility success"
 
 #: app/templates/eligibility/form_marital_status_input.html:7
 msgid "eligibility.marital_status.widowed_note"

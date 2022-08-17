@@ -116,10 +116,16 @@ export default function AccordionComponent({
                 eventKey={`${index}`}
                 onClick={() => {
                   if (toggle === index) setToggle(-1);
-                  else setToggle(index);
-                  addPlausibleGoal(plausibleDomain, `${item.title}`, {
-                    props: { method: `Hilfebereich / ${item.title}` },
-                  });
+                  else {
+                    setToggle(index);
+                    addPlausibleGoal(
+                      plausibleDomain,
+                      { title },
+                      {
+                        props: { method: `${item.title}` },
+                      }
+                    );
+                  }
                 }}
               >
                 <ExpandButton

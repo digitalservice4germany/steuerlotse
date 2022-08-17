@@ -110,9 +110,9 @@ CallToActionBox.propTypes = {
   secondButtonUrl: PropTypes.string,
   firstButtonUrl: PropTypes.string,
   firstButtonPlausibleGoal: PropTypes.string,
-  firstButtonPlausibleProps: PropTypes.string,
+  firstButtonPlausibleProps: PropTypes.shape({ method: PropTypes.string }),
   secondButtonPlausibleGoal: PropTypes.string,
-  secondButtonPlausibleProps: PropTypes.string,
+  secondButtonPlausibleProps: PropTypes.shape({ method: PropTypes.string }),
   plausibleProps: PropTypes.shape({ method: PropTypes.string }),
 };
 
