@@ -197,4 +197,9 @@ VorbereitenOverviewPage.propTypes = {
   handwerkerleistungenUrl: PropTypes.string.isRequired,
   spendenUndMitgliedsbeitraegeUrl: PropTypes.string.isRequired,
   kirchensteuerUrl: PropTypes.string.isRequired,
+  plausibleDomain: PropTypes.string,
+};
+
+VorbereitenOverviewPage.defaultProps = {
+  plausibleDomain: undefined,
 };
