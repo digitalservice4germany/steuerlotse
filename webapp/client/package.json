@@ -33,7 +33,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^11.16.9",
     "react-imask": "^6.4.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-social-icons": "^5.13.0",
     "react-spinners": "^0.13.3",
     "styled-components": "^5.3.5"
