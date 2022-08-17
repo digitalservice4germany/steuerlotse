@@ -162,6 +162,7 @@ export default function LandingPage({ plausibleDomain }) {
           title={t("LandingPage.Accordion.heading")}
           items={faqAnchorList}
           variant
+          plausibleDomain={plausibleDomain}
         />
       </AccordionWrapper>
       <CallToActionBox

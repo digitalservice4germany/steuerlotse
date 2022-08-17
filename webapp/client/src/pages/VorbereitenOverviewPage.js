@@ -58,6 +58,7 @@ export default function VorbereitenOverviewPage({
   handwerkerleistungenUrl,
   spendenUndMitgliedsbeitraegeUrl,
   kirchensteuerUrl,
+  plausibleDomain,
 }) {
   const { Text } = ButtonAnchor;
   const translateText = function translateText(key) {
@@ -118,6 +119,7 @@ export default function VorbereitenOverviewPage({
               detail: t("vorbereitenOverview.Accordion.Item5.detail"),
             },
           ]}
+          plausibleDomain={plausibleDomain}
         />
         <Headline2>{t("vorbereitenOverview.Paragraph3.heading")}</Headline2>
         <Paragraph>{t("vorbereitenOverview.Paragraph3.text")}</Paragraph>
