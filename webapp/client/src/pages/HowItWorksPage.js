@@ -239,14 +239,14 @@ export default function HowItWorksPage({ plausibleDomain }) {
           heading={StepOne.heading}
           icon={StepOne.icon}
           image={StepOne.image}
-          deadline={retirementDates.dateOne}
+          deadline={`Bis ${retirementDates.dateOne}`}
         />
         <HowItWorksComponent
           heading={StepTwo.heading}
           text={StepTwo.text}
           icon={StepTwo.icon}
           image={StepTwo.image}
-          deadline={retirementDates.dateOne}
+          deadline={`Bis ${retirementDates.dateOne}`}
         />
         <HowItWorksComponent
           heading={StepThree.heading}
@@ -265,14 +265,14 @@ export default function HowItWorksPage({ plausibleDomain }) {
           text={StepFive.text}
           icon={StepFive.icon}
           image={StepFive.image}
-          deadline={retirementDates.dateTwo}
+          deadline={`Bis ${retirementDates.dateTwo}`}
         />
         <HowItWorksComponent
           heading={StepSix.heading}
           text={StepSix.text}
           icon={StepSix.icon}
           image={StepSix.image}
-          deadline={retirementDates.dateTwo}
+          deadline={`Bis ${retirementDates.dateTwo}`}
         />
         <HowItWorksComponent
           heading={StepSeven.heading}
@@ -281,7 +281,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
           image={StepSeven.image}
           variant
           button={startButton}
-          deadline={retirementDates.dateTwo}
+          deadline={`Bis ${retirementDates.dateTwo}`}
         />
         <Div>
           <ButtonAnchor

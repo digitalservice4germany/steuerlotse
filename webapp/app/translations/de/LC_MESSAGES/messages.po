@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-15 14:01+0200\n"
+"POT-Creation-Date: 2022-08-17 15:26+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -81,7 +81,7 @@ msgstr ""
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:317 app/routes.py:564
+#: app/routes.py:317 app/routes.py:565
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
@@ -113,19 +113,19 @@ msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:555 app/routes.py:585 app/routes.py:592
+#: app/routes.py:556 app/routes.py:586 app/routes.py:593
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:560 app/routes.py:568
+#: app/routes.py:561 app/routes.py:569
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:573
+#: app/routes.py:574
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:579
+#: app/routes.py:580
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -986,21 +986,21 @@ msgstr "Infos zur Abmeldung - Der Steuerlotse für Rente und Pension"
 
 #: app/forms/steps/lotse/personal_data.py:207
 #: app/forms/steps/lotse/personal_data.py:306
-#: app/forms/steps/unlock_code_activation_steps.py:20
+#: app/forms/steps/unlock_code_activation_steps.py:19
 #: app/forms/steps/unlock_code_request_steps.py:23
 #: app/forms/steps/unlock_code_revocation_steps.py:22
 msgid "validate.missing-idnr"
 msgstr "Geben Sie Ihre Steuer-Identifikationsnummer ein."
 
-#: app/forms/steps/unlock_code_activation_steps.py:21
+#: app/forms/steps/unlock_code_activation_steps.py:20
 msgid "validate.unlock-code-required"
 msgstr "Geben Sie Ihren Freischaltcode ein. "
 
-#: app/forms/steps/unlock_code_activation_steps.py:25
+#: app/forms/steps/unlock_code_activation_steps.py:24
 msgid "form.unlock-code-activation.input-title"
 msgstr "Melden Sie sich mit Ihrem Freischaltcode an"
 
-#: app/forms/steps/unlock_code_activation_steps.py:26
+#: app/forms/steps/unlock_code_activation_steps.py:25
 msgid "form.unlock-code-activation.input-intro"
 msgstr ""
 "Wenn Sie verpflichtet sind eine Steuererklärung für 2021 abzugeben, ist "
@@ -1010,12 +1010,12 @@ msgstr ""
 "einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen "
 "Verspätungszuschlag erhebt."
 
-#: app/forms/steps/unlock_code_activation_steps.py:29
-#: app/forms/steps/unlock_code_activation_steps.py:74
+#: app/forms/steps/unlock_code_activation_steps.py:28
+#: app/forms/steps/unlock_code_activation_steps.py:68
 msgid "form.unlock-code-activation.header-title"
 msgstr "Anmelden - Der Steuerlotse für Rente und Pension"
 
-#: app/forms/steps/unlock_code_activation_steps.py:59
+#: app/forms/steps/unlock_code_activation_steps.py:58
 msgid "form.unlock-code-activation.failure-title"
 msgstr "Anmeldung fehlgeschlagen"
 
