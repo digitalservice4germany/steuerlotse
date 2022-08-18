@@ -214,7 +214,7 @@ class FuneralExpensesInfoPageProps(ComponentProps):
     pass
 
 
-class VorbereitenInfoProps(ComponentProps):
+class VorbereitenInfoProps(ComponentPlausibleProps):
     download_preparation_link: str
     vorsorgeaufwendungen_url: str
     krankheitskosten_url: str

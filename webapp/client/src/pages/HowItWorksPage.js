@@ -180,8 +180,8 @@ export default function HowItWorksPage({ plausibleDomain }) {
   const plausiblePropsEligibilityStartButton = {
     method: "Sofunktionierts / CTA Jetzt starten",
   };
-  const plausiblePropsHelpPageButton = {
-    method: "Sofunktionierts / Zum Hilfebereich",
+  const plausibleMethodHowItWorks = {
+    method: "Sofunktionierts",
   };
   const startButton = {
     url: "/eligibility/step/welcome?link_overview=False",
@@ -289,7 +289,7 @@ export default function HowItWorksPage({ plausibleDomain }) {
         variant="outline"
         anchor="/hilfebereich"
         plausibleGoal={t("howItWorksPage.questionInfoBox.plausibleGoal")}
-        plausibleProps={plausiblePropsHelpPageButton}
+        plausibleProps={plausibleMethodHowItWorks}
         plausibleDomain={plausibleDomain}
         buttonText={t("howItWorksPage.questionInfoBox.button")}
       />
