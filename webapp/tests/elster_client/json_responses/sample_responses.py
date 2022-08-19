@@ -196,7 +196,7 @@ def get_json_response(keyword, idnr=None, elster_request_id=None):
     if keyword == 'unlock_code_revocation_no_resp':
         return {
             "transferticket": "et036422myggf53jxax8uy92dmvkete8",
-            "elsterRequestId": elster_request_id,
+            "taxIdNumber": "0123456789",
         }
     if keyword == 'unlock_code_revocation_with_resp':
         return {

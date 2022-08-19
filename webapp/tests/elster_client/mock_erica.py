@@ -232,11 +232,9 @@ class MockErica:
 
         # Successful case
         if idnr_exists:
-            elster_request_id_for_revocation = gen_random_key()
             MockErica.available_idnrs = [idnr for idnr in MockErica.available_idnrs if
                                          idnr[0] != input_data.get('tax_id_number')]
-            return get_json_response('unlock_code_revocation_no_resp',
-                                     elster_request_id=elster_request_id_for_revocation)
+            return get_json_response('unlock_code_revocation_no_resp')
 
     @staticmethod
     def get_address_data(input_body, show_response: bool):

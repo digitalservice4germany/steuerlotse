@@ -407,7 +407,7 @@ class TestSendUnlockCodeRevocation(unittest.TestCase):
             actual_returned_json = send_unlock_code_revocation_with_elster(
                 {'idnr': self.new_idnr, 'elster_request_id': self.correct_elster_request_id}, 'IP')
             self.assertIn('transferticket', actual_returned_json)
-            self.assertIn('elsterRequestId', actual_returned_json)
+            self.assertIn('taxIdNumber', actual_returned_json)
 
     def test_if_successful_case_then_generate_audit_log_entry(self):
         with patch('requests.post', side_effect=MockErica.mocked_elster_requests), \
