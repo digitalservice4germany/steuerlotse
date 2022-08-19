@@ -140,7 +140,7 @@ def send_unlock_code_revocation_with_elster(form_data, ip_address):
             'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
     result = _send_job_and_get_result('fsc/revocation', data)
     create_audit_log_entry('unlock_code_revocation_sent',
-                           ip_address, form_data['idnr'],
+                           ip_address, result['taxIdNumber'],
                            result['transferticket'],
                            form_data['elster_request_id'])
     return result
