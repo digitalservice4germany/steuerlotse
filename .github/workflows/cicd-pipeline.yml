@@ -265,7 +265,7 @@ jobs:
   build-staging:
     needs: [unit-test, frontend-test, functional-test]
 
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/before-retirement'
 
     runs-on: ubuntu-latest
 
@@ -298,7 +298,7 @@ jobs:
   deploy-staging:
     needs: [build-staging]
 
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/before-retirement'
 
     runs-on: ubuntu-latest
 
