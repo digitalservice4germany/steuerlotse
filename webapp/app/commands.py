@@ -117,7 +117,6 @@ def _revoke_permission_and_delete_users(users_to_delete, success_message):
                 'elster_request_id': user_to_delete.elster_request_id}
         else:
             form_data = {
-                'idnr': user_to_delete.idnr_hashed,
                 'elster_request_id': user_to_delete.elster_request_id}
         try:
             elster_client.send_unlock_code_revocation_with_elster(form_data, 'CRONJOB-IP')

@@ -94,7 +94,6 @@ def send_est_with_elster(form_data, ip_address, year=VERANLAGUNGSJAHR):
     return _extract_est_response_data_v2(result)
 
 
-
 def validate_est_with_elster(form_data, year=VERANLAGUNGSJAHR, include_elster_responses=True):
     """The overarching method that is being called from the web backend. It
     will send the form data for an ESt to the PyERiC server and then extract information from the response.
@@ -135,7 +134,9 @@ def send_unlock_code_activation_with_elster(form_data, elster_request_id, ip_add
 
 
 def send_unlock_code_revocation_with_elster(form_data, ip_address):
-    data = {'payload': {'tax_id_number': form_data['idnr'], 'elster_request_id': form_data['elster_request_id']},
+    data = {'payload': {'tax_id_number': form_data['idnr'],
+                        'elster_request_id': form_data['elster_request_id']} if 'idnr' in form_data else {
+        'elster_request_id': form_data['elster_request_id']},
             'client_identifier': Config.ERICA_CLIENT_IDENTIFIER}
     result = _send_job_and_get_result('fsc/revocation', data)
     create_audit_log_entry('unlock_code_revocation_sent',

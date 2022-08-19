@@ -213,7 +213,7 @@ class MockErica:
     def revoke_unlock_code(input_data):
 
         # unexpected input data
-        if not input_data.get('tax_id_number') or not input_data.get('elster_request_id'):
+        if not input_data.get('elster_request_id'):
             raise UnexpectedInputDataError()
 
         idnr_exists = False
