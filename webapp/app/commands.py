@@ -9,7 +9,6 @@ from sqlalchemy.exc import IntegrityError
 from app.elster_client.elster_errors import ElsterProcessNotSuccessful, \
     ElsterRequestAlreadyRevoked, ElsterRequestIdUnkownError
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -22,7 +21,7 @@ def populate_database():
 
         if os.environ.get('FLASK_ENV') == 'production':
             logger.warning('Refusing to run populate database cron job on production '
-                            '(would create unwanted users).')
+                           '(would create unwanted users).')
             return
 
         logger.info('Executing populate_database')
@@ -44,6 +43,7 @@ def populate_database():
 
 
 cronjob_cli = AppGroup('cronjob')
+
 
 @cronjob_cli.command('delete_outdated_users')
 def delete_outdated_users():
@@ -106,18 +106,9 @@ def _delete_inactive_users():
 def _revoke_permission_and_delete_users(users_to_delete, success_message):
     from app.extensions import db
     from app.elster_client import elster_client
-    from app.crypto.pw_hashing import global_salt_hash
 
     for user_to_delete in users_to_delete:
-        PRODUCTION_TEST_IDNR = '04452397687'
-        if user_to_delete.idnr_hashed == global_salt_hash().hash(PRODUCTION_TEST_IDNR):
-            # Ensure that testmerker is used to actually revoke the permission
-            form_data = {
-                'idnr': PRODUCTION_TEST_IDNR,
-                'elster_request_id': user_to_delete.elster_request_id}
-        else:
-            form_data = {
-                'elster_request_id': user_to_delete.elster_request_id}
+        form_data = {'elster_request_id': user_to_delete.elster_request_id}
         try:
             elster_client.send_unlock_code_revocation_with_elster(form_data, 'CRONJOB-IP')
             db.session.delete(user_to_delete)
