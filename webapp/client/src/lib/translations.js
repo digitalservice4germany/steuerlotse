@@ -382,11 +382,11 @@ const translations = {
     },
     logout: {
       heading: "Wir löschen Ihr Nutzerkonto",
-      text: "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Wenn Sie unseren Service nächstes Jahr wieder nutzen möchten, können Sie sich einfach erneut registrieren. Haben Sie Ihre Steuererklärung gespeichert? Dann können Sie sich abmelden.",
+      text: "Bitte beachten Sie, dass Sie Ihren Freischaltcode nicht erneut verwenden können. Haben Sie Ihre Steuererklärung gespeichert? Dann können Sie sich abmelden.",
     },
     shutDown: {
-      heading: "Der Steuerlotse geht in Rente",
-      text: "Der Steuerlotse als Online-Dienst wird eingestellt. Ihr Nutzerkonto beim Steuerlotsen wird gelöscht. Für Ihre Steuererklärung 2022 können Sie <einfachELSTER>einfachELSTER</einfachELSTER> nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden.",
+      heading: "Der Steuerlotse wird abgeschaltet",
+      text: "Der Steuerlotse als Online-Dienst wird zum Endes des Jahres abgeschaltet. Für Ihre Steuererklärung für 2022 können Sie im nächsten Jahr <einfachELSTER>einfachELSTER</einfachELSTER> nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden.",
       url: "https://einfach.elster.de/erklaerung/ui/",
     },
   },
@@ -1416,7 +1416,7 @@ const translations = {
   helpAreaPage: {
     formHeaderTitle: "Hilfebereich",
     intro:
-      "Mehr Informationen zur Einstellung des Steuerlotsen finden Sie auf der Seite <retirementPageLink>„Ende des Steuerlotsen“</retirementPageLink>.",
+      "Mehr Informationen zur Abschaltung des Steuerlotsen finden Sie auf der Seite <retirementPageLink>„Ende des Steuerlotsen“</retirementPageLink>.",
     listOfContents: {
       one: "Kann ich den Steuerlotsen nutzen?",
       two: "Brief und Freischaltcode ",
@@ -1610,38 +1610,41 @@ const translations = {
   },
   retirementPage: {
     formHeader: {
-      title: "Der Steuerlotse geht in Rente",
+      title: "Der Steuerlotse wird abgeschaltet",
       introOne:
         "Bis einschließlich {{dateTwo}} ist die Abgabe der Steuererklärung 2021 mit dem Steuerlotsen noch möglich. Die Registrierung für neue Nutzer:innen ist noch bis einschließlich {{dateOne}} möglich.",
       introTwo:
-        "Weitere Hintergründe finden Sie in diesem <blogPostLink>Blogpost</blogPostLink>.",
+        "Weitere Hintergründe, warum der Steuerlotse abgeschaltet wird, finden Sie in diesem <blogPostLink>Artikel</blogPostLink>.",
     },
     accordion: {
       heading: "Häufig gestellte Fragen",
       elements: {
-        taxReturnDeadline: {
-          title: "Bis wann kann ich meine Steuererklärung abgeben?",
-          detail:
-            "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
-        },
         file2021TaxReturn: {
           title:
             "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
           detail: [
-            "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich. einfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+            "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich. <einfachElsterLink>einfachElster</einfachElsterLink> bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlotsen. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden.",
             "Daneben stehen Ihnen noch das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
+          ],
+        },
+        taxReturnDeadline: {
+          title:
+            "Bis wann kann ich meine Steuererklärung mit dem Steuerlotsen abgeben?",
+          detail: [
+            "Wenn Sie verpflichtet sind, eine Steuererklärung für 2021 abzugeben, ist die Abgabefrist der 31. Oktober 2022. Wenn dieser Tag in Ihrem Bundesland ein Feiertag ist, gilt der 1. November 2022 als Fristende. Sie können Ihre Steuererklärung auch nach der Frist noch einreichen. Dann kann es allerdings vorkommen, dass Ihr Finanzamt einen Verspätungszuschlag erhebt.",
+            "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, mit dem Steuerlotsen Ihre Steuererklärung auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
           ],
         },
         file2022Registration: {
           title:
-            "Ich möchte mich schon für meine Steuererklärung 2022 registrieren.",
+            "Ich habe bisher den Steuerlotsen genutzt, was mache ich im nächsten Jahr?",
           detail:
-            "Der Steuerlotse wird eingestellt und kann nicht für die Steuererklärung 2022 genutzt werden. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+            "Der Steuerlotse wird zum Endes des Jahres 2022 abgeschaltet und kann im nächsten Jahr nicht für die Steuererklärung für 2022 genutzt werden. Für die Steuererklärung für 2022 können Sie im nächsten Jahr <einfachElsterLink>einfachELSTER</einfachElsterLink> nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden.",
         },
         alternatives: {
           title: "Welche Alternativen zum Steuerlosten habe ich?",
           detail: [
-            "EinfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. EinfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de.</einfachElsterLink>",
+            "<einfachElsterLink>einfachElster</einfachElsterLink> bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlotsen. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden.",
             "Daneben stehen Ihnen noch <simplifiedPaperFormLink>das vereinfachte Papierformular</simplifiedPaperFormLink>  (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
           ],
         },

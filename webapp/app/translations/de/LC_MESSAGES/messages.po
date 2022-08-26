@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-17 15:26+0200\n"
+"POT-Creation-Date: 2022-08-26 14:13+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -55,9 +55,10 @@ msgstr "Sie müssen eingeloggt sein um das zu sehen."
 #: app/routes.py:465
 msgid "retirement.banner"
 msgstr ""
-"<strong>Der Steuerlotse geht in Rente.</strong> Die Abgabe der "
-"Steuererklärung 2021 ist noch bis einschließlich 20. Dezember 2022 "
-"möglich. Die Registrierung für neue Nutzer:innen ist nicht mehr möglich."
+"<h3>Diese Seite wird bald abgeschaltet.</h3>\n"
+"<ul><li>Die Registrierung für neue Nutzer:innen ist nicht mehr "
+"möglich.</li><li>Die Abgabe der Steuererklärung 2021 mit dem Steuerlotsen"
+" ist noch bis einschließlich 20. Dezember 2022 möglich.</li></ul>"
 
 #: app/routes.py:254
 msgid "unlock_code_request.logged_in.title"
@@ -3124,7 +3125,7 @@ msgstr "Weitere Informationen"
 msgid "button.close.aria-label"
 msgstr "Schließen"
 
-#: app/templates/basis/base.html:102 app/templates/error/erica_error.html:8
+#: app/templates/basis/base.html:101 app/templates/error/erica_error.html:8
 #: app/templates/macros.html:7
 msgid "form.back"
 msgstr "Zurück"
@@ -3225,12 +3226,12 @@ msgid "bmf"
 msgstr "Bundesministerium der Finanzen"
 
 #: app/templates/content/about_digitalservice.html:5
-#: app/templates/content/imprint.html:13
+#: app/templates/content/imprint.html:14
 msgid "about_digitalservice.headline"
 msgstr "Über den Digital Service"
 
 #: app/templates/content/about_digitalservice.html:6
-#: app/templates/content/imprint.html:14
+#: app/templates/content/imprint.html:15
 msgid "about_digitalservice.intro"
 msgstr ""
 "Der DigitalService ist eine Bundes-GmbH. Die Bundesrepublik Deutschland –"
@@ -3238,7 +3239,7 @@ msgstr ""
 "Prozent der Anteile der GmbH."
 
 #: app/templates/content/about_digitalservice.html:9
-#: app/templates/content/imprint.html:15
+#: app/templates/content/imprint.html:16
 msgid "about_digitalservice.aim-text"
 msgstr ""
 "Wir entwickeln Dienstleistungen, die besser für alle funktionieren. "
@@ -4967,48 +4968,56 @@ msgid "imprint.heading"
 msgstr "Impressum"
 
 #: app/templates/content/imprint.html:8
+msgid "imprint.dont-send-post"
+msgstr ""
+"Hinweis: Bitte schicken Sie uns <b>nicht</b> per Post die Anlage "
+"„Freischaltcode zum Datenabruf elektronischer Bescheinigungen“. "
+"Stattdessen nutzen Sie den Freischaltcode bitte zur <a "
+"href=%(link)s>Anmeldung</a>."
+
+#: app/templates/content/imprint.html:9
 msgid "imprint.law-headline"
 msgstr "Angaben gemäß § 5 TMG"
 
-#: app/templates/content/imprint.html:9
+#: app/templates/content/imprint.html:10
 msgid "imprint.operator-text-p1"
 msgstr ""
 "DigitalService GmbH des Bundes<br/>Prinzessinenstraße 8-14<br/>10969 "
 "Berlin<br/>Deutschland"
 
-#: app/templates/content/imprint.html:10
+#: app/templates/content/imprint.html:11
 msgid "imprint.ceo-text"
 msgstr ""
 "Vertreten durch die Geschäftsführung: Frau Christina Lang, Herr Philipp "
 "Moeser"
 
-#: app/templates/content/imprint.html:11
+#: app/templates/content/imprint.html:12
 msgid "imprint.alleingesellschafterin-text"
 msgstr ""
 "Alleingesellschafterin: Bundesrepublik Deutschland, vertreten durch das "
 "Bundeskanzleramt"
 
-#: app/templates/content/imprint.html:12
+#: app/templates/content/imprint.html:13
 msgid "imprint.operator-text-p2"
 msgstr ""
 "Handelsregister-Nummer: HRB 212879 B<br/>Registergericht: Berlin "
 "Charlottenburg<br/>Umsatzsteueridentifikationsnummer: DE327075535"
 
-#: app/templates/content/imprint.html:16
+#: app/templates/content/imprint.html:17
 msgid "imprint.contact-headline"
 msgstr "Kontakt"
 
-#: app/templates/content/imprint.html:17
+#: app/templates/content/imprint.html:18
 msgid "imprint.contact-text-p1"
 msgstr ""
 "E-Mail: <a href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt"
 "@steuerlotse-rente.de</a>"
 
-#: app/templates/content/imprint.html:18
+#: app/templates/content/imprint.html:19
 msgid "imprint.dispute-headline"
 msgstr "Informationspflichten gemäß Art. 14 ODR-VO, § 36 VSBG"
 
-#: app/templates/content/imprint.html:19
+#: app/templates/content/imprint.html:20
 msgid "imprint.dispute-text"
 msgstr ""
 "Die Europäische Kommission stellt eine Plattform zur Online-"
@@ -5020,11 +5029,11 @@ msgstr ""
 "verpflichtet, an Streitbeilegungsverfahren vor einer "
 "Verbraucherschlichtungsstelle teilzunehmen."
 
-#: app/templates/content/imprint.html:20
+#: app/templates/content/imprint.html:21
 msgid "imprint.liability-content-headline"
 msgstr "Haftung für Inhalte"
 
-#: app/templates/content/imprint.html:21
+#: app/templates/content/imprint.html:22
 msgid "imprint.liability-content-text-2"
 msgstr ""
 "Als Diensteanbieter im Sinne von § 2 Nr. 1 TMG sind wir gemäß § 7 Abs. 1 "
@@ -5034,7 +5043,7 @@ msgstr ""
 "nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit "
 "hinweisen."
 
-#: app/templates/content/imprint.html:22
+#: app/templates/content/imprint.html:23
 msgid "imprint.liability-content-text-1"
 msgstr ""
 "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von "
@@ -5044,11 +5053,11 @@ msgstr ""
 "solche Rechtsverletzungen bekannt werden, werden wir die entsprechenden "
 "Inhalte umgehend entfernen."
 
-#: app/templates/content/imprint.html:23
+#: app/templates/content/imprint.html:24
 msgid "imprint.liability-links-headline"
 msgstr "Haftung für Verweise und Links"
 
-#: app/templates/content/imprint.html:24
+#: app/templates/content/imprint.html:25
 msgid "imprint.liability-links-text-p1"
 msgstr ""
 "Unser Angebot enthält Links zu externen Websites Dritter, auf deren "
@@ -5059,7 +5068,7 @@ msgstr ""
 " auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum "
 "Zeitpunkt der Verlinkung nicht erkennbar."
 
-#: app/templates/content/imprint.html:25
+#: app/templates/content/imprint.html:26
 msgid "imprint.liability-links-text-p2"
 msgstr ""
 "Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch "
@@ -5068,11 +5077,11 @@ msgstr ""
 "Seiten bekannt werden, werden wir die entsprechenden Links umgehend "
 "entfernen."
 
-#: app/templates/content/imprint.html:26
+#: app/templates/content/imprint.html:27
 msgid "imprint.copyright-headline"
 msgstr "Urheberrecht"
 
-#: app/templates/content/imprint.html:27
+#: app/templates/content/imprint.html:28
 msgid "imprint.copyright-text-1"
 msgstr ""
 "Die durch uns erstellten Inhalte und Werke auf diesen Seiten unterliegen "
@@ -5082,7 +5091,7 @@ msgstr ""
 "Autor:in bzw. Ersteller:in. Downloads und Kopien dieser Seite sind nur "
 "für den privaten, nicht kommerziellen Gebrauch gestattet."
 
-#: app/templates/content/imprint.html:28
+#: app/templates/content/imprint.html:29
 msgid "imprint.copyright-text-2"
 msgstr ""
 "Soweit die Inhalte auf dieser Seite nicht von uns erstellt wurden, werden"
@@ -5092,11 +5101,11 @@ msgstr ""
 "entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden "
 "wir derartige Inhalte umgehend entfernen."
 
-#: app/templates/content/imprint.html:29
+#: app/templates/content/imprint.html:30
 msgid "imprint.responsible-headline"
 msgstr "Verantwortlich für den Inhalt gemäß § 18 Abs. 2 MStV"
 
-#: app/templates/content/imprint.html:30
+#: app/templates/content/imprint.html:31
 msgid "imprint.responsible-text"
 msgstr ""
 "DigitalService GmbH des Bundes<br/>Frau Christina "

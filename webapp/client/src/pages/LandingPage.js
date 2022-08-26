@@ -62,7 +62,7 @@ const Figure = styled.div`
 
   & img {
     width: 95%;
-    max-height: 650px;
+    max-height: 500px;
     object-fit: contain;
   }
 

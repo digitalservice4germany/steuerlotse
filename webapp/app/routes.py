@@ -349,6 +349,7 @@ def register_request_handlers(app):
     @app.route('/hilfebereich')
     @add_caching_headers
     def helparea():
+        flash(_('retirement.banner'), 'retirement')
         return render_react_content_page_template(
             props=HelpAreaPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='HelpAreaPage')
