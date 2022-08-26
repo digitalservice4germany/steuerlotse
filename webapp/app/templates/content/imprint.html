@@ -5,6 +5,7 @@
     {{ macros.header(title=_('imprint.heading'),
                  hide_intro=True) }}
     <div>
+        <p>{{ _('imprint.dont-send-post', link=url_for('unlock_code_activation', step='data_input'))}}</p>
         <h2 class="pb-1">{{ _('imprint.law-headline') }}</h2>
         <p>{{ _('imprint.operator-text-p1') }}</p>
         <p>{{ _('imprint.ceo-text') }}</p>

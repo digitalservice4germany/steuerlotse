@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-05 14:29+0200\n"
+"POT-Creation-Date: 2022-08-26 10:19+0200\n"
 "PO-Revision-Date: 2020-09-17 11:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.1\n"
+"Generated-By: Babel 2.10.3\n"
 
 #: app/routes.py:76
 msgid "nav.home"
@@ -72,7 +72,7 @@ msgstr ""
 "wenn Sie mit Ihrer Steuererklärung fortfahren möchten. Wenn Sie Ihren "
 "Freischaltcode stornieren möchten, müssen Sie sich zuerst abmelden."
 
-#: app/routes.py:290 app/routes.py:548
+#: app/routes.py:290 app/routes.py:549
 msgid "404.header-title"
 msgstr "Fehler 404 - Der Steuerlotse für Rente und Pension"
 
@@ -104,27 +104,27 @@ msgstr "Projektinfos - Der Steuerlotse für Rente und Pension"
 msgid "about_digitalservice.header-title"
 msgstr "Digital Service - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:515
+#: app/routes.py:516
 msgid "freeTaxDeclarationForPensioners.header-title"
 msgstr "Kostenlose Steuererklärung für Rentner | Steuerlotse Rente"
 
-#: app/routes.py:523
+#: app/routes.py:524
 msgid "mandateForTaxDeclaration.header-title"
 msgstr "Steuererklärung für Eltern machen | Steuerlotse-Rente"
 
-#: app/routes.py:539 app/routes.py:569 app/routes.py:576
+#: app/routes.py:540 app/routes.py:570 app/routes.py:577
 msgid "erica-error.header-title"
 msgstr "Übermittlungsfehler - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:544 app/routes.py:552
+#: app/routes.py:545 app/routes.py:553
 msgid "400.header-title"
 msgstr "Fehler 400 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:557
+#: app/routes.py:558
 msgid "429.header-title"
 msgstr "Fehler 429 - Der Steuerlotse für Rente und Pension"
 
-#: app/routes.py:563
+#: app/routes.py:564
 msgid "500.header-title"
 msgstr "Fehler 500 - Der Steuerlotse für Rente und Pension"
 
@@ -3218,12 +3218,12 @@ msgid "bmf"
 msgstr "Bundesministerium der Finanzen"
 
 #: app/templates/content/about_digitalservice.html:5
-#: app/templates/content/imprint.html:13
+#: app/templates/content/imprint.html:14
 msgid "about_digitalservice.headline"
 msgstr "Über den Digital Service"
 
 #: app/templates/content/about_digitalservice.html:6
-#: app/templates/content/imprint.html:14
+#: app/templates/content/imprint.html:15
 msgid "about_digitalservice.intro"
 msgstr ""
 "Der DigitalService ist eine Bundes-GmbH. Die Bundesrepublik Deutschland –"
@@ -3231,7 +3231,7 @@ msgstr ""
 "Prozent der Anteile der GmbH."
 
 #: app/templates/content/about_digitalservice.html:9
-#: app/templates/content/imprint.html:15
+#: app/templates/content/imprint.html:16
 msgid "about_digitalservice.aim-text"
 msgstr ""
 "Wir entwickeln Dienstleistungen, die besser für alle funktionieren. "
@@ -4960,48 +4960,56 @@ msgid "imprint.heading"
 msgstr "Impressum"
 
 #: app/templates/content/imprint.html:8
+msgid "imprint.dont-send-post"
+msgstr ""
+"Hinweis: Bitte schicken Sie uns <b>nicht</b> per Post die Anlage "
+"„Freischaltcode zum Datenabruf elektronischer Bescheinigungen“. "
+"Stattdessen nutzen Sie den Freischaltcode bitte zur <a "
+"href=%(link)s>Anmeldung</a>."
+
+#: app/templates/content/imprint.html:9
 msgid "imprint.law-headline"
 msgstr "Angaben gemäß § 5 TMG"
 
-#: app/templates/content/imprint.html:9
+#: app/templates/content/imprint.html:10
 msgid "imprint.operator-text-p1"
 msgstr ""
 "DigitalService GmbH des Bundes<br/>Prinzessinenstraße 8-14<br/>10969 "
 "Berlin<br/>Deutschland"
 
-#: app/templates/content/imprint.html:10
+#: app/templates/content/imprint.html:11
 msgid "imprint.ceo-text"
 msgstr ""
 "Vertreten durch die Geschäftsführung: Frau Christina Lang, Herr Philipp "
 "Moeser"
 
-#: app/templates/content/imprint.html:11
+#: app/templates/content/imprint.html:12
 msgid "imprint.alleingesellschafterin-text"
 msgstr ""
 "Alleingesellschafterin: Bundesrepublik Deutschland, vertreten durch das "
 "Bundeskanzleramt"
 
-#: app/templates/content/imprint.html:12
+#: app/templates/content/imprint.html:13
 msgid "imprint.operator-text-p2"
 msgstr ""
 "Handelsregister-Nummer: HRB 212879 B<br/>Registergericht: Berlin "
 "Charlottenburg<br/>Umsatzsteueridentifikationsnummer: DE327075535"
 
-#: app/templates/content/imprint.html:16
+#: app/templates/content/imprint.html:17
 msgid "imprint.contact-headline"
 msgstr "Kontakt"
 
-#: app/templates/content/imprint.html:17
+#: app/templates/content/imprint.html:18
 msgid "imprint.contact-text-p1"
 msgstr ""
 "E-Mail: <a href=\"mailto:kontakt@steuerlotse-rente.de\">kontakt"
 "@steuerlotse-rente.de</a>"
 
-#: app/templates/content/imprint.html:18
+#: app/templates/content/imprint.html:19
 msgid "imprint.dispute-headline"
 msgstr "Informationspflichten gemäß Art. 14 ODR-VO, § 36 VSBG"
 
-#: app/templates/content/imprint.html:19
+#: app/templates/content/imprint.html:20
 msgid "imprint.dispute-text"
 msgstr ""
 "Die Europäische Kommission stellt eine Plattform zur Online-"
@@ -5013,11 +5021,11 @@ msgstr ""
 "verpflichtet, an Streitbeilegungsverfahren vor einer "
 "Verbraucherschlichtungsstelle teilzunehmen."
 
-#: app/templates/content/imprint.html:20
+#: app/templates/content/imprint.html:21
 msgid "imprint.liability-content-headline"
 msgstr "Haftung für Inhalte"
 
-#: app/templates/content/imprint.html:21
+#: app/templates/content/imprint.html:22
 msgid "imprint.liability-content-text-2"
 msgstr ""
 "Als Diensteanbieter im Sinne von § 2 Nr. 1 TMG sind wir gemäß § 7 Abs. 1 "
@@ -5027,7 +5035,7 @@ msgstr ""
 "nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit "
 "hinweisen."
 
-#: app/templates/content/imprint.html:22
+#: app/templates/content/imprint.html:23
 msgid "imprint.liability-content-text-1"
 msgstr ""
 "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von "
@@ -5037,11 +5045,11 @@ msgstr ""
 "solche Rechtsverletzungen bekannt werden, werden wir die entsprechenden "
 "Inhalte umgehend entfernen."
 
-#: app/templates/content/imprint.html:23
+#: app/templates/content/imprint.html:24
 msgid "imprint.liability-links-headline"
 msgstr "Haftung für Verweise und Links"
 
-#: app/templates/content/imprint.html:24
+#: app/templates/content/imprint.html:25
 msgid "imprint.liability-links-text-p1"
 msgstr ""
 "Unser Angebot enthält Links zu externen Websites Dritter, auf deren "
@@ -5052,7 +5060,7 @@ msgstr ""
 " auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum "
 "Zeitpunkt der Verlinkung nicht erkennbar."
 
-#: app/templates/content/imprint.html:25
+#: app/templates/content/imprint.html:26
 msgid "imprint.liability-links-text-p2"
 msgstr ""
 "Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch "
@@ -5061,11 +5069,11 @@ msgstr ""
 "Seiten bekannt werden, werden wir die entsprechenden Links umgehend "
 "entfernen."
 
-#: app/templates/content/imprint.html:26
+#: app/templates/content/imprint.html:27
 msgid "imprint.copyright-headline"
 msgstr "Urheberrecht"
 
-#: app/templates/content/imprint.html:27
+#: app/templates/content/imprint.html:28
 msgid "imprint.copyright-text-1"
 msgstr ""
 "Die durch uns erstellten Inhalte und Werke auf diesen Seiten unterliegen "
@@ -5075,7 +5083,7 @@ msgstr ""
 "Autor:in bzw. Ersteller:in. Downloads und Kopien dieser Seite sind nur "
 "für den privaten, nicht kommerziellen Gebrauch gestattet."
 
-#: app/templates/content/imprint.html:28
+#: app/templates/content/imprint.html:29
 msgid "imprint.copyright-text-2"
 msgstr ""
 "Soweit die Inhalte auf dieser Seite nicht von uns erstellt wurden, werden"
@@ -5085,11 +5093,11 @@ msgstr ""
 "entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden "
 "wir derartige Inhalte umgehend entfernen."
 
-#: app/templates/content/imprint.html:29
+#: app/templates/content/imprint.html:30
 msgid "imprint.responsible-headline"
 msgstr "Verantwortlich für den Inhalt gemäß § 18 Abs. 2 MStV"
 
-#: app/templates/content/imprint.html:30
+#: app/templates/content/imprint.html:31
 msgid "imprint.responsible-text"
 msgstr ""
 "DigitalService GmbH des Bundes<br/>Frau Christina "
