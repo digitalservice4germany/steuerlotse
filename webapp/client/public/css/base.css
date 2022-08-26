@@ -523,8 +523,20 @@ img.icon {
   font-weight: 400;
   line-height: 28px;
   letter-spacing: 0px;
+  margin-bottom: 0px;
 
 }
+
+.alert-retirement h3 {
+  font-size: var(--text-medium-big);
+  font-family: var(--font-bold);
+  margin-bottom: var(--spacing-03);
+}
+
+.alert-retirement ul {
+  padding-inline-start: 25px;
+}
+
 
 .form-row {
   margin-left: 0;

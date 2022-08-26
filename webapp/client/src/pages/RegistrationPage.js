@@ -72,9 +72,6 @@ export default function RegistrationPage({
           />
         }
       />
-      <Details title={t("unlockCodeRequest.shutDown.title")} detailsId="123">
-        <p>{t("unlockCodeRequest.shutDown.text")}</p>
-      </Details>
       <StepFormAsync
         {...form}
         sendDisableCall={sendDisableCall}

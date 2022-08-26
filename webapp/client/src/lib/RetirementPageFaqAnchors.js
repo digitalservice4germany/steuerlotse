@@ -47,19 +47,24 @@ function trans(key) {
 
 const accordionRetirementPage = [
   {
-    title: t("retirementPage.accordion.taxReturnDeadline.title"),
-    detail: trans("retirementPage.accordion.taxReturnDeadline.detail"),
-  },
-  {
     title: t("retirementPage.accordion.file2021TaxReturn.title"),
     detail: trans("retirementPage.accordion.file2021TaxReturn.detail"),
+  },
+  {
+    title: t("retirementPage.accordion.taxReturnDeadline.title"),
+    detail: (
+      <div>
+        <p>{trans("retirementPage.accordion.taxReturnDeadline.detailOne")}</p>
+        <p>{trans("retirementPage.accordion.taxReturnDeadline.detailTwo")}</p>
+      </div>
+    ),
   },
   {
     title: t("retirementPage.accordion.file2022Registration.title"),
     detail: trans("retirementPage.accordion.file2022Registration.detail"),
   },
   {
-    title: t("retirementPage.accordion.file2022Registration.title"),
+    title: t("retirementPage.accordion.alternatives.title"),
     detail: (
       <div>
         <p>{trans("retirementPage.accordion.alternatives.detailOne")}</p>
