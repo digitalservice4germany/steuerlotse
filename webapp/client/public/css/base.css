@@ -525,6 +525,14 @@ img.icon {
   letter-spacing: 0px;
   margin-bottom: 0px;
 
+  padding: 24px 30px 30px 30px;
+
+}
+
+@media (max-width: 768px) {
+  .alert-retirement {
+    padding: 20px 16px 24px 16px;
+  }
 }
 
 .alert-retirement h3 {
