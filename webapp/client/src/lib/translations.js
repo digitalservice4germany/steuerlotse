@@ -1026,7 +1026,7 @@ const translations = {
     Cards: {
       cardOne: {
         header: "Ich bin neu hier",
-        url: "/ende#retirementSection-1",
+        url: "/neuhier",
       },
       cardTwo: {
         header: "Ich habe bereits einen Freischaltcode",
@@ -1669,6 +1669,16 @@ const translations = {
         text: "Zum Hilfebereich",
       },
     },
+  },
+  newHere: {
+    title:
+      "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich.",
+    text1:
+      "einfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlotsen.",
+    button: "Zu einfachELSTER",
+    url: "https://einfach.elster.de/erklaerung/ui/",
+    text2:
+      "Mehr Informationen zur Abschaltung des Steuerlotsen finden Sie auf der Seite <retirementPageLink>„Ende des Steuerlotsen“</retirementPageLink>.",
   },
 };
 

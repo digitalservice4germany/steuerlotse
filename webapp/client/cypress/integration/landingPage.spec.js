@@ -5,7 +5,7 @@ describe("Landing page", () => {
     cy.get("h2").contains("Ich bin neu hier").parent().click();
 
     // Should redirect to retirement page
-    cy.url().should("include", "/ende");
+    cy.url().should("include", "/neuhier");
   });
 
   it("Clicking 2nd box", () => {

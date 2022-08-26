@@ -49,6 +49,7 @@ import NewsletterRegisterBox from "./components/NewsletterRegisterBox";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import HelpAreaPage from "./pages/HelpAreaPage";
 import RetirementPage from "./pages/RetirementPage";
+import NewHerePage from "./pages/NewHerePage";
 
 const allowedComponents = {
   RegistrationPage,
@@ -97,6 +98,7 @@ const allowedComponents = {
   HowItWorksPage,
   HelpAreaPage,
   RetirementPage,
+  NewHerePage,
 };
 
 function mountComponent(element) {

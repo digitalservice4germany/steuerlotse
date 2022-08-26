@@ -25,7 +25,7 @@ describe("Retirement Page", () => {
     setup();
 
     const EXPECTED_HEADER = {
-      title: "Der Steuerlotse geht in Rente",
+      title: "Der Steuerlotse wird abgeschaltet",
     };
 
     const headline = screen.getByText(EXPECTED_HEADER.title);

@@ -31,7 +31,7 @@ from app.data_access.storage.session_storage import SessionStorage
 from app.data_access.storage.configuration_storage import ConfigurationStorage
 from app.templates.react_template import render_react_template, render_react_content_page_template, \
     render_react_landing_page_template
-from app.model.components import NewsletterSuccessPageProps
+from app.model.components import NewsletterSuccessPageProps, NewHerePageProps
 from app.model.components import MedicalExpensesInfoPageProps, PensionExpensesProps, \
     DisabilityCostsInfoProps, CareCostsInfoPageProps, FuneralExpensesInfoPageProps, ReplacementCostsInfoPageProps, \
     HouseholdServicesInfoPageProps, DonationInfoPageProps, ChurchTaxInfoPageProps, CraftsmanServicesInfoPageProps, \
@@ -353,6 +353,13 @@ def register_request_handlers(app):
         return render_react_content_page_template(
             props=HelpAreaPageProps(plausible_domain=Config.PLAUSIBLE_DOMAIN).camelized_dict(),
             component='HelpAreaPage')
+
+    @app.route('/neuhier')
+    @add_caching_headers
+    def newhere():
+        return render_react_template(
+            props=NewHerePageProps().camelized_dict(),
+            component='NewHerePage')
 
     @app.route('/ende')
     @add_caching_headers
