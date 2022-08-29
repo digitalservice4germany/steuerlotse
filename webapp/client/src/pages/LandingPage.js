@@ -27,7 +27,7 @@ const LandingPageHeroContentWrapper = styled.div`
   @media (max-width: 1023px) {
     width: 100%;
     margin-top: var(--spacing-08);
-    margin-bottom: 0;
+    margin-bottom: var(--spacing-06);
 
     p:first-of-type {
       margin-top: 3rem !important;
