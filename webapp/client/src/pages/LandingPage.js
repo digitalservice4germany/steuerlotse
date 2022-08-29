@@ -19,13 +19,19 @@ const LandingPageHeroWrapper = styled.div`
 `;
 
 const LandingPageHeroContentWrapper = styled.div`
-  margin-top: calc(var(--spacing-11) + 1.5rem);
+  margin-top: 5rem;
+  margin-bottom: var(--spacing-08);
   width: 50%;
   padding-right: 4%;
 
   @media (max-width: 1023px) {
     width: 100%;
     margin-top: var(--spacing-08);
+    margin-bottom: 0;
+
+    p:first-of-type {
+      margin-top: 3rem !important;
+    }
   }
 
   @media (max-width: 499px) {
@@ -38,7 +44,7 @@ const LandingPageHeroContentWrapper = styled.div`
   }
 
   & p:first-of-type {
-    margin-top: 3rem;
+    margin-top: var(--spacing-07);
   }
 
   & ul {
@@ -54,25 +60,6 @@ const LandingPageHeroContentWrapper = styled.div`
     margin-top: 1.5rem;
     margin-bottom: 1rem;
     font-family: var(--font-bold);
-  }
-`;
-
-const Figure = styled.div`
-  width: 50%;
-
-  & img {
-    width: 95%;
-    max-height: 500px;
-    object-fit: contain;
-  }
-
-  @media (max-width: 1023px) {
-    width: 100%;
-    margin: var(--spacing-06) 0;
-  }
-
-  @media (max-width: 500px) {
-    display: none;
   }
 `;
 
@@ -104,22 +91,6 @@ export default function LandingPage({ plausibleDomain }) {
             <li>{t("LandingPage.Hero.listItem3")}</li>
           </ul>
         </LandingPageHeroContentWrapper>
-        <Figure>
-          <picture>
-            <source
-              media="(min-width: 1024px)"
-              srcSet="../images/hero-image-big.png"
-            />
-            <source
-              media="(min-width: 320px)"
-              srcSet="../images/hero-image-small.png"
-            />
-            <img
-              src="../images/hero-image-small.png"
-              alt="Bilder von Rentnerinnen und Rentnern beim Ausfüllen ihrer digitalen Steuererklärung."
-            />
-          </picture>
-        </Figure>
       </LandingPageHeroWrapper>
       <CardsComponent cards={cardsInfo} />
       <CallToActionBox
