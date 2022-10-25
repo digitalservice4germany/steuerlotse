@@ -125,7 +125,7 @@ Run database migrations, create test data and translations:
 docker-compose -f docker-compose.development.yml up migrations
 ```
 
-Start frontend storybook client
+Start frontend storybook client:
 
 ```bash
 cd ./webapp/client
