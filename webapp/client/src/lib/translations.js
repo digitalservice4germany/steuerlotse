@@ -1613,8 +1613,6 @@ const translations = {
       title: "Der Steuerlotse wird abgeschaltet",
       introOne:
         "Bis einschließlich {{dateTwo}} ist die Abgabe der Steuererklärung 2021 mit dem Steuerlotsen noch möglich. Die Registrierung für neue Nutzer:innen ist noch bis einschließlich {{dateOne}} möglich.",
-      introTwo:
-        "Weitere Hintergründe, warum der Steuerlotse abgeschaltet wird, finden Sie in diesem <blogPostLink>Artikel</blogPostLink>.",
     },
     accordion: {
       heading: "Häufig gestellte Fragen",
