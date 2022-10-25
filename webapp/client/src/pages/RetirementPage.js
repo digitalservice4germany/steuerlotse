@@ -16,27 +16,10 @@ export default function RetirementPage({ plausibleDomain }) {
   };
 
   function trans(key) {
-    return (
-      <Trans
-        t={t}
-        i18nKey={key}
-        components={{
-          blogPostLink: (
-            // eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a href="https://digitalservice.bund.de/blog/steuerlotse-fuer-rente-und-pension-wird-eingestellt" />
-          ),
-        }}
-        values={retirementDates}
-      />
-    );
+    return <Trans t={t} i18nKey={key} values={retirementDates} />;
   }
 
-  const introText = (
-    <>
-      <p>{trans("retirementPage.formHeader.introOne")}</p>
-      <p>{trans("retirementPage.formHeader.introTwo")}</p>
-    </>
-  );
+  const introText = <p>{trans("retirementPage.formHeader.introOne")}</p>;
 
   return (
     <>
