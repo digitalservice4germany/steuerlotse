@@ -15,7 +15,7 @@ RUN cd ./client && yarn build
 #########
 ### Python image for running webapp and cron jobs
 ######
-FROM python:3.9.13-slim-buster AS base
+FROM python:3.11.0-slim-buster AS base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
