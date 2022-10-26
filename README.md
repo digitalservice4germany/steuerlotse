@@ -1,6 +1,6 @@
 # Steuerlotse
 
-🇬🇧 This is the code repository of the [_Steuerlotse_ ](https://steuerlotse-rente.de) by DigitalService.
+🇬🇧 This is the code repository of the [_Steuerlotse_](https://steuerlotse-rente.de) by DigitalService.
 You can use this code under the terms of the provided license.
 The _Steuerlotse_ is available at: https://steuerlotse-rente.de
 
@@ -11,7 +11,7 @@ As early as 2019, four federal states (Brandenburg, Bremen, Mecklenburg-Western 
 a simplified tax return in paper form for pensioners. Based on the paper form a
 [digital prototype](https://github.com/tech4germany/steuerlotse) was developed as part of the Tech4Germany Fellowship 2020. The fellowship is organized by [DigitalService GmbH des Bundes](https://digitalservice.bund.de).
 
-🇩🇪 Dies ist das Quellcodearchiv des [_Steuerlotse_ ](https://steuerlotse-rente.de) vom DigitalService.
+🇩🇪 Dies ist der Quellcode des [_Steuerlotse_](https://steuerlotse-rente.de) vom DigitalService.
 Du kannst den Code unter den Bedingungen der angegebenen Lizenz nutzen.
 Der _Steuerlotse_ ist verfügbar unter: https://steuerlotse-rente.de
 
