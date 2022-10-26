@@ -25,15 +25,15 @@ Tech4Germany Fellowships 2020, das von der [DigitalService GmbH des Bundes](http
 organisiert wird, von vier Fellows in Kooperation mit dem BMF ein
 [digitaler Prototyp](https://github.com/tech4germany/steuerlotse) entwickelt.
 
+
 ## General remarks
 
 🇬🇧
-The _Steuerlotse_ is actively being further developed. We plan on releasing new features and updates based on user
-research in the future in this repository.
+The _Steuerlotse_ will be shut down by the end of year 2022. For this reason the source code will only be mantained and not actively further developped.
 
 🇩🇪
-Der _Steuerlotse_ wird aktiv weiterentwickelt. Wir planen, in Zukunft neue Funktionen und Updates basierend auf
-Nutzerforschung in diesem Repository zu veröffentlichen.
+Der Steuerlotse wird zum Endes des Jahres 2022 abgeschaltet. Aus diesem Grund wird der Quellcode nur noch gewartet und nicht weiterentwickelt.
+
 
 ## Contributing
 
