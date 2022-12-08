@@ -1,4 +1,4 @@
-FROM python:3.9.13 as webapp
+FROM python:3.12.0a3 as webapp
 
 WORKDIR /app
 
