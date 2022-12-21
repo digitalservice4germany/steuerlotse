@@ -1,5 +1,8 @@
 # Steuerlotse
 
+> **Important**
+**This project has been discontinued**
+
 🇬🇧 This is the code repository of the [_Steuerlotse_ ](https://steuerlotse-rente.de) by DigitalService.
 You can use this code under the terms of the provided license.
 The _Steuerlotse_ is available at: https://steuerlotse-rente.de
