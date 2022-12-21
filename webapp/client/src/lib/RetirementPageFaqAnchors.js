@@ -24,10 +24,6 @@ function trans(key) {
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="https://www.bundesfinanzministerium.de/Content/DE/Standardartikel/Themen/Steuern/Steuerliche_Themengebiete/Altersvorsorge/2019-04-29-Laendervordruck-vereinfachte-veranlagung-rentner.html" />
         ),
-        howItWorksLink: (
-          // eslint-disable-next-line jsx-a11y/anchor-has-content
-          <a href="/sofunktionierts" />
-        ),
         dataPrivacyLink: (
           // eslint-disable-next-line jsx-a11y/anchor-has-content
           <a href="/datenschutz" />
@@ -45,39 +41,28 @@ function trans(key) {
   );
 }
 
-const accordionRetirementPage = [
-  {
-    title: t("retirementPage.accordion.taxReturnDeadline.title"),
-    detail: trans("retirementPage.accordion.taxReturnDeadline.detail"),
-  },
-  {
-    title: t("retirementPage.accordion.file2021TaxReturn.title"),
-    detail: trans("retirementPage.accordion.file2021TaxReturn.detail"),
-  },
-  {
-    title: t("retirementPage.accordion.file2022Registration.title"),
-    detail: trans("retirementPage.accordion.file2022Registration.detail"),
-  },
-  {
-    title: t("retirementPage.accordion.file2022Registration.title"),
+const accordionRetirementPage = Object.keys(
+  t("retirementPage.accordion.elements", { returnObjects: true })
+).map((k) => {
+  const values = t("retirementPage.accordion.elements", {
+    returnObjects: true,
+  })[k];
+  if (typeof values.detail === "string") {
+    return {
+      title: values.title,
+      detail: trans(`retirementPage.accordion.elements.${k}.detail`),
+    };
+  }
+  return {
+    title: values.title,
     detail: (
       <div>
-        <p>{trans("retirementPage.accordion.alternatives.detailOne")}</p>
-        <p>{trans("retirementPage.accordion.alternatives.detailTwo")}</p>
+        {values.detail.map((newk) => (
+          <p>{trans(newk)}</p>
+        ))}
       </div>
     ),
-  },
-  {
-    title: t("retirementPage.accordion.whatHappensToData.title"),
-    detail: (
-      <div>
-        <p>{trans("retirementPage.accordion.whatHappensToData.detailOne")}</p>
-        <p>{t("retirementPage.accordion.whatHappensToData.detailTwo")}</p>
-        <p>{t("retirementPage.accordion.whatHappensToData.detailThre")}</p>
-        <p>{trans("retirementPage.accordion.whatHappensToData.detailFour")}</p>
-      </div>
-    ),
-  },
-];
+  };
+});
 
 export default accordionRetirementPage;

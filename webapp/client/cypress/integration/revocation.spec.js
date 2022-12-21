@@ -50,41 +50,6 @@ describe("Revocation", () => {
     });
   });
 
-  context("with registered tax ID", () => {
-    let idnr = ["09", "953", "674", "813"];
-    let dob = {
-      day: "1",
-      month: "2",
-      year: "1951",
-    };
-
-    beforeEach(() => {
-      cy.register(idnr, dob);
-      cy.visit("/unlock_code_revocation/step/data_input");
-    });
-
-    it("should redirect to success page for correct input", function () {
-      cy.get("input[id=idnr_1]").clear().type(idnr[0]);
-      cy.get("input[id=idnr_2]").clear().type(idnr[1]);
-      cy.get("input[id=idnr_3]").clear().type(idnr[2]);
-      cy.get("input[id=idnr_4]").clear().type(idnr[3]);
-      cy.get("input[id=dob_1]").clear().type(dob.day);
-      cy.get("input[id=dob_2]").clear().type(dob.month);
-      cy.get("input[id=dob_3]")
-        .clear()
-        .type(dob.year + "{enter}");
-
-      // we should be redirected
-      cy.url().should(
-        "include",
-        "/unlock_code_revocation/step/unlock_code_success"
-      );
-
-      // and our cookie should be set
-      cy.getCookie("session").should("exist");
-    });
-  });
-
   context("with unregistered tax ID", () => {
     let idnr = ["08", "842", "569", "173"];
     let dob = {

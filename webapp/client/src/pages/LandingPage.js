@@ -2,11 +2,7 @@ import React from "react";
 import { t } from "i18next";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import AccordionComponent from "../components/AccordionComponent";
-import faqAnchorList from "../lib/faqAnchors";
-import ButtonAnchor from "../components/ButtonAnchor";
 import CardsComponent from "../components/CardsComponent";
-import InfoBoxGrundsteuer from "../components/InfoBoxGrundsteuer";
 import CallToActionBox from "../components/CallToActionBox";
 
 const LandingPageHeroWrapper = styled.div`
@@ -80,36 +76,14 @@ const Figure = styled.div`
   }
 `;
 
-const AccordionWrapper = styled.div`
-  width: 60%;
-  margin: var(--spacing-11) auto;
-
-  & h2 {
-    margin-bottom: var(--spacing-03);
-    font-size: var(--text-3xl);
-  }
-
-  @media (max-width: 767px) {
-    width: 100%;
-    padding: 0 15px;
-  }
-`;
-
 const cardsInfo = [
   {
     header: t("LandingPage.Cards.cardOne.header"),
-    text: t("LandingPage.Cards.cardOne.text"),
     url: t("LandingPage.Cards.cardOne.url"),
   },
   {
     header: t("LandingPage.Cards.cardTwo.header"),
-    text: t("LandingPage.Cards.cardTwo.text"),
     url: t("LandingPage.Cards.cardTwo.url"),
-  },
-  {
-    header: t("LandingPage.Cards.cardThree.header"),
-    text: t("LandingPage.Cards.cardThree.text"),
-    url: t("LandingPage.Cards.cardThree.url"),
   },
 ];
 
@@ -125,15 +99,6 @@ export default function LandingPage({ plausibleDomain }) {
             <li>{t("LandingPage.Hero.listItem2")}</li>
             <li>{t("LandingPage.Hero.listItem3")}</li>
           </ul>
-          <p>{t("LandingPage.Hero.eligibilityTest")}</p>
-          <ButtonAnchor
-            url="/eligibility/step/first_input_step"
-            plausibleGoal={t("LandingPage.Hero.plausibleGoal")}
-            plausibleDomain={plausibleDomain}
-            marginVariant
-          >
-            {t("LandingPage.Hero.checkUseButton")}
-          </ButtonAnchor>
         </LandingPageHeroContentWrapper>
         <Figure>
           <picture>
@@ -153,13 +118,6 @@ export default function LandingPage({ plausibleDomain }) {
         </Figure>
       </LandingPageHeroWrapper>
       <CardsComponent cards={cardsInfo} />
-      <AccordionWrapper>
-        <AccordionComponent
-          title={t("LandingPage.Accordion.heading")}
-          items={faqAnchorList}
-          variant
-        />
-      </AccordionWrapper>
       <CallToActionBox
         colorVariant
         multipleButtons
@@ -175,7 +133,6 @@ export default function LandingPage({ plausibleDomain }) {
         secondButtonPlausibleGoal="Zum Hilfebereich"
         secondButtonPlausibleProps="Start / Zum Hilfebereich"
       />
-      <InfoBoxGrundsteuer />
     </div>
   );
 }

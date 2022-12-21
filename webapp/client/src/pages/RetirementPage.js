@@ -45,6 +45,7 @@ export default function RetirementPage({ plausibleDomain }) {
           title={t("retirementPage.accordion.heading")}
           items={accordionRetirementPage}
           variant="marginTop"
+          id="retirementSection"
         />
       </ContentWrapper>
 

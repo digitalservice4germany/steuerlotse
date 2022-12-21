@@ -49,16 +49,6 @@ describe("ButtonAnchor", () => {
     expect(buttonAnchor).toHaveAttribute("disabled");
   });
 
-  it("should not render disabled attribute for button as anchor", () => {
-    setup({
-      disabled: true,
-      url: "url/some/link/path",
-    });
-    const buttonAnchor = screen.getByText("anchor text");
-
-    expect(buttonAnchor).not.toHaveAttribute("disabled");
-  });
-
   it("should render a default anchor button with component as text children", () => {
     setup({
       children: (

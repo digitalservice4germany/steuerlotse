@@ -255,14 +255,14 @@ const translations = {
       },
     },
     failure: {
+      title: "Anmeldung fehlgeschlagen",
       causes: {
         title: "Mögliche Ursachen",
-        reasons1:
+        reasons: [
           "<strong>Ihr Freischaltcode ist nicht korrekt.</strong> Eine Ursache kann die Verwechslung von Ziffern oder Buchstaben sein, die sich ähneln. So kann die Ziffer 0 schnell mit dem Buchstaben O oder der Buchstabe B schnell mit der Ziffer 8 verwechselt werden. <eligibilityLink>Prüfen</eligibilityLink> Sie Ihre Angabe.",
-        reasons2:
-          "<strong>Haben Sie sich vor 90 Tagen registriert?</strong> In diesem Fall können Sie sich mit diesem Freischaltcode nicht mehr beim Steuerlotsen anmelden. <registrationLink>Registrieren</registrationLink> Sie sich bitte erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
-        reasons3:
-          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> Dann ist Ihr Freischaltcode nicht mehr gültig. Bitte <revocationLink>stornieren</revocationLink> Sie Ihren Freischaltcode und registrieren sich erneut. Sie erhalten dann einen Brief mit einem neuen Freischaltcode. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
+          "<strong>Ihre Registrierung liegt mehr als 90 Tage zurück.</strong> In diesem Fall ist Ihr Freischaltcode nicht mehr gültig und Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben",
+          "<strong>Ihre Anmeldung ist bereits mehr als 5 Mal fehlgeschlagen.</strong> In diesem Fall ist Ihr Freischaltcode nicht mehr gültig und Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
+        ],
       },
     },
   },
@@ -466,15 +466,16 @@ const translations = {
       },
     },
   },
+
   revocation: {
     failure: {
-      header: {
-        title: "Stornierung fehlgeschlagen",
-        reason: {
-          title: "Mögliche Ursachen:",
-          one: "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. <registrationLink>Registrieren</registrationLink> Sie sich, um den Steuerlotsen zu nutzen. Die Registrierung ist noch bis einschließlich {{dateOne}} möglich.",
-          two: "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
-        },
+      title: "Stornierung fehlgeschlagen",
+      causes: {
+        title: "Mögliche Ursachen:",
+        reasons: [
+          "<strong>Sind Sie vielleicht noch nicht bei uns registriert?</strong> In diesem Fall können Sie Ihren Freischaltcode nicht stornieren. Sie können den Steuerlotsen nicht mehr nutzen. Als Alternative können Sie bei <einfachElster>einfachElster</einfachElster> eine Zugangsnummer beantragen und dort Ihre Steuererklärung abgeben.",
+          "<strong>Haben Sie Ihre Steuererklärung bereits erfolgreich verschickt?</strong>  Dann haben wir Ihren Freischaltcode automatisch storniert und Sie müssen nichts weiter tun.",
+        ],
       },
     },
   },
@@ -1020,25 +1021,15 @@ const translations = {
       listItem1: "mit Schritt-für-Schritt-Anleitung",
       listItem2: "kostenlos und ohne ELSTER-Konto",
       listItem3: "schnell und unkompliziert",
-      eligibilityTest:
-        "Möchten Sie wissen, ob Sie den Steuerlotsen nutzen können?",
-      checkUseButton: "Jetzt prüfen",
       plausibleGoal: "Nutzung prüfen",
     },
     Cards: {
       cardOne: {
-        header: "Herausfinden, ob Sie den Steuerlotsen nutzen können",
-        text: "Prüfen Sie durch die Beantwortung weniger Fragen, ob Sie die Voraussetzungen für die Nutzung des Steuerlotsen erfüllen.",
-        url: "/eligibility/step/tax_year?link_overview=False",
+        header: "Ich bin neu hier",
+        url: "/ende#retirementSection-1",
       },
       cardTwo: {
-        header: "Registrieren und Freischaltcode beantragen",
-        text: "Mit Ihrer Registrierung beantragen Sie einen Freischaltcode. Dieser wird Ihnen nach erfolgreicher Beantragung von Ihrer Finanzverwaltung zugeschickt.",
-        url: "/unlock_code_request/step/data_input?link_overview=False",
-      },
-      cardThree: {
-        header: "Mit Freischaltcode anmelden und Steuererklärung machen",
-        text: "Sie sind vorbereitet und haben Ihren Freischaltcode erhalten? Dann können Sie mit Ihrer Steuererklärung 2021 beginnen.",
+        header: "Ich habe bereits einen Freischaltcode",
         url: "/unlock_code_activation/step/data_input?link_overview=False",
       },
     },
@@ -1047,7 +1038,7 @@ const translations = {
       Item1: {
         title: "Wer kann den Steuerlotsen nutzen?",
         detail:
-          "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben.\n\nSie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den Steuerlotsen derzeit nicht nutzen.\n\nSie können <eligibilityLink>mit unserem Fragebogen</eligibilityLink> prüfen, ob Sie alle Voraussetzungen für den Steuerlotsen erfüllen.",
+          "Der Steuerlotse richtet sich an Personen und Paare, die eine Rente und Pension beziehen und keine Zusatzeinkünfte haben.\n\nSie beziehen steuerpflichtige Nebeneinkünfte, zum Beispiel Einnahmen aus Vermietung oder aus einer selbständigen Tätigkeit? Dann können Sie den Steuerlotsen derzeit nicht nutzen.\n\nSie können mit unserem Fragebogen prüfen, ob Sie alle Voraussetzungen für den Steuerlotsen erfüllen.",
       },
       Item2: {
         title: "Wie läuft die Nutzung des Steuerlotsen ab?",
@@ -1457,7 +1448,7 @@ const translations = {
       item3: {
         title: "Als Paar",
         detail:
-          "Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. In diesem Fall müssen Sie <strong>und</strong> Ihr Partner / Ihre Partnerin alle Voraussetzungen unter <eligibilityLink>„Nutzung prüfen“</eligibilityLink> erfüllen. Es reicht aus, wenn sich nur eine Person beim Steuerlotsen registriert. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner / Ihrer Partnerin eintragen.",
+          "Wenn Sie verheiratet sind oder in einer eingetragenen Partnerschaft leben, können Sie Ihre Steuererklärung gemeinsam als Paar machen. In diesem Fall müssen Sie <strong>und</strong> Ihr Partner / Ihre Partnerin alle Voraussetzungen unter „Nutzung prüfen“ erfüllen. Es reicht aus, wenn sich nur eine Person beim Steuerlotsen registriert. Im Steuerformular können Sie dann, zusätzlich zu Ihren Angaben, auch die Daten zu Ihrem Partner / Ihrer Partnerin eintragen.",
       },
       item4: {
         title: "Als Angehörige:r",
@@ -1478,7 +1469,7 @@ const translations = {
       item5: {
         title: "2021 noch berufstätig",
         detail: {
-          one: "Wenn es sich bei der Erwerbstätigkeit um eine geringfügige Beschäftigung handelt (sogenannter „Minijob“) und alle anderen Voraussetzungen unter <eligibilityLink>„Nutzung prüfen“</eligibilityLink> erfüllt sind, dann können Sie den Steuerlotsen nutzen.",
+          one: "Wenn es sich bei der Erwerbstätigkeit um eine geringfügige Beschäftigung handelt (sogenannter „Minijob“) und alle anderen Voraussetzungen unter „Nutzung prüfen“ erfüllt sind, dann können Sie den Steuerlotsen nutzen.",
           two: "Wenn Sie anderweitig erwerbstätig waren, dann können Sie den Steuerlotsen nicht nutzen. Sie können dann beispielsweise <elsterLink>Mein ELSTER</elsterLink> nutzen.",
         },
       },
@@ -1486,7 +1477,7 @@ const translations = {
         title: "Verschiedene Renteneinkünfte",
         detail: {
           one: "Sie können Ihre Steuererklärung mit dem Steuerlotsen machen, wenn die Renteneinkünfte und / oder Pensionen von den Rentenversicherungsträgern oder vom Arbeitgeber elektronisch an die Finanzverwaltung übermittelt wurden. Wenn dies auf Ihre Renten zutrifft, können Sie den Steuerlotsen nutzen. Wir können das im Einzelfall jedoch nicht prüfen oder garantieren.",
-          two: "Eine Liste der Träger, die Daten elektronisch übermitteln, finden Sie im <eligibilityLink>„Nutzung prüfen“-Fragebogen.</eligibilityLink>",
+          two: "Eine Liste der Träger, die Daten elektronisch übermitteln, finden Sie im „Nutzung prüfen“-Fragebogen.",
         },
       },
       item7: {
@@ -1498,7 +1489,7 @@ const translations = {
         title: "Kapitalerträge",
         detail: {
           one: "Der Steuerlotse kann mit Kapitalerträgen nur genutzt werden, wenn diese bereits versteuert sind und daher nicht mehr in der Steuererklärung angegeben werden müssen. Wir können das im Einzelfall jedoch nicht prüfen.",
-          two: "Ob Ihre Kapitalerträge bereits versteuert sind, finden Sie im <eligibilityLink>„Nutzung prüfen“-Fragebogen</eligibilityLink> heraus.",
+          two: "Ob Ihre Kapitalerträge bereits versteuert sind, finden Sie im „Nutzung prüfen“-Fragebogen heraus.",
         },
       },
     },
@@ -1627,41 +1618,43 @@ const translations = {
     },
     accordion: {
       heading: "Häufig gestellte Fragen",
-      taxReturnDeadline: {
-        title: "Bis wann kann ich meine Steuererklärung abgeben?",
-        detail:
-          "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
-      },
-      file2021TaxReturn: {
-        title:
-          "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
-        detail:
-          "Bis einschließlich {{dateOne}} können Sie sich noch beim Steuerlotsen registrieren, sofern Sie die Voraussetzungen zur Nutzung erfüllen. Nach der Registrierung erhalten Sie einen Brief mir Ihrem Freischaltcode zur Anmeldung.  Mehr Informationen zum Ablauf finden Sie auf der Seite <howItWorksLink>„So funktioniert’s“</howItWorksLink>.",
-      },
-      file2022Registration: {
-        title:
-          "Ich möchte mich schon für meine Steuererklärung 2022 registrieren.",
-        detail:
-          "Der Steuerlotse wird eingestellt und kann nicht für die Steuererklärung 2022 genutzt werden. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
-      },
-      alternatives: {
-        title: "Welche Alternativen zum Steuerlosten habe ich?",
-        detailOne:
-          "EinfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. EinfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de.</einfachElsterLink>",
-        detailTwo:
-          "Daneben stehen Ihnen noch <simplifiedPaperFormLink>das vereinfachte Papierformular</simplifiedPaperFormLink>  (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
-      },
-      whatHappensToData: {
-        title:
-          "Was passiert mit meinen Daten nach der Einstellung des Steuerlotsen?",
-        detailOne:
-          "Alle Steuererklärungen, die Sie über den Steuerlotsen bis einschließlich {{dateTwo}} abgeben, werden regulär an Ihr zuständiges Finanzamt übermittelt und dort weiter verarbeitet.",
-        detailTwo:
-          "Der Steuerlotse speichert Ihre Angaben nur für 10 Minuten nach dem Verschicken der Steuererklärung, um Ihnen eine Zusammenfassung der übermittelten Daten bereitzustellen. Danach wird Ihr Konto mit Ihren Daten gelöscht gemäß Art. 5 der Datenschutz-Grundverordnung (DSGVO).",
-        detailThre:
-          "Die Daten aller Nutzenden, die sich registriert, aber keine Steuererklärung mit dem Steuerlotsen abgeben haben, werden spätestens nach 60 Tagen gelöscht.",
-        detailFour:
-          "Mehr Informationen finden Sie in unser <dataPrivacyLink>Datenschutzerklärung.</dataPrivacyLink>",
+      elements: {
+        taxReturnDeadline: {
+          title: "Bis wann kann ich meine Steuererklärung abgeben?",
+          detail:
+            "Bis einschließlich {{dateTwo}} haben Sie noch die Möglichkeit, Ihre Steuererklärung mit dem Steuerlotsen auszufüllen und abzugeben. Bitte beachten Sie, dass Ihr Freischaltcode bereits vorher seine <validity>Gültigkeit</validity> verlieren kann.",
+        },
+        file2021TaxReturn: {
+          title:
+            "Ich bin neu hier und möchte noch meine Steuererklärung für 2021 abgeben.",
+          detail: [
+            "Eine Registrierung beim Steuerlotsen für neue Nutzer:innen ist nicht mehr möglich. einfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. einfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+            "Daneben stehen Ihnen noch das <simplifiedPaperFormLink>vereinfachte Papierformular</simplifiedPaperFormLink> (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
+          ],
+        },
+        file2022Registration: {
+          title:
+            "Ich möchte mich schon für meine Steuererklärung 2022 registrieren.",
+          detail:
+            "Der Steuerlotse wird eingestellt und kann nicht für die Steuererklärung 2022 genutzt werden. Für Ihre Steuererklärung 2022 können Sie im nächsten Jahr einfachELSTER nutzen. Dieser Dienst bietet ebenfalls eine vereinfachte Steuererklärung für Rentnerinnen und Renter an und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de</einfachElsterLink>.",
+        },
+        alternatives: {
+          title: "Welche Alternativen zum Steuerlosten habe ich?",
+          detail: [
+            "EinfachElster bietet ebenfalls eine vereinfachte Steuererklärung speziell für Menschen im Ruhestand und ist ein offizielles und kostenloses Angebot der Finanzbehörden. Die Voraussetzungen sind die gleichen wie zur Nutzung des Steuerlosten. EinfachElster kann zur Abgabe von Steuererklärungen ab 2020 genutzt werden. Wie Sie den Service nutzen können, wird Ihnen auf der Website von einfachElster erklärt: <einfachElsterLink>www.einfach.elster.de.</einfachElsterLink>",
+            "Daneben stehen Ihnen noch <simplifiedPaperFormLink>das vereinfachte Papierformular</simplifiedPaperFormLink>  (Steuererklärungen ab 2018 für ausgewählte Bundesländer) sowie <elsterLink>Mein ELSTER</elsterLink> zur Verfügung.",
+          ],
+        },
+        whatHappensToData: {
+          title:
+            "Was passiert mit meinen Daten nach der Einstellung des Steuerlotsen?",
+          detail: [
+            "Alle Steuererklärungen, die Sie über den Steuerlotsen bis einschließlich {{dateTwo}} abgeben, werden regulär an Ihr zuständiges Finanzamt übermittelt und dort weiter verarbeitet.",
+            "Der Steuerlotse speichert Ihre Angaben nur für 10 Minuten nach dem Verschicken der Steuererklärung, um Ihnen eine Zusammenfassung der übermittelten Daten bereitzustellen. Danach wird Ihr Konto mit Ihren Daten gelöscht gemäß Art. 5 der Datenschutz-Grundverordnung (DSGVO).",
+            "Die Daten aller Nutzenden, die sich registriert, aber keine Steuererklärung mit dem Steuerlotsen abgeben haben, werden spätestens nach 60 Tagen gelöscht.",
+            "Mehr Informationen finden Sie in unser <dataPrivacyLink>Datenschutzerklärung.</dataPrivacyLink>",
+          ],
+        },
       },
     },
     questionBox: {
